@@ -1,0 +1,54 @@
+[
+  {
+    "id": "what-is-ai",
+    "title": "What is AI?",
+    "category": "AI",
+    "page": "ai/concepts/what-is-ai.html",
+    "summary": "Rules vs. learning — why AI means letting a system learn behavior from data.",
+    "keywords": "what is ai artificial intelligence rules learning definition foundations"
+  },
+  {
+    "id": "what-is-ai-recall",
+    "title": "What is AI? — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/what-is-ai.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for the \"what is AI\" interview question.",
+    "keywords": "ai interview recall definition say this"
+  },
+  {
+    "id": "what-is-ai-trap",
+    "title": "AI vs. automation — common trap",
+    "category": "AI",
+    "page": "ai/concepts/what-is-ai.html",
+    "anchor": "trap",
+    "summary": "Why \"any smart-looking software\" isn't automatically AI.",
+    "keywords": "ai vs automation misconception trap confusion"
+  },
+  {
+    "id": "machine-learning",
+    "title": "Machine Learning",
+    "category": "AI",
+    "page": "ai/concepts/machine-learning.html",
+    "summary": "Why hand-written rules stopped scaling, and what changed once systems learned from examples.",
+    "keywords": "machine learning ml training model data pattern algorithm"
+  },
+  {
+    "id": "machine-learning-recall",
+    "title": "Machine Learning — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/machine-learning.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for the \"what is machine learning\" interview question.",
+    "keywords": "machine learning interview recall say this training inference"
+  },
+  {
+    "id": "machine-learning-trap",
+    "title": "AI vs. ML vs. Deep Learning — common trap",
+    "category": "AI",
+    "page": "ai/concepts/machine-learning.html",
+    "anchor": "trap",
+    "summary": "Why these three terms are nested, not interchangeable.",
+    "keywords": "ai vs ml vs deep learning confusion pair nested"
+  }
+]
