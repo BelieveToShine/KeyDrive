@@ -182,6 +182,7 @@ a.jm-hit{ cursor:pointer; }
 .sec-label.trap{ color:var(--rose-ink); }
 .sec-label.next{ color:var(--emerald-ink); }
 .sec-label.why{ color:var(--amber-ink); }
+.sec-label.see{ color:var(--cyan-ink); }
 
 .why-box{ background:var(--amber-bg); border:1px solid rgba(251,191,36,.22); border-radius:16px; padding:20px 22px; }
 .why-box p{ margin:0 0 10px; color:var(--ink); }

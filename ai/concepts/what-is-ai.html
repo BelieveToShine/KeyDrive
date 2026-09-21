@@ -43,23 +43,9 @@
     <div class="interview-q">❓ "How would you explain, in one sentence, what AI actually is?"</div>
   </section>
 
-  <!-- why did this exist -->
-  <section class="kd-section" id="why">
-    <div class="sec-label why">🟡 Why did this need to exist?</div>
-    <div class="kd-card why-box">
-      <p>For decades, "smart" software meant a person writing down every rule by hand: <em>"if
-      the email contains 'win a prize', mark it spam."</em> That works — until the real world
-      throws a case nobody wrote a rule for. Spam changes its wording. A photo is blurry. A
-      customer phrases a question in a way no rule anticipated.</p>
-      <p>Hand-written rules don't scale to a world with that much variation. AI is the shift
-      away from writing the rules yourself, toward giving a system enough examples that it works
-      out the pattern on its own.</p>
-    </div>
-  </section>
-
-  <!-- diagram -->
+  <!-- diagram: see it first -->
   <section class="kd-section">
-    <div class="sec-label" style="color:var(--ink-soft)">🧠 Remember this</div>
+    <div class="sec-label see">👁 See it first</div>
     <figure class="diagram-card">
       <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
         <defs>
@@ -71,6 +57,7 @@
         <rect x="20" y="40" width="120" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
         <text x="80" y="64" text-anchor="middle" font-size="12" fill="#e7ebf3">New input</text>
         <path d="M140,60 H190" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow)"/>
+        <text x="165" y="52" text-anchor="middle" font-size="9.5" fill="#5b6577">checked</text>
         <rect x="190" y="40" width="140" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185"/>
         <text x="260" y="58" text-anchor="middle" font-size="11.5" fill="#fda4af">Rules a human</text>
         <text x="260" y="72" text-anchor="middle" font-size="11.5" fill="#fda4af">wrote by hand</text>
@@ -86,19 +73,39 @@
         <text x="90" y="216" text-anchor="middle" font-size="11" fill="#e7ebf3">Thousands of</text>
         <text x="90" y="230" text-anchor="middle" font-size="11" fill="#e7ebf3">real examples</text>
         <path d="M160,218 H210" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow)"/>
+        <text x="185" y="210" text-anchor="middle" font-size="9.5" fill="#5b6577">trains</text>
         <rect x="210" y="198" width="140" height="40" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
         <text x="280" y="216" text-anchor="middle" font-size="11" fill="#6ee7b7">System finds</text>
         <text x="280" y="230" text-anchor="middle" font-size="11" fill="#6ee7b7">the pattern itself</text>
         <path d="M350,218 H400" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow)"/>
+        <text x="375" y="210" text-anchor="middle" font-size="9.5" fill="#5b6577">applies</text>
         <rect x="400" y="198" width="140" height="40" rx="10" fill="rgba(34,211,238,.12)" stroke="#22d3ee"/>
         <text x="470" y="216" text-anchor="middle" font-size="11" fill="#67e8f9">Handles cases</text>
         <text x="470" y="230" text-anchor="middle" font-size="11" fill="#67e8f9">it never saw before</text>
       </svg>
-      <figcaption>Same goal (tell spam from real mail), two completely different strategies for getting there.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> the same job — sorting spam from real mail —
+      solved two ways. Top: a person's hand-written rule checks each new input directly, so
+      anything the person didn't anticipate breaks it. Bottom: a system learns its own rule from
+      thousands of labeled examples, so it can handle a case it has never seen. That difference
+      — <em>learned</em> vs. <em>hand-written</em> — is the entire definition of AI.</figcaption>
     </figure>
   </section>
 
   <div class="one-sentence">🎯 <span class="grad-text">AI = a system that learns what to do from examples, instead of being told exactly what to do.</span></div>
+
+  <!-- why did this exist -->
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>For decades, "smart" software meant a person writing down every rule by hand: <em>"if
+      the email contains 'win a prize', mark it spam."</em> That works — until the real world
+      throws a case nobody wrote a rule for. Spam changes its wording. A photo is blurry. A
+      customer phrases a question in a way no rule anticipated.</p>
+      <p>Hand-written rules don't scale to a world with that much variation. AI is the shift
+      away from writing the rules yourself, toward giving a system enough examples that it works
+      out the pattern on its own.</p>
+    </div>
+  </section>
 
   <details class="zoom">
     <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
