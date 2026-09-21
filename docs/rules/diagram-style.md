@@ -123,6 +123,17 @@ re-reading the markup:
    review must not miss — it directly contradicts this file's own accuracy checklist (item 4:
    "does every arrow have a specific, labeled meaning" presupposes the arrow actually reaches
    what it's labeling).
+3. **An arrow-pill positioned with too little clearance to the destination box.** After adding
+   pill-shaped arrow labels (per the reference-standard rule below), several pills sat only
+   6–10 SVG units from the box they pointed at — barely enough room for the 7-unit arrowhead
+   marker, so the arrow read as not actually completing into the box even though it technically
+   did. **A pill's destination-side clearance (pill edge to the next box) must be at least 16
+   SVG units**, verified by a zoomed screenshot of that specific junction, not the full diagram
+   at normal scale. Bias the pill toward the *source* box (small gap behind it, generous gap
+   ahead of it) rather than centering it in the gap — centering is what produced the too-tight
+   clearance in the first place. If a gap is too narrow to fit a pill plus 16 units of clearance
+   at a legible font size, widen the gap (shift the destination box, and everything after it)
+   rather than shrinking the pill below legibility.
 
 **The rule this establishes:** before calling any diagram (new or edited) done —
 1. Render it in a browser (a headless screenshot is fine) at real size, not just skim the markup.
@@ -192,8 +203,11 @@ this once. What that reference does that KeyDrive's diagrams mostly don't yet:
    visually breaking around it — not text floating near the arrow. This is a step up from this
    file's existing "every arrow gets a label" rule: the label needs its own contained shape, the
    same way `.fail-box` gave a contained shape to an arrow's *endpoint*.
-3. **An icon on every major box**, consistently, for at-a-glance scanning — not decorative, a
-   real aid to distinguishing box types quickly in a diagram with more than 3-4 boxes.
+3. **An icon on every major box, and on every arrow-pill label**, consistently, for at-a-glance
+   scanning — not decorative, a real aid to distinguishing box/relationship types quickly. Pick
+   the emoji for genuine semantic fit (🔍 for a check, 🎓 for training/learning, 🎯 for applying
+   a result, ♻️ for reuse, ✨ for a result being produced) — a mismatched emoji is worse than no
+   emoji, so if nothing fits naturally, leave it off rather than force one.
 4. **Containment/grouping** — when several small items share a role (the reference groups eight
    scheduled jobs inside one labeled "Scheduled Jobs" container), draw one bordered container
    around them with its own label, rather than leaving them as loose siblings at the same visual
@@ -209,19 +223,47 @@ this once. What that reference does that KeyDrive's diagrams mostly don't yet:
    what level of detail (the reference's "How it's switched on, where a dealer uses it, and how
    it all connects · high level") — useful on a diagram complex enough that the `figcaption`
    alone doesn't orient the reader fast enough.
+7. **A literal data example gets styled as a data object**, not a plain rounded rectangle with
+   plain text — wrap the value in curly braces rendered in an accent color (amber, per the
+   existing `.arrow-pill` palette convention), monospace font, e.g. `{ 800 sqft → $150K }`. This
+   signals "this is a concrete data point" the same way real code renders an object literal, and
+   reads as far less generic than a bare text chip. Used on the Machine Learning diagram's four
+   training examples.
 
-**Where this applies on KeyDrive:** items 1, 2, and 3 apply broadly — adopt them whenever a
-diagram uses color-coded categories, arrow labels, or more than a couple of box types, including
+**Where this applies on KeyDrive:** items 1, 2, 3, and 7 apply broadly — adopt them whenever a
+diagram uses color-coded categories, arrow labels, box types, or literal data values, including
 the single-concept "See it first" diagrams. Items 4, 5, and 6 are specifically about
 architecture/system-topology diagrams (see the concept-type table above) — KeyDrive's journey
 maps are the closest match today; a single-concept comparison diagram usually doesn't have
 enough independent parts to need zones or containment, and forcing them in would fight the
 5–10-second-read rule at the top of this file. Judge which items apply by the concept-type
-classification, not by applying all six unconditionally.
+classification, not by applying all seven unconditionally.
 
 **Before calling any diagram done, cross-check it against this list explicitly, item by item**,
 the same way the accuracy checklist above is run item by item — don't eyeball it and assume it's
 covered.
+
+## External reference images and stock imagery
+
+Team feedback also pointed at generic online AI-explainer graphics (brain/circuit motifs, stock
+"how AI works" infographics) as creative inspiration and floated pulling in imagery like that
+directly. Two things pull in different directions here, worth being explicit about:
+
+- **Inspiration is welcome; hotlinking or copying the images themselves is not the default.**
+  KeyDrive's accuracy rule already rejects generic Type-B metaphors that don't teach anything
+  concrete about the actual mechanism (a brain-with-circuits graphic doesn't show *how* AI
+  learns from data the way this project's own before/after diagrams do) — most stock "AI"
+  imagery is exactly that genre. Prefer channeling the same creative energy into a custom,
+  accurate SVG (richer icons, better color, a grouping container, an extra angle) over swapping
+  in a generic image.
+- If a specific external image is ever genuinely worth using (e.g. a real annotated screenshot,
+  not a generic clip-art metaphor), self-host it in `assets/` rather than hotlinking a third-party
+  CDN URL — a hotlinked image is a dependency on someone else's server staying up, and may carry
+  licensing terms this project hasn't checked. Confirm with the user before adding any image
+  whose license isn't clear.
+- This isn't a blanket refusal — if the user points at a specific external image and asks for it
+  by name, surface the accuracy/hotlinking tradeoff above and ask before proceeding, rather than
+  silently declining or silently embedding it.
 
 ## Deferred, not in scope yet
 
