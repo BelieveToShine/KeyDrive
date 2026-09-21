@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Networks — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">Neural Networks</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 4 of 17 · 🎓 Foundations</div>
+    <h1>A neural network is <span class="grad-text">the actual thing being stacked</span> when you go "deep."</h1>
+    <p class="sub">Deep Learning said "stack many layers." A neural network is what a layer is
+    actually made of — a concrete, fairly simple computation, repeated many times over.</p>
+    <div class="interview-q">❓ "What is a neuron doing, mathematically, inside a neural network?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="nnArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="20" y="10" width="140" height="44" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="90" y="36" text-anchor="middle" font-size="11" fill="#e7ebf3">🏠 size: 1500</text>
+        <rect x="20" y="88" width="140" height="44" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="90" y="114" text-anchor="middle" font-size="11" fill="#e7ebf3">🛏️ bedrooms: 3</text>
+        <rect x="20" y="166" width="140" height="44" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="90" y="192" text-anchor="middle" font-size="11" fill="#e7ebf3">📅 age: 10 yrs</text>
+
+        <path class="flow-arrow" d="M160,32 L270,105" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#nnArrow)"/>
+        <path class="flow-arrow" d="M160,110 H270" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#nnArrow)"/>
+        <path class="flow-arrow" d="M160,188 L270,115" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#nnArrow)"/>
+        <g class="arrow-pill"><rect x="192" y="55" width="34" height="17" rx="8.5"/><text x="209" y="67" text-anchor="middle" font-size="8.5">×w1</text></g>
+        <g class="arrow-pill"><rect x="192" y="101" width="34" height="17" rx="8.5"/><text x="209" y="113" text-anchor="middle" font-size="8.5">×w2</text></g>
+        <g class="arrow-pill"><rect x="192" y="148" width="34" height="17" rx="8.5"/><text x="209" y="160" text-anchor="middle" font-size="8.5">×w3</text></g>
+
+        <rect x="270" y="80" width="90" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="315" y="106" text-anchor="middle" font-size="11" fill="#c4b5fd">🔢 Σ</text>
+        <text x="315" y="122" text-anchor="middle" font-size="9.5" fill="#c4b5fd">sum + bias</text>
+
+        <path class="flow-arrow" d="M360,110 H450" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#nnArrow)"/>
+        <g class="arrow-pill"><rect x="370" y="101" width="40" height="18" rx="9"/><text x="390" y="114" text-anchor="middle" font-size="9">feeds</text></g>
+
+        <rect x="450" y="75" width="170" height="70" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="535" y="100" text-anchor="middle" font-size="11" fill="#67e8f9">⚡ Activation</text>
+        <text x="535" y="117" text-anchor="middle" font-size="10" fill="#67e8f9">output ≈ 0.82</text>
+        <text x="535" y="132" text-anchor="middle" font-size="9" fill="#5b6577">(→ "expensive"? yes)</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> one neuron's actual computation. Each input
+      gets multiplied by its own weight, the three results get summed together with a bias, and
+      that sum passes through an activation function that turns it into the neuron's output. A
+      "layer" is many of these side by side; a "network" is many layers in sequence — this one box
+      is exactly what Deep Learning stacks.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">A neural network = many weighted-sum-then-decide units (neurons), connected in layers.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>"Stack many layers" is a shape, not a mechanism — Deep Learning needed an actual,
+      concrete computation to repeat at every layer. Neural networks are that computation: a
+      neuron takes several numeric inputs, multiplies each by its own weight, adds them up with a
+      bias term, and passes the result through an activation function that decides what the
+      neuron actually outputs.</p>
+      <p>The weights are exactly the "internal parameters" that Machine Learning's training
+      process adjusts. Training a neural network means repeatedly nudging every weight, in every
+      neuron, until the network's overall output gets closer to the right answer.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>The activation function matters more than it looks. Without one, stacking layers would
+      just be stacking simple weighted sums — which collapses back into one big weighted sum, no
+      more powerful than a single layer. The activation function introduces a bend (a
+      non-linearity) at every neuron, and it's that bend, repeated across many neurons and
+      layers, that lets a deep network represent curved, complex relationships a straight line
+      never could.</p>
+      <p>"Neuron" is a loose, decades-old metaphor from biology — the actual computation is just
+      arithmetic (multiply, add, bend). Don't over-read the biology into it.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>One neuron = weighted sum of its inputs + a bias, then an activation function.</li>
+        <li>A layer = many neurons computing in parallel on the same inputs.</li>
+        <li>A network = many layers, each feeding the next.</li>
+        <li>Training a network = adjusting every weight until outputs get closer to correct.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A neural network is built from neurons, where each neuron multiplies its inputs by learned
+    weights, sums them with a bias, and passes the result through an activation function. Layers
+    stack these neurons in sequence, and training adjusts the weights so the network's output
+    gets closer to the correct answer."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>"Neuron" is a metaphor, not a biology lesson.</b> A biological neuron is vastly more
+      complex than a weighted sum and an activation function. In interviews and in practice, treat
+      "neuron" as the name of a specific small computation — don't try to make it more
+      biologically literal than that.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🌌 Deep Learning</h5><p>The approach: stack many layers. The strategy.</p></div>
+    <div class="cp-vs">is built from</div>
+    <div class="cp-side"><h5>🔗 Neural Network</h5><p>The actual structure of neurons/layers that gets stacked. The material.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># One neuron, computed by hand</span>
+inputs  = [<span class="num">1500</span>, <span class="num">3</span>, <span class="num">10</span>]        <span class="cmt"># size, bedrooms, age</span>
+weights = [<span class="num">0.0006</span>, <span class="num">0.12</span>, <span class="num">-0.02</span>]  <span class="cmt"># learned during training</span>
+bias    = <span class="num">-0.4</span>
+
+weighted_sum = <span class="kw">sum</span>(i * w <span class="kw">for</span> i, w <span class="kw">in</span> <span class="kw">zip</span>(inputs, weights)) + bias
+output = activation(weighted_sum)   <span class="cmt"># -&gt; e.g. 0.82</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative numbers only — real weights come from training, not from anyone guessing them.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now know what's inside every layer. Next: the specific network shape behind every modern LLM.</span>
+      <a class="next-link" href="transformers.html">Transformers <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

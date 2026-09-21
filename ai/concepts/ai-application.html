@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Application — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">AI Application</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 14 of 17 · 🚀 Shipping it</div>
+    <h1>None of this reaches a user <span class="grad-text">until it's wired into a real product.</span></h1>
+    <p class="sub">Everything so far describes what happens inside an AI system. An AI
+    application is the whole wiring around it — the part an actual user actually touches.</p>
+    <div class="interview-q">❓ "Is 'the AI' the whole product, or one part of it?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="appArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="10" y="30" width="95" height="50" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="57" y="52" text-anchor="middle" font-size="10" fill="#e7ebf3">🖥️ User</text>
+        <text x="57" y="67" text-anchor="middle" font-size="8" fill="#93a0b8">types a request</text>
+
+        <path class="flow-arrow" d="M105,55 H185" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#appArrow)"/>
+        <g class="arrow-pill"><rect x="115" y="46" width="42" height="18" rx="9"/><text x="136" y="59" text-anchor="middle" font-size="9">sends</text></g>
+
+        <rect x="185" y="30" width="95" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="232" y="52" text-anchor="middle" font-size="10" fill="#c4b5fd">⚙️ Backend</text>
+        <text x="232" y="67" text-anchor="middle" font-size="8" fill="#c4b5fd">routes the request</text>
+
+        <path class="flow-arrow" d="M280,55 H360" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#appArrow)"/>
+        <g class="arrow-pill"><rect x="290" y="46" width="42" height="18" rx="9"/><text x="311" y="59" text-anchor="middle" font-size="9">calls</text></g>
+
+        <rect x="360" y="30" width="95" height="50" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="407" y="52" text-anchor="middle" font-size="10" fill="#67e8f9">🤖 AI system</text>
+        <text x="407" y="67" text-anchor="middle" font-size="8" fill="#67e8f9">model+agent+tools</text>
+
+        <path class="flow-arrow" d="M455,55 H535" stroke="#34d399" stroke-width="1.6" marker-end="url(#appArrow)"/>
+        <g class="arrow-pill"><rect x="465" y="46" width="50" height="18" rx="9"/><text x="490" y="59" text-anchor="middle" font-size="8.5">reaches</text></g>
+
+        <rect x="535" y="30" width="95" height="50" rx="10" fill="rgba(52,211,153,.14)" stroke="#34d399"/>
+        <text x="582" y="52" text-anchor="middle" font-size="10" fill="#6ee7b7">🗄️ Data</text>
+        <text x="582" y="67" text-anchor="middle" font-size="8" fill="#6ee7b7">real systems it touches</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> nothing this journey has covered so far
+      reaches a real user until it's wired into an actual application — a UI that takes a
+      request, a backend that routes it, and the AI system reaching whatever real data or
+      services it needs. The "AI system" box is everything from Machine Learning through
+      Planning; this concept is about the box around it.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">AI Application = wiring the model, agent, and tools into a real product surface a user actually uses.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Everything from Machine Learning through Planning describes what happens inside an AI
+      system. None of it reaches a real user until it's wired into an actual application: a user
+      interface that takes a request, a backend that routes it, and connections to whatever real
+      data or services the AI system needs to do its job.</p>
+      <p>An "AI application" is that whole wiring — not just the model at its center.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>This is usually the point where ordinary engineering concerns become unavoidable —
+      authentication, rate limits, logging, error handling — the same concerns any real product
+      needs, now wrapped around an AI system instead of a traditional backend.</p>
+      <p>It's also the point where "does it work" stops being a vibe and needs an actual answer:
+      Evaluation, Observability, and Production — the rest of this journey — are about running
+      this application reliably, not about the model itself.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>An AI application = UI + backend + the AI system + the real data/services it touches.</li>
+        <li>It exists because none of the AI system's capability reaches a user until it's wired into a product.</li>
+        <li>Ordinary engineering concerns (auth, rate limits, logging) apply here just like any product.</li>
+        <li>The model is one component of the application, not the whole thing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"An AI application is the whole product wiring — the UI, the backend, and the connections to
+    real data and services — with an AI system (model, agent, tools) as one component inside it.
+    Getting the model right doesn't automatically make the application reliable; it still needs
+    the same engineering rigor any product needs."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>"The AI" usually isn't the whole product.</b> It's easy to talk about "the AI" as if
+      it were the entire application. In a real system it's typically a focused component inside
+      a much larger application that also needs a UI, auth, data storage, and everything else a
+      normal product needs.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🤖 AI system</h5><p>The model, agent, and tools — what this journey has covered so far.</p></div>
+    <div class="cp-vs">wrapped by</div>
+    <div class="cp-side"><h5>📱 AI Application</h5><p>The whole product a user touches: UI, backend, AI system, and data.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># The AI system is one call inside a much larger request path</span>
+<span class="kw">def</span> handle_request(user_input):
+    context  = backend.prepare(user_input)   <span class="cmt"># auth, routing, rate limits</span>
+    response = ai_system.run(context)        <span class="cmt"># model + agent + tools</span>
+    <span class="kw">return</span> backend.format(response)      <span class="cmt"># what the user actually sees</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — a real request path adds far more handling around this core idea.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now have a real product. Next: proving it actually works, not just that it seems to.</span>
+      <a class="next-link" href="evaluation.html">Evaluation <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

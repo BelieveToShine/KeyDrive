@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">RAG</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 17 · 🛠️ Using the model</div>
+    <h1>RAG hands the model <span class="grad-text">real documents</span>, instead of hoping it remembers.</h1>
+    <p class="sub">Prompting steers behavior, but it can't teach the model facts it never saw.
+    RAG (Retrieval-Augmented Generation) is how you give it current, private, or simply new
+    knowledge — without retraining anything.</p>
+    <div class="interview-q">❓ "How does RAG let a model answer questions about data it was never trained on?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 130" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="ragArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="10" y="40" width="95" height="50" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="57" y="61" text-anchor="middle" font-size="10" fill="#e7ebf3">❓ Question</text>
+        <text x="57" y="76" text-anchor="middle" font-size="8" fill="#93a0b8">"refund policy?"</text>
+
+        <path class="flow-arrow" d="M105,65 H185" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ragArrow)"/>
+        <g class="arrow-pill"><rect x="115" y="56" width="45" height="18" rx="9"/><text x="137" y="69" text-anchor="middle" font-size="8.5">🔎 finds</text></g>
+
+        <rect x="185" y="40" width="95" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="232" y="61" text-anchor="middle" font-size="10" fill="#c4b5fd">🔍 Retrieve</text>
+        <text x="232" y="76" text-anchor="middle" font-size="8" fill="#c4b5fd">from knowledge base</text>
+
+        <path class="flow-arrow" d="M280,65 H360" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ragArrow)"/>
+        <g class="arrow-pill"><rect x="290" y="56" width="40" height="18" rx="9"/><text x="310" y="69" text-anchor="middle" font-size="8.5">adds</text></g>
+
+        <rect x="360" y="40" width="95" height="50" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="407" y="61" text-anchor="middle" font-size="10" fill="#67e8f9">🧠 LLM</text>
+        <text x="407" y="76" text-anchor="middle" font-size="8" fill="#67e8f9">question + chunks</text>
+
+        <path class="flow-arrow" d="M455,65 H535" stroke="#34d399" stroke-width="1.6" marker-end="url(#ragArrow)"/>
+        <g class="arrow-pill"><rect x="465" y="56" width="45" height="18" rx="9"/><text x="487" y="69" text-anchor="middle" font-size="8.5">✨ yields</text></g>
+
+        <rect x="535" y="40" width="95" height="50" rx="10" fill="rgba(52,211,153,.14)" stroke="#34d399"/>
+        <text x="582" y="61" text-anchor="middle" font-size="10" fill="#6ee7b7">✅ Answer</text>
+        <text x="582" y="76" text-anchor="middle" font-size="8" fill="#6ee7b7">grounded in real docs</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> a question doesn't go to the model alone.
+      It first retrieves the most relevant chunks from a knowledge base — company docs, a wiki,
+      anything the model wasn't trained on — then hands the model both the question <em>and</em>
+      those chunks together. The answer ends up grounded in real, current material instead of
+      just whatever the model memorized during training.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">RAG = retrieve the most relevant real documents, then hand them to the model alongside the question.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>An LLM's knowledge is frozen at training time — it has a cutoff, and it never saw an
+      organization's private or fast-changing information (this week's policy update, a
+      customer's own account data, internal documentation). Prompting alone can't fix this: it
+      steers behavior, but it can't hand the model facts that simply aren't in its weights.</p>
+      <p>RAG closes that gap at query time: it retrieves the most relevant material from an
+      external knowledge base and adds it directly into the prompt, so the model answers using
+      facts it was never trained on — without anyone retraining it.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>"Retrieve" almost always means searching by <i>meaning</i>, not just matching keywords.
+      Documents and the question both get converted into embeddings — numeric representations
+      of meaning — so a question about "time off rules" can still find a document about
+      "vacation policy" even though they don't share a single word.</p>
+      <p>RAG doesn't change the model at all — it changes what's <i>in the prompt</i> for that one
+      request. If the knowledge base genuinely doesn't contain the answer, RAG can't invent it;
+      it can only surface what's actually there.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>RAG = retrieve relevant chunks, then add them to the prompt before the model answers.</li>
+        <li>It exists because a model's knowledge is frozen at training time and can't include private/current data.</li>
+        <li>Retrieval usually matches by meaning (embeddings), not just keywords.</li>
+        <li>RAG changes the prompt for one request — it doesn't retrain or permanently change the model.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"RAG retrieves the most relevant documents for a question from an external knowledge base,
+    usually by comparing meaning through embeddings, and adds them to the prompt before the
+    model generates an answer. It lets the model use knowledge it was never trained on, without
+    any retraining — the model's weights never change."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>RAG doesn't retrain the model, and it can't invent missing knowledge.</b> It only
+      changes what's in that one prompt. If the knowledge base doesn't actually contain the
+      answer, retrieval can't manufacture it — the model is still limited to whatever got
+      retrieved plus whatever it already knew from training.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>💬 Prompting</h5><p>Steers behavior through instructions. No new facts added.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📚 RAG</h5><p>Adds retrieved facts to the prompt. Both happen at inference time — neither changes weights.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># Retrieve, then augment the prompt with what was found</span>
+chunks = knowledge_base.search(question, top_k=<span class="num">3</span>)  <span class="cmt"># matched by meaning, not keywords</span>
+
+prompt = <span class="str">f"Answer using only this context:\n{chunks}\n\nQuestion: {question}"</span>
+answer = model.generate(prompt)  <span class="cmt"># same frozen model — now grounded in real docs</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — real RAG systems add chunking, ranking, and citation handling around this core idea.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now know how to add facts without retraining. Next: what to do when the behavior itself needs to change, not just the facts.</span>
+      <a class="next-link" href="fine-tuning.html">Fine-tuning <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

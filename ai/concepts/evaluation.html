@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluation — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">Evaluation</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 15 of 17 · 🚀 Shipping it</div>
+    <h1>Evaluation turns <span class="grad-text">"it seems to work"</span> into an actual number.</h1>
+    <p class="sub">You have a real application now. Evaluation is how you find out — with
+    evidence, not a vibe — whether it actually works, and whether a change made it better or
+    worse.</p>
+    <div class="interview-q">❓ "How do you know a change to the prompt or model actually helped?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="evArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="10" y="30" width="95" height="50" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="57" y="52" text-anchor="middle" font-size="9.5" fill="#e7ebf3">📋 Test cases</text>
+        <text x="57" y="67" text-anchor="middle" font-size="7.5" fill="#93a0b8">known-good answers</text>
+
+        <path class="flow-arrow" d="M105,55 H185" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#evArrow)"/>
+        <g class="arrow-pill"><rect x="115" y="46" width="42" height="18" rx="9"/><text x="136" y="59" text-anchor="middle" font-size="9">runs</text></g>
+
+        <rect x="185" y="30" width="95" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="232" y="52" text-anchor="middle" font-size="9.5" fill="#c4b5fd">🤖 AI app</text>
+        <text x="232" y="67" text-anchor="middle" font-size="7.5" fill="#c4b5fd">runs on each one</text>
+
+        <path class="flow-arrow" d="M280,55 H360" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#evArrow)"/>
+        <g class="arrow-pill"><rect x="290" y="46" width="46" height="18" rx="9"/><text x="313" y="59" text-anchor="middle" font-size="9">grades</text></g>
+
+        <rect x="360" y="30" width="95" height="50" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="407" y="52" text-anchor="middle" font-size="9.5" fill="#67e8f9">⚖️ Compare</text>
+        <text x="407" y="67" text-anchor="middle" font-size="7.5" fill="#67e8f9">actual vs. expected</text>
+
+        <path class="flow-arrow" d="M455,55 H535" stroke="#34d399" stroke-width="1.6" marker-end="url(#evArrow)"/>
+        <g class="arrow-pill"><rect x="465" y="46" width="58" height="18" rx="9"/><text x="494" y="59" text-anchor="middle" font-size="9">✨ yields</text></g>
+
+        <rect x="535" y="30" width="95" height="50" rx="10" fill="rgba(52,211,153,.14)" stroke="#34d399"/>
+        <text x="582" y="52" text-anchor="middle" font-size="9.5" fill="#6ee7b7">📊 Score</text>
+        <text x="582" y="67" text-anchor="middle" font-size="7.5" fill="#6ee7b7">e.g. 87% pass</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> a set of test cases with known-good
+      answers runs through the actual AI application, and each real output gets compared
+      against what was expected. The result is a score you can track over time — not a vibe, a
+      number that tells you whether a change made things better or worse.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">Evaluation = running test cases through the real system and scoring outputs against known-good answers.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>"It seems to work" isn't rigorous enough once real users depend on it. AI systems can
+      fail in subtle, inconsistent ways that a handful of manual checks won't catch, and a change
+      that helps one case can quietly break another.</p>
+      <p>Evaluation runs a set of test cases with known-good answers through the actual system,
+      compares real outputs against what was expected, and turns that into a repeatable score —
+      so "did this change help or hurt" has an actual, checkable answer.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>Grading isn't always an exact match. For open-ended output — a summary, an explanation —
+      exact text comparison is usually too strict, since there are many valid ways to phrase a
+      good answer. Grading open-ended output often needs a more flexible check: a rubric a human
+      applies, or another model judging the output against specific criteria.</p>
+      <p>Either way, the goal is the same: a repeatable score, not a one-off impression.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>Evaluation = test cases with known answers, run through the real system, scored against expectations.</li>
+        <li>It exists because "seems to work" doesn't catch subtle, inconsistent failures.</li>
+        <li>Open-ended output usually needs flexible grading (a rubric or a judge), not exact match.</li>
+        <li>A good score only covers what the test set actually tests — see Observability for the rest.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Evaluation runs a set of test cases with known-good answers through the real system and
+    scores the actual outputs against expectations, so you get a repeatable number instead of a
+    one-off impression. For open-ended output, grading usually needs a rubric or a judging model
+    rather than an exact text match."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>A good score only covers what your test set actually tests.</b> A narrow or stale set
+      of test cases can hide real failures on the inputs that actually show up in production. A
+      high evaluation score is evidence, not proof — it's part of why watching real, live
+      traffic (Observability, next) still matters.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🗺️ Planning</h5><p>Structuring how the system gets to an answer.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📊 Evaluation</h5><p>Measuring whether the answer it got to was actually right.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># Run the real system against known-good test cases, then grade it</span>
+test_cases = load_test_cases()   <span class="cmt"># inputs + expected answers</span>
+results    = [ai_app.run(c.input) <span class="kw">for</span> c <span class="kw">in</span> test_cases]
+
+score = grade(results, [c.expected <span class="kw">for</span> c <span class="kw">in</span> test_cases])  <span class="cmt"># e.g. 0.87</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — real evaluation pipelines track many scores over time, not just one run.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now know how to score the system overall. Next: seeing exactly what happened on one specific, real request.</span>
+      <a class="next-link" href="observability.html">Observability <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

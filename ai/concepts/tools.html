@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">Tools</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 17 · 🤖 Acting on goals</div>
+    <h1>Tools let "act" mean <span class="grad-text">doing something real</span>, not just generating text about it.</h1>
+    <p class="sub">The agent loop needs a real "act" step. Tools are the real functions — an
+    API, a calculator, a database query — that turn a decision into an actual action.</p>
+    <div class="interview-q">❓ "Does the model itself run the tool, or does something else?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 110" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="toArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="25" y="30" width="170" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="110" y="51" text-anchor="middle" font-size="10.5" fill="#c4b5fd">🧭 Agent decides:</text>
+        <text x="110" y="67" text-anchor="middle" font-size="9" fill="#c4b5fd">"I need today's weather"</text>
+
+        <path class="flow-arrow" d="M195,55 H305" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#toArrow)"/>
+        <g class="arrow-pill"><rect x="205" y="46" width="46" height="18" rx="9"/><text x="228" y="59" text-anchor="middle" font-size="9">calls</text></g>
+
+        <rect x="305" y="30" width="170" height="50" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="390" y="51" text-anchor="middle" font-size="10.5" fill="#67e8f9">🔧 Weather API</text>
+        <text x="390" y="67" text-anchor="middle" font-size="9" fill="#67e8f9">a real tool, real execution</text>
+
+        <path class="flow-arrow" d="M475,55 H575" stroke="#34d399" stroke-width="1.6" marker-end="url(#toArrow)"/>
+        <g class="arrow-pill"><rect x="483" y="46" width="60" height="18" rx="9"/><text x="513" y="59" text-anchor="middle" font-size="8.5">returns</text></g>
+
+        <rect x="575" y="30" width="55" height="50" rx="10" fill="rgba(52,211,153,.14)" stroke="#34d399"/>
+        <text x="602" y="55" text-anchor="middle" font-size="9" fill="#6ee7b7">📊</text>
+        <text x="602" y="68" text-anchor="middle" font-size="8" fill="#6ee7b7">72°F</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> the agent decides it needs something it
+      can't just generate — the actual current weather — so it calls a real tool instead of
+      guessing, and gets back a real, current result. That result is exactly what "observe" in
+      the agent loop is observing.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">Tools = real functions an agent can call, so "act" means doing something real, not generating text about it.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>An agent that can only produce text can't actually check today's weather, run a
+      calculation, search the web, or send an email — it can only generate plausible-sounding
+      text about doing those things, which isn't the same as doing them.</p>
+      <p>Tools give the agent real functions to call — a search API, a calculator, a database
+      query. That makes "act" in the agent loop mean actually doing something, and "observe"
+      mean seeing a real result, not an imagined one.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>The model itself never runs the tool. Its job is to decide <i>which</i> tool fits the
+      current step and <i>what arguments</i> to call it with — that decision comes out as
+      structured output, not free text. Separate code around the model — not the model — actually
+      executes the call (hits the API, runs the query) and hands the real result back into the
+      model's context for its next step.</p>
+      <p>That separation matters: the model can be wrong about which tool to use or what
+      arguments to pass, but it never directly touches the outside world itself.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>Tools = real functions (API calls, calculators, queries) an agent can invoke.</li>
+        <li>The model decides which tool and which arguments — it doesn't execute the tool itself.</li>
+        <li>Separate surrounding code actually runs the call and returns the real result.</li>
+        <li>Tools are what makes "observe" in the agent loop see something real, not imagined.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Tools are real functions an agent can call — a search API, a calculator, a database query.
+    The model decides which tool to use and what arguments to pass, as structured output; the
+    surrounding system actually executes the call and returns a real result, which becomes the
+    agent's next observation."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>The model doesn't run the tool — the system around it does.</b> Saying "the model
+      called the API" is shorthand; the more precise version is "the model decided to call the
+      API, and the surrounding code actually called it." That separation is exactly what keeps a
+      model's mistake from directly touching a real system unchecked.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔁 Agent</h5><p>The loop that decides <i>when</i> and <i>whether</i> to act.</p></div>
+    <div class="cp-vs">acts through</div>
+    <div class="cp-side"><h5>🔧 Tools</h5><p>The real functions available to actually carry out that action.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># The model decides; the surrounding code executes</span>
+tools = {<span class="str">"get_weather"</span>: get_weather_api, <span class="str">"search"</span>: web_search}
+
+decision = model.generate(prompt, available_tools=tools)  <span class="cmt"># model picks tool + args</span>
+<span class="kw">if</span> decision.tool_call:
+    result = tools[decision.tool_call.name](**decision.tool_call.args)  <span class="cmt"># system runs it</span>
+    <span class="cmt"># result feeds back in as the agent's next observation</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — real tool-calling APIs add schemas, validation, and error handling around this core idea.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now know how an agent acts. Next: how it remembers what happened across steps and sessions.</span>
+      <a class="next-link" href="memory.html">Memory <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

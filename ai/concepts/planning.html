@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">Planning</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 13 of 17 · 🤖 Acting on goals</div>
+    <h1>Planning breaks a goal into <span class="grad-text">ordered steps up front</span>, instead of improvising one at a time.</h1>
+    <p class="sub">The agent loop decides its very next step each time through. Planning is what
+    lays out the whole sequence of steps a complex goal actually needs, before running any of
+    them.</p>
+    <div class="interview-q">❓ "Isn't planning just the 'Plan' step of the agent loop? What's different?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 120" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <defs>
+          <marker id="plArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+            <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+          </marker>
+        </defs>
+        <rect x="5" y="40" width="150" height="50" rx="10" fill="#171c28" stroke="#232a3a"/>
+        <text x="80" y="61" text-anchor="middle" font-size="10.5" fill="#e7ebf3">🎯 Goal</text>
+        <text x="80" y="77" text-anchor="middle" font-size="8.5" fill="#93a0b8">"plan a 3-day trip"</text>
+
+        <path class="flow-arrow" d="M155,65 H245" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#plArrow)"/>
+        <g class="arrow-pill"><rect x="165" y="56" width="42" height="18" rx="9"/><text x="186" y="69" text-anchor="middle" font-size="9">plans</text></g>
+
+        <rect x="245" y="30" width="150" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="320" y="47" text-anchor="middle" font-size="10.5" fill="#c4b5fd">🧭 Ordered plan</text>
+        <text x="320" y="63" text-anchor="middle" font-size="8" fill="#c4b5fd">1. Book flights</text>
+        <text x="320" y="76" text-anchor="middle" font-size="8" fill="#c4b5fd">2. Book hotel</text>
+        <text x="320" y="89" text-anchor="middle" font-size="8" fill="#c4b5fd">3. Build itinerary</text>
+
+        <path class="flow-arrow" d="M395,65 H485" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#plArrow)"/>
+        <g class="arrow-pill"><rect x="403" y="56" width="62" height="18" rx="9"/><text x="434" y="69" text-anchor="middle" font-size="8.5">executes</text></g>
+
+        <rect x="485" y="40" width="150" height="50" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
+        <text x="560" y="61" text-anchor="middle" font-size="10.5" fill="#67e8f9">🔁 Agent loop</text>
+        <text x="560" y="77" text-anchor="middle" font-size="8.5" fill="#67e8f9">runs each step, in order</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> a complex goal gets broken into an ordered
+      list of sub-steps before any of them run, instead of the agent improvising only the very
+      next step at a time. Each step then runs through the normal agent loop — plan, act,
+      observe — but the overall order was decided up front.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">Planning = breaking a complex goal into an ordered sequence of sub-steps before executing any of them.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>A complex goal — like planning a multi-day trip — often can't be handled well by
+      deciding only the very next step at a time. Some steps depend on others happening first,
+      and a purely reactive, one-step-at-a-time approach can miss that structure entirely.</p>
+      <p>Planning breaks the goal into an ordered sequence of sub-steps up front, giving the
+      agent a coherent path to follow — even though each individual step still runs through the
+      normal plan-act-observe loop.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>Planning up front doesn't mean the plan is rigid. If an early step's real result changes
+      what's needed later — a flight turns out to be sold out — that observation can feed back
+      into revising the remaining plan, not just the next action. "Planned" means "has an
+      explicit ordered structure to start from," not "unchangeable."</p>
+      <p>For a simple, single-step goal, there's nothing to plan — planning earns its keep
+      specifically once a goal has multiple, order-dependent parts.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>Planning decomposes a complex goal into an ordered sequence of sub-steps, up front.</li>
+        <li>It exists because some steps depend on others happening first — reacting one step at a time can miss that.</li>
+        <li>A plan can still be revised mid-execution based on real results.</li>
+        <li>Simple, single-step goals don't need planning — it earns its keep on multi-part goals.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Planning breaks a complex goal into an ordered sequence of sub-steps before execution starts,
+    so steps that depend on each other happen in the right order. Each step still runs through
+    the normal act-and-observe loop, and the plan itself can be revised if a step's real result
+    changes what's needed later."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Planning and the agent loop's "Plan" step aren't quite the same thing.</b> The loop's
+      "Plan" decides the very next action, every iteration. Planning, in this broader sense, is
+      about laying out the whole ordered sequence for a complex goal up front. The loop's Plan
+      step can lean on that broader plan — they're related, not identical.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧭 "Plan" (loop step)</h5><p>Decides the next single action, every iteration.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🗺️ Planning (this concept)</h5><p>Decomposes the whole goal into ordered steps, up front.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># Decompose once, then run each step through the normal agent loop</span>
+steps = decompose(goal)  <span class="cmt"># e.g. ["book flights", "book hotel", "build itinerary"]</span>
+
+<span class="kw">for</span> step <span class="kw">in</span> steps:
+    result = agent_loop(step)   <span class="cmt"># each step still: plan, act, observe</span>
+    <span class="kw">if</span> result.changes_remaining_plan:
+        steps = replan(steps, result)  <span class="cmt"># adjust what's left, if needed</span></pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — real planning systems handle dependencies and replanning with more structure than this.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now have everything an agent needs. Next: wiring all of this into something a real user actually uses.</span>
+      <a class="next-link" href="ai-application.html">AI Application <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

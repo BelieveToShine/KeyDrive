@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production — AI — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../index.html">🤖 AI</a><span class="sep">›</span><span class="cur">Production</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 17 of 17 · 🚀 Shipping it</div>
+    <h1>Production is what a prototype still needs <span class="grad-text">before real users depend on it.</span></h1>
+    <p class="sub">You can see what the system does and score how well it does it. Production is
+    the last gap: guardrails, cost control, and scale — the difference between a demo and
+    something people can actually rely on.</p>
+    <div class="interview-q">❓ "What's missing between a working demo and a production AI system?"</div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label see">👁 See it first</div>
+    <figure class="diagram-card">
+      <svg viewBox="0 0 640 210" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+        <text x="320" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fbbf24">PROTOTYPE</text>
+        <rect x="25" y="40" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24"/>
+        <text x="90" y="61" text-anchor="middle" font-size="10.5" fill="#fcd34d">🧪 One user</text>
+        <text x="90" y="77" text-anchor="middle" font-size="9" fill="#fcd34d">works great in the demo</text>
+        <text x="192.5" y="70" text-anchor="middle" font-size="16" fill="#5b6577">+</text>
+        <rect x="255" y="40" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24"/>
+        <text x="320" y="61" text-anchor="middle" font-size="10.5" fill="#fcd34d">💸 No cost control</text>
+        <text x="320" y="77" text-anchor="middle" font-size="9" fill="#fcd34d">every request, full price</text>
+        <text x="422.5" y="70" text-anchor="middle" font-size="16" fill="#5b6577">+</text>
+        <rect x="485" y="40" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24"/>
+        <text x="550" y="61" text-anchor="middle" font-size="10.5" fill="#fcd34d">⚠️ No guardrails</text>
+        <text x="550" y="77" text-anchor="middle" font-size="8.5" fill="#fcd34d">nothing checks input/output</text>
+
+        <line x1="0" y1="115" x2="640" y2="115" stroke="#232a3a" stroke-dasharray="3 4"/>
+
+        <text x="320" y="135" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">PRODUCTION</text>
+        <rect x="25" y="150" width="130" height="50" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
+        <text x="90" y="171" text-anchor="middle" font-size="10.5" fill="#6ee7b7">👥 Many users</text>
+        <text x="90" y="187" text-anchor="middle" font-size="9" fill="#6ee7b7">real concurrent traffic</text>
+        <text x="192.5" y="180" text-anchor="middle" font-size="16" fill="#5b6577">+</text>
+        <rect x="255" y="150" width="130" height="50" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
+        <text x="320" y="171" text-anchor="middle" font-size="10.5" fill="#6ee7b7">💰 Cost monitored</text>
+        <text x="320" y="187" text-anchor="middle" font-size="9" fill="#6ee7b7">limits, caching, budgets</text>
+        <text x="422.5" y="180" text-anchor="middle" font-size="16" fill="#5b6577">+</text>
+        <rect x="485" y="150" width="130" height="50" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
+        <text x="550" y="171" text-anchor="middle" font-size="10.5" fill="#6ee7b7">🛡️ Guardrails</text>
+        <text x="550" y="187" text-anchor="middle" font-size="8.5" fill="#6ee7b7">checks + safe fallbacks</text>
+      </svg>
+      <figcaption><strong>What you're seeing:</strong> the same AI application, before and after
+      it's actually ready for real users. These three concerns sit side by side deliberately —
+      no arrows between them — because they're independent requirements that all have to hold at
+      once, not a sequence. A prototype usually assumes one user, unlimited cost, and no safety
+      checks; production means handling real concurrent traffic, watching and bounding cost, and
+      catching bad input or output before it causes real harm.</figcaption>
+    </figure>
+  </section>
+
+  <div class="one-sentence">🎯 <span class="grad-text">Production = the guardrails, cost control, and scale a working prototype still needs before real users depend on it.</span></div>
+
+  <section class="kd-section" id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>A working prototype proves the idea — but it usually assumes one user, unlimited cost,
+      and no safety checks, none of which hold once real users actually depend on it.</p>
+      <p>Production means adding guardrails (checks on input and output, safe fallbacks when
+      something goes wrong), cost control (limits, caching, budgets so usage doesn't scale cost
+      unpredictably), and the ability to handle many concurrent users reliably.</p>
+    </div>
+  </section>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p>None of these three concerns are unique to AI — every real product needs guardrails,
+      cost discipline, and scale. What's new is that AI systems add failure modes traditional
+      software doesn't have as sharply: less predictable output, variable cost per request, and
+      behavior that's harder to fully bound in advance. That's why these concerns often need to
+      be taken more seriously here, not because they're a different discipline.</p>
+      <p>This closes the loop all the way back to AI Application: the "real product" idea from
+      that page only holds up in practice once these three things are actually in place.</p>
+    </div>
+  </details>
+
+  <section class="kd-section" id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul>
+        <li>Production adds three independent requirements: guardrails, cost control, and scale.</li>
+        <li>It exists because a prototype's assumptions (one user, unlimited cost, no checks) don't hold with real users.</li>
+        <li>These aren't AI-specific concerns — but AI systems make some of the risks larger and less predictable.</li>
+        <li>Production readiness is standard engineering discipline, applied carefully to a less predictable system.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="kd-section">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Production readiness means guardrails that check input and output and fail safely, cost
+    controls like limits and caching so usage doesn't scale cost unpredictably, and the ability
+    to handle real concurrent traffic reliably. None of that is unique to AI — but AI systems
+    make unpredictable output and variable per-request cost bigger risks than in traditional
+    software."</div>
+  </section>
+
+  <section class="kd-section" id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Production readiness isn't a separate "AI skill."</b> It's the same engineering
+      discipline any real product needs — applied to a system whose behavior and cost per
+      request are less predictable than typical software. Treating it as some exotic new
+      practice, rather than standard rigor applied carefully, is the trap.</p>
+    </div>
+  </section>
+
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔍 Observability</h5><p>Helps you find a problem after (or while) it happens.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🛡️ Production readiness</h5><p>Guardrails, cost control, and scale that prevent or contain problems in the first place.</p></div>
+  </div>
+
+  <details class="zoom">
+    <summary><span class="chev">▾</span> 💻 Tiny illustrative example</summary>
+    <div class="zoom-inner">
+      <div class="code-block"><pre><span class="cmt"># Before real users depend on this, ask:</span>
+checklist = {
+    <span class="str">"guardrails"</span>: <span class="str">"does it check input/output, and fail safely?"</span>,
+    <span class="str">"cost"</span>:       <span class="str">"is usage bounded — limits, caching, budgets?"</span>,
+    <span class="str">"scale"</span>:      <span class="str">"does it hold up under many concurrent users?"</span>,
+}</pre></div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — a real production checklist is longer and more specific to the system.</p>
+    </div>
+  </details>
+
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>🎉 That's the full journey — from "what is AI" to a production-ready agent, 17 concepts, each one because the last hit a real limit.</span>
+      <a class="next-link" href="../index.html">Back to the AI hub <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap"><a href="../index.html">← Back to AI</a></div>
+</footer>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>
