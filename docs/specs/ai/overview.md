@@ -1,18 +1,25 @@
 # AI category — overview
 
-**Status: 2 / 17 concepts written.** What is AI? and Machine Learning are live; the rest are
-planned, in the fixed order recorded in `concept-taxonomy.md` and tracked in `roadmap.md`.
+**Status: 17 / 17 concepts written.** The full journey from "What is AI?" to "Production" is
+complete, in the fixed order recorded in `concept-taxonomy.md` and tracked in `roadmap.md`.
+Written to be verified in production by the user next — see "Current status" below.
 
 ## What's built
 
 - `ai/index.html` — the category hub: hero, a 4-card "choose your path" picker (only "Learn AI"
   is a real link — Interview/Build/Architect are locked visual previews), the full 17-node
-  journey-map diagram, and the full concept list with status badges.
-- `ai/concepts/what-is-ai.html`, `ai/concepts/machine-learning.html` — the first two concept
-  pages, following `../../rules/content-writing.md`'s template. Both were revised after a first
-  round of team feedback: their diagrams now lead the page (before the detailed prose
-  explanation) and use labeled arrows tied to concrete data (e.g. the ML page's diagram uses the
-  same house-price numbers as its code example), per `../../rules/diagram-style.md`.
+  journey-map diagram (every node now written and linked, every connector labeled with the
+  limit that made the next concept necessary, two grouping containers around the branch
+  clusters, and an on-canvas legend), and the full concept list with status badges.
+- `ai/concepts/*.html` — all 17 concept pages, following `../../rules/content-writing.md`'s
+  template: hero → "see it first" diagram (pill-shaped labeled arrows, semantic icons, looping
+  motion on process arrows) → why-box → a deeper `<details>` block (several with a second,
+  differently-angled diagram) → recall → say-this → trap → confuse-pair → code example →
+  next-box. Concepts 1–2 were revised twice after early team feedback (visual-first ordering,
+  diagram-accuracy and animation fixes, the production-diagram reference standard); concepts
+  3–17 were written directly to that same accumulated standard from `../../rules/diagram-style.md`,
+  `content-writing.md`, and `interaction-style.md`, reusing the same proven-safe box/pill
+  coordinate patterns rather than re-deriving layout from scratch each time.
 
 ## Why this journey isn't a flat list
 
@@ -21,7 +28,8 @@ flat list looked boring: Prompting/RAG/Fine-tuning (7–9) are three different a
 you steer a model's behavior" that all sit downstream of LLMs; Tools/Memory/Planning (11–13) are
 three different capabilities an Agent loop draws on. Both clusters rejoin the main spine
 afterward (Agents, then AI Application). See `concept-taxonomy.md` for the per-concept
-reasoning.
+reasoning. The journey map's two grouping containers render this structure directly on the
+diagram, not just in prose.
 
 ## Positioning, for now
 
@@ -44,6 +52,9 @@ this as an open question to raise with the user rather than a decision to make u
 
 ## Current status
 
-Waiting for team feedback before writing concept 3 (Deep Learning) onward. The visual-first
-diagram rules in `../../rules/diagram-style.md` are now the standard for any new page — apply
-them from the start rather than writing first and revising later.
+All 17 concepts are written and the hub page is fully wired (journey map, concept list, search
+index, roadmap all updated in this pass). The user is verifying this in production next and will
+give corrections — treat any resulting feedback the same way earlier rounds were handled: apply
+it, verify by rendering, and update the rules files if it reveals a new standing pattern rather
+than a one-off fix. Don't start a new category or build any of the explicitly deferred items
+above without being asked.

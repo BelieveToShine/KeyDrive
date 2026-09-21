@@ -7,12 +7,13 @@ file first in any new session; it routes to everything else rather than trying t
 
 ## Current state
 
-- **AI** category is live: hub page + 2 of 17 planned concept pages written (What is AI?,
-  Machine Learning). Concepts 3–17 are planned and ordered but not written.
+- **AI** category is complete: hub page + all 17 planned concept pages written, start to finish
+  (What is AI? through Production). Journey map, concept list, and search index are all fully
+  wired to match.
 - Three other categories (Cloud Systems, Data Systems, Web Platforms) exist only as "coming
   soon" placeholder tiles on the platform home — no hub page, no spec folder yet.
-- **Status: waiting for team feedback before writing AI concept 3 onward, or building any other
-  category.** Don't build past what's described here without being told to.
+- **Status: the user is verifying the AI category in production and will give corrections next.**
+  Don't start a new category or build any explicitly-deferred item without being asked.
 
 Full detail: `docs/keydrive-overview.md`.
 

@@ -50,5 +50,395 @@
     "anchor": "trap",
     "summary": "Why these three terms are nested, not interchangeable.",
     "keywords": "ai vs ml vs deep learning confusion pair nested"
+  },
+  {
+    "id": "deep-learning",
+    "title": "Deep Learning",
+    "category": "AI",
+    "page": "ai/concepts/deep-learning.html",
+    "summary": "Why one layer isn't enough for complex data, and how stacking many layers fixes that.",
+    "keywords": "deep learning layers stacked neural network edges shapes objects"
+  },
+  {
+    "id": "deep-learning-recall",
+    "title": "Deep Learning — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/deep-learning.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for the \"what is deep learning\" interview question.",
+    "keywords": "deep learning interview recall say this layers"
+  },
+  {
+    "id": "deep-learning-trap",
+    "title": "More layers isn't automatically better — common trap",
+    "category": "AI",
+    "page": "ai/concepts/deep-learning.html",
+    "anchor": "trap",
+    "summary": "Why depth only helps on genuinely complex problems with enough data.",
+    "keywords": "deep learning trap more layers overfitting simple problem"
+  },
+  {
+    "id": "neural-networks",
+    "title": "Neural Networks",
+    "category": "AI",
+    "page": "ai/concepts/neural-networks.html",
+    "summary": "What a layer actually computes — weights, a sum, a bias, and an activation function.",
+    "keywords": "neural network neuron weights bias activation layer"
+  },
+  {
+    "id": "neural-networks-recall",
+    "title": "Neural Networks — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/neural-networks.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how a neuron and a network compute.",
+    "keywords": "neural network interview recall say this neuron"
+  },
+  {
+    "id": "neural-networks-trap",
+    "title": "\"Neuron\" is a metaphor — common trap",
+    "category": "AI",
+    "page": "ai/concepts/neural-networks.html",
+    "anchor": "trap",
+    "summary": "Why a neural-network neuron isn't a biological neuron.",
+    "keywords": "neural network trap neuron metaphor biology"
+  },
+  {
+    "id": "transformers",
+    "title": "Transformers",
+    "category": "AI",
+    "page": "ai/concepts/transformers.html",
+    "summary": "Why attention beats step-by-step sequence processing for long-range relationships.",
+    "keywords": "transformer attention sequence rnn parallel long-range"
+  },
+  {
+    "id": "transformers-recall",
+    "title": "Transformers — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/transformers.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for what attention actually solves.",
+    "keywords": "transformer interview recall say this attention"
+  },
+  {
+    "id": "transformers-trap",
+    "title": "Attention doesn't mean equal weight — common trap",
+    "category": "AI",
+    "page": "ai/concepts/transformers.html",
+    "anchor": "trap",
+    "summary": "Why direct access isn't the same as paying attention to everything equally.",
+    "keywords": "transformer trap attention weights equal"
+  },
+  {
+    "id": "llms",
+    "title": "LLMs",
+    "category": "AI",
+    "page": "ai/concepts/llms.html",
+    "summary": "Why an LLM is a transformer at a much larger scale, not a different architecture.",
+    "keywords": "llm large language model scale transformer parameters"
+  },
+  {
+    "id": "llms-recall",
+    "title": "LLMs — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/llms.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for what makes something an LLM.",
+    "keywords": "llm interview recall say this scale"
+  },
+  {
+    "id": "llms-trap",
+    "title": "LLM names a scale, not a mechanism — common trap",
+    "category": "AI",
+    "page": "ai/concepts/llms.html",
+    "anchor": "trap",
+    "summary": "Why LLM and transformer aren't two different techniques.",
+    "keywords": "llm trap transformer scale mechanism"
+  },
+  {
+    "id": "prompting",
+    "title": "Prompting",
+    "category": "AI",
+    "page": "ai/concepts/prompting.html",
+    "summary": "Steering a frozen model's behavior through the input text, without retraining it.",
+    "keywords": "prompting prompt engineering instructions frozen model inference"
+  },
+  {
+    "id": "prompting-recall",
+    "title": "Prompting — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/prompting.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how prompting steers behavior.",
+    "keywords": "prompting interview recall say this"
+  },
+  {
+    "id": "prompting-trap",
+    "title": "Prompting changes behavior, not knowledge — common trap",
+    "category": "AI",
+    "page": "ai/concepts/prompting.html",
+    "anchor": "trap",
+    "summary": "Why a clever prompt can't teach the model new facts.",
+    "keywords": "prompting trap knowledge facts weights"
+  },
+  {
+    "id": "rag",
+    "title": "RAG",
+    "category": "AI",
+    "page": "ai/concepts/rag.html",
+    "summary": "Retrieval-Augmented Generation — giving a model facts it was never trained on.",
+    "keywords": "rag retrieval augmented generation knowledge base embeddings vector search"
+  },
+  {
+    "id": "rag-recall",
+    "title": "RAG — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/rag.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how RAG grounds answers in real documents.",
+    "keywords": "rag interview recall say this retrieval"
+  },
+  {
+    "id": "rag-trap",
+    "title": "RAG doesn't retrain the model — common trap",
+    "category": "AI",
+    "page": "ai/concepts/rag.html",
+    "anchor": "trap",
+    "summary": "Why RAG can't invent an answer the knowledge base doesn't have.",
+    "keywords": "rag trap retrain missing knowledge"
+  },
+  {
+    "id": "fine-tuning",
+    "title": "Fine-tuning",
+    "category": "AI",
+    "page": "ai/concepts/fine-tuning.html",
+    "summary": "Training a model further on examples of the exact behavior you want, permanently.",
+    "keywords": "fine-tuning fine tune weights training permanent behavior style"
+  },
+  {
+    "id": "fine-tuning-recall",
+    "title": "Fine-tuning — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/fine-tuning.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for when to fine-tune instead of prompt or retrieve.",
+    "keywords": "fine-tuning interview recall say this"
+  },
+  {
+    "id": "fine-tuning-trap",
+    "title": "Fine-tuning isn't the first thing to reach for — common trap",
+    "category": "AI",
+    "page": "ai/concepts/fine-tuning.html",
+    "anchor": "trap",
+    "summary": "Why fine-tuning is the wrong tool for adding facts or one-off steering.",
+    "keywords": "fine-tuning trap when to use rag prompting"
+  },
+  {
+    "id": "agents",
+    "title": "Agents",
+    "category": "AI",
+    "page": "ai/concepts/agents.html",
+    "summary": "Wrapping a model in a loop — plan, act, observe, repeat — until a goal is met.",
+    "keywords": "agent agentic loop plan act observe goal"
+  },
+  {
+    "id": "agents-recall",
+    "title": "Agents — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/agents.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for the agent loop.",
+    "keywords": "agent interview recall say this loop"
+  },
+  {
+    "id": "agents-trap",
+    "title": "An agent isn't just more steps — common trap",
+    "category": "AI",
+    "page": "ai/concepts/agents.html",
+    "anchor": "trap",
+    "summary": "Why the agent loop needs real observations, not imagined ones.",
+    "keywords": "agent trap observe real tools"
+  },
+  {
+    "id": "tools",
+    "title": "Tools",
+    "category": "AI",
+    "page": "ai/concepts/tools.html",
+    "summary": "Real functions an agent can call, so acting means doing something real.",
+    "keywords": "tools tool calling function calling api agent act"
+  },
+  {
+    "id": "tools-recall",
+    "title": "Tools — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/tools.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how tool calling works.",
+    "keywords": "tools interview recall say this function calling"
+  },
+  {
+    "id": "tools-trap",
+    "title": "The model doesn't run the tool — common trap",
+    "category": "AI",
+    "page": "ai/concepts/tools.html",
+    "anchor": "trap",
+    "summary": "Why the surrounding system executes the tool call, not the model itself.",
+    "keywords": "tools trap model executes system"
+  },
+  {
+    "id": "memory",
+    "title": "Memory",
+    "category": "AI",
+    "page": "ai/concepts/memory.html",
+    "summary": "Carrying what happened in earlier steps or sessions forward, instead of starting blank.",
+    "keywords": "memory agent short-term long-term context session"
+  },
+  {
+    "id": "memory-recall",
+    "title": "Memory — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/memory.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for short-term vs. long-term memory.",
+    "keywords": "memory interview recall say this"
+  },
+  {
+    "id": "memory-trap",
+    "title": "Memory isn't just a bigger context window — common trap",
+    "category": "AI",
+    "page": "ai/concepts/memory.html",
+    "anchor": "trap",
+    "summary": "Why memory means deliberate storage and retrieval, not keeping everything.",
+    "keywords": "memory trap context window storage retrieval"
+  },
+  {
+    "id": "planning",
+    "title": "Planning",
+    "category": "AI",
+    "page": "ai/concepts/planning.html",
+    "summary": "Breaking a complex goal into an ordered sequence of sub-steps before executing.",
+    "keywords": "planning agent decompose steps order goal"
+  },
+  {
+    "id": "planning-recall",
+    "title": "Planning — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/planning.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for why complex goals need planning.",
+    "keywords": "planning interview recall say this"
+  },
+  {
+    "id": "planning-trap",
+    "title": "Planning vs. the loop's \"Plan\" step — common trap",
+    "category": "AI",
+    "page": "ai/concepts/planning.html",
+    "anchor": "trap",
+    "summary": "Why planning the whole goal differs from deciding the next single action.",
+    "keywords": "planning trap plan step agent loop"
+  },
+  {
+    "id": "ai-application",
+    "title": "AI Application",
+    "category": "AI",
+    "page": "ai/concepts/ai-application.html",
+    "summary": "Wiring the model, agent, and tools into a real product surface a user actually uses.",
+    "keywords": "ai application product ui backend architecture"
+  },
+  {
+    "id": "ai-application-recall",
+    "title": "AI Application — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/ai-application.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for what an AI application actually includes.",
+    "keywords": "ai application interview recall say this"
+  },
+  {
+    "id": "ai-application-trap",
+    "title": "\"The AI\" usually isn't the whole product — common trap",
+    "category": "AI",
+    "page": "ai/concepts/ai-application.html",
+    "anchor": "trap",
+    "summary": "Why the model is one component inside a larger application.",
+    "keywords": "ai application trap model component product"
+  },
+  {
+    "id": "evaluation",
+    "title": "Evaluation",
+    "category": "AI",
+    "page": "ai/concepts/evaluation.html",
+    "summary": "Running test cases through the real system and scoring outputs against known-good answers.",
+    "keywords": "evaluation eval testing scoring grading test cases"
+  },
+  {
+    "id": "evaluation-recall",
+    "title": "Evaluation — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/evaluation.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how evaluation scores an AI system.",
+    "keywords": "evaluation interview recall say this"
+  },
+  {
+    "id": "evaluation-trap",
+    "title": "A good score only covers your test set — common trap",
+    "category": "AI",
+    "page": "ai/concepts/evaluation.html",
+    "anchor": "trap",
+    "summary": "Why a high evaluation score doesn't guarantee production behavior.",
+    "keywords": "evaluation trap test set coverage production"
+  },
+  {
+    "id": "observability",
+    "title": "Observability",
+    "category": "AI",
+    "page": "ai/concepts/observability.html",
+    "summary": "Seeing exactly what the system did on one specific real request, not just its score.",
+    "keywords": "observability tracing logging debugging agent steps"
+  },
+  {
+    "id": "observability-recall",
+    "title": "Observability — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/observability.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for observability vs. evaluation.",
+    "keywords": "observability interview recall say this"
+  },
+  {
+    "id": "observability-trap",
+    "title": "A great eval score doesn't replace observability — common trap",
+    "category": "AI",
+    "page": "ai/concepts/observability.html",
+    "anchor": "trap",
+    "summary": "Why aggregate scores and per-request traces answer different questions.",
+    "keywords": "observability trap evaluation aggregate specific"
+  },
+  {
+    "id": "production",
+    "title": "Production",
+    "category": "AI",
+    "page": "ai/concepts/production.html",
+    "summary": "The guardrails, cost control, and scale a working prototype still needs before real users depend on it.",
+    "keywords": "production guardrails cost scale reliability deployment"
+  },
+  {
+    "id": "production-recall",
+    "title": "Production — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/production.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for what production readiness actually requires.",
+    "keywords": "production interview recall say this"
+  },
+  {
+    "id": "production-trap",
+    "title": "Production readiness isn't a separate AI skill — common trap",
+    "category": "AI",
+    "page": "ai/concepts/production.html",
+    "anchor": "trap",
+    "summary": "Why guardrails, cost, and scale are standard engineering discipline, applied carefully.",
+    "keywords": "production trap engineering discipline ai skill"
   }
 ]
