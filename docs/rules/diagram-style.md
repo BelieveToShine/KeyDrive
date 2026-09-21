@@ -76,6 +76,33 @@ Classify the concept before drawing — don't force everything into the same thr
   result/output.
 - Every diagram gets a `<figcaption>` starting with **"What you're seeing:"** in full sentences
   — see `content-writing.md`.
+- **An arrow never terminates at bare, unstyled text.** If an arrow points at an outcome (a
+  failure, a result, a state), that outcome needs its own contained, styled shape — a small
+  bordered box/pill/callout matching the diagram's existing box language — not two lines of
+  plain `<text>` floating in space. Bare text at an arrowhead reads as unfinished, not
+  intentional, even when the words themselves are correct. This was a real defect on the
+  what-is-ai.html diagram (the "breaks on anything nobody predicted" outcome had no container)
+  and was called out directly in team feedback as looking unpolished.
+
+## Multiple diagrams per concept, at different angles
+
+One diagram often isn't enough depth for a concept that deserves it, and cramming a second idea
+into the primary diagram usually makes both weaker. Default structure going forward:
+
+- **One primary diagram** in "👁 See it first" — the fastest, most essential comparison or flow,
+  exactly as `content-writing.md` already specifies.
+- **One or more supplementary diagrams**, placed inside the page's `<details class="zoom">`
+  "go one level deeper" block(s), each covering a genuinely different angle on the same
+  concept — not a redundant restatement of the primary diagram in different colors. Angles worth
+  reaching for: a *temporal sequence* of one instance failing/succeeding over time (contrast with
+  a primary diagram that compares two systems side-by-side at a single instant), a *mechanism
+  zoom* into how one step of the primary diagram actually works internally, or a concrete worked
+  example (e.g. an actual scatter of data points and the line fit through them) backing up an
+  abstraction the primary diagram only gestures at.
+- Every supplementary diagram still follows every rule on this page — accuracy, labeled arrows,
+  a "What you're seeing" caption, and the verification requirement below. More diagrams is not
+  an excuse for looser ones.
+
 ## Verification is mandatory, not optional — two known failure modes already shipped
 
 Reading the SVG source and trusting the coordinate math is **not sufficient**. Both failure
@@ -108,13 +135,47 @@ re-reading the markup:
 4. Only report the work as done after step 1–3 actually happened in this session, not on the
    assumption that "the coordinates look right."
 
-## Diagram animation (not yet used on any page)
+## Diagram animation
 
 Only animate a diagram's own elements when motion represents time, sequence, data movement,
 state change, cause/effect, request/response, or a lifecycle/iteration/feedback step. Never
 animate just to make a page feel alive — if the motion isn't showing change, use a static
 visual. (This is distinct from UI hover/press micro-interactions on clickable elements — see
-`interaction-style.md` for those.)
+`interaction-style.md` for those.) Team feedback specifically asked for more of this — "how it
+trains and how it feeds" should be visibly moving, not just labeled — so treat continuous,
+looping motion as the default for any arrow that represents an ongoing process (training,
+inference, a request/response cycle), not an optional extra.
+
+Reuse this small vocabulary of CSS techniques (defined once in `assets/style.css`, applied via
+class on the relevant SVG element) rather than inventing a new animation approach per diagram:
+
+- **`.flow-arrow`** — animated dashes traveling along an arrow's path (`stroke-dasharray` +
+  `stroke-dashoffset` keyframe), for continuous data/process flow (e.g. the training and
+  inference arrows on the Machine Learning diagram).
+- **`.fail-box`** — a periodic border/glow pulse, for a box representing a failure or limit
+  being hit (e.g. the "breaks on anything nobody predicted" box on the What is AI diagram).
+- **`.seq-frame` (`.f1`/`.f2`/`.f3`...)** — a staggered border-highlight pulse (same keyframe,
+  increasing `animation-delay` per frame) that visibly travels frame-to-frame, for a temporal
+  sequence diagram (a system's state at three different points in time).
+- **`.fit-line`** — a "draw-in" line (`stroke-dasharray` sized to the path's length, animated
+  `stroke-dashoffset` from full to zero and back), for a line/relationship being "found" or
+  constructed rather than simply present.
+- **`.predict-point`** — a fade/scale-in pulse (needs `transform-box:fill-box` so it scales
+  around its own center, not the SVG origin), for a single result appearing as the direct
+  consequence of the motion above it finishing.
+
+All of the above loop continuously (`infinite`) rather than triggering on scroll/hover, since a
+`<details>`-collapsed diagram has no reliable "become visible" event to hook without JS — a
+looping animation is guaranteed to be mid-demonstration whenever the reader actually opens the
+section. Keep loop periods in the 1–3s range: fast enough to read as motion within a glance, slow
+enough not to be distracting while reading the surrounding text.
+
+**Verifying animation is harder than verifying a static diagram — a single screenshot only shows
+one instant.** Take two screenshots of the same animated element roughly half a loop-period
+apart and confirm they actually differ (the dash offset moved, the highlighted frame changed,
+the line's drawn length changed). A screenshot that looks identical both times means the
+animation isn't firing — CSS typo, wrong selector, missing `transform-box` — not that it's just
+"a subtle effect."
 
 ## Deferred, not in scope yet
 

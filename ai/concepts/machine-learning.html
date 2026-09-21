@@ -64,14 +64,14 @@
         <rect x="20" y="102" width="140" height="20" rx="6" fill="#171c28" stroke="#232a3a"/>
         <text x="90" y="116" text-anchor="middle" font-size="10" fill="#e7ebf3">2000 sqft → $320K</text>
 
-        <path d="M160,80 H205" stroke="#5b6577" stroke-width="1.6" marker-end="url(#mlArrow)"/>
+        <path class="flow-arrow" d="M160,80 H205" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mlArrow)"/>
         <text x="182" y="72" text-anchor="middle" font-size="9" fill="#5b6577">trains</text>
 
         <rect x="205" y="50" width="150" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
         <text x="280" y="76" text-anchor="middle" font-size="11" fill="#c4b5fd">Learning algorithm</text>
         <text x="280" y="92" text-anchor="middle" font-size="11" fill="#c4b5fd">adjusts itself</text>
 
-        <path d="M355,80 H400" stroke="#5b6577" stroke-width="1.6" marker-end="url(#mlArrow)"/>
+        <path class="flow-arrow" d="M355,80 H400" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mlArrow)"/>
         <text x="378" y="72" text-anchor="middle" font-size="9" fill="#5b6577">yields</text>
 
         <rect x="400" y="50" width="160" height="60" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
@@ -87,13 +87,13 @@
         <text x="135" y="196" text-anchor="middle" font-size="11" fill="#e7ebf3">New input</text>
         <text x="135" y="210" text-anchor="middle" font-size="10" fill="#e7ebf3">1750 sqft (never seen)</text>
 
-        <path d="M210,199 H255" stroke="#5b6577" stroke-width="1.6" marker-end="url(#mlArrow)"/>
+        <path class="flow-arrow" d="M210,199 H255" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mlArrow)"/>
         <text x="232" y="191" text-anchor="middle" font-size="9" fill="#5b6577">reused</text>
 
         <rect x="255" y="178" width="150" height="42" rx="10" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/>
         <text x="330" y="203" text-anchor="middle" font-size="11" fill="#67e8f9">Trained model</text>
 
-        <path d="M405,199 H450" stroke="#5b6577" stroke-width="1.6" marker-end="url(#mlArrow)"/>
+        <path class="flow-arrow" d="M405,199 H450" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mlArrow)"/>
         <text x="428" y="191" text-anchor="middle" font-size="9" fill="#5b6577">yields</text>
 
         <rect x="450" y="178" width="150" height="42" rx="10" fill="rgba(52,211,153,.14)" stroke="#34d399"/>
@@ -136,6 +136,36 @@
       relationship on inputs you haven't seen.</b> "Deep Learning" — later in this journey — is
       what happens when that relationship gets stacked into many layers instead of one line, so
       it can capture patterns a single line never could.</p>
+
+      <figure class="diagram-card" style="margin-top:18px;">
+        <svg viewBox="0 0 500 210" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+          <line x1="70" y1="20" x2="70" y2="180" stroke="#232a3a" stroke-width="1.3"/>
+          <line x1="70" y1="180" x2="470" y2="180" stroke="#232a3a" stroke-width="1.3"/>
+          <text x="45" y="26" text-anchor="middle" font-size="10" fill="#5b6577">↑ price</text>
+          <text x="450" y="197" text-anchor="middle" font-size="10" fill="#5b6577">size →</text>
+
+          <path class="fit-line" d="M90,170 L430,92" stroke="#22d3ee" stroke-width="2" fill="none"
+                stroke-dasharray="350"/>
+
+          <circle cx="90" cy="170" r="4" fill="#a78bfa"/>
+          <circle cx="203" cy="124" r="4" fill="#a78bfa"/>
+          <circle cx="288" cy="90" r="4" fill="#a78bfa"/>
+          <circle cx="430" cy="40" r="4" fill="#a78bfa"/>
+          <text x="90" y="184" text-anchor="middle" font-size="8.5" fill="#93a0b8">800</text>
+          <text x="203" y="184" text-anchor="middle" font-size="8.5" fill="#93a0b8">1200</text>
+          <text x="288" y="184" text-anchor="middle" font-size="8.5" fill="#93a0b8">1500</text>
+          <text x="430" y="184" text-anchor="middle" font-size="8.5" fill="#93a0b8">2000</text>
+
+          <circle class="predict-point" cx="359" cy="108" r="5.5" fill="#34d399"/>
+          <text class="predict-point" x="359" y="128" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1750 → ≈$231K</text>
+        </svg>
+        <figcaption><strong>What you're seeing:</strong> the four training points don't sit exactly
+        on one line — the fitted line (drawing itself, on a loop) is the one that gets closest to
+        all four at once, not one that hits every point exactly. That gap between the line and
+        the $320K point is the model's error — real, expected, and what "best fit" actually
+        means. The new input (1750 sqft) lands wherever the line says, even though the model
+        never saw that exact size during training.</figcaption>
+      </figure>
     </div>
   </details>
 

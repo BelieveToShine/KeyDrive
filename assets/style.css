@@ -262,6 +262,40 @@ details.zoom .zoom-inner{ padding:18px 2px 4px; }
 .diagram-card figcaption{ margin-top:14px; font-size:13px; color:var(--ink-faint); text-align:center; }
 svg.concept-diagram text{ font-family:'Inter'; }
 
+/* ---------- diagram motion — represents real flow/sequence/state, per docs/rules/diagram-style.md.
+   small reusable vocabulary; reuse these classes rather than inventing a new animation per diagram. ---------- */
+.flow-arrow{ stroke-dasharray:4 4; animation:kd-diagram-flow 1s linear infinite; }
+@keyframes kd-diagram-flow{ to{ stroke-dashoffset:-16; } }
+
+.fail-box{ animation:kd-fail-pulse 1.8s ease-in-out infinite; }
+@keyframes kd-fail-pulse{
+  0%, 55%{ stroke-width:1.5; filter:none; }
+  70%{ stroke-width:2.6; filter:drop-shadow(0 0 5px rgba(251,113,133,.6)); }
+  100%{ stroke-width:1.5; filter:none; }
+}
+
+.seq-frame rect{ animation:kd-seq-highlight 4.8s ease-in-out infinite; }
+.seq-frame.f2 rect{ animation-delay:1.6s; }
+.seq-frame.f3 rect{ animation-delay:3.2s; }
+@keyframes kd-seq-highlight{
+  0%, 100%{ stroke:#232a3a; filter:none; }
+  50%{ stroke:#fb7185; filter:drop-shadow(0 0 6px rgba(251,113,133,.5)); }
+}
+
+.fit-line{ animation:kd-draw-line 3s ease-in-out infinite; }
+@keyframes kd-draw-line{
+  0%, 10%{ stroke-dashoffset:320; }
+  45%, 85%{ stroke-dashoffset:0; }
+  100%{ stroke-dashoffset:320; }
+}
+
+.predict-point{ transform-box:fill-box; transform-origin:center; animation:kd-predict-pop 3s ease-in-out infinite; }
+@keyframes kd-predict-pop{
+  0%, 40%{ opacity:0; transform:scale(.4); }
+  55%, 80%{ opacity:1; transform:scale(1); }
+  95%, 100%{ opacity:0; transform:scale(.4); }
+}
+
 /* tiny code example */
 .code-block{ background:#0d1420; border:1px solid var(--border); border-radius:14px; padding:18px 20px; overflow-x:auto; }
 .code-block pre{ margin:0; font-family:'JetBrains Mono'; font-size:13px; color:#d1d9e6; line-height:1.7; }
