@@ -76,20 +76,45 @@ Classify the concept before drawing — don't force everything into the same thr
   result/output.
 - Every diagram gets a `<figcaption>` starting with **"What you're seeing:"** in full sentences
   — see `content-writing.md`.
-- **Known failure mode, check for it every time:** an arrow label rendered with `text-anchor:
-  middle` at the midpoint of a short gap will visually overlap the neighboring box's fill if the
-  label is too long for the gap (a 45–50px gap at font-size 9–9.5 fits roughly 6–7 characters
-  including padding). This actually happened on the first two AI pages (`"checked against"`,
-  `"labeled examples"`, `"learns pattern"`, `"same model"` all overlapped their neighboring
-  boxes) and was caught only by rendering the page, not by reading the SVG source. **Render every
-  new or edited diagram in a browser (or headless screenshot) before calling it done** — reading
-  the coordinates is not sufficient to catch this.
+## Verification is mandatory, not optional — two known failure modes already shipped
 
-## Animation (not yet used on any page)
+Reading the SVG source and trusting the coordinate math is **not sufficient**. Both failure
+modes below actually shipped to the AI hub and its first two concept pages, in two separate
+rounds, and both were only caught by rendering and visually inspecting the result — never by
+re-reading the markup:
 
-Only animate when motion represents time, sequence, data movement, state change, cause/effect,
-request/response, or a lifecycle/iteration/feedback step. Never animate just to make a page feel
-alive — if the motion isn't showing change, use a static visual.
+1. **Arrow-label overlap.** A label rendered with `text-anchor: middle` at the midpoint of a
+   short gap visually overlaps the neighboring box's fill if it's too long for the gap (a
+   45–50px gap at font-size 9–9.5 fits roughly 6–7 characters including padding). Hit
+   `"checked against"`, `"labeled examples"`, `"learns pattern"`, `"same model"` — all overlapped
+   their neighboring box.
+2. **Arrows that don't actually touch the box they point at.** The AI hub's journey map shipped
+   with roughly half its connectors stopping 10–116 SVG units short of the box they were meant to
+   reach — including one segment (Agents → the Tools/Memory/Planning branch) that was fully
+   disconnected, a gap in the middle of the line with nothing drawn. This is exactly the kind of
+   "arrows not touched and completed properly" defect a learner notices immediately and a design
+   review must not miss — it directly contradicts this file's own accuracy checklist (item 4:
+   "does every arrow have a specific, labeled meaning" presupposes the arrow actually reaches
+   what it's labeling).
+
+**The rule this establishes:** before calling any diagram (new or edited) done —
+1. Render it in a browser (a headless screenshot is fine) at real size, not just skim the markup.
+2. For a multi-node diagram like a journey map, **screenshot every junction individually,
+   zoomed in enough to see whether the arrowhead actually meets the box edge** — a full-page
+   screenshot at normal zoom can hide a several-pixel gap. Compute or re-derive each connector's
+   exact start/end coordinate against the boxes it connects; don't eyeball it.
+3. For any new interactive state (hover, active/press, a deep link landing), screenshot that
+   state specifically — the default screenshot only shows the resting state.
+4. Only report the work as done after step 1–3 actually happened in this session, not on the
+   assumption that "the coordinates look right."
+
+## Diagram animation (not yet used on any page)
+
+Only animate a diagram's own elements when motion represents time, sequence, data movement,
+state change, cause/effect, request/response, or a lifecycle/iteration/feedback step. Never
+animate just to make a page feel alive — if the motion isn't showing change, use a static
+visual. (This is distinct from UI hover/press micro-interactions on clickable elements — see
+`interaction-style.md` for those.)
 
 ## Deferred, not in scope yet
 

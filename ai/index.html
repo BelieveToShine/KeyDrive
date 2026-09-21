@@ -75,29 +75,30 @@
           </marker>
         </defs>
 
-        <!-- spine connectors -->
-        <path class="jm-link done" d="M320,64 V90" marker-end="url(#jmArrow)"/>
-        <text x="345" y="80" font-size="9.5" fill="#5b6577" font-style="italic">rules don't scale</text>
-        <path class="jm-link" d="M320,144 V170" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,224 V250" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,304 V330" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,384 V410" marker-end="url(#jmArrow)"/>
+        <!-- spine connectors — every endpoint matches its box's exact edge coordinate
+             (see docs/rules/diagram-style.md's verification note: several of these
+             previously stopped 10-116 units short of the box they pointed at) -->
+        <path class="jm-link done" d="M320,64 V100" marker-end="url(#jmArrow)"/>
+        <text x="345" y="86" font-size="9.5" fill="#5b6577" font-style="italic">rules don't scale</text>
+        <path class="jm-link" d="M320,144 V180" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,224 V260" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,304 V340" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,384 V420" marker-end="url(#jmArrow)"/>
         <path class="jm-link" d="M320,464 V486 H140 V500" marker-end="url(#jmArrow)"/>
         <path class="jm-link" d="M320,464 V500" marker-end="url(#jmArrow)"/>
         <path class="jm-link" d="M320,464 V486 H500 V500" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M140,556 V580 H320 V596" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,556 V596" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M500,556 V580 H320 V596" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,650 V672" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,726 V748 H140 V762" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,726 V762" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,726 V748 H500 V762" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M140,818 V842 H320 V858" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,818 V858" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M500,818 V842 H320 V858" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,912 V938" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,992 V1018" marker-end="url(#jmArrow)"/>
-        <path class="jm-link" d="M320,1072 V1098" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M140,544 V580 H320 V596" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,544 V596" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M500,544 V580 H320 V596" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,640 V748 H140 V762" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,640 V762" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,640 V748 H500 V762" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M140,806 V842 H320 V858" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,806 V858" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M500,806 V842 H320 V858" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,902 V938" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,982 V1018" marker-end="url(#jmArrow)"/>
+        <path class="jm-link" d="M320,1062 V1098" marker-end="url(#jmArrow)"/>
 
         <!-- main spine nodes -->
         <a class="jm-hit" xlink:href="concepts/what-is-ai.html">

@@ -112,9 +112,18 @@ main{ padding:20px 0 100px; }
 /* ---------- cards / tiles ---------- */
 .kd-card{
   background:var(--surface); border:1px solid var(--border-soft); border-radius:18px; padding:22px;
-  transition:border-color .15s ease, transform .15s ease;
+  transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
 }
 .kd-card:hover{ border-color:rgba(255,255,255,.16); }
+/* a .kd-card that is itself a link (cat-tile, the real path-card) must feel like a button, not
+   a text link — kill the browser's default underline-on-hover and add a lift + glow + press
+   state instead. Plain .kd-card divs (locked previews, boxes) are untouched by this block. */
+a.kd-card:hover{
+  text-decoration:none; border-color:rgba(34,211,238,.4);
+  transform:translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 0 1px rgba(34,211,238,.12);
+}
+a.kd-card:hover *{ text-decoration:none; }
+a.kd-card:active{ transform:translateY(-1px) scale(.98); box-shadow:0 6px 16px rgba(0,0,0,.35); }
 .tile-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:8px; }
 .cat-tile{ position:relative; display:block; overflow:hidden; }
 .cat-tile .ct-icon{ font-size:30px; display:block; margin-bottom:14px; }
@@ -150,7 +159,15 @@ main{ padding:20px 0 100px; }
 .jm-link{ stroke:var(--border); stroke-width:1.6; fill:none; }
 .jm-link.done{ stroke:var(--cyan); }
 .jm-lock{ font-size:11px; }
-a.jm-hit{ cursor:pointer; }
+/* a written journey-map node is a real link — give it the same button-press feel as a card,
+   not the browser's default. transform-box:fill-box makes the lift/scale pivot around the
+   node itself instead of the whole SVG's origin. */
+a.jm-hit{ cursor:pointer; text-decoration:none; }
+a.jm-hit .jm-node{ transition:transform .15s ease; transform-box:fill-box; transform-origin:center; }
+a.jm-hit .jm-node rect{ transition:stroke-width .15s ease, filter .15s ease; }
+a.jm-hit:hover .jm-node{ transform:translateY(-3px); }
+a.jm-hit:hover .jm-node rect{ stroke-width:2.6; filter:drop-shadow(0 0 8px rgba(34,211,238,.5)); }
+a.jm-hit:active .jm-node{ transform:translateY(-1px) scale(.97); }
 
 /* ---------- concept-list rows ---------- */
 .concept-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
@@ -202,8 +219,10 @@ a.jm-hit{ cursor:pointer; }
   background:var(--emerald-bg); border:1px solid rgba(52,211,153,.24); border-radius:16px; padding:20px 22px;
   display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
 }
-.next-box a.next-link{ color:var(--emerald-ink); font-weight:700; font-family:'Sora'; font-size:16px; }
-.next-box a.next-link .arrow{ margin-left:6px; }
+.next-box a.next-link{ color:var(--emerald-ink); font-weight:700; font-family:'Sora'; font-size:16px; text-decoration:none; }
+.next-box a.next-link:hover{ text-decoration:none; }
+.next-box a.next-link .arrow{ margin-left:6px; display:inline-block; transition:transform .15s ease; }
+.next-box a.next-link:hover .arrow{ transform:translateX(4px); }
 .next-box.locked{ background:var(--surface); border-color:var(--border-soft); }
 .next-box.locked span{ color:var(--ink-faint); font-family:'JetBrains Mono'; font-size:13px; }
 

@@ -23,6 +23,14 @@ three different capabilities an Agent loop draws on. Both clusters rejoin the ma
 afterward (Agents, then AI Application). See `concept-taxonomy.md` for the per-concept
 reasoning.
 
+## Positioning, for now
+
+KeyDrive is a tutorial site — the "Learn AI" path is the only real content and the only one that
+should read as ready. Per team feedback: Interview-question content is planned for later (the
+"Interview" path tile stays locked until then); what specifically goes into "Build AI" and
+"Architect AI" hasn't been scoped yet — don't invent content for either until asked, and treat
+this as an open question to raise with the user rather than a decision to make unilaterally.
+
 ## Explicitly deferred for this category — do not build until asked
 
 - A persistent fictional-company narrative that evolves chapter by chapter.

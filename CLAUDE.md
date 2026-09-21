@@ -21,8 +21,9 @@ Full detail: `docs/keydrive-overview.md`.
 | Task | Read first |
 |---|---|
 | Writing or editing a concept page's content/structure | `docs/rules/content-writing.md` |
-| Drawing or editing any SVG diagram | `docs/rules/diagram-style.md` — **highest-priority rule on this project**: the diagram is the primary explanation, not decoration; every arrow needs a labeled real relationship; verify by rendering, not just reading coordinates |
+| Drawing or editing any SVG diagram | `docs/rules/diagram-style.md` — **highest-priority rule on this project**: the diagram is the primary explanation, not decoration; every arrow needs a labeled real relationship; verify by rendering and zooming into every junction — reading coordinates is not enough, this has already shipped broken twice |
 | Adding/reusing a CSS class or color | `docs/rules/visual-style.md` |
+| Any clickable card/tile/node, or adding animation anywhere | `docs/rules/interaction-style.md` — hover/press must feel like a button, never underlined text; animate wherever it's meaningful, not just inside diagrams |
 | Adding a page, category, or changing folder/URL layout | `docs/rules/content-structure.md` |
 | Adding or editing any page (search-index sync) | `docs/rules/search-index.md` |
 | Stating any technical or historical fact | `docs/rules/accuracy.md` — non-negotiable |
