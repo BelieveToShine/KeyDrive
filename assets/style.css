@@ -262,6 +262,17 @@ details.zoom .zoom-inner{ padding:18px 2px 4px; }
 .diagram-card figcaption{ margin-top:14px; font-size:13px; color:var(--ink-faint); text-align:center; }
 svg.concept-diagram text{ font-family:'Inter'; }
 
+/* arrow label rendered as a pill sitting directly on the line (covers the stroke beneath it),
+   per docs/rules/diagram-style.md's reference-standard rule 2 — reuse for every labeled arrow. */
+.arrow-pill rect{ fill:var(--surface-2); stroke:var(--border); stroke-width:1; }
+.arrow-pill text{ font-family:'JetBrains Mono'; fill:var(--ink-soft); }
+
+/* legend rendered directly on a diagram's own canvas (not just described in the caption),
+   per docs/rules/diagram-style.md's reference-standard rule 1. */
+.jm-legend{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:16px; font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-soft); }
+.jm-legend-item{ display:inline-flex; align-items:center; gap:6px; }
+.jm-legend-swatch{ width:14px; height:14px; border-radius:4px; display:inline-block; flex:0 0 auto; }
+
 /* ---------- diagram motion — represents real flow/sequence/state, per docs/rules/diagram-style.md.
    small reusable vocabulary; reuse these classes rather than inventing a new animation per diagram. ---------- */
 .flow-arrow{ stroke-dasharray:4 4; animation:kd-diagram-flow 1s linear infinite; }

@@ -75,11 +75,18 @@
           </marker>
         </defs>
 
+        <!-- grouping containers for the two branch clusters — drawn first so arrows/nodes
+             render on top of them, per docs/rules/diagram-style.md's reference-standard rule 4 -->
+        <rect x="40" y="478" width="560" height="88" rx="16" fill="rgba(167,139,250,.05)" stroke="rgba(167,139,250,.3)" stroke-dasharray="4 3"/>
+        <text x="56" y="472" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🎯 THREE WAYS TO STEER THE MODEL</text>
+        <rect x="40" y="740" width="560" height="88" rx="16" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.3)" stroke-dasharray="4 3"/>
+        <text x="56" y="734" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧩 CAPABILITIES AN AGENT DRAWS ON</text>
+
         <!-- spine connectors — every endpoint matches its box's exact edge coordinate
              (see docs/rules/diagram-style.md's verification note: several of these
              previously stopped 10-116 units short of the box they pointed at) -->
         <path class="jm-link done" d="M320,64 V100" marker-end="url(#jmArrow)"/>
-        <text x="345" y="86" font-size="9.5" fill="#5b6577" font-style="italic">rules don't scale</text>
+        <g class="arrow-pill"><rect x="330" y="73" width="112" height="18" rx="9"/><text x="386" y="86" text-anchor="middle" font-size="9" font-style="italic">rules don't scale</text></g>
         <path class="jm-link" d="M320,144 V180" marker-end="url(#jmArrow)"/>
         <path class="jm-link" d="M320,224 V260" marker-end="url(#jmArrow)"/>
         <path class="jm-link" d="M320,304 V340" marker-end="url(#jmArrow)"/>
@@ -166,9 +173,14 @@
           <text x="304" y="1125" text-anchor="middle" font-size="13.5">Production</text>
           <text x="392" y="1125" class="jm-lock">🔒</text></g>
       </svg>
-      <figcaption>🟢 solid border = written · dashed + 🔒 = coming soon, in this exact order. Each
-      connector is labeled with the limit that made the next concept necessary — click a solid
-      node to jump straight in.</figcaption>
+      <div class="jm-legend">
+        <span class="jm-legend-item"><span class="jm-legend-swatch" style="border:2px solid var(--cyan);background:transparent;"></span>Written</span>
+        <span class="jm-legend-item"><span class="jm-legend-swatch" style="border:2px dashed var(--border);background:transparent;"></span>Planned</span>
+        <span class="jm-legend-item"><span class="jm-legend-swatch" style="background:rgba(167,139,250,.35);"></span>Steering-technique group</span>
+        <span class="jm-legend-item"><span class="jm-legend-swatch" style="background:rgba(34,211,238,.35);"></span>Agent-capability group</span>
+      </div>
+      <figcaption>In this exact order — each connector is labeled with the limit that made the
+      next concept necessary. Click a written node to jump straight in.</figcaption>
     </figure>
   </section>
 

@@ -177,6 +177,52 @@ the line's drawn length changed). A screenshot that looks identical both times m
 animation isn't firing — CSS typo, wrong selector, missing `transform-box` — not that it's just
 "a subtle effect."
 
+## Reference standard — the bar to cross-check against every time
+
+Team feedback pointed at a real production architecture diagram (an internal "Lead Hunter —
+Functional Flow" system diagram) as the quality bar KeyDrive's diagrams should be measured
+against, with the explicit instruction to check every future diagram against it, not just read
+this once. What that reference does that KeyDrive's diagrams mostly don't yet:
+
+1. **A legend rendered directly on the diagram canvas**, not just described in a caption — small
+   colored swatches next to short labels, sitting in the diagram itself, so the color-coding is
+   self-explanatory without reading surrounding prose.
+2. **Pill-shaped labels sitting directly on top of the arrow line** — a small rounded badge
+   (background + border, matching the diagram's palette) centered on the line, with the line
+   visually breaking around it — not text floating near the arrow. This is a step up from this
+   file's existing "every arrow gets a label" rule: the label needs its own contained shape, the
+   same way `.fail-box` gave a contained shape to an arrow's *endpoint*.
+3. **An icon on every major box**, consistently, for at-a-glance scanning — not decorative, a
+   real aid to distinguishing box types quickly in a diagram with more than 3-4 boxes.
+4. **Containment/grouping** — when several small items share a role (the reference groups eight
+   scheduled jobs inside one labeled "Scheduled Jobs" container), draw one bordered container
+   around them with its own label, rather than leaving them as loose siblings at the same visual
+   level as everything else. KeyDrive's own journey map has exactly this shape already
+   (Prompting/RAG/Fine-tuning share a role as "ways to steer a model"; Tools/Memory/Planning
+   share a role as "capabilities an agent draws on") and should use a grouping container for
+   each, not just proximity and a shared row.
+5. **Zone-based spatial layout** for anything architecture-shaped — group by role/domain
+   (configuration, core system, data, outside world) as distinct visual zones, rather than one
+   long chain, once a diagram has enough independent parts that a single chain stops being the
+   clearest shape.
+6. **A title + one-line subtitle directly on/above the diagram** stating what it shows and at
+   what level of detail (the reference's "How it's switched on, where a dealer uses it, and how
+   it all connects · high level") — useful on a diagram complex enough that the `figcaption`
+   alone doesn't orient the reader fast enough.
+
+**Where this applies on KeyDrive:** items 1, 2, and 3 apply broadly — adopt them whenever a
+diagram uses color-coded categories, arrow labels, or more than a couple of box types, including
+the single-concept "See it first" diagrams. Items 4, 5, and 6 are specifically about
+architecture/system-topology diagrams (see the concept-type table above) — KeyDrive's journey
+maps are the closest match today; a single-concept comparison diagram usually doesn't have
+enough independent parts to need zones or containment, and forcing them in would fight the
+5–10-second-read rule at the top of this file. Judge which items apply by the concept-type
+classification, not by applying all six unconditionally.
+
+**Before calling any diagram done, cross-check it against this list explicitly, item by item**,
+the same way the accuracy checklist above is run item by item — don't eyeball it and assume it's
+covered.
+
 ## Deferred, not in scope yet
 
 Interactive click-to-explore diagrams (click a box/token to reveal internals, progressive
