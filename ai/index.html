@@ -68,7 +68,7 @@
   <section class="kd-section">
     <div class="sec-label" style="color:var(--ink-soft)">📍 You are here</div>
     <figure class="kd-card journey-wrap">
-      <svg viewBox="0 0 640 1250" xmlns="http://www.w3.org/2000/svg" aria-label="The AI concept journey">
+      <svg viewBox="0 0 640 1322" xmlns="http://www.w3.org/2000/svg" aria-label="The AI concept journey">
         <defs>
           <marker id="jmArrow" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
             <path d="M0,0 L4.5,2 L0,4 Z" fill="#4a5468"/>
@@ -77,14 +77,19 @@
 
         <!-- grouping containers for the two branch clusters — drawn first so arrows/nodes
              render on top of them, per docs/rules/diagram-style.md's reference-standard rule 4 -->
-        <rect x="40" y="558" width="560" height="88" rx="16" fill="rgba(167,139,250,.05)" stroke="rgba(167,139,250,.3)" stroke-dasharray="4 3"/>
-        <text x="56" y="552" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🎯 THREE WAYS TO STEER THE MODEL</text>
-        <rect x="40" y="734" width="560" height="88" rx="16" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.3)" stroke-dasharray="4 3"/>
-        <text x="56" y="728" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧩 CAPABILITIES AN AGENT DRAWS ON</text>
+        <rect x="40" y="558" width="560" height="116" rx="16" fill="rgba(167,139,250,.05)" stroke="rgba(167,139,250,.3)" stroke-dasharray="4 3"/>
+        <text x="56" y="580" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🎯 THREE WAYS TO STEER THE MODEL</text>
+        <rect x="40" y="778" width="560" height="116" rx="16" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.3)" stroke-dasharray="4 3"/>
+        <text x="56" y="800" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧩 CAPABILITIES AN AGENT DRAWS ON</text>
 
         <!-- spine connectors — every endpoint matches its box's exact edge coordinate
              (see docs/rules/diagram-style.md's verification note: several of these
-             previously stopped 10-116 units short of the box they pointed at) -->
+             previously stopped 10-116 units short of the box they pointed at). Branch
+             split/merge elbows deliberately bend *below* each container's on-canvas label
+             (not through its row) so the label never sits under a later-drawn connector line —
+             see docs/rules/diagram-style.md's "verify by rendering, zoom into every junction"
+             rule; this container-label-vs-connector clearance is exactly the class of bug that
+             reading coordinates alone missed before. -->
         <path class="jm-link done" d="M320,64 V100" marker-end="url(#jmArrow)"/>
         <g class="arrow-pill"><rect x="330" y="73" width="128" height="18" rx="9"/><text x="394" y="86" text-anchor="middle" font-size="9" font-style="italic">⚠️ rules don't scale</text></g>
         <path class="jm-link done" d="M320,144 V180" marker-end="url(#jmArrow)"/>
@@ -97,28 +102,28 @@
         <g class="arrow-pill"><rect x="330" y="393" width="120" height="18" rx="9"/><text x="390" y="406" text-anchor="middle" font-size="9" font-style="italic">scale unlocks more</text></g>
         <path class="jm-link done" d="M320,464 V500" marker-end="url(#jmArrow)"/>
         <g class="arrow-pill"><rect x="330" y="473" width="170" height="18" rx="9"/><text x="415" y="486" text-anchor="middle" font-size="9" font-style="italic">need to compare by meaning</text></g>
-        <path class="jm-link done" d="M320,544 V566 H140 V580" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,544 V580" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,544 V566 H500 V580" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M140,624 V660 H320 V676" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,624 V676" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M500,624 V660 H320 V676" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="430" y="689" width="100" height="18" rx="9"/><text x="480" y="702" text-anchor="middle" font-size="9" font-style="italic">needs to act</text></g>
-        <path class="jm-link done" d="M320,720 V742 H140 V756" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,720 V756" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,720 V742 H500 V756" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M140,800 V836 H320 V852" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M320,800 V852" marker-end="url(#jmArrow)"/>
-        <path class="jm-link done" d="M500,800 V836 H320 V852" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="430" y="865" width="160" height="18" rx="9"/><text x="510" y="878" text-anchor="middle" font-size="9" font-style="italic">too much for one prompt</text></g>
-        <path class="jm-link done" d="M320,896 V932" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="330" y="905" width="90" height="18" rx="9"/><text x="375" y="918" text-anchor="middle" font-size="9" font-style="italic">ready to ship</text></g>
-        <path class="jm-link done" d="M320,976 V1012" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="330" y="985" width="90" height="18" rx="9"/><text x="375" y="998" text-anchor="middle" font-size="9" font-style="italic">does it work?</text></g>
-        <path class="jm-link done" d="M320,1056 V1092" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="330" y="1065" width="120" height="18" rx="9"/><text x="390" y="1078" text-anchor="middle" font-size="9" font-style="italic">explains one case</text></g>
-        <path class="jm-link done" d="M320,1136 V1172" marker-end="url(#jmArrow)"/>
-        <g class="arrow-pill"><rect x="330" y="1145" width="130" height="18" rx="9"/><text x="395" y="1158" text-anchor="middle" font-size="9" font-style="italic">ready for real users</text></g>
+        <path class="jm-link done" d="M320,544 V598 H140 V610" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,544 V610" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,544 V598 H500 V610" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M140,654 V684 H320 V704" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,654 V704" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M500,654 V684 H320 V704" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="430" y="717" width="100" height="18" rx="9"/><text x="480" y="730" text-anchor="middle" font-size="9" font-style="italic">needs to act</text></g>
+        <path class="jm-link done" d="M320,748 V816 H140 V830" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,748 V830" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,748 V816 H500 V830" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M140,874 V904 H320 V924" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M320,874 V924" marker-end="url(#jmArrow)"/>
+        <path class="jm-link done" d="M500,874 V904 H320 V924" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="430" y="937" width="160" height="18" rx="9"/><text x="510" y="950" text-anchor="middle" font-size="9" font-style="italic">too much for one prompt</text></g>
+        <path class="jm-link done" d="M320,968 V1004" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="330" y="977" width="90" height="18" rx="9"/><text x="375" y="990" text-anchor="middle" font-size="9" font-style="italic">ready to ship</text></g>
+        <path class="jm-link done" d="M320,1048 V1084" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="330" y="1057" width="90" height="18" rx="9"/><text x="375" y="1070" text-anchor="middle" font-size="9" font-style="italic">does it work?</text></g>
+        <path class="jm-link done" d="M320,1128 V1164" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="330" y="1137" width="120" height="18" rx="9"/><text x="390" y="1150" text-anchor="middle" font-size="9" font-style="italic">explains one case</text></g>
+        <path class="jm-link done" d="M320,1208 V1244" marker-end="url(#jmArrow)"/>
+        <g class="arrow-pill"><rect x="330" y="1217" width="130" height="18" rx="9"/><text x="395" y="1230" text-anchor="middle" font-size="9" font-style="italic">ready for real users</text></g>
 
         <!-- main spine nodes -->
         <a class="jm-hit" xlink:href="concepts/what-is-ai.html">
@@ -157,56 +162,56 @@
 
         <!-- branch row 1: prompting / rag / fine-tuning -->
         <a class="jm-hit" xlink:href="concepts/prompting.html">
-          <g class="jm-node done"><rect x="60" y="580" width="160" height="44" rx="12"/>
-          <text x="140" y="607" text-anchor="middle" font-size="12.5" font-weight="700">💬 Prompting</text></g>
+          <g class="jm-node done"><rect x="60" y="610" width="160" height="44" rx="12"/>
+          <text x="140" y="637" text-anchor="middle" font-size="12.5" font-weight="700">💬 Prompting</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/rag.html">
-          <g class="jm-node done"><rect x="240" y="580" width="160" height="44" rx="12"/>
-          <text x="320" y="607" text-anchor="middle" font-size="12.5" font-weight="700">📚 RAG</text></g>
+          <g class="jm-node done"><rect x="240" y="610" width="160" height="44" rx="12"/>
+          <text x="320" y="637" text-anchor="middle" font-size="12.5" font-weight="700">📚 RAG</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/fine-tuning.html">
-          <g class="jm-node done"><rect x="420" y="580" width="160" height="44" rx="12"/>
-          <text x="500" y="607" text-anchor="middle" font-size="12.5" font-weight="700">🔧 Fine-tuning</text></g>
+          <g class="jm-node done"><rect x="420" y="610" width="160" height="44" rx="12"/>
+          <text x="500" y="637" text-anchor="middle" font-size="12.5" font-weight="700">🔧 Fine-tuning</text></g>
         </a>
 
         <a class="jm-hit" xlink:href="concepts/agents.html">
-          <g class="jm-node done"><rect x="220" y="676" width="200" height="44" rx="12"/>
-          <text x="320" y="703" text-anchor="middle" font-size="14" font-weight="700">🔁 Agents</text></g>
+          <g class="jm-node done"><rect x="220" y="704" width="200" height="44" rx="12"/>
+          <text x="320" y="731" text-anchor="middle" font-size="14" font-weight="700">🔁 Agents</text></g>
         </a>
 
         <!-- branch row 2: tools / memory / planning -->
         <a class="jm-hit" xlink:href="concepts/tools.html">
-          <g class="jm-node done"><rect x="60" y="756" width="160" height="44" rx="12"/>
-          <text x="140" y="783" text-anchor="middle" font-size="12.5" font-weight="700">🔧 Tools</text></g>
+          <g class="jm-node done"><rect x="60" y="830" width="160" height="44" rx="12"/>
+          <text x="140" y="857" text-anchor="middle" font-size="12.5" font-weight="700">🔧 Tools</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/memory.html">
-          <g class="jm-node done"><rect x="240" y="756" width="160" height="44" rx="12"/>
-          <text x="320" y="783" text-anchor="middle" font-size="12.5" font-weight="700">💾 Memory</text></g>
+          <g class="jm-node done"><rect x="240" y="830" width="160" height="44" rx="12"/>
+          <text x="320" y="857" text-anchor="middle" font-size="12.5" font-weight="700">💾 Memory</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/planning.html">
-          <g class="jm-node done"><rect x="420" y="756" width="160" height="44" rx="12"/>
-          <text x="500" y="783" text-anchor="middle" font-size="12.5" font-weight="700">🗺️ Planning</text></g>
+          <g class="jm-node done"><rect x="420" y="830" width="160" height="44" rx="12"/>
+          <text x="500" y="857" text-anchor="middle" font-size="12.5" font-weight="700">🗺️ Planning</text></g>
         </a>
 
         <a class="jm-hit" xlink:href="concepts/context-engineering.html">
-          <g class="jm-node done"><rect x="220" y="852" width="200" height="44" rx="12"/>
-          <text x="320" y="879" text-anchor="middle" font-size="14" font-weight="700">🧩 Context Eng.</text></g>
+          <g class="jm-node done"><rect x="220" y="924" width="200" height="44" rx="12"/>
+          <text x="320" y="951" text-anchor="middle" font-size="14" font-weight="700">🧩 Context Eng.</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/ai-application.html">
-          <g class="jm-node done"><rect x="220" y="932" width="200" height="44" rx="12"/>
-          <text x="320" y="959" text-anchor="middle" font-size="14" font-weight="700">📱 AI Application</text></g>
+          <g class="jm-node done"><rect x="220" y="1004" width="200" height="44" rx="12"/>
+          <text x="320" y="1031" text-anchor="middle" font-size="14" font-weight="700">📱 AI Application</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/evaluation.html">
-          <g class="jm-node done"><rect x="220" y="1012" width="200" height="44" rx="12"/>
-          <text x="320" y="1039" text-anchor="middle" font-size="14" font-weight="700">📊 Evaluation</text></g>
+          <g class="jm-node done"><rect x="220" y="1084" width="200" height="44" rx="12"/>
+          <text x="320" y="1111" text-anchor="middle" font-size="14" font-weight="700">📊 Evaluation</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/observability.html">
-          <g class="jm-node done"><rect x="220" y="1092" width="200" height="44" rx="12"/>
-          <text x="320" y="1119" text-anchor="middle" font-size="14" font-weight="700">🔍 Observability</text></g>
+          <g class="jm-node done"><rect x="220" y="1164" width="200" height="44" rx="12"/>
+          <text x="320" y="1191" text-anchor="middle" font-size="14" font-weight="700">🔍 Observability</text></g>
         </a>
         <a class="jm-hit" xlink:href="concepts/production.html">
-          <g class="jm-node done"><rect x="220" y="1172" width="200" height="44" rx="12"/>
-          <text x="320" y="1199" text-anchor="middle" font-size="14" font-weight="700">🛡️ Production</text></g>
+          <g class="jm-node done"><rect x="220" y="1244" width="200" height="44" rx="12"/>
+          <text x="320" y="1271" text-anchor="middle" font-size="14" font-weight="700">🛡️ Production</text></g>
         </a>
       </svg>
       <div class="jm-legend">

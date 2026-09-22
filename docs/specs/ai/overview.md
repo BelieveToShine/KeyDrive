@@ -105,6 +105,20 @@ original 17; both are fixed now — see "Current status" below.
     training vs inference, hallucination, structured output, AI security, model selection, and
     more), plus a possible future 4-layer navigation shape (Understand/Build/Ship/Architect) —
     recorded so it isn't lost, and isn't built without being asked.
+- **Round 8 (production-only rendering bug)**: the user reported (with screenshots) the journey
+  map's two grouping-container labels rendering with their first few characters hidden behind
+  the container's own top-left corner — real in their browser, not reproducible in this
+  project's own sandboxed verification screenshots (Google Fonts is blocked there, so the labels
+  never rendered in their real font/weight during any earlier check). Root cause: both labels
+  sat in a ~14-unit gap between the previous node and the container's top border, under this
+  file's own 16-unit minimum-clearance rule. Fixed by moving both labels inside their containers
+  (16+ units clear of the top border and of the branch nodes below), routing the branch
+  split/merge elbows to bend below each label's row instead of through it, and expanding both
+  containers' height (and re-deriving every coordinate below each one, down to Production, plus
+  the SVG `viewBox`) to fit — see `docs/rules/diagram-style.md`'s new 4th known-failure-mode
+  entry for the rule this establishes: a plain text label with no pill background is not exempt
+  from the clearance rule, and a sandboxed render with blocked web fonts is not proof a label's
+  real size is safe.
 
 ## Why this journey isn't a flat list
 

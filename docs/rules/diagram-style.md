@@ -134,6 +134,22 @@ re-reading the markup:
    clearance in the first place. If a gap is too narrow to fit a pill plus 16 units of clearance
    at a legible font size, widen the gap (shift the destination box, and everything after it)
    rather than shrinking the pill below legibility.
+4. **An on-canvas container/section label squeezed into a gap too small for it.** The journey
+   map's two grouping-container labels ("THREE WAYS TO STEER THE MODEL", "CAPABILITIES AN AGENT
+   DRAWS ON") were positioned in the ~14-unit gap between the previous node's bottom edge and
+   the container's own top border — under this file's own 16-unit clearance rule, that gap was
+   already too small before a single glyph was drawn. It rendered fine in this project's own
+   verification screenshots (a sandboxed headless browser with the page's web fonts blocked
+   couldn't reproduce it), but broke in a real browser with real fonts loaded — reported back as
+   the label's first few characters hidden behind the container's own top-left corner. A plain
+   text label (no pill background) is not exempt from the clearance rule just because it has no
+   box of its own — measure the actual gap it sits in against every neighboring box/border,
+   don't assume "it's just text" makes proximity safe, and don't trust a render where custom web
+   fonts failed to load as proof of a text label's real width or height. The fix: move the label
+   *inside* the container near its top (16+ units clear of the top border, 16+ units clear of
+   the nodes below it), and make sure any connector elbow bend point that must cross the
+   container also bends *below* the label's row, not through it — verified by a zoomed
+   screenshot of that exact spot with the actual page fonts loaded, not a fallback font.
 
 **The rule this establishes:** before calling any diagram (new or edited) done —
 1. Render it in a browser (a headless screenshot is fine) at real size, not just skim the markup.
