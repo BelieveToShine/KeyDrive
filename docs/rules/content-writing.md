@@ -20,7 +20,7 @@ covers where the visual sits in the page and why.
 1. **Breadcrumb** — `KeyDrive › <category icon+name> › <concept title>`. Orientation, nothing
    more.
 
-2. **Hero** — eyebrow (`Concept N of 17 · <tier>`), an H1 stated as one crisp, complete sentence
+2. **Hero** — eyebrow (`Concept N of 19 · <tier>`), an H1 stated as one crisp, complete sentence
    (not a topic label — "AI is what happens when a system learns the answer instead of being
    told it," not "What is AI?"), one italic sub-line, a `❓` interview-question pill. The H1 is
    compact enough to double as orientation without being a full explanation — it stays first
