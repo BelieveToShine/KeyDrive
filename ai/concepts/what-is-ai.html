@@ -36,10 +36,11 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 1 of 17 · 🎓 Foundations</div>
-    <h1>AI is what happens when a system <span class="grad-text">learns the answer instead of being told it.</span></h1>
-    <p class="sub">Before you learn a single algorithm, get this one distinction right — almost
-    every other AI concept is a different answer to the same question it raises.</p>
+    <div class="eyebrow">Concept 1 of 19 · 🎓 Foundations</div>
+    <h1>AI is the broad goal — <span class="grad-text">machines doing things that normally need human intelligence.</span></h1>
+    <p class="sub">Machine learning is the approach that now powers most of it, but it's not the
+    only one, and it isn't the definition of AI itself — get that distinction right before
+    anything else, because this whole journey follows the ML path on purpose.</p>
     <div class="interview-q">❓ "How would you explain, in one sentence, what AI actually is?"</div>
   </section>
 
@@ -53,7 +54,7 @@
             <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
           </marker>
         </defs>
-        <text x="200" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fb7185">THE OLD WAY — RULES</text>
+        <text x="200" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fb7185">RULE-BASED AI</text>
         <rect x="20" y="40" width="120" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
         <text x="80" y="64" text-anchor="middle" font-size="12" fill="#e7ebf3">📥 New input</text>
         <path d="M140,60 H230" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow)"/>
@@ -68,7 +69,7 @@
 
         <line x1="0" y1="150" x2="640" y2="150" stroke="#232a3a" stroke-dasharray="3 4"/>
 
-        <text x="328" y="180" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">THE AI WAY — LEARNING</text>
+        <text x="328" y="180" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">LEARNING-BASED AI (ML)</text>
         <rect x="20" y="198" width="140" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
         <text x="90" y="216" text-anchor="middle" font-size="11" fill="#e7ebf3">📚 Thousands of</text>
         <text x="90" y="230" text-anchor="middle" font-size="11" fill="#e7ebf3">real examples</text>
@@ -84,40 +85,50 @@
         <text x="568" y="230" text-anchor="middle" font-size="10" fill="#67e8f9">cases it never saw</text>
       </svg>
       <figcaption><strong>What you're seeing:</strong> the same job — sorting spam from real mail —
-      solved two ways. Top: a person's hand-written rule checks each new input directly, so
-      anything the person didn't anticipate breaks it. Bottom: a system learns its own rule from
-      thousands of labeled examples, so it can handle a case it has never seen. That difference
-      — <em>learned</em> vs. <em>hand-written</em> — is the entire definition of AI.</figcaption>
+      solved by two different AI approaches. Top: a person's hand-written rule checks each new
+      input directly, so anything the person didn't anticipate breaks it — still AI, just not
+      learning-based. Bottom: a system learns its own rule from thousands of labeled examples,
+      so it can handle a case it has never seen. That second approach — <em>machine
+      learning</em> — is what scaled far better to messy, real-world variation, which is why
+      it's the approach this journey follows from here on.</figcaption>
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">AI = a system that learns what to do from examples, instead of being told exactly what to do.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">AI = systems built to do things that normally need human intelligence; Machine Learning — learning from data instead of hand-written rules — is the approach that now powers most of them.</span></div>
 
   <!-- why did this exist -->
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
-      <p>For decades, "smart" software meant a person writing down every rule by hand: <em>"if
-      the email contains 'win a prize', mark it spam."</em> That works — until the real world
-      throws a case nobody wrote a rule for. Spam changes its wording. A photo is blurry. A
-      customer phrases a question in a way no rule anticipated.</p>
-      <p>Hand-written rules don't scale to a world with that much variation. AI is the shift
-      away from writing the rules yourself, toward giving a system enough examples that it works
-      out the pattern on its own.</p>
+      <p>"Artificial intelligence" has never meant just one technique. Hand-written rule and
+      expert systems, search and planning algorithms, logic-based reasoning — all of these are
+      genuinely part of the field, and none of them require a system to learn from data. AI is
+      the goal (systems that perform tasks requiring intelligence); these are different means to
+      it.</p>
+      <p>Machine learning is one of those means, and it works differently: instead of a person
+      writing down every rule by hand — <em>"if the email contains 'win a prize', mark it
+      spam"</em> — the system learns the pattern from examples. That shift turned out to scale
+      far better to problems with too much real-world variation for anyone to hand-write rules
+      for, which is why ML now dominates most practical AI systems, and why this journey follows
+      the ML path specifically from here on.</p>
     </div>
   </section>
 
   <details class="zoom">
     <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
     <div class="zoom-inner">
-      <p>Not every clever program is AI. A calculator, a sorting algorithm, a traffic light
-      timer — all genuinely useful, all built from rules a person designed, and none of them
-      change their own behavior based on data. AI specifically means the behavior itself was
-      <b>learned</b>, not hand-coded.</p>
-      <p>"Learning" here means: you show the system a large number of examples (a photo labeled
-      "cat", a thousand emails labeled "spam" or "not spam"), and an algorithm adjusts itself
-      until it can make the right call on examples it has never seen. That adjustment process —
-      and everything you can build once it works — is the rest of this journey: <a href="machine-learning.html">Machine Learning</a> is where it actually happens.</p>
+      <p>A calculator, a sorting algorithm, a traffic-light timer are built from rules a person
+      designed and don't change behavior based on data — genuinely useful, but not usually what
+      anyone means by "AI" today, since they don't perform tasks that need much intelligence in
+      the first place. Classical rule-based and expert systems sit in a different spot: they
+      <i>are</i> historically part of the AI field, even without any learning involved — they're
+      just not what most modern AI systems are built from anymore.</p>
+      <p>"Learning," the machine-learning approach specifically, means: you show the system a
+      large number of examples (a photo labeled "cat," a thousand emails labeled "spam" or "not
+      spam"), and an algorithm adjusts itself until it can make the right call on examples it has
+      never seen. That adjustment process — and everything you can build once it works — is the
+      rest of this journey: <a href="machine-learning.html">Machine Learning</a> is where it
+      actually happens.</p>
 
       <figure class="diagram-card" style="margin-top:18px;">
         <svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
@@ -162,35 +173,41 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>AI = <b>learned</b> behavior, not hand-written rules.</li>
-        <li>The shift happened because rules don't scale to real-world variation.</li>
-        <li>Not all software is AI — only the part where behavior comes from data, not a person coding every case.</li>
-        <li>Everything downstream (Machine Learning, Deep Learning, LLMs…) is a different technique for making that learning work better, faster, or on harder problems.</li>
+        <li>AI is the broad field/goal: systems that perform tasks requiring intelligence.</li>
+        <li>Machine Learning is <b>one major approach</b> to AI, not a synonym for it — the system learns from data instead of following hand-written rules.</li>
+        <li>Classical rule-based and expert systems are historically part of AI too, even without any learning involved.</li>
+        <li>ML now dominates practical AI because it scales far better to messy, variable real-world problems — which is why this journey follows it specifically.</li>
       </ul>
     </div>
   </section>
 
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"AI is a system whose behavior comes from learning patterns in data, rather than a
-    person writing out every rule by hand. It's useful specifically because rules stop scaling
-    once a problem has too much real-world variation for anyone to enumerate by hand."</div>
+    <div class="kd-card saythis-box">"AI is the broad field of building systems that perform tasks requiring intelligence —
+    perception, reasoning, decision-making. Machine learning is one major approach within that
+    field, where the system learns patterns from data instead of following hand-written rules;
+    it's not a synonym for AI, just the approach that currently dominates most practical
+    systems, because it scales far better to real-world variation than hand-written rules do."</div>
   </section>
 
   <section class="kd-section" id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>Not every smart-looking feature is AI.</b> An autocomplete that just looks up a fixed
-      dictionary, or a dashboard that flags "if sales &lt; last month" — those are rules, however
-      well-designed. The test isn't "does it feel intelligent?" — it's "did this behavior come
-      from a person coding it, or from the system learning it from data?"</p>
+      <p><b>AI isn't only "systems that learned from data."</b> An autocomplete that just looks
+      up a fixed dictionary, or a dashboard that flags "if sales &lt; last month," are simple
+      hand-coded rules, not AI — but that's because they don't perform a task requiring much
+      intelligence, not because rules are automatically disqualified. Classical rule-based and
+      expert systems genuinely are part of AI's history. What's true and narrower: nearly every
+      AI system worth learning about today, including everything else in this journey, is built
+      on machine learning, because it scales far better to complex, variable problems than
+      hand-written rules do.</p>
     </div>
   </section>
 
   <div class="confuse-pair">
-    <div class="cp-side"><h5>🔴 Rule-based system</h5><p>A person writes every "if this, then that." Predictable, but only handles cases someone thought of.</p></div>
+    <div class="cp-side"><h5>🔴 Rule-based AI</h5><p>A person writes every "if this, then that." Still AI — predictable, but only handles cases someone thought of.</p></div>
     <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🟢 AI system</h5><p>The mapping from input to output is learned from examples. Handles new cases the rules never saw.</p></div>
+    <div class="cp-side"><h5>🟢 Learning-based AI (ML)</h5><p>The mapping from input to output is learned from examples. Handles new cases the rules never saw.</p></div>
   </div>
 
   <details class="zoom">
@@ -200,7 +217,7 @@
 <span class="kw">def</span> is_spam_rules(email):
     <span class="kw">return</span> <span class="str">"win a prize"</span> <span class="kw">in</span> email.lower()
 
-<span class="cmt"># AI — nobody wrote the rule; it was learned from labeled examples</span>
+<span class="cmt"># Machine learning — nobody wrote the rule; it was learned from labeled examples</span>
 <span class="cmt"># model.fit(emails, labels)  -> model learns its own decision boundary</span>
 <span class="kw">def</span> is_spam_ai(email):
     <span class="kw">return</span> model.predict(email)  <span class="cmt"># behavior came from training, not from us</span></pre></div>

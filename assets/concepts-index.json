@@ -156,6 +156,32 @@
     "keywords": "llm trap transformer scale mechanism"
   },
   {
+    "id": "embeddings-vector-search",
+    "title": "Embeddings & Vector Search",
+    "category": "AI",
+    "page": "ai/concepts/embeddings-vector-search.html",
+    "summary": "Converting text into vectors so meaning can be compared numerically — the mechanism behind RAG's retrieval step.",
+    "keywords": "embeddings vector search similarity cosine semantic meaning rag"
+  },
+  {
+    "id": "embeddings-vector-search-recall",
+    "title": "Embeddings & Vector Search — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/embeddings-vector-search.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for how embeddings and vector search work.",
+    "keywords": "embeddings vector search interview recall say this"
+  },
+  {
+    "id": "embeddings-vector-search-trap",
+    "title": "A close vector isn't a correct answer — common trap",
+    "category": "AI",
+    "page": "ai/concepts/embeddings-vector-search.html",
+    "anchor": "trap",
+    "summary": "Why vector similarity is a relevance filter, not a correctness guarantee.",
+    "keywords": "embeddings vector search trap similarity correctness"
+  },
+  {
     "id": "prompting",
     "title": "Prompting",
     "category": "AI",
@@ -336,6 +362,32 @@
     "anchor": "trap",
     "summary": "Why planning the whole goal differs from deciding the next single action.",
     "keywords": "planning trap plan step agent loop"
+  },
+  {
+    "id": "context-engineering",
+    "title": "Context Engineering",
+    "category": "AI",
+    "page": "ai/concepts/context-engineering.html",
+    "summary": "Deciding what actually goes into the model's limited context window, from every available source.",
+    "keywords": "context engineering context window token limit prompt assembly memory rag tools"
+  },
+  {
+    "id": "context-engineering-recall",
+    "title": "Context Engineering — interview recall",
+    "category": "AI",
+    "page": "ai/concepts/context-engineering.html",
+    "anchor": "recall",
+    "summary": "Quick recall points for what goes into a model's context and why.",
+    "keywords": "context engineering interview recall say this"
+  },
+  {
+    "id": "context-engineering-trap",
+    "title": "More context isn't automatically better — common trap",
+    "category": "AI",
+    "page": "ai/concepts/context-engineering.html",
+    "anchor": "trap",
+    "summary": "Why stuffing in everything available can hurt more than it helps.",
+    "keywords": "context engineering trap more context noise cost"
   },
   {
     "id": "ai-application",

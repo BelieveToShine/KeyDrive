@@ -36,11 +36,11 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 9 of 17 · 🛠️ Using the model</div>
-    <h1>Fine-tuning makes a behavior <span class="grad-text">permanent</span>, instead of something you re-ask for every time.</h1>
+    <div class="eyebrow">Concept 10 of 19 · 🛠️ Using the model</div>
+    <h1>Fine-tuning builds a behavior <span class="grad-text">into the model's weights</span>, instead of something you re-ask for every time.</h1>
     <p class="sub">Prompting and RAG both work at inference time and leave the model unchanged.
-    Fine-tuning is the option that actually updates the model's own weights, for when a behavior
-    needs to stick.</p>
+    Among the three, fine-tuning is the one that changes the model's own weights, for when a
+    behavior needs to hold without re-explaining it.</p>
     <div class="interview-q">❓ "When would you fine-tune a model instead of just prompting it better?"</div>
   </section>
 
@@ -93,17 +93,21 @@
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">Fine-tuning = training the model further on examples of the exact behavior you want, so it becomes permanent.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">Fine-tuning = training the model further on examples of the exact behavior you want, so it becomes built into the weights.</span></div>
 
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
       <p>Prompting and RAG both work at inference time — they don't change the model, so their
-      effects last only for that one request. Some needs are better solved permanently: a
-      consistent tone across every response, a narrow specialized skill, reliably following a
-      specific format without being reminded.</p>
-      <p>Fine-tuning updates the model's own weights using examples of the desired behavior, so
-      that behavior becomes built in rather than something to re-specify every single time.</p>
+      effects last only for that one request. Some needs are better solved by baking the
+      behavior into the model itself: a consistent tone across every response, a narrow
+      specialized skill, reliably following a specific format without being reminded.</p>
+      <p>Among prompting, RAG, and fine-tuning, fine-tuning is the one that updates the model's
+      own weights using examples of the desired behavior, so that behavior becomes built in
+      rather than something to re-specify every single time. (Other post-training methods — a
+      reward signal instead of labeled examples, for instance — also update weights; fine-tuning
+      here refers to this comparison's specific meaning, not every possible way to change a
+      model.)</p>
     </div>
   </section>
 
@@ -124,8 +128,8 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>Fine-tuning updates the model's actual weights — the only one of the three that does.</li>
-        <li>It exists for behavior that needs to be permanent, not re-specified every request.</li>
+        <li>Among prompting, RAG, and fine-tuning, fine-tuning is the one that updates the model's actual weights.</li>
+        <li>It exists for behavior that needs to be built in, not re-specified every request.</li>
         <li>It starts from the trained base model, not from scratch.</li>
         <li>Best for style/skill consistency — not for adding facts (RAG) or one-off steering (prompting).</li>
       </ul>
@@ -135,7 +139,7 @@
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
     <div class="kd-card saythis-box">"Fine-tuning takes an already-trained model and trains it further on a curated set of examples
-    showing the exact behavior you want, updating its weights so that behavior becomes permanent.
+    showing the exact behavior you want, updating its weights so that behavior is built in.
     Unlike prompting or RAG, which only affect a single request, fine-tuning changes the model
     itself."</div>
   </section>
@@ -152,9 +156,9 @@
   </section>
 
   <div class="confuse-pair">
-    <div class="cp-side"><h5>📚 RAG</h5><p>Adds facts per-request. No weight change, no permanence.</p></div>
+    <div class="cp-side"><h5>📚 RAG</h5><p>Adds facts per-request. No weight change, nothing built in.</p></div>
     <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🔧 Fine-tuning</h5><p>Changes the model's weights. Permanent behavior change, not per-request.</p></div>
+    <div class="cp-side"><h5>🔧 Fine-tuning</h5><p>Changes the model's weights. Behavior built in, not re-specified per-request.</p></div>
   </div>
 
   <details class="zoom">

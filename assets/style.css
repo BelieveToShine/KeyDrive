@@ -86,10 +86,25 @@ code, .mono{ font-family:'JetBrains Mono', monospace; }
 
 /* ---------- crumbs ---------- */
 .kd-crumbs{ display:flex; align-items:center; gap:8px; padding:14px 24px 0; font-size:13px; color:var(--ink-faint); }
-.kd-crumbs a{ color:var(--ink-soft); }
-.kd-crumbs a:hover{ color:var(--cyan); }
+.kd-crumbs a{ color:var(--ink-soft); text-decoration:none; }
+.kd-crumbs a:hover{ color:var(--cyan); text-decoration:none; }
 .kd-crumbs .sep{ opacity:.5; }
 .kd-crumbs .cur{ color:var(--ink); font-weight:600; }
+
+/* text-link hover: an animated underline that grows in on hover, instead of the browser's
+   instant default underline — per docs/rules/interaction-style.md's text-link rule. Applies to
+   any plain inline text link (breadcrumbs, brand, concept-list rows), not whole-card buttons
+   (those get the lift+glow treatment via a.kd-card instead). */
+.kd-crumbs a, .brand, .concept-row a{
+  position:relative; text-decoration:none;
+}
+.kd-crumbs a::after, .brand::after, .concept-row a::after{
+  content:''; position:absolute; left:0; bottom:-2px; width:100%; height:1.5px;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .18s ease;
+}
+.kd-crumbs a:hover::after, .brand:hover::after, .concept-row a:hover::after{ transform:scaleX(1); }
+.brand::after{ background:var(--grad); }
 
 main{ padding:20px 0 100px; }
 
@@ -219,7 +234,7 @@ a.jm-hit:active .jm-node{ transform:translateY(-1px) scale(.97); }
   background:var(--emerald-bg); border:1px solid rgba(52,211,153,.24); border-radius:16px; padding:20px 22px;
   display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
 }
-.next-box a.next-link{ color:var(--emerald-ink); font-weight:700; font-family:'Sora'; font-size:16px; text-decoration:none; }
+.next-box a.next-link{ color:var(--emerald-ink); font-weight:700; font-family:'Sora'; font-size:16px; text-decoration:none; margin-left:auto; flex:0 0 auto; white-space:nowrap; }
 .next-box a.next-link:hover{ text-decoration:none; }
 .next-box a.next-link .arrow{ margin-left:6px; display:inline-block; transition:transform .15s ease; }
 .next-box a.next-link:hover .arrow{ transform:translateX(4px); }

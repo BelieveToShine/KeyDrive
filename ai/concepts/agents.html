@@ -36,10 +36,12 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 10 of 17 · 🤖 Acting on goals</div>
-    <h1>An agent is a model <span class="grad-text">wrapped in a loop</span> that keeps going until the goal is actually met.</h1>
+    <div class="eyebrow">Concept 11 of 19 · 🤖 Acting on goals</div>
+    <h1>An agent pursues a goal <span class="grad-text">across multiple steps</span>, not just one response.</h1>
     <p class="sub">Prompting, RAG, and fine-tuning all improve one response. Agents exist for
-    goals that need more than one response — search, check, decide, adjust, repeat.</p>
+    goals that need more than one — search, check, decide, adjust, repeat. The most common way
+    to build one is the loop below, but that loop is an architecture, not the only possible
+    definition.</p>
     <div class="interview-q">❓ "Why can't a single prompt-response handle a multi-step goal?"</div>
   </section>
 
@@ -77,14 +79,15 @@
         <path class="flow-arrow" d="M565,105 V130 H135 V105" stroke="#f472b6" stroke-width="1.6" fill="none" marker-end="url(#agArrow)"/>
         <g class="arrow-pill"><rect x="290" y="121" width="130" height="18" rx="9"/><text x="355" y="134" text-anchor="middle" font-size="9">🔁 repeat until done</text></g>
       </svg>
-      <figcaption><strong>What you're seeing:</strong> the agent loop. Given a goal, the agent
-      plans its next step, acts on it, observes the real result, and feeds that observation back
-      into planning the next step — repeating until the goal is actually met. A single
-      prompt-response can't do this: it can't see the result of its own action and adjust.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> the plan-act-observe loop — the most
+      common way an AI agent is architected. Given a goal, the agent plans its next step, acts
+      on it, observes the real result, and feeds that observation back into planning the next
+      step — repeating until the goal is actually met. A single prompt-response can't do this:
+      it can't see the result of its own action and adjust.</figcaption>
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">Agents = wrapping a model in a loop — plan, act, observe, repeat — until a goal is actually met.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">An agent = a system that uses a model to pursue a goal, choosing actions and using real feedback to make progress — commonly built as a plan-act-observe loop.</span></div>
 
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
@@ -93,9 +96,12 @@
       actually happened, and adjust based on that. Many real goals need exactly that: search for
       something, check whether the result is good enough, decide whether to search again or
       refine the approach.</p>
-      <p>Agents wrap the model in a loop that plans a step, acts on it, observes the real
-      outcome, and repeats — until the goal is satisfied, not just until the model finishes
-      generating one reply.</p>
+      <p>An agent is a system that uses a model to pursue a goal, choosing actions and using
+      feedback from the environment to make progress. The plan-act-observe loop is the most
+      common architecture for this — plan a step, act on it, observe the real outcome, repeat —
+      but it's one common shape, not the only possible one; some agent designs branch, run steps
+      in parallel, or hand off between specialized sub-agents. The loop is worth learning well
+      because it underlies most of what you'll actually build.</p>
     </div>
   </section>
 
@@ -116,7 +122,7 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>Agent = plan → act → observe → repeat, until the goal is met.</li>
+        <li>An agent uses a model to pursue a goal, choosing actions and using real feedback — commonly built as plan → act → observe → repeat, until the goal is met.</li>
         <li>It exists because a single prompt-response can't see the result of its own action.</li>
         <li>"Observe" must be a real result — not the model imagining what probably happened.</li>
         <li>Tools, Memory, and Planning are capabilities this loop draws on, not separate loops.</li>
@@ -126,10 +132,11 @@
 
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"An agent wraps a model in a loop: it plans the next step toward a goal, takes that action,
-    observes the real result, and uses that observation to plan the next step — repeating until
-    the goal is actually satisfied. That's different from a single prompt-response, which can't
-    see or react to the outcome of its own action."</div>
+    <div class="kd-card saythis-box">"An agent is a system that uses a model to pursue a goal, choosing actions and using
+    feedback from the environment to make progress. The most common architecture is a
+    plan-act-observe loop: plan the next step, take that action, observe the real result, and
+    use it to plan the next step — repeating until the goal is satisfied. That's different from
+    a single prompt-response, which can't see or react to the outcome of its own action."</div>
   </section>
 
   <section class="kd-section" id="trap">

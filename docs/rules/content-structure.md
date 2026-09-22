@@ -49,6 +49,49 @@ navigation targets correctly regardless of page depth.
 4. Update `docs/specs/<category>/roadmap.md`'s status column in the same commit — see that
    file's own rule: the roadmap update is never a follow-up task.
 
+## Inserting a concept into an existing taxonomy
+
+Adding a new concept in the *middle* of an already-written journey (not at the end) is a
+different, riskier operation than "adding a new concept page" above — it shifts every number
+after the insertion point and touches pages that were already considered finished. A
+production-verification review added Embeddings & Vector Search and Context Engineering into
+the AI category's already-complete 17-concept journey (bringing it to 19), and the exact things
+that were easy to miss are recorded here so the next insertion catches them in one pass instead
+of finding them one at a time:
+
+1. Decide the insertion point by where the reasoning actually fits, not by mechanically obeying
+   a suggested position if it would break an existing visual grouping — e.g. Embeddings was
+   placed as a linear step *before* the Prompting/RAG/Fine-tuning branch rather than wedged
+   between Prompting and RAG, to keep that branch's three-way parallel grouping intact.
+2. Renumber **every** concept from the insertion point onward, everywhere a number appears —
+   this is the step most likely to be done partially:
+   - Every later concept page's own eyebrow ("Concept N of TOTAL").
+   - `docs/specs/<category>/concept-taxonomy.md`, `roadmap.md`, and `overview.md`'s counts.
+   - The journey map and concept list on the category hub page (see below).
+3. **Check every already-written page's next-box link, not just the ones adjacent to the
+   insertion point.** When Embeddings was inserted after LLMs, LLMs' own next-box had to be
+   repointed from Prompting to Embeddings, and Embeddings' next-box had to point on to Prompting
+   — but the actual bug caught in this same review was on a *different* page (Machine Learning's
+   next-box was still hardcoded to "Deep Learning — coming soon" from an earlier round, even
+   though Deep Learning had since been written). A next-box is a hardcoded link + label baked in
+   at the time its page was written; it does not update itself when a later page ships or a
+   later insertion changes the order. Whenever you touch this category for any reason, grep every
+   concept page's next-box against the current roadmap and fix any that are stale — don't assume
+   a page's next-box is correct just because the page itself hasn't changed.
+4. Rebuild the journey-map SVG's coordinates for every node at or after the insertion point —
+   don't try to squeeze the new node into existing whitespace. Derive a consistent gap rule (this
+   project's AI hub used a plain 36-unit gap between single-to-single/single-to-branch-start
+   transitions, and a 52-unit gap split 36+16 for a branch-merge-to-single elbow transition) and
+   recompute every downstream y-coordinate from it, rather than hand-placing one node and hoping
+   later ones still line up. Any new connector "why" label must land in genuinely open space
+   beside its destination node — not on top of a merge elbow's line segment or behind a
+   later-drawn path element — verified by an actual zoomed screenshot per `diagram-style.md`, not
+   by reading the coordinates.
+5. Add the new concept's `concepts-index.json` entries in the same pass — see `search-index.md`.
+6. Do all of the above — renumbering, next-link repointing, journey-map rebuild, concept list,
+   spec docs, search index — in one commit. A partial insertion (new page added but an old page's
+   next-box or eyebrow left stale) is exactly the kind of bug this checklist exists to prevent.
+
 ## Adding a new category
 
 1. Flip its tile on the platform home `index.html` from a `.soon` placeholder to a real

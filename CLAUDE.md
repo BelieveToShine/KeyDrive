@@ -7,13 +7,15 @@ file first in any new session; it routes to everything else rather than trying t
 
 ## Current state
 
-- **AI** category is complete: hub page + all 17 planned concept pages written, start to finish
-  (What is AI? through Production). Journey map, concept list, and search index are all fully
-  wired to match.
+- **AI** category is complete: hub page + all 19 planned concept pages written, start to finish
+  (What is AI? through Production — including Embeddings & Vector Search and Context
+  Engineering, added after a production-verification review found them missing from the
+  original 17). Journey map, concept list, and search index are all fully wired to match.
 - Three other categories (Cloud Systems, Data Systems, Web Platforms) exist only as "coming
   soon" placeholder tiles on the platform home — no hub page, no spec folder yet.
-- **Status: the user is verifying the AI category in production and will give corrections next.**
-  Don't start a new category or build any explicitly-deferred item without being asked.
+- **Status: the user is verifying the AI category in production and applying corrections as
+  they come in.** Don't start a new category or build any explicitly-deferred item without
+  being asked.
 
 Full detail: `docs/keydrive-overview.md`.
 

@@ -8,7 +8,7 @@ design/content rules themselves, see `rules/`. For a specific category's own con
 
 | Category | Status | Concepts written | Hub page |
 |---|---|---|---|
-| AI | 🟢 Live, complete | 17 / 17 | `ai/index.html` — spec: `specs/ai/` |
+| AI | 🟢 Live, complete | 19 / 19 | `ai/index.html` — spec: `specs/ai/` |
 | Cloud Systems | 🔒 Placeholder tile only, no hub page yet | 0 | — |
 | Data Systems | 🔒 Placeholder tile only, no hub page yet | 0 | — |
 | Web Platforms | 🔒 Placeholder tile only, no hub page yet | 0 | — |
@@ -37,6 +37,7 @@ content philosophy (one connected journey per category vs. a tag-and-property to
 
 ## Current status
 
-The AI category's full 17-concept journey is written. The user is verifying it in production
-next and will give corrections. No other category's hub page should be built without being
-asked. See `specs/ai/overview.md` for the AI category's specific status.
+The AI category's full 19-concept journey is written. The user is verifying it in production and
+applying corrections as they come in. No other category's hub page should be built without
+being asked. See `specs/ai/overview.md` for the AI category's specific status and revision
+history.

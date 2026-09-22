@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 2 of 17 · 🎓 Foundations</div>
+    <div class="eyebrow">Concept 2 of 19 · 🎓 Foundations</div>
     <h1>Machine Learning is <span class="grad-text">the actual process</span> that does the learning AI promised.</h1>
     <p class="sub">The last page said "AI learns from examples instead of following rules."
     Machine Learning is the field that answers the obvious next question: learns <i>how</i>,
@@ -53,7 +53,7 @@
             <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
           </marker>
         </defs>
-        <text x="320" y="16" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a78bfa">TRAINING (happens once, offline)</text>
+        <text x="320" y="16" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a78bfa">TRAINING (usually upfront, can repeat)</text>
 
         <rect x="20" y="30" width="140" height="20" rx="6" fill="#171c28" stroke="#232a3a"/>
         <text x="90" y="44" text-anchor="middle" font-size="10" font-family="'JetBrains Mono'"><tspan fill="#fbbf24">{</tspan><tspan fill="#e7ebf3"> 800 sqft → $150K </tspan><tspan fill="#fbbf24">}</tspan></text>
@@ -100,26 +100,33 @@
         <text x="582" y="196" text-anchor="middle" font-size="11" fill="#6ee7b7">🎯 Prediction</text>
         <text x="582" y="210" text-anchor="middle" font-size="10" fill="#6ee7b7">≈ $231K</text>
       </svg>
-      <figcaption><strong>What you're seeing:</strong> four real (size → price) examples train a
-      model that finds the relationship between them — here, roughly <code>price ≈ 0.085 × size +
-      82</code>. That exact same trained model is then reused, unchanged, on a house size it never
-      saw during training (1750 sqft) to produce a prediction. Training happens once and is
-      expensive; inference reuses the result instantly, over and over.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> four real, labeled (size → price) examples
+      train a model that finds the relationship between them — here, roughly
+      <code>price ≈ 0.085 × size + 82</code>. That trained model is then reused on a house size
+      it never saw during training (1750 sqft) to produce a prediction. Training is usually the
+      more expensive step, typically done upfront (and repeated or updated over time as new data
+      comes in); inference reuses the current trained model instantly, over and over, in
+      production. This example — learning from labeled (input, correct-answer) pairs — is
+      specifically <b>supervised</b> learning, one of a few different ways ML systems learn.</figcaption>
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">Machine Learning = feed a model many labeled examples until it learns the pattern; then reuse it on new inputs.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">Machine Learning = a model adjusts its own parameters from data until it captures a pattern; then that pattern gets reused on new inputs.</span></div>
 
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
       <p>Saying "the system should learn from data" is a goal, not a method. Machine Learning
-      is the actual toolbox for doing that: a family of algorithms that look at many labeled
-      examples, and adjust their own internal parameters until their guesses match the real
-      answers as closely as possible.</p>
-      <p>Once that adjustment process is repeatable and works reliably on new examples, you have
-      a trained <b>model</b> — a reusable thing that turns a new input into a prediction, without
-      anyone hand-coding that specific input.</p>
+      is the actual toolbox for doing that: a family of algorithms that adjust their own
+      internal parameters from data until they capture a useful pattern.</p>
+      <p>There isn't just one way to learn from data. This page's example — labeled (input,
+      correct-answer) pairs like the house examples above — is <b>supervised</b> learning, the
+      easiest one to see clearly. Two other major flavors exist: <b>unsupervised</b> learning
+      finds structure in data that has no labels at all (grouping similar customers together,
+      say); <b>reinforcement</b> learning learns from a reward signal instead of a labeled
+      answer (try an action, get a score, adjust). All three end the same way: a trained
+      <b>model</b> — a reusable thing that turns a new input into an output, without anyone
+      hand-coding that specific input.</p>
     </div>
   </section>
 
@@ -134,8 +141,10 @@
       <p>Real ML models are far more complex than one line, but the shape of the idea is
       identical: <b>find a mathematical relationship in the examples you have, then reuse that
       relationship on inputs you haven't seen.</b> "Deep Learning" — later in this journey — is
-      what happens when that relationship gets stacked into many layers instead of one line, so
-      it can capture patterns a single line never could.</p>
+      what happens when you stack many such relationships into layers instead of using just one.
+      Take "many stacked lines" as a teaching analogy for the shape of the idea, not a literal
+      description — the actual building block a real deep network stacks (weights, a sum, a
+      non-linear bend) is covered properly in Neural Networks.</p>
 
       <figure class="diagram-card" style="margin-top:18px;">
         <svg viewBox="0 0 500 210" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
@@ -183,26 +192,31 @@
 
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"Machine learning is the process of fitting a model to a large set of labeled
-    examples so it learns the underlying pattern, then reusing that trained model to make
-    predictions on new inputs it's never seen. Training is the expensive, one-time step; inference is the fast, repeated step that actually runs in production."</div>
+    <div class="kd-card saythis-box">"Machine learning is a family of algorithms that adjust their own parameters from data —
+    from labeled examples in supervised learning, from structure in the data itself for
+    unsupervised learning, or from a reward signal for reinforcement learning — until they
+    capture a useful pattern, then reuse that trained model on new inputs. Training is usually
+    the more expensive, upfront step; inference is the fast, repeated step that actually runs in
+    production."</div>
   </section>
 
   <section class="kd-section" id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>AI, Machine Learning, and Deep Learning are not three different things — they're
-      nested.</b> AI is the overall goal (learned behavior). Machine Learning is one broad family
-      of techniques for achieving it. Deep Learning is a specific kind of Machine Learning that
-      uses many-layered neural networks. Every deep learning system is machine learning; not
-      every machine learning system is deep learning.</p>
+      <p><b>Machine Learning and Deep Learning are not two different things — they're nested,
+      both inside the broader field of AI.</b> AI is the overall goal: systems that perform
+      tasks requiring intelligence, by whatever means. Machine Learning is one major approach —
+      currently the dominant one — where the system learns from data. Deep Learning is a
+      specific kind of Machine Learning that uses many-layered neural networks. Every deep
+      learning system is machine learning; not every machine learning system is deep learning;
+      and not every AI system is machine learning, even though most modern ones are.</p>
     </div>
   </section>
 
   <div class="confuse-pair">
-    <div class="cp-side"><h5>🔵 AI</h5><p>The goal: behavior that was learned, not hand-coded. The widest circle.</p></div>
+    <div class="cp-side"><h5>🔵 AI</h5><p>The goal: systems that perform tasks needing intelligence, by any approach. The widest circle.</p></div>
     <div class="cp-vs">contains</div>
-    <div class="cp-side"><h5>🟣 Machine Learning</h5><p>The technique family that actually does the learning. A smaller circle inside AI.</p></div>
+    <div class="cp-side"><h5>🟣 Machine Learning</h5><p>One major approach — learning from data. A smaller circle inside AI, not all of it.</p></div>
   </div>
 
   <details class="zoom">
@@ -223,8 +237,9 @@ predicted_price = model.predict(<span class="num">1750</span>)  <span class="cmt
 
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
-    <div class="kd-card next-box locked">
-      <span>🔒 Next up: <b>Deep Learning</b> — what happens when you stack that "fit a line" idea into hundreds of layers. Coming soon — check back after this page is reviewed.</span>
+    <div class="kd-card next-box">
+      <span>You now know how a model learns one relationship. Next: what happens when that relationship gets stacked into many layers.</span>
+      <a class="next-link" href="deep-learning.html">Deep Learning <span class="arrow">→</span></a>
     </div>
   </section>
 </main>

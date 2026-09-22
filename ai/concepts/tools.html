@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 11 of 17 · 🤖 Acting on goals</div>
+    <div class="eyebrow">Concept 12 of 19 · 🤖 Acting on goals</div>
     <h1>Tools let "act" mean <span class="grad-text">doing something real</span>, not just generating text about it.</h1>
     <p class="sub">The agent loop needs a real "act" step. Tools are the real functions — an
     API, a calculator, a database query — that turn a decision into an actual action.</p>
@@ -94,11 +94,11 @@
   <details class="zoom">
     <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
     <div class="zoom-inner">
-      <p>The model itself never runs the tool. Its job is to decide <i>which</i> tool fits the
-      current step and <i>what arguments</i> to call it with — that decision comes out as
-      structured output, not free text. Separate code around the model — not the model — actually
-      executes the call (hits the API, runs the query) and hands the real result back into the
-      model's context for its next step.</p>
+      <p>The model generates a tool call — it decides <i>which</i> tool fits the current step and
+      <i>what arguments</i> to call it with, as structured output, not free text. The
+      surrounding application or runtime is what actually executes that call (hits the API,
+      runs the query) and hands the real result back into the model's context for its next
+      step.</p>
       <p>That separation matters: the model can be wrong about which tool to use or what
       arguments to pass, but it never directly touches the outside world itself.</p>
     </div>

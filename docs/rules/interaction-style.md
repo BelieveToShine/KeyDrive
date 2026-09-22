@@ -30,6 +30,23 @@ handler, or an SVG `<a>` wrapping a `<g>`. Concretely, on hover:
 - A smooth transition (`.15s ease` is the standard already used across the CSS) — never an
   instant snap.
 
+### Genuine inline text links get an animated underline, never the plain browser default
+
+The exception above ("only on genuine inline text links") was originally read too literally: the
+breadcrumb (`.kd-crumbs a`) and the brand logo (`.brand`) are inline text, so they were left with
+the browser's plain instant `text-decoration: underline` on hover — and a production review
+correctly called that "not looks good," a jarring, dated default that clashes with the button-like
+feedback everything else on the site gets. **A plain instant underline is never the right hover
+state anywhere on this site, including on inline text links.** Instead, give inline text links
+(breadcrumbs, brand logo, `.concept-row a`, and any future one-line text link) an animated
+underline-reveal: `text-decoration: none`, then a `::after` pseudo-element the width of the text
+that scales in from `transform: scaleX(0)` to `scaleX(1)` (`transform-origin: left`) over the same
+`.15s–.2s ease` transition used everywhere else. This still reads as "clickable" — arguably more
+clearly, since it's a deliberate reveal rather than a static line — without the dated instant-snap
+underline. See `.kd-crumbs a::after` / `.brand::after` / `.concept-row a::after` in
+`assets/style.css` as the reference implementation; reuse it rather than falling back to
+`text-decoration: underline` for any new inline text link.
+
 And on `:active` (press):
 - The lift reduces or reverses (`translateY(-1px) scale(.98)` is the pattern in use) so a click
   visibly "pushes the button down" before the navigation happens.
@@ -58,6 +75,16 @@ apply this broader version:
 - Keep transitions short (`.15s`–`.25s`) and easing consistent with what's already in
   `assets/style.css` (`ease`) — a snappy, consistent feel across the whole site matters more than
   any single flashy transition.
+
+## A link that can outgrow its box must not be allowed to wrap to the wrong position
+
+The concept-page `.next-box`'s link (`a.next-link`) sits at the right edge of a flex row next to
+a description line. With a long enough concept name (e.g. "Embeddings & Vector Search →"), the
+row wrapped and the link dropped to its own line at the *left* edge — reading like a mistake, not
+a design. Any two-part row like this (a description + a call-to-action pinned to one side) needs
+`margin-left: auto; flex: 0 0 auto; white-space: nowrap` (or equivalent) on the pinned element so
+it stays anchored to its corner regardless of the sibling text's length, rather than assuming the
+text will always be short enough to fit on one line.
 
 ## Verification
 
