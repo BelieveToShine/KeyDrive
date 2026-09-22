@@ -121,12 +121,16 @@
       internal parameters from data until they capture a useful pattern.</p>
       <p>There isn't just one way to learn from data. This page's example — labeled (input,
       correct-answer) pairs like the house examples above — is <b>supervised</b> learning, the
-      easiest one to see clearly. Two other major flavors exist: <b>unsupervised</b> learning
-      finds structure in data that has no labels at all (grouping similar customers together,
-      say); <b>reinforcement</b> learning learns from a reward signal instead of a labeled
-      answer (try an action, get a score, adjust). All three end the same way: a trained
-      <b>model</b> — a reusable thing that turns a new input into an output, without anyone
-      hand-coding that specific input.</p>
+      easiest one to see clearly, but it isn't what "ML" means by default. Three other major
+      flavors exist, shown below. All of them end the same way: a trained <b>model</b> — a
+      reusable thing that turns a new input into an output, without anyone hand-coding that
+      specific input.</p>
+      <div class="taxonomy-strip">
+        <div class="tax-item"><h5>🏷️ Supervised</h5><p>Learns from labeled (input, correct-answer) pairs — this page's house-price example.</p></div>
+        <div class="tax-item"><h5>🔍 Unsupervised</h5><p>Finds structure in unlabeled data — e.g. grouping similar customers together.</p></div>
+        <div class="tax-item"><h5>🪞 Self-supervised</h5><p>Generates its own training signal from the data itself — how most LLMs are pretrained.</p></div>
+        <div class="tax-item"><h5>🎮 Reinforcement</h5><p>Learns from a reward signal instead of a labeled answer — try an action, get a score, adjust.</p></div>
+      </div>
     </div>
   </section>
 
@@ -183,6 +187,7 @@
     <div class="kd-card recall-box">
       <ul>
         <li>ML is the concrete "how" behind AI's "learn from data" idea.</li>
+        <li>Four recognized kinds: supervised, unsupervised, self-supervised, reinforcement — not just labeled examples.</li>
         <li><b>Training</b> = fitting a model to examples, done once (or periodically), often expensive.</li>
         <li><b>Inference</b> = using the already-trained model on a new input, done constantly, needs to be fast.</li>
         <li>A "model" is just the reusable result of training — not the algorithm itself.</li>
@@ -194,9 +199,10 @@
     <div class="sec-label saythis">🎤 Say this in an interview</div>
     <div class="kd-card saythis-box">"Machine learning is a family of algorithms that adjust their own parameters from data —
     from labeled examples in supervised learning, from structure in the data itself for
-    unsupervised learning, or from a reward signal for reinforcement learning — until they
-    capture a useful pattern, then reuse that trained model on new inputs. Training is usually
-    the more expensive, upfront step; inference is the fast, repeated step that actually runs in
+    unsupervised learning, from the data generating its own training signal in self-supervised
+    learning, or from a reward signal for reinforcement learning — until they capture a useful
+    pattern, then reuse that trained model on new inputs. Training is usually the more
+    expensive, upfront step; inference is the fast, repeated step that actually runs in
     production."</div>
   </section>
 

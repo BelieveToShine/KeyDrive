@@ -54,43 +54,33 @@
             <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
           </marker>
         </defs>
-        <text x="200" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fb7185">RULE-BASED AI</text>
-        <rect x="20" y="40" width="120" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
-        <text x="80" y="64" text-anchor="middle" font-size="12" fill="#e7ebf3">📥 New input</text>
-        <path d="M140,60 H230" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow)"/>
-        <g class="arrow-pill"><rect x="150" y="51" width="60" height="18" rx="9"/><text x="180" y="64" text-anchor="middle" font-size="9.5">🔍 checked</text></g>
-        <rect x="230" y="40" width="150" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185"/>
-        <text x="305" y="58" text-anchor="middle" font-size="11.5" fill="#fda4af">📏 Rules a human</text>
-        <text x="305" y="72" text-anchor="middle" font-size="11.5" fill="#fda4af">wrote by hand</text>
-        <path class="flow-arrow" d="M305,80 V96" stroke="#fb7185" stroke-width="1.6" marker-end="url(#waArrow)"/>
-        <rect class="fail-box" x="230" y="96" width="150" height="40" rx="10" fill="rgba(251,113,133,.14)" stroke="#fb7185"/>
-        <text x="305" y="112" text-anchor="middle" font-size="10.5" fill="#fda4af">✕ breaks on anything</text>
-        <text x="305" y="126" text-anchor="middle" font-size="10.5" fill="#fda4af">nobody predicted</text>
+        <rect x="260" y="16" width="120" height="42" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa"/>
+        <text x="320" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#c4b5fd">🌐 AI</text>
 
-        <line x1="0" y1="150" x2="640" y2="150" stroke="#232a3a" stroke-dasharray="3 4"/>
+        <path d="M320,58 V74 H175 V86" stroke="#5b6577" stroke-width="1.6" fill="none" marker-end="url(#waArrow)"/>
+        <path d="M320,58 V74 H465 V86" stroke="#5b6577" stroke-width="1.6" fill="none" marker-end="url(#waArrow)"/>
 
-        <text x="328" y="180" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">LEARNING-BASED AI (ML)</text>
-        <rect x="20" y="198" width="140" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
-        <text x="90" y="216" text-anchor="middle" font-size="11" fill="#e7ebf3">📚 Thousands of</text>
-        <text x="90" y="230" text-anchor="middle" font-size="11" fill="#e7ebf3">real examples</text>
-        <path class="flow-arrow" d="M160,218 H260" stroke="#34d399" stroke-width="1.6" marker-end="url(#waArrow)"/>
-        <g class="arrow-pill"><rect x="170" y="209" width="58" height="18" rx="9"/><text x="199" y="222" text-anchor="middle" font-size="9.5">🎓 trains</text></g>
-        <rect x="260" y="198" width="140" height="40" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
-        <text x="330" y="216" text-anchor="middle" font-size="11" fill="#6ee7b7">🧠 System finds</text>
-        <text x="330" y="230" text-anchor="middle" font-size="11" fill="#6ee7b7">the pattern itself</text>
-        <path class="flow-arrow" d="M400,218 H500" stroke="#34d399" stroke-width="1.6" marker-end="url(#waArrow)"/>
-        <g class="arrow-pill"><rect x="410" y="209" width="62" height="18" rx="9"/><text x="441" y="222" text-anchor="middle" font-size="9.5">🎯 applies</text></g>
-        <rect x="500" y="198" width="135" height="40" rx="10" fill="rgba(34,211,238,.12)" stroke="#22d3ee"/>
-        <text x="568" y="216" text-anchor="middle" font-size="11" fill="#67e8f9">✅ Handles</text>
-        <text x="568" y="230" text-anchor="middle" font-size="10" fill="#67e8f9">cases it never saw</text>
+        <rect x="70" y="86" width="210" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185"/>
+        <text x="175" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#fda4af">📏 Rule / Symbolic AI</text>
+        <text x="175" y="124" text-anchor="middle" font-size="10.5" fill="#93a0b8">hand-coded logic — still AI</text>
+
+        <rect x="360" y="86" width="210" height="52" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
+        <text x="465" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#6ee7b7">🧠 Learning-based AI</text>
+        <text x="465" y="124" text-anchor="middle" font-size="10.5" fill="#93a0b8">= Machine Learning — learns from data</text>
+
+        <path d="M465,138 V198" stroke="#34d399" stroke-width="1.6" stroke-dasharray="3 4" fill="none" marker-end="url(#waArrow)"/>
+        <g class="arrow-pill"><rect x="390" y="159" width="150" height="18" rx="9"/><text x="465" y="172" text-anchor="middle" font-size="9">stacks many layers</text></g>
+
+        <rect x="390" y="198" width="150" height="34" rx="8" fill="#171c28" stroke="#3a4258" stroke-dasharray="3 4"/>
+        <text x="465" y="220" text-anchor="middle" font-size="11" fill="#93a0b8">🧱 Deep Learning (next up)</text>
       </svg>
-      <figcaption><strong>What you're seeing:</strong> the same job — sorting spam from real mail —
-      solved by two different AI approaches. Top: a person's hand-written rule checks each new
-      input directly, so anything the person didn't anticipate breaks it — still AI, just not
-      learning-based. Bottom: a system learns its own rule from thousands of labeled examples,
-      so it can handle a case it has never seen. That second approach — <em>machine
-      learning</em> — is what scaled far better to messy, real-world variation, which is why
-      it's the approach this journey follows from here on.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> AI is the umbrella goal — building systems
+      that do things that normally need human intelligence. That goal splits into two different
+      means: rule/symbolic systems, where a person writes the logic by hand, and learning-based
+      systems — which is what "machine learning" actually is. This journey follows the
+      learning-based branch specifically, because it scaled far better to real-world variation
+      and now dominates practical AI. Stack many of ML's learned layers and you get <em>Deep
+      Learning</em>, a couple of pages further into this journey.</figcaption>
     </figure>
   </section>
 
@@ -129,6 +119,51 @@
       never seen. That adjustment process — and everything you can build once it works — is the
       rest of this journey: <a href="machine-learning.html">Machine Learning</a> is where it
       actually happens.</p>
+
+      <p>Concretely, here's the same job — sorting spam from real mail — solved both ways:</p>
+
+      <figure class="diagram-card" style="margin-top:18px;">
+        <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
+          <defs>
+            <marker id="waArrow2" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto">
+              <path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/>
+            </marker>
+          </defs>
+          <text x="200" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fb7185">RULE-BASED AI</text>
+          <rect x="20" y="40" width="120" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
+          <text x="80" y="64" text-anchor="middle" font-size="12" fill="#e7ebf3">📥 New input</text>
+          <path d="M140,60 H230" stroke="#5b6577" stroke-width="1.6" marker-end="url(#waArrow2)"/>
+          <g class="arrow-pill"><rect x="150" y="51" width="60" height="18" rx="9"/><text x="180" y="64" text-anchor="middle" font-size="9.5">🔍 checked</text></g>
+          <rect x="230" y="40" width="150" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185"/>
+          <text x="305" y="58" text-anchor="middle" font-size="11.5" fill="#fda4af">📏 Rules a human</text>
+          <text x="305" y="72" text-anchor="middle" font-size="11.5" fill="#fda4af">wrote by hand</text>
+          <path class="flow-arrow" d="M305,80 V96" stroke="#fb7185" stroke-width="1.6" marker-end="url(#waArrow2)"/>
+          <rect class="fail-box" x="230" y="96" width="150" height="40" rx="10" fill="rgba(251,113,133,.14)" stroke="#fb7185"/>
+          <text x="305" y="112" text-anchor="middle" font-size="10.5" fill="#fda4af">✕ breaks on anything</text>
+          <text x="305" y="126" text-anchor="middle" font-size="10.5" fill="#fda4af">nobody predicted</text>
+
+          <line x1="0" y1="150" x2="640" y2="150" stroke="#232a3a" stroke-dasharray="3 4"/>
+
+          <text x="328" y="180" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">LEARNING-BASED AI (ML)</text>
+          <rect x="20" y="198" width="140" height="40" rx="10" fill="#171c28" stroke="#232a3a"/>
+          <text x="90" y="216" text-anchor="middle" font-size="11" fill="#e7ebf3">📚 Thousands of</text>
+          <text x="90" y="230" text-anchor="middle" font-size="11" fill="#e7ebf3">real examples</text>
+          <path class="flow-arrow" d="M160,218 H260" stroke="#34d399" stroke-width="1.6" marker-end="url(#waArrow2)"/>
+          <g class="arrow-pill"><rect x="170" y="209" width="58" height="18" rx="9"/><text x="199" y="222" text-anchor="middle" font-size="9.5">🎓 trains</text></g>
+          <rect x="260" y="198" width="140" height="40" rx="10" fill="rgba(52,211,153,.12)" stroke="#34d399"/>
+          <text x="330" y="216" text-anchor="middle" font-size="11" fill="#6ee7b7">🧠 System finds</text>
+          <text x="330" y="230" text-anchor="middle" font-size="11" fill="#6ee7b7">the pattern itself</text>
+          <path class="flow-arrow" d="M400,218 H500" stroke="#34d399" stroke-width="1.6" marker-end="url(#waArrow2)"/>
+          <g class="arrow-pill"><rect x="410" y="209" width="62" height="18" rx="9"/><text x="441" y="222" text-anchor="middle" font-size="9.5">🎯 applies</text></g>
+          <rect x="500" y="198" width="135" height="40" rx="10" fill="rgba(34,211,238,.12)" stroke="#22d3ee"/>
+          <text x="568" y="216" text-anchor="middle" font-size="11" fill="#67e8f9">✅ Handles</text>
+          <text x="568" y="230" text-anchor="middle" font-size="10" fill="#67e8f9">cases it never saw</text>
+        </svg>
+        <figcaption><strong>What you're seeing:</strong> top, a person's hand-written rule checks
+        each new input directly, so anything the person didn't anticipate breaks it — still AI,
+        just not learning-based. Bottom, a system learns its own rule from thousands of labeled
+        examples, so it can handle a case it has never seen.</figcaption>
+      </figure>
 
       <figure class="diagram-card" style="margin-top:18px;">
         <svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram">
@@ -229,7 +264,7 @@
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>You now know AI means <i>learned</i> behavior. Next: the actual field that does that learning.</span>
+      <span>You now know AI is the broad goal and machine learning is the approach this journey follows. Next: the actual field that does that learning.</span>
       <a class="next-link" href="machine-learning.html">Machine Learning <span class="arrow">→</span></a>
     </div>
   </section>

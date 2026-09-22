@@ -33,6 +33,7 @@ Poppins/Lexend/Fira Code). KeyDrive is dark, gradient-glow, Sora/Inter/JetBrains
 | "Where this leads" box (`.locked` modifier when the next concept isn't written) | `.next-box` |
 | SVG diagram container + caption | `.diagram-card` |
 | Two-sided comparison card | `.confuse-pair` (with `.cp-side`, `.cp-vs`) |
+| Flat "here are its N recognized kinds" list (taxonomy awareness, not a sub-page per kind) | `.taxonomy-strip` (with `.tax-item`) |
 | Progressive-disclosure block | `<details class="zoom">` |
 | Gradient-text 5-second takeaway pill | `.one-sentence` |
 | Inline gradient text (headings, pills) | `.grad-text` |

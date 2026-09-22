@@ -129,7 +129,7 @@
     <div class="kd-card recall-box">
       <ul>
         <li>Among prompting, RAG, and fine-tuning, fine-tuning is the one that updates the model's actual weights.</li>
-        <li>It exists for behavior that needs to be built in, not re-specified every request.</li>
+        <li>The behavior is learned into the model's weights and can persist across requests, not re-specified every time.</li>
         <li>It starts from the trained base model, not from scratch.</li>
         <li>Best for style/skill consistency — not for adding facts (RAG) or one-off steering (prompting).</li>
       </ul>
@@ -170,7 +170,7 @@ examples = [
     {<span class="str">"input"</span>: <span class="str">"..."</span>, <span class="str">"output"</span>: <span class="str">"...(in the exact desired style)..."</span>},
     <span class="cmt"># many more examples of the same style/skill</span>
 ]
-specialized_model = fine_tune(base_model, examples)  <span class="cmt"># weights updated, permanently</span></pre></div>
+specialized_model = fine_tune(base_model, examples)  <span class="cmt"># weights updated — persists across requests</span></pre></div>
       <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative shape only — real fine-tuning involves careful data curation and evaluation to avoid degrading other capabilities.</p>
     </div>
   </details>

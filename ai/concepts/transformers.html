@@ -37,7 +37,7 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 5 of 19 · 🎓 Foundations</div>
-    <h1>Transformers let every word <span class="grad-text">look at every other word directly</span>, instead of waiting in line.</h1>
+    <h1>Transformers let each word <span class="grad-text">weigh information from other relevant words directly</span>, instead of waiting in line.</h1>
     <p class="sub">Neural networks gave us the building block. Transformers are the specific
     network shape that turned out to handle sequences — sentences, code, anything ordered —
     dramatically better than what came before.</p>
@@ -71,7 +71,7 @@
 
         <line x1="0" y1="110" x2="640" y2="110" stroke="#232a3a" stroke-dasharray="3 4"/>
 
-        <text x="295" y="130" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">ATTENTION — EVERY WORD, DIRECTLY</text>
+        <text x="295" y="130" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">ATTENTION — DIRECTLY, WHERE ALLOWED</text>
         <rect x="15" y="140" width="560" height="90" rx="14" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.3)" stroke-dasharray="4 3"/>
         <text x="30" y="153" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">👀 ATTENTION — COMPUTED IN ONE STEP</text>
 
@@ -85,17 +85,19 @@
         <text x="520" y="184" text-anchor="middle" font-size="11" fill="#67e8f9">📄 word 4</text>
 
         <path class="flow-arrow" d="M70,200 V215 H520 V200" stroke="#22d3ee" stroke-width="1.6" fill="none"/>
-        <g class="arrow-pill"><rect x="265" y="206" width="110" height="18" rx="9"/><text x="320" y="219" text-anchor="middle" font-size="9">🔗 direct, any pair</text></g>
+        <g class="arrow-pill"><rect x="255" y="206" width="130" height="18" rx="9"/><text x="320" y="219" text-anchor="middle" font-size="9">🔗 direct, where allowed</text></g>
       </svg>
       <figcaption><strong>What you're seeing:</strong> the same 4-word sequence, handled two ways.
       Sequential processing passes a hidden state one word at a time, so word 4 can only reach
       back to word 1 through 3 hops — and that signal fades the farther it has to travel.
-      Attention lets any word connect directly to any other word in one step, however far apart
-      they are, computed in parallel rather than hop by hop.</figcaption>
+      Attention lets a word connect directly to other words in one step, computed in parallel
+      rather than hop by hop — "where allowed" because some transformers (causal language
+      models, which generate text one token at a time) mask out future positions, so a word can
+      only attend to itself and earlier words, not ones that come after it.</figcaption>
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">Transformers = a network built around attention, so every position can look at every other position directly.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">Transformers = a network built around attention, so each position can weigh information from other relevant positions directly.</span></div>
 
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
@@ -106,9 +108,16 @@
       word, weakening long-range relationships; and because each step depends on the previous
       one finishing, the whole sequence can't be processed in parallel.</p>
       <p>The transformer's answer is attention: instead of relaying information hop by hop, every
-      position computes, in one step, how much it should weigh every other position — near or
-      far, it doesn't matter. That removes the long-range weakening problem and lets the whole
-      computation run in parallel, which is a large part of why transformers scale so well.</p>
+      position computes, in one step, how much it should weigh other positions — near or far, it
+      doesn't matter, so distance alone no longer weakens the signal. That removes the
+      long-range weakening problem and lets the whole computation run in parallel, which is a
+      large part of why transformers scale so well.</p>
+      <p>"Every position" isn't unconditional, though: which positions a given position is
+      <i>allowed</i> to look at depends on the transformer. A causal language model — the shape
+      behind most of today's text-generating LLMs — masks out future positions, so a word can
+      only weigh itself and the words before it, not ones that haven't been generated yet.
+      Encoder-style models built to understand a whole input at once (rather than generate it
+      token by token) skip that mask and let every position see every other position.</p>
     </div>
   </section>
 
@@ -129,7 +138,7 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>Attention lets every position connect directly to every other position, not just neighbors.</li>
+        <li>Attention lets a position connect directly to other positions it's allowed to see, not just neighbors — causal models restrict that to earlier positions only.</li>
         <li>It solves two problems at once: long-range relationships weakening, and step-by-step processing blocking parallelism.</li>
         <li>Attention computes relevance weights, then blends other positions' information by those weights.</li>
         <li>Transformers = neural networks built around stacked attention layers.</li>
@@ -139,19 +148,21 @@
 
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"Transformers replace step-by-step sequence processing with attention, where every position
-    computes a relevance-weighted view of every other position in one step. That fixes the
-    long-range-dependency weakness of earlier sequential models and lets the computation run in
-    parallel, which is a big part of why transformers scale so well."</div>
+    <div class="kd-card saythis-box">"Transformers replace step-by-step sequence processing with attention, where each position
+    computes a relevance-weighted view of the other positions it's allowed to see, in one step —
+    causal language models mask out future positions so generation stays left-to-right. That
+    fixes the long-range-dependency weakness of earlier sequential models and lets the
+    computation run in parallel, which is a big part of why transformers scale so well."</div>
   </section>
 
   <section class="kd-section" id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>Attention doesn't mean "reads the whole input equally."</b> Every position <i>can</i>
-      reach every other position directly, but the learned weights usually concentrate on a few
-      genuinely relevant ones. "Direct access" and "pays attention to everything the same amount"
-      are not the same claim — only the first one is true.</p>
+      <p><b>Attention doesn't mean "reads the whole input equally."</b> A position <i>can</i>
+      reach every position it's allowed to see directly, but the learned weights usually
+      concentrate on a few genuinely relevant ones. "Direct access" and "pays attention to
+      everything the same amount" are not the same claim — only the first one is true, and even
+      "direct access" is scoped by masking in causal models, not automatically the whole input.</p>
     </div>
   </section>
 

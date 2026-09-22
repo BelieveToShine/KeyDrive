@@ -78,10 +78,11 @@
         <text x="582" y="52" text-anchor="middle" font-size="9.5" fill="#6ee7b7">📊 Score</text>
         <text x="582" y="67" text-anchor="middle" font-size="7.5" fill="#6ee7b7">e.g. 87% pass</text>
       </svg>
-      <figcaption><strong>What you're seeing:</strong> a set of test cases with known-good
-      answers runs through the actual AI application, and each real output gets compared
-      against what was expected. The result is a score you can track over time — not a vibe, a
-      number that tells you whether a change made things better or worse.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> the most common shape — a set of test
+      cases with known-good answers runs through the actual AI application, and each real
+      output gets compared against what was expected. The result is a score you can track over
+      time — not a vibe, a number that tells you whether a change made things better or worse.
+      Not every evaluation method needs a pre-written "expected" answer, though — see below.</figcaption>
     </figure>
   </section>
 
@@ -102,11 +103,19 @@
   <details class="zoom">
     <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
     <div class="zoom-inner">
-      <p>Grading isn't always an exact match. For open-ended output — a summary, an explanation —
-      exact text comparison is usually too strict, since there are many valid ways to phrase a
-      good answer. Grading open-ended output often needs a more flexible check: a rubric a human
-      applies, or another model judging the output against specific criteria.</p>
-      <p>Either way, the goal is the same: a repeatable score, not a one-off impression.</p>
+      <p>Grading isn't always an exact match, and not every method even needs a pre-written
+      "expected" answer. The test-cases-with-known-answers shape above is the easiest to explain,
+      but it's one of several recognized ways to grade:</p>
+      <div class="taxonomy-strip">
+        <div class="tax-item"><h5>✅ Exact match</h5><p>Output equals a known-good answer exactly. Strict — fine for short, deterministic outputs.</p></div>
+        <div class="tax-item"><h5>📄 Reference-based</h5><p>Scored by similarity to a known-good answer, not exact equality — for open-ended text.</p></div>
+        <div class="tax-item"><h5>⚖️ Rubric / LLM judge</h5><p>A human rubric or another model grades the output against specific criteria — no fixed answer needed.</p></div>
+        <div class="tax-item"><h5>🧑 Human evaluation</h5><p>A person reviews the output directly — slower, but catches what automated checks miss.</p></div>
+        <div class="tax-item"><h5>🔀 Pairwise comparison</h5><p>Two outputs are compared head-to-head — which is better — rather than scored in isolation.</p></div>
+        <div class="tax-item"><h5>🎯 Task/outcome success</h5><p>Did the task actually get done (e.g. booking completed)? Judged by outcome, not answer text.</p></div>
+      </div>
+      <p>Whichever method fits, the goal is the same: a repeatable score, not a one-off
+      impression.</p>
     </div>
   </details>
 
@@ -114,9 +123,9 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>Evaluation = test cases with known answers, run through the real system, scored against expectations.</li>
+        <li>Evaluation = running the real system against a set of cases and scoring the outputs — known-good answers are the common shape, not the only one.</li>
         <li>It exists because "seems to work" doesn't catch subtle, inconsistent failures.</li>
-        <li>Open-ended output usually needs flexible grading (a rubric or a judge), not exact match.</li>
+        <li>Grading methods: exact match, reference-based, rubric/LLM judge, human review, pairwise comparison, task/outcome success.</li>
         <li>A good score only covers what the test set actually tests — see Observability for the rest.</li>
       </ul>
     </div>

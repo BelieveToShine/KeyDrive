@@ -4,7 +4,7 @@
     "title": "What is AI?",
     "category": "AI",
     "page": "ai/concepts/what-is-ai.html",
-    "summary": "Rules vs. learning — why AI means letting a system learn behavior from data.",
+    "summary": "AI is the broad field/goal; machine learning — learning from data — is the major approach this journey follows.",
     "keywords": "what is ai artificial intelligence rules learning definition foundations"
   },
   {
@@ -134,7 +134,7 @@
     "title": "LLMs",
     "category": "AI",
     "page": "ai/concepts/llms.html",
-    "summary": "Why an LLM is a transformer at a much larger scale, not a different architecture.",
+    "summary": "Why an LLM is typically a transformer trained at a much larger scale — scale is the big lever, not a new mechanism.",
     "keywords": "llm large language model scale transformer parameters"
   },
   {
@@ -238,7 +238,7 @@
     "title": "Fine-tuning",
     "category": "AI",
     "page": "ai/concepts/fine-tuning.html",
-    "summary": "Training a model further on examples of the exact behavior you want, permanently.",
+    "summary": "Training a model further on examples of the exact behavior you want, so it's built into the weights.",
     "keywords": "fine-tuning fine tune weights training permanent behavior style"
   },
   {
@@ -264,7 +264,7 @@
     "title": "Agents",
     "category": "AI",
     "page": "ai/concepts/agents.html",
-    "summary": "Wrapping a model in a loop — plan, act, observe, repeat — until a goal is met.",
+    "summary": "Pursuing a goal across multiple steps — commonly a plan/act/observe loop, but not the only architecture.",
     "keywords": "agent agentic loop plan act observe goal"
   },
   {
@@ -472,7 +472,7 @@
     "title": "Production",
     "category": "AI",
     "page": "ai/concepts/production.html",
-    "summary": "The guardrails, cost control, and scale a working prototype still needs before real users depend on it.",
+    "summary": "Reliability, security, cost, and the operability to watch all three — what a working prototype still needs before real users depend on it.",
     "keywords": "production guardrails cost scale reliability deployment"
   },
   {

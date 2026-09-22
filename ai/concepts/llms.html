@@ -37,10 +37,11 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 6 of 19 · 🎓 Foundations</div>
-    <h1>An LLM is <span class="grad-text">the same transformer, scaled way up</span> — not a different architecture.</h1>
-    <p class="sub">Transformers gave us attention. LLMs are what happens when you take that exact
-    design and make it much bigger, on much more text, until its capability broadens
-    dramatically.</p>
+    <h1>An LLM is <span class="grad-text">typically a transformer, trained at massive scale</span> — scale is the big lever, not a new mechanism.</h1>
+    <p class="sub">Transformers gave us attention. Modern LLMs are transformer-based language
+    models that take that design and train it much bigger, on much more text, until its
+    capability broadens dramatically — real models still vary in architectural details, but
+    scale is the core story.</p>
     <div class="interview-q">❓ "What actually makes something an LLM instead of just 'a transformer'?"</div>
   </section>
 
@@ -85,27 +86,31 @@
         <text x="550" y="171" text-anchor="middle" font-size="10.5" fill="#6ee7b7">💬 broad capability</text>
         <text x="550" y="187" text-anchor="middle" font-size="9" fill="#6ee7b7">language, code, more</text>
       </svg>
-      <figcaption><strong>What you're seeing:</strong> the exact same transformer architecture,
-      just scaled up — more layers and parameters, trained on far more text. The small version
-      learns a narrow skill; the large version, same underlying design, ends up broadly capable
-      across many language tasks. Nothing about the architecture changes — only its size and how
-      much it's trained on.</figcaption>
+      <figcaption><strong>What you're seeing:</strong> the same transformer-style design, just
+      scaled up — more layers and parameters, trained on far more text. The small version learns
+      a narrow skill; the large version, same general design, ends up broadly capable across many
+      language tasks. Real models still vary in architectural details (encoder-decoder vs.
+      decoder-only, sparse/mixture-of-experts variants, and more) — but size and training-data
+      volume are the core lever behind this jump in capability.</figcaption>
     </figure>
   </section>
 
-  <div class="one-sentence">🎯 <span class="grad-text">LLM = a transformer, scaled way up in size and training data, until capability broadens dramatically.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text">LLM = a transformer-based language model, trained at large scale in size and training data, until capability broadens dramatically.</span></div>
 
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
       <p>A transformer at small scale already works — but its capability stays narrow, good
-      mainly at whatever specific task it was trained for. Scaling the very same architecture up
-      — many more layers and parameters, vastly more training text — is what produces a model
-      broadly capable across language tasks it was never specifically trained for.</p>
+      mainly at whatever specific task it was trained for. Scaling a transformer-style
+      architecture up — many more layers and parameters, vastly more training text — is what
+      produces a model broadly capable across language tasks it was never specifically trained
+      for.</p>
       <p>This "scale unlocks broader capability" pattern is one of the most well-established
       results in the field, even though the exact capability a given increase in scale will
-      unlock isn't fully predictable in advance. LLM isn't a separate architecture from
-      Transformer — it's the name for a transformer once it's been scaled up this far.</p>
+      unlock isn't fully predictable in advance. "LLM" isn't one exact architecture — it's the
+      name for a transformer-based language model once it's been trained at this scale; real
+      models vary in specific architectural choices (encoder-decoder vs. decoder-only,
+      mixture-of-experts, and others), but they're all telling the same scaling story.</p>
     </div>
   </section>
 
@@ -117,7 +122,8 @@
       a huge model trained on very little text, or a small model drowned in data, doesn't get
       you the same result as scaling both together.</p>
       <p>Everything downstream from here — prompting, RAG, fine-tuning, agents — is about how to
-      actually use a model at this scale, not about changing its underlying architecture.</p>
+      actually use a model at this scale, not about redesigning its architecture from
+      scratch.</p>
     </div>
   </details>
 
@@ -125,35 +131,39 @@
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
       <ul>
-        <li>LLM = a transformer, scaled way up — not a different architecture.</li>
-        <li>Scaling the same design up is what produces broad, general-purpose language capability.</li>
+        <li>LLM = typically a transformer-based language model, trained at large scale — not one fixed, exact architecture.</li>
+        <li>Scaling a transformer-style design up is what produces broad, general-purpose language capability.</li>
         <li>"Large" covers both model size (layers/parameters) and training data size — both matter.</li>
         <li>Capability gains from scale are well-established as a pattern, not perfectly predictable case by case.</li>
+        <li>Real LLMs still vary in architectural details (encoder-decoder vs. decoder-only, mixture-of-experts, etc.) — scale is the shared story, not a claim that every LLM is identical under the hood.</li>
       </ul>
     </div>
   </section>
 
   <section class="kd-section">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"An LLM is a transformer at a much larger scale — more layers and parameters, trained on far
-    more text. It's the same underlying architecture as a small transformer; scale is what turns
-    a narrow skill into broad, general-purpose language capability."</div>
+    <div class="kd-card saythis-box">"An LLM is typically a transformer-based language model at a much larger scale — more layers
+    and parameters, trained on far more text. It's fundamentally the same transformer-style
+    architecture as a small transformer, though real models vary in specific details; scale is
+    what turns a narrow skill into broad, general-purpose language capability."</div>
   </section>
 
   <section class="kd-section" id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
       <p><b>"LLM" names a scale, not a new mechanism.</b> Don't describe LLMs as if they use a
-      fundamentally different technique from transformers — the attention-based architecture is
-      identical. If asked "what's the difference between a transformer and an LLM," the honest
-      answer is scale, not architecture.</p>
+      fundamentally different technique from transformers — they're still fundamentally
+      attention-based, even though real models vary in architectural details (encoder-decoder
+      vs. decoder-only, mixture-of-experts, and more). If asked "what's the difference between a
+      transformer and an LLM," the honest answer is mainly scale, not a wholesale change in
+      technique.</p>
     </div>
   </section>
 
   <div class="confuse-pair">
     <div class="cp-side"><h5>🧭 Transformer</h5><p>The architecture, at any size — attention-based, stacked layers.</p></div>
     <div class="cp-vs">scaled up becomes</div>
-    <div class="cp-side"><h5>🌐 LLM</h5><p>The same architecture, once it's big and trained on enough text to be broadly capable.</p></div>
+    <div class="cp-side"><h5>🌐 LLM</h5><p>Typically the same transformer-style architecture, once it's big and trained on enough text to be broadly capable.</p></div>
   </div>
 
   <details class="zoom">
@@ -163,7 +173,7 @@
 <span class="cmt"># not any specific real model's actual figures</span>
 small_transformer = Transformer(layers=<span class="num">6</span>,  params=<span class="str">"~100M"</span>,  data=<span class="str">"a few GB of text"</span>)
 large_llm         = Transformer(layers=<span class="num">96</span>, params=<span class="str">"~100B+"</span>, data=<span class="str">"a huge volume of text"</span>)
-<span class="cmt"># same architecture — the difference is entirely in scale</span></pre></div>
+<span class="cmt"># same general shape — the difference is mainly scale (real models still vary in detail)</span></pre></div>
       <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative scale only — actual figures for any real model vary and aren't quoted here.</p>
     </div>
   </details>

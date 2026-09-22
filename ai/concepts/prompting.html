@@ -92,8 +92,8 @@
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
       <p>Retraining a large model for every new task or instruction is far too slow and expensive
-      to do routinely — training is the "happens once, offline" step from Machine Learning, and
-      it stays that way for a reason.</p>
+      to do routinely — training is the usually-upfront, expensive step from Machine Learning,
+      and you don't want to repeat it for every new request.</p>
       <p>Prompting solves this by steering behavior entirely at inference time: the same frozen
       weights, given a different instruction in the input, produce different behavior. No
       training run, no weight changes — just a different request to the same capability.</p>
@@ -108,9 +108,14 @@
       context. A prompt is just the starting context — asking it to summarize, translate, or
       explain simply are all just different contexts for the same underlying capability to act
       on.</p>
-      <p>Prompting has a ceiling, though: it can't give the model facts it was never trained on,
-      or permanently change how it behaves next session. Those are exactly the gaps RAG and
-      fine-tuning exist to close, next in this journey.</p>
+      <p>Prompting has a real ceiling, but it's not "can't provide new information" — you can
+      paste a document into a prompt and ask questions about facts the model never saw during
+      training, and it works. The ceiling is <em>persistence</em>: whatever you put in the
+      prompt only affects this request's context; it doesn't change the model's weights, so
+      nothing carries over to the next separate conversation unless you supply it again. Doing
+      that supplying automatically, at scale, over material too large to paste by hand is RAG's
+      job; making a change to behavior stick without re-supplying it every time is
+      fine-tuning's job — both next in this journey.</p>
     </div>
   </details>
 
@@ -121,7 +126,7 @@
         <li>Prompting steers behavior at inference time — no weights change.</li>
         <li>It exists because retraining for every task/instruction is impractical.</li>
         <li>The same frozen model, different instruction, different behavior.</li>
-        <li>Prompting can't add new knowledge or make a permanent behavior change — see RAG and Fine-tuning.</li>
+        <li>A prompt <b>can</b> supply new information for this request (e.g. pasted text); what it can't do is make that persist to the next request or change the weights — see RAG and Fine-tuning.</li>
       </ul>
     </div>
   </section>
@@ -137,10 +142,13 @@
   <section class="kd-section" id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>Prompting changes behavior, not knowledge.</b> No matter how cleverly worded, a prompt
-      can't teach the model a fact it was never trained on, and it doesn't persist — the next
-      separate conversation starts from the same frozen weights again. Giving it new facts is
-      RAG's job; making a change stick is fine-tuning's job.</p>
+      <p><b>A prompt can supply new information — it just can't make that information stick.</b>
+      Pasting a document into the prompt and asking about it genuinely works, even on facts the
+      model never trained on. What doesn't happen is persistence: nothing about that exchange
+      changes the weights, so the next separate conversation starts from the same frozen model
+      with no memory of it, unless you supply that context again. Doing that supplying
+      automatically and at scale is RAG's job; making a change stick without re-supplying it is
+      fine-tuning's job.</p>
     </div>
   </section>
 
@@ -166,7 +174,7 @@ explainer = model.generate(<span class="str">"Explain this like I'm five: ..."</
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>You now know prompting can't add new facts. Next: how to actually give the model knowledge it wasn't trained on.</span>
+      <span>You now know prompting can supply context but can't make it stick. Next: how to supply the right facts automatically, at scale, instead of pasting them in by hand.</span>
       <a class="next-link" href="rag.html">RAG <span class="arrow">→</span></a>
     </div>
   </section>

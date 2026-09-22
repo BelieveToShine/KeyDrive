@@ -52,6 +52,15 @@ current, authoritative material before treating the phrasing as safe to ship —
 diligence this file already asks for on dates and specific model behaviors extends to
 definitions of foundational terms.
 
+**A wrong claim rarely lives on only the page it was flagged on — grep the whole site for it
+before calling the fix done.** A follow-up review caught Prompting's "can't give the model
+facts it never saw" as wrong (a prompt *can* supply new information as context; it just can't
+make that persist or change the weights). The same overstated sentence had already leaked into
+RAG's hero paragraph and confuse-pair, written in an earlier round by copying the (then-current,
+already-wrong) framing from Prompting. Once a claim is identified as wrong, `grep` every other
+concept page for the same phrase or the same idea before considering the correction finished —
+don't assume a fix on the flagged page is a fix everywhere the underlying claim was echoed.
+
 ## Factual-claims log
 
 Record here any specific factual claim (beyond a general, well-established pattern) that was

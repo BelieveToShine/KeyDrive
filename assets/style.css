@@ -337,6 +337,13 @@ svg.concept-diagram text{ font-family:'Inter'; }
 .confuse-pair .cp-side p{ margin:0; font-size:13px; color:var(--ink-soft); }
 .confuse-pair .cp-vs{ font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-faint); }
 
+/* taxonomy strip — "this concept isn't just one thing, here are its N recognized kinds,"
+   shown as a flat visual list rather than expanded into N separate pages */
+.taxonomy-strip{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px; margin:18px 0; }
+.taxonomy-strip .tax-item{ background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:14px 16px; }
+.taxonomy-strip .tax-item h5{ font-family:'Sora'; font-size:13px; color:#fff; margin:0 0 4px; }
+.taxonomy-strip .tax-item p{ margin:0; font-size:12.5px; color:var(--ink-soft); }
+
 footer.kd-foot{ border-top:1px solid var(--border-soft); padding:26px 0; text-align:center; color:var(--ink-faint); font-size:13px; }
 footer.kd-foot a{ color:var(--ink-soft); }
 
