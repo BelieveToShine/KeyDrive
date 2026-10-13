@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change detection &amp; zone.js — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Change detection</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 12 · 🅰️ The update model</div>
+    <h1>Angular must <span class="grad-text">notice</span> that something changed — and the cost is how much it checks.</h1>
+    <p class="sub">What change detection is, how zone.js and zoneless start a pass, and how Eager and OnPush strategies decide how much of the tree to check.</p>
+    <div class="interview-q">❓ "How does Angular know when to update the view, and what is the difference between Default and OnPush?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="With the Eager strategy every component is checked after a keystroke, 504 in all; with OnPush only the component where the event happened, its ancestor and the one whose input changed are checked, 3 in all, and the 500 cards are skipped">
+<defs><marker id="cd2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cd2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cd2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">EAGER (the old Default) — 504 CHECKED</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">ONPUSH — 3 CHECKED</text>
+<path d="M162,80 L162,102 L64,102 L64,126" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M162,80 L162,126" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M162,80 L162,102 L260,102 L260,126" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M162,170 L162,216" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M477,80 L477,102 L379,102 L379,126" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M477,80 L477,126" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M477,80 L477,102 L575,102 L575,126" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<path d="M477,170 L477,216" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#cd2A)"/>
+<rect class="bx" x="92" y="36" width="140" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162" y="55.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">App</text>
+<text x="162" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">checked</text>
+<rect class="bx" x="18" y="126" width="92" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="64" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">SearchBox</text>
+<text x="64" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">checked</text>
+<rect class="bx" x="116" y="126" width="92" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">ProductList</text>
+<text x="162" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">checked</text>
+<rect class="bx" x="214" y="126" width="92" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="260" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cart</text>
+<text x="260" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">checked</text>
+<rect class="bx" x="116" y="216" width="92" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162" y="235.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cards ×500</text>
+<text x="162" y="248.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">checked</text>
+<rect class="bx" x="407" y="36" width="140" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="477" y="55.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">App</text>
+<text x="477" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">checked</text>
+<rect class="bx" x="333" y="126" width="92" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="379" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">SearchBox</text>
+<text x="379" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">event here</text>
+<rect class="bx" x="431" y="126" width="92" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="477" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ProductList</text>
+<text x="477" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">input changed</text>
+<rect class="bx" x="529" y="126" width="92" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="575" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Cart</text>
+<text x="575" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">skipped</text>
+<rect class="bx" x="431" y="216" width="92" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477" y="235.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Cards ×500</text>
+<text x="477" y="248.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">skipped</text>
+<text class="free" x="162" y="292" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">Every component, every time.</text>
+<text class="free" x="477" y="292" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Skipped subtrees cost nothing.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> ShopUI, one keystroke in the search box. <b>Left — Eager</b> (the strategy formerly called <span class="kw">Default</span>): Angular checks a component whenever activity might have happened anywhere in the app, so it re-evaluates the template of all <b>504</b> components. <b>Right — OnPush</b>: Angular checks the component where the event happened (and its ancestors), plus any component that received a <i>new input</i> through a template binding; the 500 product cards, whose inputs did not change, are <b>skipped</b>. (Counts are illustrative teaching numbers.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Change detection</b> is Angular re-checking templates to update the DOM. Its cost is <b>how many components it checks</b> — so the job is to make Angular check fewer.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 1 gave you a tree of components with bindings. A binding like <span class="kw">{{ product().name }}</span> shows a value; if the value changes, the DOM must change. Somebody has to notice. That somebody is <b>change detection</b>: Angular walks the tree, re-evaluates each component’s template expressions, and updates the DOM where a value differs.</p>
+      <p>Two questions decide the cost: <b>when</b> does Angular start a pass (the trigger), and <b>how much</b> of the tree does a pass visit (the strategy)? For years the answers were “after anything async, thanks to zone.js” and “everything”. Modern Angular lets you answer “only when told” and “only what is dirty”.</p>
+      <p>This page is the map: triggers (with and without zone.js) and strategies (Eager and OnPush). Page 3 shows how to opt in with OnPush and signals.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔔 What starts a pass?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="With zone.js Angular learns that something might have changed because zone.js catches every timer, network response and event listener; without zone.js Angular waits for an explicit notification such as a signal read in a template, markForCheck, the async pipe, setInput or a bound listener">
+<defs><marker id="cd1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cd1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cd1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="324" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">WITH ZONE.JS</text>
+<rect class="zone" x="325" y="8" width="305" height="324" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">ZONELESS</text>
+<path d="M162,94 L162,136" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cd1A)"/>
+<path d="M162,186 L162,228" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cd1A)"/>
+<path d="M477,94 L477,136" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cd1A)"/>
+<path d="M477,186 L477,228" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cd1A)"/>
+<rect class="bx" x="30" y="44" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="66.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Something async finishes</text>
+<text x="162.5" y="79.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">click, timer, HTTP response</text>
+<rect class="bx" x="30" y="136" width="265" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162.5" y="158.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">zone.js notices</text>
+<text x="162.5" y="171.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">it wraps those APIs</text>
+<rect class="bx" x="30" y="228" width="265" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="250.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Angular checks the tree</text>
+<text x="162.5" y="263.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">it cannot tell what changed</text>
+<rect class="bx" x="345" y="44" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="66.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">A notification arrives</text>
+<text x="477.5" y="79.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">signal, markForCheck, async pipe, setInput</text>
+<rect class="bx" x="345" y="136" width="265" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="158.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Angular schedules a pass</text>
+<text x="477.5" y="171.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">only because it was told</text>
+<rect class="bx" x="345" y="228" width="265" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="250.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Angular checks the tree</text>
+<text x="477.5" y="263.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">dirty components only (OnPush)</text>
+<text class="free" x="162" y="318" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcd34d">Simple, but it runs after every task.</text>
+<text class="free" x="477" y="318" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Precise: no notification, no work.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>With zone.js</b>: zone.js wraps asynchronous browser APIs — <span class="kw">setTimeout</span>, network requests, event listeners — and tells Angular when any of them finishes. Angular cannot know whether the data actually changed, so it checks the tree after <i>every</i> such task, even ones that touch nothing the template shows. <b>Zoneless</b>: Angular runs a pass only after an <b>explicit notification</b>: a signal read in a template changed, <span class="kw">markForCheck</span> (the async pipe calls it), <span class="kw">setInput</span>, or a bound listener ran.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Strategies and versions</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Eager (formerly “Default”)</th><th scope="col">OnPush</th></tr></thead><tbody><tr><th scope="row">A component is checked when</th><td>Angular reaches it in a pass — activity may have happened anywhere in the app</td><td>Its input changed through a template binding, an event listener in it (or a descendant) ran, or it was explicitly marked for check</td></tr><tr><th scope="row">Subtrees</th><td>Always visited</td><td>Skipped if the root has not received new inputs</td></tr><tr><th scope="row">Typical cost</th><td>Grows with the number of components</td><td>Grows with what actually changed</td></tr><tr><th scope="row">Inputs compared with</th><td>—</td><td><span class="kw">Object.is</span> in current versions (older docs describe <span class="kw">==</span>)</td></tr><tr><th scope="row">Mutating an input object</th><td>Seen on the next pass</td><td><b>Not</b> seen — pass a new object, or call <span class="kw">markForCheck()</span></td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Versions — check yours.</b> Zoneless change detection became stable in v20.2 and is the default in v21+ (new apps need no setup). The Angular roadmap says that, with zoneless stable and default, OnPush became the default strategy and <span class="kw">Default</span> was renamed <span class="kw">Eager</span>; one docs page states OnPush is the default since v22, older docs (v20) call <span class="kw">Default</span> the default. An app created years ago almost certainly uses zone.js and Eager components.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Change-detection lab · count the checks</div>
+    <div class="code-block"><pre>@Component({ selector: <span class="str">'app-product-card'</span>,
+  template: `&lt;h3&gt;{{ label() }}&lt;/h3&gt;` })
+export class ProductCard {
+  product = input.required&lt;Product&gt;();
+  label() { console.log(<span class="str">'checked'</span>, this.product().id); <span class="kw">return</span> this.product().name; }   <span class="cmt">// a method called from the template</span>
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Temporary instrumentation: a function called from a template runs every time that component is checked. Illustrative sketch.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Setup</th><th scope="col">“checked” logs per keystroke</th><th scope="col">Check time (illustrative)</th></tr></thead><tbody><tr><th scope="row">Eager components (zone.js or zoneless)</th><td>504 — every card logs</td><td>≈ 40 ms</td></tr><tr><th scope="row">OnPush cards, inputs unchanged</th><td>0 for the 500 cards</td><td>≈ 2 ms</td></tr><tr><th scope="row">Zone.js with a timer firing every 100 ms in an unrelated widget</th><td>10 passes per second, even when nothing changed</td><td>Constant background cost</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · change-detection symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">The screen updates but the app feels slow after every click</th><td>Every async task triggers a pass over an Eager tree</td><td>OnPush + signals (page 3); profile first (page 11)</td></tr><tr><th scope="row">“ExpressionChangedAfterItHasBeenChecked” (NG0100), development only</th><td>A getter or method returns a different value on the second check, or a child changes its parent’s value</td><td>Set initial values in the constructor or ngOnInit, not later; make methods pure</td></tr><tr><th scope="row">An OnPush component does not update</th><td>The input object was mutated, or the change happened outside Angular’s notifications</td><td>Pass a new object, use a signal, or call <span class="kw">markForCheck()</span></td></tr><tr><th scope="row">A third-party library’s timers trigger constant passes</th><td>They run inside the zone</td><td>Run them in <span class="kw">NgZone.runOutsideAngular</span> (zone.js apps)</td></tr><tr><th scope="row">Zoneless: a reactive-form update does not show</th><td>Form model updates do not schedule a pass by themselves</td><td>Read form state through signals or call <span class="kw">markForCheck()</span></td></tr><tr><th scope="row">A template method is called hundreds of times</th><td>It runs on every check of that component</td><td>Use a signal or <span class="kw">computed()</span>, or a pure pipe (page 4)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Typing in the search box lags</h5><p>Eager tree with 504 components.</p><span class="sc-use">→ OnPush + signals</span></div>
+      <div class="scenario"><span class="sc-icon">⏱️</span><h5>A chart library animates with timers</h5><p>Each timer tick starts a pass.</p><span class="sc-use">→ runOutsideAngular, or zoneless</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>Tests behave differently after upgrading</h5><p>Zoneless is the TestBed default.</p><span class="sc-use">→ Wait for stability instead of relying on zone.js</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Migrating an old app to zoneless</h5><p>Components rely on zone.js to notice changes.</p><span class="sc-use">→ OnPush first — it is the bridge</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Events inside an OnPush subtree check the ancestors too.</b> An event in a component marks it and its ancestors dirty, so the path from the event up to the root is checked even if those ancestors are OnPush.</p>
+      <p><b>Dev-mode second pass.</b> In development Angular performs an extra check after each pass to verify the bindings did not change (the source of NG0100); it does not exist in production.</p>
+      <p><b>OnPush is the bridge to zoneless.</b> Per the Angular team, components compatible with OnPush are mostly compatible with zoneless as well — they already tell Angular when they change.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Change detection re-evaluates template bindings and updates the DOM; cost = components checked.</li><li>zone.js triggers a pass after every async task (timers, network, events); zoneless needs an explicit notification.</li><li>Eager (old Default) checks everything; OnPush checks on input change, an event in the subtree, or an explicit mark.</li><li>OnPush compares inputs with <span class="kw">Object.is</span>; mutating an object does not trigger a check.</li><li>Zoneless is stable from v20.2 and default in v21+; the OnPush-as-default change is version-dependent.</li><li>NG0100 is a development-only second-pass check.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Change detection is Angular re-checking template bindings. With zone.js it starts a pass after every asynchronous task; zoneless starts one only after an explicit notification like a signal read in a template. Eager checks every component, while OnPush skips subtrees whose inputs did not change, so I move components to OnPush and signals to cut the number of components checked."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Mutating an input object under OnPush.</b> Angular compares references; nothing looks changed.</p>
+      <p><b>Calling expensive methods from a template.</b> They run on every check of that component.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔔 Trigger</h5><p>What starts a pass: zone.js after async tasks, or an explicit notification when zoneless.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌳 Strategy</h5><p>How much of the tree a pass visits: Eager (all) or OnPush (what is dirty).</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Eager checks everything; OnPush skips what did not change. Next: how to opt in — OnPush and signals. <i>(coming soon: OnPush & signals)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular’s defaults changed across versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">Zoneless</a> · <a href="https://angular.dev/api/core/ChangeDetectionStrategy" target="_blank" rel="noopener">ChangeDetectionStrategy</a> · <a href="https://angular.dev/best-practices/skipping-subtrees" target="_blank" rel="noopener">Skipping component subtrees</a> · <a href="https://angular.dev/guide/components/advanced-configuration" target="_blank" rel="noopener">Advanced component configuration</a> · <a href="https://angular.dev/errors/NG0100" target="_blank" rel="noopener">NG0100</a> · <a href="https://angular.dev/best-practices/zone-pollution" target="_blank" rel="noopener">Zone pollution</a> · <a href="https://angular.dev/roadmap" target="_blank" rel="noopener">Roadmap</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

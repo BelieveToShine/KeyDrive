@@ -59,7 +59,7 @@ def build_angular_mental_model():
          ['What does it need?','<span class="kw">input()</span> / <span class="kw">input.required()</span>','<span class="kw">product</span>'],
          ['What does it tell its parent?','<span class="kw">output()</span>','<span class="kw">added</span> with the product id'],
          ['What can its template use?','The <span class="kw">imports</span> array','<span class="kw">CurrencyPipe</span> only']]) + '''
-    <p style="margin-top:12px"><b>Numbers we will reuse.</b> ShopUI: 1 App + 1 SearchBox + 1 ProductList + 500 ProductCard + 1 Cart = <b>504 components</b>. With the old default strategy one keystroke checks all 504 — about <b>40 ms</b> (illustrative). Page 2 explains why and page 3 cuts it to 4.</p>''' + '\n' + ladder_strip([1,2]), label_cls='see')
+    <p style="margin-top:12px"><b>Numbers we will reuse.</b> ShopUI: 1 App + 1 SearchBox + 1 ProductList + 500 ProductCard + 1 Cart = <b>504 components</b>. With the old default strategy one keystroke checks all 504 — about <b>40 ms</b> (illustrative). Page 2 explains why and page 3 cuts it to 3.</p>''' + '\n' + ladder_strip([1,2]), label_cls='see')
     body += block('🩺 Debug checklist · first errors', table(
         ['You see','Likely cause','What to try'],
         [['“'+'app-foo'+'’ is not a known element','The component is not in the <span class="kw">imports</span> array of the component that uses it','Add it to <span class="kw">imports</span> (components are standalone by default since v19)'],

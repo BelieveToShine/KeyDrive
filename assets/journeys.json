@@ -403,7 +403,8 @@
       "angular-clinic": "Capstone: the Angular performance clinic"
     },
     "written": [
-      "angular-mental-model"
+      "angular-mental-model",
+      "change-detection"
     ],
     "sub": {},
     "subTitles": {}

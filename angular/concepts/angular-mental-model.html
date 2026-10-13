@@ -137,7 +137,7 @@
   <section class="kd-section ">
     <div class="sec-label see">🧪 Mental-model lab · read a component</div>
     <p>Open any component in your own codebase and answer four questions — this is the skill the rest of the lab builds on.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Where to look</th><th scope="col">ShopUI ProductCard</th></tr></thead><tbody><tr><th scope="row">What creates it?</th><td>The <span class="kw">selector</span> in a parent template</td><td><span class="kw">&lt;app-product-card&gt;</span> inside ProductList</td></tr><tr><th scope="row">What does it need?</th><td><span class="kw">input()</span> / <span class="kw">input.required()</span></td><td><span class="kw">product</span></td></tr><tr><th scope="row">What does it tell its parent?</th><td><span class="kw">output()</span></td><td><span class="kw">added</span> with the product id</td></tr><tr><th scope="row">What can its template use?</th><td>The <span class="kw">imports</span> array</td><td><span class="kw">CurrencyPipe</span> only</td></tr></tbody></table></div>
-    <p style="margin-top:12px"><b>Numbers we will reuse.</b> ShopUI: 1 App + 1 SearchBox + 1 ProductList + 500 ProductCard + 1 Cart = <b>504 components</b>. With the old default strategy one keystroke checks all 504 — about <b>40 ms</b> (illustrative). Page 2 explains why and page 3 cuts it to 4.</p>
+    <p style="margin-top:12px"><b>Numbers we will reuse.</b> ShopUI: 1 App + 1 SearchBox + 1 ProductList + 500 ProductCard + 1 Cart = <b>504 components</b>. With the old default strategy one keystroke checks all 504 — about <b>40 ms</b> (illustrative). Page 2 explains why and page 3 cuts it to 3.</p>
     <div class="how-strip">
       <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
       <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
@@ -192,8 +192,9 @@
   </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
-    <div class="kd-card next-box locked">
-      <span>You can read an Angular component and its bindings. Next: when state changes, how does Angular decide what to update? Change detection and zone.js. <i>(coming soon: Change detection & zone.js)</i></span>
+    <div class="kd-card next-box">
+      <span>You can read an Angular component and its bindings. Next: when state changes, how does Angular decide what to update? Change detection and zone.js.</span>
+      <a class="next-link" href="change-detection.html">Change detection & zone.js <span class="arrow">→</span></a>
     </div>
   </section>  <p class="fact-note">📌 Angular changes quickly between versions; check the version you use. Official docs: <a href="https://angular.dev/guide/components" target="_blank" rel="noopener">Anatomy of components</a> · <a href="https://angular.dev/guide/templates/binding" target="_blank" rel="noopener">Binding dynamic text, properties and attributes</a> · <a href="https://angular.dev/guide/templates/two-way-binding" target="_blank" rel="noopener">Two-way binding</a> · <a href="https://angular.dev/guide/components/inputs" target="_blank" rel="noopener">Accepting data with input properties</a> · <a href="https://angular.dev/guide/http/setup" target="_blank" rel="noopener">Setting up HttpClient</a> · <a href="https://angular.dev/api/router/provideRouter" target="_blank" rel="noopener">provideRouter</a></p>
 

@@ -2,7 +2,7 @@
 | # | Page | Slug | Status |
 |---|---|---|---|
 | 1 | The Angular mental model | angular-mental-model | ✅ written |
-| 2 | Change detection & zone.js | change-detection | 🔒 planned |
+| 2 | Change detection & zone.js | change-detection | ✅ written |
 | 3 | OnPush & signals | onpush-signals | 🔒 planned |
 | 4 | Templates, control flow & pipes | templates-control-flow | 🔒 planned |
 | 5 | Signals in depth | signals-in-depth | 🔒 planned |

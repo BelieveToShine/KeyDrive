@@ -3202,5 +3202,31 @@
     "summary": "The classic mistake with The Angular mental model.",
     "keywords": "angular component template binding input output model signal standalone bootstrapApplication selector interpolation property binding event binding trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-change-detection",
+    "title": "Change detection & zone.js",
+    "category": "Angular",
+    "page": "angular/concepts/change-detection.html",
+    "summary": "What change detection is, how zone.js and zoneless start a pass, and how Eager and OnPush strategies decide how much to check.",
+    "keywords": "angular change detection zone.js zoneless OnPush default eager NgZone markForCheck ExpressionChangedAfterItHasBeenChecked NG0100 strategy"
+  },
+  {
+    "id": "angular-change-detection-recall",
+    "title": "Change detection & zone.js — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/change-detection.html",
+    "summary": "Quick recall points: Change detection & zone.js.",
+    "keywords": "angular change detection zone.js zoneless OnPush default eager NgZone markForCheck ExpressionChangedAfterItHasBeenChecked NG0100 strategy interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-change-detection-trap",
+    "title": "Change detection & zone.js — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/change-detection.html",
+    "summary": "The classic mistake with Change detection & zone.js.",
+    "keywords": "angular change detection zone.js zoneless OnPush default eager NgZone markForCheck ExpressionChangedAfterItHasBeenChecked NG0100 strategy trap mistake",
+    "anchor": "trap"
   }
 ]
