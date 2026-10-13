@@ -118,5 +118,22 @@ Source root: https://react.dev/
 | Waterfall 300 + 300 ms vs 300 ms parallel (“300 ms”, “300”, “600 ms”) | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 10 — server rendering, hydration & Server Components
+| Claim | Status | Note |
+|---|---|---|
+| hydrateRoot expects the HTML to match the client render; mismatches are bugs; typical causes: typeof window checks, different data, stray whitespace | ✅ V | reference/react-dom/client/hydrateRoot |
+| Since React 18 hydration mismatches are errors; React reverts to client rendering up to the closest Suspense boundary instead of patching nodes | ✅ V | blog/2022/03/08/react-18-upgrade-guide; errors/418 |
+| suppressHydrationWarning works one level deep, escape hatch | ✅ V | hydrateRoot |
+| Causes of mismatch also include timestamps/random numbers, locale date formatting, invalid HTML nesting | ✅ V | errors/418 |
+| Interactive apps use renderToPipeableStream on the server and hydrateRoot on the client; renderToString emits the nearest Suspense fallback and the client retries; renderToNodeStream buffers in React 18 | ✅ V | React 18 upgrade guide; renderToNodeStream docs |
+| Server Components render ahead of time, before bundling, in an environment separate from the client app or SSR server; can run at build time or per request; cannot use state hooks; compose with Client Components using "use client" | ✅ V | reference/rsc/server-components |
+| There is no directive for Server Components; "use server" marks Server Functions; Server Function calls are network requests with serialised args; treat args as untrusted and validate authorisation; designed for mutations, not data fetching | ✅ V | reference/rsc/use-server, server-functions |
+| React 19 Server Components are stable, but bundler/framework implementation APIs do not follow semver | ✅ V | reference/rsc/server-components |
+| Critical vulnerability in React Server Components disclosed December 2025 | ✅ V | blog/2025/12/03/critical-security-vulnerability-in-react-server-components (existence and date only; details not reproduced) |
+| Static generation renders at build time | 🟨 K | general concept; "Server Components can run at build time" is verified, "static generation" as a term is not from react.dev |
+| Most teams use a framework for SSR/RSC | 🟨 K | general guidance |
+| First-load timings: content visible 0.8 s / 2.1 s; interactive 2.2 s / 2.1 s; “first second” | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

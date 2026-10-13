@@ -2890,5 +2890,31 @@
     "summary": "The classic mistake with Data fetching, Suspense & transitions.",
     "keywords": "react data fetching suspense use useTransition useDeferredValue loading waterfall fallback flicker trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-server-rendering-hydration",
+    "title": "Server rendering, hydration & Server Components",
+    "category": "React",
+    "page": "react/concepts/server-rendering-hydration.html",
+    "summary": "Client-only vs server rendering, hydrateRoot and hydration mismatches, Server and Client Components, Server Functions.",
+    "keywords": "react server rendering ssr hydration hydrateRoot server components use client use server streaming static generation mismatch"
+  },
+  {
+    "id": "react-server-rendering-hydration-recall",
+    "title": "Server rendering, hydration & Server Components — interview recall",
+    "category": "React",
+    "page": "react/concepts/server-rendering-hydration.html",
+    "summary": "Quick recall points: Server rendering, hydration & Server Components.",
+    "keywords": "react server rendering ssr hydration hydrateRoot server components use client use server streaming static generation mismatch interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-server-rendering-hydration-trap",
+    "title": "Server rendering, hydration & Server Components — common trap",
+    "category": "React",
+    "page": "react/concepts/server-rendering-hydration.html",
+    "summary": "The classic mistake with Server rendering, hydration & Server Components.",
+    "keywords": "react server rendering ssr hydration hydrateRoot server components use client use server streaming static generation mismatch trap mistake",
+    "anchor": "trap"
   }
 ]

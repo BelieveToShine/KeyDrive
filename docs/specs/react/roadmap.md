@@ -10,7 +10,7 @@
 | 7 | The React debugging playbook | react-debugging-playbook | ✅ written |
 | 8 | Context, reducers & where state lives | context-state-architecture | ✅ written |
 | 9 | Data fetching, Suspense & transitions | data-fetching-suspense | ✅ written |
-| 10 | Server rendering, hydration & Server Components | server-rendering-hydration | 🔒 planned |
+| 10 | Server rendering, hydration & Server Components | server-rendering-hydration | ✅ written |
 | 11 | Code splitting & bundle weight | code-splitting-bundles | 🔒 planned |
 | 12 | Capstone: the React performance clinic | react-clinic | 🔒 planned |
 | ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |

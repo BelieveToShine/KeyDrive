@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Server rendering, hydration &amp; Server Components — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Server rendering</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 10 of 12 · ⚛️ Shipping it</div>
+    <h1>Send <span class="grad-text">finished HTML</span> first — then make it interactive.</h1>
+    <p class="sub">Client-only versus server rendering, how hydration works and why it must match, and what Server and Client Components change.</p>
+    <div class="interview-q">❓ "What is hydration, and how do Server Components differ from server-side rendering?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Client-only rendering shows content after the JavaScript has downloaded and run, while server rendering shows HTML content first and makes it interactive after hydration">
+<defs><marker id="sv1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sv1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sv1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="150" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">CLIENT-ONLY RENDERING</text>
+<rect class="zone" x="10" y="172" width="620" height="150" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="191" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">SERVER-RENDERED HTML + HYDRATION</text>
+<path d="M148,91 L180,91" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<path d="M304,91 L336,91" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<path d="M460,91 L492,91" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<path d="M148,255 L180,255" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<path d="M304,255 L336,255" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<path d="M460,255 L492,255" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sv1A)"/>
+<rect class="bx" x="24" y="56" width="124" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="86" y="88.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Empty HTML</text>
+<text x="86" y="101.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">page shell only</text>
+<rect class="bx" x="180" y="56" width="124" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="242" y="88.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Download JS</text>
+<text x="242" y="101.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">bundle arrives</text>
+<rect class="bx" x="336" y="56" width="124" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="398" y="88.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Render + fetch</text>
+<text x="398" y="101.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">React builds the UI</text>
+<rect class="bx" x="492" y="56" width="124" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="554" y="88.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Content visible</text>
+<text x="554" y="101.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">and interactive</text>
+<rect class="bx" x="24" y="220" width="124" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="86" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">HTML + content</text>
+<text x="86" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">user can read it</text>
+<rect class="bx" x="180" y="220" width="124" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="242" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Download JS</text>
+<text x="242" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">while reading</text>
+<rect class="bx" x="336" y="220" width="124" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="398" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Hydrate</text>
+<text x="398" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">attach handlers</text>
+<rect class="bx" x="492" y="220" width="124" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="554" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Interactive</text>
+<text x="554" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">buttons work</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same ShopUI page loaded two ways. <b>Top</b>: with <b>client-only</b> rendering the browser gets an empty page, downloads the JavaScript, renders, fetches data, and only then does the user see anything. <b>Bottom</b>: with <b>server rendering</b> the HTML already contains the content, so the user can read it while the JavaScript downloads; React then <b>hydrates</b> — attaches event handlers to the existing HTML — and the page becomes interactive.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Send <b>finished HTML</b> first so users can read, then <b>hydrate</b> it so it becomes interactive. <b>Server Components</b> go one step further: some components never ship to the browser at all.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–9 assumed everything runs in the browser. That means the user waits for JavaScript to download, run and fetch data before seeing anything — the slow first paint that data fetching (page 9) could not fully fix.</p>
+      <p>Server rendering moves the first render to the server: the response already contains the page. But HTML alone is dead — buttons need handlers — so the browser still downloads the same JavaScript and React <b>hydrates</b> the HTML. The code ships twice in effect: once as HTML, once as JavaScript.</p>
+      <p>Server Components attack that cost: components that only display data run on the server and send their output, not their code.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Four ways to render</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Approach</th><th scope="col">HTML the browser first gets</th><th scope="col">JavaScript needed for</th><th scope="col">Trade-off</th></tr></thead><tbody><tr><th scope="row"><b>Client-only</b></th><td>Empty shell</td><td>Everything</td><td>Simplest hosting; slowest first content</td></tr><tr><th scope="row"><b>Server rendering + hydration</b></th><td>Full content, rendered per request</td><td>Interactivity (hydrate)</td><td>Fast content; the server does work per request; HTML and client must match</td></tr><tr><th scope="row"><b>Static generation</b></th><td>Full content, rendered at build time</td><td>Interactivity (hydrate)</td><td>Fastest and cheapest to serve; content is as old as the last build</td></tr><tr><th scope="row"><b>Server Components</b></th><td>Rendered ahead of time (at build or per request)</td><td>Only the Client Components</td><td>Smaller client bundle; new boundary rules; needs a framework or bundler that supports them</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧩 Server and Client Components</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Server Components run ahead of time on the server and read data directly; Client Components marked use client are the only component code sent to the browser and they call Server Functions over the network">
+<defs><marker id="sv2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sv2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sv2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="280" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">SERVER (ahead of time)</text>
+<rect class="zone" x="350" y="8" width="280" height="314" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="364" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">BROWSER</text>
+<path d="M150,90 L150,148" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sv2A)"/>
+<path d="M270,65 L380,65" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sv2A)"/>
+<path d="M270,175 L380,175" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sv2A)"/>
+<path d="M490,202 L490,267 L270,267" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sv2A)"/>
+<rect class="bx" x="30" y="40" width="240" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="150" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">ProductPage</text>
+<text x="150" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Server Component</text>
+<rect class="bx" x="30" y="148" width="240" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="150" y="172.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">ProductList</text>
+<text x="150" y="185.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Server Component, reads data</text>
+<rect class="bx" x="30" y="240" width="240" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="150" y="264.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">addToCart</text>
+<text x="150" y="277.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Server Function ('use server')</text>
+<rect class="bx" x="380" y="40" width="220" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="490" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Rendered output</text>
+<text x="490" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">no Server Component code</text>
+<rect class="bx" x="380" y="148" width="220" height="54" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="490" y="172.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">AddToCartButton</text>
+<text x="490" y="185.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Client Component ('use client')</text>
+<g class="arrow-pill"><rect x="122.5" y="110" width="55" height="18" rx="9"/><text x="150" y="122.5" text-anchor="middle" font-size="9" font-style="italic">renders</text></g>
+<g class="arrow-pill"><rect x="303" y="56" width="44" height="18" rx="9"/><text x="325" y="68.5" text-anchor="middle" font-size="9" font-style="italic">sends</text></g>
+<g class="arrow-pill"><rect x="303" y="166" width="44" height="18" rx="9"/><text x="325" y="178.5" text-anchor="middle" font-size="9" font-style="italic">props</text></g>
+<g class="arrow-pill"><rect x="346" y="258" width="98" height="18" rx="9"/><text x="395" y="270.5" text-anchor="middle" font-size="9" font-style="italic">network request</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Server Components</b> run ahead of time in a separate environment — at build time or per request — and can read data directly, but cannot use state hooks. Only components marked <span class="kw">'use client'</span> (and what they import) are sent to the browser, where they add interactivity. There is <b>no directive for Server Components</b>; <span class="kw">'use server'</span> marks <b>Server Functions</b>, which a Client Component calls with a <b>network request</b> carrying serialised arguments.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Server lab · first load of ShopUI</div>
+    <p>Illustrative timings on a typical phone connection; yours will differ — measure them (page 5).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Approach</th><th scope="col">Content visible</th><th scope="col">Interactive</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Client-only</th><td>≈ 2.1 s</td><td>≈ 2.1 s</td><td>JS download + render + fetch before anything shows</td></tr><tr><th scope="row">Server rendering + hydration</th><td>≈ 0.8 s</td><td>≈ 2.2 s</td><td>Content arrives as HTML; buttons wait for JS and hydration</td></tr><tr><th scope="row">Server rendering, but a click in the first second</th><td>—</td><td>—</td><td>The page looks ready but is not interactive yet (hydration pending)</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔬 Hydration must match</div>
+    <div class="code-block"><pre><span class="cmt">// ❌ different output on the server and in the browser (isBrowser = a check for window)</span>
+<span class="kw">function</span> Price() {
+  <span class="kw">return</span> &lt;span&gt;{isBrowser ? localPrice : <span class="str">'…'</span>}&lt;/span&gt;;
+}
+<span class="cmt">// ✅ same first render everywhere; use an effect for browser-only data</span>
+<span class="kw">function</span> Price() {
+  <span class="kw">const</span> [price, setPrice] = useState(<span class="str">'…'</span>);
+  useEffect(() =&gt; { setPrice(readLocalPrice()); }, []);
+  <span class="kw">return</span> &lt;span&gt;{price}&lt;/span&gt;;
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;"><span class="kw">hydrateRoot</span> expects the HTML it adopts to be identical to what the client would render. Since React 18 a mismatch is an error: React falls back to client rendering up to the closest Suspense boundary.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · server-rendering symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“Hydration failed” / text mismatch error</th><td>Server and client rendered different output (<span class="kw">typeof window</span> checks, dates, random values, locale formatting, invalid HTML nesting)</td><td>Make the first render identical; move browser-only values into an effect; <span class="kw">suppressHydrationWarning</span> only for unavoidable one-level differences</td></tr><tr><th scope="row">“window is not defined” on the server</th><td>Browser API used during render</td><td>Use it in an effect or event handler</td></tr><tr><th scope="row">Page is visible but buttons do nothing for a moment</th><td>Not hydrated yet</td><td>Ship less JavaScript (page 11); hydrate sooner</td></tr><tr><th scope="row">A Server Component errors on <span class="kw">useState</span></th><td>Server Components cannot use state hooks</td><td>Move interactivity into a Client Component</td></tr><tr><th scope="row">The client bundle is huge although most of the page is static</th><td><span class="kw">'use client'</span> placed too high in the tree</td><td>Push the boundary down to the small interactive leaves</td></tr><tr><th scope="row">A Server Function is called with unexpected data</th><td>Arguments come from the network</td><td>Treat arguments as untrusted; validate and check the user’s permission</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📰</span><h5>A marketing page must show text instantly and rank in search</h5><p>Content must be in the first HTML.</p><span class="sc-use">→ Server rendering or static generation</span></div>
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Product page: static description, one “Add to cart” button</h5><p>Most of it never needs JS.</p><span class="sc-use">→ Server Components + one Client Component</span></div>
+      <div class="scenario"><span class="sc-icon">⚠️</span><h5>Prices differ between server HTML and the browser</h5><p>Locale or time-dependent output.</p><span class="sc-use">→ Same first render; update in an effect</span></div>
+      <div class="scenario"><span class="sc-icon">🔐</span><h5>A form posts to a Server Function</h5><p>The request is public.</p><span class="sc-use">→ Validate input and authorise the user</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Streaming.</b> For interactive apps the docs point to <span class="kw">renderToPipeableStream</span> on the server and <span class="kw">hydrateRoot</span> on the client; with Suspense (page 9) parts of the page can be sent as they become ready. The older <span class="kw">renderToString</span> does not stream: for a suspended part it emits the nearest Suspense fallback HTML and the client then renders it.</p>
+      <p><b>Stability.</b> React 19 Server Components are described as stable, but the underlying APIs used to build a bundler or framework do not follow semver and may change between minor versions.</p>
+      <p><b>Security.</b> The React team published a critical vulnerability disclosure for React Server Components in December 2025; keep React and your framework up to date.</p>
+      <p><b>In practice</b> most teams get server rendering and Server Components through a framework rather than wiring them by hand.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Server rendering sends finished HTML; hydration attaches handlers to it (<span class="kw">hydrateRoot</span>).</li><li>The client’s first render must match the server HTML; mismatches are errors that fall back to client rendering up to the closest Suspense boundary.</li><li>Static generation renders at build time; server rendering renders per request.</li><li>Server Components render ahead of time, cannot use state hooks, and ship no component code; Client Components use <span class="kw">'use client'</span>.</li><li><span class="kw">'use server'</span> marks Server Functions (network calls with serialised arguments), not Server Components.</li><li>Treat Server Function arguments as untrusted; validate and authorise.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"With client-only rendering users see nothing until the JavaScript has run. Server rendering sends the content as HTML and React hydrates it afterwards, as long as the first client render matches the server output. Server Components go further by running ahead of time and sending only their output, so only the interactive Client Components add to the bundle, and I treat Server Function arguments as untrusted input."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Assuming “visible” means “interactive”.</b> Between HTML arriving and hydration finishing, clicks may do nothing.</p>
+      <p><b>Putting <span class="kw">'use client'</span> at the top of the tree.</b> Everything below it ships to the browser, undoing the benefit.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🖥️ Server-rendered</h5><p>HTML made on the server; the same components also run in the browser to hydrate.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧩 Server Component</h5><p>Runs only on the server (ahead of time); its code is not sent to the browser.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Whatever you render where, the browser must download JavaScript. Next: code splitting and bundle weight — what ships and when. <i>(coming soon: Code splitting & bundle weight)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react-dom/client/hydrateRoot" target="_blank" rel="noopener">hydrateRoot</a> · <a href="https://react.dev/reference/rsc/server-components" target="_blank" rel="noopener">Server Components</a> · <a href="https://react.dev/reference/rsc/server-functions" target="_blank" rel="noopener">Server Functions</a> · <a href="https://react.dev/reference/rsc/use-client" target="_blank" rel="noopener">'use client' directive</a> · <a href="https://react.dev/reference/react-dom/server/renderToPipeableStream" target="_blank" rel="noopener">renderToPipeableStream</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -19,7 +19,7 @@ GROUPS = [('⚛️ THE RENDER MODEL','34,211,238','#67e8f9'),
           ('🚀 SHIPPING IT','52,211,153','#6ee7b7')]
 SUB = {'react-vs-angular': 'react-clinic'}
 SUBT = {'react-vs-angular': 'Same app, two frameworks'}
-WRITTEN = ['react-mental-model','state-rerenders','keys-reconciliation','effects','profiler','memoization','react-debugging-playbook','context-state-architecture','data-fetching-suspense']
+WRITTEN = ['react-mental-model','state-rerenders','keys-reconciliation','effects','profiler','memoization','react-debugging-playbook','context-state-architecture','data-fetching-suspense','server-rendering-hydration']
 LADDER = [('1 · MEASURE','📏 How slow, exactly?','Commits and render milliseconds in the Profiler — a number, not a feeling.'),
           ('2 · READ','🔬 What rendered, and why?','Read the flamegraph: which components, and what triggered them.'),
           ('3 · FIND','🎯 The biggest wrong thing','One slow component, a render cascade, an effect loop, a heavy bundle?'),
