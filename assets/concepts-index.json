@@ -3410,5 +3410,31 @@
     "summary": "The classic mistake with Forms: template-driven, reactive & signal forms.",
     "keywords": "angular forms template-driven reactive signal forms FormGroup FormControl FormArray validators ngModel touched dirty compatForm trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-routing-lazy-loading",
+    "title": "Routing & lazy loading",
+    "category": "Angular",
+    "page": "angular/concepts/routing-lazy-loading.html",
+    "summary": "Route config, loadComponent and loadChildren, preloading, the guard to resolver to activate order and route params as inputs.",
+    "keywords": "angular routing router lazy loading loadComponent loadChildren preloading guards resolvers canActivate withComponentInputBinding route params"
+  },
+  {
+    "id": "angular-routing-lazy-loading-recall",
+    "title": "Routing & lazy loading — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/routing-lazy-loading.html",
+    "summary": "Quick recall points: Routing & lazy loading.",
+    "keywords": "angular routing router lazy loading loadComponent loadChildren preloading guards resolvers canActivate withComponentInputBinding route params interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-routing-lazy-loading-trap",
+    "title": "Routing & lazy loading — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/routing-lazy-loading.html",
+    "summary": "The classic mistake with Routing & lazy loading.",
+    "keywords": "angular routing router lazy loading loadComponent loadChildren preloading guards resolvers canActivate withComponentInputBinding route params trap mistake",
+    "anchor": "trap"
   }
 ]

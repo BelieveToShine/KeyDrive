@@ -410,7 +410,8 @@
       "signals-in-depth",
       "rxjs-async-pipe",
       "dependency-injection",
-      "forms"
+      "forms",
+      "routing-lazy-loading"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

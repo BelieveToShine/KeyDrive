@@ -9,7 +9,7 @@
 | 6 | RxJS & the async pipe | rxjs-async-pipe | ✅ written |
 | 7 | Dependency injection | dependency-injection | ✅ written |
 | 8 | Forms: template-driven, reactive & signal forms | forms | ✅ written |
-| 9 | Routing & lazy loading | routing-lazy-loading | 🔒 planned |
+| 9 | Routing & lazy loading | routing-lazy-loading | ✅ written |
 | 10 | Performance: @defer, SSR & hydration | angular-performance | 🔒 planned |
 | 11 | Angular DevTools & the debugging playbook | angular-debugging-playbook | 🔒 planned |
 | 12 | Capstone: the Angular performance clinic | angular-clinic | 🔒 planned |

@@ -134,5 +134,19 @@ Source root: https://angular.dev/
 | 12-field checkout | 🟦 I | ShopUI teaching data |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 9 — routing & lazy loading
+| Claim | Status | Note |
+|---|---|---|
+| loadComponent lazily loads a component's JavaScript when its route becomes active; loadChildren loads child routes during route matching; loaders run in the route's injection context (can call inject()) | ✅ V | angular.dev/guide/routing/loading-strategies |
+| Built-in preloading: NoPreloading (default) and PreloadAllModules (loads all lazy routes right after the initial navigation) via withPreloading in provideRouter; custom PreloadingStrategy, e.g. data: { preload: true } | ✅ V | guide/routing/customizing-route-behavior |
+| The router preloader does not load routes protected by canLoad guards | ✅ V | api/router/RouterPreloader |
+| withComponentInputBinding binds route data, path params and query params to component inputs; parent route params need paramsInheritanceStrategy: 'always' | ✅ V | v19 common routing tasks; customizing route behavior |
+| CanActivateFn: true continues, false cancels, UrlTree cancels and starts a new navigation; recommended to return a UrlTree/RedirectCommand for redirects; CanDeactivate for unsaved edits; CanMatch false skips the route and tries the next | ✅ V | guide/routing/route-guards; api/router/CanActivateFn, CanMatchFn |
+| ResolveFn: the router waits for resolver data before activation; guards run before resolvers | ✅ V | api/router/ResolveFn; route-guards guide |
+| Route providers create an injector for that route's subtree | ✅ V | angular.dev errors/NG0207 / hierarchical DI (see page 7 ledger) |
+| Host must serve index.html for client routes | 🟨 K | general SPA hosting practice |
+| 420 KB → 330 KB → 180 KB; checkout 90 KB; admin 150 KB | 🟦 I | teaching numbers (420 − 90 − 150 = 180) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

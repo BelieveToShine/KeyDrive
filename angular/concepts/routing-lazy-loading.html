@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routing &amp; lazy loading — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Routing &amp; lazy loading</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 9 of 12 · 🅰️ App structure</div>
+    <h1>The router decides <span class="grad-text">what loads, when, and for whom</span>.</h1>
+    <p class="sub">Route config, loadComponent and loadChildren, preloading, the guard → resolver → activate order, and binding route params to inputs.</p>
+    <div class="interview-q">❓ "How does lazy loading work in Angular routing, and what is the order of guards and resolvers?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="With eager routes the first bundle contains every page; with lazy routes it contains the shell and the home page, and the checkout and admin chunks download when someone navigates there or when preloading fetches them idle">
+<defs><marker id="rl1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rl1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rl1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">EAGER — ONE BIG FIRST BUNDLE</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">LAZY — SPLIT BY ROUTE</text>
+<path d="M407,96 L407,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rl1A)"/>
+<path d="M548,96 L548,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rl1A)"/>
+<path d="M407,232 L407,192" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rl1A)"/>
+<path d="M548,232 L548,192" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rl1A)"/>
+<rect class="bx" x="30" y="44" width="265" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="67.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">main.js — 420 KB</text>
+<text x="162.5" y="80.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">shell + home + checkout + admin</text>
+<text class="free" x="162" y="124" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">Every visitor downloads</text>
+<text class="free" x="162" y="142" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">all of it before the first screen.</text>
+<rect class="bx" x="345" y="44" width="265" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="67.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">main.js — 180 KB</text>
+<text x="477.5" y="80.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">shell + home only</text>
+<rect class="bx" x="345" y="140" width="124" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="407" y="163.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">checkout.js</text>
+<text x="407" y="176.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">90 KB, on demand</text>
+<rect class="bx" x="486" y="140" width="124" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="548" y="163.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">admin.js</text>
+<text x="548" y="176.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">150 KB, on demand</text>
+<rect class="bx" x="345" y="232" width="265" height="52" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="477.5" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Preloading (optional)</text>
+<text x="477.5" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">fetch lazy chunks when idle</text>
+<text class="free" x="477" y="306" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Same pages, smaller first load.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same three areas of ShopUI, shipped two ways. <b>Eager</b>: everything is in the first bundle (420 KB, illustrative) so each visitor downloads the checkout and admin screens before seeing the home page. <b>Lazy</b>: the first bundle holds the shell and the home page (180 KB); <span class="kw">checkout</span> and <span class="kw">admin</span> are separate chunks fetched when someone navigates there. Optional <b>preloading</b> fetches the lazy chunks when the browser is idle.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The <b>router</b> maps URLs to components — and decides <b>when code and data are loaded</b>. Lazy routes keep the first load small; guards and resolvers control who gets in and what is ready.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 8 collected data in forms; real apps have many screens. Angular’s router is part of the framework, integrated with dependency injection (route <span class="kw">providers</span>), signals (route data as inputs) and the build (lazy chunks).</p>
+      <p>The same ideas appeared in the React lab (routing dive and bundles page): a URL tree, nested layouts, route-level code splitting. Angular gives you one official answer.</p>
+      <p>This page covers the route config, lazy loading with <span class="kw">loadComponent</span> / <span class="kw">loadChildren</span>, preloading, and a first look at guards and resolvers; the guards deep dive goes further.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ A route config</div>
+    <div class="code-block"><pre><span class="cmt">// app.routes.ts — provided with provideRouter(routes) in app.config.ts</span>
+export <span class="kw">const</span> routes: Routes = [
+  { path: <span class="str">''</span>, component: Home },
+  { path: <span class="str">'products/:id'</span>, component: ProductPage },             <span class="cmt">// :id → a route parameter</span>
+  { path: <span class="str">'checkout'</span>, loadComponent: () =&gt; import(<span class="str">'./checkout/checkout'</span>).then(m =&gt; m.Checkout),
+    canActivate: [signedInGuard] },                         <span class="cmt">// lazy + guarded</span>
+  { path: <span class="str">'admin'</span>, loadChildren: () =&gt; import(<span class="str">'./admin/routes'</span>).then(m =&gt; m.adminRoutes) },
+];</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. <span class="kw">provideRouter(routes, withComponentInputBinding())</span> would bind <span class="kw">:id</span> to a component input.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🚦 What happens during a navigation</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 312" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A navigation passes through the router in order: match the URL, run canMatch and canActivate guards, run resolvers, then activate the component and bind route parameters to its inputs; a guard can cancel or redirect to another URL">
+<defs><marker id="rl2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rl2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rl2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M165,56 L165,86" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rl2A)"/>
+<path d="M165,136 L165,166" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rl2A)"/>
+<path d="M165,216 L165,246" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rl2A)"/>
+<rect class="bx" x="20" y="6" width="290" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="165" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · Match</text>
+<text x="165" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">URL → route config</text>
+<text class="free" x="330" y="36" text-anchor="start" font-size="10" font-weight="400" fill="#67e8f9">canMatch can skip a route</text>
+<rect class="bx" x="20" y="86" width="290" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="165" y="108.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">2 · Guards</text>
+<text x="165" y="121.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">canActivate / canDeactivate</text>
+<text class="free" x="330" y="116" text-anchor="start" font-size="10" font-weight="400" fill="#fcd34d">false cancels; a UrlTree redirects</text>
+<rect class="bx" x="20" y="166" width="290" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="165" y="188.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Resolvers</text>
+<text x="165" y="201.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">load data before activation</text>
+<text class="free" x="330" y="196" text-anchor="start" font-size="10" font-weight="400" fill="#c4b5fd">the router waits for it</text>
+<rect class="bx" x="20" y="246" width="290" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="165" y="268.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">4 · Activate</text>
+<text x="165" y="281.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">component created; params become inputs</text>
+<text class="free" x="330" y="276" text-anchor="start" font-size="10" font-weight="400" fill="#6ee7b7">route params become inputs</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> in order: the router <b>matches</b> the URL to a route (<span class="kw">canMatch</span> can make it skip one); runs <b>guards</b> (<span class="kw">canActivate</span>, <span class="kw">canDeactivate</span>) that return <span class="kw">true</span>, <span class="kw">false</span> or a <b>UrlTree</b> to redirect; runs <b>resolvers</b>, and the router waits for them; then <b>activates</b> the component. With <span class="kw">withComponentInputBinding</span>, route data, path parameters and query parameters arrive as component <b>inputs</b>. Guards run before resolvers.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Loading strategies</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Option</th><th scope="col">What it does</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><span class="kw">component</span></th><td>Included in the main bundle</td><td>The home page and the shell</td></tr><tr><th scope="row"><span class="kw">loadComponent</span></th><td>Loads one component’s JavaScript when its route becomes active</td><td>A single heavy screen (checkout)</td></tr><tr><th scope="row"><span class="kw">loadChildren</span></th><td>Loads a set of child routes during route matching</td><td>A feature area (admin)</td></tr><tr><th scope="row"><span class="kw">NoPreloading</span> (default)</th><td>Lazy chunks load only on navigation</td><td>Smallest background traffic</td></tr><tr><th scope="row"><span class="kw">withPreloading(PreloadAllModules)</span></th><td>Loads all lazy routes right after the initial navigation</td><td>Fast later navigation on good networks</td></tr><tr><th scope="row">Custom <span class="kw">PreloadingStrategy</span></th><td>Preload only routes flagged, e.g. <span class="kw">data: { preload: true }</span></td><td>Preload checkout, not admin</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Lazy loaders run in the route’s injection context, so they can call <span class="kw">inject()</span>. The preloader does not load routes protected by <span class="kw">canLoad</span> guards.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Routing lab · cut the first load</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Change</th><th scope="col">Initial JavaScript</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Baseline: all routes eager</th><td>420 KB</td><td>Shell, home, checkout and admin in one bundle</td></tr><tr><th scope="row"><span class="kw">loadComponent</span> for checkout (90 KB)</th><td>330 KB</td><td>Checkout moves to a chunk</td></tr><tr><th scope="row"><span class="kw">loadChildren</span> for admin (150 KB)</th><td>180 KB</td><td>Admin moves to a chunk</td></tr><tr><th scope="row">Preload checkout when idle</th><td>180 KB first; checkout already cached later</td><td>Fast checkout after the home page</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · routing symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Refresh on <span class="kw">/products/42</span> returns 404 from the host</th><td>The server does not serve the app for client routes</td><td>Configure the host to serve <span class="kw">index.html</span> for those paths, or use SSR (page 10)</td></tr><tr><th scope="row">A route component does not receive <span class="kw">:id</span></th><td>Input binding is not enabled</td><td>Add <span class="kw">withComponentInputBinding()</span> or inject <span class="kw">ActivatedRoute</span></td></tr><tr><th scope="row">The home page loads everything</th><td>Routes use <span class="kw">component</span> instead of <span class="kw">loadComponent</span></td><td>Lazy-load heavy routes</td></tr><tr><th scope="row">Navigation “does nothing”</th><td>A guard returned <span class="kw">false</span></td><td>Return a <span class="kw">UrlTree</span> to redirect, instead of returning false and navigating in code</td></tr><tr><th scope="row">A blank flash before data appears</th><td>Data loaded in the component, after activation</td><td>A resolver, or show a skeleton (page 10)</td></tr><tr><th scope="row">Parent route params missing in a child</th><td>Param inheritance</td><td><span class="kw">withRouterConfig({ paramsInheritanceStrategy: 'always' })</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🚀</span><h5>Slow first load on mobile</h5><p>All routes in the main bundle.</p><span class="sc-use">→ loadComponent / loadChildren</span></div>
+      <div class="scenario"><span class="sc-icon">🔐</span><h5>Only signed-in users may open checkout</h5><p>Access control.</p><span class="sc-use">→ canActivate (plus server checks)</span></div>
+      <div class="scenario"><span class="sc-icon">📝</span><h5>Warn before leaving a half-filled form</h5><p>Unsaved changes.</p><span class="sc-use">→ canDeactivate</span></div>
+      <div class="scenario"><span class="sc-icon">🔗</span><h5>Deep link to a product</h5><p>URL holds the id.</p><span class="sc-use">→ Route param → input</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Guards are not security.</b> They shape navigation in the browser; the server must still authorise every request.</p>
+      <p><b>Guard results.</b> <span class="kw">true</span> continues, <span class="kw">false</span> cancels, a <span class="kw">UrlTree</span> (or <span class="kw">RedirectCommand</span>) cancels and starts a new navigation. <span class="kw">canMatch</span> returning false does not block navigation — the router tries the next matching route definition.</p>
+      <p><b>Where providers go.</b> A route’s <span class="kw">providers</span> array creates an injector for that route’s subtree (page 7).</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Routes map URLs to components; <span class="kw">provideRouter(routes)</span> goes in the application config.</li><li><span class="kw">loadComponent</span> / <span class="kw">loadChildren</span> split code per route; the default is no preloading.</li><li>Order: match → guards → resolvers → activate.</li><li>Guards return true, false or a UrlTree; redirect with a UrlTree.</li><li><span class="kw">withComponentInputBinding()</span> turns route params and data into inputs.</li><li>Guards are UX, not security.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I define routes in a config, lazy-load heavy areas with loadComponent and loadChildren so the first bundle stays small, and optionally preload what users are likely to visit next. Navigation runs guards and then resolvers before activating the component; guards redirect by returning a UrlTree, route params become inputs with component input binding, and real access control is enforced on the server."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Importing a lazy feature’s code from an eager file.</b> The bundler pulls it back into the main bundle.</p>
+      <p><b>Returning false from a guard and then navigating in code.</b> Return a UrlTree instead.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔒 canActivate</h5><p>Decides whether to enter a route that matched.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧭 canMatch</h5><p>Decides whether the route definition applies at all; false means try the next one.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>The first load is smaller. Next: what Angular does about the rest of the render cost — @defer, SSR and hydration. <i>(coming soon: Performance: @defer, SSR & hydration)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/routing/loading-strategies" target="_blank" rel="noopener">Route loading strategies</a> · <a href="https://angular.dev/guide/routing/route-guards" target="_blank" rel="noopener">Control route access with guards</a> · <a href="https://angular.dev/guide/routing/customizing-route-behavior" target="_blank" rel="noopener">Customizing route behavior</a> · <a href="https://angular.dev/api/router/ResolveFn" target="_blank" rel="noopener">ResolveFn</a> · <a href="https://angular.dev/api/router/provideRouter" target="_blank" rel="noopener">provideRouter</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
