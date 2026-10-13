@@ -4034,5 +4034,31 @@
     "summary": "The classic mistake with Testing SOLID Code.",
     "keywords": "testing SOLID unit test fake stub mock xUnit WebApplicationFactory ConfigureTestServices contract test arrange act assert testability trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-when-not-solid",
+    "title": "When Not to Apply SOLID",
+    "category": "SOLID",
+    "page": "solid/concepts/when-not-solid.html",
+    "summary": "Yagni, DRY, KISS and over-engineering: how to decide when SOLID helps and when it just adds code.",
+    "keywords": "when not to use SOLID YAGNI KISS DRY over-engineering premature abstraction rule of three judgement"
+  },
+  {
+    "id": "solid-when-not-solid-recall",
+    "title": "When Not to Apply SOLID — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/when-not-solid.html",
+    "summary": "Quick recall points: When Not to Apply SOLID.",
+    "keywords": "when not to use SOLID YAGNI KISS DRY over-engineering premature abstraction rule of three judgement interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-when-not-solid-trap",
+    "title": "When Not to Apply SOLID — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/when-not-solid.html",
+    "summary": "The classic mistake with When Not to Apply SOLID.",
+    "keywords": "when not to use SOLID YAGNI KISS DRY over-engineering premature abstraction rule of three judgement trap mistake",
+    "anchor": "trap"
   }
 ]

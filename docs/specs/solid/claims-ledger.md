@@ -128,5 +128,16 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | TimeProvider for injecting time | 🟨 K | .NET 8+ API recalled |
 | Numbers (≈40 vs ≈6 setup lines) | 🟦 I | illustrative |
 
+## Page 11 — When Not to Apply SOLID
+| Claim | Status | Note |
+|---|---|---|
+| Yagni: avoid presumptive features; even if right, there is a cost of delay and a cost of carry (added complexity); Yagni is not a licence to neglect internal quality | ✅ V | martinfowler.com/bliki/Yagni.html (via search summary) |
+| DRY: avoid specifying the same behaviour in several places; duplication is preferable to coupling to the wrong abstraction | ✅ V | Microsoft Learn: Architectural principles (.NET) (via search summary) |
+| YAGNI warning against over-designing early when requirements are unclear | ✅ V | Microsoft patterns & practices, Key Principles of Software Architecture (older chapter; dated wording) |
+| KISS = prefer the simplest design that works | 🟨 K | common acronym, not quoted from a source |
+| Rule of three (refactor on the third repetition) | 🟨 K | common heuristic, not quoted |
+| Extracting an interface later is cheap/safe with tests | 🟨 K | general refactoring experience, not a quoted claim |
+| Situation table (script, CRUD, tax rules, I/O seams) | 🟦 I | judgement guidance, illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
