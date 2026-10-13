@@ -2474,5 +2474,31 @@
     "summary": "The classic mistake with Point reads, queries & fan-out.",
     "keywords": "cosmos db point read query cross-partition fan-out partition key filter maxconcurrency continuation token ru trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-query-metrics",
+    "title": "Reading query metrics & diagnostics",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/query-metrics.html",
+    "summary": "Retrieved vs output documents, index utilisation, triage tree, Insights, diagnostic logs and SDK diagnostics.",
+    "keywords": "cosmos db query metrics retrieved document count output index utilization request charge diagnostics insights troubleshooting"
+  },
+  {
+    "id": "cosmos-query-metrics-recall",
+    "title": "Reading query metrics & diagnostics — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/query-metrics.html",
+    "summary": "Quick recall points: Reading query metrics & diagnostics.",
+    "keywords": "cosmos db query metrics retrieved document count output index utilization request charge diagnostics insights troubleshooting interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-query-metrics-trap",
+    "title": "Reading query metrics & diagnostics — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/query-metrics.html",
+    "summary": "The classic mistake with Reading query metrics & diagnostics.",
+    "keywords": "cosmos db query metrics retrieved document count output index utilization request charge diagnostics insights troubleshooting trap mistake",
+    "anchor": "trap"
   }
 ]

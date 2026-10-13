@@ -91,6 +91,20 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | Read-model container via change feed | ✅ V | Change feed design patterns (page 10) |
 | 50 partitions, ≈ 125 RU minimum, 150 RU, 5–10 RU, 1 RU, dashboard numbers | 🟦 I | teaching numbers |
 
+## Page 7 — query metrics
+| Claim | Status | Note |
+|---|---|---|
+| First step of optimisation: get the query metrics | ✅ V | Troubleshoot query performance |
+| Retrieved ≈ Output ⇒ minimise cross-partition queries; index utilisation 0% with high RU ⇒ scan; fixes via composite index/ORDER BY | ✅ V | same |
+| Cross-partition query: separate query per partition; fan-out independent of index use | ✅ V | Query performance tips |
+| Insights → Throughput → Normalized RU by PartitionKeyRangeID; diagnostic logs (DataPlaneRequests, PartitionKeyRUConsumption) | ✅ V | 429 troubleshooting |
+| Request charge is returned by the SDK/response header | ✅ V | SDK pages |
+| `PopulateIndexMetrics` option / property names | 🟨 K | SDK specific; confirm per SDK |
+| Index metrics report utilised and potential indexes | 🟨 K | confirm NoSQL wording (MongoDB `$explain` equivalent is ✅ V) |
+| “Execution time / document load / query engine time” field names | 🟨 K | panel fields vary; page says names vary |
+| SQL page 4 analogy | 🟦 I | teaching analogy |
+| “150 KB” items, “400” RU scenario; 312 RU / 184,000 / 12 / 480 ms / 3 RU | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

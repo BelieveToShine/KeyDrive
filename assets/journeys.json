@@ -292,7 +292,8 @@
       "request-units",
       "data-modeling",
       "indexing-policy",
-      "queries-fan-out"
+      "queries-fan-out",
+      "query-metrics"
     ],
     "sub": {},
     "subTitles": {}
