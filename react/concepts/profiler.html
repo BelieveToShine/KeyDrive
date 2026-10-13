@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measure first: the React Profiler — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Profiler</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 5 of 12 · ⚛️ Measure & optimise</div>
+    <h1>Do not guess what is slow — <span class="grad-text">record it</span>.</h1>
+    <p class="sub">The Profiler tab, the Profiler component and the Performance tracks; reading a ranked profile; and measuring in the right build.</p>
+    <div class="interview-q">❓ "How do you find out why a React app is slow?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A profile of one keystroke in ShopUI ranked by render time: the 500 product cards take about 35 of the 40 milliseconds">
+<defs><marker id="pf1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pf1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pf1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">ONE COMMIT: TYPE 1 CHARACTER (ILLUSTRATIVE ms)</text>
+<text class="free" x="176" y="66" text-anchor="end" font-size="10.5" font-weight="700" fill="#fda4af">ProductCard × 500</text>
+<rect class="bx" x="188" y="44" width="420" height="30" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text class="free" x="600.0" y="64" text-anchor="end" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">35 ms</text>
+<text class="free" x="176" y="110" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">ProductList</text>
+<rect class="bx" x="188" y="88" width="30" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="226.0" y="108" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">2.5 ms</text>
+<text class="free" x="176" y="154" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">App</text>
+<rect class="bx" x="188" y="132" width="18" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="214.0" y="152" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">1.5 ms</text>
+<text class="free" x="176" y="198" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">Cart</text>
+<rect class="bx" x="188" y="176" width="7.2" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="203.2" y="196" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0.6 ms</text>
+<text class="free" x="176" y="242" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">SearchBox</text>
+<rect class="bx" x="188" y="220" width="4.8" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="200.8" y="240" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0.4 ms</text>
+<text class="free" x="320" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">35 ms ÷ 500 cards ≈ 0.07 ms each — every card is cheap, but the output is the same as last time.</text>
+<text class="free" x="320" y="304" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Total ≈ 40 ms: a few frames dropped on every keystroke.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one commit — typing a single character into ShopUI’s search box — shown as a list of components sorted by how long they took (the idea behind the Profiler’s ranked view). The 500 <b>ProductCard</b>s add up to about <b>35 of 40 ms</b>; each is cheap (≈ 0.07 ms), but there are 500 of them and their output is identical to last time. Now you know <i>where</i> the time goes — which is the whole point of measuring first. (Millisecond values are illustrative teaching numbers.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Do not guess what is slow — record it.</b> The Profiler tells you which components rendered, how long they took, and in which commit.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–4 gave you a model of when React renders. A model is not a measurement. A tree of 504 components might be perfectly fast, or one innocent-looking component might eat 30 ms. Fixing the wrong thing costs time and adds complexity.</p>
+      <p>So every optimisation starts with the same two steps: <b>record a profile of one real interaction</b>, then <b>read which component is the biggest wrong thing</b>. Only then do you reach for a fix (page 6).</p>
+      <p>This page shows the tools — React DevTools’ Profiler tab, the <span class="kw">&lt;Profiler&gt;</span> component, and React’s Performance tracks — and the traps in measuring.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Three ways to measure</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tool</th><th scope="col">What it gives you</th><th scope="col">Use it when</th></tr></thead><tbody><tr><th scope="row"><b>React Developer Tools → Profiler tab</b> (browser extension for Chrome, Firefox, Edge)</th><td>Record an interaction; see each commit and how long each component took</td><td>Your first stop: “what rendered and how long?”</td></tr><tr><th scope="row"><b><span class="kw">&lt;Profiler id onRender&gt;</span></b> component</th><td>Your own callback gets the phase (<span class="kw">mount</span>, <span class="kw">update</span> or <span class="kw">nested-update</span>), <span class="kw">actualDuration</span> and <span class="kw">baseDuration</span> for that subtree</td><td>Logging numbers from tests or a staging build</td></tr><tr><th scope="row"><b>React Performance tracks</b> in the browser’s Performance panel</th><td>A Components track and Scheduler tracks next to the browser’s own flame chart</td><td>You need to see React work next to layout, paint and network</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><span class="kw">actualDuration</span> is the time spent rendering the profiled subtree for this update; <span class="kw">baseDuration</span> is an estimate of rendering the whole subtree with no optimisation. When memoization works (page 6), <span class="kw">actualDuration</span> drops well below <span class="kw">baseDuration</span> after mount.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚠️ Measure in the right build</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Development builds do extra checking work such as the Strict Mode extra render; profile production-like numbers with a profiling build and compare before and after in the same build">
+<defs><marker id="pf2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pf2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pf2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="300" height="284" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DEVELOPMENT BUILD</text>
+<rect class="zone" x="330" y="8" width="300" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="344" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">PROFILING BUILD (react-dom/profiling)</text>
+<path d="M160,98 L160,124" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pf2A)"/>
+<path d="M160,182 L160,208" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pf2A)"/>
+<path d="M480,98 L480,124" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#pf2A)"/>
+<path d="M480,182 L480,208" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#pf2A)"/>
+<rect class="bx" x="40" y="40" width="240" height="58" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="160" y="66.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Strict Mode checks</text>
+<text x="160" y="79.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">extra render, extra effect cycle</text>
+<rect class="bx" x="40" y="124" width="240" height="58" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="160" y="150.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Great for finding</text>
+<text x="160" y="163.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">what renders and why</text>
+<rect class="bx" x="40" y="208" width="240" height="58" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="160" y="234.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Milliseconds are not</text>
+<text x="160" y="247.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">what your users see</text>
+<rect class="bx" x="360" y="40" width="240" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="66.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">No dev-only checks</text>
+<text x="480" y="79.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">closest to what users run</text>
+<rect class="bx" x="360" y="124" width="240" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="150.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Profiler and Performance</text>
+<text x="480" y="163.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">tracks are available</text>
+<rect class="bx" x="360" y="208" width="240" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="234.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Trust the milliseconds</text>
+<text x="480" y="247.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">compare before and after</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: in development React does extra checking — Strict Mode renders components an extra time and runs an extra effect cycle — which is useful for finding problems but means the milliseconds are not what users get. <b>Right</b>: the Performance tracks are available only in development and profiling builds, and a profiling build (<span class="kw">react-dom/profiling</span>) is the way to get realistic numbers. Whatever build you pick, <b>compare before and after in the same build</b> on the same interaction.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Profiler lab · record one keystroke</div>
+    <ol>
+      <li><b>Pick one interaction</b>: type one character into the search box.</li>
+      <li><b>Record</b>: start the Profiler, type the character, stop.</li>
+      <li><b>Read</b>: how many commits? Which component is slowest? (ShopUI, illustrative: 1 commit, ≈ 40 ms, 504 components, ProductCards ≈ 35 ms.)</li>
+      <li><b>Find</b> the biggest wrong thing: 500 identical ProductCards rendering again.</li>
+      <li><b>Guess</b> one cause: their props did not change, so rendering them is wasted. (Fix on page 6; prove with a second recording.)</li>
+    </ol>    <div class="code-block"><pre>&lt;Profiler id=<span class="str">"ProductList"</span> onRender={(id, phase, actualDuration, baseDuration) =&gt; {
+  console.log(id, phase, actualDuration.toFixed(1), baseDuration.toFixed(1));
+}}&gt;
+  &lt;ProductList query={query} /&gt;
+&lt;/Profiler&gt;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. A line such as “ProductList update 38.0 38.0” means: this update took 38 ms, and the unoptimised cost is also 38 ms — nothing is being skipped yet.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · measuring symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Numbers jump between recordings</th><td>Too little data or background work</td><td>Record the same interaction 3 times; use the middle result</td></tr><tr><th scope="row">Everything looks twice as slow as users report</th><td>Development build and Strict Mode</td><td>Compare in a profiling build; always compare like with like</td></tr><tr><th scope="row">A component shows 0.1 ms but is rendered 500 times</th><td>Many cheap renders add up</td><td>Look at the total, not one row</td></tr><tr><th scope="row">React is fast but the page still feels slow</th><td>The time is in layout, paint or network, not in React</td><td>Use the browser Performance panel (Performance tracks show both)</td></tr><tr><th scope="row">You fixed something and the number did not change</th><td>Wrong hypothesis, or a cached/stale build</td><td>Re-record; confirm the build contains your change</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Typing in the search box drops frames</h5><p>One commit is 40 ms.</p><span class="sc-use">→ Record, rank, find the 500 cards</span></div>
+      <div class="scenario"><span class="sc-icon">🐢</span><h5>A page is slow only the first time</h5><p>Mount, not update.</p><span class="sc-use">→ Look at phase = mount (page 11)</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Something re-renders on a timer</h5><p>A hidden interval sets state.</p><span class="sc-use">→ Profile with the page idle</span></div>
+      <div class="scenario"><span class="sc-icon">📱</span><h5>Fast on a laptop, slow on a phone</h5><p>Budget differs per device.</p><span class="sc-use">→ Profile on the slow device or throttle the CPU</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Why a render is not a frame.</b> React render time is only part of what a keystroke costs; the browser also runs layout and paint. The Performance tracks put React’s work on the same timeline as the browser’s.</p>
+      <p><b>If the extension is installed</b>, the Components track lists every component, not just the ones inside a <span class="kw">&lt;Profiler&gt;</span>.</p>
+      <p><b>Profiling a build.</b> Profiling builds are made by importing <span class="kw">react-dom/profiling</span> instead of <span class="kw">react-dom/client</span>; your bundler setup decides how you switch.</p>
+      <p><b>DevTools labels.</b> Chart names, buttons and settings in React Developer Tools change between versions; if a label here differs from your version, trust your version.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Measure first: record one real interaction, read the slowest component, then change one thing.</li><li>React Developer Tools’ Profiler tab, the <span class="kw">&lt;Profiler&gt;</span> component and the Performance tracks are the three tools.</li><li><span class="kw">actualDuration</span> = time rendering this update; <span class="kw">baseDuration</span> = estimated cost with no optimisation.</li><li>Development builds add checks (Strict Mode); compare before/after in the same build, ideally a profiling build.</li><li>Many cheap renders add up — look at the total.</li><li>A fast React render does not guarantee a fast page: layout, paint and network matter too.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Before optimising a React app I record a profile of the real interaction in the Profiler — which components rendered, how many commits, and how long each took — and I compare before and after in the same build. Only the biggest cost gets a fix, and I re-record to prove the number moved."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Optimising without a profile.</b> You will add <span class="kw">memo</span> everywhere and measure nothing.</p>
+      <p><b>Trusting development-mode milliseconds as user milliseconds.</b> Dev builds do extra work on purpose.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📏 Render time</h5><p>Time React spends calling your components (what the Profiler shows).</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🖼️ Frame time</h5><p>Everything the browser does for a frame: JavaScript, layout, paint. The user feels this one.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You found the biggest wrong thing: 500 cards re-rendering with the same props. Next: the tools that skip needless renders — memo, useMemo, useCallback and the Compiler. <i>(coming soon: memo, useMemo, useCallback & the Compiler)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener">Profiler</a> · <a href="https://react.dev/reference/dev-tools/react-performance-tracks" target="_blank" rel="noopener">React Performance tracks</a> · <a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">React Developer Tools</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

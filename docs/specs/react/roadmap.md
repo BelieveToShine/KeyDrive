@@ -5,7 +5,7 @@
 | 2 | State, props & why components re-render | state-rerenders | ✅ written |
 | 3 | Keys, identity & reconciliation | keys-reconciliation | ✅ written |
 | 4 | Effects: synchronising with the outside world | effects | ✅ written |
-| 5 | Measure first: the React Profiler | profiler | 🔒 planned |
+| 5 | Measure first: the React Profiler | profiler | ✅ written |
 | 6 | memo, useMemo, useCallback & the Compiler | memoization | 🔒 planned |
 | 7 | The React debugging playbook | react-debugging-playbook | 🔒 planned |
 | 8 | Context, reducers & where state lives | context-state-architecture | 🔒 planned |

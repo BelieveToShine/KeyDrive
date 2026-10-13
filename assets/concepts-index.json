@@ -2760,5 +2760,31 @@
     "summary": "The classic mistake with Effects: synchronising with the outside world.",
     "keywords": "react useEffect effect cleanup dependencies strict mode derived state fetch race you might not need an effect trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-profiler",
+    "title": "Measure first: the React Profiler",
+    "category": "React",
+    "page": "react/concepts/profiler.html",
+    "summary": "Record one interaction with the Profiler, read a ranked profile, and measure in the right build.",
+    "keywords": "react profiler devtools performance actualDuration baseDuration measure slow render performance tracks"
+  },
+  {
+    "id": "react-profiler-recall",
+    "title": "Measure first: the React Profiler — interview recall",
+    "category": "React",
+    "page": "react/concepts/profiler.html",
+    "summary": "Quick recall points: Measure first: the React Profiler.",
+    "keywords": "react profiler devtools performance actualDuration baseDuration measure slow render performance tracks interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-profiler-trap",
+    "title": "Measure first: the React Profiler — common trap",
+    "category": "React",
+    "page": "react/concepts/profiler.html",
+    "summary": "The classic mistake with Measure first: the React Profiler.",
+    "keywords": "react profiler devtools performance actualDuration baseDuration measure slow render performance tracks trap mistake",
+    "anchor": "trap"
   }
 ]

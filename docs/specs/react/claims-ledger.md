@@ -55,5 +55,18 @@ Source root: https://react.dev/
 | Effect that copies state into state: 504 + 504 = 1,008 renders | 🟦 I | teaching arithmetic |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 5 — profiler
+| Claim | Status | Note |
+|---|---|---|
+| React Developer Tools is a browser extension (Chrome, Firefox, Edge) with a Components tab and a Profiler tab | ✅ V | learn/react-developer-tools |
+| `<Profiler>` onRender receives phase ("mount", "update", "nested-update"), actualDuration, baseDuration | ✅ V | reference/react/Profiler |
+| actualDuration = ms rendering the Profiler subtree for this update; baseDuration = estimate of rendering the subtree without optimisation; actualDuration drops after mount when memoization works | ✅ V | same |
+| React Performance tracks are available in development and profiling builds only; profiling build = react-dom/profiling instead of react-dom/client; Components track lists all components if DevTools extension is enabled | ✅ V | reference/dev-tools/react-performance-tracks |
+| Strict Mode renders components an extra time / one extra effect cycle in development | ✅ V | reference/react/StrictMode |
+| A profiling build has no dev-only checks (closest to user numbers) | 🟨 K | not stated on react.dev in the pages searched; phrase kept general |
+| DevTools UI names (commit chart, flamegraph, ranked view, “why did this render”) | 🟨 K | not found on react.dev; page says “the idea behind the ranked view” and tells readers to trust their version's labels |
+| Illustrative profile: 40 ms total, 35 ms for 500 cards (0.07 ms each) | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

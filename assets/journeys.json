@@ -341,7 +341,8 @@
       "react-mental-model",
       "state-rerenders",
       "keys-reconciliation",
-      "effects"
+      "effects",
+      "profiler"
     ],
     "sub": {},
     "subTitles": {}
