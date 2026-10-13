@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D — the Dependency Inversion Principle — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">D — Dependency Inversion</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 6 of 12 · 🔤 The five principles</div>
+    <h1>Who depends on <span class="grad-text">whom</span>? Flip the arrow.</h1>
+    <p class="sub">The Dependency Inversion Principle: high-level policy vs low-level detail, who owns the interface, and replacing new with constructor parameters.</p>
+    <div class="interview-q">❓ "What is the Dependency Inversion Principle, and how is it different from dependency injection?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Before inversion: OrderService creates SqlOrderRepository with new, and that class creates a SqlConnection, so the high-level business code depends directly on low-level database details">
+<defs><marker id="dp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,68 L320,122" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dp1A)"/>
+<path d="M320,178 L320,232" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#dp1A)"/>
+<rect class="bx" x="190" y="12" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
+<text x="320" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">business rules (high level)</text>
+<rect class="bx" x="190" y="122" width="260" height="56" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">SqlOrderRepository</text>
+<text x="320" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">SQL details (low level)</text>
+<rect class="bx" x="190" y="232" width="260" height="56" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">SqlConnection</text>
+<text x="320" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">a real database</text>
+<g class="arrow-pill"><rect x="268.5" y="86" width="103" height="18" rx="9"/><text x="320" y="98.5" text-anchor="middle" font-size="9" font-style="italic">creates with new</text></g>
+<g class="arrow-pill"><rect x="300.5" y="196" width="39" height="18" rx="9"/><text x="320" y="208.5" text-anchor="middle" font-size="9" font-style="italic">uses</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> The most important class — <b>OrderService</b>, with the business rules — <b>creates</b> a <b>SqlOrderRepository</b> with <span class="kw">new</span>, which uses a <b>SqlConnection</b>. The arrows run from high-level policy down to low-level detail. Change the database and the business class changes; test the business class and you need a real database.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Business code should depend on abstractions that it owns, not on details</b> — the database class conforms to the business layer, not the other way round.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Robert C. Martin’s wording: high-level modules should not depend on low-level modules; both should depend on abstractions. Microsoft’s .NET architecture guidance puts it as dependency direction pointing toward abstractions rather than implementation details.</p>
+      <p>The consequence in that guidance: a calling class depends on an interface, a lower-level class implements it, and the compile-time dependency is <b>inverted</b> while runtime behaviour stays the same. This is what makes implementations swappable and code testable, and it is the idea behind the clean-architecture layout in Microsoft’s web-app guidance: infrastructure depends on the application core through interfaces defined in the core.</p>
+      <p>Martin has written that the SOLID principles are about <b>managing dependencies</b>; this is the principle where that is most literal.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔄 After inversion</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="After inversion: OrderService depends on the IOrderRepository interface, which belongs to the business layer; SqlOrderRepository and FakeOrderRepository both implement it, so the source-code arrow from the database class now points up to the abstraction">
+<defs><marker id="dp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,68 L320,130" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dp2A)"/>
+<path d="M160,250 L160,186" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dp2A)"/>
+<path d="M480,250 L480,186" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dp2A)"/>
+<rect class="bx" x="220" y="12" width="200" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
+<text x="320" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">high level</text>
+<rect class="bx" x="120" y="130" width="400" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IOrderRepository</text>
+<text x="320" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">owned by the business layer</text>
+<rect class="bx" x="20" y="250" width="280" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="160" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SqlOrderRepository</text>
+<text x="160" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">production</text>
+<rect class="bx" x="340" y="250" width="280" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="480" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">FakeOrderRepository</text>
+<text x="480" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">tests, in memory</text>
+<g class="arrow-pill"><rect x="284.5" y="90" width="71" height="18" rx="9"/><text x="320" y="102.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
+<g class="arrow-pill"><rect x="124.5" y="209" width="71" height="18" rx="9"/><text x="160" y="221.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
+<g class="arrow-pill"><rect x="444.5" y="209" width="71" height="18" rx="9"/><text x="480" y="221.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the interface <span class="kw">IOrderRepository</span> sits <b>with the business layer</b>, shaped by what OrderService needs (page 5). Both the SQL class and a test fake now point <b>up</b> to it. The runtime call still reaches SQL — only the <b>source-code</b> dependency flipped. That flip is the “inversion”.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 DIP lab · stop using new inside the business class</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — high-level code builds its own low-level collaborators</span>
+<span class="kw">public</span> <span class="kw">class</span> OrderService
+{
+    <span class="kw">public</span> <span class="kw">void</span> Place(Order order)
+    {
+        <span class="kw">var</span> repo = <span class="kw">new</span> SqlOrderRepository(<span class="kw">new</span> SqlConnection(ConnectionStrings.Shop));
+        repo.Save(order);
+        <span class="kw">new</span> SmtpClient(<span class="str">"smtp.shop.example"</span>).Send(/* confirmation */);
+    }
+}
+
+<span class="cmt">// AFTER — depend on abstractions; receive them through the constructor</span>
+<span class="kw">public</span> <span class="kw">interface</span> IOrderRepository { <span class="kw">void</span> Save(Order order); }
+<span class="kw">public</span> <span class="kw">interface</span> INotifier        { <span class="kw">void</span> OrderPlaced(Order order); }
+
+<span class="kw">public</span> <span class="kw">class</span> OrderService
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> IOrderRepository _repo;
+    <span class="kw">private</span> <span class="kw">readonly</span> INotifier _notifier;
+
+    <span class="kw">public</span> OrderService(IOrderRepository repo, INotifier notifier)
+    {
+        _repo = repo;
+        _notifier = notifier;
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> Place(Order order)
+    {
+        _repo.Save(order);
+        _notifier.OrderPlaced(order);
+    }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. Who passes the real objects in? Not this class — a single place near startup (page 7). Note that this change alone, passing interfaces into a constructor, is DIP in action; the container that automates it is a separate tool.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody><tr><th scope="row">Needs a database/SMTP to unit test OrderService</th><td>Yes</td><td>No — two fakes in memory</td></tr><tr><th scope="row">Edits to OrderService when SQL is replaced by Cosmos</th><td>Yes</td><td>None</td></tr><tr><th scope="row">Direction of source-code arrow (business ↔ database)</th><td>Business → database</td><td>Database → business interface</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">📋 Smells of a dependency problem</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row"><span class="kw">new</span> of a service/repository/client inside business code</th><td>The class chooses its own collaborators</td><td>Take an interface through the constructor</td></tr><tr><th scope="row">Static calls (<span class="kw">DateTime.Now</span>, <span class="kw">File.ReadAllText</span>, a static singleton) in the middle of logic</th><td>Hidden dependency you cannot replace in a test</td><td>Wrap behind an interface (for time, <span class="kw">TimeProvider</span>)</td></tr><tr><th scope="row">Business project references the EF / SQL / SMTP package</th><td>Wrong direction</td><td>Move the interface into the business project; implement it in infrastructure</td></tr><tr><th scope="row">Unit tests need a database, a file or a network</th><td>Details leaked upward</td><td>Fakes behind abstractions</td></tr><tr><th scope="row">A “service locator” pulled from inside methods</th><td>Dependencies are hidden again</td><td>Make them explicit constructor parameters</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🗄️</span><h5>Switch the orders store from SQL to Cosmos</h5><p>OrderService is edited in 30 places.</p><span class="sc-use">→ A new class implementing IOrderRepository; zero edits</span></div>
+      <div class="scenario"><span class="sc-icon">⏰</span><h5>A discount that only applies on weekdays</h5><p>Tests fail on Saturdays.</p><span class="sc-use">→ Inject the clock</span></div>
+      <div class="scenario"><span class="sc-icon">📧</span><h5>Emails sent during every test run</h5><p>Real people get mail.</p><span class="sc-use">→ Inject INotifier; use a fake in tests</span></div>
+      <div class="scenario"><span class="sc-icon">🏗️</span><h5>Domain project references Entity Framework</h5><p>It cannot be tested or reused without it.</p><span class="sc-use">→ Interface in the domain, implementation in infrastructure</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Three similar words.</b> <i>Dependency Inversion</i> is the design principle (depend on abstractions you own). <i>Dependency Injection</i> is a technique for handing dependencies in. An <i>IoC container</i> is a tool that automates injection. You can follow DIP with plain constructors and no container.</p>
+      <p><b>Ownership matters.</b> An interface defined in the same project as the database class, and merely referenced by the business layer, does not invert anything. The interface lives with its <i>client</i>.</p>
+      <p><b>Not everything needs one.</b> Do not hide stable, deterministic things such as <span class="kw">string</span> or <span class="kw">List&lt;T&gt;</span> behind interfaces; invert at the boundaries that vary or are slow (I/O, time, randomness, third-party services).</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>DIP: high-level code and low-level code both depend on abstractions; details depend on policy.</li><li>The source-code arrow flips; the runtime call is unchanged.</li><li>The interface is owned by the client (the business layer), not by the implementation.</li><li>Receive collaborators through the constructor instead of calling new or static methods inside logic.</li><li>DIP (principle) ≠ DI (technique) ≠ IoC container (tool).</li><li>Invert at boundaries that vary or are slow: I/O, time, randomness, external services.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Dependency Inversion Principle says high-level policy shouldn’t depend on low-level details; both depend on abstractions, and the abstraction is owned by the business side. In practice OrderService takes an IOrderRepository through its constructor instead of creating a SqlOrderRepository, so the database class depends on the business layer rather than the reverse. I’d use constructor injection, and I distinguish the principle from DI, which is a technique, and from a container, which is just a tool."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“DIP means use a DI container.”</b> The principle is about the direction of dependencies; a container is optional tooling.</p>
+      <p><b>Putting the interface next to the implementation.</b> Then the business layer still depends on the infrastructure project.</p>
+      <p><b>An interface for every class.</b> Abstract the boundaries that vary, not every type.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>💉 Injection</h5><p>How a dependency gets handed in (constructor, parameter).</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔄 Inversion</h5><p>Which way the source-code dependency points.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>We know what to depend on. Next: how .NET hands the real objects in — the built-in dependency injection container, lifetimes and the composition root. <i>(coming soon: Dependency Injection in .NET)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 The wording is Robert C. Martin’s (quoted in an MSDN Magazine article); the “dependency direction toward abstractions” and clean-architecture layout follow Microsoft’s .NET architectural-principles guidance. “DIP vs DI vs container” is the usual distinction, consistent with that guidance, not a quoted definition. Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles" target="_blank" rel="noopener">Architectural principles (.NET)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection" target="_blank" rel="noopener">Dependency injection in .NET</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

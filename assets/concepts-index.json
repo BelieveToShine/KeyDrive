@@ -3904,5 +3904,31 @@
     "summary": "The classic mistake with I — the Interface Segregation Principle.",
     "keywords": "solid interface segregation principle ISP fat interface role interface IReadOnlyList trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-dependency-inversion",
+    "title": "D — the Dependency Inversion Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "High-level policy vs low-level detail: who owns the interface, flipping the arrow, and replacing new with constructor parameters.",
+    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection"
+  },
+  {
+    "id": "solid-dependency-inversion-recall",
+    "title": "D — the Dependency Inversion Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "Quick recall points: D — the Dependency Inversion Principle.",
+    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-dependency-inversion-trap",
+    "title": "D — the Dependency Inversion Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "The classic mistake with D — the Dependency Inversion Principle.",
+    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection trap mistake",
+    "anchor": "trap"
   }
 ]

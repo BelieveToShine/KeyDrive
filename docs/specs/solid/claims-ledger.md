@@ -64,5 +64,17 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | No official .NET page defines ISP | 🟨 K | search found none; absence not proven |
 | Splitting 4 methods → 1 per client, 3 clients, ShopCore numbers | 🟦 I | illustrative |
 
+## Page 6 — Dependency Inversion
+| Claim | Status | Note |
+|---|---|---|
+| DIP: high-level modules should not depend on low-level modules; both should depend on abstractions | ✅ V | Martin's wording quoted in MSDN Magazine "Tame Your Software Dependencies" and archived TechNet wiki "Dependency Inversion Principle" (via search summary) |
+| Dependency direction should point toward abstractions, not implementation details; the calling class depends on an interface, a lower-level class implements it, compile-time dependency is inverted, runtime behaviour unchanged | ✅ V | learn.microsoft.com/dotnet/architecture/modern-web-apps-azure/architectural-principles (via search summary) |
+| Clean-architecture layout: infrastructure depends on the application core through interfaces defined in the core | ✅ V | Common web application architectures (.NET) |
+| SOLID is about managing dependencies (Martin) | ✅ V | Uncle Bob, Solid Relevance (2020) — ledgered on page 1 |
+| DIP ≠ DI ≠ IoC container | 🟨 K | standard distinction; Microsoft guidance treats DI as enabled by the principle; not a quoted definition |
+| TimeProvider abstracts time in .NET | 🟨 K | recalled API (.NET 8+), not re-verified this session |
+| DateTime.Now / File.ReadAllText as hidden static dependencies | 🟨 K | Microsoft guidance advises avoiding static dependencies; the specific examples are illustrative |
+| ShopCore OrderService code, 30 edits | 🟦 I | illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

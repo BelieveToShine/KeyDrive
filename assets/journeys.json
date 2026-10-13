@@ -478,7 +478,8 @@
       "single-responsibility",
       "open-closed",
       "liskov-substitution",
-      "interface-segregation"
+      "interface-segregation",
+      "dependency-inversion"
     ],
     "sub": {},
     "subTitles": {}

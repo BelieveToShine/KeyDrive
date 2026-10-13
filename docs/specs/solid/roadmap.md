@@ -6,7 +6,7 @@
 | 3 | O — the Open/Closed Principle | open-closed | ✅ written |
 | 4 | L — the Liskov Substitution Principle | liskov-substitution | ✅ written |
 | 5 | I — the Interface Segregation Principle | interface-segregation | ✅ written |
-| 6 | D — the Dependency Inversion Principle | dependency-inversion | 🔒 planned |
+| 6 | D — the Dependency Inversion Principle | dependency-inversion | ✅ written |
 | 7 | Dependency injection in .NET: making D real | dependency-injection-dotnet | 🔒 planned |
 | 8 | Smells and the refactoring playbook | smells-refactoring | 🔒 planned |
 | 9 | Refactoring OrderService step by step | solid-together | 🔒 planned |
