@@ -2370,5 +2370,31 @@
     "summary": "The classic mistake with Partition keys: the decision that rules everything.",
     "keywords": "cosmos db partition key logical physical partition hot partition cardinality hierarchical synthetic key 20 gb trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-request-units",
+    "title": "Request Units: the currency of cost",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/request-units.html",
+    "summary": "What an RU is, what raises the charge, provisioned vs autoscale vs serverless, and how to price each operation.",
+    "keywords": "cosmos db request units ru autoscale serverless provisioned throughput request charge 429 cost"
+  },
+  {
+    "id": "cosmos-request-units-recall",
+    "title": "Request Units: the currency of cost — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/request-units.html",
+    "summary": "Quick recall points: Request Units: the currency of cost.",
+    "keywords": "cosmos db request units ru autoscale serverless provisioned throughput request charge 429 cost interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-request-units-trap",
+    "title": "Request Units: the currency of cost — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/request-units.html",
+    "summary": "The classic mistake with Request Units: the currency of cost.",
+    "keywords": "cosmos db request units ru autoscale serverless provisioned throughput request charge 429 cost trap mistake",
+    "anchor": "trap"
   }
 ]

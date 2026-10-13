@@ -31,6 +31,20 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | Salting a hot key with a suffix | 🟨 K | common practice |
 | 50,000 customers, BigCorp 80,000 × 2 KB ≈ 160 MB, partitions P1–P8, 35%/100% values | 🟦 I | teaching numbers |
 
+## Page 3 — request units
+| Claim | Status | Note |
+|---|---|---|
+| RU = normalised cost bundling CPU, memory, I/O; request charge returned with each response | ✅ V | Request units docs |
+| Point read of a 1 KB item ≈ 1 RU; ≈ 10 RU for 100 KB; item size is the only factor besides consistency; a query by id + partition key is not a point read | ✅ V | same / understand RU consumption |
+| Write cost depends on item size and indexed properties; 1 KB write ≈ 5 RU (sources quote ≈ 4.95–5.5); replace ≈ 2× insert; more regions raise write RU | ✅ V | same |
+| Strong and bounded-staleness reads ≈ 2× RU of relaxed levels | ✅ V | Consistency levels / RU docs |
+| Over the RU/s budget → 429; SDKs retry automatically | ✅ V | 429 troubleshooting |
+| Autoscale: 0.1 × Tmax (“10%” of max) to Tmax; billed on highest level in the hour; min Tmax 1,000 RU/s; autoscale rate ≈ 1.5× manual; manual cheaper above ≈ 66% utilisation | ✅ V | Choose manual vs autoscale / quotas |
+| Serverless: pay for RUs consumed; single region; not autoscale | ✅ V | Serverless docs |
+| Minimum charge ≈ 2.5 RU per physical partition checked by a cross-partition query | ✅ V | Query performance tips |
+| DynamoDB capacity units as an analogue | 🟨 K | other-engine pointer |
+| 10,000 RU/s, 300 inserts/s → “3,000 RU/s” → “2,100 RU/s”, ≈ 10 RU per 2 KB insert, 30% saving, 12 orders | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

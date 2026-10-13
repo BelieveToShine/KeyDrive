@@ -288,7 +288,8 @@
     },
     "written": [
       "cosmos-mental-model",
-      "partition-keys"
+      "partition-keys",
+      "request-units"
     ],
     "sub": {},
     "subTitles": {}

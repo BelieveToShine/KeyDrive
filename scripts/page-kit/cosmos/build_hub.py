@@ -26,7 +26,7 @@ GROUPS = [('🌌 THE MODEL','34,211,238','#67e8f9'),
           ('🧠 QUERY & INDEX','167,139,250','#c4b5fd'),
           ('🔥 UNDER LOAD','251,113,133','#fda4af'),
           ('🌍 AT SCALE','52,211,153','#6ee7b7')]
-WRITTEN = ['cosmos-mental-model','partition-keys']
+WRITTEN = ['cosmos-mental-model','partition-keys','request-units']
 
 journeys = json.loads((REPO / 'assets/journeys.json').read_text())
 journeys['cosmos'] = {'title': 'Cosmos DB Performance Lab', 'order': [c[0] for c in C], 'titles': {c[0]: c[2] for c in C}, 'written': WRITTEN, 'sub': {}, 'subTitles': {}}
