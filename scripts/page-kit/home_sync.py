@@ -34,4 +34,16 @@ for g, href in hrefs.items():
     h, n = pat.subn(lambda m: m.group(1) + foot, h, count=1)
     assert n, href
 (R / 'index.html').write_text(h)
+# Cloud hub tiles + Azure/AWS hub footers/notes (deep-dive counts from the files)
+def sub(path, pat, rep):
+    f = R / path; t = f.read_text(); t2 = re.sub(pat, rep, t); f.write_text(t2)
+da, dw = dives('azure'), dives('aws')
+cl = (R / 'cloud/index.html').read_text()
+for lab, n in (('azure', da), ('aws', dw)):
+    cl = re.sub(r'(href="\.\./' + lab + r'/index\.html".*?<p>[^<]*?19 concepts and )\d+( deep dives)', lambda m: f'{m.group(1)}{n}{m.group(2)}', cl, count=1, flags=re.S)
+    cl = re.sub(r'(href="\.\./' + lab + r'/index\.html".*?ct-done">✓ \d+ / \d+</span><span class="ct-dives">)\d+( deep dives)', lambda m: f'{m.group(1)}{n}{m.group(2)}', cl, count=1, flags=re.S)
+(R / 'cloud/index.html').write_text(cl)
+sub('aws/index.html', r'(19 / 19 concepts written · )\d+( deep dives)', lambda m: f'{m.group(1)}{dw}{m.group(2)}')
+sub('aws/index.html', r'(judging a complete design, with )\d+( deep dives)', lambda m: f'{m.group(1)}{dw}{m.group(2)}')
+sub('azure/index.html', r'(19 / 19 concepts written · )\d+( deep dives)', lambda m: f'{m.group(1)}{da}{m.group(2)}')
 print(f'home: {all_c} concepts · {all_d} deep dives · {diagrams} diagrams')

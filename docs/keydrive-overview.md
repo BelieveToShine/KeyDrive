@@ -10,7 +10,7 @@ design/content rules themselves, see `rules/`. For a specific category's own con
 |---|---|---|---|
 | AI | 🟢 Live, complete | 19 / 19 | `ai/index.html` — spec: `specs/ai/` |
 | Azure | 🟢 Live, complete | 19 / 19 (+ 7 deep dives) | `azure/index.html` — spec: `specs/azure/` |
-| AWS | 🟢 Live, complete — awaiting the user's verification pass | 19 / 19 (+ 9 deep dives) | `aws/index.html` — spec: `specs/aws/` |
+| AWS | 🟢 Live, complete — awaiting the user's verification pass | 19 / 19 (+ 7 deep dives) | `aws/index.html` — spec: `specs/aws/` |
 | Cloud Systems | 🔒 Placeholder tile only, no hub page yet | 0 | — |
 | Data Systems | 🔒 Placeholder tile only, no hub page yet | 0 | — |
 | Web Platforms | 🔒 Placeholder tile only, no hub page yet | 0 | — |

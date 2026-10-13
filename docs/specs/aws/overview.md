@@ -2,7 +2,7 @@
 
 ## Status
 
-Hub page, full roadmap and **all 19 concept pages** are done (19 / 19, plus 9 deep dives), written in one unattended session on 2026-10-12 — **needs the user's verification pass**. Added at the user's
+Hub page, full roadmap and **all 19 concept pages** are done (19 / 19, plus 7 deep dives), written in one unattended session on 2026-10-12 — **needs the user's verification pass**. Added at the user's
 explicit request (2026-10-12), which lifts the platform-wide "don't start a new category without
 being asked" rule for this category only.
 
