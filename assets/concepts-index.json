@@ -3930,5 +3930,31 @@
     "summary": "The classic mistake with D — the Dependency Inversion Principle.",
     "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet",
+    "title": "Dependency Injection in .NET",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "The composition root, service lifetimes, captive dependencies and the service-locator trap.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet-recall",
+    "title": "Dependency Injection in .NET — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "Quick recall points: Dependency Injection in .NET.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet-trap",
+    "title": "Dependency Injection in .NET — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "The classic mistake with Dependency Injection in .NET.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes trap mistake",
+    "anchor": "trap"
   }
 ]

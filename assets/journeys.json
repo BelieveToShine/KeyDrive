@@ -479,7 +479,8 @@
       "open-closed",
       "liskov-substitution",
       "interface-segregation",
-      "dependency-inversion"
+      "dependency-inversion",
+      "dependency-injection-dotnet"
     ],
     "sub": {},
     "subTitles": {}

@@ -76,5 +76,20 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | DateTime.Now / File.ReadAllText as hidden static dependencies | 🟨 K | Microsoft guidance advises avoiding static dependencies; the specific examples are illustrative |
 | ShopCore OrderService code, 30 edits | 🟦 I | illustrative |
 
+## Page 7 — Dependency Injection in .NET
+| Claim | Status | Note |
+|---|---|---|
+| Lifetimes: singleton = one instance; scoped = new instance per scope; transient = new instance every time it is requested | ✅ V | Microsoft Learn: Dependency injection overview / Service lifetimes (via search summary) |
+| Captive dependency: long-lived service holding a shorter-lived one (term from Mark Seemann); example singleton taking scoped service | ✅ V | Microsoft Learn: Dependency injection guidelines |
+| ValidateScopes: scoped services must not be resolved from the root provider; default follows IsDevelopment in ASP.NET Core host; configurable via UseDefaultServiceProvider | ✅ V | ServiceProviderOptions.ValidateScopes reference (page was a preview version; check target version) |
+| Background services: inject IServiceScopeFactory and create a scope instead of constructor-injecting scoped services | ✅ V | ASP.NET Core DI docs |
+| Conventional middleware constructor injection of scoped services behaves like singleton; use InvokeAsync parameters or factory-based middleware | ✅ V | ASP.NET Core DI docs |
+| Avoid service locator (GetService when DI can supply); avoid stateful static classes; avoid direct instantiation of dependent classes inside services | ✅ V | Microsoft Learn DI guidelines / ASP.NET Core DI |
+| Container disposes what it creates; receiver of injected IDisposable should not dispose it; avoid registering IDisposable as transient | ✅ V | Microsoft Learn DI guidelines |
+| DI is often key to OCP; a large constructor is a smell | ✅ V | .NET architecture guide (ledgered page 3/1) |
+| Built-in container package name Microsoft.Extensions.DependencyInjection; IServiceCollection/IServiceProvider/IServiceScopeFactory | ✅ V | API reference names seen in search results |
+| Primary-constructor syntax (class NightlyJob(IServiceScopeFactory scopes)) requires C# 12 / .NET 8 | 🟨 K | language feature recalled, not verified this session |
+| Data of user A shown to user B as a symptom of singleton-with-per-user-state | 🟦 I | illustrative scenario |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

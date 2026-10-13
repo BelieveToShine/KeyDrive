@@ -41,7 +41,7 @@
     <div class="eyebrow">🧱 SOLID · from “why does every change break something?” to “here is the small, safe refactoring”</div>
     <h1>Learn the five principles that keep code <span class="grad-text">cheap to change</span> — by refactoring one real class.</h1>
     <p class="sub">One continuous story: why code rots, then S, O, L, I and D one at a time on a single ShopCore <b>OrderService</b>, dependency injection in .NET, a smell-to-refactoring playbook, a full worked refactoring, testability as proof, and the judgement to know when <i>not</i> to apply a principle. Examples are in <b>C#</b>.</p>
-    <p class="hub-note">🗺️ <b>6 of 12</b> concepts are written — the rest (6) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>7 of 12</b> concepts are written — the rest (5) are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/why-design-principles.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -59,7 +59,7 @@
 <path class="jm-link done" d="M320,302 V338" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,382 V418" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,462 V498" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,542 V632" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,542 V632" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,676 V712" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,756 V792" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,836 V926" marker-end="url(#jmArrow)"/>
@@ -82,7 +82,7 @@
 <a class="jm-hit" xlink:href="concepts/liskov-substitution.html"><g class="jm-node done"><rect x="220" y="338" width="200" height="44" rx="12"/><text x="320" y="365" text-anchor="middle" font-size="14" font-weight="700">3️⃣ Liskov Substitution</text></g></a>
 <a class="jm-hit" xlink:href="concepts/interface-segregation.html"><g class="jm-node done"><rect x="220" y="418" width="200" height="44" rx="12"/><text x="320" y="445" text-anchor="middle" font-size="14" font-weight="700">4️⃣ Interface Segregation</text></g></a>
 <a class="jm-hit" xlink:href="concepts/dependency-inversion.html"><g class="jm-node done"><rect x="220" y="498" width="200" height="44" rx="12"/><text x="320" y="525" text-anchor="middle" font-size="14" font-weight="700">5️⃣ Dependency Inversion</text></g></a>
-<g class="jm-node locked"><rect x="220" y="632" width="200" height="44" rx="12"/><text x="320" y="659" text-anchor="middle" font-size="14" font-weight="700">💉 DI in .NET</text></g>
+<a class="jm-hit" xlink:href="concepts/dependency-injection-dotnet.html"><g class="jm-node done"><rect x="220" y="632" width="200" height="44" rx="12"/><text x="320" y="659" text-anchor="middle" font-size="14" font-weight="700">💉 DI in .NET</text></g></a>
 <g class="jm-node locked"><rect x="220" y="712" width="200" height="44" rx="12"/><text x="320" y="739" text-anchor="middle" font-size="14" font-weight="700">👃 Smells &amp; Refactoring</text></g>
 <g class="jm-node locked"><rect x="220" y="792" width="200" height="44" rx="12"/><text x="320" y="819" text-anchor="middle" font-size="14" font-weight="700">🧩 SOLID Together</text></g>
 <g class="jm-node locked"><rect x="220" y="926" width="200" height="44" rx="12"/><text x="320" y="953" text-anchor="middle" font-size="14" font-weight="700">🧪 Testability</text></g>
@@ -121,7 +121,7 @@
       <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/liskov-substitution.html">L — the Liskov Substitution Principle</a><span class="cr-tail">subtypes must honour the contract</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">5</span><span class="cr-main"><a href="concepts/interface-segregation.html">I — the Interface Segregation Principle</a><span class="cr-tail">small interfaces per client; fat interfaces hurt</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">6</span><span class="cr-main"><a href="concepts/dependency-inversion.html">D — the Dependency Inversion Principle</a><span class="cr-tail">depend on abstractions; high-level policy owns the interface</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">7</span><span class="cr-main"><span class="cr-name">Dependency injection in .NET: making D real</span><span class="cr-tail">constructor injection, lifetimes, the container</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">7</span><span class="cr-main"><a href="concepts/dependency-injection-dotnet.html">Dependency injection in .NET: making D real</a><span class="cr-tail">constructor injection, lifetimes, the container</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">8</span><span class="cr-main"><span class="cr-name">Smells and the refactoring playbook</span><span class="cr-tail">symptom → violated principle → safe refactoring</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">9</span><span class="cr-main"><span class="cr-name">Refactoring OrderService step by step</span><span class="cr-tail">a worked example, one principle at a time</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">10</span><span class="cr-main"><span class="cr-name">Testability: the proof that it worked</span><span class="cr-tail">fakes, seams, tests that need no database</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -133,7 +133,7 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Software Design · SOLID Lab · 6 / 12 concepts written</div>
+  <div class="wrap">KeyDrive · Software Design · SOLID Lab · 7 / 12 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>
