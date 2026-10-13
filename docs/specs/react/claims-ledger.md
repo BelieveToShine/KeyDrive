@@ -235,5 +235,18 @@ Source root: https://react.dev/
 | 7 places, 3 identical GETs, 1 after | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — routing & navigation
+| Claim | Status | Note |
+|---|---|---|
+| react.dev's Creating a React App page lists Next.js (App Router), React Router (v7) and Expo; Sunsetting CRA recommends frameworks | ✅ V | learn/start-a-new-react-project; blog/2025/02/14/sunsetting-create-react-app |
+| When building from scratch the docs suggest React Router and TanStack Router for routing; routers are usually integrated with data fetching, code splitting and page rendering approaches | ✅ V | learn/build-a-react-app-from-scratch |
+| pushState adds a new history entry, replaceState updates the current one, neither fires popstate; popstate fires on Back/Forward; these APIs support single-page apps | ✅ V | developer.mozilla.org History_API / Working_with_the_History_API |
+| Nested routes: parent renders child at an Outlet, parent path included in the child; dynamic segments such as :teamId reach loaders as params and components via useParams; layout and child data can load in parallel | ✅ V | reactrouter.com start/data/routing, feature overview |
+| TanStack Router has typed search params validated with a schema and layout routes with Outlet | ✅ V | tanstack.com router docs (search-params, outlets) |
+| Example order number /orders/123 and product id 42 in URLs | 🟦 I | invented ShopUI examples |
+| React itself does not include a router | 🟨 K | consequence of the docs recommending frameworks/routers; not stated verbatim |
+| Hosting must serve the app for deep links; access control in the browser is not security; push vs replace conventions | 🟨 K | general web practice |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

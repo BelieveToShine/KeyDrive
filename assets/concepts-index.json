@@ -3098,5 +3098,31 @@
     "summary": "The classic mistake with The API layer: fetch wrappers & caching.",
     "keywords": "react api layer fetch wrapper interceptor axios cache TanStack Query SWR response.ok AbortController auth token 401 retry trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-routing-navigation",
+    "title": "Routing & navigation",
+    "category": "React",
+    "page": "react/concepts/routing-navigation.html",
+    "summary": "What a router does: nested routes and layouts, params, search params, History API navigation, data and code per route, and access control.",
+    "keywords": "react routing router react router tanstack router nested routes layout outlet params search params history api pushState navigation link"
+  },
+  {
+    "id": "react-routing-navigation-recall",
+    "title": "Routing & navigation — interview recall",
+    "category": "React",
+    "page": "react/concepts/routing-navigation.html",
+    "summary": "Quick recall points: Routing & navigation.",
+    "keywords": "react routing router react router tanstack router nested routes layout outlet params search params history api pushState navigation link interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-routing-navigation-trap",
+    "title": "Routing & navigation — common trap",
+    "category": "React",
+    "page": "react/concepts/routing-navigation.html",
+    "summary": "The classic mistake with Routing & navigation.",
+    "keywords": "react routing router react router tanstack router nested routes layout outlet params search params history api pushState navigation link trap mistake",
+    "anchor": "trap"
   }
 ]

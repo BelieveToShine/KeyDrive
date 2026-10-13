@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routing &amp; navigation — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="code-splitting-bundles.html">Bundles</a><span class="sep">›</span><span class="cur">Routing &amp; navigation</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 🧭 Routing</div>
+    <h1>The <span class="grad-text">URL</span> decides the screen — a router makes that work.</h1>
+    <p class="sub">What a router does: route trees and layouts, params, search params, navigation with the History API, data and code per route, and access control.</p>
+    <div class="interview-q">❓ "How does routing work in a React app, and what do you get from a router?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 356" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Client-side navigation: clicking a link changes the URL with the History API without reloading, the router matches the new route, loads its code and data inside a transition while the old page stays visible, then shows the new page; Back and Forward fire popstate">
+<defs><marker id="rt2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rt2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rt2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M160,46 L160,98" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rt2A)"/>
+<path d="M160,138 L160,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rt2A)"/>
+<path d="M160,230 L160,282" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rt2A)"/>
+<rect class="bx" x="20" y="6" width="280" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="160" y="23.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · Click a link</text>
+<text x="160" y="36.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the router intercepts it</text>
+<text class="free" x="322" y="31" text-anchor="start" font-size="10.5" font-weight="400" fill="#67e8f9">no full page load</text>
+<rect class="bx" x="20" y="98" width="280" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="160" y="115.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">2 · URL changes</text>
+<text x="160" y="128.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">history.pushState adds an entry</text>
+<text class="free" x="322" y="123" text-anchor="start" font-size="10.5" font-weight="400" fill="#fcd34d">History API</text>
+<rect class="bx" x="20" y="190" width="280" height="40" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="160" y="207.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Route matches</text>
+<text x="160" y="220.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">code (lazy) and data load</text>
+<text class="free" x="322" y="215" text-anchor="start" font-size="10.5" font-weight="400" fill="#c4b5fd">in a transition</text>
+<rect class="bx" x="20" y="282" width="280" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="160" y="299.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">4 · New page shows</text>
+<text x="160" y="312.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">old page stayed until ready</text>
+<text class="free" x="322" y="307" text-anchor="start" font-size="10.5" font-weight="400" fill="#6ee7b7">no blank flash</text>
+<text class="free" x="330" y="346" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Back / Forward fire popstate: the router re-matches the URL and shows the right page.</text>
+<g class="arrow-pill"><rect x="90" y="63" width="140" height="18" rx="9"/><text x="160" y="75.5" text-anchor="middle" font-size="9" font-style="italic">updates the address bar</text></g>
+<g class="arrow-pill"><rect x="106" y="155" width="108" height="18" rx="9"/><text x="160" y="167.5" text-anchor="middle" font-size="9" font-style="italic">router re-matches</text></g>
+<g class="arrow-pill"><rect x="138" y="247" width="44" height="18" rx="9"/><text x="160" y="259.5" text-anchor="middle" font-size="9" font-style="italic">ready</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> what happens when a user clicks a link in a client-routed React app. The router <b>intercepts the click</b>, the <b>History API</b> changes the address bar without reloading the page (<span class="kw">pushState</span> adds a history entry), the router <b>matches the new route</b> and loads its code and data — ideally inside a <b>transition</b> (page 9) so the old page stays visible — and then shows the new page. The browser’s Back and Forward buttons fire <span class="kw">popstate</span>, and the router re-matches the URL.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The <b>URL is state</b> your app should obey: a <b>router</b> maps it to components, nested layouts, data and code.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>ShopUI so far is one screen. A shop has many: product list, product detail, cart, checkout, account. Users expect the Back button to work, links to be shareable, and a refresh to land on the same page.</p>
+      <p>React itself renders components; it does not decide <i>which</i> screen to show for a URL. That is the router’s job. The React docs point you to a <b>framework</b> (Next.js, React Router, Expo) or, when building from scratch, a <b>router</b> such as React Router or TanStack Router, and note that routers are usually integrated with data fetching, code splitting and page rendering.</p>
+      <p>This page explains what a router does, so you can judge any of them: route tree and layouts, params, navigation, data, code splitting and access control.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🌳 The route tree</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A router matches the URL to a tree of nested routes: the layout route renders the header and an outlet, and the matched child route fills the outlet with the products list, a product detail with an id parameter, or checkout">
+<defs><marker id="rt1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rt1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rt1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="390" y="8" width="240" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="404" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">ROUTE TREE</text>
+<path d="M120,148 L190,148" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rt1A)"/>
+<path d="M310,148 L350,148 L350,59 L404,59" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rt1A)"/>
+<path d="M510,84 L510,140" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rt1A)"/>
+<rect class="bx" x="10" y="120" width="110" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="65" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">URL</text>
+<text x="65" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">/products/42</text>
+<rect class="bx" x="190" y="120" width="120" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="250" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Router</text>
+<text x="250" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">matches paths</text>
+<rect class="bx" x="404" y="34" width="212" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="510" y="56.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Layout route  /</text>
+<text x="510" y="69.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">header + cart + outlet</text>
+<rect class="bx" x="412" y="140" width="196" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="510" y="163.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">/products/:id</text>
+<text x="510" y="176.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">matched: id = 42</text>
+<rect class="bx" x="412" y="208" width="196" height="42" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="510" y="226.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">/products</text>
+<text x="510" y="239.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">ProductList (not matched)</text>
+<rect class="bx" x="412" y="266" width="196" height="42" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="510" y="284.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">/checkout</text>
+<text x="510" y="297.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">lazy chunk (page 11)</text>
+<g class="arrow-pill"><rect x="135.5" y="139" width="39" height="18" rx="9"/><text x="155" y="151.5" text-anchor="middle" font-size="9" font-style="italic">path</text></g>
+<g class="arrow-pill"><rect x="322.5" y="94" width="55" height="18" rx="9"/><text x="350" y="106.5" text-anchor="middle" font-size="9" font-style="italic">matches</text></g>
+<g class="arrow-pill"><rect x="485" y="103" width="50" height="18" rx="9"/><text x="510" y="115.5" text-anchor="middle" font-size="9" font-style="italic">outlet</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the URL <span class="kw">/products/42</span> goes to the <b>router</b>, which matches it against a tree of routes. A <b>layout route</b> renders what every page shares (header, cart) plus an <b>outlet</b>; the <b>matched child route</b> fills the outlet — here the product page with <span class="kw">id = 42</span> from the URL. Each route can bring its own data loader and its own lazy-loaded code (page 11).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 What a router gives you</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Feature</th><th scope="col">What it does</th><th scope="col">ShopUI example</th></tr></thead><tbody><tr><th scope="row"><b>Nested routes and layouts</b></th><td>A parent route renders shared UI and an outlet for its children; the parent path is included in the child path</td><td>Header and cart stay mounted while the page changes</td></tr><tr><th scope="row"><b>Params</b></th><td>Dynamic segments such as <span class="kw">:id</span> are read by components or passed to loaders</td><td><span class="kw">/products/42</span> → id = 42</td></tr><tr><th scope="row"><b>Search params</b></th><td>Filters, sort and page number in the query string</td><td><span class="kw">/products?sort=price&amp;page=2</span> is shareable and survives refresh</td></tr><tr><th scope="row"><b>Links and navigation</b></th><td>A link component that navigates without a full page load; programmatic navigate after an action</td><td>After “Place order” go to <span class="kw">/orders/123</span></td></tr><tr><th scope="row"><b>Data loading</b></th><td>Loaders per route; layout and child data can load in parallel (React Router docs)</td><td>Product and reviews requested together — no waterfall (page 9)</td></tr><tr><th scope="row"><b>Code splitting</b></th><td>Load a route’s code on demand</td><td><span class="kw">/checkout</span> chunk (page 11)</td></tr><tr><th scope="row"><b>Not found and errors</b></th><td>A route for unmatched URLs; a route-level error element</td><td>404 page; error boundary per route</td></tr><tr><th scope="row"><b>Access control</b></th><td>Redirect or hide routes for signed-out users</td><td>Account pages require login</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Access control is a UX feature, not security.</b> Hiding a route in the browser does not protect data: the server must check permissions on every request.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Routing lab · keep the state in the URL</div>
+    <div class="code-block"><pre><span class="cmt">// Before — filter lives in component state: lost on refresh, not shareable, Back does nothing</span>
+<span class="kw">const</span> [sort, setSort] = useState(<span class="str">'price'</span>);
+
+<span class="cmt">// After — the URL holds it (search params); read and write it through your router's API</span>
+<span class="cmt">// /products?sort=price&amp;page=2   → refresh, share, Back and Forward all work</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative; the exact API depends on your router or framework.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">State in a component</th><th scope="col">State in the URL</th></tr></thead><tbody><tr><th scope="row">Survives a page refresh?</th><td>No</td><td>Yes</td></tr><tr><th scope="row">Can be shared as a link?</th><td>No</td><td>Yes</td></tr><tr><th scope="row">Back button restores it?</th><td>No</td><td>Yes</td></tr><tr><th scope="row">Good for</th><td>Transient UI (a drawer open)</td><td>What defines the page: filters, sort, selected item</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · routing symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Refresh on a deep link shows 404 from the server</th><td>The server does not know client routes</td><td>Configure the host to serve the app for those paths, or use a framework with server routing</td></tr><tr><th scope="row">Back button leaves the site or does nothing</th><td>State kept in components, or navigation replaced history entries</td><td>Put page-defining state in the URL; use push for real navigations</td></tr><tr><th scope="row">Header and cart reset on every page change</th><td>They are inside each page instead of a layout route</td><td>Move them into a layout route</td></tr><tr><th scope="row">A spinner replaces the old page on every navigation</th><td>The navigation is not a transition</td><td>Use the router’s transition support or <span class="kw">startTransition</span> (page 9)</td></tr><tr><th scope="row">Page flashes and refetches when switching tabs of the same route</th><td>Data is tied to component mount, not the route</td><td>Load data in the route loader or a cache (api-layer dive)</td></tr><tr><th scope="row">Signed-out users can see data by guessing a URL</th><td>Access control only in the browser</td><td>Enforce authorisation on the server</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔗</span><h5>A customer shares a filtered product list</h5><p>Filters were state.</p><span class="sc-use">→ Search params in the URL</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Header flickers on navigation</h5><p>Header lives inside each page.</p><span class="sc-use">→ Layout route + outlet</span></div>
+      <div class="scenario"><span class="sc-icon">🔐</span><h5>Only logged-in users may open /account</h5><p>Needs a redirect.</p><span class="sc-use">→ Route-level redirect (+ server checks)</span></div>
+      <div class="scenario"><span class="sc-icon">🚀</span><h5>Checkout code is large</h5><p>Not needed on the home page.</p><span class="sc-use">→ Lazy route</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>The History API.</b> <span class="kw">pushState</span> adds a new session-history entry and <span class="kw">replaceState</span> updates the current one; neither fires <span class="kw">popstate</span>. That event fires when the user presses Back or Forward, so a router listens for it to re-render the right route.</p>
+      <p><b>Routing modes.</b> Some routers are used purely in the browser; others work inside a framework that also renders on the server (page 10). Pick based on whether you need server rendering and loaders integrated with routes.</p>
+      <p><b>Choosing.</b> The React docs recommend starting a new app with a framework; if you build from scratch, you must pick and wire a router, data fetching, code splitting and rendering approach yourself.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>React does not choose screens by URL; a router (or a framework) does.</li><li>Client-side navigation uses the History API (<span class="kw">pushState</span>) — no full page load; Back/Forward fire <span class="kw">popstate</span>.</li><li>Nested routes: a layout route renders shared UI and an outlet; params like <span class="kw">:id</span> come from the URL.</li><li>Put page-defining state (filters, sort, selected id) in the URL.</li><li>Routes are natural places for data loading and code splitting.</li><li>Hiding routes in the browser is not security; the server must authorise.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A router maps the URL to a tree of nested routes: layouts for shared UI, params for ids, search params for filters. Navigation uses the History API so there is no full reload, ideally in a transition so the old page stays until the new one is ready. Routes are also where I load data and split code, and access checks must be enforced on the server, not just hidden in the UI."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Keeping page-defining state in components.</b> Refresh, sharing and Back all break.</p>
+      <p><b>Treating a client-side redirect as authorisation.</b> Anyone can call the API directly.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔗 Link</h5><p>Navigates inside the app without a full reload (the router handles it).</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🅰️ Anchor to another site</h5><p>A normal browser navigation: full load of a new document.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: bundle weight, where routes are the natural split points.</span>
+      <a class="next-link" href="code-splitting-bundles.html">Code splitting & bundle weight <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; routers are third-party — their own docs are the authority. Official docs: <a href="https://react.dev/learn/start-a-new-react-project" target="_blank" rel="noopener">Creating a React App</a> · <a href="https://react.dev/learn/build-a-react-app-from-scratch" target="_blank" rel="noopener">Build a React app from Scratch</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API" target="_blank" rel="noopener">MDN: Working with the History API</a> · <a href="https://reactrouter.com/start/data/routing" target="_blank" rel="noopener">React Router: Routing</a> · <a href="https://tanstack.com/router/latest/docs/framework/react/routing/routing-concepts" target="_blank" rel="noopener">TanStack Router: Routing concepts</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

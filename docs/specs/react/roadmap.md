@@ -20,7 +20,7 @@
 | ➕ | Deep dive: Forms & actions | forms-actions | ✅ written (sub page of data-fetching-suspense) |
 | ➕ | Deep dive: Error boundaries & error handling | error-boundaries | ✅ written (sub page of data-fetching-suspense) |
 | ➕ | Deep dive: The API layer: fetch wrappers & caching | api-layer-caching | ✅ written (sub page of data-fetching-suspense) |
-| ➕ | Deep dive: Routing & navigation | routing-navigation | 🔒 planned (sub page of code-splitting-bundles) |
+| ➕ | Deep dive: Routing & navigation | routing-navigation | ✅ written (sub page of code-splitting-bundles) |
 | ➕ | Deep dive: Testing React | testing-react | 🔒 planned (sub page of react-clinic) |
 
 When a page ships: `scripts/page-kit/lab_ship.sh react …`, update this table, `scripts/push3.sh`.
