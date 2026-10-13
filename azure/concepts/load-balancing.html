@@ -78,6 +78,48 @@
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text">A load balancer is a front door that spreads traffic across healthy copies of your app — and the real choice is how much of the request it should understand, and how far it should reach.</span></div>
+
+<!-- kd-story:az-sh11 -->
+  <section class="kd-section ">
+    <div class="sec-label see">▶️ Watch it happen: spreading traffic over healthy copies</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A load balancer receives requests and sends them to healthy copies A and B but skips copy C, which failed its health check">
+<defs><marker id="azsh11A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="azsh11S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="azsh11T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="azsh11-in" d="M160,140 L240,140" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#azsh11A)"/></g>
+<g class="st" data-s="3-"><path id="azsh11-o0" d="M390,140 L480,50" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#azsh11A)"/></g>
+<g class="st" data-s="4-"><path id="azsh11-o1" d="M390,140 L480,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#azsh11A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="90" width="150" height="100" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="85" y="138.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">👥</text></g>
+<g class="st" data-s="1-"><text x="85" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Requests</text></g>
+<g class="st" data-s="1-"><text x="85" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">arrive together</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="240" y="90" width="150" height="100" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="emo" x="315" y="138.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🚪</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="315" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Load balancer</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="315" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">front door</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="480" y="10" width="150" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="555" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ Copy A</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="555" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">healthy</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="480" y="110" width="150" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="555" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ Copy B</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="555" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">healthy</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="480" y="210" width="150" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="555" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">❌ Copy C</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="555" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">failed health check</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="240" width="380" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="200" y="261" text-anchor="middle" font-size="10" fill="#fcd34d">Copy C gets nothing until it recovers</text></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="azsh11-in"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🌐</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="azsh11-o0"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🌐</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="azsh11-o1"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🌐</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Many requests arrive.</li><li>They meet the load balancer, one front door.</li><li>It sends some to copy A…</li><li>…some to copy B.</li><li>Copy C fails its health check, so it receives nothing until it recovers. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> traffic goes only to healthy copies.</figcaption>
+</figure>
+  </section>
+<!-- /kd-story:az-sh11 -->
+
+
   <section class="kd-section " id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
