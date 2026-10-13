@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S — the Single Responsibility Principle — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">S — Single Responsibility</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 12 · 🔤 The five principles</div>
+    <h1>One class, <span class="grad-text">one reason to change</span> — and a reason is a person.</h1>
+    <p class="sub">The Single Responsibility Principle as Martin states it, the actor test, and splitting ShopCore’s OrderService into four focused classes.</p>
+    <div class="interview-q">❓ "What does the Single Responsibility Principle mean, and how do you tell when a class breaks it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Four different people can ask for changes to OrderService: finance changes pricing, operations changes the e-mail, the database team changes persistence and compliance changes tax; all four edit the same class, so their changes collide">
+<defs><marker id="sr1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sr1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sr1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M84,74 L84,130 L210,130 L210,200" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sr1A)"/>
+<path d="M242,74 L242,130 L290,130 L290,200" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sr1A)"/>
+<path d="M400,74 L400,130 L370,130 L370,200" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sr1A)"/>
+<path d="M558,74 L558,130 L450,130 L450,200" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sr1A)"/>
+<rect class="bx" x="10" y="20" width="148" height="54" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="84" y="44.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">💼 Finance</text>
+<text x="84" y="57.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">promotions, prices</text>
+<rect class="bx" x="168" y="20" width="148" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="242" y="44.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📣 Operations</text>
+<text x="242" y="57.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">e-mail wording</text>
+<rect class="bx" x="326" y="20" width="148" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="44.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🗄️ Database team</text>
+<text x="400" y="57.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">schema, storage</text>
+<rect class="bx" x="484" y="20" width="148" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="558" y="44.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">⚖️ Compliance</text>
+<text x="558" y="57.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">tax rules</text>
+<rect class="bx" x="130" y="200" width="380" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="320" y="227.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">OrderService.cs</text>
+<text x="320" y="240.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">pricing · e-mail · persistence · tax in one file</text>
+<text class="free" x="320" y="296" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Four reasons to change → merge conflicts, retesting everything, surprise breakage.</text>
+<g class="arrow-pill"><rect x="252.5" y="121" width="135" height="18" rx="9"/><text x="320" y="133.5" text-anchor="middle" font-size="9" font-style="italic">all edit the same file</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> four people want different things from the same class. <b>Finance</b> changes promotions, <b>operations</b> rewrites the e-mail, the <b>database team</b> changes storage, <b>compliance</b> changes tax rules — and all of them edit <span class="kw">OrderService.cs</span>. Their changes collide in version control, and any edit risks breaking the other three jobs. Four reasons to change in one place is exactly what the Single Responsibility Principle forbids.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A class should have one, and only one, reason to change</b> — gather together the things that change for the same reason, and separate the things that change for different reasons.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 1 introduced the cost of change. The first principle tells you <i>where to cut</i>. Robert C. Martin’s answer is about <b>people</b>: a module’s “reasons to change” are the people (or tightly-knit groups, like a business function) who can ask for changes. In his payroll example, pay calculation changes come from finance, report format from operations, and database saving from technology — three reasons, so three modules.</p>
+      <p>He describes SRP as another way to define cohesion and coupling: cohesion should rise among things that change for the same reasons, and coupling should fall between things that change for different reasons.</p>
+      <p>A practical test follows: <b>ask who could request a change to this class.</b> If the answer names more than one stakeholder, there is more than one responsibility.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">✂️ Splitting OrderService by actor</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="After applying the Single Responsibility Principle each actor changes its own class: PricingCalculator for finance, OrderNotifier for operations, OrderRepository for the database team and TaxCalculator for compliance, and OrderService only orchestrates">
+<defs><marker id="sr2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sr2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sr2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M84,60 L84,130" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M242,60 L242,130" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M400,60 L400,130" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M558,60 L558,130" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M84,180 L84,215 L144,215 L144,250" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M242,180 L242,250" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M400,180 L400,250" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<path d="M558,180 L558,215 L498,215 L498,250" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sr2A)"/>
+<rect class="bx" x="10" y="20" width="148" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="84" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Finance</text>
+<rect class="bx" x="10" y="130" width="148" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="84" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">PricingCalculator</text>
+<text x="84" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">one reason to change</text>
+<rect class="bx" x="168" y="20" width="148" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="242" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Operations</text>
+<rect class="bx" x="168" y="130" width="148" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="242" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderNotifier</text>
+<text x="242" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">one reason to change</text>
+<rect class="bx" x="326" y="20" width="148" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="400" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Database team</text>
+<rect class="bx" x="326" y="130" width="148" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">OrderRepository</text>
+<text x="400" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">one reason to change</text>
+<rect class="bx" x="484" y="20" width="148" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="558" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Compliance</text>
+<rect class="bx" x="484" y="130" width="148" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="558" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">TaxCalculator</text>
+<text x="558" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">one reason to change</text>
+<rect class="bx" x="130" y="250" width="380" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="272.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">OrderService</text>
+<text x="320" y="285.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">orchestrates: validate → price → tax → save → notify</text>
+<g class="arrow-pill"><rect x="64.5" y="86" width="39" height="18" rx="9"/><text x="84" y="98.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+<g class="arrow-pill"><rect x="222.5" y="86" width="39" height="18" rx="9"/><text x="242" y="98.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+<g class="arrow-pill"><rect x="380.5" y="86" width="39" height="18" rx="9"/><text x="400" y="98.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+<g class="arrow-pill"><rect x="538.5" y="86" width="39" height="18" rx="9"/><text x="558" y="98.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> each actor now owns one class: <b>PricingCalculator</b> (finance), <b>OrderNotifier</b> (operations), <b>OrderRepository</b> (database team) and <b>TaxCalculator</b> (compliance). OrderService is left with one job — <b>coordinating</b> the steps — and changes only if the order process itself changes. A new promotion now touches one class, owned by one group.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 SRP lab · before and after</div>
+    <div class="code-block"><pre><span class="cmt">// AFTER — each class has one reason to change</span>
+<span class="kw">public</span> <span class="kw">class</span> PricingCalculator   { <span class="kw">public</span> <span class="kw">decimal</span> Price(Order o) { /* promotions and totals */ <span class="kw">return</span> 0m; } }
+<span class="kw">public</span> <span class="kw">class</span> TaxCalculator       { <span class="kw">public</span> <span class="kw">decimal</span> Tax(Order o, <span class="kw">decimal</span> net) { /* tax rules */ <span class="kw">return</span> 0m; } }
+<span class="kw">public</span> <span class="kw">class</span> OrderRepository     { <span class="kw">public</span> <span class="kw">void</span> Save(Order o) { /* SQL only */ } }
+<span class="kw">public</span> <span class="kw">class</span> OrderNotifier       { <span class="kw">public</span> <span class="kw">void</span> Confirm(Order o) { /* e-mail only */ } }
+
+<span class="kw">public</span> <span class="kw">class</span> OrderService
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> PricingCalculator _pricing = <span class="kw">new</span>();     <span class="cmt">// still created here — page 6 fixes this</span>
+    <span class="kw">private</span> <span class="kw">readonly</span> TaxCalculator _tax = <span class="kw">new</span>();
+    <span class="kw">private</span> <span class="kw">readonly</span> OrderRepository _repo = <span class="kw">new</span>();
+    <span class="kw">private</span> <span class="kw">readonly</span> OrderNotifier _notifier = <span class="kw">new</span>();
+
+    <span class="kw">public</span> <span class="kw">void</span> PlaceOrder(Order order)
+    {
+        <span class="kw">var</span> net = _pricing.Price(order);
+        order.Total = net + _tax.Tax(order, net);
+        _repo.Save(order);
+        _notifier.Confirm(order);
+    }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. OrderService shrinks from ≈ 300 to ≈ 40 lines. It still creates its own collaborators with <span class="kw">new</span>; fixing that is the Dependency Inversion Principle (page 6).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure</th><th scope="col">Before</th><th scope="col">After SRP</th></tr></thead><tbody><tr><th scope="row">Reasons to change in OrderService</th><td>6</td><td>1 (the order process)</td></tr><tr><th scope="row">Classes a promotion edits</th><td>1 (and retests all 6 jobs)</td><td>1 (PricingCalculator)</td></tr><tr><th scope="row">Merge conflicts between finance and operations</th><td>Likely — same file</td><td>None — different files</td></tr><tr><th scope="row">Lines in OrderService</th><td>≈ 300</td><td>≈ 40</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📏 Telling responsibilities apart</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Test</th><th scope="col">Question</th><th scope="col">Violation looks like</th></tr></thead><tbody><tr><th scope="row"><b>Actor test</b></th><td>Who could ask me to change this class?</td><td>More than one department or role</td></tr><tr><th scope="row"><b>Sentence test</b></th><td>Can I describe the class without “and”?</td><td>“It validates and prices and saves and e-mails”</td></tr><tr><th scope="row"><b>Constructor test</b></th><td>How many dependencies does it take?</td><td>Many parameters — Microsoft’s DI guidance calls a big constructor a code smell for too many jobs</td></tr><tr><th scope="row"><b>Change test</b></th><td>Do unrelated changes edit this file?</td><td>Every sprint touches it for different reasons</td></tr><tr><th scope="row"><b>Import test</b></th><td>Does it reference SQL, SMTP, HTTP and business rules?</td><td>Infrastructure and policy in one place</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · SRP symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">A “Manager”, “Helper” or “Utils” class with dozens of methods</th><td>A dumping ground; no single reason to change</td><td>Group methods by who changes them; extract classes</td></tr><tr><th scope="row">Merge conflicts in the same file from different teams</th><td>Two actors share one class</td><td>Split by actor</td></tr><tr><th scope="row">A change in tax rules breaks e-mail sending</th><td>Shared state or ordering between jobs</td><td>Separate the jobs; pass data explicitly</td></tr><tr><th scope="row">Tests need many mocks for one class</th><td>Too many collaborators = too many jobs</td><td>Split the class</td></tr><tr><th scope="row">You split too far: one-method classes everywhere</th><td>Over-applying SRP (a “responsibility” is not “a method”)</td><td>Merge things that always change together (page 11)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📬</span><h5>Marketing and legal both edit the e-mail class</h5><p>Two actors in one class.</p><span class="sc-use">→ Separate template content from sending</span></div>
+      <div class="scenario"><span class="sc-icon">💼</span><h5>A pricing class also reads the database</h5><p>Policy mixed with infrastructure.</p><span class="sc-use">→ Extract a repository</span></div>
+      <div class="scenario"><span class="sc-icon">🧰</span><h5>A giant `Utils` class</h5><p>No reason to change at all, so every reason.</p><span class="sc-use">→ Move each function to its owner</span></div>
+      <div class="scenario"><span class="sc-icon">🌐</span><h5>A controller that validates, prices and saves</h5><p>Web layer doing the domain’s job.</p><span class="sc-use">→ Controllers delegate; services own rules</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>What SRP is not.</b> It does not say “a class should do only one thing” in the sense of one method. Martin’s own wording is about <i>reasons to change</i>, and he admits the definition shifted over time and asks “what defines a reason to change?” — answering with people and business functions.</p>
+      <p><b>Related idea.</b> Microsoft’s architecture guidance describes separation of concerns the same way: break an application up by its responsibilities so a growing codebase stays navigable.</p>
+      <p><b>Functions too.</b> The same test works for methods, modules and services; a microservice with six reasons to change has the same problem at a bigger scale.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>SRP: a class (module) should have one, and only one, reason to change.</li><li>Reasons to change are people/business functions: ask “who could request a change here?”.</li><li>Gather things that change for the same reasons; separate things that change for different reasons.</li><li>Smells: “and” in the description, many constructor parameters, “Manager/Utils” classes, conflicts in one file.</li><li>SRP is cohesion and coupling made practical; it is not “one method per class”.</li><li>After SRP, OrderService only orchestrates; it still creates its collaborators (fixed by D).</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Single Responsibility Principle says a module should have one reason to change, and in practice a reason to change is a stakeholder who can ask for it. I test a class by asking who could request changes to it; if the answer is finance and operations and the database team, I split it by actor so each change lands in one place, and the original class just orchestrates."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Reading SRP as “one method per class”.</b> You end up with a hundred tiny classes that always change together.</p>
+      <p><b>Splitting by technical layer only.</b> Splitting “data functions” from “rules” can group things that change for different reasons.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🎯 Responsibility</h5><p>A reason to change — usually one stakeholder or business function.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔧 Method</h5><p>A unit of code. One class can have many methods and still one responsibility.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>OrderService now has one reason to change. But how do we add the tenth promotion without editing PricingCalculator? Next: open for extension, closed for modification. <i>(coming soon: O — the Open/Closed Principle)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 SOLID has no single standard. The wording quoted is Robert C. Martin’s; Microsoft statements come from .NET guidance. Official docs: <a href="https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html" target="_blank" rel="noopener">Uncle Bob: The Single Responsibility Principle</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/develop-asp-net-core-mvc-apps" target="_blank" rel="noopener">Developing ASP.NET Core MVC apps (.NET)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

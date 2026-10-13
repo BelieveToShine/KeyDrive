@@ -474,7 +474,8 @@
       "solid-clinic": "Capstone: the SOLID clinic"
     },
     "written": [
-      "why-design-principles"
+      "why-design-principles",
+      "single-responsibility"
     ],
     "sub": {},
     "subTitles": {}

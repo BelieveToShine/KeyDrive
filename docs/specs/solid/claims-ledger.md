@@ -16,5 +16,17 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | The acronym SOLID was added later as a mnemonic | 🟨 K | commonly stated; not verified in the sources searched |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 2 — Single Responsibility
+| Claim | Status | Note |
+|---|---|---|
+| Each software module should have one and only one reason to change; reasons to change come from a single person or tightly coupled group representing one narrowly defined business function (CFO/COO/CTO payroll example: pay calculation, report format, database saving) | ✅ V | blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html |
+| SRP is another way to define cohesion and coupling: increase cohesion among things that change for the same reasons, decrease coupling between things that change for different reasons | ✅ V | same; “Solid Relevance” 2020 gives the short form |
+| Martin admits the definition shifted and asks what defines a reason to change | ✅ V | butunclebob.com PrinciplesOfOod / 2014 post |
+| A constructor with many dependencies is a code smell that a class does too much | ✅ V | Microsoft Learn (ASP.NET Core clean code with DI article; MVC guidance) |
+| Separation of concerns: break an app up by responsibilities | ✅ V | Microsoft Learn: Common web application architectures / Key principles |
+| “Manager/Utils” dumping-ground smell; actor/sentence/import tests; SRP ≠ one method per class | 🟨 K | heuristics derived from Martin's definition, presented as tests, not quotes |
+| Before/after lines (≈ 300 → ≈ 40), 6 → 1 reasons | 🟦 I | teaching numbers (overview.md) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

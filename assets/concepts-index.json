@@ -3800,5 +3800,31 @@
     "summary": "The classic mistake with Why code rots: change, coupling & cohesion.",
     "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-single-responsibility",
+    "title": "S — the Single Responsibility Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "One reason to change; reasons are stakeholders; the actor test; splitting OrderService into four focused classes.",
+    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split"
+  },
+  {
+    "id": "solid-single-responsibility-recall",
+    "title": "S — the Single Responsibility Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "Quick recall points: S — the Single Responsibility Principle.",
+    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-single-responsibility-trap",
+    "title": "S — the Single Responsibility Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "The classic mistake with S — the Single Responsibility Principle.",
+    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split trap mistake",
+    "anchor": "trap"
   }
 ]
