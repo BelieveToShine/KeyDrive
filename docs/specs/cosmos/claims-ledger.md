@@ -169,7 +169,23 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | Bounded staleness suggested for single-write accounts with “two regions” or more | ✅ V | Consistency level choices |
 | Storage and write RU scale with the number of regions | ✅ V | Request units (“write RU increases with regions”); storage K |
 | Azure SQL failover groups; DynamoDB global tables analogies | 🟨 K | other-engine pointers |
-| 120 ms / 10 ms latencies, ≈ 3× storage, 3-region shop | 🟦 I | teaching numbers |
+| “409” conflict error mention, 120 ms / 10 ms latencies, ≈ 3× storage, 3-region shop | 🟦 I | teaching numbers |
+
+## Page 12 — cost clinic
+| Claim | Status | Note |
+|---|---|---|
+| Every technique in the nine cases is sourced on the page it points to (pages 2–11) | ✅ V / 🟨 K | see those sections; no new technical claim is introduced here |
+| All numbers (12 RU, 7 RU, 150 RU, 312 RU, 184,000/12, 20,000 RU/s at ≈ 9%, 60% peak, 1.8 MB, 12% of inserts, ≈ 90% of write RU, 2–4 RU) | 🟦 I | teaching numbers consistent with `docs/specs/cosmos/overview.md` |
+| Autoscale scales between 10% and 100% of the max | ✅ V | page 3 |
+| Scoring bands | 🟦 I | self-assessment |
+
+## Deep dive — same question, two engines
+| Claim | Status | Note |
+|---|---|---|
+| Translation table entries | ✅ V / 🟨 K | each row restates a fact verified on the page it cites (SQL pages 3–15; Cosmos pages 2–11) |
+| Cosmos DB as system of record + SQL/warehouse for reporting via change feed | ✅ V | Change feed design patterns (sync to warehouse) |
+| PostgreSQL / DynamoDB as the two poles | 🟨 K | other-engine pointer |
+| 240,000 / 400 reads; 312 / 3 RU; 184,000 / 12 | 🟦 I | taken from SQL page 7 and Cosmos page 7 |
 
 ## Cross-page notes
 | Claim | Status | Note |

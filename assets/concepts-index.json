@@ -2604,5 +2604,57 @@
     "summary": "The classic mistake with Global distribution & multi-region writes.",
     "keywords": "cosmos db global distribution multi region writes failover conflict resolution last write wins custom merge read regions trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-cosmos-cost-clinic",
+    "title": "Capstone: the Cosmos cost clinic",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-cost-clinic.html",
+    "summary": "Nine practice cases from the whole Cosmos DB lab: symptom, evidence, your diagnosis, one change, with an answer key.",
+    "keywords": "cosmos db cost clinic capstone practice cases diagnosis 429 ru troubleshooting interview"
+  },
+  {
+    "id": "cosmos-cosmos-cost-clinic-recall",
+    "title": "Capstone: the Cosmos cost clinic — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-cost-clinic.html",
+    "summary": "Quick recall points: Capstone: the Cosmos cost clinic.",
+    "keywords": "cosmos db cost clinic capstone practice cases diagnosis 429 ru troubleshooting interview interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-cosmos-cost-clinic-trap",
+    "title": "Capstone: the Cosmos cost clinic — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-cost-clinic.html",
+    "summary": "The classic mistake with Capstone: the Cosmos cost clinic.",
+    "keywords": "cosmos db cost clinic capstone practice cases diagnosis 429 ru troubleshooting interview trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "cosmos-same-question-two-engines",
+    "title": "Same question, two engines (SQL vs Cosmos DB)",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/same-question-two-engines.html",
+    "summary": "Translation table between the SQL and Cosmos DB labs, a decision picture and the same shop question measured in both.",
+    "keywords": "sql versus cosmos db comparison choose azure sql cosmos db translation index partition key logical reads ru"
+  },
+  {
+    "id": "cosmos-same-question-two-engines-recall",
+    "title": "Same question, two engines (SQL vs Cosmos DB) — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/same-question-two-engines.html",
+    "summary": "Quick recall points: Same question, two engines (SQL vs Cosmos DB).",
+    "keywords": "sql versus cosmos db comparison choose azure sql cosmos db translation index partition key logical reads ru interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-same-question-two-engines-trap",
+    "title": "Same question, two engines (SQL vs Cosmos DB) — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/same-question-two-engines.html",
+    "summary": "The classic mistake with Same question, two engines (SQL vs Cosmos DB).",
+    "keywords": "sql versus cosmos db comparison choose azure sql cosmos db translation index partition key logical reads ru trap mistake",
+    "anchor": "trap"
   }
 ]

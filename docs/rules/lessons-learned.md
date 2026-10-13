@@ -51,3 +51,10 @@ The goal: the same mistake never reaches the user twice, in any category or any 
 - The BigCorp customer had 200,000 orders on page 9 and 80,000 on pages 7, 10 and 11. Caught in review before shipping. Rule: canonical numbers live in `docs/specs/sql/overview.md`; grep a number before reusing it, and re-read earlier pages when a new page changes the story.
 - When a page ships, search every earlier page for “(page N — coming)” and “later)” and turn them into plain references.
 - A wrong claim in a cause-and-effect chain is worse than a wrong number (page 4 first said the bad estimate “chose” the join; the real mechanism is the hash memory grant). Re-derive the mechanism, don’t just copy the number.
+
+## L11 — Shipping many pages unattended (2026-10-13)
+- A page's `next` box must be locked until its target exists; the Cosmos `p_common.next_box` now auto-locks. Re-run the previous page's build after each new page so its next link goes live (`ship.sh` does this).
+- `build.py` names the output file from the function suffix: a function called `build_hot_partitions` writes `hot-partitions.html`, not `hot-partitions-429.html`. Name functions after the slug.
+- Free-floating arrows (no box at either end) fail the linter; use two side boxes as axis labels.
+- Words like “undefined” in prose trip the placeholder check; “two regions”, “five levels” and sizes trip the ledger check — add the literal token to the ledger row.
+- Never leave a case-board label truncated by `[:11]` — write short labels by hand.

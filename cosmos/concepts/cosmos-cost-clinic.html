@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the Cosmos cost clinic — Cosmos DB — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🌌 Cosmos DB Performance Lab</a><span class="sep">›</span><span class="cur">Capstone: the Cosmos cost clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 12 · 🌍 At scale</div>
+    <h1>Eight patients and a bonus: <span class="grad-text">diagnose first</span>, then open the file.</h1>
+    <p class="sub">A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.</p>
+    <div class="interview-q">❓ "A Cosmos DB bill is high and there are 429s. Walk me through your investigation."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The case board: nine cases in five families: hot key and fan-out, index and write cost, data shape, consistency and provisioning, regions">
+<defs><marker id="cc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="200" height="144" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">HOT KEY &amp; FAN-OUT</text>
+<rect class="zone" x="220" y="8" width="200" height="144" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">INDEX &amp; WRITE COST</text>
+<rect class="zone" x="432" y="8" width="200" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="446" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">DATA SHAPE</text>
+<rect class="zone" x="8" y="160" width="200" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">CONSISTENCY &amp; PROVISIONING</text>
+<rect class="zone" x="220" y="160" width="200" height="144" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">REGIONS</text>
+<rect class="bx" x="16" y="46" width="88" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="60" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 1</text>
+<text x="60" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Evening 429</text>
+<rect class="bx" x="110" y="46" width="88" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="154" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 2</text>
+<text x="154" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Open orders</text>
+<rect class="bx" x="228" y="46" width="88" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="272" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 3</text>
+<text x="272" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Fat inserts</text>
+<rect class="bx" x="322" y="46" width="88" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="366" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 4</text>
+<text x="366" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Sorted list</text>
+<rect class="bx" x="440" y="46" width="88" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="484" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 5</text>
+<text x="484" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Order page</text>
+<rect class="bx" x="534" y="46" width="88" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="578" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 6</text>
+<text x="578" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Comments</text>
+<rect class="bx" x="16" y="198" width="88" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="60" y="238.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 7</text>
+<text x="60" y="251.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Strong</text>
+<rect class="bx" x="110" y="198" width="88" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="154" y="238.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 8</text>
+<text x="154" y="251.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Idle RUs</text>
+<rect class="bx" x="228" y="198" width="88" height="86" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="272" y="238.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 9</text>
+<text x="272" y="251.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Failover</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> eight patients and a bonus, grouped by the family of problem you have met: <b>hot key and fan-out</b>, <b>index and write cost</b>, <b>data shape</b>, <b>consistency and provisioning</b>, and <b>regions</b>. Each case gives a symptom and the evidence from metrics or the portal. <b>Decide your diagnosis first</b>, then reveal it — and see which page to revisit.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You have the model, the key, the currency, the shape, the index, the query, the metrics, the limits and the copies. This is the practice ward: <b>symptom → evidence → diagnosis → one change</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>In real life the ticket says “Cosmos is expensive” or “we get 429s”, not “you have a fan-out”. The cases start the way tickets do. All of them use the same orders container and the same illustrative numbers as the rest of the lab.</p>
+      <p>Every case is solvable with the ladder: <b>measure the RU charge, read the diagnostics, find the biggest wrong thing, one hypothesis, one change, prove it</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The ladder, Cosmos edition</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 What did it cost?</h4><p>The RU charge and latency of one request — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Read the diagnostics</h4><p>Query metrics, partitions touched, indexed vs retrieved documents.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A fan-out, a scan, a hot key, a fat document?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Wrong partition key? Missing composite index? Wrong shape?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same request, same data, lower RU charge.</p></div>
+    </div>
+    <p style="margin-top:12px">Ask in this order: <b>429s or just cost?</b> → <b>one partition or all?</b> → <b>retrieved ≈ output?</b> → <b>how many partitions touched?</b> → <b>how big is the item and how many paths are indexed?</b> → <b>which consistency level and how many regions?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Throttled at night, quiet by day</h4><p><b>Symptom.</b> Writes to <code>orders</code> get 429s every evening; account-wide RU/s looks comfortable. The key is <code>/orderDate</code>.</p><p><b>Evidence.</b></p><ul><li>Insights: <b>one partition range at 100%</b>, the others 20–35%.</li><li>Key-RU log: one value (“today”) takes ≈ 90% of write RU.</li><li>429s ≈ 12% of inserts; reads fine.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A hot key: every new order shares today’s date, so one partition takes all the writes.</p><p><b>Fix.</b> A key that spreads writes — new container keyed by <code>/customerId</code> (the key cannot change in place), migrate, switch. Raising RU/s only masks it.</p><p>📖 <b>Where to review:</b> pages 2 and 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 2</div>
+    <div class="kd-card"><h4>The dashboard that costs 150 RU</h4><p><b>Symptom.</b> The “all open orders” dashboard refreshes constantly and costs about 150 RU per run; the bill is dominated by it.</p><p><b>Evidence.</b></p><ul><li>Query metrics: <b>partitions queried ≈ 50</b>; retrieved ≈ output.</li><li>No partition key in the filter (<code>status = "Open"</code>).</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Fan-out: ≈ 2.5 RU minimum per physical partition before any work.</p><p><b>Fix.</b> A read model kept by the change feed (keyed so the dashboard hits one partition), or a precomputed summary item read with a point read — ≈ 1–10 RU.</p><p>📖 <b>Where to review:</b> pages 6 and 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 3</div>
+    <div class="kd-card"><h4>Writes cost 12 RU for a 2 KB order</h4><p><b>Symptom.</b> Inserts cost far more than expected; nobody filters on the long <code>notes</code> field or the <code>lines</code> array.</p><p><b>Evidence.</b></p><ul><li>Indexing policy: default — every path indexed.</li><li>A 2 KB order ≈ 12 RU; the team expects ≈ 7.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Every indexed path is write work.</p><p><b>Fix.</b> Include the root, exclude <code>/notes/?</code> and <code>/lines/*</code>; re-measure; check no query filters on them.</p><p>📖 <b>Where to review:</b> pages 3 and 5.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 4</div>
+    <div class="kd-card"><h4>Customer’s newest orders: 312 RU</h4><p><b>Symptom.</b> “Customer 42’s newest orders” is slow and expensive although the partition key is in the filter.</p><p><b>Evidence.</b></p><ul><li>Metrics: <b>retrieved 184,000, output 12</b>, index utilisation 0%.</li><li>Query: <code>WHERE customerId = 42 ORDER BY orderDate DESC</code>.</li><li>One partition queried.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Not a fan-out; an index gap — the sort needs a composite index.</p><p><b>Fix.</b> Composite <code>(customerId asc, orderDate desc)</code>; wait for it to finish building; re-run → a few RU.</p><p>📖 <b>Where to review:</b> pages 5 and 7.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 5</div>
+    <div class="kd-card"><h4>Six requests for one page</h4><p><b>Symptom.</b> The order detail page makes six sequential requests and costs ≈ 8 RU; latency is poor.</p><p><b>Evidence.</b></p><ul><li>Model: separate containers for orders, lines, products, customers.</li><li>Each request is a point read of ≈ 1–2 RU.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Over-normalised — a SQL habit.</p><p><b>Fix.</b> Embed lines (with copied product name and price) and a customer display-name snapshot: one point read ≈ 1–2 RU.</p><p>📖 <b>Where to review:</b> page 4.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>The post item that keeps growing</h4><p><b>Symptom.</b> Writes on popular posts get more expensive every day; one item is approaching 2 MB.</p><p><b>Evidence.</b></p><ul><li>The post item contains an embedded <code>comments</code> array.</li><li>Each new comment rewrites the whole item.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> An unbounded embedded array — cost rises with item size and the 2 MB limit approaches.</p><p><b>Fix.</b> One item per comment with <code>/postId</code> as the key; read a post and its comments with one single-partition query.</p><p>📖 <b>Where to review:</b> page 4.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 7</div>
+    <div class="kd-card"><h4>Reads suddenly cost double</h4><p><b>Symptom.</b> After a configuration change the read RU bill doubled and cross-region writes became slower.</p><p><b>Evidence.</b></p><ul><li>Account default consistency: <b>Strong</b> (was Session).</li><li>Point reads ≈ 2–4 RU instead of 1–2.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Strong reads use two replicas; strong writes wait for all regions.</p><p><b>Fix.</b> Back to Session; strengthen per request only where a feature needs it.</p><p>📖 <b>Where to review:</b> pages 3 and 9.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 8</div>
+    <div class="kd-card"><h4>A big bill, a quiet container</h4><p><b>Symptom.</b> A container is provisioned at 20,000 RU/s (manual); the monthly bill is large; usage averages about 9% with an evening peak.</p><p><b>Evidence.</b></p><ul><li>Normalized RU: low all day; peak 60% for one hour.</li><li>No 429s.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Over-provisioned for the peak.</p><p><b>Fix.</b> Autoscale (max sized for the peak; it scales between 10% and 100% of the max) — or serverless for light workloads; re-check utilisation after a week.</p><p>📖 <b>Where to review:</b> page 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 9</div>
+    <div class="kd-card"><h4>Bonus: a region failed — and the others throttled</h4><p><b>Symptom.</b> A region went down; traffic moved to the others and they returned 429s for an hour.</p><p><b>Evidence.</b></p><ul><li>Remaining regions provisioned for their own traffic only.</li><li>Normalized RU high on all partitions in those regions.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The remaining regions lacked RU for the redirected reads (and writes if promoted).</p><p><b>Fix.</b> Provision (or autoscale) each region for the failover load; rehearse a failover.</p><p>📖 <b>Where to review:</b> pages 8 and 11.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key — case → family → page</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Root cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Throttled at night, quiet by day</th><td>Hot key & fan-out</td><td>A hot key: every new order shares today’s date, so one partition takes all the writes.</td><td>pages 2 and 8</td></tr><tr><th scope="row">2. The dashboard that costs 150 RU</th><td>Hot key & fan-out</td><td>Fan-out: ≈ 2.</td><td>pages 6 and 10</td></tr><tr><th scope="row">3. Writes cost 12 RU for a 2 KB order</th><td>Index & write cost</td><td>Every indexed path is write work.</td><td>pages 3 and 5</td></tr><tr><th scope="row">4. Customer’s newest orders: 312 RU</th><td>Index & write cost</td><td>Not a fan-out; an index gap — the sort needs a composite index.</td><td>pages 5 and 7</td></tr><tr><th scope="row">5. Six requests for one page</th><td>Data shape</td><td>Over-normalised — a SQL habit.</td><td>page 4</td></tr><tr><th scope="row">6. The post item that keeps growing</th><td>Data shape</td><td>An unbounded embedded array — cost rises with item size and the 2 MB limit approaches.</td><td>page 4</td></tr><tr><th scope="row">7. Reads suddenly cost double</th><td>Consistency & provisioning</td><td>Strong reads use two replicas; strong writes wait for all regions.</td><td>pages 3 and 9</td></tr><tr><th scope="row">8. A big bill, a quiet container</th><td>Consistency & provisioning</td><td>Over-provisioned for the peak.</td><td>page 3</td></tr><tr><th scope="row">9. Bonus: a region failed — and the others throttled</th><td>Regions</td><td>The remaining regions lacked RU for the redirected reads (and writes if promoted).</td><td>pages 8 and 11</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>7–9 diagnosed before the reveal</h5><p>You think in the ladder. Practise on your own container’s top ten operations.</p><span class="sc-use">→ Log RequestCharge</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>4–6</h5><p>You know the pieces; practise the order of questions.</p><span class="sc-use">→ Re-read the triage trees</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–3</h5><p>Normal on a first pass. Revisit pages 2, 3 and 6 — key, RU and request shape carry most cases.</p><span class="sc-use">→ Key → RU → shape</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo in a week without the evidence list.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns.</b> Cases 1 and 8 look like “not enough throughput” but are about skew and failover headroom; cases 2 and 4 look alike (“expensive query”) but one is fan-out and the other an index gap — retrieved-vs-output and partitions-queried separate them.</p>
+      <p><b>The two bridges.</b> The SQL lab’s method (measure, find the biggest wrong thing, one change) transfers unchanged; only the instruments differ. The bridge page compares them side by side.</p>
+      <p><b>Make your own clinic.</b> Take five real tickets, strip the diagnosis, keep symptom and evidence, and run it with your team.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: 429s or cost? → one partition or all? → retrieved ≈ output? → partitions touched? → item size and indexed paths? → consistency and regions.</li><li>One change, same request, compare the RU charge.</li><li>Families: hot key & fan-out (1, 2), index & write cost (3, 4), data shape (5, 6), consistency & provisioning (7, 8), regions (9).</li><li>Similar symptoms, different causes: check metrics before theorising.</li><li>Log RequestCharge for your top operations.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat a Cosmos DB cost or throttling problem as an investigation: is it 429s or just cost, is it one partition or all, do retrieved and output documents match, how many partitions does the request touch, how big is the item and how many paths are indexed, and what are the consistency level and region setup. I change one thing and compare the RU charge."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Buying RU/s first.</b> In five of nine cases the fix was design, not throughput.</p>
+      <p><b>Skipping the evidence.</b> In every case one number or one chart decided the diagnosis.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧠 Knowing the features</h5><p>You can explain partition keys, RUs, composite indexes and consistency levels.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Doing the diagnosis</h5><p>You can read a chart and a metrics panel and choose the one change that proves a hypothesis.</p></div>
+  </div>
+  <section class="kd-section ">
+    <div class="sec-label next">🔀 Deep dive: the same question in SQL and Cosmos</div>
+    <div class="deep-grid">
+      <a class="kd-card deep-card" href="same-question-two-engines.html"><span class="dc-kicker">Deep dive · Cosmos cost clinic</span><h4>Same question, two engines</h4><p>The same shop question solved in Azure SQL and in Cosmos DB, side by side: where each wins and how the same thinking applies.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the Cosmos DB Performance Lab. One more page compares it with the SQL lab. Back to the Data Systems hub, or open the deep dive above.</span>
+      <a class="next-link" href="../../data/index.html">Data Systems hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every technique in the cases is explained, with its sources, on the page it points to. For exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/troubleshoot-query-performance" target="_blank" rel="noopener">Troubleshoot query performance</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/troubleshoot-request-rate-too-large" target="_blank" rel="noopener">Troubleshoot request rate too large (429)</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/request-units" target="_blank" rel="noopener">Request units</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Cosmos DB · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

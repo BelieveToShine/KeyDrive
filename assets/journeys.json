@@ -297,9 +297,14 @@
       "hot-partitions-429",
       "consistency-levels",
       "change-feed",
-      "global-distribution"
+      "global-distribution",
+      "cosmos-cost-clinic"
     ],
-    "sub": {},
-    "subTitles": {}
+    "sub": {
+      "same-question-two-engines": "cosmos-cost-clinic"
+    },
+    "subTitles": {
+      "same-question-two-engines": "Same question, two engines"
+    }
   }
 }

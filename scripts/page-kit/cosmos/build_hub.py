@@ -26,10 +26,15 @@ GROUPS = [('🌌 THE MODEL','34,211,238','#67e8f9'),
           ('🧠 QUERY & INDEX','167,139,250','#c4b5fd'),
           ('🔥 UNDER LOAD','251,113,133','#fda4af'),
           ('🌍 AT SCALE','52,211,153','#6ee7b7')]
-WRITTEN = ['cosmos-mental-model','partition-keys','request-units','data-modeling','indexing-policy','queries-fan-out','query-metrics','hot-partitions-429','consistency-levels','change-feed','global-distribution']
+SUB = {}
+SUBT = {}
+import os
+if os.path.exists(str(REPO / 'cosmos/concepts/same-question-two-engines.html')):
+    SUB = {'same-question-two-engines': 'cosmos-cost-clinic'}; SUBT = {'same-question-two-engines': 'Same question, two engines'}
+WRITTEN = ['cosmos-mental-model','partition-keys','request-units','data-modeling','indexing-policy','queries-fan-out','query-metrics','hot-partitions-429','consistency-levels','change-feed','global-distribution','cosmos-cost-clinic']
 
 journeys = json.loads((REPO / 'assets/journeys.json').read_text())
-journeys['cosmos'] = {'title': 'Cosmos DB Performance Lab', 'order': [c[0] for c in C], 'titles': {c[0]: c[2] for c in C}, 'written': WRITTEN, 'sub': {}, 'subTitles': {}}
+journeys['cosmos'] = {'title': 'Cosmos DB Performance Lab', 'order': [c[0] for c in C], 'titles': {c[0]: c[2] for c in C}, 'written': WRITTEN, 'sub': SUB, 'subTitles': SUBT}
 (REPO / 'assets/journeys.json').write_text(json.dumps(journeys, indent=2, ensure_ascii=False) + '\n')
 
 # ---- SVG map

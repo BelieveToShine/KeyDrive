@@ -12,3 +12,5 @@ Page rhythm = the SQL lab's: See it first → Why → how it works → pick-card
 | Physical partitions (illustrative) | the orders container has about 50 physical partitions |
 | Costs used for teaching | point read ≈ 1 RU per 1 KB (a 2 KB order ≈ 1–2 RU); write ≈ 5 RU per 1 KB with default indexing (a 2 KB order ≈ 10 RU); each physical partition checked by a cross-partition query ≥ 2.5 RU (≈ 125 RU for 50) |
 | Throughput examples | autoscale max 10,000 RU/s (floor 1,000); 1–5% 429s is healthy |
+
+Status: **complete — 12 / 12 pages + the deep dive "Same question, two engines"** (2026-10-13). User has not reviewed yet — expect corrections.
