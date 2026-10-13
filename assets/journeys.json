@@ -343,7 +343,8 @@
       "keys-reconciliation",
       "effects",
       "profiler",
-      "memoization"
+      "memoization",
+      "react-debugging-playbook"
     ],
     "sub": {},
     "subTitles": {}

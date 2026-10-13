@@ -7,7 +7,7 @@
 | 4 | Effects: synchronising with the outside world | effects | ✅ written |
 | 5 | Measure first: the React Profiler | profiler | ✅ written |
 | 6 | memo, useMemo, useCallback & the Compiler | memoization | ✅ written |
-| 7 | The React debugging playbook | react-debugging-playbook | 🔒 planned |
+| 7 | The React debugging playbook | react-debugging-playbook | ✅ written |
 | 8 | Context, reducers & where state lives | context-state-architecture | 🔒 planned |
 | 9 | Data fetching, Suspense & transitions | data-fetching-suspense | 🔒 planned |
 | 10 | Server rendering, hydration & Server Components | server-rendering-hydration | 🔒 planned |

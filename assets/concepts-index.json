@@ -2812,5 +2812,31 @@
     "summary": "The classic mistake with memo, useMemo, useCallback & the Compiler.",
     "keywords": "react memo useMemo useCallback react compiler memoization stable props object is performance trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-react-debugging-playbook",
+    "title": "The React debugging playbook",
+    "category": "React",
+    "page": "react/concepts/react-debugging-playbook.html",
+    "summary": "The thinking ladder in React, symptom triage to pages, and a worked example of changing one thing at a time.",
+    "keywords": "react debugging playbook performance triage profiler one change at a time measure prove"
+  },
+  {
+    "id": "react-react-debugging-playbook-recall",
+    "title": "The React debugging playbook — interview recall",
+    "category": "React",
+    "page": "react/concepts/react-debugging-playbook.html",
+    "summary": "Quick recall points: The React debugging playbook.",
+    "keywords": "react debugging playbook performance triage profiler one change at a time measure prove interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-react-debugging-playbook-trap",
+    "title": "The React debugging playbook — common trap",
+    "category": "React",
+    "page": "react/concepts/react-debugging-playbook.html",
+    "summary": "The classic mistake with The React debugging playbook.",
+    "keywords": "react debugging playbook performance triage profiler one change at a time measure prove trap mistake",
+    "anchor": "trap"
   }
 ]

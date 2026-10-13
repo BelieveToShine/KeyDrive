@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The React debugging playbook — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Debugging playbook</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 7 of 12 · ⚛️ Measure & optimise</div>
+    <h1>A repeatable <span class="grad-text">method</span> for wrong and slow React screens.</h1>
+    <p class="sub">The thinking ladder in React, a triage map from symptom to page, and a worked example of one change at a time.</p>
+    <div class="interview-q">❓ "How do you debug a slow or wrong React component?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The six-step ladder applied to the ShopUI keystroke: measure 40 ms, read that the cards take 35, find 500 identical renders, guess unchanged props, change by stabilising props with memo, prove 4 renders and 3 ms">
+<defs><marker id="pb1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M194,76 L235,76" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M405,76 L446,76" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M531,116 L531,160 L109,160 L109,206" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M194,246 L235,246" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M405,246 L446,246" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<rect class="bx" x="24" y="36" width="170" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="109" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · MEASURE</text>
+<text x="109" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">40 ms per keystroke</text>
+<rect class="bx" x="235" y="36" width="170" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">2 · READ</text>
+<text x="320" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">cards take 35 of 40 ms</text>
+<rect class="bx" x="446" y="36" width="170" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="531" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">3 · FIND</text>
+<text x="531" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">500 identical renders</text>
+<rect class="bx" x="24" y="206" width="170" height="80" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="109" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">4 · GUESS</text>
+<text x="109" y="256.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">their props never change</text>
+<rect class="bx" x="235" y="206" width="170" height="80" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">5 · CHANGE</text>
+<text x="320" y="256.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">memo + stable props</text>
+<rect class="bx" x="446" y="206" width="170" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="531" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">6 · PROVE</text>
+<text x="531" y="256.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">4 renders, ≈ 3 ms</text>
+<text class="free" x="320" y="320" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Same interaction, same data, same build — the only difference is the one change.</text>
+<g class="arrow-pill"><rect x="300.5" y="151" width="39" height="18" rx="9"/><text x="320" y="163.5" text-anchor="middle" font-size="9" font-style="italic">then</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same six steps on the ShopUI keystroke from pages 5–6. <b>Measure</b>: 40 ms. <b>Read</b>: the Profiler ranks the cards at 35 of those 40 ms. <b>Find</b> the biggest wrong thing: 500 identical renders. <b>Guess</b> one cause: their props never change. <b>Change</b> one thing: memo with stable props. <b>Prove</b>: 4 renders, about 3 ms, in the same build. Skipping the last step is how “fixes” that do nothing reach production. (Numbers are illustrative.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A <b>method</b> beats cleverness: <b>measure → read → find the biggest wrong thing → one hypothesis → one change → prove.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–6 gave you facts: how renders start, how state and keys behave, what effects are for, how to measure, and how to skip work. Facts do not fix a bug at 5 pm on a Friday; a repeatable <b>routine</b> does.</p>
+      <p>Most React bugs fall into a few families — wrong values (snapshots, dependencies), wrong identity (keys), runaway work (effects), and slow renders. Each family has a first place to look.</p>
+      <p>This page is the checklist you can carry into any codebase. The same thinking ladder runs through the SQL and Cosmos labs; only the tools change.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Where to start: triage by symptom</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Symptom triage: a wrong or stale value points to state snapshots and effect dependencies, the wrong row keeping state points to keys, loops and double runs point to effects, and a slow interaction points to the Profiler and memoization">
+<defs><marker id="pb2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,54 L320,82 L80,82 L80,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M80,170 L80,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M320,54 L320,82 L240,82 L240,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M240,170 L240,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M320,54 L320,82 L400,82 L400,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M400,170 L400,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M320,54 L320,82 L560,82 L560,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M560,170 L560,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<rect class="bx" x="220" y="8" width="200" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">What does it look like?</text>
+<text x="320" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">pick the symptom</text>
+<rect class="bx" x="10" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Wrong or stale</text>
+<text x="80" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">value on screen</text>
+<rect class="bx" x="10" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 2 and 4</text>
+<text x="80" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">state snapshot, deps</text>
+<rect class="bx" x="170" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="240" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Wrong row keeps</text>
+<text x="240" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">its state or input</text>
+<rect class="bx" x="170" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="240" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">page 3</text>
+<text x="240" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">keys and identity</text>
+<rect class="bx" x="330" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="400" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Loops, or runs</text>
+<text x="400" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">twice in dev</text>
+<rect class="bx" x="330" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">page 4</text>
+<text x="400" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">effects, Strict Mode</text>
+<rect class="bx" x="490" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="560" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Slow typing</text>
+<text x="560" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">or clicking</text>
+<rect class="bx" x="490" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="560" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 5 and 6</text>
+<text x="560" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Profiler, then memo</text>
+<g class="arrow-pill"><rect x="52.5" y="189" width="55" height="18" rx="9"/><text x="80" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="212.5" y="189" width="55" height="18" rx="9"/><text x="240" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="372.5" y="189" width="55" height="18" rx="9"/><text x="400" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="532.5" y="189" width="55" height="18" rx="9"/><text x="560" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> pick the symptom, then go to the page that explains it. A <b>wrong or stale value</b> usually means a state snapshot or a missing effect dependency (pages 2 and 4). A <b>wrong row keeping state</b> means keys (page 3). <b>Loops or double runs</b> point to effects and Strict Mode (page 4). A <b>slow interaction</b> starts with the Profiler, then memoization (pages 5 and 6).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 The ladder in React</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Question</th><th scope="col">Tool in React</th><th scope="col">ShopUI example</th></tr></thead><tbody><tr><th scope="row">1 · Measure</th><td>How slow, exactly? How many renders?</td><td>Profiler tab; <span class="kw">&lt;Profiler&gt;</span> <span class="kw">onRender</span></td><td>40 ms, 504 renders per keystroke</td></tr><tr><th scope="row">2 · Read</th><td>What rendered, how long did each take?</td><td>Ranked view of the profile; Components tab for props and state</td><td>Cards 35 ms of 40</td></tr><tr><th scope="row">3 · Find</th><td>What is the single biggest wrong thing?</td><td>Sort by time; look for 500 of the same thing</td><td>500 identical card renders</td></tr><tr><th scope="row">4 · Guess</th><td>Why does it happen? One hypothesis only</td><td>The model: pages 1–4</td><td>Props never change, but the parent renders</td></tr><tr><th scope="row">5 · Change</th><td>Smallest change that tests the guess</td><td>memo, state moved down, stable key, derived value</td><td>memo + stable <span class="kw">onAdd</span></td></tr><tr><th scope="row">6 · Prove</th><td>Did the number move, in the same build?</td><td>Record the same interaction again</td><td>4 renders, ≈ 3 ms</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Playbook lab · one change at a time</div>
+    <p>A teammate “fixed” ShopUI in one commit: added <span class="kw">memo</span> to the cards, moved <span class="kw">cartOpen</span> into Cart, and wrapped the filter in <span class="kw">useMemo</span>. The page is faster. Was it all three?</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Approach</th><th scope="col">What you learn</th><th scope="col">Verdict</th></tr></thead><tbody><tr><th scope="row">Three changes, one recording</th><td>“It got faster.” You cannot say which change mattered, or whether two of them are noise</td><td>❌ Cargo cult</td></tr><tr><th scope="row">One change, re-record, keep or revert</th><td>Each change has a measured effect: memo −36 ms, cartOpen move 0 ms for typing (it helps the cart toggle), useMemo 0 ms for typing</td><td>✅ Evidence</td></tr><tr><th scope="row">Revert the changes that did not help</th><td>Less code, same speed</td><td>✅ Simpler code</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · six cases to practise</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">First measurement</th><th scope="col">Likely cause</th><th scope="col">Fix, then prove</th></tr></thead><tbody><tr><th scope="row">“Add 3” adds 1</th><td><span class="kw">console.log</span> inside the handler</td><td>Stale snapshot (page 2)</td><td>Updater function; click again</td></tr><tr><th scope="row">Typed note jumps to another row after delete</th><td>Check the <span class="kw">key</span> in the list</td><td>Index keys (page 3)</td><td>Stable id; delete the first row again</td></tr><tr><th scope="row">Requests twice in development</th><td>Is Strict Mode on?</td><td>Extra dev-only effect cycle (page 4)</td><td>Correct cleanup; confirm production behaves</td></tr><tr><th scope="row">Whole page re-renders when the cart opens</th><td>Profile: who rendered?</td><td>State too high (page 2)</td><td>Move state down; count renders</td></tr><tr><th scope="row">Typing lags with 500 cards</th><td>Profile: ms per commit</td><td>Cards re-render with equal props (pages 5–6)</td><td>memo + stable props; re-record</td></tr><tr><th scope="row">Filter shows old results for a frame</th><td>Look for an effect that sets state</td><td>Derived state in an effect (page 4)</td><td>Calculate during render</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🚨</span><h5>Production is slow, nobody can reproduce it</h5><p>No measurement of the real interaction.</p><span class="sc-use">→ Profile a production-like build of the exact flow</span></div>
+      <div class="scenario"><span class="sc-icon">🙋</span><h5>“Can you look at my component?”</h5><p>No repro, no numbers.</p><span class="sc-use">→ Ask for the smallest interaction and its profile</span></div>
+      <div class="scenario"><span class="sc-icon">🧹</span><h5>Code review adds memo “just in case”</h5><p>No evidence.</p><span class="sc-use">→ Ask for the profile that justifies it</span></div>
+      <div class="scenario"><span class="sc-icon">🔒</span><h5>A fix works on your laptop only</h5><p>Different build or CPU.</p><span class="sc-use">→ Compare in the same build, throttle the CPU</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Wrong versus slow.</b> A <i>wrong</i> value is a correctness bug — fix the model first (pages 2–4). A <i>slow</i> render is a performance bug — measure first (page 5). Do not “optimise” a wrong value.</p>
+      <p><b>React Developer Tools’ Components tab</b> lets you inspect a component’s props and state, which answers “what did it receive?” quickly.</p>
+      <p><b>Strict Mode is a debugging aid</b>, not a bug: its extra render and effect cycle exist to expose impure code and missing cleanup.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>The ladder: measure → read → find the biggest wrong thing → one hypothesis → one change → prove.</li><li>Triage by symptom: wrong value (2, 4), wrong identity (3), runaway effect (4), slow (5–6).</li><li>Change one thing at a time; re-record in the same build.</li><li>Revert changes the profile does not justify.</li><li>Correctness bugs first, performance second.</li><li>The profile — not intuition — picks what to fix.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"When a React screen is slow, I record the exact interaction in a profiling build, read which component is the biggest cost, form one hypothesis from how renders, state, keys and effects work, change one thing, and re-record to prove it. Anything the profile does not justify, I revert."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Changing three things at once.</b> If it gets faster you do not know why; if it gets slower you cannot back out cleanly.</p>
+      <p><b>Declaring victory without a second recording.</b> A fix you did not measure is a guess with a commit message.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🐞 Correctness bug</h5><p>The UI shows the wrong thing. Fix with the model: snapshots, keys, effects.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🐢 Performance bug</h5><p>The UI is right but late. Fix with measurement: profile, then skip or reduce work.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Individual components are fixed. Next: how state is shared across the whole app — context, reducers and where state should live. <i>(coming soon: Context, reducers & where state lives)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener">Profiler</a> · <a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">React Developer Tools</a> · <a href="https://react.dev/reference/react/StrictMode" target="_blank" rel="noopener">StrictMode</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

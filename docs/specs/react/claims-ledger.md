@@ -82,5 +82,14 @@ Source root: https://react.dev/
 | Lab numbers: 504 renders ≈ 40 ms; memo with inline function ≈ 41 ms; stable props 4 renders ≈ 3 ms | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 7 — debugging playbook
+| Claim | Status | Note |
+|---|---|---|
+| React Developer Tools lets you inspect a component's props and state; Profiler tab for profiling | ✅ V | learn/react-developer-tools |
+| Strict Mode: extra render and extra effect cycle in development, to find impure rendering / missing cleanup | ✅ V | reference/react/StrictMode |
+| Triage mapping to pages 2–6 | 🟦 I | structure of this lab, built on facts from pages 2–6 (see their sections) |
+| Playbook numbers: 40 ms, 35 ms, 4 renders, ≈ 3 ms, “memo −36 ms”, “0 ms” per change | 🟦 I | teaching numbers consistent with overview.md |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
