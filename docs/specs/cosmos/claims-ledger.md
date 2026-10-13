@@ -105,6 +105,25 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | SQL page 4 analogy | 🟦 I | teaching analogy |
 | “150 KB” items, “400” RU scenario; 312 RU / 184,000 / 12 / 480 ms / 3 RU | 🟦 I | teaching numbers |
 
+## Page 8 — hot partitions and 429s
+| Claim | Status | Note |
+|---|---|---|
+| Exceeding provisioned RU in a second returns 429; 1–5% of requests with 429 and acceptable latency is healthy | ✅ V | Troubleshoot request rate too large |
+| SDKs/tools retry 429s automatically, typically up to nine times | ✅ V | same |
+| Normalized RU consumption: per-minute, maximum across partition key ranges; 100% does not always mean a 429 | ✅ V | Monitor normalized request units |
+| Hot partition: Insights → Throughput → Normalized RU by PartitionKeyRangeID; diagnostic log (CDBPartitionKeyRUConsumption / PartitionKeyRUConsumption) sums RU by key; DataPlaneRequests log for throttled vs total | ✅ V | same |
+| Splitting a partition with a single hot key does not help; durable fix is a better key | ✅ V | same |
+| Redistribute throughput across partitions is a preview feature | ✅ V | docs list it as preview |
+| Raising RU/s temporarily is not recommended long term | ✅ V | same |
+| Autoscale: hot logical key can exceed its physical partition’s RU/s budget (429 above ≈ 5,000 RU/s or 100% normalized) | ✅ V | autoscale FAQ (quoted in 429 doc search) |
+| Each physical partition receives an even share of the container budget (≈ total ÷ partitions) | 🟨 K | consistent with docs’ per-partition RU/s limits; confirm wording |
+| Check retry-after value returned by the service | 🟨 K | SDK docs; community-sourced in search |
+| Throttle bulk importers / bulk mode with backoff | 🟨 K | general guidance |
+| DynamoDB hot key analogy; SQL page 12 analogy | 🟨 K / 🟦 I | pointers |
+| 10,000 RU/s, “2,500 RU/s” share, “40%” used, 12% / 90% / 35% / 1% figures | 🟦 I | teaching numbers |
+
+
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

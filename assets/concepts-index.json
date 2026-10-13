@@ -2500,5 +2500,31 @@
     "summary": "The classic mistake with Reading query metrics & diagnostics.",
     "keywords": "cosmos db query metrics retrieved document count output index utilization request charge diagnostics insights troubleshooting trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-hot-partitions-429",
+    "title": "Hot partitions, throughput & 429s",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/hot-partitions-429.html",
+    "summary": "What a 429 means, healthy vs unhealthy throttling, normalized RU by partition, hot key fixes and autoscale.",
+    "keywords": "cosmos db 429 hot partition throttling normalized ru request rate too large autoscale retry"
+  },
+  {
+    "id": "cosmos-hot-partitions-429-recall",
+    "title": "Hot partitions, throughput & 429s — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/hot-partitions-429.html",
+    "summary": "Quick recall points: Hot partitions, throughput & 429s.",
+    "keywords": "cosmos db 429 hot partition throttling normalized ru request rate too large autoscale retry interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-hot-partitions-429-trap",
+    "title": "Hot partitions, throughput & 429s — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/hot-partitions-429.html",
+    "summary": "The classic mistake with Hot partitions, throughput & 429s.",
+    "keywords": "cosmos db 429 hot partition throttling normalized ru request rate too large autoscale retry trap mistake",
+    "anchor": "trap"
   }
 ]
