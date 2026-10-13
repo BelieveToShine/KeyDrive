@@ -8,7 +8,7 @@ def plan_tour():
         'scan': dict(x=470, y=150, w=160, h=104, lines=[('Clustered Index Scan','t'),('Orders','m'),('cost 85%','b'),('estimated 1,000,000','s'),('actual 1,000,000','s')], color='rose'),
     }
     return plan_diagram('pl1', 'An annotated plan: a Clustered Index Scan of Orders carries 85 percent of the cost and the thickest arrow, and the Index Seek on Customers expected 50 rows but got 4,000', 290, nodes,
-                        [('seek', 'hash', 4000, '4,000 rows'), ('scan', 'hash', 1000000, '1,000,000 rows'), ('hash', 'sel', 4000, '4,000 rows')],
+                        [('seek', 'hash', 4000, '4,000 rows'), ('scan', 'hash', 1000000, '1,000,000 rows'), ('hash', 'sel', 80000, '80,000 rows')],
                         note='Read right to left. Fat red arrow + 85% cost = start here. Estimated 50 vs actual 4,000 = the optimizer guessed wrong.')
 
 def build_reading_execution_plans():
@@ -16,7 +16,7 @@ def build_reading_execution_plans():
     body += see(figure(plan_tour(),
         'a real-looking plan for “orders of customers in a city”. <b>Data flows right to left</b>, from the leaf operators that read pages, through the join, into SELECT. '
         'The <b>arrow thickness</b> is the number of rows moving; the <b>cost %</b> is the optimizer’s estimate of each operator’s share. Two things jump out: the red scan produces a million rows and carries 85% of the cost, '
-        'and the amber seek <i>estimated</i> 50 rows but really returned 4,000. (All numbers are illustrative.)'))
+        'and the amber seek <i>estimated</i> 50 rows but really returned 4,000. (All numbers are illustrative; about 20 orders per customer gives roughly 80,000 joined rows.)'))
     body += one('Read a plan <b>right to left</b>, start at the fattest arrow and biggest cost, then check one thing everywhere: <i>did the engine guess the row counts right?</i>')
     body += why([
         'Page 3 showed a plan with two or three boxes. Real plans have dozens, nested, with numbers everywhere. Staring at them without a method is how people end up “fixing” the wrong operator.',
@@ -33,13 +33,13 @@ def build_reading_execution_plans():
         [['SSMS estimated plan','The plan without running the query (shortcut Ctrl+L)','Needs the SHOWPLAN permission on every database the query touches'],
          ['SSMS actual plan','The plan with real row counts and runtime info (Ctrl+M, then run)','The query really runs — careful with INSERT, UPDATE, DELETE'],
          ['T-SQL command','Actual plan as XML: <code>SET STATISTICS XML ON</code>','Runs the query; handy for scripts and saving plans'],
-         ['Query Store','Plans for past executions','These are estimated plans, not actual — page 10 (coming)'],
+         ['Query Store','Plans for past executions','These are estimated plans, not actual — page 10'],
          ['Extended Events','Actual plans from a running system, using the <code>query_post_execution_showplan</code> event','For when you cannot reproduce the problem on your machine']]), label_cls='see')
     body += block('📖 Operator cheat sheet — what you will meet most', table(
         ['Operator','Plain English','Ask yourself'],
         [['Index Seek / Clustered Index Seek','Navigates the tree to the matching range','Is the range small? Check logical reads'],
          ['Index Scan / Clustered Index Scan / Table Scan','Reads all rows of the index, clustered table or heap (the last one is a heap)','Is it reading far more than it returns?'],
-         ['Key Lookup','Fetches the missing columns from the clustered table, once per row; always paired with Nested Loops','How many times does it run? (page 7 — coming)'],
+         ['Key Lookup','Fetches the missing columns from the clustered table, once per row; always paired with Nested Loops','How many times does it run? (page 7)'],
          ['Nested Loops','For each row on the top input, probe the bottom input','Is the outer side small?'],
          ['Hash Match','Builds a hash table from one input and probes it with the other (joins, aggregates)','Is it using lots of memory for big inputs?'],
          ['Merge Join','Walks two sorted inputs side by side','Are both inputs already sorted?'],
@@ -50,8 +50,8 @@ def build_reading_execution_plans():
     <ol>
       <li><b>Direction.</b> Two inputs meet in a Hash Match, which feeds SELECT.</li>
       <li><b>Weight.</b> The Clustered Index Scan of <code>Orders</code>: 85% of the cost, a million rows. It is the heaviest thing, so look at it first.</li>
-      <li><b>Guess.</b> The Index Seek on <code>Customers</code> estimated 50 rows and got 4,000. The optimizer expected a tiny customer list — it was wrong by about 80 times. That error is why it chose a join that reads all of Orders (page 5 explains why such errors happen; page 6 why the join type follows).</li>
-      <li><b>Warnings.</b> None in this plan — but a scan feeding a join is worth a question.</li>
+      <li><b>Guess.</b> The Index Seek on <code>Customers</code> estimated 50 rows and got 4,000 — the optimizer expected a tiny customer list and was wrong by about 80 times. A wrong estimate on a join input is dangerous: the join sizes its memory for the small guess (page 6 shows what happens next). Page 5 explains why such errors happen.</li>
+      <li><b>Warnings.</b> None shown on this plan — but a scan feeding a join is worth a question, and a hash join whose input was underestimated is a prime suspect for a spill (page 6).</li>
       <li><b>Properties.</b> Open the scan: it has no seek predicate. The join column <code>Orders.CustomerId</code> is not indexed — exactly the fix from the last page.</li>
     </ol>''' + code_block(
 f'''<span class="cmt">-- two hypotheses, tested one at a time</span>
@@ -65,8 +65,8 @@ f'''<span class="cmt">-- two hypotheses, tested one at a time</span>
         ['You see','What it can lead to','Where to go'],
         [['Estimated far <b>below</b> actual','The optimizer picks a plan built for few rows (e.g. a nested-loops join and a small memory request) and then gets swamped','Statistics (page 5), then join choice (page 6)'],
          ['Estimated far <b>above</b> actual','It may reserve more memory or parallelism than the query needs','Statistics (page 5)'],
-         ['Estimates close to actual, query still slow','The plan matches reality — the work is simply big, or the time is spent waiting','Measuring (page 10 — coming), blocking (page 12 — coming)'],
-         ['Scan, 80%+ cost, few rows out','Missing or unusable index','Indexes (page 3), SARGability (page 8 — coming)']]), label_cls='trap')
+         ['Estimates close to actual, query still slow','The plan matches reality — the work is simply big, or the time is spent waiting','Measuring (page 10), blocking (page 12 — coming)'],
+         ['Scan, 80%+ cost, few rows out','Missing or unusable index','Indexes (page 3), SARGability (page 8)']]), label_cls='trap')
     body += block('🎬 Real-world scenarios', scenarios([
         ('📉','Fast yesterday, slow today','Same query, same index. The estimated and actual rows now differ by 1000×.','Update/inspect statistics'),
         ('🧱','A plan with 40 operators','You freeze. Follow the fattest arrow first, ignore the rest until it is explained.','Weight first'),

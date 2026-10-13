@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan cache &amp; parameter sniffing — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Plan cache &amp; parameter sniffing</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 9 of 16 · 🛠️ Optimise the query</div>
+    <h1>The plan is built for the <span class="grad-text">first value it sees</span> — then shared with everyone.</h1>
+    <p class="sub">Why one query can be fast for one customer and slow for another, why SSMS and the app disagree, and the five ways to fix it.</p>
+    <div class="interview-q">❓ "What is parameter sniffing and how do you diagnose and fix it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Parameter sniffing: the first call compiles a plan for customer 42 and caches it; the second call for a huge customer reuses that plan and runs 80,000 key lookups">
+<defs><marker id="ps1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M160,53 L240,53" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ps1A)"/>
+<path d="M390,53 L470,53" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ps1A)"/>
+<path d="M550,190 L550,86" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ps1A)"/>
+<path d="M470,223 L390,223" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ps1A)"/>
+<rect class="bx" x="10" y="20" width="150" height="66" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="85" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Call 1</text>
+<text x="85" y="57.75" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">@CustomerId = 42</text>
+<text x="85" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">12 orders</text>
+<rect class="bx" x="240" y="20" width="150" height="66" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="315" y="44.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧠 Compile</text>
+<text x="315" y="57" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">sniffs the value 42</text>
+<text x="315" y="69.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Plan A: seek + lookups</text>
+<rect class="bx" x="470" y="20" width="160" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="550" y="44.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">🗃️ Plan cache</text>
+<text x="550" y="57" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Plan A saved</text>
+<text x="550" y="69.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">keyed by the SQL text</text>
+<rect class="bx" x="470" y="190" width="160" height="66" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="550" y="213.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Call 2</text>
+<text x="550" y="227.75" text-anchor="middle" font-size="11" font-weight="600" fill="#c4b5fd" font-family="'JetBrains Mono'">@CustomerId = 7</text>
+<text x="550" y="240.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">80,000 orders</text>
+<rect class="bx" x="240" y="190" width="150" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="315" y="214.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🐌 Plan A runs</text>
+<text x="315" y="227" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">80,000 key lookups</text>
+<text x="315" y="239.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">built for 12 rows</text>
+<text class="free" x="320" y="294" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Plan A was perfect for customer 42 and terrible for customer 7 — same SQL text, same cached plan.</text>
+<text class="free" x="320" y="312" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Nothing is “broken”: the engine did exactly what it was designed to do.</text>
+<g class="arrow-pill"><rect x="178" y="44" width="44" height="18" rx="9"/><text x="200" y="56.5" text-anchor="middle" font-size="9" font-style="italic">first</text></g>
+<g class="arrow-pill"><rect x="408" y="44" width="44" height="18" rx="9"/><text x="430" y="56.5" text-anchor="middle" font-size="9" font-style="italic">saved</text></g>
+<g class="arrow-pill"><rect x="493" y="129" width="114" height="18" rx="9"/><text x="550" y="141.5" text-anchor="middle" font-size="9" font-style="italic">same text → reuse</text></g>
+<g class="arrow-pill"><rect x="410.5" y="214" width="39" height="18" rx="9"/><text x="430" y="226.5" text-anchor="middle" font-size="9" font-style="italic">runs</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the first call for customer 42 triggers a <b>compile</b>. The optimizer <b>sniffs</b> the parameter value, builds Plan A for 12 rows (seek plus lookups), and saves it in the plan cache. The second call has the same SQL text, so the engine <b>reuses</b> Plan A — for a customer with 80,000 orders. Two hundred thousand key lookups later, the call is “mysteriously” slow.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The plan is built for the <b>first</b> parameter value it sees, then shared with everyone — so a plan that is perfect for one input can be terrible for another.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 1 told you plans are cached and reused when the statement text matches. That is a good thing: compiling costs CPU, and most queries want the same plan every time.</p>
+      <p>But a parameterized query is one statement with many possible inputs, and data is rarely evenly spread (page 5). Customer 42 has 12 orders; one business customer has 80,000. A plan that suits one cannot suit the other (page 7 showed exactly why: lookups explode with the row count).</p>
+      <p>This is <b>parameter sniffing</b>. It is not a bug — it is the same feature that makes most queries fast — and it explains the most puzzling bug report in SQL: <i>“it is fast in SSMS and slow in the app”.</i></p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔍 See the damage in two pictures</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Cached Plan A running for the big customer: an index seek plus 80,000 key lookups">
+<defs><marker id="ps3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M210,104 L100,104" fill="none" stroke="#fb7185" stroke-width="6.6" marker-end="url(#ps3T)"/>
+<path d="M470,45 L400,45 L400,95 L330,95" fill="none" stroke="#fb7185" stroke-width="6.6" marker-end="url(#ps3T)"/>
+<path d="M470,162 L400,162 L400,113 L330,113" fill="none" stroke="#fb7185" stroke-width="6.6" marker-end="url(#ps3T)"/>
+<rect class="bx" x="10" y="76" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="55" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="55" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="210" y="76" width="120" height="56" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="270" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Nested Loops</text>
+<text x="270" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">join the two</text>
+<rect class="bx" x="470" y="10" width="160" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="550" y="36.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Index Seek</text>
+<text x="550" y="48.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">IX_Orders_CustomerId</text>
+<text x="550" y="61.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">estimated 12</text>
+<rect class="bx" x="470" y="120" width="160" height="84" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="550" y="147.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Key Lookup</text>
+<text x="550" y="159.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders (PK_Orders)</text>
+<text x="550" y="172" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">runs 80,000 times</text>
+<text x="550" y="184.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">cost 98%</text>
+<text class="free" x="320" y="220" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Compiled for 12 rows (customer 42). Executing for 80,000 rows.</text>
+<g class="arrow-pill"><rect x="117" y="79" width="76" height="18" rx="9"/><text x="155" y="91.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+<g class="arrow-pill"><rect x="362" y="61" width="76" height="18" rx="9"/><text x="400" y="73.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+<g class="arrow-pill"><rect x="362" y="128.5" width="76" height="18" rx="9"/><text x="400" y="141" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> Plan A <b>as it runs for the big customer</b>. The shape is the one from page 7: a cheap seek feeding 80,000 key lookups. The giveaway is the gap between what the plan was <i>compiled</i> for (12 rows) and what it is <i>running</i> for (80,000).</figcaption>
+</figure>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The plan the optimizer would have chosen if it had compiled for the big customer: one clustered index scan">
+<defs><marker id="ps4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M330,62 L110,62" fill="none" stroke="#fb7185" stroke-width="6.6" marker-end="url(#ps4T)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="330" y="14" width="250" height="96" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="455" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Clustered Index Scan</text>
+<text x="455" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Orders</text>
+<text x="455" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">estimated 80,000 · actual 80,000</text>
+<text x="455" y="84.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">≈ 12,500 page reads</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Compiled for 80,000 rows: reading the whole table once beats 80,000 lookups.</text>
+<g class="arrow-pill"><rect x="182" y="37" width="76" height="18" rx="9"/><text x="220" y="49.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> what the optimizer <b>would</b> have chosen had the first call been for the big customer: a single scan, roughly 12,500 page reads (page 2’s arithmetic). Neither plan is “wrong” — each is right for its input. Sniffing is the engine trusting one input to speak for all.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · “fast in SSMS, slow in the app”</div>
+    <p>A stored procedure <code>GetOrdersByCustomer</code> is slow in production for one customer. You run it in SSMS with that customer’s id — fast. Method, not magic:</p>
+    <ol>
+      <li><b>Get the app’s plan, not yours.</b> Take the plan from the app’s execution (Query Store or the plan cache), not a fresh one you compile in SSMS — a fresh compile sniffs <i>your</i> value.</li>
+      <li><b>Compare compiled vs runtime parameter values.</b> The plan records the value it was compiled for and the value of the current run. Different values + a large cost gap = sniffing.</li>
+      <li><b>Test with a recompile.</b> Add <code>OPTION (RECOMPILE)</code> in a test copy. If the query is suddenly fast for the big customer, the cached plan was the cause.</li>
+    </ol>    <div class="code-block"><pre><span class="cmt">-- Plan A is compiled for the first value it sees...</span>
+<span class="kw">EXEC</span> dbo.GetOrdersByCustomer @CustomerId = <span class="num">42</span>;   <span class="cmt">-- 12 rows → seek + lookups, cached</span>
+<span class="cmt">-- ...and reused for the next call</span>
+<span class="kw">EXEC</span> dbo.GetOrdersByCustomer @CustomerId = <span class="num">7</span>;    <span class="cmt">-- 80,000 rows → same plan → slow</span>
+
+<span class="cmt">-- the test: compile for each value</span>
+<span class="kw">SELECT</span> OrderId, OrderDate, Total <span class="kw">FROM</span> dbo.Orders
+<span class="kw">WHERE</span> CustomerId = @CustomerId
+<span class="kw">OPTION</span> (<span class="kw">RECOMPILE</span>);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative stored procedure and numbers. In the real plan look at the SELECT operator’s properties for the compiled and runtime parameter values.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Which fix?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Choosing a fix for parameter sensitivity: if one plan does not suit all values, use parameter sensitive plan optimization where available, otherwise hints or a forced plan">
+<defs><marker id="ps2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ps2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M185,33 L90,33 L90,110" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ps2A)"/>
+<path d="M455,33 L540,33 L540,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ps2A)"/>
+<path d="M375,166 L375,230" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ps2A)"/>
+<path d="M555,166 L555,230" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ps2A)"/>
+<rect class="bx" x="185" y="10" width="270" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Does one plan fail for some values?</text>
+<rect class="bx" x="10" y="110" width="160" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="90" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Not sensitive</text>
+<text x="90" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">back to the ladder</text>
+<rect class="bx" x="300" y="110" width="330" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="465" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">PSP available? (SQL Server 2022 / compat 160)</text>
+<rect class="bx" x="300" y="230" width="150" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="375" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ PSP optimization</text>
+<text x="375" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">multiple cached plans</text>
+<rect class="bx" x="480" y="230" width="150" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="555" y="256.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔧 Hint or forced plan</text>
+<text x="555" y="269" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">RECOMPILE, OPTIMIZE</text>
+<text x="555" y="281.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">FOR, or force a plan</text>
+<g class="arrow-pill"><rect x="75.5" y="63" width="29" height="18" rx="9"/><text x="90" y="75.5" text-anchor="middle" font-size="9" font-style="italic">no</text></g>
+<g class="arrow-pill"><rect x="523" y="63" width="34" height="18" rx="9"/><text x="540" y="75.5" text-anchor="middle" font-size="9" font-style="italic">yes</text></g>
+<g class="arrow-pill"><rect x="358" y="189" width="34" height="18" rx="9"/><text x="375" y="201.5" text-anchor="middle" font-size="9" font-style="italic">yes</text></g>
+<g class="arrow-pill"><rect x="540.5" y="189" width="29" height="18" rx="9"/><text x="555" y="201.5" text-anchor="middle" font-size="9" font-style="italic">no</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> first make sure it really is sensitivity (steps above). Then: on <b>SQL Server 2022 / database compatibility level 160 (including Azure SQL Database)</b> the engine can keep <b>several active plans</b> for one parameterized statement. Where that is not available — or not enough — use a targeted hint or force a known-good plan (page 10).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The fixes, side by side</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>♻️ OPTION (RECOMPILE)</h4><span class="pk-tag">compile a fresh plan on every run</span><span class="pk-label use">✅ Pick it when</span><ul><li>Rarely-run or wildly varying queries</li><li>You want the plan built from the actual values</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Hot queries: you pay compile CPU on every execution</li><li>It does not replace the cached plan for other callers of the same text</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>📌 OPTIMIZE FOR (value)</h4><span class="pk-tag">compile as if the parameter had a chosen value</span><span class="pk-label use">✅ Pick it when</span><ul><li>One value clearly represents the typical case</li><li>You know the plan you want</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Only one value per variable; you must know the right one</li><li>Wrong for the outliers by design</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🎲 OPTIMIZE FOR UNKNOWN</h4><span class="pk-tag">use the average, not the sniffed value</span><span class="pk-label use">✅ Pick it when</span><ul><li>You want a stable “middling” plan</li><li>Same effect as copying the parameter into a local variable</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Density averages can be imprecise — the plan may be mediocre for everyone</li></ul></div>
+      <div class="pick-card" style="--pick:#34d399"><h4>🪄 PSP optimization</h4><span class="pk-tag">automatic: several plans for one statement</span><span class="pk-label use">✅ Pick it when</span><ul><li>SQL Server 2022, or Azure SQL Database at compatibility level 160</li><li>Skewed data with parameterized queries</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>It considers only the most at-risk predicates (up to three); it does not cover everything</li><li>Older versions or compatibility levels</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · parameter-sensitivity symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Fast for most inputs, slow for a few</th><td>One cached plan shared by very different input sizes</td><td>Compare compiled vs runtime parameter value; test with RECOMPILE</td></tr><tr><th scope="row">Fast in SSMS, slow in the app</th><td>Different sniffed value, or a different cached entry (session SET options can differ)</td><td>Capture the app’s plan; compare the SET options of the two sessions</td></tr><tr><th scope="row">Was fast, slow since the last deploy or restart</th><td>The first call after the plan left the cache chose the new plan</td><td>Force the last good plan (page 10) while you fix the root cause</td></tr><tr><th scope="row">Thousands of compiles per minute</th><td>Literals pasted into SQL text — every value is a new statement</td><td>Parameterize the calls; the cache needs identical text</td></tr><tr><th scope="row">Every run slow, compiled value = runtime value</th><td>Not sniffing — the plan fits its input and is just expensive</td><td>Back to the ladder: read the plan</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🚀</span><h5>Deploy at 09:00, slow by 09:05</h5><p>The first call after the restart was for a tiny customer, so the cached plan suits tiny customers.</p><span class="sc-use">→ Parameter sniffing</span></div>
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Search screen with optional filters</h5><p>The first search had only “city”; later searches filter by date and name.</p><span class="sc-use">→ Optional-parameter plan optimization or RECOMPILE</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Nightly job vs daytime users</h5><p>The job compiles for “all rows”; daytime calls inherit that plan.</p><span class="sc-use">→ Separate procedures or hints</span></div>
+      <div class="scenario"><span class="sc-icon">📋</span><h5>ORM pastes literals into SQL</h5><p>Each value is a new statement: the cache bloats and every call compiles.</p><span class="sc-use">→ Use parameters</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>How a plan is found.</b> The cache lookup needs the statement to match a cached one character for character, with fully qualified object names. Plans are removed under memory pressure using a cost-based policy, and when statistics or schema change a plan can be recompiled — and a recompile samples the parameter values of <i>that</i> execution.</p>
+      <p><b>PSP in detail.</b> On the first compile the optimizer looks at the column statistics histograms, spots non-uniform distributions, and evaluates up to three of the most at-risk parameterized predicates; the engine can then keep multiple active plans for one statement. It is enabled by database compatibility level 160 (SQL Server 2022 and Azure SQL Database).</p>
+      <p><b>Optional-parameter plan optimization</b> uses the same multi-plan idea to pick plans depending on whether a parameter is NULL.</p>
+      <p><b>Other hints.</b> <code>OPTION (RECOMPILE)</code> builds a plan from current values and its temporary plan does not replace the one in the cache for other callers. <code>DISABLE_PARAMETER_SNIFFING</code> turns sniffing off for a query, but blanket-disabling is rarely the best choice — it throws away the good with the bad.</p>
+      <p><b>Other engines:</b> PostgreSQL’s prepared statements choose between custom plans (built for the actual values) and a generic plan; MySQL does not cache plans the same way.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Parameter sniffing = the optimizer compiles for the first parameter value it sees; the plan is cached and shared.</li><li>It is a feature, not a bug — it hurts only when the data is skewed.</li><li>Diagnose: compare compiled vs runtime parameter value in the plan; test with OPTION (RECOMPILE).</li><li>Fixes: RECOMPILE, OPTIMIZE FOR value / UNKNOWN, PSP optimization (SQL Server 2022 / compat 160), or a forced plan from Query Store.</li><li>Literals in SQL text → every value is a new plan; use real parameters.</li><li>Always capture the app’s plan — a fresh compile in SSMS sniffs your value, not theirs.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A parameterized query is compiled once, for the first parameter value it sees, and that plan is cached and reused. With skewed data a plan that is perfect for a small input can be terrible for a large one. I confirm it by comparing the compiled and runtime parameter values in the plan and testing with OPTION (RECOMPILE), then choose a fix: PSP optimization where it is available, otherwise OPTIMIZE FOR or RECOMPILE, or force a known-good plan through Query Store."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Clearing the whole plan cache in production “to fix it”.</b> Every query in the system must recompile at once, and the next unlucky first call picks the next accidental plan. The problem will return.</p>
+      <p><b>Concluding “the server is slow” because SSMS was fast.</b> SSMS compiled a fresh plan for <i>your</i> value; the app was running someone else’s plan.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>♻️ Compile every time</h5><p>OPTION (RECOMPILE): always the right plan for the values, at the price of compile CPU.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🗃️ Reuse the cached plan</h5><p>The default: cheap to run, but only as good as the value it was first built for.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You have a fix for one case. But how do you <i>find</i> the queries that deserve attention — and prove a change worked, over time? Next: measuring with STATISTICS IO/TIME, waits and Query Store.</span>
+      <a class="next-link" href="measuring-query-store.html">Measuring: IO, TIME, waits &amp; Query Store <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Plan-caching behaviour and PSP availability depend on version and compatibility level. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/parameter-sensitive-plan-optimization" target="_blank" rel="noopener">Parameter sensitive plan optimization</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-query" target="_blank" rel="noopener">Query hints</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/identify-query-performance-issues" target="_blank" rel="noopener">Detectable types of query performance bottlenecks (Azure SQL)</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide" target="_blank" rel="noopener">Query processing architecture guide</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

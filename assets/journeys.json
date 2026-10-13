@@ -240,7 +240,13 @@
       "storage-pages",
       "indexes-seek-scan",
       "reading-execution-plans",
-      "statistics-cardinality"
+      "statistics-cardinality",
+      "join-algorithms",
+      "covering-indexes",
+      "sargable-queries",
+      "plan-cache-sniffing",
+      "measuring-query-store",
+      "debugging-playbook"
     ],
     "sub": {},
     "subTitles": {}

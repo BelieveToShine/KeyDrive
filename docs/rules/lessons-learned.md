@@ -39,10 +39,15 @@ The goal: the same mistake never reaches the user twice, in any category or any 
 - Nowrap links (`.next-link`) overflow on narrow screens; allow wrapping.
 - A 640px-wide SVG map shrunk or scrolled sideways is not "mobile-ready". `site.js` now builds a vertical stepper (`.jm-steps`) from the hub SVG itself (nodes, pills, group boxes) and CSS swaps it in at ≤720px. Any new hub map gets this free as long as it uses `.jm-node` / `a.jm-hit` / `.arrow-pill` / dashed group rects.
 - Search results: category tag must be `display:block` under the title, or it glues to the last word.
-- Bump `?v=` on every page whenever style.css/site.js change (now 20261017).
+- Bump `?v=` on every page whenever style.css/site.js change (now 20261018).
 
 ## L9 — Tables on phones, and plan pictures (2026-10-13, Data Systems build)
 - `.cmp-table` first-column cells were `nowrap`, so a sentence in column 1 swallowed the phone screen and hid every other column. Rule: on ≤720px the first column wraps (`min 104px / max 170px`); still keep column-1 labels short and put code tokens in later columns. Check: print first-column width vs wrapper width at 390px for every table.
 - Execution-plan pictures use `p_common.plan_diagram`: data right → left, thickness = log(rows), siblings of one parent attach at different heights so arrowheads never overlap, pills sit on the vertical elbow. Thin arrow ≠ cheap (a scan can output few rows after reading everything) — say so in the caption.
 - New category checklist (done for `sql/`): folder + `config.py` in page-kit, hub generator (`build_hub.py` keeps hub, `journeys.json` and node counts in sync), parent hub (`data/index.html`), home tile, search entries (3 per page + hub), ledger, roadmap, overview, CLAUDE.md.
 - Group titles inside a hub map must stay short: the spine arrow runs through the zone at x=320 and would cross a long title.
+
+## L10 — One running dataset means one set of numbers (2026-10-13)
+- The BigCorp customer had 200,000 orders on page 9 and 80,000 on pages 7, 10 and 11. Caught in review before shipping. Rule: canonical numbers live in `docs/specs/sql/overview.md`; grep a number before reusing it, and re-read earlier pages when a new page changes the story.
+- When a page ships, search every earlier page for “(page N — coming)” and “later)” and turn them into plain references.
+- A wrong claim in a cause-and-effect chain is worse than a wrong number (page 4 first said the bad estimate “chose” the join; the real mechanism is the hash memory grant). Re-derive the mechanism, don’t just copy the number.

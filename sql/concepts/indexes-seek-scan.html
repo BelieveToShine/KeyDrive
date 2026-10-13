@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indexes: seek vs scan — SQL — KeyDrive</title>
-<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
 </head>
 <body data-root="../../">
 
@@ -104,7 +104,7 @@
     <div class="how-strip">
       <div class="how-step"><span class="hs-n">TOO MANY ROWS</span><h4>🧮 Lookups add up</h4><p>If a big share of rows match, doing a key lookup for each one costs more than one scan. The optimizer weighs this.</p></div>
       <div class="how-step"><span class="hs-n">WRONG COLUMN ORDER</span><h4>↔️ Leading column</h4><p>An index on (LastName, FirstName) helps find a last name, not a first name alone.</p></div>
-      <div class="how-step"><span class="hs-n">HIDDEN COLUMN</span><h4>🙈 Function on the column</h4><p>Wrapping the column in an expression usually prevents a seek (page 8 — coming).</p></div>
+      <div class="how-step"><span class="hs-n">HIDDEN COLUMN</span><h4>🙈 Function on the column</h4><p>Wrapping the column in an expression usually prevents a seek (page 8).</p></div>
       <div class="how-step"><span class="hs-n">BAD GUESS</span><h4>🎲 Stale estimate</h4><p>The optimizer thought many rows would match (page 5).</p></div>
     </div>
   </section>
@@ -163,12 +163,12 @@
 <g class="arrow-pill"><rect x="362.5" y="63" width="55" height="18" rx="9"/><text x="390" y="75.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
 <g class="arrow-pill"><rect x="362.5" y="127" width="55" height="18" rx="9"/><text x="390" y="139.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
 </svg>
-<figcaption><strong>What you're seeing:</strong> a <b>seek</b> (green) finds the 12 matching index entries; for each one a <b>key lookup</b> (amber) fetches the full row from the clustered table; <b>Nested Loops</b> joins them. A Key Lookup always comes with a Nested Loops. Twelve lookups are cheap — but notice how this cost grows with the row count, which is what the next page (covering indexes, later) fixes.</figcaption>
+<figcaption><strong>What you're seeing:</strong> a <b>seek</b> (green) finds the 12 matching index entries; for each one a <b>key lookup</b> (amber) fetches the full row from the clustered table; <b>Nested Loops</b> joins them. A Key Lookup always comes with a Nested Loops. Twelve lookups are cheap — but notice how this cost grows with the row count, which is what page 7 (covering indexes) fixes.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label trap">🩺 Debug checklist · index-related symptoms</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see in the plan / numbers</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Scan, high cost %, few rows out</th><td>No usable index on the filtered column</td><td>Index the column in the WHERE/JOIN (check it will be selective)</td></tr><tr><th scope="row">Seek, but logical reads still huge</th><td>The seek range itself is huge (e.g. leading-wildcard LIKE, wide range)</td><td>Check the seek predicate; narrow the range</td></tr><tr><th scope="row">Key Lookup repeated thousands of times</th><td>Index lacks columns the query needs</td><td>Covering index with INCLUDE (page 7 — coming)</td></tr><tr><th scope="row">Index exists but plan scans</th><td>Too many rows match, a function hides the column, or stats mislead</td><td>Check selectivity, rewrite the predicate (page 8), check stats (page 5)</td></tr><tr><th scope="row">Writes got slower after adding indexes</th><td>Each index must be maintained on every write</td><td>Drop unused or duplicate indexes (page 13 — coming)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see in the plan / numbers</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Scan, high cost %, few rows out</th><td>No usable index on the filtered column</td><td>Index the column in the WHERE/JOIN (check it will be selective)</td></tr><tr><th scope="row">Seek, but logical reads still huge</th><td>The seek range itself is huge (e.g. leading-wildcard LIKE, wide range)</td><td>Check the seek predicate; narrow the range</td></tr><tr><th scope="row">Key Lookup repeated thousands of times</th><td>Index lacks columns the query needs</td><td>Covering index with INCLUDE (page 7)</td></tr><tr><th scope="row">Index exists but plan scans</th><td>Too many rows match, a function hides the column, or stats mislead</td><td>Check selectivity, rewrite the predicate (page 8), check stats (page 5)</td></tr><tr><th scope="row">Writes got slower after adding indexes</th><td>Each index must be maintained on every write</td><td>Drop unused or duplicate indexes (page 13 — coming)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🎬 Real-world scenarios</div>
@@ -225,6 +225,6 @@
   <div class="wrap">KeyDrive · SQL · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261017"></script>
+<script src="../../assets/site.js?v=20261018"></script>
 </body>
 </html>

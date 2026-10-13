@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The debugging playbook — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">The debugging playbook</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 16 · 🧪 Measure & debug</div>
+    <h1>Tools tell you <span class="grad-text">what</span>; a method tells you what next.</h1>
+    <p class="sub">The full six-step ladder, a triage tree for “where do I start?”, one investigation from first complaint to proof, and the seven things never to do.</p>
+    <div class="interview-q">❓ "A query is slow in production. Walk me through how you would find and fix the problem."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The debugging ladder as a loop: measure, read the plan, find the biggest wrong thing, form one hypothesis, change one thing, prove it with the same measurement, and repeat if it is not fixed">
+<defs><marker id="pb1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M140,55 L255,55" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M385,55 L500,55" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M565,90 L565,210" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M500,245 L385,245" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M255,245 L140,245" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#pb1A)"/>
+<path d="M75,210 L75,90" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#pb1A)"/>
+<rect class="bx" x="10" y="20" width="130" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · Measure</text>
+<text x="75" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">IO, TIME, baseline</text>
+<rect class="bx" x="255" y="20" width="130" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="46.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">2 · Read</text>
+<text x="320" y="59" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">actual plan</text>
+<text x="320" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">heaviest operator</text>
+<rect class="bx" x="500" y="20" width="130" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="565" y="46.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">3 · Find</text>
+<text x="565" y="59" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">the biggest</text>
+<text x="565" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">wrong thing</text>
+<rect class="bx" x="500" y="210" width="130" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="565" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">4 · Guess</text>
+<text x="565" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">ONE hypothesis</text>
+<rect class="bx" x="255" y="210" width="130" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">5 · Change</text>
+<text x="320" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">ONE thing</text>
+<rect class="bx" x="10" y="210" width="130" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="236.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">6 · Prove</text>
+<text x="75" y="249" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">same numbers,</text>
+<text x="75" y="261.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">same query</text>
+<text class="free" x="320" y="316" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Fixed? Write down the before/after numbers. Not fixed? Your hypothesis was wrong — that is information, not failure.</text>
+<g class="arrow-pill"><rect x="167" y="46" width="60" height="18" rx="9"/><text x="197" y="58.5" text-anchor="middle" font-size="9" font-style="italic">baseline</text></g>
+<g class="arrow-pill"><rect x="422.5" y="46" width="39" height="18" rx="9"/><text x="442" y="58.5" text-anchor="middle" font-size="9" font-style="italic">spot</text></g>
+<g class="arrow-pill"><rect x="545.5" y="141" width="39" height="18" rx="9"/><text x="565" y="153.5" text-anchor="middle" font-size="9" font-style="italic">why?</text></g>
+<g class="arrow-pill"><rect x="414.5" y="236" width="55" height="18" rx="9"/><text x="442" y="248.5" text-anchor="middle" font-size="9" font-style="italic">test it</text></g>
+<g class="arrow-pill"><rect x="169.5" y="236" width="55" height="18" rx="9"/><text x="197" y="248.5" text-anchor="middle" font-size="9" font-style="italic">measure</text></g>
+<g class="arrow-pill"><rect x="15.5" y="141" width="119" height="18" rx="9"/><text x="75" y="153.5" text-anchor="middle" font-size="9" font-style="italic">not fixed? go again</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a loop, not a list. <b>Measure</b> a baseline, <b>read</b> the plan, <b>find</b> the biggest wrong thing (an estimate that is off, a scan, a lookup that runs thousands of times), form <b>one</b> hypothesis, change <b>one</b> thing, then <b>prove</b> it with exactly the same measurement. If it did not help, the dashed arrow takes you round again — the wrong hypothesis taught you something. The two “ONE”s are the whole discipline.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Tools tell you <i>what</i>; a method tells you <i>what next</i>. <b>Measure → read → find the biggest wrong thing → one hypothesis → one change → prove it.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–10 gave you the pieces: how a query runs, how pages and indexes work, how to read a plan, why estimates go wrong, how joins behave, how to hide a column from its own index, how plans get reused, and how to measure. Someone who knows all that can still tune at random — add an index, add a hint, restart, hope.</p>
+      <p>Random tuning has a name in operations: <i>change roulette</i>. It sometimes works, you never know why, and it leaves behind indexes and hints nobody dares to remove.</p>
+      <p>The fix is a <b>repeatable method</b>: a fixed order of questions, one change at a time, and a written before-and-after. This page is that method — the one you have seen as a small ladder on every page, now in full.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Triage — where do I even start?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 456" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Triage tree: one query or everything; for one query, waiting or running; for running, whether estimates match actual rows; each leaf names the pages of this lab to use">
+<defs><marker id="pb2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pb2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M240,28 L135,28 L135,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M400,28 L505,28 L505,90" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M505,134 L505,230" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M135,134 L135,170 L75,170 L75,230" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M135,134 L135,170 L235,170 L235,230" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M75,274 L75,350" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M235,274 L235,300 L215,300 L215,350" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<path d="M235,274 L235,300 L365,300 L365,350" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#pb2A)"/>
+<rect class="bx" x="240" y="8" width="160" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="32" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🐢 Something is slow</text>
+<rect class="bx" x="60" y="90" width="150" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="135" y="116" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">One query</text>
+<rect class="bx" x="430" y="90" width="150" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="505" y="116" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Everything</text>
+<rect class="bx" x="430" y="230" width="150" height="84" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="505" y="263.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Look wider</text>
+<text x="505" y="276" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">tier limits, waits,</text>
+<text x="505" y="288.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">blocking (pages 12, 15)</text>
+<rect class="bx" x="10" y="230" width="130" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="75" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Waiting</text>
+<rect class="bx" x="170" y="230" width="130" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="235" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Running</text>
+<rect class="bx" x="10" y="350" width="120" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="70" y="382.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Find the wait</text>
+<text x="70" y="395.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">pages 10 and 12</text>
+<rect class="bx" x="150" y="350" width="130" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="215" y="375.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Estimates off</text>
+<text x="215" y="387.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">pages 5, 8, 9</text>
+<text x="215" y="400.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">stats, sniffing,</text>
+<text x="215" y="412.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">hidden column</text>
+<rect class="bx" x="300" y="350" width="130" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="365" y="375.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Estimates fine</text>
+<text x="365" y="387.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">pages 3, 6, 7</text>
+<text x="365" y="400.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">index, join,</text>
+<text x="365" y="412.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">or less data</text>
+<text class="free" x="320" y="442" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Whichever branch you take, start with measurements (page 10).</text>
+<g class="arrow-pill"><rect x="102" y="50" width="66" height="18" rx="9"/><text x="135" y="62.5" text-anchor="middle" font-size="9" font-style="italic">only this</text></g>
+<g class="arrow-pill"><rect x="472" y="50" width="66" height="18" rx="9"/><text x="505" y="62.5" text-anchor="middle" font-size="9" font-style="italic">all of it</text></g>
+<g class="arrow-pill"><rect x="472" y="173" width="66" height="18" rx="9"/><text x="505" y="185.5" text-anchor="middle" font-size="9" font-style="italic">resources</text></g>
+<g class="arrow-pill"><rect x="53" y="191" width="44" height="18" rx="9"/><text x="75" y="203.5" text-anchor="middle" font-size="9" font-style="italic">waits</text></g>
+<g class="arrow-pill"><rect x="205" y="191" width="60" height="18" rx="9"/><text x="235" y="203.5" text-anchor="middle" font-size="9" font-style="italic">CPU busy</text></g>
+<g class="arrow-pill"><rect x="42" y="303" width="66" height="18" rx="9"/><text x="75" y="315.5" text-anchor="middle" font-size="9" font-style="italic">wait type</text></g>
+<g class="arrow-pill"><rect x="171" y="316" width="88" height="18" rx="9"/><text x="215" y="328.5" text-anchor="middle" font-size="9" font-style="italic">est ≠ actual</text></g>
+<g class="arrow-pill"><rect x="321" y="316" width="88" height="18" rx="9"/><text x="365" y="328.5" text-anchor="middle" font-size="9" font-style="italic">est ≈ actual</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> start at the top. <b>One query or everything?</b> If everything is slow, look wider than a plan: resource limits, blocking, waits. If it is one query, ask <b>waiting or running</b> (page 10). A running query then splits on a single check — do the <b>estimates match the actual rows</b>? If not, the root cause is statistics, a sniffed plan or a hidden column; if they do, the plan is honest and the work itself is big, so improve the index, the join, or the amount of data.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · one investigation, start to finish</div>
+    <p><b>The report.</b> “The <i>My orders</i> page takes about 6 seconds for our biggest customer (BigCorp). It is instant for everyone else.” Walk the ladder, writing down each result. (All numbers illustrative; they chain the examples from pages 3, 7 and 9.)</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rung</th><th scope="col">What you do</th><th scope="col">What you see</th><th scope="col">Decision</th></tr></thead><tbody><tr><th scope="row">1 · Measure</th><td>STATISTICS IO/TIME with BigCorp’s id (the slow input), twice</td><td>240,000 logical reads · CPU 900 ms · elapsed 1,250 ms</td><td>Baseline written down; CPU ≈ elapsed → running, not waiting</td></tr><tr><th scope="row">2 · Read</th><td>Actual plan, from the app’s execution</td><td>Index Seek + Key Lookup ×80,000 + Nested Loops</td><td>The heaviest operator is the Key Lookup (97%)</td></tr><tr><th scope="row">3 · Find</th><td>Estimated vs actual on the seek</td><td>Estimated 12 · actual 80,000 — compiled for a small customer</td><td>Two findings: lookup cost, and plan built for the wrong size</td></tr><tr><th scope="row">4 · Guess</th><td>Pick the one that explains the data: lookups are expensive because the index lacks Total and OrderDate</td><td>—</td><td>Hypothesis: a covering index removes the lookups (page 7)</td></tr><tr><th scope="row">5 · Change</th><td>Create <code>IX_Orders_Customer_Date (CustomerId, OrderDate) INCLUDE (Total)</code></td><td>—</td><td>One change. Nothing else touched</td></tr><tr><th scope="row">6 · Prove</th><td>Same query, same BigCorp id, same lens</td><td>400 logical reads · CPU 15 ms · elapsed 40 ms</td><td>Fixed for BigCorp. Now check the small customer too</td></tr><tr><th scope="row">Loop</th><td>Re-test customer 42 and watch Query Store for a few days</td><td>Both fast; plan stable</td><td>Done — write the log</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📝 The investigation log — five lines that save you later</div>
+    <div class="code-block"><pre><span class="cmt">-- 2026-10-13  GetOrdersByCustomer slow for BigCorp</span>
+<span class="cmt">-- BEFORE : 240,000 reads | CPU 900 ms | elapsed 1,250 ms | plan: seek + 80,000 key lookups</span>
+<span class="cmt">-- FOUND  : Key Lookup = 97% of cost; estimate 12 vs actual 80,000</span>
+<span class="cmt">-- CHANGE : CREATE INDEX IX_Orders_Customer_Date (CustomerId, OrderDate) INCLUDE (Total)</span>
+<span class="cmt">-- AFTER  : 400 reads | CPU 15 ms | elapsed 40 ms | plan: covering seek | small customer unchanged</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Keep it next to the index definition (a comment, a ticket, a wiki). Six months later nobody wonders why the index exists — and everybody knows how to prove it still helps.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🚫 What NOT to do</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tempting move</th><th scope="col">Why it backfires</th><th scope="col">Do this instead</th></tr></thead><tbody><tr><th scope="row">Add an index for every slow query</th><td>Every index slows every write, may never be chosen, and overlaps others (page 13 — coming)</td><td>Read the plan, design <b>one</b> index for the real problem, test it</td></tr><tr><th scope="row">Reach for hints first</th><td>They freeze today’s data shape into the query and break when the data changes</td><td>Fix estimates and indexes; use a hint only to test a theory</td></tr><tr><th scope="row">Clear the plan cache, or restart the server</th><td>Everything recompiles at once and the next accidental first call picks the next plan; the cause is untouched</td><td>Find the cause; force the last good plan if you need a bandage (page 10)</td></tr><tr><th scope="row">Change two things at once</th><td>You cannot tell which one helped — or which one hurt</td><td>One change, then re-measure</td></tr><tr><th scope="row">Trust cost % or a missing-index suggestion blindly</th><td>Cost % is an estimate; suggestions are single-query guesses with no key-order or write-cost advice</td><td>Verify with the actual plan and logical reads</td></tr><tr><th scope="row">Compare a cold run with a warm run</th><td>Caches, not your fix, explain the difference</td><td>Compare logical reads on the same input</td></tr><tr><th scope="row">Buy a bigger tier before reading the plan</th><td>You pay more to run the same bad plan — and it does nothing if the query is waiting on a lock</td><td>Read the plan and the waits first (page 15 — coming)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">✅ Ten questions before you touch anything</div>
+    <ol>
+      <li>How slow, in numbers — and slower than <i>what</i>?</li>
+      <li>Always slow, or only sometimes? For which input?</li>
+      <li>Is it one query or the whole system?</li>
+      <li>Running (CPU) or waiting (locks, I/O, memory)?</li>
+      <li>What does the actual plan’s heaviest operator say?</li>
+      <li>Do estimated and actual rows agree?</li>
+      <li>Any warnings (spills, type conversion)?</li>
+      <li>What changed recently: data volume, a deploy, statistics, an index?</li>
+      <li>What is my single hypothesis, and how will I prove it?</li>
+      <li>How do I undo the change if it does not work?</li>
+    </ol>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📞</span><h5>“Slow since Tuesday” (one report)</h5><p>Elapsed 8 s, CPU 0.3 s. Almost everything is waiting.</p><span class="sc-use">→ Waits and blocking before plans</span></div>
+      <div class="scenario"><span class="sc-icon">🐌</span><h5>“Everything is slow at month-end”</h5><p>Many queries, same time. Not one bad plan.</p><span class="sc-use">→ Look wider: resources, blocking, tier</span></div>
+      <div class="scenario"><span class="sc-icon">🎯</span><h5>One query, estimates 50 vs 4,000</h5><p>Running, estimates off.</p><span class="sc-use">→ Statistics, then rerun the ladder</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Plan fine, estimates fine, still 3 s</h5><p>The work is big: a million rows are really needed.</p><span class="sc-use">→ Reduce the data or precompute</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>CPU vs elapsed.</b> Elapsed time includes waiting; CPU time is time spent computing. When elapsed is far larger than CPU, the query was mostly waiting; when they are close, it was running.</p>
+      <p><b>Why “one change at a time” is a statistical rule, not a style rule.</b> With two simultaneous changes you cannot separate their effects, and if performance gets worse you cannot tell which change to roll back. The log makes the experiment repeatable.</p>
+      <p><b>Production safety.</b> Prove a fix on a copy with realistic data first. Prefer changes that are easy to undo (a new index you can drop) over changes that are not. Check the query for other inputs — a fix tuned for BigCorp must not break the small customers (page 9).</p>
+      <p><b>When the problem is not the query.</b> If the plan is sound and the estimates match, the remaining causes are the amount of data, waits (locks, I/O), or the resources of the service — the next four pages.</p>
+      <p><b>Other engines:</b> the ladder is engine-independent. Replace “actual plan” with <code>EXPLAIN (ANALYZE, BUFFERS)</code> in PostgreSQL or <code>EXPLAIN ANALYZE</code> in MySQL, and “Query Store” with <code>pg_stat_statements</code> or the slow-query log.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: measure → read the plan → find the biggest wrong thing → ONE hypothesis → ONE change → prove with the same measurement → repeat.</li><li>First split: one query or everything? Then waiting or running? Then estimates ≈ actual?</li><li>Write the before/after numbers down (an investigation log).</li><li>Do not: index everything, hint first, clear the plan cache, change two things, trust cost % blindly, compare cold with warm, buy a tier before reading the plan.</li><li>Compare logical reads and CPU on the same input; check the other inputs too.</li><li>A wrong hypothesis is information — go round the loop again.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I don’t tune at random. I measure a baseline with logical reads and CPU, decide whether the query is running or waiting, read the actual plan for the heaviest operator and for estimated-versus-actual gaps, form one hypothesis, make one change, and re-measure with the same input. I write down before and after, and I check the other parameter values so I don’t fix one customer and break another."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Declaring victory on one run.</b> A faster run proves nothing until the same input, the same lens, the same cache state and the other inputs agree.</p>
+      <p><b>Skipping the log.</b> Without it, the next person (or you in six months) removes the “weird” index and the slow query returns.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🎲 Tuning by feel</h5><p>Add an index, add a hint, restart, hope. Sometimes works. Nobody knows why.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧪 Tuning by experiment</h5><p>Baseline, hypothesis, one change, same measurement. Always explainable and repeatable.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>A query that is fast alone can still crawl when many run together — the next kind of problem is <i>waiting</i>, not computing. Next: transactions, locking and isolation <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Tool names and defaults vary by product and version. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/execution-plans" target="_blank" rel="noopener">Execution plans</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql" target="_blank" rel="noopener">SET STATISTICS IO</a> · <a href="https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/performance/troubleshoot-slow-running-queries" target="_blank" rel="noopener">Troubleshoot slow-running queries</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

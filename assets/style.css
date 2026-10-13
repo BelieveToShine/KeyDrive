@@ -565,3 +565,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* phones: first-column labels may wrap so the other columns stay within reach of one swipe (lessons L9) */
 @media (max-width:720px){ .cmp-table tbody th{ white-space:normal; min-width:104px; max-width:170px; } }
+
+/* paragraphs and list items anywhere in main (including inside the zoom <details>) may break long identifiers (lessons L9) */
+main p, main li{ overflow-wrap:anywhere; }

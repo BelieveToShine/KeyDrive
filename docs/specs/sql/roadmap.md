@@ -8,12 +8,12 @@ Taxonomy: `docs/specs/data/concept-taxonomy.md` (Track A, S1–S16). Folder `sql
 | 3 | Indexes: seek vs scan | indexes-seek-scan | ✅ written |
 | 4 | Reading an execution plan | reading-execution-plans | ✅ written |
 | 5 | Statistics & cardinality estimation | statistics-cardinality | ✅ written |
-| 6 | Join algorithms | join-algorithms | planned |
-| 7 | Covering indexes & key lookups | covering-indexes | planned |
-| 8 | Writing queries the optimizer can use | sargable-queries | planned |
-| 9 | Plan cache & parameter sniffing | plan-cache-sniffing | planned |
-| 10 | Measuring: STATISTICS IO/TIME, waits, Query Store | measuring-query-store | planned |
-| 11 | The debugging playbook | debugging-playbook | planned |
+| 6 | Join algorithms | join-algorithms | ✅ written |
+| 7 | Covering indexes & key lookups | covering-indexes | ✅ written |
+| 8 | Writing queries the optimizer can use | sargable-queries | ✅ written |
+| 9 | Plan cache & parameter sniffing | plan-cache-sniffing | ✅ written |
+| 10 | Measuring: STATISTICS IO/TIME, waits, Query Store | measuring-query-store | ✅ written |
+| 11 | The debugging playbook | debugging-playbook | ✅ written |
 | 12 | Transactions, locking & isolation | locking-isolation | planned |
 | 13 | The cost of indexes & maintenance | index-maintenance-cost | planned |
 | 14 | Partitioning & columnstore | partitioning-columnstore | planned |

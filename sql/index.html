@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SQL Performance Lab — KeyDrive</title>
-<link rel="stylesheet" href="../assets/style.css?v=20261017">
+<link rel="stylesheet" href="../assets/style.css?v=20261018">
 </head>
 <body data-root="../">
 
@@ -41,7 +41,7 @@
     <div class="eyebrow">🗄️ SQL · from “why is it slow?” to “here is the fix, and the proof”</div>
     <h1>Learn to read <span class="grad-text">what the database really did</span> — then make it faster.</h1>
     <p class="sub">Not a list of tuning tricks. One continuous story: a query’s journey, how data sits on disk, indexes, execution plans, statistics, joins, and a debugging method you can use on any slow query. Every page has a before-and-after plan you can compare. Written for SQL Server and Azure SQL (T-SQL); the thinking transfers to other engines.</p>
-    <p class="hub-note">🗺️ <b>5 of 16</b> concepts are written — the whole “plan literacy” arc (pages 1–5) is ready. The rest are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>11 of 16</b> concepts are written — plan literacy, optimising a query, and measuring and debugging (pages 1–11) are ready. The system-level pages (12–16) are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/query-journey.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -58,12 +58,12 @@
 <path class="jm-link done" d="M320,168 V204" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,248 V284" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,328 V364" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,408 V498" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,542 V578" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,622 V658" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,702 V738" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,782 V872" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,916 V952" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,408 V498" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,542 V578" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,622 V658" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,702 V738" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,782 V872" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,916 V952" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,996 V1086" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1130 V1166" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1210 V1246" marker-end="url(#jmArrow)"/>
@@ -89,12 +89,12 @@
 <a class="jm-hit" xlink:href="concepts/indexes-seek-scan.html"><g class="jm-node done"><rect x="220" y="204" width="200" height="44" rx="12"/><text x="320" y="231" text-anchor="middle" font-size="14" font-weight="700">📇 Indexes</text></g></a>
 <a class="jm-hit" xlink:href="concepts/reading-execution-plans.html"><g class="jm-node done"><rect x="220" y="284" width="200" height="44" rx="12"/><text x="320" y="311" text-anchor="middle" font-size="14" font-weight="700">🗺️ Reading Plans</text></g></a>
 <a class="jm-hit" xlink:href="concepts/statistics-cardinality.html"><g class="jm-node done"><rect x="220" y="364" width="200" height="44" rx="12"/><text x="320" y="391" text-anchor="middle" font-size="14" font-weight="700">📊 Statistics</text></g></a>
-<g class="jm-node locked"><rect x="220" y="498" width="200" height="44" rx="12"/><text x="320" y="525" text-anchor="middle" font-size="14" font-weight="700">🔗 Join Algorithms</text></g>
-<g class="jm-node locked"><rect x="220" y="578" width="200" height="44" rx="12"/><text x="320" y="605" text-anchor="middle" font-size="14" font-weight="700">📌 Covering Indexes</text></g>
-<g class="jm-node locked"><rect x="220" y="658" width="200" height="44" rx="12"/><text x="320" y="685" text-anchor="middle" font-size="14" font-weight="700">🎯 SARGable Queries</text></g>
-<g class="jm-node locked"><rect x="220" y="738" width="200" height="44" rx="12"/><text x="320" y="765" text-anchor="middle" font-size="14" font-weight="700">🗃️ Plan Cache</text></g>
-<g class="jm-node locked"><rect x="220" y="872" width="200" height="44" rx="12"/><text x="320" y="899" text-anchor="middle" font-size="14" font-weight="700">📏 Measuring</text></g>
-<g class="jm-node locked"><rect x="220" y="952" width="200" height="44" rx="12"/><text x="320" y="979" text-anchor="middle" font-size="14" font-weight="700">🧭 Debug Playbook</text></g>
+<a class="jm-hit" xlink:href="concepts/join-algorithms.html"><g class="jm-node done"><rect x="220" y="498" width="200" height="44" rx="12"/><text x="320" y="525" text-anchor="middle" font-size="14" font-weight="700">🔗 Join Algorithms</text></g></a>
+<a class="jm-hit" xlink:href="concepts/covering-indexes.html"><g class="jm-node done"><rect x="220" y="578" width="200" height="44" rx="12"/><text x="320" y="605" text-anchor="middle" font-size="14" font-weight="700">📌 Covering Indexes</text></g></a>
+<a class="jm-hit" xlink:href="concepts/sargable-queries.html"><g class="jm-node done"><rect x="220" y="658" width="200" height="44" rx="12"/><text x="320" y="685" text-anchor="middle" font-size="14" font-weight="700">🎯 SARGable Queries</text></g></a>
+<a class="jm-hit" xlink:href="concepts/plan-cache-sniffing.html"><g class="jm-node done"><rect x="220" y="738" width="200" height="44" rx="12"/><text x="320" y="765" text-anchor="middle" font-size="14" font-weight="700">🗃️ Plan Cache</text></g></a>
+<a class="jm-hit" xlink:href="concepts/measuring-query-store.html"><g class="jm-node done"><rect x="220" y="872" width="200" height="44" rx="12"/><text x="320" y="899" text-anchor="middle" font-size="14" font-weight="700">📏 Measuring</text></g></a>
+<a class="jm-hit" xlink:href="concepts/debugging-playbook.html"><g class="jm-node done"><rect x="220" y="952" width="200" height="44" rx="12"/><text x="320" y="979" text-anchor="middle" font-size="14" font-weight="700">🧭 Debug Playbook</text></g></a>
 <g class="jm-node locked"><rect x="220" y="1086" width="200" height="44" rx="12"/><text x="320" y="1113" text-anchor="middle" font-size="14" font-weight="700">🔒 Locking</text></g>
 <g class="jm-node locked"><rect x="220" y="1166" width="200" height="44" rx="12"/><text x="320" y="1193" text-anchor="middle" font-size="14" font-weight="700">⚖️ Index Costs</text></g>
 <g class="jm-node locked"><rect x="220" y="1246" width="200" height="44" rx="12"/><text x="320" y="1273" text-anchor="middle" font-size="14" font-weight="700">🧱 Partitioning</text></g>
@@ -140,12 +140,12 @@
       <li class="concept-row done"><span class="cr-num">3</span><span class="cr-main"><a href="concepts/indexes-seek-scan.html">Indexes: seek vs scan</a><span class="cr-tail">B-tree, clustered vs nonclustered, key lookups, why indexes get ignored</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/reading-execution-plans.html">Reading an execution plan</a><span class="cr-tail">the five-step routine, operator cheat sheet, estimated vs actual rows</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">5</span><span class="cr-main"><a href="concepts/statistics-cardinality.html">Statistics &amp; cardinality estimation</a><span class="cr-tail">histograms, stale statistics, why the optimizer guesses wrong</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">6</span><span class="cr-main"><span class="cr-name">Join algorithms</span><span class="cr-tail">nested loops vs hash vs merge, memory grants, spills</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">7</span><span class="cr-main"><span class="cr-name">Covering indexes &amp; key lookups</span><span class="cr-tail">INCLUDE, composite key order, filtered indexes</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">8</span><span class="cr-main"><span class="cr-name">Writing queries the optimizer can use</span><span class="cr-tail">functions on columns, implicit conversion, LIKE, OR, row-by-row</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">9</span><span class="cr-main"><span class="cr-name">Plan cache &amp; parameter sniffing</span><span class="cr-tail">plan reuse, skewed data, “fast in SSMS, slow in the app”</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">10</span><span class="cr-main"><span class="cr-name">Measuring: STATISTICS IO/TIME, waits, Query Store</span><span class="cr-tail">logical reads, wait types, regressions, forcing a plan</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">11</span><span class="cr-main"><span class="cr-name">The debugging playbook</span><span class="cr-tail">the six-step ladder, symptom → tool → cause, what NOT to do</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">6</span><span class="cr-main"><a href="concepts/join-algorithms.html">Join algorithms</a><span class="cr-tail">nested loops vs hash vs merge, memory grants, spills</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">7</span><span class="cr-main"><a href="concepts/covering-indexes.html">Covering indexes &amp; key lookups</a><span class="cr-tail">INCLUDE, composite key order, filtered indexes</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">8</span><span class="cr-main"><a href="concepts/sargable-queries.html">Writing queries the optimizer can use</a><span class="cr-tail">functions on columns, implicit conversion, LIKE, OR, row-by-row</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">9</span><span class="cr-main"><a href="concepts/plan-cache-sniffing.html">Plan cache &amp; parameter sniffing</a><span class="cr-tail">plan reuse, skewed data, “fast in SSMS, slow in the app”</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">10</span><span class="cr-main"><a href="concepts/measuring-query-store.html">Measuring: STATISTICS IO/TIME, waits, Query Store</a><span class="cr-tail">logical reads, wait types, regressions, forcing a plan</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">11</span><span class="cr-main"><a href="concepts/debugging-playbook.html">The debugging playbook</a><span class="cr-tail">the six-step ladder, symptom → tool → cause, what NOT to do</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">12</span><span class="cr-main"><span class="cr-name">Transactions, locking &amp; isolation</span><span class="cr-tail">blocking vs deadlocks, isolation levels, snapshot, deadlock graphs</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">13</span><span class="cr-main"><span class="cr-name">The cost of indexes &amp; maintenance</span><span class="cr-tail">write cost, fragmentation, unused and duplicate indexes</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">14</span><span class="cr-main"><span class="cr-name">Big-data reads: partitioning &amp; columnstore</span><span class="cr-tail">partition elimination, columnstore, batch mode</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -156,9 +156,9 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Data Systems · SQL Performance Lab · 5 / 16 concepts written</div>
+  <div class="wrap">KeyDrive · Data Systems · SQL Performance Lab · 11 / 16 concepts written</div>
 </footer>
 
-<script src="../assets/site.js?v=20261017"></script>
+<script src="../assets/site.js?v=20261018"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reading an execution plan — SQL — KeyDrive</title>
-<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
 </head>
 <body data-root="../../">
 
@@ -49,7 +49,7 @@
 <defs><marker id="pl1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pl1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pl1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <path d="M470,62 L405,62 L405,137 L340,137" fill="none" stroke="#fbbf24" stroke-width="5" marker-end="url(#pl1T)"/>
 <path d="M470,202 L405,202 L405,155 L340,155" fill="none" stroke="#fb7185" stroke-width="7.2" marker-end="url(#pl1T)"/>
-<path d="M220,146 L100,146" fill="none" stroke="#fbbf24" stroke-width="5" marker-end="url(#pl1T)"/>
+<path d="M220,146 L100,146" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#pl1T)"/>
 <rect class="bx" x="10" y="118" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
 <text x="55" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
 <text x="55" y="156.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
@@ -72,9 +72,9 @@
 <text class="free" x="320" y="280" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Read right to left. Fat red arrow + 85% cost = start here. Estimated 50 vs actual 4,000 = the optimizer guessed wrong.</text>
 <g class="arrow-pill"><rect x="369.5" y="90.5" width="71" height="18" rx="9"/><text x="405" y="103" text-anchor="middle" font-size="9" font-style="italic">4,000 rows</text></g>
 <g class="arrow-pill"><rect x="359" y="169.5" width="92" height="18" rx="9"/><text x="405" y="182" text-anchor="middle" font-size="9" font-style="italic">1,000,000 rows</text></g>
-<g class="arrow-pill"><rect x="124.5" y="121" width="71" height="18" rx="9"/><text x="160" y="133.5" text-anchor="middle" font-size="9" font-style="italic">4,000 rows</text></g>
+<g class="arrow-pill"><rect x="122" y="121" width="76" height="18" rx="9"/><text x="160" y="133.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
 </svg>
-<figcaption><strong>What you're seeing:</strong> a real-looking plan for “orders of customers in a city”. <b>Data flows right to left</b>, from the leaf operators that read pages, through the join, into SELECT. The <b>arrow thickness</b> is the number of rows moving; the <b>cost %</b> is the optimizer’s estimate of each operator’s share. Two things jump out: the red scan produces a million rows and carries 85% of the cost, and the amber seek <i>estimated</i> 50 rows but really returned 4,000. (All numbers are illustrative.)</figcaption>
+<figcaption><strong>What you're seeing:</strong> a real-looking plan for “orders of customers in a city”. <b>Data flows right to left</b>, from the leaf operators that read pages, through the join, into SELECT. The <b>arrow thickness</b> is the number of rows moving; the <b>cost %</b> is the optimizer’s estimate of each operator’s share. Two things jump out: the red scan produces a million rows and carries 85% of the cost, and the amber seek <i>estimated</i> 50 rows but really returned 4,000. (All numbers are illustrative; about 20 orders per customer gives roughly 80,000 joined rows.)</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text">Read a plan <b>right to left</b>, start at the fattest arrow and biggest cost, then check one thing everywhere: <i>did the engine guess the row counts right?</i></span></div>
@@ -97,11 +97,11 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🧰 How to get a plan</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Way</th><th scope="col">What you get</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">SSMS estimated plan</th><td>The plan without running the query (shortcut Ctrl+L)</td><td>Needs the SHOWPLAN permission on every database the query touches</td></tr><tr><th scope="row">SSMS actual plan</th><td>The plan with real row counts and runtime info (Ctrl+M, then run)</td><td>The query really runs — careful with INSERT, UPDATE, DELETE</td></tr><tr><th scope="row">T-SQL command</th><td>Actual plan as XML: <code>SET STATISTICS XML ON</code></td><td>Runs the query; handy for scripts and saving plans</td></tr><tr><th scope="row">Query Store</th><td>Plans for past executions</td><td>These are estimated plans, not actual — page 10 (coming)</td></tr><tr><th scope="row">Extended Events</th><td>Actual plans from a running system, using the <code>query_post_execution_showplan</code> event</td><td>For when you cannot reproduce the problem on your machine</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Way</th><th scope="col">What you get</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">SSMS estimated plan</th><td>The plan without running the query (shortcut Ctrl+L)</td><td>Needs the SHOWPLAN permission on every database the query touches</td></tr><tr><th scope="row">SSMS actual plan</th><td>The plan with real row counts and runtime info (Ctrl+M, then run)</td><td>The query really runs — careful with INSERT, UPDATE, DELETE</td></tr><tr><th scope="row">T-SQL command</th><td>Actual plan as XML: <code>SET STATISTICS XML ON</code></td><td>Runs the query; handy for scripts and saving plans</td></tr><tr><th scope="row">Query Store</th><td>Plans for past executions</td><td>These are estimated plans, not actual — page 10</td></tr><tr><th scope="row">Extended Events</th><td>Actual plans from a running system, using the <code>query_post_execution_showplan</code> event</td><td>For when you cannot reproduce the problem on your machine</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">📖 Operator cheat sheet — what you will meet most</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Operator</th><th scope="col">Plain English</th><th scope="col">Ask yourself</th></tr></thead><tbody><tr><th scope="row">Index Seek / Clustered Index Seek</th><td>Navigates the tree to the matching range</td><td>Is the range small? Check logical reads</td></tr><tr><th scope="row">Index Scan / Clustered Index Scan / Table Scan</th><td>Reads all rows of the index, clustered table or heap (the last one is a heap)</td><td>Is it reading far more than it returns?</td></tr><tr><th scope="row">Key Lookup</th><td>Fetches the missing columns from the clustered table, once per row; always paired with Nested Loops</td><td>How many times does it run? (page 7 — coming)</td></tr><tr><th scope="row">Nested Loops</th><td>For each row on the top input, probe the bottom input</td><td>Is the outer side small?</td></tr><tr><th scope="row">Hash Match</th><td>Builds a hash table from one input and probes it with the other (joins, aggregates)</td><td>Is it using lots of memory for big inputs?</td></tr><tr><th scope="row">Merge Join</th><td>Walks two sorted inputs side by side</td><td>Are both inputs already sorted?</td></tr><tr><th scope="row">Sort</th><td>Puts rows in order</td><td>Could an index already provide the order?</td></tr><tr><th scope="row">Parallelism (yellow circle with arrows)</th><td>Part of the plan ran on several threads</td><td>Parallel can be good — but a tiny query rarely needs it</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Operator</th><th scope="col">Plain English</th><th scope="col">Ask yourself</th></tr></thead><tbody><tr><th scope="row">Index Seek / Clustered Index Seek</th><td>Navigates the tree to the matching range</td><td>Is the range small? Check logical reads</td></tr><tr><th scope="row">Index Scan / Clustered Index Scan / Table Scan</th><td>Reads all rows of the index, clustered table or heap (the last one is a heap)</td><td>Is it reading far more than it returns?</td></tr><tr><th scope="row">Key Lookup</th><td>Fetches the missing columns from the clustered table, once per row; always paired with Nested Loops</td><td>How many times does it run? (page 7)</td></tr><tr><th scope="row">Nested Loops</th><td>For each row on the top input, probe the bottom input</td><td>Is the outer side small?</td></tr><tr><th scope="row">Hash Match</th><td>Builds a hash table from one input and probes it with the other (joins, aggregates)</td><td>Is it using lots of memory for big inputs?</td></tr><tr><th scope="row">Merge Join</th><td>Walks two sorted inputs side by side</td><td>Are both inputs already sorted?</td></tr><tr><th scope="row">Sort</th><td>Puts rows in order</td><td>Could an index already provide the order?</td></tr><tr><th scope="row">Parallelism (yellow circle with arrows)</th><td>Part of the plan ran on several threads</td><td>Parallel can be good — but a tiny query rarely needs it</td></tr></tbody></table></div>
     <p style="margin-top:12px">A <b>logical</b> operator describes what must be done; a <b>physical</b> operator is the algorithm that does it (and carries the cost). Plans show physical operators.</p>
   </section>
   <section class="kd-section ">
@@ -110,8 +110,8 @@
     <ol>
       <li><b>Direction.</b> Two inputs meet in a Hash Match, which feeds SELECT.</li>
       <li><b>Weight.</b> The Clustered Index Scan of <code>Orders</code>: 85% of the cost, a million rows. It is the heaviest thing, so look at it first.</li>
-      <li><b>Guess.</b> The Index Seek on <code>Customers</code> estimated 50 rows and got 4,000. The optimizer expected a tiny customer list — it was wrong by about 80 times. That error is why it chose a join that reads all of Orders (page 5 explains why such errors happen; page 6 why the join type follows).</li>
-      <li><b>Warnings.</b> None in this plan — but a scan feeding a join is worth a question.</li>
+      <li><b>Guess.</b> The Index Seek on <code>Customers</code> estimated 50 rows and got 4,000 — the optimizer expected a tiny customer list and was wrong by about 80 times. A wrong estimate on a join input is dangerous: the join sizes its memory for the small guess (page 6 shows what happens next). Page 5 explains why such errors happen.</li>
+      <li><b>Warnings.</b> None shown on this plan — but a scan feeding a join is worth a question, and a hash join whose input was underestimated is a prime suspect for a spill (page 6).</li>
       <li><b>Properties.</b> Open the scan: it has no seek predicate. The join column <code>Orders.CustomerId</code> is not indexed — exactly the fix from the last page.</li>
     </ol>    <div class="code-block"><pre><span class="cmt">-- two hypotheses, tested one at a time</span>
 <span class="cmt">-- 1) is the estimate stale?</span>
@@ -131,7 +131,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label trap">🩺 Debug checklist · estimated vs actual rows</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it can lead to</th><th scope="col">Where to go</th></tr></thead><tbody><tr><th scope="row">Estimated far <b>below</b> actual</th><td>The optimizer picks a plan built for few rows (e.g. a nested-loops join and a small memory request) and then gets swamped</td><td>Statistics (page 5), then join choice (page 6)</td></tr><tr><th scope="row">Estimated far <b>above</b> actual</th><td>It may reserve more memory or parallelism than the query needs</td><td>Statistics (page 5)</td></tr><tr><th scope="row">Estimates close to actual, query still slow</th><td>The plan matches reality — the work is simply big, or the time is spent waiting</td><td>Measuring (page 10 — coming), blocking (page 12 — coming)</td></tr><tr><th scope="row">Scan, 80%+ cost, few rows out</th><td>Missing or unusable index</td><td>Indexes (page 3), SARGability (page 8 — coming)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it can lead to</th><th scope="col">Where to go</th></tr></thead><tbody><tr><th scope="row">Estimated far <b>below</b> actual</th><td>The optimizer picks a plan built for few rows (e.g. a nested-loops join and a small memory request) and then gets swamped</td><td>Statistics (page 5), then join choice (page 6)</td></tr><tr><th scope="row">Estimated far <b>above</b> actual</th><td>It may reserve more memory or parallelism than the query needs</td><td>Statistics (page 5)</td></tr><tr><th scope="row">Estimates close to actual, query still slow</th><td>The plan matches reality — the work is simply big, or the time is spent waiting</td><td>Measuring (page 10), blocking (page 12 — coming)</td></tr><tr><th scope="row">Scan, 80%+ cost, few rows out</th><td>Missing or unusable index</td><td>Indexes (page 3), SARGability (page 8)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🎬 Real-world scenarios</div>
@@ -188,6 +188,6 @@
   <div class="wrap">KeyDrive · SQL · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261017"></script>
+<script src="../../assets/site.js?v=20261018"></script>
 </body>
 </html>

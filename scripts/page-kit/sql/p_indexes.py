@@ -65,7 +65,7 @@ def build_indexes_seek_scan():
     body += block('🚫 Why the engine ignores your index (on purpose)', '''    <div class="how-strip">
       <div class="how-step"><span class="hs-n">TOO MANY ROWS</span><h4>🧮 Lookups add up</h4><p>If a big share of rows match, doing a key lookup for each one costs more than one scan. The optimizer weighs this.</p></div>
       <div class="how-step"><span class="hs-n">WRONG COLUMN ORDER</span><h4>↔️ Leading column</h4><p>An index on (LastName, FirstName) helps find a last name, not a first name alone.</p></div>
-      <div class="how-step"><span class="hs-n">HIDDEN COLUMN</span><h4>🙈 Function on the column</h4><p>Wrapping the column in an expression usually prevents a seek (page 8 — coming).</p></div>
+      <div class="how-step"><span class="hs-n">HIDDEN COLUMN</span><h4>🙈 Function on the column</h4><p>Wrapping the column in an expression usually prevents a seek (page 8).</p></div>
       <div class="how-step"><span class="hs-n">BAD GUESS</span><h4>🎲 Stale estimate</h4><p>The optimizer thought many rows would match (page 5).</p></div>
     </div>''', label_cls='see')
     body += block('🧪 Plan lab · twelve rows out of a million', f'''    <p><b>Before.</b> No index on <code>CustomerId</code>. The query asks for customer 42’s twelve orders.</p>''' + code_block(
@@ -85,12 +85,12 @@ f'''{kw('CREATE NONCLUSTERED INDEX')} IX_Orders_CustomerId
 <span class="cmt">-- illustrative after: Table 'Orders'. Scan count 1, logical reads ~40</span>''',
         '~40 = about 3 page reads to reach the leaf, plus about 3 per key lookup × 12 rows. The page after next explains how to read such a plan operator by operator.') + '\n' + figure(plan_after(),
         'a <b>seek</b> (green) finds the 12 matching index entries; for each one a <b>key lookup</b> (amber) fetches the full row from the clustered table; <b>Nested Loops</b> joins them. '
-        'A Key Lookup always comes with a Nested Loops. Twelve lookups are cheap — but notice how this cost grows with the row count, which is what the next page (covering indexes, later) fixes.'), label_cls='see')
+        'A Key Lookup always comes with a Nested Loops. Twelve lookups are cheap — but notice how this cost grows with the row count, which is what page 7 (covering indexes) fixes.'), label_cls='see')
     body += block('🩺 Debug checklist · index-related symptoms', table(
         ['You see in the plan / numbers','Likely cause','What to try'],
         [['Scan, high cost %, few rows out','No usable index on the filtered column','Index the column in the WHERE/JOIN (check it will be selective)'],
          ['Seek, but logical reads still huge','The seek range itself is huge (e.g. leading-wildcard LIKE, wide range)','Check the seek predicate; narrow the range'],
-         ['Key Lookup repeated thousands of times','Index lacks columns the query needs','Covering index with INCLUDE (page 7 — coming)'],
+         ['Key Lookup repeated thousands of times','Index lacks columns the query needs','Covering index with INCLUDE (page 7)'],
          ['Index exists but plan scans','Too many rows match, a function hides the column, or stats mislead','Check selectivity, rewrite the predicate (page 8), check stats (page 5)'],
          ['Writes got slower after adding indexes','Each index must be maintained on every write','Drop unused or duplicate indexes (page 13 — coming)']]), label_cls='trap')
     body += block('🎬 Real-world scenarios', scenarios([

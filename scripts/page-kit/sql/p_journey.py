@@ -67,8 +67,8 @@ f'''{kw('SELECT')} OrderId, OrderDate, Total
         ['What you notice','First question','Where this lab goes'],
         [['Slow <b>every</b> time','What does the plan show? Is it reading far more than it returns?','Read the plan (page 4), then indexes (page 3)'],
          ['Was fast, got slower','Did the data grow, or did the estimates go stale?','Statistics (page 5)'],
-         ['Fast for one user, slow for another','Is one cached plan being shared by very different inputs?','Plan cache &amp; sniffing (page 9 — coming)'],
-         ['Fast in SSMS, slow in the app','Same text? Same settings? Same plan?','Plan cache &amp; sniffing (page 9 — coming)'],
+         ['Fast for one user, slow for another','Is one cached plan being shared by very different inputs?','Plan cache &amp; sniffing (page 9)'],
+         ['Fast in SSMS, slow in the app','Same text? Same settings? Same plan?','Plan cache &amp; sniffing (page 9)'],
          ['Slow only under load','Is something waiting or blocking, not computing?','Locking (page 12 — coming)']]), label_cls='trap')
     body += block('🪜 Your thinking ladder (you will use it on every page)', ladder_strip([1,2]) + '\n    <p style="margin-top:12px">This page practises the first two rungs: <b>know that a plan exists</b>, and <b>know where to look at it</b>.</p>', label_cls='see')
     body += block('🎬 Real-world scenarios', scenarios([

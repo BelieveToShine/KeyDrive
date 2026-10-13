@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing queries the optimizer can use — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Writing queries the optimizer can use</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 16 · 🛠️ Optimise the query</div>
+    <h1>A perfect index only helps if the predicate leaves <span class="grad-text">the bare column</span> alone.</h1>
+    <p class="sub">Functions, arithmetic, wildcards and silent type conversions — how a column gets hidden from its own index, how to spot it in a plan, and the rewrite for each.</p>
+    <div class="interview-q">❓ "What does it mean for a predicate to be SARGable, and how do you fix one that is not?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="An index on OrderDate is sorted by date: a range predicate can seek straight to the 2026 block, but YEAR(OrderDate) = 2026 forces the engine to compute YEAR for every row">
+<defs><marker id="sg1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="262" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WHERE OrderDate &gt;= 2026-01-01  AND  &lt; 2027-01-01</text>
+<rect class="zone" x="325" y="8" width="305" height="262" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">WHERE YEAR(OrderDate) = 2026</text>
+<rect class="bx" x="26" y="36" width="273" height="120" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="40" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">2025-11-02</text>
+<text x="40" y="71" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">2025-12-19</text>
+<text x="40" y="84" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-01-05</text>
+<text x="40" y="97" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-03-14</text>
+<text x="40" y="110" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-09-30</text>
+<text x="40" y="123" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">2027-01-08</text>
+<rect class="bx" x="40" y="176" width="245" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="198.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ Seek</text>
+<text x="162.5" y="211" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">jump to the first 2026 row,</text>
+<text x="162.5" y="223.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">read until the last — done</text>
+<rect class="bx" x="341" y="36" width="273" height="120" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="355" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2025-11-02 → YEAR = 2025</text>
+<text x="355" y="71" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2025-12-19 → YEAR = 2025</text>
+<text x="355" y="84" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-01-05 → YEAR = 2026</text>
+<text x="355" y="97" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-03-14 → YEAR = 2026</text>
+<text x="355" y="110" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-09-30 → YEAR = 2026</text>
+<text x="355" y="123" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2027-01-08 → YEAR = 2027</text>
+<rect class="bx" x="355" y="176" width="245" height="62" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="198.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">⛔ Scan</text>
+<text x="477.5" y="211" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">compute YEAR() for every row,</text>
+<text x="477.5" y="223.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">keep the matches</text>
+<text class="free" x="320" y="290" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Same index, same answer. Only one of the two lets the engine use the sort order.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the index is sorted by date. On the left the predicate is a <b>range on the bare column</b>, so the engine jumps to the first 2026 row and reads until the last. On the right the same filter is written as <b>YEAR(OrderDate) = 2026</b>: the sort order says nothing about the <i>result of a function</i>, so the engine has to compute YEAR for every row and keep the matches. Same index, same rows — one query can use it, the other cannot.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A perfect index only helps if the predicate leaves the <b>bare column</b> alone — wrap the column in a function and the engine can no longer seek.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 7 gave you a covering index. But an index is a <i>sorted</i> structure: it can only help with questions about the sorted values themselves. “Is the date between these two?” is a question about the values. “Is the YEAR of the date 2026?” is a question about a <i>calculation</i> — and the index stores no calculations.</p>
+      <p>The word for a predicate the engine can use an index for is <b>SARGable</b> (Search ARGument-able). Most “my index is ignored” tickets are not index problems at all; they are predicates that stopped being SARGable the day someone added a convenient function.</p>
+      <p>This page is a catalogue of how columns get hidden, how to spot it in a plan, and the rewrite for each.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · YEAR() on a date column</div>
+    <p>The ShopDB team added an index on <code>OrderDate</code> yesterday. The yearly report is still slow.</p>    <div class="code-block"><pre><span class="kw">SELECT</span> OrderId
+<span class="kw">FROM</span>   dbo.Orders
+<span class="kw">WHERE</span>  <span class="kw">YEAR</span>(OrderDate) = <span class="num">2026</span>;      <span class="cmt">-- hides OrderDate inside a function</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. We select only OrderId — it is the clustered key, so it is already inside the OrderDate index and the index covers the query (page 7). Logical reads here are roughly the size of the whole index.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan before the rewrite: an Index Scan of the OrderDate index applies YEAR(OrderDate) = 2026 as a predicate on every row it reads">
+<defs><marker id="sg3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M330,62 L110,62" fill="none" stroke="#fb7185" stroke-width="6.7" marker-end="url(#sg3T)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="330" y="14" width="250" height="96" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="455" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Index Scan</text>
+<text x="455" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">IX_Orders_OrderDate</text>
+<text x="455" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">predicate: YEAR(OrderDate)=2026</text>
+<text x="455" y="84.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">cost 98%</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">The index exists and is even used — but only as a narrower table to scan.</text>
+<g class="arrow-pill"><rect x="179" y="37" width="82" height="18" rx="9"/><text x="220" y="49.5" text-anchor="middle" font-size="9" font-style="italic">250,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the engine <b>does</b> use the new index — but as an <b>Index Scan</b>: it reads every entry and applies the YEAR test as a <i>predicate</i>. In the operator’s properties you would see a <b>Predicate</b>, not a <b>Seek Predicate</b>. That one word is the giveaway.</figcaption>
+</figure>
+    <p style="margin-top:18px"><b>The rewrite.</b> Say the same thing as a half-open range on the bare column.</p>    <div class="code-block"><pre><span class="kw">SELECT</span> OrderId
+<span class="kw">FROM</span>   dbo.Orders
+<span class="kw">WHERE</span>  OrderDate >= <span class="str">'20260101'</span>
+  <span class="kw">AND</span>  OrderDate <  <span class="str">'20270101'</span>;     <span class="cmt">-- bare column, range on both sides</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Why “< 2027-01-01” and not “<= 2026-12-31”? A half-open range works for date, datetime and datetime2 alike, with no risk of dropping the last day’s times. The YYYYMMDD literal form is unambiguous.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan after the rewrite: an Index Seek with an OrderDate range as its seek predicate, reading only the 2026 rows">
+<defs><marker id="sg4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M330,62 L110,62" fill="none" stroke="#fb7185" stroke-width="6.7" marker-end="url(#sg4T)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="330" y="14" width="250" height="96" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="455" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Index Seek</text>
+<text x="455" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">IX_Orders_OrderDate</text>
+<text x="455" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">seek predicate: OrderDate range</text>
+<text x="455" y="84.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">cost 2%</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Same 250,000 rows out — but now only those rows (plus a few pages) were read.</text>
+<g class="arrow-pill"><rect x="179" y="37" width="82" height="18" rx="9"/><text x="220" y="49.5" text-anchor="middle" font-size="9" font-style="italic">250,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> now the properties show a <b>Seek Predicate</b> on <code>OrderDate</code>. The same 250,000 rows are returned, but the engine only visited the pages that hold them. The plan shape changed from scan to seek without any new index.</figcaption>
+</figure>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🙈 Ways a column gets hidden — and the rewrite</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Looks like</th><th scope="col">Why the index cannot help</th><th scope="col">Rewrite</th></tr></thead><tbody><tr><th scope="row"><code>YEAR(OrderDate) = 2026</code></th><td>A function is computed per row; the index is sorted by the raw value</td><td>Range on the bare column: <code>&gt;= '20260101' AND &lt; '20270101'</code></td></tr><tr><th scope="row"><code>UPPER(LastName) = 'SMITH'</code></th><td>Function on the column</td><td>Compare the column directly; check the column’s collation (many are case-insensitive)</td></tr><tr><th scope="row"><code>LastName LIKE '%smith'</code></th><td>A leading wildcard gives no starting point in a sorted list</td><td><code>LIKE 'smith%'</code> is seekable; “contains” search needs another technique (e.g. full-text search)</td></tr><tr><th scope="row"><code>Total * 1.2 &gt; 100</code></th><td>Arithmetic on the column</td><td>Move the arithmetic to the other side: <code>Total &gt; 100 / 1.2</code></td></tr><tr><th scope="row"><code>ISNULL(Discount, 0) = 0</code></th><td>Function on the column</td><td><code>Discount = 0 OR Discount IS NULL</code></td></tr><tr><th scope="row"><code>CASE WHEN … END = x</code></th><td>CASE expressions are not SARGable</td><td>Restructure into separate predicates or queries</td></tr><tr><th scope="row">Parameter type ≠ column type</th><td>The column is converted for every row (next picture)</td><td>Declare the parameter with the column’s type</td></tr><tr><th scope="row"><code>SELECT *</code></th><td>Not a seek problem — it prevents a <i>covering</i> index</td><td>List only the columns you need (page 7)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔤 The silent one: implicit conversion</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Implicit conversion: an NVARCHAR parameter compared with a VARCHAR column converts the column for every row, which prevents a seek; matching the parameter type to the column keeps the seek">
+<defs><marker id="sg2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sg2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M180,50 L220,50 L220,95 L260,95" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sg2A)"/>
+<path d="M180,160 L220,160 L220,120 L260,120" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sg2A)"/>
+<path d="M380,95 L430,95 L430,52 L490,52" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sg2A)"/>
+<path d="M380,120 L430,120 L430,162 L490,162" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#sg2A)"/>
+<rect class="bx" x="10" y="20" width="170" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="95" y="47.25" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">@status NVARCHAR</text>
+<text x="95" y="59.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">driver sends Unicode</text>
+<rect class="bx" x="10" y="130" width="170" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="95" y="157.25" text-anchor="middle" font-size="11" font-weight="600" fill="#c4b5fd" font-family="'JetBrains Mono'">Status VARCHAR</text>
+<text x="95" y="169.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">has an index</text>
+<rect class="bx" x="260" y="62" width="120" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="98.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Types differ</text>
+<text x="320" y="111" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">lower-precedence</text>
+<text x="320" y="123.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">side is converted</text>
+<rect class="bx" x="490" y="14" width="140" height="76" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="560" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">⛔ Column converted</text>
+<text x="560" y="55.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">CONVERT_IMPLICIT</text>
+<text x="560" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">can’t seek → scan</text>
+<rect class="bx" x="490" y="124" width="140" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="560" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ Match the types</text>
+<text x="560" y="165.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">@status VARCHAR</text>
+<text x="560" y="178.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">→ index seek</text>
+<text class="free" x="320" y="240" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Which side gets converted depends on data type precedence; the plan warns: “may affect SeekPlan”.</text>
+<g class="arrow-pill"><rect x="198" y="63" width="44" height="18" rx="9"/><text x="220" y="75.5" text-anchor="middle" font-size="9" font-style="italic">value</text></g>
+<g class="arrow-pill"><rect x="195" y="131" width="50" height="18" rx="9"/><text x="220" y="143.5" text-anchor="middle" font-size="9" font-style="italic">column</text></g>
+<g class="arrow-pill"><rect x="386.5" y="64" width="87" height="18" rx="9"/><text x="430" y="76.5" text-anchor="middle" font-size="9" font-style="italic">NVARCHAR wins</text></g>
+<g class="arrow-pill"><rect x="402.5" y="132" width="55" height="18" rx="9"/><text x="430" y="144.5" text-anchor="middle" font-size="9" font-style="italic">the fix</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> when two different data types are compared, SQL Server converts the one with <b>lower precedence</b> to match the other. If a <code>VARCHAR</code> column is compared with an <code>NVARCHAR</code> value, the <i>column</i> is converted — for every row — and the seek is lost. Many client drivers send string parameters as Unicode by default, so this appears with no change to your SQL text. Fix: match the parameter type to the column type.</figcaption>
+</figure>
+    <p style="margin-top:12px">The plan tells you, if you look: a warning on the SELECT operator reads like <i>“Type conversion in expression (CONVERT_IMPLICIT(…)) may affect “SeekPlan” in query plan choice”</i>. In the plan XML the same thing is flagged as <code>PlanAffectingConvert</code>.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · how to spot a hidden column</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">It means</th><th scope="col">Next step</th></tr></thead><tbody><tr><th scope="row">Index Scan on a column that has an index, and the scan carries a <b>Predicate</b></th><td>The predicate could not become a seek predicate</td><td>Look at the WHERE clause for a function, arithmetic, CASE or conversion on that column</td></tr><tr><th scope="row">Warning on SELECT: “may affect SeekPlan”</th><td>A type conversion is hiding a column (or hurting estimates)</td><td>Compare parameter and column types; fix the parameter</td></tr><tr><th scope="row">A Seek, but logical reads equal a scan</th><td>Leading-wildcard LIKE, or a very wide range</td><td>Check the seek predicate and the range; measure logical reads</td></tr><tr><th scope="row">Query was fast in SSMS, slow from the app</th><td>The app’s driver sends a different parameter type</td><td>Compare the declared parameter types (and see page 9)</td></tr><tr><th scope="row">Looks fine but still slow</th><td>The predicate is OK — the cost is elsewhere</td><td>Back to the ladder: read the plan for the heaviest operator</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📅</span><h5>Monthly sales report</h5><p>WHERE MONTH(OrderDate) = 3 AND YEAR(OrderDate) = 2026.</p><span class="sc-use">→ Range on OrderDate</span></div>
+      <div class="scenario"><span class="sc-icon">🔍</span><h5>Customer lookup by name</h5><p>WHERE UPPER(LastName) = @name — with a case-insensitive column the UPPER adds nothing.</p><span class="sc-use">→ Compare the column directly</span></div>
+      <div class="scenario"><span class="sc-icon">🌐</span><h5>Java app, slow only in production</h5><p>Driver sends strings as Unicode; the column is VARCHAR.</p><span class="sc-use">→ Fix the parameter type (or the driver setting)</span></div>
+      <div class="scenario"><span class="sc-icon">📱</span><h5>“Contains” search box</h5><p>LIKE '%' + @text + '%' on a million-row table.</p><span class="sc-use">→ Needs a different technique, not a rewrite</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Seek predicate vs residual predicate.</b> A seek can use equality and range conditions on the <i>leading</i> columns of an index. Conditions it cannot use to navigate become <b>residual predicates</b>, applied after the rows are read. If the leading column has no seekable predicate, you get a scan with a predicate.</p>
+      <p><b>Not every conversion blocks a seek.</b> Whether a conversion hides the column depends on the types and the collation: for example, a <code>VARCHAR</code> column with a Windows collation can still seek against an <code>NVARCHAR</code> value, while one with a SQL collation cannot. Don’t rely on that — match the types.</p>
+      <p><b>Drivers.</b> Some client drivers send string parameters as Unicode by default; the JDBC driver has a connection property for it (<code>sendStringParametersAsUnicode</code>). Changing it can fix the plan, but declaring the right parameter type in code is the cleaner fix.</p>
+      <p><b>Other engines:</b> the same rule exists everywhere that uses B-tree indexes: functions on the indexed column hide it (PostgreSQL offers <i>expression indexes</i> to index the function result itself; MySQL 8 has functional indexes).</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>SARGable = the engine can use an index to narrow the search.</li><li>Bare column compared to a value or parameter, with =, range or LIKE ’abc%’ → seekable.</li><li>Function, arithmetic or CASE around the column, or a leading-wildcard LIKE → usually a scan with a predicate.</li><li>Implicit conversion: the lower-precedence type is converted — if that is the column, the seek is lost.</li><li>Spot it: Predicate (not Seek Predicate) on a scan, and the “may affect SeekPlan” warning.</li><li>Fix by rewriting the predicate or matching types — not by adding another index.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A predicate is SARGable when the engine can use an index to seek. Wrapping the column in a function, doing arithmetic on it, using CASE, or having an implicit conversion that converts the column all force a scan with a predicate. I look for a Predicate instead of a Seek Predicate in the plan, and for the SeekPlan conversion warning, and I rewrite the filter as a range on the bare column or match the parameter type."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Adding another index to “fix” a non-SARGable predicate.</b> The new index has the same problem — the function is still on the column. Fix the query.</p>
+      <p><b>Assuming a “Seek” in the plan means it is cheap.</b> A leading-wildcard LIKE can show a Seek yet touch nearly every row. Always check logical reads.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>✅ SARGable</h5><p>WHERE OrderDate >= @from AND OrderDate < @to — the column is bare, the index sort order applies.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>⛔ Non-SARGable</h5><p>WHERE YEAR(OrderDate) = 2026 — the engine must calculate for every row.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You can now write queries the optimizer can use. But the same query text can still get <i>different plans</i> for different inputs — and one of them can be terrible. Next: the plan cache and parameter sniffing.</span>
+      <a class="next-link" href="plan-cache-sniffing.html">Plan cache &amp; parameter sniffing <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Which conversions block a seek depends on types and collations. For exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/post-migration-validation-and-optimization-guide" target="_blank" rel="noopener">Post-migration validation and optimization guide (SARGable predicates)</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql" target="_blank" rel="noopener">CAST and CONVERT (data type conversion)</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/execution-plans" target="_blank" rel="noopener">Execution plans</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

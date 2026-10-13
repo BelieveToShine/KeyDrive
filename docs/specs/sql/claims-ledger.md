@@ -74,11 +74,102 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | PostgreSQL ANALYZE refreshes statistics | 🟨 K | other-engine pointer |
 | Pune/Agra/Delhi numbers, 3,950 sign-ups, 50 vs 4,000 | 🟦 I | teaching numbers |
 
+## Page 6 — join algorithms
+| Claim | Status | Note |
+|---|---|---|
+| Nested loops: outer input row by row, inner searched per outer row; supports any join predicate; cost can grow with the product of the inputs | ✅ V | MS Learn “Joins” + Craig Freedman join series |
+| Hash join: build phase then probe phase; blocking; needs a memory grant; spills a part of the hash table to a tempdb workfile when memory runs out; bad cardinality estimates are the usual cause | ✅ V | Joins page, Freedman “Hash Join”, memory-grant troubleshooting |
+| Merge join: both inputs sorted on the join keys; at least one equality predicate; a Sort is added if not sorted | ✅ V | Freedman “Merge Join” |
+| Hash warning = yellow exclamation on Hash/Sort; recursion vs bailout; since SQL Server 2016 the warning shows threads and pages spilled | ✅ V | showplan spill events blog / Hash Warning event docs |
+| Row-mode grant cannot be exceeded; batch mode grant can grow dynamically | ✅ V | memory-grant troubleshooting |
+| Remedy order: statistics on join columns first; join hints are a last resort and do not guarantee a better plan | ✅ V | same |
+| Adaptive joins (batch mode, SQL Server 2017+): switch by a row-count threshold | ✅ V | Intelligent QP docs |
+| TOP/FAST row goal makes nested loops more attractive | ✅ V | MS blog “Row Goals in Action” |
+| Hints LOOP JOIN / HASH JOIN / MERGE JOIN / FORCE ORDER | ✅ V | Join hints doc |
+| Memory grant sized from the estimate (so a 50-row estimate gives a small grant) | ✅ V | follows from “grant sized from estimates”; memory-grant guidance |
+| PostgreSQL Nested Loop / Hash Join / Merge Join; MySQL 8 hash joins | 🟨 K | other-engine pointers |
+| 80,000 rows, 4,000 customers, 20 orders/customer, 1,000,000-row scan | 🟦 I | teaching numbers |
+
+## Page 7 — covering indexes
+| Claim | Status | Note |
+|---|---|---|
+| INCLUDE columns exist only on nonclustered indexes; at least one key column; up to 1,023 included columns; no repeat of a column in key and INCLUDE; INCLUDE order does not matter | ✅ V | Create indexes with included columns / missing-index docs |
+| Key limits 32 columns / 1,700 bytes (nonclustered); included columns not counted | ✅ V | same |
+| Put search/join/group/sort columns in the key; return-only columns in INCLUDE | ✅ V | same |
+| Wide indexes: fewer rows per page, more I/O, write cost | ✅ V | same |
+| Filtered index: filter columns used in non-equivalent comparisons or returned should be key/included | ✅ V | same |
+| Missing-index suggestions: single-query estimates, nonclustered rowstore only, no key-order advice, ignore size cost of included columns, can overlap; limited number kept; cleared on restart | ✅ V | Tune nonclustered indexes with missing index suggestions |
+| Filtered indexes are smaller, cheaper to maintain, and have more accurate statistics for their slice | 🟨 K | commonly stated; confirm on the filtered-index page |
+| Two single-column indexes are rarely as good as one covering index (index intersection) | 🟨 K | general guidance; confirm |
+| Key order “equality first, then range/sort” | 🟨 K | widely taught design rule (also Freedman “Seek predicates”); confirm wording |
+| PostgreSQL INCLUDE and Index Only Scan; MySQL InnoDB secondary index carries the primary key | 🟨 K | other-engine pointers |
+| 240,000 / 12,500 / 400 page reads; 97% / 3% / 2% cost; ~3 reads per lookup | 🟦 I | teaching arithmetic |
+
+## Page 8 — sargable queries
+| Claim | Status | Note |
+|---|---|---|
+| SARGable = predicate the engine can use an index for; `UPPER(col)=…` and `LIKE '%x'` are non-SARGable, `LIKE 'x%'` fine | ✅ V | post-migration optimization guide; Freedman “Seek predicates” |
+| Functions over a column and leading-wildcard LIKE generally prevent a seek | ✅ V | same |
+| CASE expressions are not SARGable | ✅ V | MS Q&A (E. Sommarskog) — community-sourced, kept as a table row |
+| Lower-precedence type is converted when two types are compared; converting the column can turn a seek into a scan | ✅ V | MS blog posts on implicit conversions, CAST/CONVERT page |
+| Warning text “may affect SeekPlan in query plan choice”; plan XML flag PlanAffectingConvert | ✅ V | same |
+| VARCHAR with Windows collation can still seek vs NVARCHAR; SQL collation cannot | ✅ V | same |
+| JDBC sendStringParametersAsUnicode, default true | ✅ V | MS SQLCAT blog |
+| Seek predicate vs residual predicate | ✅ V | Freedman “Seek predicates” |
+| Leading-wildcard LIKE can show a Seek yet read nearly everything; check logical reads | ✅ V | MS forum thread + Freedman (community-supported) |
+| `'YYYYMMDD'` literals are unambiguous; half-open date range | 🟨 K | standard T-SQL practice |
+| Arithmetic rewrite, `ISNULL` rewrite, `OR` → UNION ALL, set-based vs row-by-row | 🟨 K | general query-writing practice (OR and row-by-row rows not on the page body) |
+| PostgreSQL expression indexes; MySQL 8 functional indexes | 🟨 K | other-engine pointers |
+| 250,000 rows, 98% / 2% cost, year 2026 | 🟦 I | teaching numbers |
+
+## Page 9 — plan cache & sniffing
+| Claim | Status | Note |
+|---|---|---|
+| Sniffing: first compile examines the passed parameter value; plan cached and used for later calls | ✅ V | query processing architecture guide |
+| PSP optimization: SQL Server 2022; multiple active cached plans for one parameterized statement; evaluates histograms for non-uniform distributions, up to three predicates; Azure SQL Database at compatibility level 160 | ✅ V | PSP optimization doc, Azure SQL bottleneck page |
+| Optional-parameter plan optimization (NULL vs non-NULL) | ✅ V | MS Learn page exists |
+| OPTION (RECOMPILE): new plan each run, CPU cost; its temporary plan does not replace the cached plan | ✅ V | query hints doc |
+| OPTIMIZE FOR UNKNOWN uses density/average; OPTIMIZE FOR value pins one value, one per variable; local variable copy behaves like UNKNOWN | ✅ V | query hints doc, MS Q&A / blogs |
+| DISABLE_PARAMETER_SNIFFING hint exists | ✅ V | query hints doc |
+| Compiled vs runtime parameter values visible in plan XML | ✅ V | SQLCAT blog |
+| Improper parameterization → many compiles | ✅ V | Azure SQL bottleneck page |
+| Different session SET options can produce a different cached entry (SSMS vs app) | 🟨 K | well-known behaviour; confirm |
+| Stats updates / schema change can trigger recompiles | 🟨 K | confirm |
+| PostgreSQL custom vs generic plans; MySQL plan caching | 🟨 K | other-engine pointers |
+| 12 / 80,000 orders, customers 42 and 7, 12,500 reads | 🟦 I | teaching numbers |
+
+## Page 10 — measuring
+| Claim | Status | Note |
+|---|---|---|
+| STATISTICS TIME reports ms spent parsing, compiling and executing | ✅ V | SET STATISTICS TIME |
+| STATISTICS IO counters: logical, physical, read-ahead | ✅ V | SET STATISTICS IO |
+| dm_exec_query_stats: cumulative totals since the plan was compiled; rows update when queries finish | ✅ V | dm_exec_query_stats doc |
+| dm_os_wait_stats cumulative since start, not kept across restarts; lock waits ⇒ contention, page IO latch waits ⇒ slow I/O; dm_db_wait_stats in Azure SQL DB | ✅ V | wait-stats docs, Azure SQL bottleneck page |
+| Running vs waiting classification; waiting = locks, I/O, tempdb, memory grants | ✅ V | Azure SQL bottleneck page |
+| Query Store captures queries, plans, runtime stats and wait stats; Regressed Queries and Top Resource Consuming Queries reports | ✅ V | Query Store docs |
+| Only plans already used while Query Store was active can be forced; `sp_query_store_force_plan @query_id, @plan_id` (docs example 48/49) | ✅ V | Query Store docs |
+| `sys.dm_db_tuning_recommendations`, FORCE_LAST_GOOD_PLAN depends on Query Store; force_failure_count / last_force_failure_reason_desc | ✅ V | automatic tuning docs |
+| Query Store plans are estimated | ✅ V | MS Q&A; consistent with docs |
+| Query Store default in Azure SQL Database | 🟨 K | not found; page says check `sys.database_query_store_options` |
+| `sys.dm_exec_sql_text`, `sys.database_query_store_options` names | 🟨 K | names well known; confirm before publishing |
+| Elapsed ≫ CPU suggests waiting | 🟨 K | general rule |
+| 240,000 / 400 reads; 900 → 15 ms CPU; 1,250 → 40 ms elapsed; query ids 48/49 are the docs’ example | 🟦 I / ✅ V | teaching numbers |
+
+## Page 11 — debugging playbook
+| Claim | Status | Note |
+|---|---|---|
+| The six-step ladder and the triage tree | 🟦 I | the course’s own method, built from pages 1–10 |
+| Clearing the plan cache forces all plans to recompile | 🟨 K | consequence of plan-cache behaviour (page 1) |
+| Missing-index and cost-% caveats | ✅ V | see pages 4 and 7 |
+| BigCorp case numbers (6 s, 240,000 → 400 reads, 900 → 15 ms CPU, 97%) | 🟦 I | teaching numbers, chained from pages 3, 7, 9 |
+| Troubleshoot slow-running queries doc exists | ✅ V | linked in the fact note |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label, not a technical claim |
-| “90% of rows / customers” (report and skew scenarios), “80%+ cost” (debug table) | 🟦 I | teaching thresholds, not engine rules |
+| “90% of rows / customers” (report and skew scenarios), “80%+ cost” (debug table), “100%” CPU example, “120” (SUBSTRING length in an example query) | 🟦 I | teaching thresholds, not engine rules |
+| Timing examples “6 seconds”, “900 ms”, “1,250 ms” (also written “1250 ms” inside a code comment) | 🟦 I | teaching numbers on pages 10 and 11 |
 
 ## Open verification list
 - 🟨 K rows above (page 3 optimizer-prefers-scan wording; page 4 Query Store plans, Merge/Hash/Sort descriptions; page 5 Azure SQL default, rebuild side effect, FULLSCAN wording; other-engine pointers).

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Covering indexes &amp; key lookups — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Covering indexes &amp; key lookups</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 7 of 16 · 🛠️ Optimise the query</div>
+    <h1>A seek is only cheap if it never has to <span class="grad-text">go back to the table</span> for every row.</h1>
+    <p class="sub">INCLUDE columns, composite key order and filtered indexes — and the surprising moment when a naive index loses to a table scan.</p>
+    <div class="interview-q">❓ "What is a covering index and how do you choose its key and included columns?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The same query answered three ways: an index with key lookups reads about 240,000 pages, a table scan about 12,500, a covering index about 400 (illustrative)">
+<defs><marker id="cv1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,62 L320,92 L105,92 L105,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cv1A)"/>
+<path d="M320,62 L320,150" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cv1A)"/>
+<path d="M320,62 L320,92 L535,92 L535,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cv1A)"/>
+<rect class="bx" x="150" y="8" width="340" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="32.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Orders of ~4,000 customers → 80,000 rows</text>
+<text x="320" y="45.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">needs CustomerId, OrderDate, Total</text>
+<rect class="bx" x="10" y="150" width="190" height="96" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="105" y="183.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Seek + Key Lookups</text>
+<text x="105" y="195.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">index on CustomerId only</text>
+<text x="105" y="208.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">one lookup per row</text>
+<text x="105" y="220.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">≈ 240,000 page reads</text>
+<rect class="bx" x="225" y="150" width="190" height="96" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="183.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Scan the whole table</text>
+<text x="320" y="195.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">no index used</text>
+<text x="320" y="208.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">every page, once</text>
+<text x="320" y="220.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fcd34d">≈ 12,500 page reads</text>
+<rect class="bx" x="440" y="150" width="190" height="96" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="535" y="183.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Covering index seek</text>
+<text x="535" y="195.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">key + INCLUDE columns</text>
+<text x="535" y="208.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">no trip to the table</text>
+<text x="535" y="220.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">≈ 400 page reads</text>
+<text class="free" x="320" y="276" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Illustrative: ~3 page reads per lookup × 80,000 rows; the scan reads the whole table once;</text>
+<text class="free" x="320" y="292" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">a covering index is narrow, so its leaf pages hold many rows. A naive index can lose to a scan!</text>
+<g class="arrow-pill"><rect x="174" y="83" width="76" height="18" rx="9"/><text x="212" y="95.5" text-anchor="middle" font-size="9" font-style="italic">naive index</text></g>
+<g class="arrow-pill"><rect x="290" y="113" width="60" height="18" rx="9"/><text x="320" y="125.5" text-anchor="middle" font-size="9" font-style="italic">no index</text></g>
+<g class="arrow-pill"><rect x="382" y="83" width="92" height="18" rx="9"/><text x="428" y="95.5" text-anchor="middle" font-size="9" font-style="italic">covering index</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one query, three answers. An index on <code>CustomerId</code> alone finds the 80,000 rows quickly — and then has to <b>go back to the table once per row</b> for the other columns. At 80,000 rows that costs more pages than reading the whole table. A <b>covering index</b> carries every column the query needs, so the engine never leaves the index. (Page counts are illustrative arithmetic, not measurements.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A seek is only cheap if it does not have to <b>go back to the table for every row</b> — a covering index keeps the whole answer inside the index.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 3 ended on a plan with a <b>Key Lookup</b>, and a note that twelve lookups are cheap. Page 6 showed a nested-loops join ending in the same lookup. Now scale up: what if the query returns 80,000 rows instead of 12?</p>
+      <p>Each lookup is a small trip through the clustered tree, <i>per row</i>. Multiply it by 80,000 and the “fast index” becomes the slowest part of the plan — the optimizer may even ignore your index and scan the table instead. That is the second reason (after page 3) an index sometimes “doesn’t get used”.</p>
+      <p>The cure is an index that already holds every column the query needs: a <b>covering index</b>. This page covers how to build one, how to order its columns, and when a <b>filtered</b> index is smarter.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧬 What is inside a covering index</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 252" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A covering index: key columns are sorted and used to navigate the tree; included columns are stored only at the leaf; the row locator is added automatically">
+<defs><marker id="cv2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="74" width="620" height="166" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<path d="M91,52 L91,110" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cv2A)"/>
+<path d="M231,52 L231,110" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cv2A)"/>
+<path d="M381,52 L381,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cv2A)"/>
+<path d="M536,52 L536,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cv2A)"/>
+<rect class="bx" x="26" y="8" width="270" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="161" y="27.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Upper levels of the tree</text>
+<text x="161" y="40.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">hold only the KEY columns</text>
+<rect class="bx" x="316" y="8" width="300" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="466" y="27.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Leaf level only</text>
+<text x="466" y="40.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">included columns + row locator</text>
+<rect class="bx" x="26" y="110" width="130" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="91" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">CustomerId</text>
+<text x="91" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">KEY · 1st</text>
+<rect class="bx" x="166" y="110" width="130" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="231" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">OrderDate</text>
+<text x="231" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">KEY · 2nd</text>
+<rect class="bx" x="316" y="110" width="130" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="381" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Total</text>
+<text x="381" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">INCLUDED</text>
+<rect class="bx" x="456" y="110" width="160" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="536" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">OrderId</text>
+<text x="536" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">row locator = clustered key</text>
+<text class="free" x="320" y="204" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">ONE LEAF ROW OF IX_Orders_Customer_Date</text>
+<text class="free" x="320" y="224" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Included columns cost space but are not sorted — they only save the trip back to the table.</text>
+<g class="arrow-pill"><rect x="71.5" y="72" width="39" height="18" rx="9"/><text x="91" y="84.5" text-anchor="middle" font-size="9" font-style="italic">seek</text></g>
+<g class="arrow-pill"><rect x="211.5" y="72" width="39" height="18" rx="9"/><text x="231" y="84.5" text-anchor="middle" font-size="9" font-style="italic">seek</text></g>
+<g class="arrow-pill"><rect x="353.5" y="72" width="55" height="18" rx="9"/><text x="381" y="84.5" text-anchor="middle" font-size="9" font-style="italic">carried</text></g>
+<g class="arrow-pill"><rect x="514" y="72" width="44" height="18" rx="9"/><text x="536" y="84.5" text-anchor="middle" font-size="9" font-style="italic">added</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the <b>key columns</b> are sorted and used to navigate the tree — they decide whether the engine can seek. The <b>included columns</b> are copied into the leaf pages only: not sorted, not searchable, just carried along so the lookup is unnecessary. The row locator (here the clustered key) is added automatically. The docs’ rule of thumb: put columns used to search, join, group or sort in the key; put columns you only need to return in <code>INCLUDE</code>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Three tools — pick the right one</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🔑 Key column</h4><span class="pk-tag">sorted, searchable — decides seeks</span><span class="pk-label use">✅ Pick it when</span><ul><li>Columns in WHERE, JOIN, GROUP BY or ORDER BY</li><li>Equality columns first, then a range column</li><li>Limits: up to 32 key columns and 1,700 bytes</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Columns you only return — INCLUDE is cheaper to maintain</li><li>Wide columns — they bloat every level of the tree</li></ul></div>
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🎒 INCLUDE column</h4><span class="pk-tag">stored in the leaf only</span><span class="pk-label use">✅ Pick it when</span><ul><li>Columns in the SELECT list you do not filter on</li><li>Removing a costly Key Lookup</li><li>Does not count toward the key limits; the order inside INCLUDE does not matter</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>“Include everything” — wide indexes fit fewer rows per page and slow writes</li><li>A column cannot be both a key and an included column</li></ul></div>
+      <div class="pick-card" style="--pick:#34d399"><h4>🎯 Filtered index</h4><span class="pk-tag">an index on just a slice of the rows</span><span class="pk-label use">✅ Pick it when</span><ul><li>A query always targets a small subset (e.g. open orders only)</li><li>Smaller, cheaper to maintain, more accurate statistics for the slice</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Columns in the filter that the query uses in a non-equivalent comparison or returns — add them as key or included columns</li><li>Queries that sometimes need the other rows</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">↕️ Key order — equality first, then range</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Key order matters: with the index on CustomerId then OrderDate the matching rows sit side by side; with OrderDate then CustomerId they are scattered among other customers">
+<defs><marker id="cv3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="226" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">INDEX (CustomerId, OrderDate)</text>
+<rect class="zone" x="325" y="8" width="305" height="226" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">INDEX (OrderDate, CustomerId)</text>
+<rect class="bx" x="26" y="36" width="273" height="122" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="40" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">cust 41 · 2026-01-03</text>
+<text x="40" y="71" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">cust 41 · 2026-02-11</text>
+<text x="40" y="84" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">cust 42 · 2026-01-05</text>
+<text x="40" y="97" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">cust 42 · 2026-02-03</text>
+<text x="40" y="110" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">cust 42 · 2026-02-20</text>
+<text x="40" y="123" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">cust 43 · 2026-01-02</text>
+<text x="40" y="136" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#a7f0d0">cust 43 · 2026-02-02</text>
+<rect class="bx" x="40" y="168" width="245" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="191.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Seek lands on 42 · Feb 1</text>
+<text x="162.5" y="204.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">reads exactly the 2 matches</text>
+<rect class="bx" x="341" y="36" width="273" height="122" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="355" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2026-01-02 · cust 43</text>
+<text x="355" y="71" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2026-01-03 · cust 41</text>
+<text x="355" y="84" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2026-01-05 · cust 42</text>
+<text x="355" y="97" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2026-02-02 · cust 43</text>
+<text x="355" y="110" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-02-03 · cust 42</text>
+<text x="355" y="123" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcc3cb">2026-02-11 · cust 41</text>
+<text x="355" y="136" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">2026-02-20 · cust 42</text>
+<rect class="bx" x="355" y="168" width="245" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="191.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Seek lands on Feb 1</text>
+<text x="477.5" y="204.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">reads 4 rows to find 2</text>
+<text class="free" x="320" y="256" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Query: WHERE CustomerId = 42 AND OrderDate &gt;= 2026-02-01.  Highlighted rows = the matches.</text>
+<text class="free" x="320" y="274" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Equality column first, range column second — then the matches are neighbours.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same two columns, in two orders. On the left the index is sorted by <b>customer first</b>, so everything for customer 42 is one contiguous block and the date filter just trims it. On the right it is sorted by <b>date first</b>, so customer 42’s rows are spread among everyone else’s and the engine reads rows it does not need. In a real table with millions of rows the right-hand index reads thousands of unwanted rows to find a few.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · from 80,000 lookups to none</div>
+    <p><b>Before.</b> Customers from one city placed about 80,000 orders. We want <code>OrderDate</code> and <code>Total</code> for each. The only index is on <code>CustomerId</code>.</p><figure class="diagram-card">
+<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan before the covering index: an Index Seek finds 80,000 rows, then a Key Lookup runs 80,000 times and carries 97 percent of the cost">
+<defs><marker id="cv4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M210,104 L100,104" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#cv4T)"/>
+<path d="M470,45 L400,45 L400,95 L330,95" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#cv4T)"/>
+<path d="M470,162 L400,162 L400,113 L330,113" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#cv4T)"/>
+<rect class="bx" x="10" y="76" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="55" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="55" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="210" y="76" width="120" height="56" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="270" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Nested Loops</text>
+<text x="270" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">join the two</text>
+<rect class="bx" x="470" y="10" width="160" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="550" y="36.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Index Seek</text>
+<text x="550" y="48.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">IX_Orders_CustomerId</text>
+<text x="550" y="61.25" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">cost 3%</text>
+<rect class="bx" x="470" y="120" width="160" height="84" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="550" y="147.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Key Lookup</text>
+<text x="550" y="159.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders (PK_Orders)</text>
+<text x="550" y="172" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">cost 97%</text>
+<text x="550" y="184.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">runs 80,000 times</text>
+<text class="free" x="320" y="220" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">The seek is cheap. The lookups — one per row — are the whole bill.</text>
+<g class="arrow-pill"><rect x="117" y="79" width="76" height="18" rx="9"/><text x="155" y="91.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+<g class="arrow-pill"><rect x="362" y="61" width="76" height="18" rx="9"/><text x="400" y="73.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+<g class="arrow-pill"><rect x="362" y="128.5" width="76" height="18" rx="9"/><text x="400" y="141" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the green seek is cheap and finds all 80,000 index entries; but the amber-red <b>Key Lookup</b> runs once for each of them — 80,000 trips into the clustered table, 97% of the cost. Thick arrows everywhere tell you a lot of rows are moving; the cost % tells you where the pain is.</figcaption>
+</figure>
+    <p style="margin-top:18px"><b>The fix.</b> Key columns first (what we filter and sort on), then INCLUDE what we only return.</p>    <div class="code-block"><pre><span class="kw">CREATE NONCLUSTERED INDEX</span> IX_Orders_Customer_Date
+<span class="kw">ON</span> dbo.Orders (CustomerId, OrderDate)
+<span class="kw">INCLUDE</span> (Total);
+
+<span class="cmt">-- illustrative logical reads for the 80,000-row result:</span>
+<span class="cmt">--   before: seek + 80,000 lookups  ≈ 240,000</span>
+<span class="cmt">--   after : covering seek           ≈ 400</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Re-run with SET STATISTICS IO ON and compare logical reads — the plan shape changes first, the numbers prove it. Illustrative figures.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 170" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan after the covering index: a single Index Seek returns 80,000 rows with no Key Lookup and no Nested Loops">
+<defs><marker id="cv5A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv5S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cv5T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M330,78 L110,78" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#cv5T)"/>
+<rect class="bx" x="10" y="50" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="75.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="88.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="330" y="30" width="210" height="96" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="435" y="63.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Index Seek</text>
+<text x="435" y="75.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">IX_Orders_Customer_Date</text>
+<text x="435" y="88" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">no Key Lookup needed</text>
+<text x="435" y="100.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">cost: almost all of a tiny bill</text>
+<text class="free" x="320" y="160" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Same rows, same query text. The Key Lookup and Nested Loops operators are gone.</text>
+<g class="arrow-pill"><rect x="182" y="53" width="76" height="18" rx="9"/><text x="220" y="65.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one operator does all the work. No Key Lookup, no Nested Loops. The arrow is still thick — 80,000 rows still need to move — but the engine reads a few hundred narrow index pages instead of hundreds of thousands of table pages.</figcaption>
+</figure>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · lookups and covering</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Key Lookup with a high cost % and many executions</th><td>Index misses a column the query returns</td><td>Add the column with INCLUDE (or trim the SELECT list)</td></tr><tr><th scope="row">Index exists, plan scans anyway</th><td>So many rows qualify that lookups would cost more than a scan</td><td>Cover the query, or accept the scan; check how many rows really qualify</td></tr><tr><th scope="row">Seek reads far more rows than it returns</th><td>Key column order is wrong, or the range column comes first</td><td>Equality columns first, range last (see the order picture)</td></tr><tr><th scope="row">Writes slowed down after adding an index with 10 included columns</th><td>Wide indexes are maintained on every write and fit fewer rows per page</td><td>Keep INCLUDE lists short; drop unused indexes (page 13 — coming)</td></tr><tr><th scope="row">Missing-index suggestion keeps appearing</th><td>It is an estimate for one query: no key order, no size cost, may duplicate an existing index</td><td>Treat as a hint; design the index yourself and test it</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📋</span><h5>“My orders” list: date, total</h5><p>Filters by customer, shows date and total. Both columns can ride in the index.</p><span class="sc-use">→ Key (CustomerId, OrderDate) + INCLUDE (Total)</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Open-orders dashboard</h5><p>Only 2% of orders are “Open”; the rest are history nobody queries here.</p><span class="sc-use">→ Filtered index on Status = Open</span></div>
+      <div class="scenario"><span class="sc-icon">🧮</span><h5>SELECT * everywhere</h5><p>The ORM selects every column, so no narrow index can ever cover.</p><span class="sc-use">→ Select only the columns you need</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Index with 12 INCLUDE columns</h5><p>Reads got faster, inserts got slower and the index is as big as the table.</p><span class="sc-use">→ Shrink it</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Limits.</b> Included columns exist only on nonclustered indexes (tables and indexed views), at least one key column is required, and up to 1,023 columns can be included; they do not count toward the 32-key-column / 1,700-byte key limits. A column cannot appear in both the key and the INCLUDE list.</p>
+      <p><b>Index intersection is not a plan.</b> Two narrow single-column indexes are not the same as one index on both columns; the optimizer can combine indexes in some plans, but it is rarely as good as one well-designed covering index.</p>
+      <p><b>Missing-index suggestions</b> are estimates made for one query before it runs: only nonclustered disk-based rowstore indexes, no key-order advice, no size cost of included columns, and different queries can produce near-identical suggestions that should be merged. The DMV keeps a limited number of suggestions and clears on restart.</p>
+      <p><b>Other engines:</b> PostgreSQL has <code>INCLUDE</code> columns for B-tree indexes and “Index Only Scan”; MySQL InnoDB secondary indexes always carry the primary key, giving “Using index” (covering) in <code>EXPLAIN</code>.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A Key Lookup costs one trip into the clustered index per row — cheap for a few rows, ruinous for many.</li><li>A covering index contains every column the query needs: key columns (sorted, searchable) + INCLUDE columns (leaf only).</li><li>Key order: equality columns first, then the range or sort column.</li><li>INCLUDE order does not matter; included columns do not count toward key size limits.</li><li>Filtered indexes cover just a slice of rows — smaller and cheaper, but only for queries aimed at that slice.</li><li>Missing-index suggestions are single-query estimates: use as hints, not as final designs.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A nonclustered index seek is cheap, but every column it does not hold forces a key lookup per row, which explodes for large results — the optimizer may even switch to a scan. I fix that with a covering index: key columns for what I filter and sort on, equality columns before the range column, and INCLUDE for columns I only return. I verify with logical reads before and after, and I keep the index narrow because every write maintains it."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>INCLUDE everything “just in case”.</b> The index becomes as wide as the table, fits few rows per page, and every insert and update pays for it.</p>
+      <p><b>Applying the missing-index suggestion verbatim.</b> It ignores key order and write cost, and may duplicate an index you already have.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔑 Key column</h5><p>Part of the sort order. Lets the engine seek and keeps rows in order.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🎒 INCLUDE column</h5><p>Just carried in the leaf. Saves the lookup but cannot be searched or sorted on.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>A covering index only helps if the engine can actually <i>use</i> it. A function around a column, an implicit conversion or a leading wildcard can all hide it. Next: writing queries the optimizer can use.</span>
+      <a class="next-link" href="sargable-queries.html">Writing queries the optimizer can use <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Index limits and behaviour differ slightly between versions. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/create-indexes-with-included-columns" target="_blank" rel="noopener">Create indexes with included columns</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide" target="_blank" rel="noopener">Index design guide</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/tune-nonclustered-missing-index-suggestions" target="_blank" rel="noopener">Tune nonclustered indexes with missing index suggestions</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

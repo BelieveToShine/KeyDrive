@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measuring: STATISTICS IO/TIME, waits &amp; Query Store — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Measuring: IO, TIME, waits &amp; Query Store</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 10 of 16 · 🧪 Measure & debug</div>
+    <h1>You cannot fix what you cannot measure — <span class="grad-text">same thing, same way</span>, before and after.</h1>
+    <p class="sub">The three lenses on performance — one query now, the server so far, and history over time — and how to use each to find the heavy queries and prove a fix.</p>
+    <div class="interview-q">❓ "How do you find the most expensive queries in SQL Server and prove that a change actually helped?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three lenses on performance: STATISTICS IO and TIME for one query now, DMVs for cumulative server totals, and Query Store for history over time">
+<defs><marker id="ms1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M150,70 L250,70" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ms1A)"/>
+<path d="M390,70 L490,70" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ms1A)"/>
+<rect class="bx" x="10" y="30" width="140" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="61.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🔬 This query, now</text>
+<text x="80" y="74" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">STATISTICS IO / TIME</text>
+<text x="80" y="86.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">plus the actual plan</text>
+<text class="free" x="80" y="150" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Good: exact cost of one run</text>
+<text class="free" x="80" y="167" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Blind: other queries, the past</text>
+<rect class="bx" x="250" y="30" width="140" height="80" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="61.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📈 Since it started</text>
+<text x="320" y="74" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">DMVs: query_stats,</text>
+<text x="320" y="86.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">wait_stats</text>
+<text class="free" x="320" y="150" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Good: top queries right now</text>
+<text class="free" x="320" y="167" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Blind: resets on restart</text>
+<rect class="bx" x="490" y="30" width="140" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="560" y="61.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🗄️ Over time</text>
+<text x="560" y="74" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Query Store: plans,</text>
+<text x="560" y="86.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">runtime + wait stats</text>
+<text class="free" x="560" y="150" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Good: history, regressions</text>
+<text class="free" x="560" y="167" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Needs to be switched on</text>
+<text class="free" x="320" y="232" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Use the narrow lens to prove a fix, the middle one to find the heavy queries,</text>
+<text class="free" x="320" y="250" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">and the wide one to see what changed — and when.</text>
+<g class="arrow-pill"><rect x="170" y="61" width="60" height="18" rx="9"/><text x="200" y="73.5" text-anchor="middle" font-size="9" font-style="italic">zoom out</text></g>
+<g class="arrow-pill"><rect x="412.5" y="61" width="55" height="18" rx="9"/><text x="440" y="73.5" text-anchor="middle" font-size="9" font-style="italic">history</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> three tools, three zoom levels. <b>STATISTICS IO and TIME</b> (left) measure one query run exactly. <b>DMVs</b> (middle) are running totals the server keeps since it — or the plan — started. <b>Query Store</b> (right) keeps history: plans, runtime statistics and wait statistics over time. Each answers a different question, and each is blind to what the others see.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You cannot fix what you cannot measure — and a number from one run, one moment or one lens is rarely enough. <b>Measure the same thing the same way before and after.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 9 left you with a fix for one problem — but in a real system you have thousands of queries. Which ones deserve your attention? And once you change something, how do you <i>prove</i> it helped, and keep proving it next week when the data has moved?</p>
+      <p>Without measurement you are tuning by feel: “it seems faster”. Feelings are shaped by cold caches, other users, and luck. A good engineer uses <b>logical reads</b> (stable) and <b>CPU time</b> (honest), not just a stopwatch.</p>
+      <p>This page gives you the three lenses and when to use each — and finishes with Query Store, the one that remembers.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔬 Lens 1 — one query, right now</div>
+    <p>Turn these on, run the query, read the <b>Messages</b> tab. They are the “before” and “after” numbers for every fix in this lab.</p>    <div class="code-block"><pre><span class="kw">SET STATISTICS IO ON</span>;
+<span class="kw">SET STATISTICS TIME ON</span>;
+
+<span class="kw">SELECT</span> OrderId, OrderDate, Total <span class="kw">FROM</span> dbo.Orders <span class="kw">WHERE</span> CustomerId = <span class="num">7</span>;
+
+<span class="cmt">-- Messages (illustrative):</span>
+<span class="cmt">-- Table 'Orders'. Scan count 1, logical reads 240000, physical reads 0 ...</span>
+<span class="cmt">-- SQL Server Execution Times: CPU time = 900 ms,  elapsed time = 1250 ms.</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">STATISTICS TIME reports milliseconds spent parsing, compiling and executing. STATISTICS IO reports pages per table: logical (from memory), physical (from disk), read-ahead.</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Number</th><th scope="col">What it tells you</th><th scope="col">Trust it for</th></tr></thead><tbody><tr><th scope="row">Logical reads</th><td>Pages touched — the work done</td><td>Comparing a query before and after a change (stable between runs)</td></tr><tr><th scope="row">Physical reads</th><td>Pages fetched from disk</td><td>Explaining a slow <i>first</i> run; ignore for comparisons</td></tr><tr><th scope="row">CPU time</th><td>Time spent computing</td><td>Honest cost; hard to fake with caching</td></tr><tr><th scope="row">Elapsed time</th><td>Wall-clock time including waiting</td><td>What users feel; if far above CPU, something was waiting</td></tr><tr><th scope="row">Parse and compile time</th><td>Time to build the plan</td><td>Spotting queries that are expensive to compile (page 9)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔬 Lens 2 — the whole server, since it started</div>
+    <p>Dynamic management views (DMVs) hold running totals. They answer “which queries cost the most?” — but they only know about plans still in the cache.</p>    <div class="code-block"><pre><span class="kw">SELECT TOP</span> (<span class="num">5</span>)
+       qs.total_logical_reads,
+       qs.execution_count,
+       qs.total_logical_reads / qs.execution_count <span class="kw">AS</span> avg_reads,
+       <span class="kw">SUBSTRING</span>(st.text, <span class="num">1</span>, <span class="num">120</span>) <span class="kw">AS</span> query_start
+<span class="kw">FROM</span>   sys.dm_exec_query_stats <span class="kw">AS</span> qs
+<span class="kw">CROSS APPLY</span> sys.dm_exec_sql_text(qs.sql_handle) <span class="kw">AS</span> st
+<span class="kw">ORDER BY</span> qs.total_logical_reads <span class="kw">DESC</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Cumulative totals: total_logical_reads is the lifetime sum across executions since the plan was compiled, and a row only updates when a query finishes. A cheap query run a million times can outrank an expensive one run once — that is why the example also shows the average.</p>
+    <p style="margin-top:12px"><b>Waits.</b> <code>sys.dm_os_wait_stats</code> aggregates completed waits across the instance since start (not kept across restarts). In Azure SQL Database there is also <code>sys.dm_db_wait_stats</code>. Lock waits point to data contention; page I/O latch waits point to slow I/O.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Running or waiting? — the first question</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A slow query is either running or waiting; running problems are plans and resources, waiting problems are locks, I/O, tempdb and memory grants">
+<defs><marker id="ms3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M185,33 L135,33 L135,110" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ms3A)"/>
+<path d="M455,33 L505,33 L505,110" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ms3A)"/>
+<path d="M135,170 L135,220" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ms3A)"/>
+<path d="M505,170 L505,220" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ms3A)"/>
+<rect class="bx" x="185" y="10" width="270" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Slow query: running or waiting?</text>
+<rect class="bx" x="10" y="110" width="250" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="135" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🏃 Running</text>
+<text x="135" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">it is using CPU</text>
+<rect class="bx" x="380" y="110" width="250" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="505" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">⏳ Waiting</text>
+<text x="505" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">it is stuck behind something</text>
+<rect class="bx" x="10" y="220" width="250" height="84" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="135" y="247.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Look at</text>
+<text x="135" y="259.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a bad or sniffed plan</text>
+<text x="135" y="272.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">too much work (scans, lookups)</text>
+<text x="135" y="284.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">hitting the tier’s limits</text>
+<rect class="bx" x="380" y="220" width="250" height="84" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="505" y="247.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Look at</text>
+<text x="505" y="259.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">locks / blocking</text>
+<text x="505" y="272.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">I/O and tempdb</text>
+<text x="505" y="284.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">memory grants</text>
+<g class="arrow-pill"><rect x="105" y="63" width="60" height="18" rx="9"/><text x="135" y="75.5" text-anchor="middle" font-size="9" font-style="italic">CPU busy</text></g>
+<g class="arrow-pill"><rect x="475" y="63" width="60" height="18" rx="9"/><text x="505" y="75.5" text-anchor="middle" font-size="9" font-style="italic">CPU idle</text></g>
+<g class="arrow-pill"><rect x="115.5" y="186" width="39" height="18" rx="9"/><text x="135" y="198.5" text-anchor="middle" font-size="9" font-style="italic">plan</text></g>
+<g class="arrow-pill"><rect x="483" y="186" width="44" height="18" rx="9"/><text x="505" y="198.5" text-anchor="middle" font-size="9" font-style="italic">waits</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> before you open a plan, ask whether the query is <b>running</b> (burning CPU) or <b>waiting</b> (idle behind something). Running problems are usually compile and plan problems (pages 5–9) or resource limits; waiting problems are locks (blocking), I/O, tempdb and memory grants. Query Store records wait statistics per query, grouped into wait categories, so it can tell you which queries are waiting and on what.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗄️ Lens 3 — Query Store, the one that remembers</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The Query Store loop: queries run and are captured, the Regressed Queries report shows plan changes, you compare plans and force the last good plan, then monitor that the force worked">
+<defs><marker id="ms2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ms2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M160,55 L245,55" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ms2A)"/>
+<path d="M395,55 L480,55" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ms2A)"/>
+<path d="M555,90 L555,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ms2A)"/>
+<path d="M480,225 L395,225" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ms2A)"/>
+<rect class="bx" x="10" y="20" width="150" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="85" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">▶️ Queries run</text>
+<text x="85" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">as usual</text>
+<rect class="bx" x="245" y="20" width="150" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="46.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🗄️ Query Store</text>
+<text x="320" y="59" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">captures plans, runtime</text>
+<text x="320" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">and wait statistics</text>
+<rect class="bx" x="480" y="20" width="150" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="555" y="46.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📉 Regressed Queries</text>
+<text x="555" y="59" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">report: duration, CPU,</text>
+<text x="555" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">reads got worse</text>
+<rect class="bx" x="480" y="190" width="150" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="555" y="217" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📌 Force the plan</text>
+<text x="555" y="229" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sp_query_store_</text>
+<text x="555" y="241" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">force_plan</text>
+<rect class="bx" x="245" y="190" width="150" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="216.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">👀 Monitor</text>
+<text x="320" y="229.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">did forcing fail?</text>
+<text x="320" y="241.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">force_failure_count</text>
+<text class="free" x="165" y="285" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">Only plans Query Store has already recorded can be forced.</text>
+<g class="arrow-pill"><rect x="177" y="46" width="50" height="18" rx="9"/><text x="202" y="58.5" text-anchor="middle" font-size="9" font-style="italic">logged</text></g>
+<g class="arrow-pill"><rect x="409.5" y="46" width="55" height="18" rx="9"/><text x="437" y="58.5" text-anchor="middle" font-size="9" font-style="italic">compare</text></g>
+<g class="arrow-pill"><rect x="503.5" y="131" width="103" height="18" rx="9"/><text x="555" y="143.5" text-anchor="middle" font-size="9" font-style="italic">pick a good plan</text></g>
+<g class="arrow-pill"><rect x="412" y="216" width="50" height="18" rx="9"/><text x="437" y="228.5" text-anchor="middle" font-size="9" font-style="italic">forced</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> Query Store keeps a history of <b>queries, plans, runtime statistics and wait statistics</b>, so it can answer “what changed?”. The <b>Regressed Queries</b> report lists queries whose duration, CPU or reads got worse; you compare the plans, then <b>force</b> the last good one while you fix the root cause. Afterwards, check that forcing did not fail (the plan view exposes <code>force_failure_count</code>). Automatic tuning can do the same job for you with <code>FORCE_LAST_GOOD_PLAN</code>; it depends on Query Store being on.</figcaption>
+</figure>
+    <div class="code-block"><pre><span class="cmt">-- is it on? (check, don't assume — the default may differ by product)</span>
+<span class="kw">SELECT</span> actual_state_desc <span class="kw">FROM</span> sys.database_query_store_options;
+
+<span class="kw">ALTER DATABASE CURRENT SET</span> QUERY_STORE = <span class="kw">ON</span>;
+
+<span class="cmt">-- force a plan for a regressed query (ids come from the report)</span>
+<span class="kw">EXEC</span> sp_query_store_force_plan @query_id = <span class="num">48</span>, @plan_id = <span class="num">49</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The ids 48 and 49 are the docs’ own example values. Only plans that Query Store has already recorded can be forced; forcing a plan that has since become invalid (for example after an index is dropped) can fail.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · find it, fix it, prove it</div>
+    <p>The whole loop on one query, using only numbers (illustrative):</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">What you do</th><th scope="col">What you record</th></tr></thead><tbody><tr><th scope="row">1 · Find</th><td>Top queries by logical reads (DMV) or Top Resource Consuming Queries (Query Store)</td><td>“GetOrdersByCustomer: avg 240,000 reads, 5,000 runs/day”</td></tr><tr><th scope="row">2 · Baseline</th><td>STATISTICS IO/TIME on a realistic parameter</td><td>240,000 logical reads · CPU 900 ms · elapsed 1,250 ms</td></tr><tr><th scope="row">3 · Read</th><td>Actual plan: heaviest operator, estimated vs actual</td><td>Key Lookup 97% of cost (page 7)</td></tr><tr><th scope="row">4 · Change</th><td>One change: covering index</td><td>—</td></tr><tr><th scope="row">5 · Prove</th><td>Same query, same parameter, same lens</td><td>400 logical reads · CPU 15 ms · elapsed 40 ms</td></tr><tr><th scope="row">6 · Watch</th><td>Query Store: is the new plan stable over days and across parameter values?</td><td>No regression; check the big customer too (page 9)</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · which tool for which question</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You ask</th><th scope="col">Use</th><th scope="col">Careful</th></tr></thead><tbody><tr><th scope="row">How expensive is this one query?</th><td>STATISTICS IO + TIME and the actual plan</td><td>Warm vs cold cache: compare logical reads, run twice</td></tr><tr><th scope="row">Which queries cost the most right now?</th><td>sys.dm_exec_query_stats, or Query Store “Top Resource Consuming Queries”</td><td>DMV totals are cumulative and vanish with the plan; divide by executions</td></tr><tr><th scope="row">What is the server waiting on?</th><td>sys.dm_os_wait_stats / sys.dm_db_wait_stats, Query Store wait statistics</td><td>Instance-wide waits include idle background work; focus on the slow queries’ waits</td></tr><tr><th scope="row">Did a plan change make it worse?</th><td>Query Store Regressed Queries, sys.dm_db_tuning_recommendations</td><td>Query Store must have been on <i>before</i> the regression</td></tr><tr><th scope="row">Can I fix it without a code change?</th><td>Force the last good plan (or FORCE_LAST_GOOD_PLAN automatic tuning)</td><td>Forcing is a bandage; the root cause is still there</td></tr><tr><th scope="row">Is it blocking, not computing?</th><td>Elapsed time ≫ CPU time; lock waits</td><td>Locking page (12 — coming)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📞</span><h5>“The system was fine yesterday”</h5><p>Without Query Store you have no “yesterday”. With it, the report shows a plan change at 03:12.</p><span class="sc-use">→ Regressed Queries → force last good plan</span></div>
+      <div class="scenario"><span class="sc-icon">🔥</span><h5>CPU at 100% after lunch</h5><p>Top queries by CPU in Query Store, not a guess.</p><span class="sc-use">→ Top Resource Consuming Queries</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>“I made it 10× faster!”</h5><p>On a warm cache, one run, a different parameter. Compare logical reads on the same input.</p><span class="sc-use">→ Measure the same way twice</span></div>
+      <div class="scenario"><span class="sc-icon">⏱️</span><h5>Elapsed 8 s, CPU 0.2 s</h5><p>Almost all of it was waiting. A faster plan will not help.</p><span class="sc-use">→ Look at waits and blocking</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Query Store’s three stores.</b> A plan store, a runtime-statistics store and a wait-statistics store. It retains multiple plans per query, so it can enforce a policy that directs the optimizer to use a specific plan.</p>
+      <p><b>Estimated, not actual.</b> The plans Query Store keeps are estimated plans; the actual row counts come from a plan you capture yourself or from runtime statistics.</p>
+      <p><b>Tuning recommendations.</b> <code>sys.dm_db_tuning_recommendations</code> lists queries that regressed and the plan that might be used instead; with <code>FORCE_LAST_GOOD_PLAN</code> automatic tuning, SQL Server applies it and monitors the result. Forcing the <i>last good</i> plan is preferred because older plans can be invalid after statistics or index changes.</p>
+      <p><b>Azure SQL Database</b> adds its own tooling on top (Query Performance Insight, automatic tuning, Intelligent Insights) — covered on page 15.</p>
+      <p><b>Other engines:</b> PostgreSQL uses <code>pg_stat_statements</code> and, on Azure Database for PostgreSQL, its own Query Store; <code>EXPLAIN (ANALYZE, BUFFERS)</code> is the “one query now” lens there.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Three lenses: STATISTICS IO/TIME (one query now), DMVs (cumulative since start), Query Store (history).</li><li>Compare logical reads and CPU time, not just elapsed time.</li><li>DMV counters are cumulative and only cover plans still in the cache; wait stats reset on restart.</li><li>First question: running or waiting? Running → plans/resources; waiting → locks, I/O, tempdb, memory grants.</li><li>Query Store records queries, plans, runtime and wait stats; Regressed Queries + force plan; FORCE_LAST_GOOD_PLAN automates it.</li><li>Only plans Query Store has recorded can be forced; check force failures afterwards.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I measure with the narrowest lens that answers the question: STATISTICS IO and TIME for one query, comparing logical reads and CPU, DMVs like dm_exec_query_stats to find the top consumers, and Query Store for history, regressions and plan forcing. First I decide whether the query is running or waiting. After a change I re-measure the same query with the same parameter and keep watching Query Store, including for the outlier parameter values."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Judging a fix by one elapsed-time reading.</b> Caches, other users and parameter choice move it more than most fixes do. Use logical reads and CPU on the same input.</p>
+      <p><b>Forcing a plan and forgetting it.</b> A forced plan hides the root cause and can fail silently after a schema change. Track it, and fix the underlying problem.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📈 DMV statistics</h5><p>Cumulative totals in memory; vanish when the plan is evicted or the server restarts.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🗄️ Query Store</h5><p>Persisted history of plans and runtime/wait statistics; survives restarts and shows change over time.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now have tools and a few techniques. What you need is a <b>method</b> that ties them together — so you never tune at random. Next: the debugging playbook.</span>
+      <a class="next-link" href="debugging-playbook.html">The debugging playbook <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Query Store defaults and DMV details vary by product and version. For exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store" target="_blank" rel="noopener">Monitor performance by using the Query Store</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/query-store-usage-scenarios" target="_blank" rel="noopener">Query Store usage scenarios</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-time-transact-sql" target="_blank" rel="noopener">SET STATISTICS TIME</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-exec-query-stats-transact-sql" target="_blank" rel="noopener">sys.dm_exec_query_stats</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/automatic-tuning/automatic-tuning" target="_blank" rel="noopener">Automatic tuning</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql" target="_blank" rel="noopener">SET STATISTICS IO</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

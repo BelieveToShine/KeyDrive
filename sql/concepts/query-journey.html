@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The journey of a query — SQL — KeyDrive</title>
-<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
 </head>
 <body data-root="../../">
 
@@ -152,7 +152,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label trap">🩺 Debug checklist · “my query is slow” — ask these first</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What you notice</th><th scope="col">First question</th><th scope="col">Where this lab goes</th></tr></thead><tbody><tr><th scope="row">Slow <b>every</b> time</th><td>What does the plan show? Is it reading far more than it returns?</td><td>Read the plan (page 4), then indexes (page 3)</td></tr><tr><th scope="row">Was fast, got slower</th><td>Did the data grow, or did the estimates go stale?</td><td>Statistics (page 5)</td></tr><tr><th scope="row">Fast for one user, slow for another</th><td>Is one cached plan being shared by very different inputs?</td><td>Plan cache &amp; sniffing (page 9 — coming)</td></tr><tr><th scope="row">Fast in SSMS, slow in the app</th><td>Same text? Same settings? Same plan?</td><td>Plan cache &amp; sniffing (page 9 — coming)</td></tr><tr><th scope="row">Slow only under load</th><td>Is something waiting or blocking, not computing?</td><td>Locking (page 12 — coming)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What you notice</th><th scope="col">First question</th><th scope="col">Where this lab goes</th></tr></thead><tbody><tr><th scope="row">Slow <b>every</b> time</th><td>What does the plan show? Is it reading far more than it returns?</td><td>Read the plan (page 4), then indexes (page 3)</td></tr><tr><th scope="row">Was fast, got slower</th><td>Did the data grow, or did the estimates go stale?</td><td>Statistics (page 5)</td></tr><tr><th scope="row">Fast for one user, slow for another</th><td>Is one cached plan being shared by very different inputs?</td><td>Plan cache &amp; sniffing (page 9)</td></tr><tr><th scope="row">Fast in SSMS, slow in the app</th><td>Same text? Same settings? Same plan?</td><td>Plan cache &amp; sniffing (page 9)</td></tr><tr><th scope="row">Slow only under load</th><td>Is something waiting or blocking, not computing?</td><td>Locking (page 12 — coming)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🪜 Your thinking ladder (you will use it on every page)</div>
@@ -221,6 +221,6 @@
   <div class="wrap">KeyDrive · SQL · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261017"></script>
+<script src="../../assets/site.js?v=20261018"></script>
 </body>
 </html>

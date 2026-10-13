@@ -2032,5 +2032,161 @@
     "page": "sql/index.html",
     "summary": "Deep dive into SQL performance: execution plans, indexes, statistics, joins and a debugging method.",
     "keywords": "sql performance tuning query optimization execution plan index statistics lab data systems"
+  },
+  {
+    "id": "sql-join-algorithms",
+    "title": "Join algorithms",
+    "category": "SQL",
+    "page": "sql/concepts/join-algorithms.html",
+    "summary": "Nested loops, hash and merge joins: what each needs, when each wins, and how a wrong estimate causes a hash spill.",
+    "keywords": "sql join nested loops hash match merge join memory grant spill tempdb hint adaptive join"
+  },
+  {
+    "id": "sql-join-algorithms-recall",
+    "title": "Join algorithms — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/join-algorithms.html",
+    "summary": "Quick recall points: Join algorithms.",
+    "keywords": "sql join nested loops hash match merge join memory grant spill tempdb hint adaptive join interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-join-algorithms-trap",
+    "title": "Join algorithms — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/join-algorithms.html",
+    "summary": "The classic mistake with Join algorithms.",
+    "keywords": "sql join nested loops hash match merge join memory grant spill tempdb hint adaptive join trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-covering-indexes",
+    "title": "Covering indexes & key lookups",
+    "category": "SQL",
+    "page": "sql/concepts/covering-indexes.html",
+    "summary": "INCLUDE columns, composite key order, filtered indexes, and why a key lookup can lose to a table scan.",
+    "keywords": "sql covering index include key lookup composite key order filtered index missing index"
+  },
+  {
+    "id": "sql-covering-indexes-recall",
+    "title": "Covering indexes & key lookups — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/covering-indexes.html",
+    "summary": "Quick recall points: Covering indexes & key lookups.",
+    "keywords": "sql covering index include key lookup composite key order filtered index missing index interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-covering-indexes-trap",
+    "title": "Covering indexes & key lookups — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/covering-indexes.html",
+    "summary": "The classic mistake with Covering indexes & key lookups.",
+    "keywords": "sql covering index include key lookup composite key order filtered index missing index trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-sargable-queries",
+    "title": "Writing queries the optimizer can use",
+    "category": "SQL",
+    "page": "sql/concepts/sargable-queries.html",
+    "summary": "SARGable predicates: functions, arithmetic, wildcards and implicit conversions that hide a column from its index, and the rewrites.",
+    "keywords": "sql sargable seek predicate function on column implicit conversion like wildcard year date range nvarchar varchar"
+  },
+  {
+    "id": "sql-sargable-queries-recall",
+    "title": "Writing queries the optimizer can use — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/sargable-queries.html",
+    "summary": "Quick recall points: Writing queries the optimizer can use.",
+    "keywords": "sql sargable seek predicate function on column implicit conversion like wildcard year date range nvarchar varchar interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-sargable-queries-trap",
+    "title": "Writing queries the optimizer can use — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/sargable-queries.html",
+    "summary": "The classic mistake with Writing queries the optimizer can use.",
+    "keywords": "sql sargable seek predicate function on column implicit conversion like wildcard year date range nvarchar varchar trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-plan-cache-sniffing",
+    "title": "Plan cache & parameter sniffing",
+    "category": "SQL",
+    "page": "sql/concepts/plan-cache-sniffing.html",
+    "summary": "Why one query is fast for one input and slow for another: sniffing, PSP optimization, RECOMPILE, OPTIMIZE FOR.",
+    "keywords": "sql plan cache parameter sniffing recompile optimize for unknown parameter sensitive plan psp stored procedure"
+  },
+  {
+    "id": "sql-plan-cache-sniffing-recall",
+    "title": "Plan cache & parameter sniffing — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/plan-cache-sniffing.html",
+    "summary": "Quick recall points: Plan cache & parameter sniffing.",
+    "keywords": "sql plan cache parameter sniffing recompile optimize for unknown parameter sensitive plan psp stored procedure interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-plan-cache-sniffing-trap",
+    "title": "Plan cache & parameter sniffing — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/plan-cache-sniffing.html",
+    "summary": "The classic mistake with Plan cache & parameter sniffing.",
+    "keywords": "sql plan cache parameter sniffing recompile optimize for unknown parameter sensitive plan psp stored procedure trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-measuring-query-store",
+    "title": "Measuring: STATISTICS IO/TIME, waits & Query Store",
+    "category": "SQL",
+    "page": "sql/concepts/measuring-query-store.html",
+    "summary": "Three lenses: STATISTICS IO/TIME, DMVs and wait stats, and Query Store regressions and plan forcing.",
+    "keywords": "sql statistics io time logical reads dmv dm_exec_query_stats wait stats query store force plan regression"
+  },
+  {
+    "id": "sql-measuring-query-store-recall",
+    "title": "Measuring: STATISTICS IO/TIME, waits & Query Store — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/measuring-query-store.html",
+    "summary": "Quick recall points: Measuring: STATISTICS IO/TIME, waits & Query Store.",
+    "keywords": "sql statistics io time logical reads dmv dm_exec_query_stats wait stats query store force plan regression interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-measuring-query-store-trap",
+    "title": "Measuring: STATISTICS IO/TIME, waits & Query Store — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/measuring-query-store.html",
+    "summary": "The classic mistake with Measuring: STATISTICS IO/TIME, waits & Query Store.",
+    "keywords": "sql statistics io time logical reads dmv dm_exec_query_stats wait stats query store force plan regression trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-debugging-playbook",
+    "title": "The debugging playbook",
+    "category": "SQL",
+    "page": "sql/concepts/debugging-playbook.html",
+    "summary": "The six-step ladder, a triage tree, one worked investigation and the seven things never to do when tuning SQL.",
+    "keywords": "sql debugging method playbook slow query triage measure hypothesis one change investigation log"
+  },
+  {
+    "id": "sql-debugging-playbook-recall",
+    "title": "The debugging playbook — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/debugging-playbook.html",
+    "summary": "Quick recall points: The debugging playbook.",
+    "keywords": "sql debugging method playbook slow query triage measure hypothesis one change investigation log interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-debugging-playbook-trap",
+    "title": "The debugging playbook — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/debugging-playbook.html",
+    "summary": "The classic mistake with The debugging playbook.",
+    "keywords": "sql debugging method playbook slow query triage measure hypothesis one change investigation log trap mistake",
+    "anchor": "trap"
   }
 ]

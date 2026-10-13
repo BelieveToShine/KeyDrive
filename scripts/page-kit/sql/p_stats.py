@@ -102,7 +102,7 @@ f'''<span class="cmt">-- 1. look: when were the statistics last updated, and wha
         '<b>Rebuilding indexes “to fix statistics”.</b> Statistics and index fragmentation are different things. A rebuild does refresh that index’s statistics as a side effect, but it is a heavy way to do a light job — update the statistics directly.',
         '<b>Turning auto-update off to “save time”.</b> The docs warn it can lead to suboptimal plans and degraded performance.'])
     body += confuse('📊 Statistics', 'A summary of how values are spread in a column. Used for row <i>estimates</i>.', '📇 Index', 'A sorted structure used to <i>find rows</i>. An index automatically has statistics, but they are not the same thing.')
-    body += next_box('A good estimate lets the optimizer choose the right <i>join algorithm</i> — the choice behind most slow multi-table queries. Next: nested loops, hash and merge joins <i>(coming soon)</i>.')
+    body += next_box('A good estimate lets the optimizer choose the right <i>join algorithm</i> — the choice behind most slow multi-table queries. Next: nested loops, hash and merge joins.', 'join-algorithms.html', 'Join algorithms')
     body += fact_note('Defaults and thresholds change between SQL Server and Azure SQL versions. For exact behaviour check the official docs.', [DOC_STATS, DOC_CE])
     return page('statistics-cardinality', 'Statistics & cardinality estimation', 'Concept 5 of 16 · 🔭 Plan literacy',
         'The optimizer never counts your rows — it trusts <span class="grad-text">statistics</span>, and a wrong summary means a wrong plan.',

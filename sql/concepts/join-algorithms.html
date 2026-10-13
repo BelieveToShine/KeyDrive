@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join algorithms — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Join algorithms</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 6 of 16 · 🛠️ Optimise the query</div>
+    <h1>There is no best join — only the one that fits <span class="grad-text">the row counts.</span></h1>
+    <p class="sub">Nested loops, hash and merge: what each needs, when each wins, and how a wrong estimate turns a good hash join into a spill.</p>
+    <div class="interview-q">❓ "What are the three physical join algorithms in SQL Server and when does each one win?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three join algorithms: nested loops searches the inner input once per outer row, hash join builds a hash table from one input and probes it with the other, merge join walks two sorted inputs in step">
+<defs><marker id="jn1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="204" height="324" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🔁 NESTED LOOPS</text>
+<rect class="zone" x="218" y="8" width="204" height="324" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="232" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">#️⃣ HASH MATCH</text>
+<rect class="zone" x="428" y="8" width="204" height="324" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="442" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧵 MERGE JOIN</text>
+<path d="M110,100 L110,150" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#jn1A)"/>
+<path d="M320,100 L320,150" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#jn1A)"/>
+<path d="M530,100 L530,150" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#jn1A)"/>
+<rect class="bx" x="30" y="44" width="160" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="69.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Outer input</text>
+<text x="110" y="82.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">few rows</text>
+<rect class="bx" x="30" y="150" width="160" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="175.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Inner input</text>
+<text x="110" y="188.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">searched per outer row</text>
+<text class="free" x="110" y="236" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Best: outer side small, inner</text>
+<text class="free" x="110" y="252" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">side indexed on the join column</text>
+<text class="free" x="110" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Watch: cost grows with outer</text>
+<text class="free" x="110" y="284" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">rows × inner work</text>
+<rect class="bx" x="240" y="44" width="160" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="69.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Build input</text>
+<text x="320" y="82.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">smaller side → hash table</text>
+<rect class="bx" x="240" y="150" width="160" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="175.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Probe input</text>
+<text x="320" y="188.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">each row looks itself up</text>
+<text class="free" x="320" y="236" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Best: big unsorted inputs,</text>
+<text class="free" x="320" y="252" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">no useful index</text>
+<text class="free" x="320" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Watch: needs a memory grant;</text>
+<text class="free" x="320" y="284" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">can spill to tempdb</text>
+<rect class="bx" x="450" y="44" width="160" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="69.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Sorted input A</text>
+<text x="530" y="82.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">sorted on the join key</text>
+<rect class="bx" x="450" y="150" width="160" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="175.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Sorted input B</text>
+<text x="530" y="188.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">sorted on the join key</text>
+<text class="free" x="530" y="236" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Best: both inputs already</text>
+<text class="free" x="530" y="252" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">sorted (e.g. by an index)</text>
+<text class="free" x="530" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Watch: needs an equality join;</text>
+<text class="free" x="530" y="284" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">a Sort is added if unsorted</text>
+<g class="arrow-pill"><rect x="69" y="116" width="82" height="18" rx="9"/><text x="110" y="128.5" text-anchor="middle" font-size="9" font-style="italic">seek per row</text></g>
+<g class="arrow-pill"><rect x="298" y="116" width="44" height="18" rx="9"/><text x="320" y="128.5" text-anchor="middle" font-size="9" font-style="italic">probe</text></g>
+<g class="arrow-pill"><rect x="489" y="116" width="82" height="18" rx="9"/><text x="530" y="128.5" text-anchor="middle" font-size="9" font-style="italic">walk in step</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> every join in a plan is one of three algorithms. <b>Nested loops</b> (left): take one row from the small outer input and look for matches in the inner input — fast when the inner side can be searched with an index. <b>Hash match</b> (middle): build a hash table from one input, then probe it with the other — the all-rounder for big inputs, but it needs <b>memory</b>. <b>Merge join</b> (right): two inputs already sorted on the join key are walked side by side. Under each picture: when it shines, and what to watch for.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">There is no “best” join — only the one that fits the <b>row counts</b>. Nested loops for few rows with an index, hash for big unsorted inputs, merge for sorted inputs.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The last page ended with a number: estimated 50 rows, actual 4,000. Why does a wrong row count matter so much? Because the optimizer uses it to pick the <b>join algorithm</b> — and each algorithm has a completely different cost curve.</p>
+      <p>Almost every slow multi-table query is slow in its joins. A nested-loops join that runs its inner side a million times, a hash join that runs out of memory, a merge join that has to sort first — each one looks fine in the query text and awful in the plan.</p>
+      <p>This page teaches you to recognise the three, to know what each one needs, and to spot the two classic failures: <b>too many loops</b> and <b>a hash spill</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Which join will the engine pick?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Which join the engine tends to pick: nested loops when one input is small and the other indexed on the join column, merge when both inputs are sorted, hash otherwise">
+<defs><marker id="jn2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M185,33 L90,33 L90,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#jn2A)"/>
+<path d="M455,33 L540,33 L540,110" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#jn2A)"/>
+<path d="M375,166 L375,230" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#jn2A)"/>
+<path d="M555,166 L555,230" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#jn2A)"/>
+<rect class="bx" x="185" y="10" width="270" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">One side small, other indexed on the key?</text>
+<rect class="bx" x="10" y="110" width="160" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="90" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🔁 Nested Loops</text>
+<text x="90" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">seek per outer row</text>
+<rect class="bx" x="300" y="110" width="330" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="465" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Both sorted on the key + equality join?</text>
+<rect class="bx" x="300" y="230" width="150" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="375" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧵 Merge Join</text>
+<text x="375" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">walk both in step</text>
+<rect class="bx" x="480" y="230" width="150" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="555" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">#️⃣ Hash Match</text>
+<text x="555" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">build + probe</text>
+<text class="free" x="320" y="312" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">A rule of thumb for the engine’s taste — the real choice is cost-based and uses the estimates.</text>
+<g class="arrow-pill"><rect x="73" y="63" width="34" height="18" rx="9"/><text x="90" y="75.5" text-anchor="middle" font-size="9" font-style="italic">yes</text></g>
+<g class="arrow-pill"><rect x="525.5" y="63" width="29" height="18" rx="9"/><text x="540" y="75.5" text-anchor="middle" font-size="9" font-style="italic">no</text></g>
+<g class="arrow-pill"><rect x="358" y="189" width="34" height="18" rx="9"/><text x="375" y="201.5" text-anchor="middle" font-size="9" font-style="italic">yes</text></g>
+<g class="arrow-pill"><rect x="540.5" y="189" width="29" height="18" rx="9"/><text x="555" y="201.5" text-anchor="middle" font-size="9" font-style="italic">no</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> follow the questions from the top. The engine’s choice is cost-based and driven by the <b>estimated</b> row counts, so treat this as the shape of its taste, not a rule. If the estimates are wrong, the pick can be wrong — which is why statistics came first.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The three joins, side by side</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🔁 Nested Loops</h4><span class="pk-tag">for each outer row, search the inner input</span><span class="pk-label use">✅ Pick it when</span><ul><li>The outer input is small</li><li>The inner input has an index on the join column</li><li>The join condition is not a simple equality (it supports any join predicate)</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Both inputs are large — total work is roughly outer rows × inner work</li><li>No index on the inner join column — every probe is a scan</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>#️⃣ Hash Match</h4><span class="pk-tag">build a hash table, then probe it</span><span class="pk-label use">✅ Pick it when</span><ul><li>Large, unsorted inputs</li><li>No helpful index</li><li>Big joins and parallel plans — it is the workhorse for the largest joins</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Memory is tight — the hash table must fit in the memory grant or it spills to tempdb</li><li>You need the first rows fast — it must read the whole build input first</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🧵 Merge Join</h4><span class="pk-tag">walk two sorted inputs together</span><span class="pk-label use">✅ Pick it when</span><ul><li>Both inputs are already sorted on the join key (an index often provides that)</li><li>You need the output order preserved</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>It needs at least one equality predicate</li><li>If the inputs are not sorted, a Sort operator is added — and that is the cost</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · the hash join that spilled</div>
+    <p>Remember the plan from page 4: a Hash Match joining a small customer list to the big <code>Orders</code> input. The customer seek <b>estimated 50 rows and returned 4,000</b>. A hash join needs a <b>memory grant</b> to hold its build input — and the grant is sized from the estimate.</p><figure class="diagram-card">
+<svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Before: the hash join was sized for 50 rows but received 4,000, so it spilled to tempdb and shows a warning">
+<defs><marker id="jn3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M470,62 L410,62 L410,137 L350,137" fill="none" stroke="#fbbf24" stroke-width="5" marker-end="url(#jn3T)"/>
+<path d="M470,202 L410,202 L410,155 L350,155" fill="none" stroke="#fb7185" stroke-width="7.2" marker-end="url(#jn3T)"/>
+<path d="M220,146 L100,146" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#jn3T)"/>
+<rect class="bx" x="10" y="118" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="55" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="55" y="156.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="220" y="96" width="130" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="285" y="131.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Hash Match</text>
+<text x="285" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">inner join</text>
+<text x="285" y="156.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">memory sized for 50</text>
+<text x="285" y="168.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fcd34d">⚠ spilled to tempdb</text>
+<rect class="bx" x="470" y="10" width="160" height="104" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="550" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Index Seek</text>
+<text x="550" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">IX_Customers_City</text>
+<text x="550" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">estimated 50</text>
+<text x="550" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">actual 4,000</text>
+<rect class="bx" x="470" y="150" width="160" height="104" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="550" y="187.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Clustered Index Scan</text>
+<text x="550" y="199.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders</text>
+<text x="550" y="212" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">estimated 1,000,000</text>
+<text x="550" y="224.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">actual 1,000,000</text>
+<text class="free" x="320" y="270" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">The only change between the two pictures: UPDATE STATISTICS. Same query, same indexes.</text>
+<g class="arrow-pill"><rect x="374.5" y="90.5" width="71" height="18" rx="9"/><text x="410" y="103" text-anchor="middle" font-size="9" font-style="italic">4,000 rows</text></g>
+<g class="arrow-pill"><rect x="364" y="169.5" width="92" height="18" rx="9"/><text x="410" y="182" text-anchor="middle" font-size="9" font-style="italic">1,000,000 rows</text></g>
+<g class="arrow-pill"><rect x="122" y="121" width="76" height="18" rx="9"/><text x="160" y="133.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the amber Hash Match carries a <b>warning</b> (in SSMS a yellow exclamation mark): it asked for memory for 50 rows, received 4,000, ran out, and wrote part of its hash table to <b>tempdb</b>. Tempdb is disk-backed, so the join slows down sharply. The arrows are unchanged — the damage is invisible unless you look for the warning.</figcaption>
+</figure>
+    <p style="margin-top:18px"><b>Test one hypothesis:</b> the estimate was wrong because statistics were stale (page 5). Change only that.</p>    <div class="code-block"><pre><span class="kw">UPDATE STATISTICS</span> dbo.Customers IX_Customers_City <span class="kw">WITH FULLSCAN</span>;
+
+<span class="cmt">-- re-run with the ACTUAL plan on, then look at: the Hash Match warning,</span>
+<span class="cmt">-- estimated vs actual rows on the Customers seek, and SET STATISTICS TIME elapsed.</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Typical outcome (illustrative): the estimate becomes ~4,000, the memory grant grows, the spill warning disappears, elapsed time drops. If it does not, the estimate was not the cause — go back one rung on the ladder.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="After refreshing statistics: the hash join gets a memory grant sized for 4,000 rows and no longer spills">
+<defs><marker id="jn4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="jn4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M470,62 L410,62 L410,137 L350,137" fill="none" stroke="#fbbf24" stroke-width="5" marker-end="url(#jn4T)"/>
+<path d="M470,202 L410,202 L410,155 L350,155" fill="none" stroke="#fb7185" stroke-width="7.2" marker-end="url(#jn4T)"/>
+<path d="M220,146 L100,146" fill="none" stroke="#fbbf24" stroke-width="6.2" marker-end="url(#jn4T)"/>
+<rect class="bx" x="10" y="118" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="55" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="55" y="156.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="220" y="96" width="130" height="100" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="285" y="131.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Hash Match</text>
+<text x="285" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">inner join</text>
+<text x="285" y="156.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">memory sized for 4,000</text>
+<text x="285" y="168.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">no warning</text>
+<rect class="bx" x="470" y="10" width="160" height="104" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="550" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Index Seek</text>
+<text x="550" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">IX_Customers_City</text>
+<text x="550" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">estimated 4,000</text>
+<text x="550" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">actual 4,000</text>
+<rect class="bx" x="470" y="150" width="160" height="104" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="550" y="187.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Clustered Index Scan</text>
+<text x="550" y="199.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders</text>
+<text x="550" y="212" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">estimated 1,000,000</text>
+<text x="550" y="224.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">actual 1,000,000</text>
+<text class="free" x="320" y="270" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">The only change between the two pictures: UPDATE STATISTICS. Same query, same indexes.</text>
+<g class="arrow-pill"><rect x="374.5" y="90.5" width="71" height="18" rx="9"/><text x="410" y="103" text-anchor="middle" font-size="9" font-style="italic">4,000 rows</text></g>
+<g class="arrow-pill"><rect x="364" y="169.5" width="92" height="18" rx="9"/><text x="410" y="182" text-anchor="middle" font-size="9" font-style="italic">1,000,000 rows</text></g>
+<g class="arrow-pill"><rect x="122" y="121" width="76" height="18" rx="9"/><text x="160" y="133.5" text-anchor="middle" font-size="9" font-style="italic">80,000 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> same shape, same arrows — but the join now got a memory grant for 4,000 rows, so it stays in memory and the warning is gone. Notice that nothing about the <i>query</i> changed. Microsoft’s own advice for hash spills starts the same way: make sure statistics exist on the join columns and are up to date.</figcaption>
+</figure>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · join symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see in the plan</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Nested Loops, inner side runs thousands of times</th><td>Outer side bigger than expected, or no good index for the inner side</td><td>Check estimated vs actual rows on the outer input; index the inner join column (pages 3 and 7)</td></tr><tr><th scope="row">Hash Match with a warning icon (spill)</th><td>Memory grant too small — the build input was underestimated</td><td>Fix the estimate: update statistics (page 5); only then consider hints</td></tr><tr><th scope="row">Merge Join preceded by a big Sort</th><td>Inputs were not sorted, so the engine sorted them</td><td>An index on the join column that provides the order</td></tr><tr><th scope="row">Hash Match joining a tiny input to a huge scan</th><td>No usable index on the huge side</td><td>Index the join column; check the scan is really needed</td></tr><tr><th scope="row">Plan changes shape between “few rows” and “many rows” inputs</th><td>The join algorithm follows the row count — that is normal</td><td>Compare plans for both sizes; consider whether one cached plan suits both (page 9)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>One customer’s orders</h5><p>One outer row, indexed inner side — a handful of seeks.</p><span class="sc-use">→ Nested Loops</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>Revenue per city, all customers</h5><p>Millions of rows on both sides, no useful order.</p><span class="sc-use">→ Hash Match</span></div>
+      <div class="scenario"><span class="sc-icon">📑</span><h5>Two tables both clustered on OrderId</h5><p>Join them on OrderId — both already sorted by that key.</p><span class="sc-use">→ Merge Join</span></div>
+      <div class="scenario"><span class="sc-icon">🔥</span><h5>Report slow after a data load</h5><p>Estimates are old, the hash join spilled. Same SQL, same indexes.</p><span class="sc-use">→ Update statistics first</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Hash join phases.</b> The <i>build</i> phase reads the whole first input, hashes it on the join keys and builds an in-memory table; the <i>probe</i> phase reads the second input, hashes it the same way and looks for matches. It is “blocking”: it must finish the build input before returning any rows.</p>
+      <p><b>Spill levels.</b> In a hash warning, <i>recursion</i> means the build input did not fit and was split into partitions processed separately; <i>bailout</i> means recursion hit its limit and the operator switched to an alternative way of finishing. Since SQL Server 2016 the warning shows how many threads and pages spilled.</p>
+      <p><b>Memory grants.</b> In row-mode execution the initial memory grant cannot be exceeded; batch mode can grow the grant dynamically up to an internal threshold.</p>
+      <p><b>Adaptive joins.</b> In newer versions (batch mode), an Adaptive Join defers the choice: it uses a threshold on the rows it actually sees to switch between hash and nested loops while running.</p>
+      <p><b>Row goals.</b> A <code>TOP</code> or <code>FAST</code> hint tells the optimizer you need only the first rows, which makes nested loops more attractive.</p>
+      <p><b>Join hints</b> (<code>LOOP JOIN</code>, <code>HASH JOIN</code>, <code>MERGE JOIN</code>, <code>FORCE ORDER</code>) exist, but they tie the optimizer’s hands. Use them to <i>test</i> a theory, not as the first fix: forcing a join type does not guarantee a better plan.</p>
+      <p><b>Other engines:</b> PostgreSQL shows <i>Nested Loop</i>, <i>Hash Join</i> and <i>Merge Join</i> nodes with the same meaning; MySQL (8.0 and later) also has hash joins.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Three physical joins: Nested Loops, Hash Match, Merge Join.</li><li>Nested Loops: small outer + indexed inner. Cost grows with outer rows × inner work.</li><li>Hash Match: build + probe; needs a memory grant; spills to tempdb if the grant is too small (look for the warning icon).</li><li>Merge Join: both inputs sorted on the join key, at least one equality predicate; a Sort is added if unsorted.</li><li>The algorithm follows the <b>estimated</b> row counts — bad estimates give bad join choices and bad memory grants.</li><li>Join hints are a last resort; fix estimates and indexes first.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"There are three physical joins. Nested loops probes the inner side once per outer row, so it wants a small outer input and an indexed inner side. Hash match builds a hash table from one input and probes it with the other — great for big unsorted inputs but it needs a memory grant and can spill to tempdb. Merge join walks two sorted inputs. When a join is slow I check the estimated versus actual rows first, because the engine picks the algorithm and sizes the memory from the estimates."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Forcing a join hint to “fix” a slow join.</b> If the cause was a wrong estimate, the hint freezes today’s data shape into the query — and breaks the day the data changes. Fix the estimate; use the hint only to prove a theory.</p>
+      <p><b>Reading “Hash Match” as “bad”.</b> It is the right choice for large joins. The red flag is a hash <i>warning</i>, not the operator itself.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔁 Nested Loops</h5><p>Cost ≈ outer rows × inner work. Great when the outer side is small and the inner is indexed.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>#️⃣ Hash Match</h5><p>Cost ≈ read both inputs once, plus memory. Great for big joins; watch for spills.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Nested Loops with an index often ends in a <b>Key Lookup</b> for every row — fine for 12 rows, ruinous for 80,000. Next: covering indexes.</span>
+      <a class="next-link" href="covering-indexes.html">Covering indexes &amp; key lookups <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Join behaviour can differ across versions and compatibility levels. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins" target="_blank" rel="noopener">Joins</a> · <a href="https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/performance/troubleshoot-memory-grant-issues" target="_blank" rel="noopener">Troubleshoot memory grant issues</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/showplan-logical-and-physical-operators-reference" target="_blank" rel="noopener">Showplan operator reference</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
