@@ -3982,5 +3982,31 @@
     "summary": "The classic mistake with Smells & Safe Refactoring.",
     "keywords": "code smells refactoring Fowler divergent change shotgun surgery feature envy extract class move method SOLID trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-solid-together",
+    "title": "SOLID Together: a Worked Refactoring",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-together.html",
+    "summary": "A full refactoring of the ShopCore OrderService: the five steps, what each fixes and how to prove it.",
+    "keywords": "solid together worked refactoring OrderService golden master extract class strategy dependency injection step by step"
+  },
+  {
+    "id": "solid-solid-together-recall",
+    "title": "SOLID Together: a Worked Refactoring — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-together.html",
+    "summary": "Quick recall points: SOLID Together: a Worked Refactoring.",
+    "keywords": "solid together worked refactoring OrderService golden master extract class strategy dependency injection step by step interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-solid-together-trap",
+    "title": "SOLID Together: a Worked Refactoring — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-together.html",
+    "summary": "The classic mistake with SOLID Together: a Worked Refactoring.",
+    "keywords": "solid together worked refactoring OrderService golden master extract class strategy dependency injection step by step trap mistake",
+    "anchor": "trap"
   }
 ]

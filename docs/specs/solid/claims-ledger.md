@@ -104,5 +104,15 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Characterisation tests, IDE-assisted refactorings | 🟨 K | general practice |
 | Order/OrderService code, 1,200 lines, 8 files, 40-line setup | 🟦 I | illustrative |
 
+## Page 9 — SOLID Together (worked refactoring)
+| Claim | Status | Note |
+|---|---|---|
+| SOLID is about managing dependencies / keeping code easy to change | ✅ V | Uncle Bob, Solid Relevance (2020); Principles of OOD |
+| Primary constructors on classes (C# 12) used in the code sketch | 🟨 K | language feature recalled, not re-verified this session |
+| Golden-master / characterisation test as the first step | 🟨 K | general refactoring practice |
+| Order of steps (SRP → OCP → LSP/ISP → DIP/DI) | 🟦 I | one sensible teaching path, not a rule; page says so |
+| ShopCore numbers: ≈300 → ≈40 lines, 6 reasons → 1, 4 constructor parameters, ≈40/120/60/50 line parts | 🟦 I | illustrative, canonical in docs/specs/solid/overview.md |
+| Code sketches (OrderValidator, PricingCalculator, IDiscountRule…) | 🟦 I | illustrative, not compiled |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

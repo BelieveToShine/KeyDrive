@@ -481,7 +481,8 @@
       "interface-segregation",
       "dependency-inversion",
       "dependency-injection-dotnet",
-      "smells-refactoring"
+      "smells-refactoring",
+      "solid-together"
     ],
     "sub": {},
     "subTitles": {}
