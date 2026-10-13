@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strangler Fig: Replace an Old System Piece by Piece — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="cache-aside.html">Cache-Aside</a><span class="sep">›</span><span class="cur">Strangler Fig</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 22 of 24 · ☁️ Architecture</div>
+    <h1>The vine around the old tree: <span class="grad-text">replace it one branch at a time</span>.</h1>
+    <p class="sub">The Strangler Fig pattern: migrate a legacy system gradually behind a routing front door, so users never see a big-bang switch.</p>
+    <div class="interview-q">❓ "What is the Strangler Fig pattern and why is it safer than a rewrite?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Rewriting a big old system from scratch takes a long time, nothing new can be used until the very end, and the whole switch is risky because everything changes at once">
+<defs><marker id="sf1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sf1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sf1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path id="sf1-bg" d="M230,135 L410,135" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sf1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="90" width="220" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="120" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🏚️ Old system</text></g>
+<g class="st" data-s="1-"><text x="120" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">works, but ageing</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="410" y="90" width="220" height="90" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="520" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🏗️ New system</text></g>
+<g class="st" data-s="2-"><text x="520" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">being built… 18 months</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="210" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="160" y="235" text-anchor="middle" font-size="10" fill="#fda4af">Nothing usable until the end</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="330" y="210" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="480" y="235" text-anchor="middle" font-size="10" fill="#fda4af">Everything switches at once — risky 🎲</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="271" y="126" width="98" height="18" rx="9"/><text x="320" y="138.5" text-anchor="middle" font-size="9" font-style="italic">big-bang switch</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="sf1-bg"><circle r="8.68" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🎲</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>An <b>old system</b> still works, but it is ageing.</li><li>The plan: build a <b>complete new system</b> — 18 months of work.</li><li>Then <b>switch</b> everything over in one go.</li><li>Until then <b>nothing new</b> is usable by anyone.</li><li>And the switch itself is a <b>gamble</b>: everything changes at once. 🎲</li></ol>
+<figcaption><strong>What you're seeing:</strong> a big-bang rewrite.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Put a routing front door in front of the old system, move one feature at a time to a new one, and switch the old one off when it is empty.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🌿 A strangler fig <b>vine</b> grows around a tree branch by branch. In time the vine is a complete tree of its own, and the old tree inside is gone — while the whole thing stood up the entire time.</p>
+      <p>The Azure Architecture Center describes Strangler Fig as migrating a legacy system incrementally behind a facade, so customers keep using the same interface and are unaware a migration is in progress.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🌿 The fix: grow around it</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A routing front door sends each request to the old or new system; first all go to the old one, then the search feature moves to the new one, then checkout, until the old system has nothing left and is removed">
+<defs><marker id="sf2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sf2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sf2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><path id="sf2-ro" d="M145,76 L145,150" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sf2A)"/></g>
+<g class="st" data-s="2-"><path id="sf2-rn" d="M495,76 L495,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#sf2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="620" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="52" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🚪 Router (the facade) — decides: old or new?</text></g>
+<g class="st" data-s="1-3" data-hl="2"><rect class="bx" x="10" y="150" width="270" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="2"><text x="145" y="197.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🏚️ Old system</text></g>
+<g class="st" data-s="1-3" data-hl="2"><text x="145" y="210.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">search · checkout · accounts</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="10" y="150" width="270" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="145" y="197.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🏚️ Old system</text></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="145" y="210.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">accounts only</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="10" y="150" width="270" height="100" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="145" y="197.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">🏚️ Old system</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="145" y="210.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">empty — switch it off</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="360" y="150" width="270" height="100" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="495" y="197.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🌿 New system</text></g>
+<g class="st" data-s="1-"><text x="495" y="210.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">grows feature by feature</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="10" y="270" width="300" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="160" y="301" text-anchor="middle" font-size="10" fill="#6ee7b7">Search moved ✅ (users did not notice)</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="270" width="300" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="160" y="301" text-anchor="middle" font-size="10" fill="#6ee7b7">Checkout moved too ✅</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="270" width="620" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#6ee7b7">Old system removed — like a vine that replaced the tree 🌿</text></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="sf2-rn"><circle r="8.06" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">🔍</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Put a <b>router</b> (a facade) in front. At first <b>everything goes to the old system</b>.</li><li>Build <b>search</b> in the new system. The router sends search requests there; everything else still goes to the old one.</li><li>Search has moved. ✅ Users did not notice.</li><li>Next, <b>checkout</b> moves too. The old system has only accounts left.</li><li>When the old system is empty, <b>switch it off</b>. The vine has replaced the tree. 🌿</li></ol>
+<figcaption><strong>What you're seeing:</strong> features move over one by one.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Facade / router</b></th><td>the front door</td><td>API gateway or reverse proxy</td></tr><tr><th scope="row"><b>Legacy system</b></th><td>the old tree</td><td>the old app</td></tr><tr><th scope="row"><b>New system</b></th><td>the vine</td><td>new services, grown feature by feature</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// A tiny routing rule: move features one at a time by changing this list</span>
+<span class="kw">static</span> <span class="kw">readonly</span> HashSet&lt;<span class="kw">string</span>&gt; MovedToNew = <span class="kw">new</span>() { <span class="str">"/search"</span> };      <span class="cmt">// later add "/checkout", …</span>
+
+IResult Route(<span class="kw">string</span> path) =&gt;
+    MovedToNew.Any(p =&gt; path.StartsWith(p))
+        ? Results.Redirect(<span class="str">"https://new.shop.example"</span> + path)     // <span class="kw">new</span> system
+        : Results.Redirect(<span class="str">"https://old.shop.example"</span> + path);    // old system</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Real setups use an API gateway or reverse proxy (for example YARP in .NET) with routing rules; the idea is the same.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">Reverse proxy / API gateway rules per path</th><td>route “/search” to new, the rest to old</td></tr><tr><th scope="row">Feature flags to roll back instantly</th><td>a safety net during migration</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A large legacy system you cannot stop or freeze</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Migrate in slices behind a router.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A small app that can be rewritten in a week</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Just rewrite it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The old and new must share a database for a while</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Common: plan the data migration carefully.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You can’t put anything in front of the old system</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> No front door, no strangler. Look for another seam.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">A rewrite plan measured in years with one launch date</th><td>Slice it and ship value earlier.</td></tr><tr><th scope="row">“We can’t touch it” legacy code</th><td>Wrap and replace slice by slice.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Strangler Fig = migrate gradually behind a facade/router; old and new run side by side.</li><li>Move one feature at a time; roll back by changing the route.</li><li>Users keep using the same interface.</li><li>Remove the old system when it is empty.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Strangler Fig pattern migrates a legacy system incrementally: I put a routing facade in front, move one feature at a time to the new implementation, keep the old one running for everything else, and retire it when it’s empty. It avoids a risky big-bang rewrite and delivers value continuously."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Never finishing.</b> The old system lingers forever; set an end date.</p>
+      <p><b>Shared data headaches.</b> Plan data ownership early.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You have seen the patterns. Next: how to <i>choose</i> — from problem to pattern.</span>
+      <a class="next-link" href="choosing-patterns.html">Choosing patterns: from problem to pattern <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Strangler Fig (incremental migration behind a facade; users unaware) follows the Azure Architecture Center page. YARP and API gateways are common ways to route. The vine is a teaching analogy. Official docs: <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Strangler Fig pattern (Azure Architecture Center)</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/" target="_blank" rel="noopener">Cloud Design Patterns (Azure Architecture Center)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

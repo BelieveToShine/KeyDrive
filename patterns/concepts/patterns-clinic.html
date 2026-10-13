@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the Patterns Clinic — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><span class="cur">Capstone: the patterns clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 24 of 24 · ⚖️ Judgement</div>
+    <h1>Twelve small cases: <span class="grad-text">name the pain, pick the pattern</span>.</h1>
+    <p class="sub">A practice ward for the whole lab: symptom, evidence, your pattern, then reveal — with an answer key back to each page.</p>
+    <div class="interview-q">❓ "Here is a design problem. Which pattern would you try, and why?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The patterns case board: twelve cases in four families: creating objects, shaping structure, behaving, and whole systems">
+<defs><marker id="pc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="200" height="144" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CREATING</text>
+<rect class="zone" x="216" y="8" width="300" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="230" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">SHAPING</text>
+<rect class="zone" x="8" y="164" width="300" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">BEHAVING</text>
+<rect class="zone" x="316" y="164" width="316" height="144" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="330" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">WHOLE SYSTEMS</text>
+<rect class="bx" x="16" y="46" width="86" height="86" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="59" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 1</text>
+<text x="59" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Pizza</text>
+<rect class="bx" x="106" y="46" width="86" height="86" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="149" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 2</text>
+<text x="149" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Burger</text>
+<rect class="bx" x="224" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="269" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 3</text>
+<text x="269" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Vendor</text>
+<rect class="bx" x="318" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="363" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 4</text>
+<text x="363" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Logging</text>
+<rect class="bx" x="412" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="457" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 5</text>
+<text x="457" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Concierge</text>
+<rect class="bx" x="16" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="61" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 6</text>
+<text x="61" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Pricing</text>
+<rect class="bx" x="110" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="155" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 7</text>
+<text x="155" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Bell</text>
+<rect class="bx" x="204" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="249" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 8</text>
+<text x="249" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Undo</text>
+<rect class="bx" x="324" y="202" width="72" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="360" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 9</text>
+<text x="360" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Flaky</text>
+<rect class="bx" x="400" y="202" width="72" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="436" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 10</text>
+<text x="436" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Trip</text>
+<rect class="bx" x="476" y="202" width="72" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="512" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 11</text>
+<text x="512" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Slow</text>
+<rect class="bx" x="552" y="202" width="72" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="588" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 12</text>
+<text x="588" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Legacy</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> twelve small cases in four families: <b>creating</b> (1–2), <b>shaping</b> (3–5), <b>behaving</b> (6–8) and <b>whole systems</b> (9–12). Each shows a symptom and the evidence you would really find. <b>Decide your pattern first</b>, then reveal the answer.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You have seen creational, structural, behavioral and whole-system patterns. This is the practice ward: <b>symptom → evidence → pattern → why → where to review</b>.</span></div>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 How to decide</div>
+    <p>Ask in this order: <b>what hurts?</b> → <b>which family of question is it</b> (making, shaping, behaving, or whole system)? → <b>which pattern removes exactly that pain?</b> → <b>is the next change cheaper?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Adding a pizza type edits three screens</h4><p><b>Symptom.</b> Each screen has its own if/else that creates the pizza class.</p><p><b>Evidence.</b></p><ul><li>The same <code>if type == …</code> appears in 3 files.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Creation logic is copied everywhere.</p><p><b>Pattern.</b> One <b>Factory</b> decides; screens ask it.</p><p>📖 <b>Where to review:</b> page 2.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 2</div>
+    <div class="kd-card"><h4>A constructor with eight unnamed values</h4><p><b>Symptom.</b> <code>new Burger("sesame","beef",true,false,true,"none",false,true)</code></p><p><b>Evidence.</b></p><ul><li>Nobody remembers what the third <code>true</code> means.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A telescoping constructor.</p><p><b>Pattern.</b> <b>Builder</b> with named steps and defaults.</p><p>📖 <b>Where to review:</b> page 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 3</div>
+    <div class="kd-card"><h4>The payment vendor’s types are everywhere</h4><p><b>Symptom.</b> Switching vendors would touch 30 files.</p><p><b>Evidence.</b></p><ul><li><code>VendorClient</code> and <code>VendorResponse</code> appear across the code.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A foreign API shape leaks through the app.</p><p><b>Pattern.</b> <b>Adapter</b> behind your own <code>IPaymentGateway</code>.</p><p>📖 <b>Where to review:</b> page 5.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 4</div>
+    <div class="kd-card"><h4>Logging code is pasted into every repository method</h4><p><b>Symptom.</b> Every method starts with the same three log lines.</p><p><b>Evidence.</b></p><ul><li>10 repositories, 40 methods, same lines.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Cross-cutting behaviour mixed into the class.</p><p><b>Pattern.</b> <b>Decorator</b> that logs and delegates.</p><p>📖 <b>Where to review:</b> page 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 5</div>
+    <div class="kd-card"><h4>Callers must call five classes in order</h4><p><b>Symptom.</b> Booking an evening = taxi, restaurant, tickets, in the right order.</p><p><b>Evidence.</b></p><ul><li>The same 5-call sequence is copied in four places.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A complex subsystem exposed to everyone.</p><p><b>Pattern.</b> <b>Facade</b> with one <code>Plan()</code> method.</p><p>📖 <b>Where to review:</b> page 7.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>A new customer type means opening the pricing switch</h4><p><b>Symptom.</b> The discount method grows with every type.</p><p><b>Evidence.</b></p><ul><li>One method, six branches, edited monthly.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Several interchangeable ways inside one class.</p><p><b>Pattern.</b> <b>Strategy</b> per way, plugged in.</p><p>📖 <b>Where to review:</b> page 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 7</div>
+    <div class="kd-card"><h4>The channel calls every fan by name</h4><p><b>Symptom.</b> A new fan means editing the channel.</p><p><b>Evidence.</b></p><ul><li>Channel code lists Asha, Ben, Chen…</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Publisher knows its listeners.</p><p><b>Pattern.</b> <b>Observer</b>: subscribe and notify the list.</p><p>📖 <b>Where to review:</b> page 11.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 8</div>
+    <div class="kd-card"><h4>Users want undo and a history</h4><p><b>Symptom.</b> Actions run directly and leave no trace.</p><p><b>Evidence.</b></p><ul><li>Buttons call <code>lamp.On()</code> directly.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Requests vanish after being made.</p><p><b>Pattern.</b> <b>Command</b> objects with Execute/Undo and a history.</p><p>📖 <b>Where to review:</b> page 12.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 9</div>
+    <div class="kd-card"><h4>Everything freezes when one service is slow</h4><p><b>Symptom.</b> A slow dependency makes every caller wait 30 seconds.</p><p><b>Evidence.</b></p><ul><li>Retries pile up; threads are exhausted.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Hammering a failing dependency (retry storm).</p><p><b>Pattern.</b> <b>Retry</b> with backoff + <b>Circuit Breaker</b> + fallback.</p><p>📖 <b>Where to review:</b> page 20.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 10</div>
+    <div class="kd-card"><h4>A booking leaves a flight and hotel but no car</h4><p><b>Symptom.</b> The third service failed after two succeeded.</p><p><b>Evidence.</b></p><ul><li>Three services, three databases, no common rollback.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> No way to undo across services.</p><p><b>Pattern.</b> <b>Saga</b> with compensating steps.</p><p>📖 <b>Where to review:</b> page 19.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 11</div>
+    <div class="kd-card"><h4>The same product query hits the database 1,000 times a minute</h4><p><b>Symptom.</b> The database is busy; pages are slow.</p><p><b>Evidence.</b></p><ul><li>Same query, same answer, repeated.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Repeated slow work.</p><p><b>Pattern.</b> <b>Cache-Aside</b> with expiry and invalidation.</p><p>📖 <b>Where to review:</b> page 21.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 12</div>
+    <div class="kd-card"><h4>A two-year rewrite plan with one launch date</h4><p><b>Symptom.</b> Nothing new ships until the end.</p><p><b>Evidence.</b></p><ul><li>Big-bang switch planned for next year.</li></ul><p><b>Your move:</b> which pattern would you try?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> High-risk all-at-once replacement.</p><p><b>Pattern.</b> <b>Strangler Fig</b>: route features over one by one.</p><p>📖 <b>Where to review:</b> page 22.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Pattern</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Adding a pizza type edits three screens</th><td>Creating</td><td>One Factory decides; screens ask it.</td><td>page 2</td></tr><tr><th scope="row">2. A constructor with eight unnamed values</th><td>Creating</td><td>Builder with named steps and defaults.</td><td>page 3</td></tr><tr><th scope="row">3. The payment vendor’s types are everywhere</th><td>Shaping</td><td>Adapter behind your own <code>IPaymentGateway</code>.</td><td>page 5</td></tr><tr><th scope="row">4. Logging code is pasted into every repository method</th><td>Shaping</td><td>Decorator that logs and delegates.</td><td>page 6</td></tr><tr><th scope="row">5. Callers must call five classes in order</th><td>Shaping</td><td>Facade with one <code>Plan()</code> method.</td><td>page 7</td></tr><tr><th scope="row">6. A new customer type means opening the pricing switch</th><td>Behaving</td><td>Strategy per way, plugged in.</td><td>page 10</td></tr><tr><th scope="row">7. The channel calls every fan by name</th><td>Behaving</td><td>Observer: subscribe and notify the list.</td><td>page 11</td></tr><tr><th scope="row">8. Users want undo and a history</th><td>Behaving</td><td>Command objects with Execute/Undo and a history.</td><td>page 12</td></tr><tr><th scope="row">9. Everything freezes when one service is slow</th><td>Whole systems</td><td>Retry with backoff + Circuit Breaker + fallback.</td><td>page 20</td></tr><tr><th scope="row">10. A booking leaves a flight and hotel but no car</th><td>Whole systems</td><td>Saga with compensating steps.</td><td>page 19</td></tr><tr><th scope="row">11. The same product query hits the database 1,000 times a minute</th><td>Whole systems</td><td>Cache-Aside with expiry and invalidation.</td><td>page 21</td></tr><tr><th scope="row">12. A two-year rewrite plan with one launch date</th><td>Whole systems</td><td>Strangler Fig: route features over one by one.</td><td>page 22</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>10–12 before the reveal</h5><p>You think problem-first. Look for these smells in your own code.</p><span class="sc-use">→ Apply it</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>6–9</h5><p>You know the patterns; practise naming the pain first.</p><span class="sc-use">→ Re-read “Choosing patterns”</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–5</h5><p>Normal at first. Re-read the look-alike pairs and the family map.</p><span class="sc-use">→ Pages 1 and 23</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo in a week without the evidence list.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: what hurts → which family → which pattern → is the next change cheaper?</li><li>Families: creating, shaping, behaving, whole systems.</li><li>Similar symptoms, different patterns: read the evidence.</li><li>Prefer the smallest pattern.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I read a design problem as a symptom with evidence, work out whether it is about making objects, shaping structure, behaviour, or a whole system, and pick the smallest pattern that removes exactly that pain — then check the next change really is cheaper."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Picking the pattern you learned last.</b> Read the evidence.</p>
+      <p><b>Stopping at the diagram.</b> Check it removed the pain.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📚 Knowing patterns</h5><p>You can recite names and diagrams.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Using patterns</h5><p>You can name the pain and pick the smallest fix.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the main Design Patterns journey. Open the deep dives for the rest of the catalog, or go back to the hub.</span>
+      <a class="next-link" href="../index.html">Design Patterns Lab hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every pattern in the cases is explained, with its sources, on the page it points to. The cases and numbers are illustrative. Official docs: <a href="https://refactoring.guru/design-patterns/catalog" target="_blank" rel="noopener">The catalog of design patterns (refactoring.guru)</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/" target="_blank" rel="noopener">Cloud Design Patterns (Azure Architecture Center)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

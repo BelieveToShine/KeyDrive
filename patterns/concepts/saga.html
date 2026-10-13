@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saga: A Long Task as Small Steps with Undo Steps — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="event-sourcing.html">Event Sourcing</a><span class="sep">›</span><span class="cur">Saga</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 19 of 24 · ☁️ Architecture</div>
+    <h1>Booking a trip: <span class="grad-text">if a later step fails, undo the earlier ones</span>.</h1>
+    <p class="sub">The Saga pattern with a trip booking: coordinate a task across several services using small steps, each with a compensating undo step.</p>
+    <div class="interview-q">❓ "What is the Saga pattern and why are distributed transactions avoided?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Booking a trip needs the flight, hotel and car services; if the car booking fails after the flight and hotel are booked, the customer is left with two bookings and no trip">
+<defs><marker id="sa1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sa1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sa1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="60" width="190" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="97.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✈️ Flight</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="110.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">booked ✅</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="225" y="60" width="190" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="97.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🏨 Hotel</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="110.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">booked ✅</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="440" y="60" width="190" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="97.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🚗 Car</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="110.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">FAILED ❌</text></g>
+<g class="st" data-s="1-"><rect class="bx note" x="10" y="10" width="620" height="36" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-"><text x="320" y="31" text-anchor="middle" font-size="10" fill="#67e8f9">✈️ Flight service · 🏨 Hotel service · 🚗 Car service — each with its own database</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="170" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="195" text-anchor="middle" font-size="10" fill="#fcd34d">Three services, three databases — no single “undo everything” button</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="230" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="320" y="255" text-anchor="middle" font-size="10" fill="#fda4af">Result: flight and hotel stay booked, no car, confused customer</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Booking a trip needs three services: <b>flight</b>, <b>hotel</b> and <b>car</b>. Each has its own database.</li><li>The flight is booked. ✅</li><li>The hotel is booked. ✅</li><li>The <b>car booking fails</b>. ❌</li><li>There is no single “undo everything” button across three databases.</li><li>The customer is left with <b>a flight and a hotel, but no car</b> — a half-finished trip.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a task that cannot be rolled back with one command.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Split a long task into small steps, and give each step an “undo” step, so if something fails you run the undos backwards.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧳 If you book a flight, a hotel and a car and the car is sold out, you do not just give up: you <b>cancel the hotel and the flight</b>. Each cancel is the “undo” of a booking.</p>
+      <p>The Azure Architecture Center describes Saga as managing data consistency across microservices with independent data stores, using a sequence of local transactions with compensating actions to reverse failures; retryable steps should be idempotent.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧳 The fix: steps with undo steps</div>
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A saga runs the steps one by one; when the car step fails it runs compensating steps backwards, cancelling the hotel and then the flight, so the system ends consistent">
+<defs><marker id="sa2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sa2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sa2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="sa2-f1" d="M200,70 L225,70" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#sa2A)"/></g>
+<g class="st" data-s="3-"><path id="sa2-f2" d="M415,70 L440,70" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#sa2A)"/></g>
+<g class="st" data-s="5-"><path id="sa2-cc1" d="M535,100 L535,140 L320,140 L320,190" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sa2A)"/></g>
+<g class="st" data-s="6-"><path id="sa2-cc2" d="M320,250 L320,280 L105,280 L105,250" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sa2A)"/></g>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="10" y="40" width="190" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text x="105" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✈️ Book flight</text></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="225" y="40" width="190" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text x="320" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🏨 Book hotel</text></g>
+<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="440" y="40" width="190" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4"><text x="535" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🚗 Book car</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="62" text-anchor="middle" font-size="22">❌</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="225" y="190" width="190" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">↩️ Cancel hotel</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">compensating step</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="10" y="190" width="190" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">↩️ Cancel flight</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">compensating step</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx note" x="330" y="260" width="300" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="480" y="285" text-anchor="middle" font-size="10" fill="#6ee7b7">Everything is consistent again ✅</text></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="394.5" y="131" width="71" height="18" rx="9"/><text x="430" y="143.5" text-anchor="middle" font-size="9" font-style="italic">car failed</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="sa2-f1"><circle r="7.44" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.2" text-anchor="middle" font-size="12">✅</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="sa2-f2"><circle r="7.44" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.2" text-anchor="middle" font-size="12">✅</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="sa2-cc1"><circle r="8.06" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">⚠️</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="sa2-cc2"><circle r="8.06" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">↩️</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The saga runs the steps <b>in order</b>: flight, hotel, car.</li><li>Flight booked. ✅</li><li>Hotel booked. ✅</li><li>Car booking <b>fails</b>. ❌ The saga switches to <b>undo mode</b>.</li><li>Run the <b>compensating step</b> for the hotel: cancel it.</li><li>Then for the flight: cancel it.</li><li>Everything is <b>consistent again</b>. ✅ (No half-finished trip.)</li></ol>
+<figcaption><strong>What you're seeing:</strong> steps go forward, then undo steps go backward.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Saga</b></th><td>the trip planner</td><td><code>BookTripSaga</code></td></tr><tr><th scope="row"><b>Step</b></th><td>book flight / hotel / car</td><td>local transaction in one service</td></tr><tr><th scope="row"><b>Compensation</b></th><td>cancel flight / hotel</td><td><code>CancelFlight()</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> BookTripSaga(IFlights flights, IHotels hotels, ICars cars)
+{
+    <span class="kw">public</span> <span class="kw">bool</span> Run()
+    {
+        <span class="kw">var</span> f = flights.Book();
+        <span class="kw">var</span> h = hotels.Book();
+        <span class="kw">if</span> (h is <span class="kw">null</span>) { flights.Cancel(f); <span class="kw">return</span> false; }           <span class="cmt">// undo step 1</span>
+        <span class="kw">var</span> c = cars.Book();
+        <span class="kw">if</span> (c is <span class="kw">null</span>) { hotels.Cancel(h); flights.Cancel(f); <span class="kw">return</span> false; }   <span class="cmt">// undo 2, then 1</span>
+        <span class="kw">return</span> true;
+    }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Real sagas run over messages (queues) and must make each step and each undo safe to repeat (idempotent). This sketch shows the idea only.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">Order → payment → stock → shipping across services</th><td>a classic microservices saga</td></tr><tr><th scope="row">Choreography (services react to events) or orchestration (a coordinator tells each step)</th><td>the two ways to run a saga</td></tr></tbody></table></div>
+    <p style="margin-top:10px;color:var(--ink-soft)">Mapping to examples is common practice; the Azure page covers choreography and orchestration.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A business process across services with separate databases</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Sagas keep it consistent without a global transaction.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Everything lives in one database</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Use a normal database transaction.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Some steps cannot be undone (an email already sent)</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Plan for it: order such steps last, or use a different design.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You need steps to be safe to retry</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Design each step to be idempotent.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">A multi-service process with manual “clean up” scripts for failures</th><td>Make the undo steps part of the design.</td></tr><tr><th scope="row">Two-phase commit across services</th><td>Consider a saga instead.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Saga = sequence of local transactions, each with a compensating (undo) action.</li><li>Replaces distributed transactions across services.</li><li>Steps and compensations should be idempotent.</li><li>Watch for temporary inconsistency while the saga runs.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A Saga coordinates a long business process across services without a distributed transaction: it runs local steps in order and, if one fails, runs compensating actions for the earlier steps in reverse, like cancelling a hotel and flight when the car can’t be booked. Steps need to be idempotent, and the data is briefly inconsistent while it runs."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Undo is not always possible.</b> Some actions cannot be reversed.</p>
+      <p><b>No idempotency.</b> Retries create duplicates.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: when a service is down, what should callers do? Retry and Circuit Breaker — the fuse box.</span>
+      <a class="next-link" href="circuit-breaker-retry.html">Retry and Circuit Breaker: survive a flaky service <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 The Saga description (local transactions with compensating actions across microservices; idempotent retryable steps) follows the Azure Architecture Center Saga page via search summary. The trip booking is a teaching analogy; the code is a sketch. Official docs: <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/saga" target="_blank" rel="noopener">Saga pattern (Azure Architecture Center)</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/" target="_blank" rel="noopener">Cloud Design Patterns (Azure Architecture Center)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

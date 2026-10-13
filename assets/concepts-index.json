@@ -4554,5 +4554,187 @@
     "summary": "The classic mistake with Chain of Responsibility: Pass It Along Until Handled.",
     "keywords": "chain of responsibility pattern behavioral middleware handler escalation pipeline trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-repository-unit-of-work",
+    "title": "Repository and Unit of Work: A Collection-Like Door to Storage",
+    "category": "Patterns",
+    "page": "patterns/concepts/repository-unit-of-work.html",
+    "summary": "The librarian and the shopping basket: hide storage behind a repository and save changes together; EF DbContext already does both.",
+    "keywords": "repository pattern unit of work DbContext EF Core SaveChanges persistence"
+  },
+  {
+    "id": "patterns-repository-unit-of-work-recall",
+    "title": "Repository and Unit of Work: A Collection-Like Door to Storage — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/repository-unit-of-work.html",
+    "summary": "Quick recall points: Repository and Unit of Work: A Collection-Like Door to Storage.",
+    "keywords": "repository pattern unit of work DbContext EF Core SaveChanges persistence interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-repository-unit-of-work-trap",
+    "title": "Repository and Unit of Work: A Collection-Like Door to Storage — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/repository-unit-of-work.html",
+    "summary": "The classic mistake with Repository and Unit of Work: A Collection-Like Door to Storage.",
+    "keywords": "repository pattern unit of work DbContext EF Core SaveChanges persistence trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-cqrs",
+    "title": "CQRS: Separate Counters for Asking and Changing",
+    "category": "Patterns",
+    "page": "patterns/concepts/cqrs.html",
+    "summary": "CQRS with a café: separate models for commands and queries, and the eventual-consistency trade-off.",
+    "keywords": "CQRS command query responsibility segregation read model write model eventual consistency"
+  },
+  {
+    "id": "patterns-cqrs-recall",
+    "title": "CQRS: Separate Counters for Asking and Changing — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/cqrs.html",
+    "summary": "Quick recall points: CQRS: Separate Counters for Asking and Changing.",
+    "keywords": "CQRS command query responsibility segregation read model write model eventual consistency interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-cqrs-trap",
+    "title": "CQRS: Separate Counters for Asking and Changing — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/cqrs.html",
+    "summary": "The classic mistake with CQRS: Separate Counters for Asking and Changing.",
+    "keywords": "CQRS command query responsibility segregation read model write model eventual consistency trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-event-sourcing",
+    "title": "Event Sourcing: Keep the History, Not Just the Total",
+    "category": "Patterns",
+    "page": "patterns/concepts/event-sourcing.html",
+    "summary": "Event Sourcing with a bank statement: store events, rebuild state by replay.",
+    "keywords": "event sourcing events append-only replay audit snapshot bank statement"
+  },
+  {
+    "id": "patterns-event-sourcing-recall",
+    "title": "Event Sourcing: Keep the History, Not Just the Total — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/event-sourcing.html",
+    "summary": "Quick recall points: Event Sourcing: Keep the History, Not Just the Total.",
+    "keywords": "event sourcing events append-only replay audit snapshot bank statement interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-event-sourcing-trap",
+    "title": "Event Sourcing: Keep the History, Not Just the Total — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/event-sourcing.html",
+    "summary": "The classic mistake with Event Sourcing: Keep the History, Not Just the Total.",
+    "keywords": "event sourcing events append-only replay audit snapshot bank statement trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-saga",
+    "title": "Saga: A Long Task as Small Steps with Undo Steps",
+    "category": "Patterns",
+    "page": "patterns/concepts/saga.html",
+    "summary": "The Saga pattern with a trip booking: local steps with compensating actions instead of distributed transactions.",
+    "keywords": "saga pattern distributed transaction compensating microservices choreography orchestration"
+  },
+  {
+    "id": "patterns-saga-recall",
+    "title": "Saga: A Long Task as Small Steps with Undo Steps — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/saga.html",
+    "summary": "Quick recall points: Saga: A Long Task as Small Steps with Undo Steps.",
+    "keywords": "saga pattern distributed transaction compensating microservices choreography orchestration interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-saga-trap",
+    "title": "Saga: A Long Task as Small Steps with Undo Steps — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/saga.html",
+    "summary": "The classic mistake with Saga: A Long Task as Small Steps with Undo Steps.",
+    "keywords": "saga pattern distributed transaction compensating microservices choreography orchestration trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-circuit-breaker-retry",
+    "title": "Retry and Circuit Breaker: Survive a Flaky Service",
+    "category": "Patterns",
+    "page": "patterns/concepts/circuit-breaker-retry.html",
+    "summary": "The fuse box: retry small hiccups, break on big outages, and use both.",
+    "keywords": "circuit breaker retry polly resilience transient fault retry storm half-open"
+  },
+  {
+    "id": "patterns-circuit-breaker-retry-recall",
+    "title": "Retry and Circuit Breaker: Survive a Flaky Service — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/circuit-breaker-retry.html",
+    "summary": "Quick recall points: Retry and Circuit Breaker: Survive a Flaky Service.",
+    "keywords": "circuit breaker retry polly resilience transient fault retry storm half-open interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-circuit-breaker-retry-trap",
+    "title": "Retry and Circuit Breaker: Survive a Flaky Service — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/circuit-breaker-retry.html",
+    "summary": "The classic mistake with Retry and Circuit Breaker: Survive a Flaky Service.",
+    "keywords": "circuit breaker retry polly resilience transient fault retry storm half-open trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-cache-aside",
+    "title": "Cache-Aside: Check the Notebook First",
+    "category": "Patterns",
+    "page": "patterns/concepts/cache-aside.html",
+    "summary": "Cache-Aside with a notebook: populate a cache on demand and invalidate it on writes.",
+    "keywords": "cache-aside pattern cache redis IMemoryCache invalidate stale hit miss"
+  },
+  {
+    "id": "patterns-cache-aside-recall",
+    "title": "Cache-Aside: Check the Notebook First — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/cache-aside.html",
+    "summary": "Quick recall points: Cache-Aside: Check the Notebook First.",
+    "keywords": "cache-aside pattern cache redis IMemoryCache invalidate stale hit miss interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-cache-aside-trap",
+    "title": "Cache-Aside: Check the Notebook First — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/cache-aside.html",
+    "summary": "The classic mistake with Cache-Aside: Check the Notebook First.",
+    "keywords": "cache-aside pattern cache redis IMemoryCache invalidate stale hit miss trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-strangler-fig",
+    "title": "Strangler Fig: Replace an Old System Piece by Piece",
+    "category": "Patterns",
+    "page": "patterns/concepts/strangler-fig.html",
+    "summary": "The vine around the old tree: migrate a legacy system gradually behind a routing facade.",
+    "keywords": "strangler fig pattern legacy migration facade incremental rewrite yarp"
+  },
+  {
+    "id": "patterns-strangler-fig-recall",
+    "title": "Strangler Fig: Replace an Old System Piece by Piece — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/strangler-fig.html",
+    "summary": "Quick recall points: Strangler Fig: Replace an Old System Piece by Piece.",
+    "keywords": "strangler fig pattern legacy migration facade incremental rewrite yarp interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-strangler-fig-trap",
+    "title": "Strangler Fig: Replace an Old System Piece by Piece — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/strangler-fig.html",
+    "summary": "The classic mistake with Strangler Fig: Replace an Old System Piece by Piece.",
+    "keywords": "strangler fig pattern legacy migration facade incremental rewrite yarp trap mistake",
+    "anchor": "trap"
   }
 ]

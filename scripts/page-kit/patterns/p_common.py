@@ -93,5 +93,5 @@ def pattern_page(P):
     b += trap(P['trap'])
     b += next_box(*P['next'])
     b += fact_note(*P['facts'])
-    return page(P['slug'], P['title'], f"Concept {P['num']} of {P['total']} · {P['group']}", P['h1'], P['sub'], P['ivq'], b,
+    return page(P['slug'], P['title'], P.get('eyebrow') or f"Concept {P['num']} of {P['total']} · {P['group']}", P['h1'], P['sub'], P['ivq'], b,
                 CR + ([P['prev_crumb']] if P.get('prev_crumb') else []) + [f'<span class="cur">{P["crumb"]}</span>'], '')

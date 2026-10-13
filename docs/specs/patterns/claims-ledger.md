@@ -71,5 +71,31 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 
 
 
+## Architecture pages 16–22 — Repository/UoW, CQRS, Event Sourcing, Saga, Retry & Circuit Breaker, Cache-Aside, Strangler Fig
+| Claim | Status | Note |
+|---|---|---|
+| EF DbContext combines Unit of Work and Repository; unit of work executes on SaveChanges; custom repositories optional/for complex apps | ✅ V | Microsoft Learn: EF Core DbContext docs; .NET microservices persistence-layer guidance (via search summary) |
+| CQRS: segregate read and write operations into separate data models, optimise each independently; costs complexity and eventual consistency | ✅ V | Azure Architecture Center: CQRS pattern |
+| Event Sourcing: state change as a series of events in an immutable, append-only log; useful when reliable history matters | ✅ V | Azure Architecture Center: Event Sourcing (catalog summary) |
+| Saga: sequence of local transactions with compensating actions across microservices with independent data stores; retryable steps idempotent; dirty-read style anomalies possible | ✅ V | Azure Architecture Center: Saga |
+| Retry handles transient faults in a controlled way; bounded, exponential backoff; Retry Storm antipattern | ✅ V | Azure Architecture Center: Retry, Retry Storm antipattern |
+| Circuit Breaker: blocks access to a failing dependency after failures reach a threshold; closed/open/half-open; pairs with Retry | ✅ V | Azure Architecture Center: Circuit Breaker |
+| Cache-Aside: cache populated on demand; stale-data trade-off; fall back to source if cache unavailable | ✅ V | Azure Architecture Center: Cache-Aside, Caching guidance |
+| Strangler Fig: incremental migration behind a facade; customers unaware | ✅ V | Azure Architecture Center: Strangler Fig |
+| Polly / resilience handlers; IMemoryCache/IDistributedCache; YARP; Redis | 🟨 K | widely used .NET tools, not re-verified here |
+| Librarian/basket, café, bank statement, trip, fuse box, notebook, vine pictures; all numbers (200 ms, 2 ms, 18 months, balances, thresholds of 3 failures/30 s) | 🟦 I | teaching analogies and illustrative figures |
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.

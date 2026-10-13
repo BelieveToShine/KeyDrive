@@ -567,7 +567,14 @@
       "command",
       "state",
       "template-method",
-      "chain-of-responsibility"
+      "chain-of-responsibility",
+      "repository-unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga",
+      "circuit-breaker-retry",
+      "cache-aside",
+      "strangler-fig"
     ],
     "sub": {},
     "subTitles": {}
