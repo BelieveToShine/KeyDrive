@@ -40,5 +40,18 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Promotion #10: 1 class edited vs 0 | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 4 — Liskov Substitution
+| Claim | Status | Note |
+|---|---|---|
+| LSP: a type S is a subtype of T if objects of T may be replaced with objects of S without altering the main behavioural properties of the program; Martin's summary: derived classes must be usable wherever their base classes are | ✅ V | butunclebob.com PrinciplesOfOod; Michael Feathers (butunclebob.com) |
+| Square/Rectangle: a square has fewer behavioural freedoms (width and height locked together) and adds an invariant width = height | ✅ V | MSDN Magazine: Code Contracts — Inheritance and the Liskov Principle (learn.microsoft.com/archive) |
+| A derived class cannot add preconditions without restricting accepted values (possible runtime failures); preconditions cannot be strengthened, postconditions cannot be weakened; invariants still apply | ✅ V | same MSDN Magazine article |
+| You follow LSP if any implementation of an abstraction can be used wherever that abstraction is accepted | ✅ V | MSDN Magazine: Patterns in Practice (open/closed) archive |
+| LSP still matters in dynamic languages where inheritance is not needed for substitution (Feathers, 2006) | ✅ V | butunclebob.com ArticleS.MichaelFeathers.LiskovSubstitutionInDynamicLanguages |
+| .NET Code Contracts tooling is dated | 🟨 K | MSDN article is ~15 years old; current tooling status not checked |
+| “Throws NotSupportedException” and “is/as checks” as smells; contract-test suites per implementation | 🟨 K | widely taught practice, not quoted from a standard |
+| “Exceptions: callers cannot catch what they were never told” rule | 🟨 K | common LSP formulation (no new exceptions); not verified in a source above |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

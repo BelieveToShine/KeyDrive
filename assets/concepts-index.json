@@ -3852,5 +3852,31 @@
     "summary": "The classic mistake with O — the Open/Closed Principle.",
     "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-liskov-substitution",
+    "title": "L — the Liskov Substitution Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "Subtypes must honour the base contract: the substitution rules, Square/Rectangle, and repairing a repository that throws on Save.",
+    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions"
+  },
+  {
+    "id": "solid-liskov-substitution-recall",
+    "title": "L — the Liskov Substitution Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "Quick recall points: L — the Liskov Substitution Principle.",
+    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-liskov-substitution-trap",
+    "title": "L — the Liskov Substitution Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "The classic mistake with L — the Liskov Substitution Principle.",
+    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions trap mistake",
+    "anchor": "trap"
   }
 ]

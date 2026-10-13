@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L — the Liskov Substitution Principle — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">L — Liskov Substitution</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 4 of 12 · 🔤 The five principles</div>
+    <h1>It compiles — but does it <span class="grad-text">behave</span> like the type it claims to be?</h1>
+    <p class="sub">The Liskov Substitution Principle: contracts, the substitution rules, Square/Rectangle, and repairing a repository that throws on Save.</p>
+    <div class="interview-q">❓ "What is the Liskov Substitution Principle, and what is a classic example of violating it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="OrderService calls Save through the IOrderRepository interface; SqlOrderRepository honours the contract and the order is saved, but ReadOnlyOrderRepository throws NotSupportedException, so substituting it crashes the caller">
+<defs><marker id="ls1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,72 L320,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls1A)"/>
+<path d="M165,240 L165,205 L290,205 L290,170" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ls1A)"/>
+<path d="M475,240 L475,205 L350,205 L350,170" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ls1A)"/>
+<rect class="bx" x="230" y="16" width="180" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="42" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
+<text x="320" y="54" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">repo.Save(order)</text>
+<rect class="bx" x="210" y="120" width="220" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IOrderRepository</text>
+<text x="320" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Save(Order) : saves it</text>
+<rect class="bx" x="30" y="240" width="270" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="165" y="261.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SqlOrderRepository</text>
+<text x="165" y="274" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">saves the order ✅</text>
+<text x="165" y="286.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">contract honoured</text>
+<rect class="bx" x="340" y="240" width="270" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="475" y="261.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">ReadOnlyOrderRepository</text>
+<text x="475" y="274" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">throws NotSupportedException ❌</text>
+<text x="475" y="286.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">contract broken</text>
+<g class="arrow-pill"><rect x="284.5" y="87" width="71" height="18" rx="9"/><text x="320" y="99.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
+<g class="arrow-pill"><rect x="129.5" y="196" width="71" height="18" rx="9"/><text x="165" y="208.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
+<g class="arrow-pill"><rect x="439.5" y="196" width="71" height="18" rx="9"/><text x="475" y="208.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> OrderService depends on the <span class="kw">IOrderRepository</span> interface, which promises “<span class="kw">Save</span> stores the order”. <b>SqlOrderRepository</b> keeps that promise. <b>ReadOnlyOrderRepository</b> implements the interface too — the code compiles — but its <span class="kw">Save</span> throws <span class="kw">NotSupportedException</span>. The compiler accepted the substitute; the <i>behaviour</i> rejects it. That gap is what the Liskov Substitution Principle is about.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Anywhere you use a base type, any subtype must work</b> — without the caller knowing which one it got and without surprises.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 3 made behaviour pluggable through interfaces: the calculator accepts any <span class="kw">IDiscountRule</span>. That only works if every implementation <b>behaves</b> as the interface promises. A rule that returns a negative total, or a repository that refuses to save, makes the plug-in model unsafe.</p>
+      <p>Robert C. Martin’s summary is that derived classes must be usable wherever their base classes are. In type-theory terms, objects of type T may be replaced with objects of subtype S without altering the main behavioural properties of the program.</p>
+      <p>The classic illustration is Square and Rectangle: mathematically a square is a rectangle, but a square’s width and height are locked together, so code that sets width and height independently gets a surprise. “Is-a” in English is not enough; <b>behaves-like-a</b> is the test.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📜 The substitution rules</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Substitutability rules for a subtype: it may accept the same or more inputs, must promise the same or more in its results, must not throw new kinds of exceptions the caller does not expect, and must keep the base type invariants">
+<defs><marker id="ls2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="bx" x="10" y="12" width="305" height="130" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="162.5" y="68.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Inputs (preconditions)</text>
+<text x="162.5" y="81" text-anchor="middle" font-size="9.5" font-weight="700" fill="#67e8f9">may accept the same or MORE</text>
+<text x="162.5" y="93.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">never demand more than the base type</text>
+<rect class="bx" x="325" y="12" width="305" height="130" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="68.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Results (postconditions)</text>
+<text x="477.5" y="81" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">must promise the same or MORE</text>
+<text x="477.5" y="93.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">never deliver less than the base type</text>
+<rect class="bx" x="10" y="162" width="305" height="130" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162.5" y="218.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Errors</text>
+<text x="162.5" y="231" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fcd34d">must not throw new surprises</text>
+<text x="162.5" y="243.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">callers cannot catch what they were never told about</text>
+<rect class="bx" x="325" y="162" width="305" height="130" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="477.5" y="218.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Invariants</text>
+<text x="477.5" y="231" text-anchor="middle" font-size="9.5" font-weight="700" fill="#c4b5fd">must keep the base type’s rules</text>
+<text x="477.5" y="243.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">e.g. “width and height can change independently”</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> think of the base type as a <b>contract</b>. A subtype may be <b>more generous</b> — accept more inputs, promise more in its results — but never <b>stricter</b>: it must not demand more of callers, deliver less, throw errors callers were not told about, or break the base type’s invariants. These are the design-by-contract rules usually summarised as “preconditions cannot be strengthened, postconditions cannot be weakened”.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 LSP lab · repair the repository</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — compiles, but breaks the contract</span>
+<span class="kw">public</span> <span class="kw">interface</span> IOrderRepository
+{
+    <span class="kw">void</span> Save(Order order);
+    Order? Find(<span class="kw">int</span> id);
+}
+<span class="kw">public</span> <span class="kw">class</span> ReadOnlyOrderRepository : IOrderRepository
+{
+    <span class="kw">public</span> <span class="kw">void</span> Save(Order order) =&gt; <span class="kw">throw</span> <span class="kw">new</span> NotSupportedException();   <span class="cmt">// callers did not expect this</span>
+    <span class="kw">public</span> Order? Find(<span class="kw">int</span> id) =&gt; /* query */ <span class="kw">null</span>;
+}
+
+<span class="cmt">// AFTER — say what each client really needs (ISP and LSP work together)</span>
+<span class="kw">public</span> <span class="kw">interface</span> IOrderReader { Order? Find(<span class="kw">int</span> id); }
+<span class="kw">public</span> <span class="kw">interface</span> IOrderWriter { <span class="kw">void</span> Save(Order order); }
+
+<span class="kw">public</span> <span class="kw">class</span> SqlOrderRepository : IOrderReader, IOrderWriter { /* both */ }
+<span class="kw">public</span> <span class="kw">class</span> ReportingOrderReader : IOrderReader { /* read only: honest type */ }
+
+<span class="kw">public</span> <span class="kw">class</span> OrderService
+{
+    <span class="kw">public</span> OrderService(IOrderWriter writer) { /* needs Save: cannot be given a reader */ }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. The fix is not a cleverer subclass; it is a more honest <b>abstraction</b>: a type that cannot save should not claim to be able to (next page: Interface Segregation).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Substitution check</th><th scope="col">ReadOnlyOrderRepository as IOrderRepository</th><th scope="col">After the split</th></tr></thead><tbody><tr><th scope="row">Honours “Save stores the order”</th><td>No — throws</td><td>Cannot be passed where a writer is required</td></tr><tr><th scope="row">Caller needs <span class="kw">is</span>/<span class="kw">as</span> checks to be safe</th><td>Yes (smell)</td><td>No</td></tr><tr><th scope="row">Discovered</th><td>At runtime, in production</td><td>At compile time</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">📋 Smells of an LSP violation</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">A subclass throws <span class="kw">NotImplementedException</span> / <span class="kw">NotSupportedException</span></th><td>It cannot honour the base contract</td><td>Do not inherit; split the interface (I) or use composition</td></tr><tr><th scope="row">Callers write <span class="kw">if (x is SpecialRule)</span></th><td>The abstraction leaks; callers know the subtype</td><td>Move the behaviour into the base contract, or separate abstractions</td></tr><tr><th scope="row">An override does nothing or returns a dummy</th><td>It silently weakens a postcondition</td><td>Same as above</td></tr><tr><th scope="row">An override rejects values the base accepts</th><td>It strengthens a precondition</td><td>Accept the same inputs, or change the abstraction</td></tr><tr><th scope="row">An override changes shared state the base promised not to touch</th><td>It breaks an invariant</td><td>Use composition (see the deep dive)</td></tr><tr><th scope="row">Tests written for the base class fail for a subclass</th><td>The subtype is not substitutable</td><td>Run the same contract tests against every implementation</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">💳</span><h5>A “GiftCardPayment” cannot refund</h5><p>It implements IPaymentMethod but throws on Refund.</p><span class="sc-use">→ Separate refundable from non-refundable</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>A “DiscountRule” returns a negative total in one case</h5><p>It breaks the postcondition.</p><span class="sc-use">→ Contract tests for every rule</span></div>
+      <div class="scenario"><span class="sc-icon">🟦</span><h5>Square extends Rectangle</h5><p>Locked width and height.</p><span class="sc-use">→ Do not inherit; model both as shapes with area</span></div>
+      <div class="scenario"><span class="sc-icon">🔌</span><h5>A mock that returns null where the real one never does</h5><p>Tests pass, production fails.</p><span class="sc-use">→ Make fakes honour the contract</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Contract tests.</b> Write one test suite against the interface and run it against every implementation; a new rule class must pass the same suite. This is how LSP becomes automatic.</p>
+      <p><b>Dynamic languages.</b> Michael Feathers notes LSP still applies where inheritance is not required for substitution: what matters is behavioural compatibility.</p>
+      <p><b>Code Contracts.</b> The older .NET Code Contracts tooling modelled preconditions, postconditions and invariants explicitly; check current guidance, since the tooling is dated.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>LSP: subtypes must be usable wherever their base types are, without altering the program’s main behaviour.</li><li>A subtype may accept more and promise more; never demand more, deliver less, add new exceptions, or break invariants.</li><li>Compiling is not substituting: Square/Rectangle and ReadOnlyRepository both compile.</li><li>Smells: NotSupportedException overrides, is/as checks on subtypes, do-nothing overrides.</li><li>Fix by making the abstraction honest (smaller interfaces) or by using composition.</li><li>Run the same contract tests against every implementation.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Liskov Substitution Principle says any subtype must work wherever its base type is expected. Compiling isn’t enough — the subtype must honour the contract: accept at least the same inputs, promise at least the same results and not add surprising exceptions. When I see a subclass throwing NotSupportedException or callers checking the concrete type, I fix the abstraction, by splitting interfaces or using composition, and I run shared contract tests against every implementation."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“It is-a in real life, so it can inherit.”</b> Square is-a rectangle in geometry, not in behaviour.</p>
+      <p><b>Throwing NotSupportedException to “comply” with a fat interface.</b> The violation just moves to runtime.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🏷️ Same type</h5><p>The compiler is satisfied: the method signatures match.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🤝 Same behaviour</h5><p>The runtime is satisfied: the promises of the contract hold.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>A class that cannot honour a method should not be forced to claim it. Next: Interface Segregation — small interfaces tailored to each client. <i>(coming soon: I — the Interface Segregation Principle)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 The principle’s wording is Robert C. Martin’s summary; the contract rules follow standard design-by-contract guidance, with .NET examples from Microsoft’s MSDN Magazine archive (dated). Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/july/msdn-magazine-cutting-edge-code-contracts-inheritance-and-the-liskov-principle" target="_blank" rel="noopener">MSDN Magazine: Code Contracts, inheritance and the Liskov principle</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

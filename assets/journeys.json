@@ -476,7 +476,8 @@
     "written": [
       "why-design-principles",
       "single-responsibility",
-      "open-closed"
+      "open-closed",
+      "liskov-substitution"
     ],
     "sub": {},
     "subTitles": {}
