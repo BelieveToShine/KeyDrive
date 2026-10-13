@@ -136,8 +136,9 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🧪 Context lab · split the big context</div>
-    <p>ShopUI before: one <span class="kw">AppContext</span> holds <span class="kw">cart</span> and <span class="kw">theme</span>. Click “Add to cart”.</p>    <div class="code-block"><pre><span class="cmt">// Before — one value, rebuilt whenever cart or theme changes</span>
-&lt;AppContext.Provider value={{ cart, theme, dispatch }}&gt;
+    <p>ShopUI before: one <span class="kw">AppContext</span> holds <span class="kw">cart</span> and <span class="kw">theme</span>. Click “Add to cart”.</p>    <div class="code-block"><pre><span class="cmt">// Before — one value for everything</span>
+<span class="kw">const</span> value = { cart, theme, dispatch };   <span class="cmt">// a new object whenever cart or theme changes</span>
+&lt;AppContext.Provider value={value}&gt;
 
 <span class="cmt">// After — split by what changes together; dispatch is stable</span>
 &lt;CartStateContext.Provider value={cart}&gt;

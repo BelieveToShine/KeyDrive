@@ -64,8 +64,9 @@ def build_context_state_architecture():
          ['Separate state and dispatch contexts','<span class="kw">dispatch</span> has a stable identity, so components that only dispatch need not re-render when state changes','CartStateContext + CartDispatchContext'],
          ['Prefer local state; do not lift further than necessary','Lifted state widens the re-render and the coupling','Keep search text near the search box']]), label_cls='see')
     body += block('🧪 Context lab · split the big context', '''    <p>ShopUI before: one <span class="kw">AppContext</span> holds <span class="kw">cart</span> and <span class="kw">theme</span>. Click “Add to cart”.</p>''' + code_block(
-f'''<span class="cmt">// Before — one value, rebuilt whenever cart or theme changes</span>
-&lt;AppContext.Provider value={{{{ cart, theme, dispatch }}}}&gt;
+f'''<span class="cmt">// Before — one value for everything</span>
+{kw('const')} value = {{ cart, theme, dispatch }};   <span class="cmt">// a new object whenever cart or theme changes</span>
+&lt;AppContext.Provider value={{value}}&gt;
 
 <span class="cmt">// After — split by what changes together; dispatch is stable</span>
 &lt;CartStateContext.Provider value={{cart}}&gt;
