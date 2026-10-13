@@ -22,7 +22,8 @@ file first in any new session; it routes to everything else rather than trying t
   Disaster Recovery, SQS/SNS/EventBridge, Kinesis), written in one unattended session following `docs/rules/page-production-workflow.md`
   and `docs/rules/cloud-category-playbook.md`. **The user has not reviewed it yet** — expect corrections. Facts are in
   `docs/specs/aws/claims-ledger.md` (✅ V from AWS-docs-restricted searches; 🟨 K rows listed at the bottom still need checking).
-- Three other categories (Cloud Systems, Data Systems, Web Platforms) exist only as "coming
+- **Data Systems (SQL + Cosmos DB deep dive)** is PLANNED, not built: plan in `docs/specs/data/` (overview, concept-taxonomy S1–S16 + C1–C12, roadmap, claims-ledger). Awaiting the user's go on the plan.
+- Two other categories (Data Systems page, Web Platforms) exist only as "coming
   soon" placeholder tiles on the platform home — no hub page, no spec folder yet.
 - **Status: the user is verifying the AI category in production and applying corrections as
   they come in.** Don't start a new category or build any explicitly-deferred item without
