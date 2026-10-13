@@ -222,7 +222,18 @@ Source root: https://angular.dev/
 | Signal queries return signals; contentChild/contentChildren read projected content (direct children only unless descendants: true); view queries read the component's own template; contentChild resolves before ngAfterContentInit | ✅ V | angular.dev/guide/components/queries; api/core/ContentChild |
 | ng-template expressions are evaluated against the declaring component | ✅ V | guide/templates/ng-template |
 | View query results are not available in the constructor | 🟨 K | follows from view creation order; lifecycle page |
-| Boolean-input explosion / service-as-global-bag as design smells | 🟨 K | design advice |
+| Boolean-input explosion / service-as-global-bag as design smells; “five levels” of chained outputs | 🟨 K | design advice; “five levels” is an illustration |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Deep dive — directives & custom pipes
+| Claim | Status | Note |
+|---|---|---|
+| A custom attribute directive is a class with @Directive(); its selector defines the attribute; host bindings and events go in the host property, which the docs prefer to @HostBinding (kept for backwards compatibility); an input named like the selector lets one binding apply the directive and pass a value | ✅ V | angular.dev/guide/directives/attribute-directives; guide/components/host-elements; api/core/HostBinding |
+| hostDirectives apply directives to a component's host; their inputs/outputs are not exposed unless listed in inputs/outputs; a directive appearing more than once in the tree is de-duplicated; conflicting aliases for the same shared input raise NG8024 | ✅ V | angular.dev/guide/directives/directive-composition-api; errors/NG8024 |
+| Pipes are pure by default; pure: false = impure, avoid unless absolutely necessary; a custom pipe needs @Pipe name and a transform method (PipeTransform) | ✅ V | angular.dev/guide/templates/pipes; api/core/Pipe |
+| Intl.NumberFormat used in the example pipe | 🟨 K | standard browser API; snippet illustrative |
+| Component = directive with a template | 🟨 K | standard Angular definition |
+| 6 forms, 20 templates | 🟦 I | teaching illustrations |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
 ## Cross-page notes

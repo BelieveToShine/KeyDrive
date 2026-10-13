@@ -419,12 +419,14 @@
     "sub": {
       "lifecycle-hooks": "change-detection",
       "component-communication": "templates-control-flow",
+      "directives-pipes": "templates-control-flow",
       "http-interceptors": "rxjs-async-pipe",
       "testing-angular": "angular-clinic"
     },
     "subTitles": {
       "lifecycle-hooks": "Lifecycle hooks: what each does and when to use which",
       "component-communication": "Component communication",
+      "directives-pipes": "Directives & custom pipes",
       "http-interceptors": "HttpClient & interceptors",
       "testing-angular": "Testing Angular"
     }

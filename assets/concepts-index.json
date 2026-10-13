@@ -3592,5 +3592,31 @@
     "summary": "The classic mistake with Component communication.",
     "keywords": "angular component communication input output model ng-content content projection viewChild contentChild parent child trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-directives-pipes",
+    "title": "Directives & custom pipes",
+    "category": "Angular",
+    "page": "angular/concepts/directives-pipes.html",
+    "summary": "Attribute directives and the host property, hostDirectives composition, custom pure pipes, and choosing between component, directive and pipe.",
+    "keywords": "angular directive attribute directive hostDirectives host binding custom pipe PipeTransform pure impure component vs directive NG8024"
+  },
+  {
+    "id": "angular-directives-pipes-recall",
+    "title": "Directives & custom pipes — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/directives-pipes.html",
+    "summary": "Quick recall points: Directives & custom pipes.",
+    "keywords": "angular directive attribute directive hostDirectives host binding custom pipe PipeTransform pure impure component vs directive NG8024 interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-directives-pipes-trap",
+    "title": "Directives & custom pipes — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/directives-pipes.html",
+    "summary": "The classic mistake with Directives & custom pipes.",
+    "keywords": "angular directive attribute directive hostDirectives host binding custom pipe PipeTransform pure impure component vs directive NG8024 trap mistake",
+    "anchor": "trap"
   }
 ]

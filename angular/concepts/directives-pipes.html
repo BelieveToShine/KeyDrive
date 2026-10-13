@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directives &amp; custom pipes — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><a href="templates-control-flow.html">Templates &amp; control flow</a><span class="sep">›</span><span class="cur">Directives &amp; pipes</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Angular lab · 🎛️ Directives</div>
+    <h1>Reusable <span class="grad-text">behaviour</span> and formatting, in the right container.</h1>
+    <p class="sub">Attribute directives and the host property, directive composition with hostDirectives, writing pure pipes, and choosing between component, directive and pipe.</p>
+    <div class="interview-q">❓ "What is the difference between a component, a directive and a pipe in Angular?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Choosing between a component, a directive and a pipe: a component owns a template, a directive adds behaviour to an existing element, and a pipe transforms a value for display">
+<defs><marker id="dp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="172" width="620" height="142" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="191" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">THE QUESTION TO ASK</text>
+<rect class="bx" x="10" y="20" width="200" height="120" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="65.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧩 Component</text>
+<text x="110" y="78" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">owns a template</text>
+<text x="110" y="90" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">&lt;app-product-card&gt;</text>
+<text x="110" y="102.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">new piece of UI</text>
+<rect class="bx" x="220" y="20" width="200" height="120" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="65.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🎛️ Attribute directive</text>
+<text x="320" y="78" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">adds behaviour or styling</text>
+<text x="320" y="90" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">&lt;input appAutofocus&gt;</text>
+<text x="320" y="102.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">to an existing element</text>
+<rect class="bx" x="430" y="20" width="200" height="120" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="530" y="65.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🔧 Pipe</text>
+<text x="530" y="78" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">transforms a value</text>
+<text x="530" y="90" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">{{ price | currency }}</text>
+<text x="530" y="102.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">for display only</text>
+<text class="free" x="320" y="218" text-anchor="middle" font-size="10.5" font-weight="700" fill="#67e8f9">Does it need its own template?  → component</text>
+<text class="free" x="320" y="248" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fcd34d">Does it change how an existing element behaves or looks?  → directive</text>
+<text class="free" x="320" y="278" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6ee7b7">Does it only turn a value into text for display?  → pipe</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> three ways to package reusable template behaviour. A <b>component</b> owns a template (<span class="kw">&lt;app-product-card&gt;</span>). An <b>attribute directive</b> adds behaviour or styling to an <i>existing</i> element (<span class="kw">&lt;input appAutofocus&gt;</span>). A <b>pipe</b> only turns a value into display text (<span class="kw">{{ price | currency }}</span>). The three questions in the lower panel pick between them.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Component</b> = new UI, <b>directive</b> = new behaviour on an existing element, <b>pipe</b> = a value formatted for display.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 4 used built-in control flow and built-in pipes. Real apps repeat the same small behaviours — autofocus, tooltips, “format this as money”, “click outside to close” — and copying them into every component is the next scatter after copying HTTP logic (HTTP dive).</p>
+      <p>Angular gives each repeated thing a home: directives for behaviour, pipes for formatting, and <b>directive composition</b> (<span class="kw">hostDirectives</span>) to build bigger behaviours from small ones.</p>
+      <p>This page shows how to write each, how host bindings work, and how composition keeps parent templates unchanged.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎛️ Writing a directive</div>
+    <div class="code-block"><pre>@Directive({
+  selector: <span class="str">'[appHighlight]'</span>,                      <span class="cmt">// applied as an attribute</span>
+  host: { <span class="str">'[class.on]'</span>: <span class="str">'active()'</span>, <span class="str">'(mouseenter)'</span>: <span class="str">'active.set(true)'</span>, <span class="str">'(mouseleave)'</span>: <span class="str">'active.set(false)'</span> },
+})
+export class Highlight {
+  active = signal(false);
+  color = input(<span class="str">'yellow'</span>, { alias: <span class="str">'appHighlight'</span> });   <span class="cmt">// one binding applies it and passes a value</span>
+}
+
+&lt;p [appHighlight]=<span class="str">"'orange'"</span>&gt;Hover me&lt;/p&gt;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. The <span class="kw">host</span> property declares host bindings and event listeners; the docs prefer it to <span class="kw">@HostBinding</span>, which remains for backwards compatibility.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧱 Composing directives</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Directive composition: a component lists hostDirectives such as Tooltip and Focusable in its decorator; their inputs and outputs are hidden unless exposed, and the component gets their behaviour without the parent template changing">
+<defs><marker id="dp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="150" width="620" height="160" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">RULES</text>
+<path d="M270,45 L350,45" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dp2A)"/>
+<path d="M270,75 L310,75 L310,110 L560,110 L560,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dp2A)"/>
+<rect class="bx" x="20" y="20" width="250" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="145" y="53" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">ProductCard</text>
+<text x="145" y="65" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">hostDirectives: [Tooltip, Focusable]</text>
+<rect class="bx" x="350" y="20" width="130" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="415" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Tooltip</text>
+<text x="415" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">directive</text>
+<rect class="bx" x="500" y="20" width="120" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="560" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Focusable</text>
+<text x="560" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">directive</text>
+<text class="free" x="30" y="190" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">• Host directive inputs and outputs are not exposed unless listed in inputs / outputs.</text>
+<text class="free" x="30" y="220" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">• A directive appearing more than once in the host-directive tree is de-duplicated.</text>
+<text class="free" x="30" y="250" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">• Conflicting aliases for the same shared input raise NG8024 at compile time.</text>
+<text class="free" x="30" y="280" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">• Prefer the host property over @HostBinding for host bindings and events.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> with <span class="kw">hostDirectives</span> a component (or directive) applies other directives to its own host element — so every <span class="kw">ProductCard</span> gets a tooltip and focus handling without the parent’s template changing. Their inputs and outputs are <b>not</b> exposed on the host unless you list them. A directive reachable twice is de-duplicated; conflicting aliases raise <b>NG8024</b>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 Writing a pipe</div>
+    <div class="code-block"><pre>@Pipe({ name: <span class="str">'price'</span> })                           <span class="cmt">// pure by default</span>
+export class PricePipe <span class="kw">implements</span> PipeTransform {
+  transform(cents: number, currency = <span class="str">'USD'</span>): string {
+    <span class="kw">return</span> new Intl.NumberFormat(<span class="str">'en'</span>, { style: <span class="str">'currency'</span>, currency }).format(cents / 100);
+  }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. A pure pipe runs only when its inputs change (page 4); <span class="kw">pure: false</span> makes it run every change-detection cycle — avoid unless absolutely necessary.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Which one?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You want to…</th><th scope="col">Use</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row">Show a new piece of UI</th><td>Component</td><td>ProductCard, CartBadge</td></tr><tr><th scope="row">Add behaviour to elements (focus, tooltip, click-outside, highlight)</th><td>Attribute directive</td><td><span class="kw">appAutofocus</span></td></tr><tr><th scope="row">Reuse several behaviours on one component</th><td><span class="kw">hostDirectives</span></td><td>Card = Tooltip + Focusable</td></tr><tr><th scope="row">Format a value in many templates</th><td>Pure pipe</td><td><span class="kw">price</span>, <span class="kw">currency</span></td></tr><tr><th scope="row">Derive a value in the class</th><td><span class="kw">computed()</span></td><td>Filtered list</td></tr><tr><th scope="row">Change which template appears</th><td>Built-in control flow</td><td><span class="kw">@if</span>, <span class="kw">@for</span></td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · directive and pipe symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">A directive does nothing</th><td>Not in the component’s <span class="kw">imports</span>, or the selector does not match</td><td>Import it; check the attribute spelling</td></tr><tr><th scope="row">An input on a host directive is “unknown”</th><td>Host-directive inputs are hidden by default</td><td>List it in <span class="kw">hostDirectives: [{ directive, inputs: [...] }]</span></td></tr><tr><th scope="row">NG8024 conflicting host directive binding</th><td>Two directives expose the same input with different aliases</td><td>Align the aliases</td></tr><tr><th scope="row">A pipe result is stale after pushing to an array</th><td>A pure pipe sees the same reference</td><td>Pass a new array, or compute with a signal</td></tr><tr><th scope="row">A template runs a heavy pipe on every check</th><td>The pipe is impure</td><td>Make it pure; derive in <span class="kw">computed()</span></td></tr><tr><th scope="row">Host listeners fire on the wrong element</th><td>Listener declared on the host, not the inner element</td><td>Bind inside the template instead</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🎯</span><h5>Autofocus the first field in six forms</h5><p>Same behaviour copy-pasted.</p><span class="sc-use">→ One attribute directive</span></div>
+      <div class="scenario"><span class="sc-icon">💲</span><h5>Prices formatted in 20 templates</h5><p>Repeated formatting.</p><span class="sc-use">→ A pure price pipe</span></div>
+      <div class="scenario"><span class="sc-icon">🃏</span><h5>Every card needs a tooltip and focus ring</h5><p>Behaviour on a component.</p><span class="sc-use">→ hostDirectives</span></div>
+      <div class="scenario"><span class="sc-icon">🖱️</span><h5>Close a menu when clicking outside</h5><p>DOM behaviour.</p><span class="sc-use">→ Directive with a host listener</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Host.</b> A directive’s <span class="kw">host</span> property maps host bindings and events to class members; it is preferred over <span class="kw">@HostBinding</span>/<span class="kw">@HostListener</span>.</p>
+      <p><b>Directive inputs named like the selector</b> let one binding both apply the directive and pass a value.</p>
+      <p><b>Pipes in classes.</b> Pipes are classes with a <span class="kw">transform</span> method; you can also call that method from code when you need the formatted value there.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Component = template; directive = behaviour on an existing element; pipe = value formatting.</li><li>A directive is a class with <span class="kw">@Directive({ selector })</span>; host bindings and events go in the <span class="kw">host</span> property.</li><li><span class="kw">hostDirectives</span> composes directives onto a component; inputs/outputs are exposed only if listed.</li><li>A custom pipe implements <span class="kw">PipeTransform</span>; pure by default.</li><li>NG8024 = conflicting aliases for a shared host-directive input.</li><li>Prefer <span class="kw">computed()</span> to a pipe for class-side derivation.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I write a component when I need a template, an attribute directive when I need reusable behaviour on an existing element, and a pure pipe to format values. I use hostDirectives to compose behaviours onto a component without touching the parent template, and I avoid impure pipes."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>An impure pipe for convenience.</b> It runs on every check of every instance.</p>
+      <p><b>A component where a directive would do.</b> You gain a wrapper element and lose flexibility.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🎛️ Directive</h5><p>Adds behaviour to an existing element or component.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧩 Component</h5><p>A directive with a template of its own.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: templates, control flow and pipes.</span>
+      <a class="next-link" href="templates-control-flow.html">Templates, control flow & pipes <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/directives/attribute-directives" target="_blank" rel="noopener">Attribute directives</a> · <a href="https://angular.dev/guide/directives/directive-composition-api" target="_blank" rel="noopener">Directive composition API</a> · <a href="https://angular.dev/guide/components/host-elements" target="_blank" rel="noopener">Host elements</a> · <a href="https://angular.dev/guide/templates/pipes" target="_blank" rel="noopener">Pipes</a> · <a href="https://angular.dev/errors/NG8024" target="_blank" rel="noopener">NG8024</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
