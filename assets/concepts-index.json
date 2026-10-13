@@ -2578,5 +2578,31 @@
     "summary": "The classic mistake with Change feed & event-driven reads.",
     "keywords": "cosmos db change feed processor lease container read model materialized view event driven at least once idempotent trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-global-distribution",
+    "title": "Global distribution & multi-region writes",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/global-distribution.html",
+    "summary": "Single vs multiple write regions, failover, conflict resolution policies and the cost of extra regions.",
+    "keywords": "cosmos db global distribution multi region writes failover conflict resolution last write wins custom merge read regions"
+  },
+  {
+    "id": "cosmos-global-distribution-recall",
+    "title": "Global distribution & multi-region writes — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/global-distribution.html",
+    "summary": "Quick recall points: Global distribution & multi-region writes.",
+    "keywords": "cosmos db global distribution multi region writes failover conflict resolution last write wins custom merge read regions interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-global-distribution-trap",
+    "title": "Global distribution & multi-region writes — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/global-distribution.html",
+    "summary": "The classic mistake with Global distribution & multi-region writes.",
+    "keywords": "cosmos db global distribution multi region writes failover conflict resolution last write wins custom merge read regions trap mistake",
+    "anchor": "trap"
   }
 ]

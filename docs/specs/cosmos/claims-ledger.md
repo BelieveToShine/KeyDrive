@@ -155,6 +155,22 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | SQL change tracking/CDC, DynamoDB streams analogies | 🟨 K | other-engine pointers |
 | 150 RU dashboard, “150,000 RU/s”, 1,000 reads/s, read-model RU figures, 100 managers × 10/s | 🟦 I | teaching numbers |
 
+## Page 11 — global distribution
+| Claim | Status | Note |
+|---|---|---|
+| Multi-write accounts: default Last Write Wins (system timestamp; NoSQL API can use a custom numeric property); Custom policy = merge stored procedure set at container creation; failed/missing merge → conflicts feed | ✅ V | Conflict resolution policies |
+| Service-managed failover promotes the next region in priority order; original region not promoted back automatically | ✅ V | High availability / failover docs |
+| Manual failover should not be triggered during an outage of source or destination | ✅ V | same |
+| Per-partition automatic failover redirects writes for affected partitions (single-write NoSQL accounts) | ✅ V | Per-partition automatic failover |
+| Read-region outage: clients redirect reads automatically; keep enough RU in other regions | ✅ V | same |
+| Multi-write and service-managed failover cannot be enabled together | ✅ V | PowerShell guide (search) |
+| Strict uniqueness cannot be enforced across regions at write without strong consistency | ✅ V | MS Q&A (community-sourced) — kept as a caution |
+| Strong consistency not available with multi-region writes | 🟨 K | confirm in Consistency/Global distribution docs |
+| Bounded staleness suggested for single-write accounts with “two regions” or more | ✅ V | Consistency level choices |
+| Storage and write RU scale with the number of regions | ✅ V | Request units (“write RU increases with regions”); storage K |
+| Azure SQL failover groups; DynamoDB global tables analogies | 🟨 K | other-engine pointers |
+| 120 ms / 10 ms latencies, ≈ 3× storage, 3-region shop | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

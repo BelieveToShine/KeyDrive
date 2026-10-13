@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global distribution &amp; multi-region writes — Cosmos DB — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🌌 Cosmos DB Performance Lab</a><span class="sep">›</span><span class="cur">Global distribution</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 12 · 🌍 At scale</div>
+    <h1>Add regions to bring data <span class="grad-text">close to users</span> — and decide how to handle two regions writing at once.</h1>
+    <p class="sub">Single vs multiple write regions, failover, the conflict policies, and what every extra region costs.</p>
+    <div class="interview-q">❓ "How would you make a Cosmos DB application fast and resilient for users on three continents?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A global account replicates data to several regions; with a single write region, reads are served nearby and writes travel to one region, while with multiple write regions every region accepts writes and conflicts are resolved by a policy">
+<defs><marker id="gd1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="324" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">SINGLE WRITE REGION</text>
+<rect class="zone" x="325" y="8" width="305" height="324" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">MULTIPLE WRITE REGIONS</text>
+<path d="M140,90 L82,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#gd1A)"/>
+<path d="M185,90 L242,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#gd1A)"/>
+<path d="M455,90 L397,190" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gd1A)" marker-start="url(#gd1S)"/>
+<path d="M505,90 L557,190" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gd1A)" marker-start="url(#gd1S)"/>
+<path d="M457,215 L497,215" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gd1A)" marker-start="url(#gd1S)"/>
+<rect class="bx" x="110" y="40" width="105" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="162.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🌍 West</text>
+<text x="162.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">writes + reads</text>
+<rect class="bx" x="22" y="190" width="120" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="82" y="212.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">East</text>
+<text x="82" y="225.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">reads</text>
+<rect class="bx" x="182" y="190" width="120" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="242" y="212.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Asia</text>
+<text x="242" y="225.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">reads</text>
+<text class="free" x="162" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Writes from Asia travel to West.</text>
+<text class="free" x="162" y="288" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Failover promotes another region.</text>
+<rect class="bx" x="430" y="40" width="100" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🌍 West</text>
+<text x="480" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">read + write</text>
+<rect class="bx" x="337" y="190" width="120" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="397" y="212.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">East</text>
+<text x="397" y="225.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">read + write</text>
+<rect class="bx" x="497" y="190" width="120" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="557" y="212.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Asia</text>
+<text x="557" y="225.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">read + write</text>
+<text class="free" x="477" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Every region writes locally — fast.</text>
+<text class="free" x="477" y="288" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Two writes to one item can collide.</text>
+<g class="arrow-pill"><rect x="80.5" y="129" width="39" height="18" rx="9"/><text x="100" y="141.5" text-anchor="middle" font-size="9" font-style="italic">copy</text></g>
+<g class="arrow-pill"><rect x="202.5" y="129" width="39" height="18" rx="9"/><text x="222" y="141.5" text-anchor="middle" font-size="9" font-style="italic">copy</text></g>
+<g class="arrow-pill"><rect x="394.5" y="129" width="39" height="18" rx="9"/><text x="414" y="141.5" text-anchor="middle" font-size="9" font-style="italic">sync</text></g>
+<g class="arrow-pill"><rect x="520.5" y="129" width="39" height="18" rx="9"/><text x="540" y="141.5" text-anchor="middle" font-size="9" font-style="italic">sync</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one account, several regions. <b>Left — a single write region</b>: one region takes all writes and copies them to the others; every region can serve reads close to users; writes from far away travel to the write region, and if it fails another region is promoted. <b>Right — multiple write regions</b>: every region accepts writes locally, so writes are fast everywhere — but two regions can update the <b>same item</b> at nearly the same time, so a <b>conflict resolution policy</b> must decide the winner.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Add regions to bring data <b>close to users</b> and to <b>survive a region loss</b>. Choose single-write for simplicity, multi-write for local write speed — and plan for conflicts.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 9 explained that data has copies and that readers choose how fresh a copy must be. Global distribution is the same idea at the scale of the planet: copies in <b>several regions</b>, so a user in Mumbai reads from Mumbai, and a region outage does not take the app down.</p>
+      <p>The new costs are real: <b>more regions multiply storage and write RU</b>, and <b>multi-region writes introduce conflicts</b>. This page covers the options, the failure story, and the conflict story.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The three configurations</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#a78bfa"><h4>📍 Single region</h4><span class="pk-tag">simplest and cheapest</span><span class="pk-label use">✅ Pick it when</span><ul><li>Users in one geography</li><li>Early stage / dev-test</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Far-away users see high latency</li><li>A region outage is an outage</li></ul></div>
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🌐 Multiple read regions, one write region</h4><span class="pk-tag">fast reads everywhere, one place for writes</span><span class="pk-label use">✅ Pick it when</span><ul><li>Read-heavy global apps</li><li>Automatic regional failover (service-managed) promotes the next region in your priority order</li><li>No write conflicts to design for</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Writes from far regions pay the round trip to the write region</li></ul></div>
+      <div class="pick-card" style="--pick:#34d399"><h4>✍️ Multiple write regions</h4><span class="pk-tag">local writes everywhere</span><span class="pk-label use">✅ Pick it when</span><ul><li>Write-heavy global apps that need low write latency in every region</li><li>You can tolerate conflict resolution</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Strong consistency is not available with multiple write regions (check the docs)</li><li>Service-managed failover and multi-write cannot be enabled together</li><li>Unique-value rules cannot be enforced across regions at write time</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚔️ When two regions write the same item</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Conflict resolution: two regions update the same item at nearly the same time; Last Write Wins keeps the one with the highest timestamp or custom property, a custom policy runs your merge procedure">
+<defs><marker id="gd2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M180,53 L215,53 L215,100 L250,100" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M180,163 L215,163 L215,120 L250,120" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M390,100 L420,100 L420,60 L450,60" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M390,120 L420,120 L420,170 L450,170" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<rect class="bx" x="10" y="20" width="170" height="66" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="95" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🌍 West writes</text>
+<text x="95" y="57.75" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">qty = 3</text>
+<text x="95" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">t = 10:00:01.2</text>
+<rect class="bx" x="10" y="130" width="170" height="66" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="95" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🌏 Asia writes</text>
+<text x="95" y="167.75" text-anchor="middle" font-size="11" font-weight="600" fill="#c4b5fd" font-family="'JetBrains Mono'">qty = 5</text>
+<text x="95" y="180.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">t = 10:00:01.7</text>
+<rect class="bx" x="250" y="70" width="140" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="101.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">⚔️ Conflict</text>
+<text x="320" y="114" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">same item, two writers</text>
+<text x="320" y="126.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">resolved by policy</text>
+<rect class="bx" x="450" y="20" width="180" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="540" y="51.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Last Write Wins (default)</text>
+<text x="540" y="64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">highest timestamp (or</text>
+<text x="540" y="76.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">numeric property) wins → 5</text>
+<rect class="bx" x="450" y="130" width="180" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="540" y="161.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Custom</text>
+<text x="540" y="174" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">your merge stored</text>
+<text x="540" y="186.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">procedure; else conflicts feed</text>
+<text class="free" x="320" y="262" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">All regions converge on one winner. Design to avoid conflicts: let one region “own” each customer.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> West and Asia both change the same item within a second. Cosmos DB detects the conflict and applies the container’s <b>policy</b>. <b>Last Write Wins</b> (the default) keeps the write with the highest system timestamp — or the highest value of a numeric property you nominate (NoSQL API) — so all regions converge on one winner. A <b>Custom</b> policy runs a <b>merge stored procedure</b> you register (set at container creation); if it is missing or fails, the conflict goes to the <b>conflicts feed</b> for your application to resolve. The best conflict policy is a design that avoids conflicts.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · the 3-region shop</div>
+    <p>ShopDB users are in India, Europe and the US. Today everything runs in one region (West Europe). Illustrative numbers; measure your own latency and RU.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Design</th><th scope="col">User in Mumbai: read / write</th><th scope="col">Region outage</th><th scope="col">Cost shape</th></tr></thead><tbody><tr><th scope="row">A. One region</th><td>≈ 120 ms read / ≈ 120 ms write</td><td>Outage</td><td>1×</td></tr><tr><th scope="row">B. + read regions in India and US (one write region)</th><td>≈ 10 ms read / ≈ 120 ms write</td><td>Another region is promoted (service-managed failover)</td><td>≈ 3× storage; writes replicate to all regions; provision RU in every region</td></tr><tr><th scope="row">C. B with multi-region writes and “home region per customer”</th><td>≈ 10 ms read / ≈ 10 ms write</td><td>Remaining regions keep writing</td><td>as B, plus conflict design</td></tr></tbody></table></div>
+    <p style="margin-top:14px"><b>Change one thing.</b> Start with B: it fixes read latency and region loss without conflicts. Move to C only if write latency is a measured problem — and keep each customer’s writes in one region so conflicts stay rare.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 What did it cost?</h4><p>The RU charge and latency of one request — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Read the diagnostics</h4><p>Query metrics, partitions touched, indexed vs retrieved documents.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A fan-out, a scan, a hot key, a fat document?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Wrong partition key? Missing composite index? Wrong shape?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same request, same data, lower RU charge.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · multi-region symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Writes slow for users far from the write region</th><td>Single write region</td><td>Multi-region writes, or route those users’ writes sensibly</td></tr><tr><th scope="row">Reads after a write look stale in another region</th><td>Session/weaker consistency across regions</td><td>Use session consistency with the token; strong only if the account allows</td></tr><tr><th scope="row">Bill rose ≈ N× after adding regions</th><td>Storage and write RU replicate to every region</td><td>Add regions deliberately; keep RU provisioned per region sensible</td></tr><tr><th scope="row">409 / lost updates in multi-write</th><td>Conflicting writes to the same item</td><td>Home-region ownership; custom merge; LWW on a meaningful property</td></tr><tr><th scope="row">Failover happened and the old region did not come back as primary</th><td>Service-managed failover does not promote the original region back automatically</td><td>Plan the fail-back deliberately</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📱</span><h5>Social app, global readers</h5><p>Most traffic is reads of recent posts.</p><span class="sc-use">→ Read regions, one write region</span></div>
+      <div class="scenario"><span class="sc-icon">🎮</span><h5>Game saves in 3 continents</h5><p>Players write constantly, near home.</p><span class="sc-use">→ Multi-region writes, home region per player</span></div>
+      <div class="scenario"><span class="sc-icon">🏦</span><h5>Ledger that must never conflict</h5><p>Strict single-writer rules.</p><span class="sc-use">→ One write region</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>Dev/test</h5><p>No need for resilience.</p><span class="sc-use">→ Single region</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Failover.</b> For single-write accounts, service-managed failover promotes the next region in the priority order you set; the original region is not promoted back automatically after it recovers. Manual failover should not be triggered during an outage of the source or destination region.</p>
+      <p><b>Per-partition failover.</b> A newer capability redirects writes only for affected partitions to the next preferred region (single-write NoSQL accounts) — check availability.</p>
+      <p><b>Read-region outage.</b> Clients redirect reads to other regions automatically; make sure those regions have enough provisioned RU for the extra traffic.</p>
+      <p><b>Bounded staleness.</b> The docs suggest it for single-write accounts with two or more regions where near-strong behaviour across regions is wanted.</p>
+      <p><b>Other engines.</b> Azure SQL’s geo-replication and failover groups (SQL page 15) and DynamoDB global tables answer the same question with different trade-offs.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Add regions for latency (readers near users) and resilience (region loss).</li><li>Single write region: no conflicts, service-managed failover promotes the next region in priority order; far writes pay latency.</li><li>Multiple write regions: local writes everywhere; conflicts resolved by a policy — Last Write Wins (default, by timestamp or a numeric property) or Custom merge procedure (conflicts feed otherwise).</li><li>Multi-write and service-managed failover cannot be enabled together; strong consistency is not available with multi-write.</li><li>Every region multiplies storage and write RU.</li><li>Best conflict policy: avoid conflicts (one home region per entity).</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I add regions to put data near users and survive a region loss. I start with multiple read regions and one write region — no conflicts and automatic failover — and move to multi-region writes only if write latency is a measured problem, keeping each entity’s writes in a home region and choosing a conflict policy: Last Write Wins on a meaningful property, or a custom merge procedure. I remember that regions multiply storage and write RU."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Multi-write “because global”.</b> You gain write latency and take on conflicts; most apps need only read regions.</p>
+      <p><b>Forgetting RU per region.</b> A read region that cannot absorb a failed-over region’s traffic turns an outage into 429s.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📖 Read region</h5><p>A copy that serves reads and takes over on failover.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>✍️ Write region</h5><p>Accepts writes. One (default) or several (conflicts possible).</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You now know the whole toolbox. The last page is practice: eight cost cases to diagnose with the ladder. Next: the Cosmos cost clinic. <i>(coming soon: Capstone: the Cosmos cost clinic)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Regions, failover options and conflict features change. For current details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/conflict-resolution-policies" target="_blank" rel="noopener">Conflict resolution policies</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/high-availability" target="_blank" rel="noopener">High availability</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels" target="_blank" rel="noopener">Consistency levels</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally" target="_blank" rel="noopener">Distribute data globally</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Cosmos DB · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

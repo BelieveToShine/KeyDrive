@@ -296,7 +296,8 @@
       "query-metrics",
       "hot-partitions-429",
       "consistency-levels",
-      "change-feed"
+      "change-feed",
+      "global-distribution"
     ],
     "sub": {},
     "subTitles": {}
