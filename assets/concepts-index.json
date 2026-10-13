@@ -2942,5 +2942,31 @@
     "summary": "The classic mistake with Code splitting & bundle weight.",
     "keywords": "react code splitting lazy dynamic import bundle size suspense chunk bundle analyzer performance trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-react-hooks-guide",
+    "title": "Hooks: what each does and when to use which",
+    "category": "React",
+    "page": "react/concepts/react-hooks-guide.html",
+    "summary": "Every built-in React hook: what it answers, whether it re-renders, when to use it; where a value should live; the Rules of Hooks.",
+    "keywords": "react hooks useState useReducer useContext useRef useEffect useLayoutEffect useMemo useCallback useId useTransition useSyncExternalStore rules of hooks which hook"
+  },
+  {
+    "id": "react-react-hooks-guide-recall",
+    "title": "Hooks: what each does and when to use which — interview recall",
+    "category": "React",
+    "page": "react/concepts/react-hooks-guide.html",
+    "summary": "Quick recall points: Hooks: what each does and when to use which.",
+    "keywords": "react hooks useState useReducer useContext useRef useEffect useLayoutEffect useMemo useCallback useId useTransition useSyncExternalStore rules of hooks which hook interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-react-hooks-guide-trap",
+    "title": "Hooks: what each does and when to use which — common trap",
+    "category": "React",
+    "page": "react/concepts/react-hooks-guide.html",
+    "summary": "The classic mistake with Hooks: what each does and when to use which.",
+    "keywords": "react hooks useState useReducer useContext useRef useEffect useLayoutEffect useMemo useCallback useId useTransition useSyncExternalStore rules of hooks which hook trap mistake",
+    "anchor": "trap"
   }
 ]

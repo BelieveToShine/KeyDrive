@@ -14,7 +14,7 @@
 | 11 | Code splitting & bundle weight | code-splitting-bundles | ✅ written |
 | 12 | Capstone: the React performance clinic | react-clinic | 🔒 planned |
 | ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
-| ➕ | Deep dive: Hooks: what each does and when to use which | react-hooks-guide | 🔒 planned (sub page of effects) |
+| ➕ | Deep dive: Hooks: what each does and when to use which | react-hooks-guide | ✅ written (sub page of effects) |
 | ➕ | Deep dive: Refs and the DOM | refs-and-dom | 🔒 planned (sub page of effects) |
 | ➕ | Deep dive: Custom hooks & the Rules of Hooks | custom-hooks | 🔒 planned (sub page of effects) |
 | ➕ | Deep dive: Forms & actions | forms-actions | 🔒 planned (sub page of data-fetching-suspense) |

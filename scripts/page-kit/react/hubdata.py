@@ -41,3 +41,12 @@ TEXT = dict(
  dataset_intro='Every page uses the same small shop front-end, so numbers stay comparable. The counts and milliseconds are <b>illustrative teaching data</b> — always measure your own app in the Profiler.',
  dataset_cols=('Part of ShopUI','What it does','Teaching size'),
  dataset_rows=[('ProductList','renders one ProductCard per product','500 products'),('SearchBox','filters the list on every keystroke','one text input'),('Cart','shows items and the total','1–20 items'),('Checkout','a form with address and payment fields','about 12 fields')])
+SUBD = {'react-hooks-guide': 'What every built-in hook does, whether it re-renders, when to use it — plus where a value should live and the Rules of Hooks.',
+        'refs-and-dom': 'Refs, DOM access, focus and measuring; when a ref is the right tool.',
+        'custom-hooks': 'Share logic between components with your own hooks, and the rules that keep them safe.',
+        'forms-actions': 'Controlled and uncontrolled inputs, form actions, pending state and optimistic updates.',
+        'error-boundaries': 'What happens when rendering throws, and how to contain it.',
+        'api-layer-caching': 'A single place for requests, auth headers, retries and caching — React’s version of interceptors.',
+        'routing-navigation': 'React has no built-in router: what frameworks and routers add, nested layouts and route-level splitting.',
+        'testing-react': 'What to test in a component and how to wait for updates.',
+        'react-vs-angular': 'The same ShopUI problem solved in both frameworks, side by side.'}

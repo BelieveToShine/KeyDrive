@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooks: what each does and when to use which — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="effects.html">Effects</a><span class="sep">›</span><span class="cur">Hooks guide</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 🪝 Hooks</div>
+    <h1>Every built-in hook, <span class="grad-text">what it answers</span> and when to use it.</h1>
+    <p class="sub">A map from what you need to the hook that does it, a table of all built-in hooks, where a value should live, and the Rules of Hooks.</p>
+    <div class="interview-q">❓ "What is the difference between useState, useRef, useContext, useReducer and useEffect — and when do you use each?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 312" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A map from what you need to the hook that does it: state and reducers to remember values that change the screen, refs to remember values that do not, context to share, effects to sync, memo hooks to skip work, transitions to stay responsive, action hooks for forms, and library-level helpers">
+<defs><marker id="hk1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hk1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hk1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="bx" x="10" y="8" width="200" height="88" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Remember a value</text>
+<text x="110" y="55.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">useState · useReducer</text>
+<text x="110" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">it changes what is on screen</text>
+<rect class="bx" x="220" y="8" width="200" height="88" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Remember, no re-render</text>
+<text x="320" y="55.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">useRef</text>
+<text x="320" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">timer id, DOM node, last value</text>
+<rect class="bx" x="430" y="8" width="200" height="88" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="43.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Read a shared value</text>
+<text x="530" y="55.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">useContext</text>
+<text x="530" y="68.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">theme, current user, cart</text>
+<rect class="bx" x="10" y="108" width="200" height="88" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="110" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Sync with outside</text>
+<text x="110" y="155.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">useEffect · useLayoutEffect</text>
+<text x="110" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">network, timers, measuring</text>
+<rect class="bx" x="220" y="108" width="200" height="88" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Skip repeated work</text>
+<text x="320" y="155.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">memo · useMemo · useCallback</text>
+<text x="320" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">only after a profile says so</text>
+<rect class="bx" x="430" y="108" width="200" height="88" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="530" y="143.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Keep the UI responsive</text>
+<text x="530" y="155.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">useTransition · useDeferredValue</text>
+<text x="530" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">search box, tab switch</text>
+<rect class="bx" x="10" y="208" width="200" height="88" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="110" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Forms and actions</text>
+<text x="110" y="255.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">useActionState · useFormStatus</text>
+<text x="110" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">submit, pending, errors</text>
+<rect class="bx" x="220" y="208" width="200" height="88" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Show the result early</text>
+<text x="320" y="255.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">useOptimistic</text>
+<text x="320" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">before the server answers</text>
+<rect class="bx" x="430" y="208" width="200" height="88" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="530" y="243.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Library-level helpers</text>
+<text x="530" y="255.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">useSyncExternalStore · useId</text>
+<text x="530" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">external stores, accessibility ids</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> nine things you need to do in a React component and the hook (or hooks) that does each. Start from the need, not the hook name: <b>remember something that changes the screen</b> → state; <b>remember something that does not</b> → a ref; <b>share a value</b> → context; <b>talk to the outside world</b> → an effect; <b>skip repeated work</b> → memoization; <b>stay responsive</b> → transitions; <b>submit a form</b> → action hooks; the last box holds hooks mostly useful to library authors.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Do not memorise hooks — memorise <b>the question each one answers</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–11 introduced hooks one at a time, where the story needed them. But when you open a real codebase you meet all of them at once, and the everyday question becomes: “I need to do X — which hook?”.</p>
+      <p>This page is the reference for that question: what every built-in hook does, whether it triggers a render, when to use it, and the mistake people usually make with it. It also shows the two <b>Rules of Hooks</b>, which the linter enforces for you.</p>
+      <p>Use it next to pages 2 (state), 4 (effects), 6 (memoization), 8 (context) and 9 (Suspense and transitions), which explain the behaviour in depth.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Where should this value live?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">The value is…</th><th scope="col">Put it in…</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Calculable from props or state</th><td>A plain variable in render</td><td>No state, no effect, never out of sync (page 4)</td></tr><tr><th scope="row">Something the user changes and the screen shows</th><td><span class="kw">useState</span> (or <span class="kw">useReducer</span>)</td><td>Setting it triggers a render</td></tr><tr><th scope="row">Something you must remember but never display (timer id, DOM node, previous value)</th><td><span class="kw">useRef</span></td><td>Changing it does not re-render</td></tr><tr><th scope="row">Read by many distant components</th><td><span class="kw">useContext</span> (provider above)</td><td>Avoids prop drilling; every reader re-renders on change (page 8)</td></tr><tr><th scope="row">Owned by a server</th><td>A data layer or Suspense-enabled source</td><td>Caching, loading, errors (page 9)</td></tr><tr><th scope="row">Owned by the browser (online status, media queries)</th><td><span class="kw">useSyncExternalStore</span> or a custom hook around it</td><td>Reads data that changes outside React</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 Every built-in hook: what it does and when to use it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Hook</th><th scope="col">What it does</th><th scope="col">Re-renders?</th><th scope="col">Use it when · watch out</th></tr></thead><tbody><tr><th scope="row"><span class="kw">useState</span></th><td>Declares a state variable</td><td>Yes, when set</td><td>A value the screen shows · never mutate; updater form for “based on previous”</td></tr><tr><th scope="row"><span class="kw">useReducer</span></th><td>State with update logic in a reducer function</td><td>Yes, when dispatched</td><td>Many kinds of updates to one state · <span class="kw">dispatch</span> is stable</td></tr><tr><th scope="row"><span class="kw">useContext</span></th><td>Reads and subscribes to a context</td><td>Yes, when the value changes</td><td>Shared values · memo does not block it; split contexts</td></tr><tr><th scope="row"><span class="kw">useRef</span></th><td>Holds a value not needed for rendering; also DOM nodes</td><td>No</td><td>Timer ids, DOM access · do not read or write <span class="kw">ref.current</span> during render</td></tr><tr><th scope="row"><span class="kw">useEffect</span></th><td>Connects a component to an external system, after commit</td><td>No (it can set state)</td><td>Network, subscriptions, timers · needs cleanup; correct dependencies</td></tr><tr><th scope="row"><span class="kw">useLayoutEffect</span></th><td>Like useEffect, but fires before the browser repaints</td><td>No</td><td>Measuring layout before paint · blocks painting; prefer useEffect</td></tr><tr><th scope="row"><span class="kw">useMemo</span></th><td>Caches the result of a calculation between renders</td><td>No</td><td>A slow calculation, or a stable object for memo · optimisation only</td></tr><tr><th scope="row"><span class="kw">useCallback</span></th><td>Caches a function definition between renders</td><td>No</td><td>A function passed to a memoized child · optimisation only</td></tr><tr><th scope="row"><span class="kw">useTransition</span></th><td>Renders part of the UI in the background; gives <span class="kw">isPending</span></td><td>Yes, for the transition</td><td>Non-urgent updates (tab switch, navigation)</td></tr><tr><th scope="row"><span class="kw">useDeferredValue</span></th><td>Lets part of the UI lag behind a value</td><td>Yes, a second lower-priority render</td><td>Live search over a heavy list</td></tr><tr><th scope="row"><span class="kw">use</span></th><td>Reads a promise or context during render</td><td>—</td><td>Suspense-enabled data · the promise must be cached</td></tr><tr><th scope="row"><span class="kw">useSyncExternalStore</span></th><td>Subscribes to an external store</td><td>Yes, when the store changes</td><td>Libraries and browser APIs · you give it subscribe and getSnapshot</td></tr><tr><th scope="row"><span class="kw">useId</span></th><td>A stable unique id per component instance</td><td>No</td><td>Linking labels to inputs, accessibility · never for list keys</td></tr><tr><th scope="row"><span class="kw">useActionState</span></th><td>State updated from the result of a form action; gives an action and a pending flag</td><td>Yes</td><td>Form submission results (page forms-actions)</td></tr><tr><th scope="row"><span class="kw">useFormStatus</span></th><td>Status of the last form submission (react-dom)</td><td>Yes</td><td>A submit button inside a form · only works in a component rendered inside the form</td></tr><tr><th scope="row"><span class="kw">useOptimistic</span></th><td>Shows a temporary value while an async action runs</td><td>Yes</td><td>Instant feedback · call the setter inside an action or transition</td></tr><tr><th scope="row"><span class="kw">useImperativeHandle</span></th><td>Customises the ref a component exposes</td><td>No</td><td>Rarely — a deliberate escape hatch</td></tr><tr><th scope="row"><span class="kw">useDebugValue</span></th><td>Adds a label to a custom hook in DevTools</td><td>No</td><td>Library authors</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📏 The Rules of Hooks</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Rules of Hooks: call hooks at the top level of a component or custom hook, before any early return, and never inside loops, conditions, nested functions or try blocks">
+<defs><marker id="hk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">✅ ALLOWED</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">❌ NOT ALLOWED</text>
+<rect class="bx" x="24" y="36" width="277" height="178" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="38" y="58" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#a7f0d0">function Cart() {</text>
+<text x="50" y="74" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">const [open, setOpen] = useState(false);</text>
+<text x="50" y="90" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">const total = useCartTotal();</text>
+<text x="50" y="106" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">useEffect(() =&gt; { /* … */ }, []);</text>
+<text x="50" y="122" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#a7f0d0">if (!open) return null;</text>
+<text x="50" y="138" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#a7f0d0">return &lt;Drawer /&gt;;</text>
+<text x="38" y="154" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#a7f0d0">}</text>
+<text class="free" x="162" y="246" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Same hooks, same order, every render.</text>
+<text class="free" x="162" y="264" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Early returns come after the hooks.</text>
+<rect class="bx" x="339" y="36" width="277" height="178" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="353" y="58" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">if (loggedIn) {</text>
+<text x="365" y="74" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">const [user] = useState(null);</text>
+<text x="353" y="90" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">}                       // condition</text>
+<text x="353" y="106" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">for (const p of items) {</text>
+<text x="365" y="122" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">useEffect(() =&gt; {}, []);</text>
+<text x="353" y="138" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">}                       // loop</text>
+<text x="353" y="154" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">function onClick() {</text>
+<text x="365" y="170" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcd34d">useState(0);</text>
+<text x="353" y="186" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#fcc3cb">}                       // nested function</text>
+<text class="free" x="477" y="246" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">The order of hooks would change</text>
+<text class="free" x="477" y="264" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">between renders.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: hooks are called at the <b>top level</b> of a component or custom hook, always in the same order, with any early return <i>after</i> them. <b>Right</b>: hooks inside a condition, a loop or a nested function are not allowed — the set of hooks would change between renders. The docs add: do not call hooks in try/catch/finally blocks or from regular JavaScript functions. The <span class="kw">eslint-plugin-react-hooks</span> linter checks these rules for you.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Pick-the-hook lab · six ShopUI jobs</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">The job</th><th scope="col">Hook</th><th scope="col">Why this one</th></tr></thead><tbody><tr><th scope="row">Remember what the user typed in the search box</th><td><span class="kw">useState</span></td><td>It changes what is on screen</td></tr><tr><th scope="row">Cart with add, remove, clear, and quantity rules</th><td><span class="kw">useReducer</span> (+ context, page 8)</td><td>Many update kinds; one place decides how state changes</td></tr><tr><th scope="row">Remember the id of a debounce timer</th><td><span class="kw">useRef</span></td><td>Never shown; changing it must not re-render</td></tr><tr><th scope="row">Focus the search box when the page opens</th><td><span class="kw">useRef</span> for the node + an effect or ref callback</td><td>A DOM node is outside React’s render output</td></tr><tr><th scope="row">Tooltip must be measured before it appears</th><td><span class="kw">useLayoutEffect</span></td><td>Runs before paint; avoids a visible jump</td></tr><tr><th scope="row">A label tied to a checkout input</th><td><span class="kw">useId</span></td><td>Unique and stable, also across server and client</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · hook symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“Rendered more hooks than during the previous render”</th><td>A hook is inside a condition or after an early return</td><td>Move all hooks to the top, before returns</td></tr><tr><th scope="row">A value in a ref does not update the screen</th><td>Refs do not trigger renders</td><td>Use state for anything displayed</td></tr><tr><th scope="row"><span class="kw">useEffect</span> shows an old value</th><td>Missing dependency</td><td>Add it; follow the linter (page 4)</td></tr><tr><th scope="row"><span class="kw">useFormStatus</span> never says pending</th><td>Called in the component that renders the form</td><td>Call it in a child rendered inside the form</td></tr><tr><th scope="row">Layout flickers on first paint</th><td>Measuring in useEffect, after paint</td><td><span class="kw">useLayoutEffect</span>, used sparingly</td></tr><tr><th scope="row">Everything wrapped in useMemo/useCallback</th><td>Optimising without a profile</td><td>Remove it; profile first (pages 5–6)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🧭</span><h5>A new teammate asks “state or ref?”</h5><p>Does the screen show it?</p><span class="sc-use">→ Shown → state; not shown → ref</span></div>
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart logic is spread over ten handlers</h5><p>Scattered updates.</p><span class="sc-use">→ useReducer</span></div>
+      <div class="scenario"><span class="sc-icon">📐</span><h5>A popover jumps after it appears</h5><p>Measured after paint.</p><span class="sc-use">→ useLayoutEffect</span></div>
+      <div class="scenario"><span class="sc-icon">🔗</span><h5>Two inputs share an id on every page</h5><p>Hand-written ids collide.</p><span class="sc-use">→ useId</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Why order matters.</b> React keeps each component’s hook state in a list, so the same hooks must run in the same order on every render; that is what the rules protect.</p>
+      <p><b>Custom hooks</b> are ordinary functions whose name starts with <span class="kw">use</span> and that call other hooks; they share logic, not state (see the custom hooks deep dive).</p>
+      <p><b>Library helpers.</b> <span class="kw">useSyncExternalStore</span> was added mainly for libraries; application code rarely needs it directly.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>State (and reducers) for values the screen shows; refs for values it does not; context for sharing; effects for syncing with outside.</li><li>Setting state re-renders; changing <span class="kw">ref.current</span> does not.</li><li>Never read or write a ref during render; use handlers or effects.</li><li><span class="kw">useMemo</span>/<span class="kw">useCallback</span>/<span class="kw">memo</span> are optimisations — profile first.</li><li>Hooks run at the top level, in the same order every render; no hooks in conditions, loops, nested functions or try blocks.</li><li><span class="kw">useId</span> is for accessibility ids, never list keys; <span class="kw">useLayoutEffect</span> runs before paint and can block it.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I choose a hook by the question it answers: state when the screen shows the value, a ref when I must remember something without rendering, context to share, an effect to sync with the outside, and memoization only after a profile. I follow the Rules of Hooks — top level, same order — and rely on the lint rule to catch mistakes."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Storing displayed values in a ref.</b> The screen will not update.</p>
+      <p><b>Calling a hook conditionally.</b> It works until the condition flips, then React throws or mixes up state.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📸 useState</h5><p>Remembers a value and re-renders when it changes.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📦 useRef</h5><p>Remembers a value (or a DOM node) and stays silent when it changes.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: effects are the hook with the most traps, and the hooks above are the ones you will use every day.</span>
+      <a class="next-link" href="effects.html">Effects: synchronising with the outside world <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/hooks" target="_blank" rel="noopener">Built-in React Hooks</a> · <a href="https://react.dev/reference/rules/rules-of-hooks" target="_blank" rel="noopener">Rules of Hooks</a> · <a href="https://react.dev/reference/react/useRef" target="_blank" rel="noopener">useRef</a> · <a href="https://react.dev/reference/react/useLayoutEffect" target="_blank" rel="noopener">useLayoutEffect</a> · <a href="https://react.dev/reference/react/useSyncExternalStore" target="_blank" rel="noopener">useSyncExternalStore</a> · <a href="https://react.dev/reference/react/useId" target="_blank" rel="noopener">useId</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

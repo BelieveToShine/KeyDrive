@@ -350,8 +350,12 @@
       "server-rendering-hydration",
       "code-splitting-bundles"
     ],
-    "sub": {},
-    "subTitles": {}
+    "sub": {
+      "react-hooks-guide": "effects"
+    },
+    "subTitles": {
+      "react-hooks-guide": "Hooks: what each does and when to use which"
+    }
   },
   "angular": {
     "title": "Angular Lab",

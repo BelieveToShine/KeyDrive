@@ -38,12 +38,20 @@ def row(i, c):
         return f'      <li class="concept-row done"><span class="cr-num">{i+1}</span><span class="cr-main"><a href="concepts/{c[0]}.html">{e(c[2])}</a><span class="cr-tail">{e(c[3])}</span></span><span class="cr-status done">✅ written</span></li>'
     return f'      <li class="concept-row soon"><span class="cr-num">{i+1}</span><span class="cr-main"><span class="cr-name">{e(c[2])}</span><span class="cr-tail">{e(c[3])}</span></span><span class="cr-status soon">🔒 coming soon</span></li>'
 rows = '\n'.join(row(i, c) for i, c in enumerate(C))
-for slug, parent in SUB.items():
-    rows += f'\n      <li class="concept-row done"><span class="cr-num">＋</span><span class="cr-main"><a href="concepts/{slug}.html">{e(SUBT[slug])}</a><span class="cr-tail">deep dive</span></span><span class="cr-status done">✅ written</span></li>'
 nw, nt = len(WRITTEN), len(C)
 note = T['done_note'] if nw == nt else f'the rest ({nt - nw}) are on the map as locked steps.'
 ladder = ''.join(f'<div class="how-step"><span class="hs-n">{n}</span><h4>{h}</h4><p>{p}</p></div>' for n, h, p in hd.LADDER)
 ds = ''.join(f'<tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td></tr>' for a, b, c in T['dataset_rows'])
+titles = {c[0]: c[2] for c in C}
+dd = ''
+for slug, parent in SUB.items():
+    dd += f'      <a class="kd-card deep-card" href="concepts/{slug}.html"><span class="dc-kicker">Deep dive · from “{e(titles.get(parent, parent))}”</span><h4>{e(SUBT[slug])}</h4><p>{e(getattr(hd, "SUBD", {}).get(slug, ""))}</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>\n'
+deep = f'''  <section class="kd-section">
+    <div class="sec-label" style="color:var(--ink-soft)">🔎 Deep dives — reference pages you will use every day</div>
+    <div class="deep-grid">
+{dd}    </div>
+  </section>
+''' if dd else ''
 first = C[0][0]
 page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])} — KeyDrive</title>') + f'''<nav class="kd-crumbs wrap">
   <a href="../index.html">KeyDrive</a><span class="sep">›</span><a href="../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><span class="cur">{T["icon"]} {e(T["title"])}</span>
@@ -91,7 +99,8 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])
 {rows}
     </ol>
   </section>
-</main>
+
+{deep}</main>
 
 <footer class="kd-foot">
   <div class="wrap">KeyDrive · Web Platforms · {e(T["title"])} · {nw} / {nt} concepts written</div>

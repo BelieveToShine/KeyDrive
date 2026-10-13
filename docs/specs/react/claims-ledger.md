@@ -148,5 +148,22 @@ Source root: https://react.dev/
 | Bundle numbers: 420 KB → 330 KB → 180 KB (−57%); checkout 90 KB, charts 120 KB, editor 30 KB | 🟦 I | teaching numbers (420 − 90 − 120 − 30 = 180) |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — hooks guide
+| Claim | Status | Note |
+|---|---|---|
+| useState declares a state variable; useReducer puts update logic in a reducer; useContext reads and subscribes to a context | ✅ V | reference/react/hooks |
+| useRef declares a ref; changing ref.current does not re-render; do not read or write ref.current during render (initialisation excepted) | ✅ V | reference/react/useRef; learn/referencing-values-with-refs |
+| useEffect connects a component to an external system; useLayoutEffect fires before the browser repaints and can block painting, prefer useEffect | ✅ V | reference/react/hooks; reference/react/useLayoutEffect |
+| useMemo caches a calculation; useCallback caches a function; useTransition and useDeferredValue are for non-blocking rendering | ✅ V | reference/react/hooks |
+| useImperativeHandle customises the exposed ref and is rarely used; useDebugValue labels custom hooks in DevTools; useId for unique ids, typically accessibility APIs; useSyncExternalStore subscribes to an external store (subscribe + getSnapshot); useActionState manages action state | ✅ V | reference/react/hooks |
+| useId is not for list keys; useSyncExternalStore is intended for libraries | ✅ V | blog/2022/03/29/react-v18; useId docs |
+| useActionState returns state, an action for the form's action prop, and a pending flag; useFormStatus.pending only works inside the form; useOptimistic equals the passed value unless an action is pending, call its setter in an action/transition | ✅ V | reference/react/useActionState, react-dom/hooks/useFormStatus, useOptimistic |
+| Rules of Hooks: only call hooks at the top level and only from React functions; not in loops, conditions, nested functions, try/catch/finally; before early returns | ✅ V | reference/rules/rules-of-hooks |
+| eslint-plugin-react-hooks checks the rules | ✅ V | reference/eslint-plugin-react-hooks |
+| “Rendered more hooks than during the previous render” error text | 🟨 K | React's common error message, not re-checked on react.dev |
+| React keeps hook state in an ordered list so the order must not change | 🟨 K | explanation of why; not quoted from the current rules page |
+| useReducer dispatch has a stable identity | ✅ V | reference/react/useReducer |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
