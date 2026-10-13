@@ -2526,5 +2526,31 @@
     "summary": "The classic mistake with Hot partitions, throughput & 429s.",
     "keywords": "cosmos db 429 hot partition throttling normalized ru request rate too large autoscale retry trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-consistency-levels",
+    "title": "Consistency levels",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/consistency-levels.html",
+    "summary": "The five consistency levels, their RU and latency cost, session tokens and matching level to feature.",
+    "keywords": "cosmos db consistency levels strong bounded staleness session consistent prefix eventual session token ru latency"
+  },
+  {
+    "id": "cosmos-consistency-levels-recall",
+    "title": "Consistency levels — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/consistency-levels.html",
+    "summary": "Quick recall points: Consistency levels.",
+    "keywords": "cosmos db consistency levels strong bounded staleness session consistent prefix eventual session token ru latency interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-consistency-levels-trap",
+    "title": "Consistency levels — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/consistency-levels.html",
+    "summary": "The classic mistake with Consistency levels.",
+    "keywords": "cosmos db consistency levels strong bounded staleness session consistent prefix eventual session token ru latency trap mistake",
+    "anchor": "trap"
   }
 ]

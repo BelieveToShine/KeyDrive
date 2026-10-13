@@ -294,7 +294,8 @@
       "indexing-policy",
       "queries-fan-out",
       "query-metrics",
-      "hot-partitions-429"
+      "hot-partitions-429",
+      "consistency-levels"
     ],
     "sub": {},
     "subTitles": {}

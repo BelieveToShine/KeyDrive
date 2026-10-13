@@ -124,6 +124,8 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 
 
 
+
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

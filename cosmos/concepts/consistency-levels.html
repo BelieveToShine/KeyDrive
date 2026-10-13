@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consistency levels — Cosmos DB — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🌌 Cosmos DB Performance Lab</a><span class="sep">›</span><span class="cur">Consistency levels</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 9 of 12 · 🔥 Under load</div>
+    <h1>Consistency is a dial between <span class="grad-text">fresh and fast</span> — keep it at Session unless a feature needs more.</h1>
+    <p class="sub">The five levels in plain English, what each costs in RU and latency, and how to match the level to the feature.</p>
+    <div class="interview-q">❓ "What are Cosmos DB’s consistency levels and how do you choose one?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The five consistency levels from strongest to weakest: strong, bounded staleness, session, consistent prefix, eventual; stronger levels cost more RU and latency, weaker levels are faster and cheaper">
+<defs><marker id="cs1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cs1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cs1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="bx" x="150" y="10" width="340" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="32.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Strong</text>
+<text x="320" y="45.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">always the latest committed write</text>
+<rect class="bx" x="150" y="72" width="340" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="94.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Bounded staleness</text>
+<text x="320" y="107.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">lags by at most K versions or T time</text>
+<rect class="bx" x="150" y="134" width="340" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Session ★ default</text>
+<text x="320" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">you read your own writes</text>
+<rect class="bx" x="150" y="196" width="340" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="218.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Consistent prefix</text>
+<text x="320" y="231.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">never out of order, may lag</text>
+<rect class="bx" x="150" y="258" width="340" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="280.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Eventual</text>
+<text x="320" y="293.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">fastest; no ordering promise</text>
+<rect class="bx" x="10" y="10" width="130" height="298" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="144.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">↑ Fresher</text>
+<text x="75" y="156.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">stronger guarantee</text>
+<text x="75" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">more RU per read</text>
+<text x="75" y="181.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">more latency</text>
+<rect class="bx" x="500" y="10" width="130" height="298" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="565" y="144.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">↓ Faster</text>
+<text x="565" y="156.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">weaker guarantee</text>
+<text x="565" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">fewer RU per read</text>
+<text x="565" y="181.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">more availability</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> five settings on one dial between <b>freshness</b> (left) and <b>speed and cost</b> (right). <b>Strong</b> always shows the latest committed write. <b>Bounded staleness</b> may lag by a limit you set. <b>Session</b> — the <b>default</b> — guarantees that a client reads its own writes. <b>Consistent prefix</b> never shows writes out of order but may lag. <b>Eventual</b> is the fastest and promises no ordering. Moving down the list trades freshness for lower latency, lower RU cost and higher availability.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Consistency is a dial between <b>fresh</b> and <b>fast</b>. Most apps want <b>Session</b>; choose stronger only for the feature that truly needs it.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 2–8 were about spreading data and load. Spreading means <b>copies</b>: the data lives on several replicas, maybe in several regions. A read can then ask one nearby copy (fast) or insist on the latest (slower, dearer). That choice has a name: the <b>consistency level</b>.</p>
+      <p>It matters for cost too: page 3 told you strong and bounded-staleness reads cost about <b>twice</b> the RUs of the relaxed levels. So “just use strong to be safe” doubles your read bill.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 The five levels in plain English</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Level</th><th scope="col">What a reader is guaranteed</th><th scope="col">Cost / latency notes</th></tr></thead><tbody><tr><th scope="row">Strong</th><td>Linearizable: the latest committed write</td><td>Reads ≈ 2× RU; write latency ≈ 2× the round trip between the two farthest regions (+10 ms at p99); blocked by default beyond ≈ 5,000 miles (8,000 km)</td></tr><tr><th scope="row">Bounded staleness</th><td>Reads lag by at most K versions or T time</td><td>Reads ≈ 2× RU; if lag exceeds the bound, writes are throttled until it recovers</td></tr><tr><th scope="row">Session (default)</th><td>Within one client session: read-your-writes, monotonic reads/writes</td><td>Latency and throughput close to eventual</td></tr><tr><th scope="row">Consistent prefix</th><td>Reads never see writes out of order (A, A+B, A+B+C)</td><td>Latency/throughput like eventual</td></tr><tr><th scope="row">Eventual</th><td>Replicas converge; no ordering guarantee</td><td>Fastest; cheapest</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Docs: read latency is under 10 ms at the 99th percentile for every level; the exception is <i>write</i> latency under Strong across regions. Session works by passing a <b>session token</b> — keep it if your app is spread over many servers.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎯 Match the level to the feature</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three read scenes: reading your own write needs session or stronger, reading a balance globally may need strong, and showing a like count can be eventual">
+<defs><marker id="cs2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cs2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cs2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M112,100 L112,170" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cs2A)"/>
+<path d="M324,100 L324,170" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cs2A)"/>
+<path d="M536,100 L536,170" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cs2A)"/>
+<rect class="bx" x="10" y="20" width="204" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="112" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🛒 My new order</text>
+<text x="112" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">show it on my next page</text>
+<rect class="bx" x="30" y="170" width="164" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="112" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Choose</text>
+<text x="112" y="210.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Session ✔</text>
+<rect class="bx" x="222" y="20" width="204" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="324" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🏦 Balance in Tokyo</text>
+<text x="324" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">right after a transfer; never stale</text>
+<rect class="bx" x="242" y="170" width="164" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="324" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Choose</text>
+<text x="324" y="210.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Strong</text>
+<rect class="bx" x="434" y="20" width="204" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="536" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">👍 Like count</text>
+<text x="536" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a few seconds late is fine</text>
+<rect class="bx" x="454" y="170" width="164" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="536" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Choose</text>
+<text x="536" y="210.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Eventual / prefix</text>
+<text class="free" x="320" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Pick the weakest level the feature can tolerate — it is the cheapest and fastest.</text>
+<g class="arrow-pill"><rect x="90" y="126" width="44" height="18" rx="9"/><text x="112" y="138.5" text-anchor="middle" font-size="9" font-style="italic">needs</text></g>
+<g class="arrow-pill"><rect x="302" y="126" width="44" height="18" rx="9"/><text x="324" y="138.5" text-anchor="middle" font-size="9" font-style="italic">needs</text></g>
+<g class="arrow-pill"><rect x="514" y="126" width="44" height="18" rx="9"/><text x="536" y="138.5" text-anchor="middle" font-size="9" font-style="italic">needs</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> start from the feature, not the technology. Seeing your own order straight after checkout needs <b>Session</b>. A balance read in another region right after a transfer is the classic <b>Strong</b> case. A like counter can happily be <b>eventual</b>. You can <b>relax</b> the level per request (never strengthen it above the account default), so one account can serve both kinds of feature.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · what a level costs</div>
+    <p>Illustrative: the order-detail point read (2 KB) and 1,000 reads per second.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Account default</th><th scope="col">RU per read</th><th scope="col">RU/s for 1,000 reads/s</th><th scope="col">Read latency</th></tr></thead><tbody><tr><th scope="row">Session</th><td>≈ 1–2</td><td>≈ 1,000–2,000</td><td>low</td></tr><tr><th scope="row">Strong</th><td>≈ 2–4 (two replicas read)</td><td>≈ 2,000–4,000</td><td>low, but writes pay the cross-region round trip</td></tr><tr><th scope="row">Eventual</th><td>≈ 1–2</td><td>≈ 1,000–2,000</td><td>low</td></tr></tbody></table></div>
+    <p style="margin-top:14px"><b>One change:</b> the team set the account to Strong “for safety”. Read RU bills doubled and cross-region writes got slower. Measure, then move the default back to Session and relax or strengthen <i>per feature</i> only where the product needs it.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 What did it cost?</h4><p>The RU charge and latency of one request — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Read the diagnostics</h4><p>Query metrics, partitions touched, indexed vs retrieved documents.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A fan-out, a scan, a hot key, a fat document?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Wrong partition key? Missing composite index? Wrong shape?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same request, same data, lower RU charge.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · consistency symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Users do not see their own update</th><td>Reads use a level that does not guarantee read-your-writes, or the session token is not passed between servers</td><td>Session (default) + carry the session token</td></tr><tr><th scope="row">Read RU doubled after a config change</th><td>Strong or bounded staleness</td><td>Return to session; strengthen only where needed</td></tr><tr><th scope="row">Cross-region writes are slow</th><td>Strong consistency across far regions</td><td>Weaker level, or fewer/closer regions</td></tr><tr><th scope="row">Writes throttled with bounded staleness</th><td>Replication lag exceeded the bound</td><td>Widen the bound or fix replication load</td></tr><tr><th scope="row">Integrated cache misses</th><td>The cache serves only session and eventual reads</td><td>Use those levels for cached reads</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Order confirmation page</h5><p>You must see the order you just placed.</p><span class="sc-use">→ Session</span></div>
+      <div class="scenario"><span class="sc-icon">🏦</span><h5>Cross-region balance</h5><p>Never stale, even in another region.</p><span class="sc-use">→ Strong (mind the latency)</span></div>
+      <div class="scenario"><span class="sc-icon">📺</span><h5>View counter</h5><p>A little late is fine.</p><span class="sc-use">→ Eventual</span></div>
+      <div class="scenario"><span class="sc-icon">💬</span><h5>Chat thread</h5><p>Order matters, small lag fine.</p><span class="sc-use">→ Consistent prefix</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Per-request overrides.</b> You can relax the level for a request but not strengthen it beyond the account default. Newer options exist (for example LATEST_COMMITTED reads) — check the docs for your SDK.</p>
+      <p><b>Quorums.</b> Strong and bounded-staleness reads use two replicas (a local minority quorum); the other levels read from one. Strong writes need commitment in every region; other levels use a local majority. Hence ≈ 2× read RU and roughly 2× read throughput for the relaxed levels.</p>
+      <p><b>Multi-region writes.</b> With several write regions, strong consistency is not available, and conflicts are resolved by a policy (page 11).</p>
+      <p><b>Other engines.</b> SQL’s isolation levels (SQL page 12) answer “what may I see of concurrent changes on one server”; consistency levels answer “which <i>copy</i> do I read”. Different problem, similar trade (freshness vs concurrency/speed).</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Five levels, strongest → weakest: Strong, Bounded staleness, Session (default), Consistent prefix, Eventual.</li><li>Session = read-your-writes per client session (needs the session token).</li><li>Strong and bounded-staleness reads ≈ 2× RU; strong writes wait for all regions.</li><li>You can relax the level per request, not strengthen it.</li><li>Pick the weakest level the feature tolerates.</li><li>The integrated cache serves only session and eventual reads.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Cosmos DB offers five consistency levels. I keep the account on Session, the default, because it gives read-your-writes at near-eventual cost and latency, and I only use strong or bounded staleness for features that truly need fresh cross-region reads, remembering they double read RU and strong slows cross-region writes. I can relax the level per request, and I pass the session token when my app runs on several servers."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“Strong is safer, so use it everywhere.”</b> You pay twice for reads and slow writes for features that never needed it.</p>
+      <p><b>Losing the session token.</b> With many app servers, “read your own write” silently stops working.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧭 Consistency level (Cosmos)</h5><p>Which replica’s version of the data a read may see.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔒 Isolation level (SQL)</h5><p>How much of other transactions’ in-progress changes a read may see.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Not every read has to be a query. Cosmos DB also records <i>what changed</i>, in order. Next: the change feed. <i>(coming soon: Change feed)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Consistency options and defaults evolve. For current details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels" target="_blank" rel="noopener">Consistency levels</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/understand-request-unit-consumption" target="_blank" rel="noopener">Request unit consumption</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/high-availability" target="_blank" rel="noopener">High availability</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Cosmos DB · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
