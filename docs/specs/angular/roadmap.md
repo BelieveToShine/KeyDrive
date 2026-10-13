@@ -4,7 +4,7 @@
 | 1 | The Angular mental model | angular-mental-model | ✅ written |
 | 2 | Change detection & zone.js | change-detection | ✅ written |
 | 3 | OnPush & signals | onpush-signals | ✅ written |
-| 4 | Templates, control flow & pipes | templates-control-flow | 🔒 planned |
+| 4 | Templates, control flow & pipes | templates-control-flow | ✅ written |
 | 5 | Signals in depth | signals-in-depth | 🔒 planned |
 | 6 | RxJS & the async pipe | rxjs-async-pipe | 🔒 planned |
 | 7 | Dependency injection | dependency-injection | 🔒 planned |

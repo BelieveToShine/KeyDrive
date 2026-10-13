@@ -3280,5 +3280,31 @@
     "summary": "The classic mistake with Lifecycle hooks: what each does and when to use which.",
     "keywords": "angular lifecycle hooks ngOnInit ngOnChanges ngOnDestroy ngDoCheck ngAfterViewInit afterNextRender afterEveryRender DestroyRef constructor trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-templates-control-flow",
+    "title": "Templates, control flow & pipes",
+    "category": "Angular",
+    "page": "angular/concepts/templates-control-flow.html",
+    "summary": "Built-in control flow, why @for needs track, pure versus impure pipes and computed instead of method calls in bindings.",
+    "keywords": "angular templates control flow @for @if @switch track pipes pure impure async pipe @let ngFor ngIf computed method call"
+  },
+  {
+    "id": "angular-templates-control-flow-recall",
+    "title": "Templates, control flow & pipes — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/templates-control-flow.html",
+    "summary": "Quick recall points: Templates, control flow & pipes.",
+    "keywords": "angular templates control flow @for @if @switch track pipes pure impure async pipe @let ngFor ngIf computed method call interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-templates-control-flow-trap",
+    "title": "Templates, control flow & pipes — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/templates-control-flow.html",
+    "summary": "The classic mistake with Templates, control flow & pipes.",
+    "keywords": "angular templates control flow @for @if @switch track pipes pure impure async pipe @let ngFor ngIf computed method call trap mistake",
+    "anchor": "trap"
   }
 ]

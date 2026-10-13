@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Templates, control flow &amp; pipes — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Templates &amp; control flow</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 4 of 12 · 🅰️ Templates & state</div>
+    <h1>A template runs <span class="grad-text">on every check</span> — keep it cheap.</h1>
+    <p class="sub">Built-in control flow, why @for needs track, pure versus impure pipes, and why computed beats a method call in a binding.</p>
+    <div class="interview-q">❓ "Why does @for require track, and what is the difference between pure and impure pipes?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="In an @for loop, tracking by a unique id lets Angular keep the DOM for the 480 cards that remain after a filter and remove only 20, while tracking by item identity with freshly fetched objects destroys 500 and creates 480">
+<defs><marker id="tp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">track item  (a last resort)</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">track p.id</text>
+<path d="M162,86 L162,136" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#tp1A)"/>
+<path d="M162,182 L162,232" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#tp1A)"/>
+<path d="M477,86 L477,136" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#tp1A)"/>
+<path d="M477,182 L477,232" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#tp1A)"/>
+<rect class="bx" x="30" y="40" width="265" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="59.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">@for (p of list(); track p)</text>
+<text x="162.5" y="71.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">500 cards, filter keeps 480</text>
+<rect class="bx" x="30" y="136" width="265" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">New objects after a refetch</text>
+<text x="162.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Angular sees 500 “new” items</text>
+<rect class="bx" x="30" y="232" width="265" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Result</text>
+<text x="162.5" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">500 destroyed, 480 created = 980 DOM operations</text>
+<rect class="bx" x="345" y="40" width="265" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="59.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">@for (p of list(); track p.id)</text>
+<text x="477.5" y="71.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">500 cards, filter keeps 480</text>
+<rect class="bx" x="345" y="136" width="265" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Same ids after the refetch</text>
+<text x="477.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Angular matches 480 to old views</text>
+<rect class="bx" x="345" y="232" width="265" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Result</text>
+<text x="477.5" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">20 removed, 480 kept = 20 DOM operations</text>
+<g class="arrow-pill"><rect x="116" y="102" width="92" height="18" rx="9"/><text x="162" y="114.5" text-anchor="middle" font-size="9" font-style="italic">data refreshes</text></g>
+<g class="arrow-pill"><rect x="105.5" y="198" width="113" height="18" rx="9"/><text x="162" y="210.5" text-anchor="middle" font-size="9" font-style="italic">Angular reconciles</text></g>
+<g class="arrow-pill"><rect x="431" y="102" width="92" height="18" rx="9"/><text x="477" y="114.5" text-anchor="middle" font-size="9" font-style="italic">data refreshes</text></g>
+<g class="arrow-pill"><rect x="420.5" y="198" width="113" height="18" rx="9"/><text x="477" y="210.5" text-anchor="middle" font-size="9" font-style="italic">Angular reconciles</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> ShopUI’s product list after a filter or a refetch, 500 cards down to 480. <b>Left</b>: <span class="kw">track p</span> (the item itself) — after a refetch the objects are new, so Angular treats all 500 as removed and 480 as added: 980 DOM operations. <b>Right</b>: <span class="kw">track p.id</span> — Angular matches the ids, keeps 480 views and removes only 20. <span class="kw">track</span> is <b>required</b> in <span class="kw">@for</span>, and a unique id is the right choice. (Counts are illustrative.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A template is code that runs <b>on every check</b>: keep it cheap, give loops a <b>unique track</b>, and compute values <b>once</b>, not on every pass.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 3 reduced how many components are checked. This page is about what each check <i>does</i>: it re-evaluates every expression in the template. A loop over 500 items, a method call in a binding, a heavy pipe — each multiplies.</p>
+      <p>Modern Angular templates have <b>built-in control flow</b> — <span class="kw">@if</span>, <span class="kw">@for</span>, <span class="kw">@switch</span> — that replaced the older <span class="kw">*ngIf</span>/<span class="kw">*ngFor</span> directives. <span class="kw">@for</span> forces you to say how to <b>track</b> items, which is exactly the identity question React answers with keys (React lab, page 3).</p>
+      <p>Pipes transform values for display. <b>Pure</b> pipes only re-run when their input changes; this is the template-level version of memoization.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Control flow in one table</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Block</th><th scope="col">What it does</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row"><span class="kw">@if (cond) { … } @else { … }</span></th><td>Shows one branch; <span class="kw">@else if</span> is supported; <span class="kw">as</span> saves the condition result in a variable</td><td><span class="kw">@if (user(); as u) { {{ u.name }} }</span></td></tr><tr><th scope="row"><span class="kw">@for (p of items(); track p.id) { … } @empty { … }</span></th><td>Repeats a block; <span class="kw">track</span> is required; <span class="kw">@empty</span> shows when there are no items</td><td>Variables: <span class="kw">$index</span>, <span class="kw">$count</span>, <span class="kw">$first</span>, <span class="kw">$last</span>, <span class="kw">$even</span>, <span class="kw">$odd</span></td></tr><tr><th scope="row"><span class="kw">@switch (x) { @case (…) { … } @default { … } }</span></th><td>Compares with <span class="kw">===</span>; no fall-through; <span class="kw">@default</span> optional</td><td>With no match and no default, nothing is shown</td></tr><tr><th scope="row"><span class="kw">@let name = expr;</span></th><td>A local template variable; re-evaluated every time the template runs; cannot be reassigned</td><td>Visible only in its own view</td></tr><tr><th scope="row"><span class="kw">@defer</span></th><td>Loads part of the template later</td><td>Page 10</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>What to track.</b> Use a unique property such as <span class="kw">id</span>; for a static list <span class="kw">$index</span> is fine; tracking by the item itself is a last resort because it can lead to significantly slower updates. A track expression may only use <span class="kw">$index</span>, the item, and members of the component. Unlike the old <span class="kw">*ngFor</span>, <span class="kw">@for</span> prioritises reusing views.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">💰 What a displayed value costs</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Showing a formatted price in 500 cards: a method call in the template runs for every card on every check, a pure pipe runs only when its input changes, and a computed signal is cached until its dependency changes">
+<defs><marker id="tp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,58 L320,100 L105,100 L105,180" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#tp2A)"/>
+<path d="M320,58 L320,180" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#tp2A)"/>
+<path d="M320,58 L320,100 L535,100 L535,180" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#tp2A)"/>
+<rect class="bx" x="220" y="8" width="200" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="30.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">A formatted price</text>
+<text x="320" y="43.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">shown in 500 cards</text>
+<rect class="bx" x="10" y="180" width="190" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="105" y="210.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Method in template</text>
+<text x="105" y="223.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">500 runs per keystroke</text>
+<rect class="bx" x="225" y="180" width="190" height="66" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="210.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Pure pipe</text>
+<text x="320" y="223.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">0 runs: input unchanged</text>
+<rect class="bx" x="440" y="180" width="190" height="66" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="535" y="210.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">computed()</text>
+<text x="535" y="223.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">0 runs: cached</text>
+<text class="free" x="320" y="284" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Same output; the difference is how often the work repeats.</text>
+<g class="arrow-pill"><rect x="67" y="131" width="76" height="18" rx="9"/><text x="105" y="143.5" text-anchor="middle" font-size="9" font-style="italic">every check</text></g>
+<g class="arrow-pill"><rect x="274" y="131" width="92" height="18" rx="9"/><text x="320" y="143.5" text-anchor="middle" font-size="9" font-style="italic">input changed?</text></g>
+<g class="arrow-pill"><rect x="475.5" y="131" width="119" height="18" rx="9"/><text x="535" y="143.5" text-anchor="middle" font-size="9" font-style="italic">dependency changed?</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same formatted price shown in 500 cards. A <b>method call</b> in the template runs for every card on every check of that card — 500 runs for one keystroke under Eager checking. A <b>pure pipe</b> runs only when its input changes, and a <b>computed signal</b> is cached until a signal it read changes. All three produce the same text; only the repeated work differs.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 Pipes</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Kind</th><th scope="col">When it runs</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><b>Pure</b> (default)</th><td>Only when its input arguments change</td><td>Formatting: <span class="kw">currency</span>, <span class="kw">date</span>, <span class="kw">percent</span>, a custom <span class="kw">price</span> pipe</td></tr><tr><th scope="row"><b>Impure</b> (<span class="kw">pure: false</span>)</th><td>On every change-detection cycle</td><td>Rare — results that depend on internal state; avoid unless absolutely necessary</td></tr><tr><th scope="row"><b>AsyncPipe</b></th><td>Subscribes, marks the component for check on each value, unsubscribes on destroy</td><td>Observables and promises (page 6)</td></tr><tr><th scope="row">Custom pipe</th><td><span class="kw">@Pipe({ name })</span> + <span class="kw">transform()</span>, implementing <span class="kw">PipeTransform</span></td><td>Display formatting reused in many templates</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Template lab · the product list</div>
+    <div class="code-block"><pre>@for (p of visible(); track p.id) {
+  &lt;app-product-card [product]=<span class="str">"p"</span> (added)=<span class="str">"add($event)"</span> /&gt;
+} @empty {
+  &lt;p&gt;No products match “{{ query() }}”.&lt;/p&gt;
+}
+
+<span class="cmt">// in the card template:</span>
+&lt;span&gt;{{ product().price | currency }}&lt;/span&gt;      <span class="cmt">// pure pipe: runs only when price changes</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. <span class="kw">visible</span> is a <span class="kw">computed()</span> over the products and the query.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Change</th><th scope="col">DOM operations per refetch</th><th scope="col">Template function runs per keystroke</th></tr></thead><tbody><tr><th scope="row"><span class="kw">track p</span> (item identity), method <span class="kw">formatPrice(p)</span></th><td>980</td><td>500</td></tr><tr><th scope="row"><span class="kw">track p.id</span>, method call</th><td>20</td><td>500</td></tr><tr><th scope="row"><span class="kw">track p.id</span>, pure <span class="kw">currency</span> pipe</th><td>20</td><td>0</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · template symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Compile error: “@for requires track”</th><td><span class="kw">track</span> is mandatory</td><td>Add <span class="kw">track p.id</span> (or <span class="kw">$index</span> for a static list)</td></tr><tr><th scope="row">Typed input in a row jumps after a filter</th><td>Tracking by <span class="kw">$index</span> on a changing list</td><td>Track by a unique id</td></tr><tr><th scope="row">A console log in a template method prints hundreds of times</th><td>The method runs on every check</td><td>Use a pure pipe or <span class="kw">computed()</span></td></tr><tr><th scope="row">The list flickers or loses focus on every refetch</th><td>Tracking by object identity</td><td>Track by id</td></tr><tr><th scope="row">A custom pipe does not update when an array changes</th><td>A pure pipe sees the same reference</td><td>Pass a new array, or compute in a signal</td></tr><tr><th scope="row">An <span class="kw">@if</span> value is read three times</th><td>Expression repeated</td><td><span class="kw">@if (… ; as v)</span> or <span class="kw">@let</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Filtering a 500-row list is slow</h5><p>Items tracked by identity.</p><span class="sc-use">→ track by id</span></div>
+      <div class="scenario"><span class="sc-icon">💲</span><h5>Prices formatted by a component method</h5><p>Runs on every check.</p><span class="sc-use">→ currency pipe or computed</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>An empty cart shows a blank box</h5><p>No empty state.</p><span class="sc-use">→ @for … @empty</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Old tutorial uses *ngFor</h5><p>Pre-control-flow syntax.</p><span class="sc-use">→ @for with track</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Expressions.</b> Template expressions run against the component; a template variable with the same name as a class member shadows it. Declarations such as functions or classes are not supported inside expressions.</p>
+      <p><b>ng-template.</b> It declares a fragment that can be rendered dynamically; its expressions are evaluated against the component that declares it, wherever it is rendered. Content projection (<span class="kw">ng-content</span>) is covered in the component-communication dive.</p>
+      <p><b>Exhaustive switches.</b> <span class="kw">@default never;</span> makes the compiler check that every case is handled, when the switched value is a plain variable.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li><span class="kw">@for</span> needs <span class="kw">track</span>; use a unique id; item identity is a last resort.</li><li><span class="kw">@if</span> / <span class="kw">@else</span>, <span class="kw">@switch</span>, <span class="kw">@empty</span>, <span class="kw">@let</span> are built-in control flow.</li><li>Template expressions re-run on every check of that component.</li><li>Pure pipes re-run only when their input changes; impure pipes run every cycle.</li><li>Prefer a pure pipe or <span class="kw">computed()</span> to a method call in a binding.</li><li>AsyncPipe subscribes, marks for check and unsubscribes for you.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A template is re-evaluated on every check, so I keep it cheap: @for always tracks by a unique id so Angular reuses DOM nodes, values are derived with computed or pure pipes instead of method calls, and impure pipes are avoided. Built-in control flow replaces the old structural directives."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Tracking by $index in a list that changes.</b> State and focus stick to positions.</p>
+      <p><b>Calling methods from bindings.</b> They run on every check, for every instance.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧮 Pure pipe</h5><p>Re-runs only when its input changes; safe for formatting.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔁 Impure pipe</h5><p>Re-runs on every change-detection cycle; use only when unavoidable.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Templates are cheap. Next: the signals toolbox in depth — computed, effect, linkedSignal and friends. <i>(coming soon: Signals in depth)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/templates/control-flow" target="_blank" rel="noopener">Control flow</a> · <a href="https://angular.dev/api/core/@for" target="_blank" rel="noopener">@for</a> · <a href="https://angular.dev/guide/templates/pipes" target="_blank" rel="noopener">Pipes</a> · <a href="https://angular.dev/api/core/@let" target="_blank" rel="noopener">@let</a> · <a href="https://angular.dev/guide/templates/expression-syntax" target="_blank" rel="noopener">Expression syntax</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

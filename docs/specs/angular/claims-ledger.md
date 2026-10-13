@@ -64,5 +64,19 @@ Source root: https://angular.dev/
 | takeUntilDestroyed for streams | 🟨 K | covered with sources on the RxJS page |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 4 — templates, control flow & pipes
+| Claim | Status | Note |
+|---|---|---|
+| @for: track is required; use a unique property such as id/uuid; $index for static lists; tracking by the item itself is a last resort (can be significantly slower); track expressions limited to $index, the item and component members; @for prioritises view reuse over *ngFor | ✅ V | angular.dev/guide/templates/control-flow; api/core/@for |
+| @for variables $count, $index, $first, $last, $even, $odd; @empty block when no items | ✅ V | same |
+| @if supports @else if / @else and `as`; @switch compares with ===, no fall-through, @default optional, `@default never;` exhaustiveness for plain variables | ✅ V | same; api/core/@switch |
+| @let: local variable, re-evaluated every time the template runs, cannot be reassigned, scoped to its own view | ✅ V | api/core/@let; guide/templates/variables |
+| Template expressions run against the component; template variables shadow members; function/class declarations not supported | ✅ V | guide/templates/expression-syntax |
+| ng-template declares a fragment whose expressions evaluate against the declaring component | ✅ V | guide/templates/ng-template |
+| Pipes are pure by default (transform runs only when inputs change); impure pipes (pure: false) run every change-detection cycle and should be avoided unless absolutely necessary; AsyncPipe subscribes, marks for check, unsubscribes on destroy; custom pipe = @Pipe + transform implementing PipeTransform | ✅ V | guide/templates/pipes; api/core/Pipe; api/common/AsyncPipe |
+| A method called in a template runs on every check of that component | 🟨 K | follows from @let/expression re-evaluation statements; no dedicated quote |
+| 980 vs 20 DOM operations; 500 method runs; 0 with pipe/computed | 🟦 I | teaching arithmetic (500 + 480; 500 − 480) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
