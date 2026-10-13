@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State, props &amp; why components re-render — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">State &amp; re-renders</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 12 · ⚛️ The render model</div>
+    <h1>Components re-render for <span class="grad-text">two reasons</span> — and you control where the state lives.</h1>
+    <p class="sub">State as a snapshot, batching, updater functions, what really triggers a render, and the cheapest fix: moving state down.</p>
+    <div class="interview-q">❓ "Why does my whole page re-render when I change one small piece of state?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Where state lives decides who re-renders: with cartOpen in App a click renders 504 components; with cartOpen inside Cart only Cart renders">
+<defs><marker id="st2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">STATE IN APP — 504 RENDERS</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">STATE IN CART — 1 RENDER</text>
+<path d="M162,76 L162,96 L64,96 L64,116" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M162,76 L162,116" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M162,76 L162,96 L260,96 L260,116" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M162,156 L162,186" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M477,76 L477,96 L379,96 L379,116" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M477,76 L477,116" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M477,76 L477,96 L575,96 L575,116" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M477,156 L477,186" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#st2A)"/>
+<rect class="bx" x="92" y="36" width="140" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162" y="53.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">App</text>
+<text x="162" y="66.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">cartOpen state</text>
+<rect class="bx" x="18" y="116" width="92" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="64" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">SearchBox</text>
+<rect class="bx" x="116" y="116" width="92" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">ProductList</text>
+<rect class="bx" x="214" y="116" width="92" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="260" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cart</text>
+<rect class="bx" x="116" y="186" width="92" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cards ×500</text>
+<rect class="bx" x="407" y="36" width="140" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477" y="60" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">App</text>
+<rect class="bx" x="333" y="116" width="92" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="379" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">SearchBox</text>
+<rect class="bx" x="431" y="116" width="92" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">ProductList</text>
+<rect class="bx" x="529" y="116" width="92" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="575" y="133.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cart</text>
+<text x="575" y="146.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">cartOpen state</text>
+<rect class="bx" x="431" y="186" width="92" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Cards ×500</text>
+<text class="free" x="162" y="262" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Click “Cart” → App re-renders</text>
+<text class="free" x="162" y="280" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">and so does everything below it</text>
+<text class="free" x="477" y="262" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Click “Cart” → only Cart re-renders;</text>
+<text class="free" x="477" y="280" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">App and its other children are untouched</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same click on a “Cart” button, with the <b>cartOpen</b> state kept in two different places. <b>Left</b>: it lives in App, so setting it re-renders App and — by default — every child below: 504 components for one boolean. <b>Right</b>: it lives inside Cart, the only component that uses it, so React renders just Cart. <i>Where state lives decides who renders.</i> (Counts are illustrative ShopUI teaching numbers.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A component re-renders when <b>its own state is set</b> or when <b>its parent re-renders</b>. The cheapest speed-up is usually to <b>move state down</b> to the component that really uses it.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 1 said every update starts with a trigger. This page is about the trigger: <b>state</b>. State is a component’s memory — what it must remember between renders, like “is the cart open?”.</p>
+      <p>But state has a surprising rule: it is a <b>snapshot</b>. Inside one render, a state variable never changes, even after you call the setter. React collects your updates, finishes the handler, and then renders once with the new value.</p>
+      <p>Both facts matter for performance and for bugs: state placed too high re-renders too much, and code that expects the variable to change immediately gives wrong answers.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📸 State is a snapshot — and updates are batched</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="State is a snapshot: three setCount(count + 1) calls in one handler all queue the same value and count becomes 1, while three updater functions chain and count becomes 3">
+<defs><marker id="st1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="300" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">setCount(count + 1) × 3</text>
+<rect class="zone" x="330" y="8" width="300" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="344" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">setCount(n =&gt; n + 1) × 3</text>
+<path d="M160,82 L160,108" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M160,154 L160,180" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M160,226 L160,252" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M480,82 L480,108" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M480,154 L480,180" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M480,226 L480,252" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st1A)"/>
+<rect class="bx" x="50" y="36" width="220" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="160" y="56.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Render: count = 0</text>
+<text x="160" y="69.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">a snapshot</text>
+<rect class="bx" x="50" y="108" width="220" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="160" y="128.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Click handler runs</text>
+<text x="160" y="141.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">count is 0 in every call</text>
+<rect class="bx" x="50" y="180" width="220" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="160" y="200.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">React queues the updates</text>
+<text x="160" y="213.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">queue: set 1, set 1, set 1</text>
+<rect class="bx" x="50" y="252" width="220" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="160" y="272.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">One batched re-render</text>
+<text x="160" y="285.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Next render: count = 1</text>
+<rect class="bx" x="370" y="36" width="220" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="480" y="56.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Render: count = 0</text>
+<text x="480" y="69.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">a snapshot</text>
+<rect class="bx" x="370" y="108" width="220" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="480" y="128.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Click handler runs</text>
+<text x="480" y="141.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">n starts at 0, each adds 1</text>
+<rect class="bx" x="370" y="180" width="220" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="200.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">React queues the updates</text>
+<text x="480" y="213.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">queue: +1, +1, +1</text>
+<rect class="bx" x="370" y="252" width="220" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="272.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">One batched re-render</text>
+<text x="480" y="285.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Next render: count = 3</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: three <span class="kw">setCount(count + 1)</span> calls inside one click handler. In that render <b>count is 0</b>, so all three say “set it to 1”; the result is 1, not 3. <b>Right</b>: three <span class="kw">setCount(n => n + 1)</span> calls queue <i>updater functions</i>; React feeds each the previous result and the next render has count = 3. In both cases React waits until the handler finishes and renders <b>once</b> (batching).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Three things that cause a component to render</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Cause</th><th scope="col">Example</th><th scope="col">What follows</th></tr></thead><tbody><tr><th scope="row">Its own state is set</th><td><span class="kw">setCartOpen(true)</span> inside Cart</td><td>Cart renders, then its children (by default)</td></tr><tr><th scope="row">Its parent rendered</th><td>App renders, so SearchBox, ProductList and Cart render</td><td>The whole subtree, recursively</td></tr><tr><th scope="row">A context it reads changed</th><td>The theme changes (page 8)</td><td>Components that read that context render</td></tr><tr><th scope="row"><i>Not</i> a cause: “props changed” by itself</th><td>A prop only changes because a parent rendered — the parent render is the trigger</td><td>Props are the result, not the cause</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Render lab · move the state down</div>
+    <p>ShopUI before: the cart-drawer flag lives in App because “it seemed simple”. Click the Cart button once.</p>    <div class="code-block"><pre><span class="cmt">// Before — state in App: one click renders App + SearchBox + ProductList + 500 cards + Cart</span>
+<span class="kw">function</span> App() {
+  <span class="kw">const</span> [cartOpen, setCartOpen] = useState(false);
+  <span class="kw">return</span> &lt;&gt;&lt;SearchBox /&gt;&lt;ProductList /&gt;
+    &lt;Cart open={cartOpen} onToggle={() =&gt; setCartOpen(!cartOpen)} /&gt;&lt;/&gt;;
+}
+
+<span class="cmt">// After — state lives in Cart, the only component that uses it</span>
+<span class="kw">function</span> Cart() {
+  <span class="kw">const</span> [open, setOpen] = useState(false);
+  <span class="kw">return</span> &lt;button onClick={() =&gt; setOpen(!open)}&gt;…&lt;/button&gt;;
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. The behaviour is identical; only the place where the state lives changed.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Components rendered per click</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Before (state in App)</th><td>504</td><td>App’s state changed, so everything below App renders</td></tr><tr><th scope="row">After (state in Cart)</th><td>1</td><td>Only Cart’s own state changed; its parent did not render</td></tr><tr><th scope="row">Sibling needs the flag too</th><td>Lift state to the <i>nearest</i> common parent — not to App</td><td>Lift only as far as needed</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · state symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row"><span class="kw">console.log(count)</span> right after the setter shows the old value</th><td>State is a snapshot; the setter does not change the running render</td><td>Use the next render, or compute the new value in a variable</td></tr><tr><th scope="row">Calling the setter three times only adds 1</th><td>All three used the same snapshot</td><td>Use the updater form: <span class="kw">setCount(n =&gt; n + 1)</span></td></tr><tr><th scope="row">The screen does not update after you changed an object</th><td>You mutated the object; React sees the same reference (<span class="kw">Object.is</span>) and skips the render</td><td>Make a new object or array: <span class="kw">{...old, field: x}</span></td></tr><tr><th scope="row">Whole page re-renders on a tiny interaction</th><td>State is higher than it needs to be</td><td>Move it down to the component that uses it</td></tr><tr><th scope="row">Two siblings disagree about a value</th><td>Each has its own copy of state</td><td>Lift the state to their nearest common parent and pass it down</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart drawer toggle re-renders 500 cards</h5><p>The flag is stored in App.</p><span class="sc-use">→ Move state down to Cart</span></div>
+      <div class="scenario"><span class="sc-icon">🔢</span><h5>“Add 3” button adds 1</h5><p>Three setters used the same snapshot.</p><span class="sc-use">→ Updater function</span></div>
+      <div class="scenario"><span class="sc-icon">📝</span><h5>Edited a todo, nothing changed on screen</h5><p>The object was mutated in place.</p><span class="sc-use">→ Copy, then set</span></div>
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Typing in an input lags a big page</h5><p>Input state is in a huge parent.</p><span class="sc-use">→ Keep input state near the input</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Same value, no render.</b> If you set state to a value that is the same as the current one (compared with <span class="kw">Object.is</span>), React skips rendering that component and its children. React may still call the component once before it bails out — it will not touch your output.</p>
+      <p><b>Updaters must be pure.</b> They run during rendering, and in development Strict Mode runs them twice to check.</p>
+      <p><b>Passing JSX as <span class="kw">children</span></b> is another way to stop a state change from re-rendering unrelated content: elements created by a parent that did not render are reused. We use it again on page 6.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A component renders when its own state is set or its parent renders (or a context it reads changes).</li><li>State is a snapshot: the setter does not change the variable in the running render.</li><li>Updates are batched: React renders once after the handler finishes.</li><li>Use the updater form (<span class="kw">n =&gt; n + 1</span>) when the new value depends on the old one.</li><li>Never mutate state; set a new object or array.</li><li>Move state down to where it is used; lift it only as far as the nearest common parent.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"State is a snapshot per render, and React batches updates and renders once after the handler. A component re-renders when its own state changes or its parent re-renders, and by default that includes all its children. So I keep state as close as possible to where it is used, use updater functions for updates that depend on the previous value, and never mutate objects in state."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Putting every piece of state in App “to keep it simple”.</b> It is simple until one boolean renders the whole page.</p>
+      <p><b>Mutating state in place.</b> React compares references; the same object means “nothing changed”.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📸 State</h5><p>What a component remembers; setting it triggers a render. A new snapshot each render.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📨 Props</h5><p>Values a parent passes down; read-only for the child. They change because the parent rendered.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>A component renders again — but how does React know which child is “the same” one as before? That is identity. Next: keys and reconciliation. <i>(coming soon: Keys, identity & reconciliation)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/learn/state-a-components-memory" target="_blank" rel="noopener">State: A Component’s Memory</a> · <a href="https://react.dev/learn/state-as-a-snapshot" target="_blank" rel="noopener">State as a Snapshot</a> · <a href="https://react.dev/learn/queueing-a-series-of-state-updates" target="_blank" rel="noopener">Queueing a Series of State Updates</a> · <a href="https://react.dev/reference/react/useState" target="_blank" rel="noopener">useState</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

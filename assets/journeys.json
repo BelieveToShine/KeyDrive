@@ -338,7 +338,8 @@
       "react-clinic": "Capstone: the React performance clinic"
     },
     "written": [
-      "react-mental-model"
+      "react-mental-model",
+      "state-rerenders"
     ],
     "sub": {},
     "subTitles": {}

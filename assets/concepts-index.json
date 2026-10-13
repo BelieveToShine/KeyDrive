@@ -2682,5 +2682,31 @@
     "summary": "The classic mistake with Render, commit & the React mental model.",
     "keywords": "react render commit mental model state virtual dom purity strict mode trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-state-rerenders",
+    "title": "State, props & why components re-render",
+    "category": "React",
+    "page": "react/concepts/state-rerenders.html",
+    "summary": "State as a snapshot, batching, updater functions, what triggers a render and moving state down.",
+    "keywords": "react state props rerender re-render snapshot batching setState useState updater lift state up"
+  },
+  {
+    "id": "react-state-rerenders-recall",
+    "title": "State, props & why components re-render — interview recall",
+    "category": "React",
+    "page": "react/concepts/state-rerenders.html",
+    "summary": "Quick recall points: State, props & why components re-render.",
+    "keywords": "react state props rerender re-render snapshot batching setState useState updater lift state up interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-state-rerenders-trap",
+    "title": "State, props & why components re-render — common trap",
+    "category": "React",
+    "page": "react/concepts/state-rerenders.html",
+    "summary": "The classic mistake with State, props & why components re-render.",
+    "keywords": "react state props rerender re-render snapshot batching setState useState updater lift state up trap mistake",
+    "anchor": "trap"
   }
 ]
