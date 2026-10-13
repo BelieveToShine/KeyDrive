@@ -226,6 +226,29 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Large constructor is a smell | ✅ V | .NET architecture guide (ledgered earlier) |
 | Electrician, printer/notebook/paper-cup pictures; Bulb/LightSwitch/CartCache code | 🟦 I | teaching analogies and tiny illustrations |
 
+## Rewrite (2026-10-13, L14) — pages 8–12 simple + animated
+| Claim | Status | Note |
+|---|---|---|
+| Smell families (Large Class, Switch Statements, Divergent Change, Shotgun Surgery, Feature Envy); Extract Class and Replace Conditional with Polymorphism kept in Refactoring 2nd ed. | ✅ V | refactoring.guru catalog; martinfowler.com/articles/refactoring-2nd-changes.html |
+| “Refused Bequest”, “Speculative Generality” as smell names | 🟨 K | known catalog names; not re-opened this session |
+| Clue → principle table; “usually means” column | 🟦 I | rule of thumb, not an official mapping |
+| Arrange/Act/Assert; mock vs stub distinguished by asserting against the mock; mixing the words misleads | ✅ V | Microsoft Learn: Best practices for writing unit tests (.NET) |
+| ConfigureTestServices replaces a registration in ASP.NET Core integration tests | ✅ V | Microsoft Learn: Integration tests in ASP.NET Core |
+| xUnit [Fact], Assert.Equal on arrays | 🟨 K | common API, not compiled this session |
+| Yagni: presumptive features; cost of delay; cost of carry; not a licence to neglect quality | ✅ V | martinfowler.com/bliki/Yagni.html (via search summary) |
+| DRY: duplication preferable to coupling to the wrong abstraction; early over-design warning | ✅ V | Microsoft Learn architectural principles; patterns & practices chapter (older) |
+| Coffee shop OrderService (300 → 40 lines, six reasons to change, four helpers, fakes) | 🟦 I | illustrative teaching data |
+| Primary constructors (C# 12) in the OrderService sketch | 🟨 K | language feature recalled, not re-verified |
+| Restaurant/doctor/driving-test/lorry/coffee-shop analogies; clinic case figures (14 of 20 changes, etc.) | 🟦 I | teaching analogies and illustrative figures |
+
+
+
+
+
+
+
+
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |

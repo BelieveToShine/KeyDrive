@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOLID Together: a Worked Refactoring — SOLID — KeyDrive</title>
+<title>SOLID Together: One Messy Class, Fixed Step by Step — SOLID — KeyDrive</title>
 <link rel="stylesheet" href="../../assets/style.css?v=20261018">
 </head>
 <body data-root="../../">
@@ -37,187 +37,174 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 9 of 12 · 🛠️ Making it real</div>
-    <h1>One messy class, <span class="grad-text">five principles</span>, step by step.</h1>
-    <p class="sub">A full refactoring of the ShopCore OrderService: the five steps, what each fixes and how to prove it.</p>
+    <h1>One messy class, <span class="grad-text">five habits</span>, step by step.</h1>
+    <p class="sub">A coffee-shop OrderService refactored with all five principles, step by step, in pictures.</p>
     <div class="interview-q">❓ "Walk me through refactoring a large service class using SOLID."</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Before: OrderService is one class of about 300 lines that also does validation, pricing, persistence, notification, logging and tax, so it has six reasons to change">
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A coffee-shop OrderService that does validating, pricing, saving and emailing in one 300-line class is split into four small classes with a small coordinator, and then pricing rules plug into the pricing class">
 <defs><marker id="st1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M57,80 L57,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/>
-<path d="M162,80 L162,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/>
-<path d="M267,80 L267,190" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st1A)"/>
-<path d="M372,80 L372,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st1A)"/>
-<path d="M477,80 L477,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/>
-<path d="M582,80 L582,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/>
-<rect class="bx" x="10" y="10" width="620" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="320" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">OrderService · ≈ 300 lines</text>
-<text x="320" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">6 reasons to change, 0 injected dependencies</text>
-<rect class="bx" x="10" y="190" width="95" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="57.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Validation</text>
-<text x="57.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">≈ 40 lines</text>
-<rect class="bx" x="115" y="190" width="95" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="162.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Pricing</text>
-<text x="162.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">≈ 120 lines</text>
-<rect class="bx" x="220" y="190" width="95" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="267.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Persistence</text>
-<text x="267.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">≈ 60 lines</text>
-<rect class="bx" x="325" y="190" width="95" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="372.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Notify</text>
-<text x="372.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">≈ 50 lines</text>
-<rect class="bx" x="430" y="190" width="95" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="477.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Logging</text>
-<text x="477.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">inline</text>
-<rect class="bx" x="535" y="190" width="95" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="582.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Tax rules</text>
-<text x="582.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">inline</text>
-<g class="arrow-pill"><rect x="24" y="126" width="66" height="18" rx="9"/><text x="57" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-<g class="arrow-pill"><rect x="129" y="126" width="66" height="18" rx="9"/><text x="162" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-<g class="arrow-pill"><rect x="234" y="126" width="66" height="18" rx="9"/><text x="267" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-<g class="arrow-pill"><rect x="339" y="126" width="66" height="18" rx="9"/><text x="372" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-<g class="arrow-pill"><rect x="444" y="126" width="66" height="18" rx="9"/><text x="477" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-<g class="arrow-pill"><rect x="549" y="126" width="66" height="18" rx="9"/><text x="582" y="138.5" text-anchor="middle" font-size="9" font-style="italic">also does</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> The ShopCore <b>OrderService</b> after two years: validation, pricing (≈ 120 lines that grow with every promotion), persistence, notification, logging and tax rules in one class. Six reasons to change, nothing injected, and a unit test needs a SQL database and an SMTP server.</figcaption>
+<g class="st" data-s="2-"><path d="M82,66 L82,140" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="2-"><path d="M237,66 L237,140" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="2-"><path d="M392,66 L392,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="2-"><path d="M547,66 L547,140" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="3-"><path d="M200,262 L200,212" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="3-"><path id="st1-pl" d="M280,262 L280,212" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="10" y="10" width="620" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="320" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">☕ OrderService — one big class</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="320" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">validate · price · save · email — about 300 lines</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="10" width="620" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">☕ OrderService — only coordinates</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks the four helpers to do the work</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="140" width="145" height="72" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="82.5" y="173.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✅ Validator</text></g>
+<g class="st" data-s="2-"><text x="82.5" y="186.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">checks the order</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="165" y="140" width="145" height="72" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="237.5" y="173.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">💲 Pricing</text></g>
+<g class="st" data-s="2-"><text x="237.5" y="186.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">works out the total</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="320" y="140" width="145" height="72" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="392.5" y="173.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">💾 Saver</text></g>
+<g class="st" data-s="2-"><text x="392.5" y="186.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">stores the order</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="475" y="140" width="145" height="72" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="547.5" y="173.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">✉️ Notifier</text></g>
+<g class="st" data-s="2-"><text x="547.5" y="186.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">emails the customer</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="165" y="262" width="70" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="200" y="287.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">10% off</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="245" y="262" width="70" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="280" y="287.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Student</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="340" y="250" width="290" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="485" y="275" text-anchor="middle" font-size="10" fill="#6ee7b7">Coordinator ≈ 40 lines.</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="485" y="289" text-anchor="middle" font-size="10" fill="#6ee7b7">Each part has one reason to change.</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="60" y="94" width="44" height="18" rx="9"/><text x="82" y="106.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="215" y="94" width="44" height="18" rx="9"/><text x="237" y="106.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="370" y="94" width="44" height="18" rx="9"/><text x="392" y="106.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="525" y="94" width="44" height="18" rx="9"/><text x="547" y="106.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="172.5" y="228" width="55" height="18" rx="9"/><text x="200" y="240.5" text-anchor="middle" font-size="9" font-style="italic">plug in</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="st1-pl"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔌</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A coffee-shop app has one big <b>OrderService</b>: it validates, prices, saves and emails — about 300 lines, with six reasons to change.</li><li><b>S — split by job.</b> Four small classes, and a small OrderService that only <i>coordinates</i> them.</li><li><b>O — make growth plug-in.</b> Pricing grows with every promotion, so each promotion becomes a small rule that plugs into Pricing.</li><li>The coordinator is now about 40 lines. Each part has one reason to change. A new promotion is one new class.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same class before and after. The big box splits into small boxes, and the part that keeps growing gets plugs.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>The principles are not five separate rules — they are five views of the same refactoring.</b> Fix the biggest pain first, one small step at a time.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>The five habits work together.</b> Fix the part that hurts most first, then the next, one small step at a time.</span></div>
   <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>In real code violations tangle: the pricing branch that needs OCP lives in a class that needs SRP and builds its own SQL repository, which is a DIP problem. You cannot fix “just one letter”.</p>
-      <p>Robert C. Martin has described SOLID as being about managing dependencies and keeping code easy to change; the aim is not to satisfy a checklist but to make the next change cheap.</p>
-      <p>So the order matters: split responsibilities (SRP) → make the growing part pluggable (OCP) → make sure each plug honours its contract (LSP) → keep interfaces small (ISP) → inject them (DIP). Each step is shippable and tested before the next.</p>
+      <p>☕ A coffee shop starts with one person doing everything. As it grows you hire a barista, a cashier and a cleaner (<b>S</b>), you let the menu grow without rebuilding the counter (<b>O</b>), and you give every worker the same standard tools so anyone can cover a shift (<b>D</b>).</p>
+      <p>You do not hire everyone on day one. You change what hurts, when it hurts.</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🏁 After all five steps</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="After: OrderService of about 40 lines only coordinates four collaborators it receives through its constructor: a validator, a list of discount rules, an order repository and a notifier">
+    <div class="sec-label see">🔌 Then plug the details in</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="The coordinator OrderService depends on two interfaces, IOrderRepository and INotifier; in production SqlOrderRepository and SmtpNotifier plug into them, and in tests FakeOrderRepository and FakeNotifier plug in instead">
 <defs><marker id="st2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M82,80 L82,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/>
-<path d="M240,80 L240,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/>
-<path d="M398,80 L398,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st2A)"/>
-<path d="M556,80 L556,190" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#st2A)"/>
-<rect class="bx" x="10" y="10" width="620" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">OrderService · ≈ 40 lines</text>
-<text x="320" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">one job: coordinate the steps of placing an order</text>
-<rect class="bx" x="10" y="190" width="145" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="82.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">IOrderValidator</text>
-<text x="82.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">checks the order</text>
-<rect class="bx" x="168" y="190" width="145" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="240.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">IDiscountRule[ ]</text>
-<text x="240.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">one class per promotion</text>
-<rect class="bx" x="326" y="190" width="145" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="398.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">IOrderRepository</text>
-<text x="398.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Sql or Fake</text>
-<rect class="bx" x="484" y="190" width="145" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="556.5" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">INotifier</text>
-<text x="556.5" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Smtp or Fake</text>
-<g class="arrow-pill"><rect x="46.5" y="126" width="71" height="18" rx="9"/><text x="82" y="138.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="204.5" y="126" width="71" height="18" rx="9"/><text x="240" y="138.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="362.5" y="126" width="71" height="18" rx="9"/><text x="398" y="138.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="520.5" y="126" width="71" height="18" rx="9"/><text x="556" y="138.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> <b>OrderService</b> is now ≈ 40 lines and only coordinates. Pricing is a list of small rule classes; storage and email are interfaces with real and fake implementations. Adding a promotion is <b>one new class and zero edits</b> to OrderService; a unit test uses in-memory fakes and no infrastructure.</figcaption>
+<g class="st" data-s="1-"><path d="M260,64 L200,128" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="1-"><path d="M380,64 L440,128" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="2-2"><path id="st2-p1" d="M80,250 L80,184" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="2-2"><path id="st2-p2" d="M420,250 L420,184" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="3-"><path id="st2-f1" d="M240,250 L240,184" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="3-"><path id="st2-f2" d="M560,250 L560,184" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="210" y="8" width="220" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">☕ OrderService</text></g>
+<g class="st" data-s="1-"><text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for two sockets</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="40" y="128" width="250" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="165" y="154" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🔌 IOrderRepository</text></g>
+<g class="st" data-s="1-"><text x="165" y="166" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Save(order)</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="350" y="128" width="250" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="475" y="154" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🔌 INotifier</text></g>
+<g class="st" data-s="1-"><text x="475" y="166" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">OrderPlaced(order)</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="10" y="250" width="140" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="80" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">💾 SqlRepository</text></g>
+<g class="st" data-s="2-2"><text x="80" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">real database</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="350" y="250" width="140" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="420" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✉️ SmtpNotifier</text></g>
+<g class="st" data-s="2-2"><text x="420" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">real email</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="170" y="250" width="140" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="240" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧪 FakeRepository</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="240" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">in memory</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="490" y="250" width="140" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="560" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧪 FakeNotifier</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="560" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">remembers calls</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="26" text-anchor="middle" font-size="22">⚡</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="194.5" y="87" width="71" height="18" rx="9"/><text x="230" y="99.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="374.5" y="87" width="71" height="18" rx="9"/><text x="410" y="99.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="50" y="208" width="60" height="18" rx="9"/><text x="80" y="220.5" text-anchor="middle" font-size="9" font-style="italic">plugs in</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="390" y="208" width="60" height="18" rx="9"/><text x="420" y="220.5" text-anchor="middle" font-size="9" font-style="italic">plugs in</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="210" y="208" width="60" height="18" rx="9"/><text x="240" y="220.5" text-anchor="middle" font-size="9" font-style="italic">plugs in</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="530" y="208" width="60" height="18" rx="9"/><text x="560" y="220.5" text-anchor="middle" font-size="9" font-style="italic">plugs in</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="st2-p1"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔌</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="st2-p2"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔌</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="st2-f1"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔌</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="st2-f2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔌</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The coordinator asks for two <b>sockets</b>: <code>IOrderRepository</code> (save) and <code>INotifier</code> (tell the customer).</li><li>In <b>production</b>, the real <b>SqlOrderRepository</b> and <b>SmtpNotifier</b> plug into the sockets.</li><li>In a <b>test</b>, we plug in <b>fakes</b> instead: in memory, nothing real happens, no email is sent.</li><li>The same OrderService ran both times and the tests finish in milliseconds. ⚡</li></ol>
+<figcaption><strong>What you're seeing:</strong> the last step: D. The coordinator never changes; what plugs into the sockets does.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧪 Worked refactoring · five steps</div>
-    <div class="code-block"><pre><span class="cmt">// STEP 0 — pin today's behaviour with a test (golden-master: a few real orders → expected totals)</span>
-
-<span class="cmt">// STEP 1 · SRP — Extract Class for each reason to change</span>
-<span class="kw">public</span> <span class="kw">class</span> OrderValidator { <span class="kw">public</span> <span class="kw">void</span> Validate(Order o) { /* the old ≈ 40 lines */ } }
-<span class="kw">public</span> <span class="kw">class</span> PricingCalculator { <span class="kw">public</span> <span class="kw">decimal</span> Total(Order o) { /* the old ≈ 120 lines */ } }
-
-<span class="cmt">// STEP 2 · OCP — pricing grows, so make promotions pluggable</span>
-<span class="kw">public</span> <span class="kw">interface</span> IDiscountRule { <span class="kw">decimal</span> Discount(Order order); }
-<span class="kw">public</span> <span class="kw">class</span> PricingCalculator(IEnumerable&lt;IDiscountRule&gt; rules)
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — one class, everything inside</span>
+<span class="kw">class</span> OrderService
 {
-    <span class="kw">public</span> <span class="kw">decimal</span> Total(Order o) =&gt; Base(o) - rules.Sum(r =&gt; r.Discount(o));
+    <span class="kw">public</span> <span class="kw">void</span> Place(Order order)
+    {
+        /* validate: ~40 lines */
+        /* price: ~120 lines of <span class="kw">if</span>/<span class="kw">else</span> */
+        <span class="kw">var</span> db = <span class="kw">new</span> SqlConnection(<span class="str">"..."</span>);       <span class="cmt">// saves directly</span>
+        <span class="kw">var</span> mail = <span class="kw">new</span> SmtpClient(<span class="str">"..."</span>);        <span class="cmt">// emails directly</span>
+    }
 }
 
-<span class="cmt">// STEP 3 · LSP + ISP — every rule honours the contract; interfaces are small and role-named</span>
-<span class="kw">public</span> <span class="kw">interface</span> IOrderRepository { <span class="kw">void</span> Save(Order o); }
-<span class="kw">public</span> <span class="kw">interface</span> INotifier        { <span class="kw">void</span> OrderPlaced(Order o); }
-
-<span class="cmt">// STEP 4 · DIP + DI — receive collaborators, register once</span>
-<span class="kw">public</span> <span class="kw">class</span> OrderService(IOrderValidator validator, IPricing pricing,
-                          IOrderRepository repo, INotifier notifier)
+<span class="cmt">// AFTER — a coordinator that is handed its helpers</span>
+<span class="kw">class</span> OrderService(IOrderValidator validator, PriceCalculator pricing,
+                   IOrderRepository repository, INotifier notifier)
 {
     <span class="kw">public</span> <span class="kw">void</span> Place(Order order)
     {
         validator.Validate(order);
-        order.Total = pricing.Total(order);
-        repo.Save(order);
+        order.Total = pricing.Total(order);      <span class="cmt">// pricing owns the discount rules (plug-ins)</span>
+        repository.Save(order);
         notifier.OrderPlaced(order);
     }
-}
-<span class="cmt">// Program.cs: AddScoped&lt;IOrderRepository, SqlOrderRepository&gt;(); AddSingleton&lt;INotifier, SmtpNotifier&gt;(); ...</span></pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch (C# 12 primary constructors). Every step compiles and passes the pinned test before the next begins; the logging and tax concerns move to a decorator and to a rule respectively (see the deep dive on patterns).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Pain it removes</th><th scope="col">Principle</th><th scope="col">Prove it</th></tr></thead><tbody><tr><th scope="row">1 · Extract validator + pricing</th><td>Six reasons to change</td><td>SRP</td><td>Golden-master test still green</td></tr><tr><th scope="row">2 · Promotions become <span class="kw">IDiscountRule</span></th><td>Every promotion edits one big method</td><td>OCP</td><td>New rule class, zero edits to the calculator</td></tr><tr><th scope="row">3 · Small role interfaces, honest rules</th><td>Rule throwing, 10-method fakes</td><td>LSP · ISP</td><td>Same contract test run against every rule</td></tr><tr><th scope="row">4 · Constructor injection</th><td>Needs SQL + SMTP to test</td><td>DIP · DI</td><td>Unit test with two fakes, runs in memory</td></tr><tr><th scope="row">5 · Compose in Program.cs</th><td><span class="kw">new</span> scattered everywhere</td><td>DI</td><td>App starts; scope validation passes</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL ★</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
-    </div>
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Sketch in C# 12. The numbers (300 → 40 lines, six reasons to change) are illustrative teaching data.</p>
   </section>
   <section class="kd-section ">
-    <div class="sec-label trap">📋 What changed, in numbers (illustrative)</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody><tr><th scope="row">OrderService size</th><td>≈ 300 lines</td><td>≈ 40 lines</td></tr><tr><th scope="row">Reasons to change in OrderService</th><td>6</td><td>1</td></tr><tr><th scope="row">Add a promotion</th><td>Edit OrderService, retest everything</td><td>Add 1 class, 0 edits</td></tr><tr><th scope="row">Unit-test setup</th><td>SQL database + SMTP server</td><td>2 in-memory fakes</td></tr><tr><th scope="row">Constructor parameters</th><td>0 (everything built inside)</td><td>4</td></tr></tbody></table></div>
+    <div class="sec-label trap">🗺️ What each step fixed</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Habit</th><th scope="col">What it fixed</th><th scope="col">How we know</th></tr></thead><tbody><tr><th scope="row">Split by job</th><td>S</td><td>six reasons to change in one class</td><td>each class changes for one reason</td></tr><tr><th scope="row">Rules plug in</th><td>O</td><td>every promotion edited the pricing code</td><td>a new promotion = one new class</td></tr><tr><th scope="row">Rules keep their promises</th><td>L</td><td>a rule that returned nonsense broke totals</td><td>same tests run against every rule</td></tr><tr><th scope="row">Small sockets</th><td>I</td><td>a fake with ten empty methods</td><td>each fake has one method</td></tr><tr><th scope="row">Sockets + injection</th><td>D</td><td>tests needed SQL and a mail server</td><td>tests run in memory</td></tr></tbody></table></div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">🎁</span><h5>Marketing wants “buy 2 get 1 free” by Friday</h5><p>Used to mean a risky edit to a 300-line class.</p><span class="sc-use">→ Now: one IDiscountRule class and a test</span></div>
-      <div class="scenario"><span class="sc-icon">🗄️</span><h5>Move orders from SQL to Cosmos</h5><p>Used to touch the business class.</p><span class="sc-use">→ Now: a new IOrderRepository implementation</span></div>
-      <div class="scenario"><span class="sc-icon">🔔</span><h5>Notify by SMS as well as email</h5><p>Used to edit the same method again.</p><span class="sc-use">→ Now: another INotifier (or a composite)</span></div>
-      <div class="scenario"><span class="sc-icon">🧪</span><h5>Nightly CI got slow and flaky</h5><p>Tests needed real infrastructure.</p><span class="sc-use">→ Now: fast in-memory unit tests</span></div>
-    </div>
-  </section>
-  <details class="zoom">
-    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
-    <div class="zoom-inner">
-      <p><b>Why not start with DIP?</b> You can — injecting the two biggest dependencies is often the cheapest first step because it unlocks tests. The order on this page is one sensible path, not a law: start where the pain is.</p>
-      <p><b>Constructor size.</b> Four parameters is fine. If it grows past six or seven, ask whether OrderService has accumulated responsibilities again.</p>
-      <p><b>Stop condition.</b> Stop when the next change is cheap. More layers after that is the over-engineering page 11 warns about.</p>
-    </div>
-  </details>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>The five principles interlock; real refactorings use several together.</li><li>Order used here: pin with a test → SRP → OCP → LSP/ISP → DIP/DI → compose in Program.cs.</li><li>Every step is small, compiles and passes the same pinned test.</li><li>Result: OrderService ≈ 40 lines, 1 reason to change, new promotion = 1 class, tests in memory.</li><li>Start where the pain is; stop when the next change is cheap.</li><li>The numbers on this page are illustrative, not measured.</li></ul>
+      <ul><li>Start with the pain: what is hard to change or test?</li><li>S splits by job, O lets the growing part take plug-ins, L keeps plug-ins honest, I keeps sockets small, D hands them in.</li><li>Pin behaviour with a test first; make one small step at a time.</li><li>Stop when the next change is cheap.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"On our order service I’d first pin its behaviour with a test. Then split by reason to change — validation, pricing, persistence, notification — make the growing pricing part a list of rule classes so new promotions are new classes, keep the interfaces small, and inject them through the constructor so tests use fakes. Each step compiles and passes the same test, and I stop when the next change is cheap rather than chasing purity."</div>
+    <div class="kd-card saythis-box">"On an order service I would first pin its behaviour with a test. Then split it by job — validation, pricing, saving, notifying — make the pricing rules plug-ins so a new promotion is a new class, keep the interfaces small, and inject them through the constructor so tests use fakes. Each step compiles and passes the same test, and I stop when the next change is cheap."</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>Doing it as one giant rewrite.</b> You lose the safety net and the history.</p>
-      <p><b>Refactoring everything because the principles say so.</b> Only the parts that hurt.</p>
-      <p><b>Forgetting the proof.</b> A refactoring without a passing pinned test is just a hope.</p>
+      <p><b>Doing it all in one giant rewrite.</b> You lose the safety net. One small step, test, commit.</p>
+      <p><b>Refactoring code that is not hurting.</b> Only the parts that cost you.</p>
     </div>
   </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🔤 Checklist thinking</h5><p>“Does this class satisfy S, O, L, I, D?”</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🧭 Pain-driven thinking</h5><p>“What is hard to change or test, and which principle explains it?”</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>Testing is where the payoff shows. Next: what DIP and SRP buy you in tests — fakes vs mocks, contract tests and seams.</span>
+      <span>Testing is where the payoff shows. Next: why this design makes tests fast and simple.</span>
       <a class="next-link" href="testing-solid.html">Testing SOLID Code <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 This page is a worked example built from the earlier pages’ sources; the code is a sketch and the numbers are illustrative. Primary constructors are a C# 12 feature (not re-verified this session). The framing of SOLID as dependency management is from Robert C. Martin. Official docs: <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection" target="_blank" rel="noopener">Dependency injection in .NET</a></p>
+  </section>  <p class="fact-note">📌 This page is a worked example built from the earlier pages’ sources; the code is a sketch and all numbers are illustrative. Primary constructors are a C# 12 feature (not re-verified this session). Official docs: <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection" target="_blank" rel="noopener">Dependency injection in .NET</a></p>
 
 
 </main>

@@ -36,169 +36,173 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 10 of 12 · 🛠️ Making it real</div>
-    <h1>Testability is the <span class="grad-text">proof</span> the design worked.</h1>
-    <p class="sub">Fakes, stubs and mocks, a unit test and an integration test in C#, contract tests for LSP, and what bad tests say about your design.</p>
+    <div class="eyebrow">Concept 10 of 12 · ⚖️ Judgement</div>
+    <h1>Easy tests are the <span class="grad-text">proof</span> the design worked.</h1>
+    <p class="sub">Fakes, stubs and mocks in plain words, a fast unit test in C#, and what a hard-to-test class is telling you.</p>
     <div class="interview-q">❓ "How does SOLID make code easier to test, and what is the difference between a stub and a mock?"</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A unit test calls OrderService.Place; OrderService talks to FakeOrderRepository and FakeNotifier, which are in-memory stand-ins that record what was called, so the test needs no database or mail server and can assert on the fakes">
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A test that uses the real database and the real mail server is slow, needs everything running and sends a real email to a real customer">
 <defs><marker id="ts1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M320,66 L320,128" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ts1A)"/>
-<path d="M240,184 L240,215 L155,215 L155,250" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ts1A)"/>
-<path d="M400,184 L400,215 L485,215 L485,250" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ts1A)"/>
-<rect class="bx" x="190" y="10" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="320" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Unit test</text>
-<text x="320" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Arrange · Act · Assert</text>
-<rect class="bx" x="190" y="128" width="260" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">OrderService</text>
-<text x="320" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the code under test</text>
-<rect class="bx" x="10" y="250" width="290" height="64" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="155" y="279.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">FakeOrderRepository</text>
-<text x="155" y="292.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">List&lt;Order&gt; in memory</text>
-<rect class="bx" x="340" y="250" width="290" height="64" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="485" y="279.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">FakeNotifier</text>
-<text x="485" y="292.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">remembers who was told</text>
-<g class="arrow-pill"><rect x="276.5" y="88" width="87" height="18" rx="9"/><text x="320" y="100.5" text-anchor="middle" font-size="9" font-style="italic">calls Place()</text></g>
-<g class="arrow-pill"><rect x="130" y="206" width="50" height="18" rx="9"/><text x="155" y="218.5" text-anchor="middle" font-size="9" font-style="italic">Save()</text></g>
-<g class="arrow-pill"><rect x="441.5" y="206" width="87" height="18" rx="9"/><text x="485" y="218.5" text-anchor="middle" font-size="9" font-style="italic">OrderPlaced()</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> The test calls <b>OrderService.Place</b>. Because OrderService receives its collaborators (page 6), the test hands it <b>FakeOrderRepository</b> and <b>FakeNotifier</b>: in-memory stand-ins that record what happened. The test then asserts on the fakes — “was the order saved? was the customer notified?” — with no database, no mail server and no waiting.</figcaption>
+<g class="st" data-s="1-"><path id="ts1-t1" d="M320,64 L320,126" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ts1A)"/></g>
+<g class="st" data-s="2-"><path id="ts1-s1" d="M240,182 L240,214 L155,214 L155,246" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ts1A)"/></g>
+<g class="st" data-s="3-"><path id="ts1-s2" d="M400,182 L400,214 L485,214 L485,246" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ts1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="190" y="8" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧪 The test</text></g>
+<g class="st" data-s="1-"><text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">“place an order, check what happened”</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="190" y="126" width="260" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">☕ OrderService</text></g>
+<g class="st" data-s="1-"><text x="320" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the code being tested</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="246" width="290" height="64" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="155" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🗄️ Real database</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="155" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">has to be running</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="340" y="246" width="290" height="64" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="485" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">✉️ Real mail server</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="485" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">sends a real email</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx note" x="10" y="120" width="150" height="70" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="144" text-anchor="middle" font-size="10" fill="#fda4af">Slow 🐢</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="158" text-anchor="middle" font-size="10" fill="#fda4af">needs a database</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="172" text-anchor="middle" font-size="10" fill="#fda4af">running</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="480" y="120" width="150" height="70" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="555" y="151" text-anchor="middle" font-size="10" fill="#fda4af">Real customers</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="555" y="165" text-anchor="middle" font-size="10" fill="#fda4af">get real emails 😱</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="8" width="170" height="56" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="32" text-anchor="middle" font-size="10" fill="#fda4af">Slow · fragile · noisy</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="46" text-anchor="middle" font-size="10" fill="#fda4af">nobody runs these</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="292.5" y="86" width="55" height="18" rx="9"/><text x="320" y="98.5" text-anchor="middle" font-size="9" font-style="italic">Place()</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="130" y="205" width="50" height="18" rx="9"/><text x="155" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Save()</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="460" y="205" width="50" height="18" rx="9"/><text x="485" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Send()</text></g></g>
+<g class="st" data-s="1-1"><g class="tok" data-path="ts1-t1"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">▶</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="ts1-s1"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🐢</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ts1-s2"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📨</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>test</b> asks OrderService to place an order. OrderService creates its own database connection and its own mail client inside.</li><li>It really saves to a <b>real database</b>. That database must be installed, running and reachable — and it is <b>slow</b>. 🐢</li><li>It also sends a <b>real email</b> to a real person. Every time the tests run. 😱</li><li>Slow, fragile, noisy tests: people stop running them. This is what a design that bends the Dependency Inversion Principle feels like.</li></ol>
+<figcaption><strong>What you're seeing:</strong> what testing feels like when important code builds its own database and mail client.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>Testability is the proof that the design worked.</b> If a class is hard to test, one of the principles is being bent.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Easy testing is the proof that the design worked.</b> If a class is hard to test, a principle is being bent.</span></div>
   <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>Microsoft’s unit-testing guidance describes the standard shape: <i>arrange</i> your objects, <i>act</i> on one of them, <i>assert</i> that something is as expected; and to isolate a component by replacing a dependency with a fake implementation so the test focuses on one thing.</p>
-      <p>It also gives useful vocabulary: a <b>stub</b> just supplies canned answers; a <b>mock</b> is like a stub except that you assert against it. “Fake” is the general word for any test stand-in. Mixing those words up leads other developers to the wrong assumptions about the test’s intent.</p>
-      <p>SOLID and testing feed each other: SRP gives small units to test, DIP supplies the seams, ISP keeps fakes tiny, LSP says the fake must behave like the real thing, and OCP means adding a rule adds a test rather than editing one.</p>
+      <p>🚗 Before a driving test, you practise in an empty car park with a <b>practice dummy</b>, not on a busy road with real pedestrians. Tests do the same: they use <b>stand-ins</b> that look like the real thing but cannot hurt anyone.</p>
+      <p>A <b>fake</b> is a stand-in that works (in memory). A <b>stub</b> just gives canned answers. A <b>mock</b> is a spy that remembers who called it, so the test can check.</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧪 Test lab · a unit test and an integration test</div>
-    <div class="code-block"><pre><span class="cmt">// UNIT TEST — fakes, no infrastructure</span>
-<span class="kw">public</span> <span class="kw">class</span> FakeOrderRepository : IOrderRepository
-{
-    <span class="kw">public</span> List&lt;Order&gt; Saved { <span class="kw">get</span>; } = <span class="kw">new</span>();
-    <span class="kw">public</span> <span class="kw">void</span> Save(Order order) =&gt; Saved.Add(order);
-}
-<span class="kw">public</span> <span class="kw">class</span> FakeNotifier : INotifier
+    <div class="sec-label see">⚡ With sockets, tests use fakes</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="The same test with fakes: OrderService calls FakeRepository and FakeNotifier that live in memory and remember what happened, and the test then asks the fakes whether the order was saved and the customer told">
+<defs><marker id="ts2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><path id="ts2-t1" d="M320,64 L320,126" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ts2A)"/></g>
+<g class="st" data-s="2-"><path id="ts2-f1" d="M240,182 L240,214 L155,214 L155,246" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ts2A)"/></g>
+<g class="st" data-s="2-"><path id="ts2-f2" d="M400,182 L400,214 L485,214 L485,246" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ts2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="190" y="8" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧪 The test</text></g>
+<g class="st" data-s="1-"><text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">“place an order, check what happened”</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="190" y="126" width="260" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">☕ OrderService</text></g>
+<g class="st" data-s="1-"><text x="320" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the code being tested</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="246" width="290" height="64" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="155" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧪 FakeRepository</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="155" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">keeps orders in a list</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="340" y="246" width="290" height="64" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="485" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧪 FakeNotifier</text></g>
+<g class="st" data-s="2-"><text x="485" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">remembers who was told</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="10" y="126" width="150" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="85" y="150" text-anchor="middle" font-size="10" fill="#6ee7b7">In memory —</text></g>
+<g class="st" data-s="2-"><text x="85" y="164" text-anchor="middle" font-size="10" fill="#6ee7b7">nothing real</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="480" y="126" width="150" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="555" y="150" text-anchor="middle" font-size="10" fill="#6ee7b7">No email</text></g>
+<g class="st" data-s="2-"><text x="555" y="164" text-anchor="middle" font-size="10" fill="#6ee7b7">is sent ✅</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="10" y="8" width="160" height="56" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="90" y="32" text-anchor="middle" font-size="10" fill="#67e8f9">3 · The test asks the fakes:</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="90" y="46" text-anchor="middle" font-size="10" fill="#67e8f9">“saved? told?”</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="30" text-anchor="middle" font-size="26">⚡</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="470" y="8" width="120" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="530" y="39" text-anchor="middle" font-size="10" fill="#6ee7b7">Milliseconds</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="292.5" y="86" width="55" height="18" rx="9"/><text x="320" y="98.5" text-anchor="middle" font-size="9" font-style="italic">Place()</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="130" y="205" width="50" height="18" rx="9"/><text x="155" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Save()</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="460" y="205" width="50" height="18" rx="9"/><text x="485" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Send()</text></g></g>
+<g class="st" data-s="1-1"><g class="tok" data-path="ts2-t1"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">▶</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="ts2-f1"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">💾</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="ts2-f2"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📨</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Same test. But now OrderService <b>receives</b> its helpers (last pages), so the test can hand it <b>fakes</b>.</li><li>OrderService saves to the <b>FakeRepository</b> (just a list in memory) and tells the <b>FakeNotifier</b> (which only remembers). Nothing real happens.</li><li>Then the test asks the fakes: “were you asked to save? were you told?” — and checks the answers.</li><li>No database, no email server, no waiting. The test runs in <b>milliseconds</b>. ⚡</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same test with fakes plugged into the sockets.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> FakeNotifier : INotifier
 {
     <span class="kw">public</span> List&lt;<span class="kw">int</span>&gt; Told { <span class="kw">get</span>; } = <span class="kw">new</span>();
-    <span class="kw">public</span> <span class="kw">void</span> OrderPlaced(Order order) =&gt; Told.Add(order.Id);
+    <span class="kw">public</span> <span class="kw">void</span> OrderPlaced(Order order) =&gt; Told.Add(order.Id);     <span class="cmt">// just remembers</span>
 }
 
 [Fact]
-<span class="kw">public</span> <span class="kw">void</span> Place_saves_the_order_and_notifies()
+<span class="kw">public</span> <span class="kw">void</span> Placing_an_order_tells_the_customer()
 {
-    <span class="cmt">// Arrange</span>
-    <span class="kw">var</span> repo = <span class="kw">new</span> FakeOrderRepository();
     <span class="kw">var</span> notifier = <span class="kw">new</span> FakeNotifier();
-    <span class="kw">var</span> service = <span class="kw">new</span> OrderService(<span class="kw">new</span> OrderValidator(), <span class="kw">new</span> PricingCalculator(<span class="kw">new</span> IDiscountRule[0]), repo, notifier);
+    <span class="kw">var</span> service = <span class="kw">new</span> OrderService(<span class="kw">new</span> FakeRepository(), notifier);   <span class="cmt">// plug in the fakes</span>
 
-    <span class="cmt">// Act</span>
-    service.Place(<span class="kw">new</span> Order(id: 42));
+    service.Place(<span class="kw">new</span> Order(id: 42));                                  <span class="cmt">// act</span>
 
-    <span class="cmt">// Assert</span>
-    Assert.Single(repo.Saved);
-    Assert.Equal(42, Assert.Single(notifier.Told));
-}
-
-<span class="cmt">// INTEGRATION TEST — real host, swap only the outside world</span>
-<span class="kw">public</span> <span class="kw">class</span> OrdersApiTests(WebApplicationFactory&lt;Program&gt; factory) : IClassFixture&lt;WebApplicationFactory&lt;Program&gt;&gt;
-{
-    [Fact]
-    <span class="kw">public</span> <span class="kw">async</span> Task Post_order_returns_created()
-    {
-        <span class="kw">var</span> client = factory.WithWebHostBuilder(b =&gt; b.ConfigureTestServices(s =&gt;
-            s.AddSingleton&lt;INotifier, FakeNotifier&gt;())).CreateClient();
-        <span class="kw">var</span> response = <span class="kw">await</span> client.PostAsJsonAsync(<span class="str">"/orders"</span>, <span class="kw">new</span> { id = 42 });
-        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-    }
+    Assert.Equal(<span class="kw">new</span>[] { 42 }, notifier.Told);                         <span class="cmt">// assert on the fake</span>
 }</pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. The unit test needs nothing but code. The integration test runs the real pipeline and real registrations, replacing only the notifier so no mail goes out.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Hard-to-test design</th><th scope="col">SOLID design</th></tr></thead><tbody><tr><th scope="row">Needs a database/mail server</th><td>Yes</td><td>No (fakes)</td></tr><tr><th scope="row">Lines of setup for one test</th><td>≈ 40</td><td>≈ 6</td></tr><tr><th scope="row">New promotion needs</th><td>Edit and retest the big method</td><td>One new rule + one new test</td></tr><tr><th scope="row">A bug in the SQL repository found by</th><td>Anything that touches it</td><td>The shared repository contract test</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Arrange – Act – Assert: set things up, do one thing, check the result.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🧸 Stub, mock, fake — plain words</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Word</th><th scope="col">Plain meaning</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row"><b>Fake</b></th><td>a simple working copy</td><td>a list that stands in for the database</td></tr><tr><th scope="row"><b>Stub</b></th><td>gives canned answers</td><td>a clock that always says “Monday 9:00”</td></tr><tr><th scope="row"><b>Mock</b></th><td>a spy: you check what was called</td><td>“was OrderPlaced called with 42?”</td></tr></tbody></table></div>
+    <p style="margin-top:10px;color:var(--ink-soft)">Microsoft’s .NET testing guidance separates mock and stub by where the assertions happen (against a mock, not a stub) and warns that mixing the words up misleads readers. “Fake” is the general word for any stand-in.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: what is the test telling you?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> “I cannot run this test without the internet”</summary><div class="zoom-inner"><p><b>A design smell.</b> Something real is hard-wired inside (DIP). Hand it in through an interface.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> “Setting up the test takes 40 lines”</summary><div class="zoom-inner"><p><b>A design smell.</b> The class needs too many things (SRP). Split it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> “My fake passes but production crashes”</summary><div class="zoom-inner"><p><b>A design smell.</b> The fake does not behave like the real thing (LSP). Run the same checks against both.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> “A test for one rule needs only one small object”</summary><div class="zoom-inner"><p><b>Healthy.</b> That is what well-designed code feels like.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Testability is the proof of design: easy tests = small, separate, replaceable pieces.</li><li>Hand fakes in through interfaces; the test never touches the real database or mail server.</li><li>Fake = simple working copy, stub = canned answers, mock = a spy you check.</li><li>Arrange – Act – Assert; keep most tests small and fast, a few that use the real thing.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🔬 The test levels</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three levels of test: many fast unit tests using fakes, some integration tests on a real host with one service swapped, and a few end-to-end tests on the real system">
-<defs><marker id="ts2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="bx" x="10" y="10" width="620" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Unit tests · many · milliseconds</text>
-<text x="320" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">fakes for repository and notifier; no I/O</text>
-<rect class="bx" x="90" y="120" width="460" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="320" y="162.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Integration tests · some</text>
-<text x="320" y="175.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">real host, real wiring; swap only the outside world</text>
-<rect class="bx" x="190" y="230" width="260" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="320" y="272.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">End-to-end · a few</text>
-<text x="320" y="285.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">real database, real mail</text>
-</svg>
-<figcaption><strong>What you're seeing:</strong> SOLID makes the <b>bottom of the test pyramid cheap</b>: most behaviour is checked by fast unit tests with fakes. A few integration tests prove the real wiring (and the real SQL), and only a handful go end to end. If everything needs the top layer, the design has no seams.</figcaption>
-</figure>
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat testability as the proof the design worked. Because OrderService receives its dependencies through interfaces, I can unit-test it with in-memory fakes — arrange, act, assert, in milliseconds, with no database or email. I keep a few integration tests on the real host, swapping only the outside world, and I make sure fakes behave like the real thing."</div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label trap">📋 What bad tests tell you about the design</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">The design says</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Test needs 40 lines of setup</th><td>Too many dependencies (SRP)</td><td>Split the class</td></tr><tr><th scope="row">Test needs the real clock, file system or network</th><td>Hidden dependency (DIP)</td><td>Inject an abstraction (for time: <span class="kw">TimeProvider</span>)</td></tr><tr><th scope="row">You are mocking a class with 12 methods</th><td>Fat interface (ISP)</td><td>Narrow the interface to what the client uses</td></tr><tr><th scope="row">The fake passes but production fails</th><td>Fake does not honour the contract (LSP)</td><td>Run one contract-test suite against both</td></tr><tr><th scope="row">Tests assert on how it works, not what it does (call counts everywhere)</th><td>Over-mocking couples tests to internals</td><td>Assert on outcomes; stub, do not mock, what you only read</td></tr><tr><th scope="row">Tests break whenever you refactor</th><td>They test private details</td><td>Test behaviour through the public API</td></tr></tbody></table></div>
-  </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">⏰</span><h5>A test passes on weekdays and fails at weekends</h5><p>It reads DateTime.Now.</p><span class="sc-use">→ Inject the clock</span></div>
-      <div class="scenario"><span class="sc-icon">📧</span><h5>Developers learn not to run tests locally</h5><p>They send real email.</p><span class="sc-use">→ FakeNotifier in unit tests; fake in integration tests</span></div>
-      <div class="scenario"><span class="sc-icon">🔁</span><h5>SqlRepo and InMemoryRepo disagree</h5><p>The fake was written from memory.</p><span class="sc-use">→ One contract-test class, run against both</span></div>
-      <div class="scenario"><span class="sc-icon">🧱</span><h5>Refactoring breaks 60 tests</h5><p>They mocked every call.</p><span class="sc-use">→ Assert on results, keep mocks at the boundary</span></div>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Mocking everything.</b> Tests then copy the code and break at every refactoring. Check results, not every call.</p>
+      <p><b>Fakes that drift from the real thing.</b> Check both with the same tests.</p>
     </div>
   </section>
   <details class="zoom">
     <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
     <div class="zoom-inner">
-      <p><b>Contract tests for LSP.</b> Write the repository tests once as an abstract class (<span class="kw">OrderRepositoryContract</span>) and subclass it for each implementation: the in-memory fake and the SQL one. If both pass, substituting is safe.</p>
-      <p><b>Database tests.</b> The EF Core documentation has a page on testing without your production database; use it for deciding between an in-memory substitute and a real test database, because they behave differently.</p>
-      <p><b>Mocking libraries.</b> Libraries such as Moq or NSubstitute generate stubs and mocks for small interfaces; hand-written fakes are often clearer for stateful things like repositories.</p>
+      <p><b>Integration tests.</b> In ASP.NET Core you can start the real app in a test and replace just one registration (for example the notifier) with <span class="kw">ConfigureTestServices</span>, so real wiring is checked without sending real mail.</p>
+      <p><b>Same tests for real and fake.</b> Write the repository checks once and run them against both the fake and the SQL one. If both pass, swapping is safe — that is Liskov in practice.</p>
     </div>
   </details>
-  <section class="kd-section " id="recall">
-    <div class="sec-label recall">🔥 Interview recall</div>
-    <div class="kd-card recall-box">
-      <ul><li>Arrange, act, assert; isolate the unit by replacing dependencies with fakes.</li><li>Stub = canned answers; mock = you assert against it; fake = any stand-in.</li><li>DIP gives the seams, SRP the small units, ISP the tiny fakes, LSP the trustworthy fakes.</li><li>Many unit tests, some integration tests (swap only the outside world), few end-to-end.</li><li>Hard-to-test code is design feedback, not a testing problem.</li><li>Run one contract-test suite against every implementation, real and fake.</li></ul>
-    </div>
-  </section>
-  <section class="kd-section ">
-    <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"I treat testability as the proof the design worked. With dependencies injected through small interfaces I can unit-test OrderService with in-memory fakes — arrange, act, assert, no infrastructure. I keep a few integration tests on the real host, swapping only the outside world with ConfigureTestServices, and I run one contract-test suite against both the fake and the real repository so substitution is safe. If a test needs huge setup or real I/O, that tells me which principle the code bends."</div>
-  </section>
-  <section class="kd-section " id="trap">
-    <div class="sec-label trap">⚠️ Common trap</div>
-    <div class="kd-card trap-box">
-      <p><b>Mocking everything.</b> Tests then mirror the implementation and break on every refactoring.</p>
-      <p><b>Fakes that drift from the real thing.</b> They pass while production fails.</p>
-      <p><b>Adding an interface only to mock it.</b> If nothing else varies, ask whether the test really needs it.</p>
-    </div>
-  </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🧱 Stub</h5><p>Gives canned answers; you do not assert on it.</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🎯 Mock</h5><p>You assert that specific calls happened.</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>You can now design for change and prove it. Next, the judgement call: when SOLID is too much, and what to do instead.</span>
+      <span>You can now design for change and prove it. Next, the judgement call: when is SOLID too much?</span>
       <a class="next-link" href="when-not-solid.html">When Not to Apply SOLID <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 Arrange/act/assert and the stub-versus-mock distinction follow Microsoft Learn’s .NET unit-testing best practices; replacing services in integration tests follows the ASP.NET Core integration-testing page (WebApplicationFactory, ConfigureTestServices). xUnit attributes and the contract-test pattern are common practice, not quoted here. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices" target="_blank" rel="noopener">Best practices for writing unit tests (.NET)</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests" target="_blank" rel="noopener">Integration tests in ASP.NET Core</a> · <a href="https://learn.microsoft.com/en-us/ef/core/testing/testing-without-the-database" target="_blank" rel="noopener">Testing without your production database (EF Core)</a></p>
+  </section>  <p class="fact-note">📌 Arrange/act/assert and the stub-versus-mock distinction follow Microsoft Learn’s .NET unit-testing best practices; replacing a registration in an integration test follows the ASP.NET Core integration-testing page (WebApplicationFactory, ConfigureTestServices). xUnit attributes are common practice and not quoted here. The practice-dummy analogy is a teaching picture. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices" target="_blank" rel="noopener">Best practices for writing unit tests (.NET)</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests" target="_blank" rel="noopener">Integration tests in ASP.NET Core</a> · <a href="https://learn.microsoft.com/en-us/ef/core/testing/testing-without-the-database" target="_blank" rel="noopener">Testing without your production database (EF Core)</a></p>
 
 
 </main>

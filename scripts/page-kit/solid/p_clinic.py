@@ -6,22 +6,22 @@ CASES = [
   ['OrderService is ≈ 300 lines; pricing alone is ≈ 120 lines of nested <code>if</code>/<code>else</code>.', 'Git history: 14 of the last 20 changes touched this file, for 4 different reasons.'],
   ['<b>Diagnosis.</b> One class changes for many reasons (SRP) and the growing part is a conditional (OCP).',
    '<b>Fix.</b> Extract pricing into its own class, then turn promotions into <code>IDiscountRule</code> classes. A new promotion is one new class.'], 'pages 2 and 3'),
- (1, 'Throwing override', 'Reports crash when they save', 'A reporting job receives an <code>IOrderRepository</code> and crashes in production with <code>NotSupportedException</code>.',
-  ['<code>ReadOnlyOrderRepository.Save</code> throws.', 'The code compiled; the unit tests used another implementation.'],
-  ['<b>Diagnosis.</b> A subtype that cannot honour the base contract (LSP), caused by an interface wider than its implementer’s abilities (ISP).',
-   '<b>Fix.</b> Split into <code>IOrderReader</code> and <code>IOrderWriter</code>; the read-only class implements only the reader.'], 'pages 4 and 5'),
- (2, 'Hidden new', 'Tests need a database and an SMTP server', 'A one-line unit test takes 8 seconds and sometimes sends real emails.',
-  ['<code>OrderService.Place</code> contains <code>new SqlConnection(...)</code> and <code>new SmtpClient(...)</code>.', 'Constructor has 0 parameters.'],
-  ['<b>Diagnosis.</b> The business class builds its own low-level collaborators (DIP).',
-   '<b>Fix.</b> Introduce <code>IOrderRepository</code> and <code>INotifier</code>, receive them in the constructor, register them in Program.cs. Tests use fakes: milliseconds, no email.'], 'pages 6, 7 and 10'),
+ (1, 'Penguin', 'The loop that makes every bird fly crashes', 'A zoo app calls <code>Fly()</code> on every bird. It works all week — then crashes on a penguin.',
+  ['<code>Penguin.Fly()</code> contains <code>throw new NotSupportedException()</code>.', 'The code compiled; the unit tests only used sparrows.'],
+  ['<b>Diagnosis.</b> A child that cannot keep its parent’s promise (Liskov). <code>Bird</code> promised something not every bird can do.',
+   '<b>Fix.</b> <code>Bird</code> only promises <code>Eat()</code>; <code>Fly()</code> moves into <code>IFlyable</code>; the loop takes <code>IFlyable</code>s.'], 'page 4'),
+ (2, 'Hidden new', 'Tests need a real database and send real emails', 'A one-line test takes ages and sometimes emails real customers.',
+  ['<code>OrderService.Place</code> contains <code>new SqlConnection(...)</code> and <code>new SmtpClient(...)</code>.', 'Its constructor takes nothing.'],
+  ['<b>Diagnosis.</b> The important class wires itself to one particular database and mail server, like a switch wired to one bulb (Dependency Inversion).',
+   '<b>Fix.</b> Introduce <code>IOrderRepository</code> and <code>INotifier</code>, receive them in the constructor, register them in Program.cs. Tests plug in fakes.'], 'pages 6, 7 and 10'),
  (0, 'Switch on type', 'Adding a payment method means five edits', 'Adding PayPal needs changes in checkout, refunds, receipts, reports and the fraud check.',
   ['The same <code>switch (payment.Kind)</code> appears in 5 files.', 'Each new method breaks one of the five places that were missed.'],
   ['<b>Diagnosis.</b> Repeated switch on a type (OCP) with the behaviour scattered across classes (shotgun surgery).',
    '<b>Fix.</b> One <code>IPaymentMethod</code> with Charge/Refund/Receipt; one class per method. New method = new class.'], 'pages 3 and 8'),
- (1, 'Fat interface', 'A test double has 14 methods for 1 call', 'Writing a fake <code>IUserService</code> for a login test needs 14 empty methods.',
-  ['The interface mixes login, profile, billing and admin operations.', 'LoginController uses exactly 1 member.'],
-  ['<b>Diagnosis.</b> Fat interface: clients depend on methods they do not use (ISP).',
-   '<b>Fix.</b> Role interfaces such as <code>IAuthenticator</code>; the class may still implement all of them.'], 'page 5'),
+ (1, 'Fat interface', 'A basic printer full of methods that throw', 'The new basic printer class has ten lines of <code>throw new NotSupportedException()</code>.',
+  ['It implements <code>IMachine</code> with <code>Print</code>, <code>Scan</code> and <code>Fax</code>.', 'It only prints. Its fake in the tests needs three empty methods to run one check.'],
+  ['<b>Diagnosis.</b> A fat interface forces classes to carry methods they cannot use (Interface Segregation).',
+   '<b>Fix.</b> Split into <code>IPrinter</code>, <code>IScanner</code>, <code>IFax</code>; the basic printer implements only <code>IPrinter</code>.'], 'page 5'),
  (2, 'Captive', 'Data from user A appears for user B', 'Occasionally a customer sees another customer’s cart. Restarting the app “fixes” it.',
   ['<code>CartCache</code> is registered as a singleton and its constructor takes a scoped <code>ICartRepository</code>.', 'Scope validation is off in Production.'],
   ['<b>Diagnosis.</b> A captive dependency: a singleton holds a scoped service for the app’s lifetime (DI lifetimes).',
@@ -63,7 +63,7 @@ def build_solid_clinic():
         '<b>Decide your diagnosis first</b>, then reveal it.'))
     body += one('You know the five principles, DI, smells, refactoring, testing and when to stop. This is the practice ward: <b>symptom → evidence → diagnosis → one change → prove it</b>.')
     body += why([
-        'Real tickets say “every promotion breaks something” or “tests take forever”, not “this violates OCP”. The cases start the way tickets do, and all of them use the same ShopCore app and the same illustrative numbers as the lab.',
+        'Real tickets say “every promotion breaks something” or “tests take forever”, not “this violates OCP”. Each case starts the way a ticket does, using the same pictures as the lab: restaurant, power strip, birds, printer, light switch.',
         'Every case is solved with the ladder: <b>smell → read (who changes it, and why?) → find the bent principle → guess one change → make it small and safe → prove it with a test</b>.'])
     body += block('🧭 The ladder, SOLID edition', ladder_strip([1,2,3,4,5,6]) + '''
     <p style="margin-top:12px">Ask in this order: <b>what hurts (changing, testing, or understanding)?</b> → <b>who or what forces the change?</b> → <b>which principle does the evidence point to?</b> → <b>what is the smallest refactoring?</b> → <b>does it still pass the pinned test, and is the next change cheaper?</b> → <b>or is it better left alone?</b></p>''', label_cls='see')
