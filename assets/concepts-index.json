@@ -2708,5 +2708,31 @@
     "summary": "The classic mistake with State, props & why components re-render.",
     "keywords": "react state props rerender re-render snapshot batching setState useState updater lift state up trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-keys-reconciliation",
+    "title": "Keys, identity & reconciliation",
+    "category": "React",
+    "page": "react/concepts/keys-reconciliation.html",
+    "summary": "How React matches the new tree to the old one by type, position and key; when state is kept or reset; bad keys.",
+    "keywords": "react keys key reconciliation identity index random list state reset"
+  },
+  {
+    "id": "react-keys-reconciliation-recall",
+    "title": "Keys, identity & reconciliation — interview recall",
+    "category": "React",
+    "page": "react/concepts/keys-reconciliation.html",
+    "summary": "Quick recall points: Keys, identity & reconciliation.",
+    "keywords": "react keys key reconciliation identity index random list state reset interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-keys-reconciliation-trap",
+    "title": "Keys, identity & reconciliation — common trap",
+    "category": "React",
+    "page": "react/concepts/keys-reconciliation.html",
+    "summary": "The classic mistake with Keys, identity & reconciliation.",
+    "keywords": "react keys key reconciliation identity index random list state reset trap mistake",
+    "anchor": "trap"
   }
 ]

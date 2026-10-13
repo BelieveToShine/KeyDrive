@@ -28,5 +28,19 @@ Source root: https://react.dev/
 | cartOpen example: 504 renders vs 1 | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 3 — keys & reconciliation
+| Claim | Status | Note |
+|---|---|---|
+| State is kept while the same component stays at the same position; discarded when removed or a different component takes the spot | ✅ V | learn/preserving-and-resetting-state |
+| Different keys make React treat elements as separate components, resetting state; keys identify a child only within its parent | ✅ V | same |
+| Do not nest component definitions (resets state by accident) | ✅ V | same (recap) |
+| Keys unique among siblings, must not change, do not generate while rendering; DB ids, counter or crypto.randomUUID() for local data | ✅ V | learn/rendering-lists |
+| Random keys rebuild every component and DOM node and drop input | ✅ V | learn/rendering-lists |
+| Index keys break on reorder/insert/remove; acceptable only for lists that never reorder | ✅ V | learn/tutorial-tic-tac-toe |
+| useId should not be used for list keys | ✅ V | reference/react/useId |
+| `key` resets state (e.g. key per user) | ✅ V | You Might Not Need an Effect / preserving-and-resetting-state |
+| 500 → 480 cards: 980 mount/unmount operations with random keys | 🟦 I | arithmetic on teaching numbers (500 + 480) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
