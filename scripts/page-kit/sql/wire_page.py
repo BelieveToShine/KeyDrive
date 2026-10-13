@@ -18,17 +18,5 @@ idx += [dict(id=base, title=title, category='SQL', page=page, summary=summ, keyw
         dict(id=base + '-recall', title=f'{title} — interview recall', category='SQL', page=page, summary=f'Quick recall points: {title}.', keywords=kw + ' interview recall', anchor='recall'),
         dict(id=base + '-trap', title=f'{title} — common trap', category='SQL', page=page, summary=f'The classic mistake with {title}.', keywords=kw + ' trap mistake', anchor='trap')]
 (R / 'assets/concepts-index.json').write_text(json.dumps(idx, indent=2, ensure_ascii=False) + '\n')
-j = json.loads((R / 'assets/journeys.json').read_text())
-ns = len(j['sql']['written']); nt = len(j['sql']['order'])
-nc = len(j.get('cosmos', {}).get('written', [])); ntc = len(j.get('cosmos', {}).get('order', [])) or 12
-tot = ns + nc; totmax = nt + ntc
-d = (R / 'data/index.html').read_text()
-d = re.sub(r'(Live|Complete) · \d+ of \d+', ('Complete' if ns == nt else 'Live') + f' · {ns} of {nt}', d)
-d = re.sub(r'\d+ / \d+ concepts</span></div><div class="progress"><i style="width:\d+%"></i></div><span class="dc-go">Open the SQL', f'{ns} / {nt} concepts</span></div><div class="progress"><i style="width:{round(100*ns/nt)}%"></i></div><span class="dc-go">Open the SQL', d)
-d = re.sub(r'SQL lab (live|complete) \(\d+ / \d+\)', ('SQL lab complete' if ns == nt else 'SQL lab live') + f' ({ns} / {nt})', d)
-(R / 'data/index.html').write_text(d)
-h = (R / 'index.html').read_text()
-h = re.sub(r'\d+ / \d+ concepts</span></div><div class="progress"><i style="width:\d+%"></i></div></div>\n      </a>\n      <div class="kd-card cat-tile soon">', f'{tot} / {totmax} concepts</span></div><div class="progress"><i style="width:{round(100*tot/totmax)}%"></i></div></div>\n      </a>\n      <div class="kd-card cat-tile soon">', h)
-h = re.sub(r'<b>\d+</b> <span>concepts</span>', f'<b>{57 + tot}</b> <span>concepts</span>', h)
-(R / 'index.html').write_text(h)
-print('wired', slug, f'sql {ns}/{nt}, cosmos {nc}, total {tot}/{totmax}')
+subprocess.run([sys.executable, str(R / 'scripts/page-kit/data_hub.py')], check=True)
+print('wired', slug)

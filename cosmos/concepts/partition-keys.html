@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partition keys: the decision that rules everything — Cosmos DB — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🌌 Cosmos DB Performance Lab</a><span class="sep">›</span><span class="cur">Partition keys</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 12 · 🌌 The model</div>
+    <h1>One property name decides <span class="grad-text">where data lives, how load spreads and what queries cost.</span></h1>
+    <p class="sub">Logical and physical partitions, three tests for a good key, hot keys and the 20 GB limit, and the fixes: synthetic and hierarchical keys.</p>
+    <div class="interview-q">❓ "How do you choose a partition key in Cosmos DB, and what goes wrong with a bad one?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The partition key value is hashed to choose a logical partition; logical partitions live on physical partitions that the service manages and splits as data grows">
+<defs><marker id="pk1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="440" y="8" width="190" height="314" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="454" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">PHYSICAL PARTITIONS</text>
+<path d="M160,55 L270,55" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pk1A)"/>
+<path d="M400,55 L420,55 L420,139 L452,139" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pk1A)"/>
+<rect class="bx" x="10" y="20" width="150" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="85" y="45.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧾 An order</text>
+<text x="85" y="59.75" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">"customerId": 42</text>
+<text x="85" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">id "o-1001"</text>
+<rect class="bx" x="270" y="20" width="130" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="335" y="46.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔑 Hash</text>
+<text x="335" y="59" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">of the key value</text>
+<text x="335" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">42 → slot</text>
+<rect class="bx" x="452" y="36" width="166" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="535" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">P1 · customers 1–9k</text>
+<text x="535" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">many logical partitions</text>
+<rect class="bx" x="452" y="110" width="166" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="535" y="136.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">P2 · customers 10–19k</text>
+<text x="535" y="149.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">many logical partitions</text>
+<rect class="bx" x="452" y="184" width="166" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="535" y="210.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">P3 · customers 20–29k</text>
+<text x="535" y="223.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">many logical partitions</text>
+<rect class="bx" x="10" y="130" width="400" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="210" y="156.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Logical partition “customer 42”</text>
+<text x="210" y="169" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">all items sharing the value 42 — up to 20 GB, always together</text>
+<text x="210" y="181.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">transactions and single-key queries stay inside it</text>
+<rect class="bx" x="10" y="230" width="400" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="210" y="256.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">The service splits and moves partitions as you grow</text>
+<text x="210" y="269" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">you cannot choose where a logical partition lives</text>
+<text x="210" y="281.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">you CAN choose which values share a logical partition</text>
+<g class="arrow-pill"><rect x="182" y="46" width="66" height="18" rx="9"/><text x="215" y="58.5" text-anchor="middle" font-size="9" font-style="italic">key value</text></g>
+<g class="arrow-pill"><rect x="396" y="95" width="44" height="18" rx="9"/><text x="418" y="107.5" text-anchor="middle" font-size="9" font-style="italic">picks</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> every item carries a <b>partition key value</b> — here the <code>customerId</code>. The service <b>hashes</b> that value to decide which <b>logical partition</b> the item belongs to. All items with the same value form one logical partition (green): they are stored together, can be changed in a single transaction, and can hold up to <b>20 GB</b>. Many logical partitions are packed onto <b>physical partitions</b> (right), which the service creates, splits and moves for you. You choose the key; you do not choose the machines.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The partition key decides <b>which items sit together</b>, <b>how load spreads</b>, and <b>which queries stay cheap</b>. It cannot be changed in place — choose it first, and choose it for the queries you will run.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 1 left a promise: the key “decides where an item lives”. Here is why that matters. The engine can only <i>spread</i> data and load by placing different keys on different machines, and it can only run a query cheaply if it knows <i>which</i> machine to ask.</p>
+      <p>A good key makes the two common wishes agree: <b>spread the load evenly</b> (so no machine is overworked) and <b>keep what is read together in one place</b> (so most requests touch one partition). A bad key breaks one of them — and, unlike an index in SQL, <b>you cannot simply add another</b>; once chosen, a container’s key is fixed (changing it means copying the data to a new container).</p>
+      <p>This is why the Cosmos lab spends a whole page on a single property name.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚖️ What makes a key good — three tests</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · CARDINALITY</span><h4>🎲 Many distinct values</h4><p>A wide range of possible values lets the service spread items over many partitions.</p></div>
+      <div class="how-step"><span class="hs-n">2 · EVEN LOAD</span><h4>⚖️ Requests and storage spread evenly</h4><p>No single value (a “hot key”) should receive most of the traffic or most of the data.</p></div>
+      <div class="how-step"><span class="hs-n">3 · QUERY FIT</span><h4>🎯 Your main queries include it</h4><p>Queries that filter on the key go to one partition; the rest fan out (page 6).</p></div>
+      <div class="how-step"><span class="hs-n">LIMIT</span><h4>📏 20 GB per logical partition</h4><p>Once a logical partition is full you cannot write more to it. Plan for growth per key value.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Three candidates for the orders container</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three candidate keys for the orders container: customerId spreads load and keeps one customer together, orderDate sends all new writes to one partition, and a country code has too few values">
+<defs><marker id="pk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="204" height="344" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">/customerId</text>
+<rect class="zone" x="222" y="8" width="204" height="344" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="236" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">/orderDate</text>
+<rect class="zone" x="434" y="8" width="204" height="344" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="448" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">/country</text>
+<text class="free" x="112" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="#6ee7b7">✅ high cardinality</text>
+<rect x="26" y="180.2" width="22" height="19.8" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="26" y="180.2" width="22" height="19.8" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<rect x="55" y="175.8" width="22" height="24.2" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="55" y="175.8" width="22" height="24.2" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<rect x="84" y="182.4" width="22" height="17.6" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="84" y="182.4" width="22" height="17.6" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<rect x="113" y="178" width="22" height="22" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="113" y="178" width="22" height="22" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<rect x="142" y="184.6" width="22" height="15.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="142" y="184.6" width="22" height="15.4" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<rect x="171" y="173.6" width="22" height="26.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="171" y="173.6" width="22" height="26.4" rx="3" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="112" y="216" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">load per partition</text>
+<text class="free" x="112" y="250" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">50,000 values</text>
+<text class="free" x="112" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">a customer’s orders stay together</text>
+<text class="free" x="112" y="286" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">writes spread across customers</text>
+<text class="free" x="324" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="#fda4af">⛔ hot key</text>
+<rect x="238" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="238" y="195.6" width="22" height="4.4" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<rect x="267" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="267" y="195.6" width="22" height="4.4" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<rect x="296" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="296" y="195.6" width="22" height="4.4" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<rect x="325" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="325" y="195.6" width="22" height="4.4" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<rect x="354" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="354" y="195.6" width="22" height="4.4" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<rect x="383" y="94.4" width="22" height="105.6" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="383" y="94.4" width="22" height="105.6" rx="3" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<text class="free" x="324" y="216" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">load per partition</text>
+<text class="free" x="324" y="250" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">new orders all share “today”</text>
+<text class="free" x="324" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">one partition takes every write</text>
+<text class="free" x="324" y="286" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">old partitions sit idle</text>
+<text class="free" x="536" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="#fcd34d">⚠️ low cardinality</text>
+<rect x="450" y="193.4" width="22" height="6.6" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="450" y="193.4" width="22" height="6.6" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<rect x="479" y="156" width="22" height="44" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="479" y="156" width="22" height="44" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<rect x="508" y="195.6" width="22" height="4.4" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="508" y="195.6" width="22" height="4.4" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<rect x="537" y="191.2" width="22" height="8.8" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="537" y="191.2" width="22" height="8.8" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<rect x="566" y="101" width="22" height="99" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="566" y="101" width="22" height="99" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<rect x="595" y="186.8" width="22" height="13.2" rx="3" fill="#fff" fill-opacity=".0" stroke="none"/>
+<rect x="595" y="186.8" width="22" height="13.2" rx="3" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<text class="free" x="536" y="216" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">load per partition</text>
+<text class="free" x="536" y="250" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">about 30 values</text>
+<text class="free" x="536" y="268" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">one big country = one huge partition</text>
+<text class="free" x="536" y="286" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">cannot spread further</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the bars are the load on each partition. <b><code>/customerId</code></b> (left): 50,000 values, orders of one customer stay together, writes spread across customers — even bars. <b><code>/orderDate</code></b> (middle): every new order today shares one value, so <b>one partition takes all the writes</b> while old dates sit idle — a hot key. <b><code>/country</code></b> (right): only about thirty values and one giant country — too few values to spread, and one logical partition can grow toward the limit.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Fixes when no single property is good enough</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🧬 Synthetic key</h4><span class="pk-tag">combine properties into one</span><span class="pk-label use">✅ Pick it when</span><ul><li>No single field has both high cardinality and fits your queries</li><li>e.g. customerId + month for write-heavy streams</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Queries that do not know every part of the key still fan out</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🪜 Hierarchical partition key</h4><span class="pk-tag">up to three levels, e.g. tenantId → userId → sessionId</span><span class="pk-label use">✅ Pick it when</span><ul><li>Multi-tenant data where one tenant could exceed 20 GB</li><li>Queries that give the first one or two levels are routed to a subset of partitions</li><li>Adding a unique last level (like the item id) keeps each logical partition tiny</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Choosing levels with no query that uses the first level</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>🧂 Add a suffix (salting)</h4><span class="pk-tag">spread one hot value over N buckets</span><span class="pk-label use">✅ Pick it when</span><ul><li>A known hot value you cannot avoid</li><li>You will read it by fanning out over the N buckets</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>It adds complexity — try a better key first</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · the hot key, in the portal</div>
+    <p>Symptom: writes to <code>orders</code> get throttled (429s) although the account-wide RU/s looks fine. You are using <code>/orderDate</code> as the partition key. The metric to open is <b>Normalized RU Consumption by PartitionKeyRangeId</b>.</p><figure class="diagram-card">
+<svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Normalized RU consumption by partition: one physical partition at 100 percent while the others stay low, the signature of a hot partition">
+<defs><marker id="pk3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pk3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<text class="free" x="320" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#93a0b8">Normalized RU consumption per physical partition (illustrative)</text>
+<rect x="40" y="160.8" width="52" height="39.2" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="66" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P1</text>
+<text class="free" x="66" y="156.8" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">28%</text>
+<rect x="112" y="60" width="52" height="140" rx="4" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<text class="free" x="138" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P2</text>
+<text class="free" x="138" y="56.0" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">100%</text>
+<rect x="184" y="156.6" width="52" height="43.4" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="210" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P3</text>
+<text class="free" x="210" y="152.6" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">31%</text>
+<rect x="256" y="169.2" width="52" height="30.8" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="282" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P4</text>
+<text class="free" x="282" y="165.2" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">22%</text>
+<rect x="328" y="151" width="52" height="49" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="354" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P5</text>
+<text class="free" x="354" y="147.0" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">35%</text>
+<rect x="400" y="163.6" width="52" height="36.4" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="426" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P6</text>
+<text class="free" x="426" y="159.6" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">26%</text>
+<rect x="472" y="158" width="52" height="42" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="498" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P7</text>
+<text class="free" x="498" y="154.0" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">30%</text>
+<rect x="544" y="166.4" width="52" height="33.6" rx="4" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="570" y="216" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">P8</text>
+<text class="free" x="570" y="162.4" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">24%</text>
+<text class="free" x="320" y="240" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">One key (or a few) is carrying the load — adding RU/s to the whole container will not fix it.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> seven partitions idle around 25–35% and <b>one at 100%</b>. “Normalized RU consumption” is the maximum utilisation across partitions, so a single busy partition can pin it at 100% while the container as a whole has plenty of headroom. This is the fingerprint of a hot partition — and why more RU/s alone rarely fixes it.</figcaption>
+</figure>
+    <p style="margin-top:14px"><b>One change:</b> a key that spreads writes — create a new container keyed by <code>/customerId</code> and copy the data (the key cannot be changed in place).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure (illustrative)</th><th scope="col">/orderDate</th><th scope="col">/customerId</th></tr></thead><tbody><tr><th scope="row">Busiest partition (normalized RU)</th><td>100%</td><td>≈ 35%</td></tr><tr><th scope="row">429s during the evening peak</th><td>several per second</td><td>almost none</td></tr><tr><th scope="row">“Show customer 42’s orders”</th><td>cross-partition query</td><td>single-partition query (page 6)</td></tr><tr><th scope="row">Largest logical partition</th><td>one day of orders</td><td>BigCorp ≈ 160 MB (80,000 × 2 KB)</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 What did it cost?</h4><p>The RU charge and latency of one request — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Read the diagnostics</h4><p>Query metrics, partitions touched, indexed vs retrieved documents.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A fan-out, a scan, a hot key, a fat document?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Wrong partition key? Missing composite index? Wrong shape?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same request, same data, lower RU charge.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · partition-key symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">429s while account-wide usage is low</th><td>A hot partition — a skewed key</td><td>Check normalized RU by PartitionKeyRangeId; find the hot key values in diagnostic logs</td></tr><tr><th scope="row">Writes to one key start failing</th><td>That logical partition reached 20 GB</td><td>Hierarchical partition key or a finer key; a temporary limit increase is only a stopgap</td></tr><tr><th scope="row">Most queries are cross-partition</th><td>The key does not appear in your main queries</td><td>Re-key around the main query (new container), or add a second container for the other query</td></tr><tr><th scope="row">Few key values (status, country, boolean)</th><td>Low cardinality</td><td>Use a higher-cardinality or synthetic key</td></tr><tr><th scope="row">Need a different key now</th><td>The key cannot be changed in place</td><td>Create a new container with the new key and migrate the data</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Orders read by customer</h5><p>Main query: “this customer’s orders”.</p><span class="sc-use">→ /customerId</span></div>
+      <div class="scenario"><span class="sc-icon">📡</span><h5>IoT telemetry, one device sends constantly</h5><p>One device key would become hot over time.</p><span class="sc-use">→ /deviceId + time bucket (synthetic) or hierarchical</span></div>
+      <div class="scenario"><span class="sc-icon">🏢</span><h5>Multi-tenant SaaS with one huge tenant</h5><p>A tenant can exceed 20 GB.</p><span class="sc-use">→ Hierarchical: /tenantId → /userId</span></div>
+      <div class="scenario"><span class="sc-icon">📅</span><h5>“Partition by date” because it feels natural</h5><p>All writes land today.</p><span class="sc-use">→ Avoid for write-heavy data</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Logical vs physical.</b> A logical partition is the set of items sharing a key value (max 20 GB). Physical partitions are the internal storage units; the service manages them, you cannot control them, and several logical partitions share one. Physical partitions split as data and throughput grow.</p>
+      <p><b>Hierarchical partition keys</b> allow up to three levels. Queries that specify the first level (or the first two) are routed to the subset of physical partitions that hold the data; adding a unique final level such as the item id avoids the 20 GB limit.</p>
+      <p><b>Splitting does not cure a hot key.</b> After a split, all items with the same key value are still on one physical partition.</p>
+      <p><b>Transactions.</b> Stored procedures and transactional batches work inside one partition key value — another reason to keep data that changes together under the same key.</p>
+      <p><b>Other engines.</b> DynamoDB has the same idea (partition key + hot key), and SQL’s table partitioning (SQL lab page 14) is a manageability feature, not a scale-out key — the two share a word, not a purpose.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Items with the same partition key value form a logical partition (max 20 GB, transactions stay inside it).</li><li>The key value is hashed; physical partitions are managed by the service.</li><li>Good key: high cardinality, even load and storage, fits the main queries.</li><li>The key cannot be changed in place — migrate to a new container.</li><li>Fixes: synthetic key, hierarchical partition key (up to 3 levels), unique last level to avoid the 20 GB limit.</li><li>Hot key signature: one partition at 100% normalized RU, 429s with low overall usage.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The partition key decides which items live together and how load spreads. I look for high cardinality, even request and storage distribution, and a property that appears in my main queries. A logical partition is capped at 20 GB, so for multi-tenant data I consider hierarchical keys. Because the key can’t be changed in place, I get it right up front and I watch normalized RU consumption by partition to catch hot keys."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Choosing the key by habit.</b> “Use id” spreads perfectly but makes every query a fan-out; “use date” makes every write hot. Pick the key from the queries and the load, not from the schema.</p>
+      <p><b>Adding RU/s to a hot partition.</b> You pay for throughput that the busy partition cannot use — the other partitions just sit under-used.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔑 Partition key</h5><p>Decides where items live and how load spreads. Fixed once chosen.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🆔 id</h5><p>Unique within a partition key value. A point read needs both.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>A key spreads the load — but load is measured in something. What does a request actually cost? Next: Request Units. <i>(coming soon: Request Units)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Partitioning limits and features change. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/partitioning" target="_blank" rel="noopener">Partitioning and horizontal scaling</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/hierarchical-partition-keys" target="_blank" rel="noopener">Hierarchical partition keys</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/concepts-limits" target="_blank" rel="noopener">Service quotas and default limits</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/monitor-normalized-request-units" target="_blank" rel="noopener">Monitor normalized request units</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Cosmos DB · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

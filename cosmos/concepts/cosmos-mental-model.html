@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Items, containers &amp; the Cosmos mental model — Cosmos DB — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🌌 Cosmos DB Performance Lab</a><span class="sep">›</span><span class="cur">Items, containers &amp; the Cosmos mental model</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 1 of 12 · 🌌 The model</div>
+    <h1>Cosmos DB stores <span class="grad-text">JSON items in containers</span> — and you pay for every request.</h1>
+    <p class="sub">The mental model for a distributed NoSQL database: the resource hierarchy, how SQL words translate, why there are no joins, and where tuning happens.</p>
+    <div class="interview-q">❓ "How is Cosmos DB for NoSQL organised, and how does it differ from a relational database?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The relational shop translated to Cosmos DB: orders, order lines and product details become one order document, kept in the orders container">
+<defs><marker id="cm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M180,68 L300,68" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cm1A)"/>
+<path d="M180,148 L300,148" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cm1A)"/>
+<path d="M180,228 L300,228" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cm1A)"/>
+<text class="free" x="95" y="20" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">RELATIONAL (SQL lab)</text>
+<rect class="bx" x="10" y="40" width="170" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="95" y="65.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Orders</text>
+<text x="95" y="78.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">id, customer, date, total</text>
+<rect class="bx" x="10" y="120" width="170" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="95" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">OrderItems</text>
+<text x="95" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">order id, product, qty</text>
+<rect class="bx" x="10" y="200" width="170" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="95" y="225.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Products</text>
+<text x="95" y="238.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">name, price</text>
+<text class="free" x="465" y="20" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">COSMOS DB · container “orders”</text>
+<rect class="bx" x="300" y="36" width="330" height="224" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="314" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">{</text>
+<text x="328" y="73" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">"id": "o-1001",</text>
+<text x="328" y="88" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">"customerId": 42,</text>
+<text x="328" y="103" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">"orderDate": "2026-01-05",</text>
+<text x="328" y="118" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">"lines": [</text>
+<text x="342" y="133" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">{ "sku": "P-7", "name": "Mug",</text>
+<text x="342" y="148" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">  "price": 9.50, "qty": 2 }</text>
+<text x="328" y="163" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">],</text>
+<text x="328" y="178" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">"total": 19.00</text>
+<text x="314" y="193" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#9fe8f5">}</text>
+<text class="free" x="320" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">One order = one item. “Show order 1001” becomes a single read — no joins.</text>
+<g class="arrow-pill"><rect x="204.5" y="59" width="71" height="18" rx="9"/><text x="240" y="71.5" text-anchor="middle" font-size="9" font-style="italic">the header</text></g>
+<g class="arrow-pill"><rect x="210" y="139" width="60" height="18" rx="9"/><text x="240" y="151.5" text-anchor="middle" font-size="9" font-style="italic">embedded</text></g>
+<g class="arrow-pill"><rect x="215" y="219" width="50" height="18" rx="9"/><text x="240" y="231.5" text-anchor="middle" font-size="9" font-style="italic">copied</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> on the left, the shop you know from the SQL lab: three tables joined by keys. On the right, the same information as <b>one JSON item</b> in a Cosmos DB container. The order header, its lines and the name and price of each product (<i>copied</i> into the line) all live together, so reading an order is <b>one read</b> instead of three joins. The yellow line, <code>customerId</code>, will become the most important decision in the whole lab (page 2).</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Cosmos DB stores <b>JSON items in containers</b>, spread across machines by a key you choose — and you pay for every request in <b>Request Units</b>. Design for the reads you will do.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The SQL lab ended with a database on one (large) machine: tables, joins, a plan you can read. That model is brilliant for related data and ad-hoc questions — and it has two limits. A single primary database mostly scales <i>up</i>, and the data and the users must live close to one place.</p>
+      <p>Cosmos DB is built for the opposite corner: data that must <b>scale out</b> across many machines, <b>spread across regions</b> close to users, with a flexible JSON shape. To spread data, the engine must decide where each item lives — and it cannot afford to join items that live on different machines.</p>
+      <p>So the rules change. You choose a <b>partition key</b>. You <b>shape the data for the reads</b>. And you pay in <b>Request Units</b> (RUs) rather than watching a plan. This page gives you the mental model; the next eleven give you the tuning.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 The hierarchy</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 410" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The Cosmos DB resource hierarchy: an account holds databases, a database holds containers, and a container holds items; the container carries the partition key, throughput and indexing policy">
+<defs><marker id="cm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M130,60 L130,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cm2A)"/>
+<path d="M130,160 L130,210" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cm2A)"/>
+<path d="M130,260 L130,310" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cm2A)"/>
+<rect class="bx" x="20" y="10" width="220" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="130" y="39" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">☁️ Account</text>
+<text class="free" x="270" y="34" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">regions, default consistency, keys</text>
+<rect class="bx" x="20" y="110" width="220" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="130" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🗄️ Database</text>
+<text class="free" x="270" y="134" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">groups containers (can share throughput)</text>
+<rect class="bx" x="20" y="210" width="220" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="130" y="239" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📦 Container “orders”</text>
+<text class="free" x="270" y="234" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">THE unit: partition key, throughput, indexing policy</text>
+<rect class="bx" x="20" y="310" width="220" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="130" y="339" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🧾 Items</text>
+<text class="free" x="270" y="334" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">JSON up to 2 MB, each with id + partition key value</text>
+<text class="free" x="330" y="392" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Cost and scale are decided at the container level — that is where you tune.</text>
+<g class="arrow-pill"><rect x="94.5" y="76" width="71" height="18" rx="9"/><text x="130" y="88.5" text-anchor="middle" font-size="9" font-style="italic">holds many</text></g>
+<g class="arrow-pill"><rect x="94.5" y="176" width="71" height="18" rx="9"/><text x="130" y="188.5" text-anchor="middle" font-size="9" font-style="italic">holds many</text></g>
+<g class="arrow-pill"><rect x="94.5" y="276" width="71" height="18" rx="9"/><text x="130" y="288.5" text-anchor="middle" font-size="9" font-style="italic">holds many</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> four levels. The <b>account</b> is the top (regions, default consistency level, keys). A <b>database</b> groups containers. The <b>container</b> is where everything that matters is configured: its <b>partition key</b>, its <b>throughput</b> (RU/s) and its <b>indexing policy</b>. A container holds <b>items</b> — JSON documents up to 2 MB each. An item is identified by its <b>id</b> together with its <b>partition key value</b>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 SQL words → Cosmos words</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">In SQL you say…</th><th scope="col">In Cosmos DB (NoSQL API) it is…</th><th scope="col">What changes</th></tr></thead><tbody><tr><th scope="row">Server / database</th><td>Account / database</td><td>The account can span regions</td></tr><tr><th scope="row">Table</th><td>Container</td><td>A container can hold items of different shapes</td></tr><tr><th scope="row">Row</th><td>Item (a JSON document)</td><td>Nested objects and arrays live inside the item</td></tr><tr><th scope="row">Primary key</th><td><code>id</code> + the partition key value</td><td>The key decides <i>where</i> the item physically lives</td></tr><tr><th scope="row">Foreign key + JOIN</th><td>Embed the data, or store an id and read it separately</td><td>No joins across items or containers — design for the read</td></tr><tr><th scope="row">Index (you create)</th><td>Indexing policy (everything indexed by default)</td><td>Tuning means <i>removing</i> and <i>adding composite</i> indexes (page 5)</td></tr><tr><th scope="row">Cost shown in a plan</th><td>Request Units charged per request</td><td>You read the RU charge and query metrics, not a plan</td></tr><tr><th scope="row">Transaction across tables</th><td>Transaction inside one partition key value</td><td>Keep data that must change together in the same partition</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 When Cosmos DB fits — and when SQL still wins</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🌌 Azure Cosmos DB (NoSQL API)</h4><span class="pk-tag">distributed, flexible JSON, global</span><span class="pk-label use">✅ Pick it when</span><ul><li>Flexible JSON items and a shape that keeps changing</li><li>Users in many regions needing fast reads and writes</li><li>Huge scale: spread data and load over many partitions</li><li>Access patterns you know in advance (read by key, small result sets)</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Many ad-hoc joins and reports across entities</li><li>You cannot name a good partition key yet</li><li>Strict multi-table transactions on a small dataset</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🗄️ Azure SQL (the SQL lab)</h4><span class="pk-tag">related tables, joins, ad-hoc questions</span><span class="pk-label use">✅ Pick it when</span><ul><li>Related tables, constraints and multi-table transactions</li><li>Ad-hoc queries and reporting</li><li>Mostly scale-up with read replicas</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>One writable primary is not enough for your global scale or latency</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · “show order 1001” in two worlds</div>
+    <p>Illustrative comparison — the point is the <i>shape</i> of the work, not the exact numbers.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">SQL (ShopDB)</th><th scope="col">Cosmos DB (orders container)</th></tr></thead><tbody><tr><th scope="row">What you send</th><td>SELECT … FROM Orders JOIN OrderItems JOIN Products WHERE OrderId = 1001</td><td>Read item <code>"o-1001"</code> with partition key <code>42</code></td></tr><tr><th scope="row">Work done</th><td>Seeks in three tables plus two joins (pages 3 and 6)</td><td>One lookup by id and partition key (a <b>point read</b>)</td></tr><tr><th scope="row">What you read to learn the cost</th><td>The plan, logical reads</td><td>The <b>RU charge</b> of the response</td></tr><tr><th scope="row">Typical cost (illustrative)</th><td>a few dozen logical reads</td><td>≈ 1–2 RU for a 2 KB item</td></tr></tbody></table></div>
+    <div class="code-block"><pre><span class="cmt">// .NET-style sketch — a point read needs the id AND the partition key value</span>
+<span class="kw">var</span> response = <span class="kw">await</span> container.ReadItemAsync<Order>(<span class="str">"o-1001"</span>, <span class="kw">new</span> PartitionKey(<span class="num">42</span>));
+Console.WriteLine(response.RequestCharge);   <span class="cmt">// the RU charge: ≈ 1–2 for a 2 KB order (illustrative)</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch; real code adds error handling and client setup. The response carries the RU charge (the x-ms-request-charge header) — your first measurement on this platform.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 What did it cost?</h4><p>The RU charge and latency of one request — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Read the diagnostics</h4><p>Query metrics, partitions touched, indexed vs retrieved documents.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The biggest wrong thing</h4><p>A fan-out, a scan, a hot key, a fat document?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Wrong partition key? Missing composite index? Wrong shape?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same request, same data, lower RU charge.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · habits that carry over from SQL — and bite</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">SQL habit</th><th scope="col">What happens in Cosmos DB</th><th scope="col">Do this instead</th></tr></thead><tbody><tr><th scope="row">“I’ll just JOIN the tables”</th><td>Items in different containers (or partitions) cannot be joined by the engine</td><td>Embed what you read together; or read the second item by id</td></tr><tr><th scope="row">“Put all comments in an array on the post”</th><td>The item can grow without limit toward the 2 MB cap</td><td>One item per child, keyed to the parent (page 4)</td></tr><tr><th scope="row">“Query for it by id”</th><td>A query is not a point read and costs more</td><td>Use a point read with id + partition key</td></tr><tr><th scope="row">“The schema is flexible, so no design is needed”</th><td>The partition key, and the shape per access pattern, decide cost and scale</td><td>Design for the reads first</td></tr><tr><th scope="row">“Add indexes for every query”</th><td>Every property is already indexed, and each costs write RU</td><td>Tune the indexing policy (page 5)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Order history for a logged-in customer</h5><p>Always read by customer; each order is read as a whole.</p><span class="sc-use">→ Good fit — key on customer</span></div>
+      <div class="scenario"><span class="sc-icon">🌍</span><h5>Profile for players worldwide</h5><p>Read on every login, from a nearby region.</p><span class="sc-use">→ Good fit — multi-region</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>Finance asks a new cross-entity question every week</h5><p>Ad-hoc joins and reports.</p><span class="sc-use">→ SQL (or export to analytics)</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>A tiny app with 5 tables and strict transactions</h5><p>No scale problem to solve.</p><span class="sc-use">→ SQL is simpler</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Other APIs.</b> Cosmos DB also offers MongoDB, Cassandra, Gremlin (graph) and Table APIs. This lab covers only the <b>NoSQL</b> API — the native one with the SQL-like query language.</p>
+      <p><b>“Schemaless” still has a schema.</b> It lives in your application code, not in the database. Items in one container can differ, but your queries and indexes assume shapes.</p>
+      <p><b>Throughput placement.</b> RU/s can be provisioned per container or shared across the containers of a database (page 3). Storage and throughput scale by spreading data over <i>physical partitions</i>, which the service manages and you cannot control (page 2).</p>
+      <p><b>The ladder is the same.</b> Pages 1–11 of the SQL lab taught a method: measure, read, find the biggest wrong thing, change one thing, prove it. Here “measure” is the RU charge and “read” is the query metrics and diagnostics — same discipline, different instruments.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Account → database → container → item. The container holds the partition key, throughput and indexing policy.</li><li>An item is JSON (up to 2 MB) identified by id + partition key value.</li><li>No joins across items or containers: embed what you read together.</li><li>Everything is indexed by default; cost is measured in Request Units (RU).</li><li>Transactions work inside one partition key value.</li><li>This lab covers the NoSQL API only.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Cosmos DB for NoSQL stores JSON items in containers inside databases inside an account. Each container has a partition key that decides where items live, a throughput measured in request units, and an indexing policy. There are no joins across items, so I shape the data for the reads — typically embedding what is read together — and I measure cost by the RU charge on each request."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Treating Cosmos DB like SQL on JSON.</b> Normalising into many small containers and “joining” in code makes every page load a dozen requests — and every request costs RUs.</p>
+      <p><b>Picking the partition key last.</b> It is the one decision you cannot change in place (page 2).</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🗄️ Relational (SQL)</h5><p>Tables and joins; one primary, scale up; the optimizer plans each query.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌌 Cosmos DB</h5><p>Items and containers; spread by partition key, scale out; you design for known reads and pay per request in RUs.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You said the key “decides where an item lives”. How does it do that — and what makes a key good or terrible? Next: partition keys.</span>
+      <a class="next-link" href="partition-keys.html">Partition keys <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Cosmos DB features, limits and prices change often. For exact current details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/resource-model" target="_blank" rel="noopener">Databases, containers and items</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/partitioning" target="_blank" rel="noopener">Partitioning and horizontal scaling</a> · <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/concepts-limits" target="_blank" rel="noopener">Service quotas and default limits</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Cosmos DB · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

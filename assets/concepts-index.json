@@ -2318,5 +2318,57 @@
     "summary": "The classic mistake with Capstone: the slow-query clinic.",
     "keywords": "sql slow query clinic capstone practice cases diagnosis troubleshooting exercise interview trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-cosmos-mental-model",
+    "title": "Items, containers & the Cosmos mental model",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-mental-model.html",
+    "summary": "Cosmos DB for NoSQL: account, database, container, item, how SQL words translate, why there are no joins and where tuning happens.",
+    "keywords": "cosmos db nosql container item json partition key request units mental model resource hierarchy no joins"
+  },
+  {
+    "id": "cosmos-cosmos-mental-model-recall",
+    "title": "Items, containers & the Cosmos mental model — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-mental-model.html",
+    "summary": "Quick recall points: Items, containers & the Cosmos mental model.",
+    "keywords": "cosmos db nosql container item json partition key request units mental model resource hierarchy no joins interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-cosmos-mental-model-trap",
+    "title": "Items, containers & the Cosmos mental model — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/cosmos-mental-model.html",
+    "summary": "The classic mistake with Items, containers & the Cosmos mental model.",
+    "keywords": "cosmos db nosql container item json partition key request units mental model resource hierarchy no joins trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "cosmos-partition-keys",
+    "title": "Partition keys: the decision that rules everything",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/partition-keys.html",
+    "summary": "Logical and physical partitions, three tests for a good key, hot keys, the 20 GB limit, synthetic and hierarchical keys.",
+    "keywords": "cosmos db partition key logical physical partition hot partition cardinality hierarchical synthetic key 20 gb"
+  },
+  {
+    "id": "cosmos-partition-keys-recall",
+    "title": "Partition keys: the decision that rules everything — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/partition-keys.html",
+    "summary": "Quick recall points: Partition keys: the decision that rules everything.",
+    "keywords": "cosmos db partition key logical physical partition hot partition cardinality hierarchical synthetic key 20 gb interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-partition-keys-trap",
+    "title": "Partition keys: the decision that rules everything — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/partition-keys.html",
+    "summary": "The classic mistake with Partition keys: the decision that rules everything.",
+    "keywords": "cosmos db partition key logical physical partition hot partition cardinality hierarchical synthetic key 20 gb trap mistake",
+    "anchor": "trap"
   }
 ]

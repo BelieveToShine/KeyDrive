@@ -255,5 +255,42 @@
     ],
     "sub": {},
     "subTitles": {}
+  },
+  "cosmos": {
+    "title": "Cosmos DB Performance Lab",
+    "order": [
+      "cosmos-mental-model",
+      "partition-keys",
+      "request-units",
+      "data-modeling",
+      "indexing-policy",
+      "queries-fan-out",
+      "query-metrics",
+      "hot-partitions-429",
+      "consistency-levels",
+      "change-feed",
+      "global-distribution",
+      "cosmos-cost-clinic"
+    ],
+    "titles": {
+      "cosmos-mental-model": "Items, containers & the Cosmos mental model",
+      "partition-keys": "Partition keys: the decision that rules everything",
+      "request-units": "Request Units: the currency of cost",
+      "data-modeling": "Data modeling: embed vs reference",
+      "indexing-policy": "Indexing policy",
+      "queries-fan-out": "Point reads, queries & fan-out",
+      "query-metrics": "Reading query metrics & diagnostics",
+      "hot-partitions-429": "Hot partitions, throughput & 429s",
+      "consistency-levels": "Consistency levels",
+      "change-feed": "Change feed & event-driven reads",
+      "global-distribution": "Global distribution & multi-region writes",
+      "cosmos-cost-clinic": "Capstone: the Cosmos cost clinic"
+    },
+    "written": [
+      "cosmos-mental-model",
+      "partition-keys"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }
