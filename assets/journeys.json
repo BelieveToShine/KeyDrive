@@ -477,7 +477,8 @@
       "why-design-principles",
       "single-responsibility",
       "open-closed",
-      "liskov-substitution"
+      "liskov-substitution",
+      "interface-segregation"
     ],
     "sub": {},
     "subTitles": {}

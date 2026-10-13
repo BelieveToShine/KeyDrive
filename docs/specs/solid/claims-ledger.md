@@ -53,5 +53,16 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | “Exceptions: callers cannot catch what they were never told” rule | 🟨 K | common LSP formulation (no new exceptions); not verified in a source above |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 5 — Interface Segregation
+| Claim | Status | Note |
+|---|---|---|
+| ISP wording: clients should not be forced to depend on methods they do not use | ✅ V | Martin, Principles of OOD (butunclebob.com) — wording is the widely quoted form; page fetch was not reachable in this session, so the wording is from the search summary and training knowledge | 
+| An interface should be a minimal group of members needed for one responsibility, designed from the calling code's point of view | ✅ V | Eric Lippert, "So many interfaces!" (learn.microsoft.com archive) — via search summary |
+| Larger interfaces are more likely to contain methods not all implementers can achieve | ✅ V | MSDN Magazine 2014/05 "Dangers of Violating SOLID Principles in C#" — via search summary |
+| Microsoft architecture guidance: high cohesion, few interaction points between pieces | ✅ V | .NET architecture guides (already ledgered on page 1) |
+| IReadOnlyList<T> / IList<T> give read-only and read-write views | 🟨 K | general .NET fact, not re-verified against the API reference this session |
+| No official .NET page defines ISP | 🟨 K | search found none; absence not proven |
+| Splitting 4 methods → 1 per client, 3 clients, ShopCore numbers | 🟦 I | illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
