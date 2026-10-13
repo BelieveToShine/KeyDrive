@@ -34,16 +34,23 @@ def next_box(text, href=None, title=None):
     return _kit.next_box(text, href, title)
 
 import re as _re, html as _html
-_KW = r'\b(class|interface|public|private|protected|internal|static|readonly|new|return|if|else|void|string|int|decimal|double|bool|var|async|await|override|virtual|abstract|sealed|using|namespace|this|null|throw|foreach|in|where|record|get|set|init|required|Task|List|IEnumerable|IReadOnlyList)\b'
+_KWS = r'class|interface|public|private|protected|internal|static|readonly|new|return|if|else|void|string|int|decimal|double|bool|var|async|await|override|virtual|abstract|sealed|using|namespace|this|null|throw|foreach|in|where|record|get|set|init|required'
+_TOK = _re.compile(r'"[^"\n]*"|\b(?:' + _KWS + r')\b')
+def _hl(text):
+    def f(m):
+        t = _html.escape(m.group(0), quote=False)
+        return f'<span class="str">{t}</span>' if m.group(0).startswith('"') else f'<span class="kw">{t}</span>'
+    out, pos = [], 0
+    for m in _TOK.finditer(text):
+        out.append(_html.escape(text[pos:m.start()], quote=False)); out.append(f(m)); pos = m.end()
+    out.append(_html.escape(text[pos:], quote=False)); return ''.join(out)
 def cs(code, note=''):
     """Highlight a C# snippet: plain braces allowed (no f-string escaping needed)."""
-    out = []
+    lines = []
     for line in code.strip('\n').split('\n'):
-        if '//' in line:
+        if '//' in line and line.count('"', 0, line.index('//')) % 2 == 0:
             a, b = line.split('//', 1)
-            body = _re.sub(_KW, r'<span class="kw">\1</span>', _html.escape(a, quote=False)); body = _re.sub(r'(&quot;|")([^"<]*)\1', lambda m: '<span class="str">"' + m.group(2) + '"</span>', body)
-            out.append(body + '<span class="cmt">//' + _html.escape(b, quote=False) + '</span>')
+            lines.append(_hl(a) + '<span class="cmt">//' + _html.escape(b, quote=False) + '</span>')
         else:
-            body = _re.sub(_KW, r'<span class="kw">\1</span>', _html.escape(line, quote=False)); body = _re.sub(r'"([^"<]*)"', lambda m: '<span class="str">"' + m.group(1) + '"</span>', body)
-            out.append(body)
-    return code_block('\n'.join(out), note)
+            lines.append(_hl(line))
+    return code_block('\n'.join(lines), note)

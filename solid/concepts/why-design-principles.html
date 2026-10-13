@@ -135,18 +135,18 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🛒 The practice class: ShopCore OrderService</div>
-    <div class="code-block"><pre><span class=<span class="str">"kw"</span>>public</span> <span class=<span class="str">"kw"</span>>class</span> OrderService
+    <div class="code-block"><pre><span class="kw">public</span> <span class="kw">class</span> OrderService
 {
-    <span class=<span class="str">"kw"</span>>public</span> <span class=<span class="str">"kw"</span>>void</span> PlaceOrder(Order order)
+    <span class="kw">public</span> <span class="kw">void</span> PlaceOrder(Order order)
     {
-        <span class=<span class="str">"kw"</span>>if</span> (order.Items.Count == 0) <span class=<span class="str">"kw"</span>>throw</span> <span class=<span class="str">"kw"</span>>new</span> Exception(<span class="str">"empty"</span>);              <span class="cmt">// validation</span>
-        <span class=<span class="str">"kw"</span>>decimal</span> total = 0;
-        <span class=<span class="str">"kw"</span>>foreach</span> (<span class=<span class="str">"kw"</span>>var</span> i <span class=<span class="str">"kw"</span>>in</span> order.Items) total += i.Price * i.Quantity;          <span class="cmt">// pricing</span>
-        <span class=<span class="str">"kw"</span>>if</span> (order.Customer.IsVip) total *= 0.9m;                               <span class="cmt">// a promotion</span>
-        <span class=<span class="str">"kw"</span>>if</span> (order.Country == <span class="str">"DE"</span>) total *= 1.19m;                             <span class="cmt">// tax rules</span>
-        <span class=<span class="str">"kw"</span>>using</span> <span class=<span class="str">"kw"</span>>var</span> db = <span class=<span class="str">"kw"</span>>new</span> SqlConnection(<span class="str">"Server=..."</span>);                        <span class="cmt">// persistence</span>
+        <span class="kw">if</span> (order.Items.Count == 0) <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="str">"empty"</span>);              <span class="cmt">// validation</span>
+        <span class="kw">decimal</span> total = 0;
+        <span class="kw">foreach</span> (<span class="kw">var</span> i <span class="kw">in</span> order.Items) total += i.Price * i.Quantity;          <span class="cmt">// pricing</span>
+        <span class="kw">if</span> (order.Customer.IsVip) total *= 0.9m;                               <span class="cmt">// a promotion</span>
+        <span class="kw">if</span> (order.Country == <span class="str">"DE"</span>) total *= 1.19m;                             <span class="cmt">// tax rules</span>
+        <span class="kw">using</span> <span class="kw">var</span> db = <span class="kw">new</span> SqlConnection(<span class="str">"Server=..."</span>);                        <span class="cmt">// persistence</span>
         db.Execute(<span class="str">"INSERT INTO Orders ..."</span>, order);
-        <span class=<span class="str">"kw"</span>>new</span> SmtpClient(<span class="str">"smtp.shop.local"</span>).Send(<span class="str">"shop@x"</span>, order.Email, <span class="str">"Thanks"</span>); <span class="cmt">// notification</span>
+        <span class="kw">new</span> SmtpClient(<span class="str">"smtp.shop.local"</span>).Send(<span class="str">"shop@x"</span>, order.Email, <span class="str">"Thanks"</span>); <span class="cmt">// notification</span>
         File.AppendAllText(<span class="str">"log.txt"</span>, <span class="str">"order "</span> + order.Id);                    <span class="cmt">// logging</span>
     }
 }</pre></div>
