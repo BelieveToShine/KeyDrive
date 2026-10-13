@@ -88,6 +88,55 @@
 
   <div class="one-sentence">🎯 <span class="grad-text">RAG = retrieve the most relevant real documents, then hand them to the model alongside the question.</span></div>
 
+<!-- kd-story:ai-s8 -->
+  <section class="kd-section ">
+    <div class="sec-label see">▶️ Watch it happen: retrieve, then answer</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A question triggers a search for relevant documents, which are combined with the question and handed to the model so the answer is grounded in them">
+<defs><marker id="as8A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="as8S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="as8T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="as8-a1" d="M153,60 L167,60" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#as8A)"/></g>
+<g class="st" data-s="3-"><path id="as8-a2" d="M313,60 L327,60" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#as8A)"/></g>
+<g class="st" data-s="4-"><path id="as8-a3" d="M473,60 L487,60" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#as8A)"/></g>
+<g class="st" data-s="5-"><path id="as8-a4" d="M560,110 L560,140 L240,140 L240,170" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#as8A)"/></g>
+<g class="st" data-s="6-"><path id="as8-a5" d="M313,220 L327,220" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#as8A)"/></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="7" y="10" width="146" height="100" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text class="emo" x="80" y="58.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">❓</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="80" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Question</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="80" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the user asks</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="167" y="10" width="146" height="100" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="emo" x="240" y="58.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🔎</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="240" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Retrieve</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="240" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">find relevant docs</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="327" y="10" width="146" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text class="emo" x="400" y="58.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">📄</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="400" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Documents</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="400" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">real passages</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="487" y="10" width="146" height="100" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text class="emo" x="560" y="58.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧩</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="560" y="73.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Combine</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="560" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">question + docs</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="167" y="170" width="146" height="100" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text class="emo" x="240" y="218.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧠</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="240" y="233.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Model</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="240" y="246.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">answers from them</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="327" y="170" width="146" height="100" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text class="emo" x="400" y="218.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">✅</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="400" y="233.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Answer</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="400" y="246.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">grounded in sources</text></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="as8-a1"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="as8-a2"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="as8-a3"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="as8-a4"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="as8-a5"><circle r="8.68" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A user asks a question.</li><li>The system first searches for the most relevant documents.</li><li>It finds real passages.</li><li>Question and passages are put together in one prompt.</li><li>The model answers using those passages instead of hoping it remembers.</li><li>The answer is grounded in real documents. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> retrieval comes first; generation second.</figcaption>
+</figure>
+  </section>
+<!-- /kd-story:ai-s8 -->
+
   <section class="kd-section" id="why">
     <div class="sec-label why">📖 Why did this need to exist?</div>
     <div class="kd-card why-box">
