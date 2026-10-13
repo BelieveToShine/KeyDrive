@@ -104,5 +104,20 @@ Source root: https://angular.dev/
 | 300 ms debounce, 3 requests/2 cancelled/1 request | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 7 — dependency injection
+| Claim | Status | Note |
+|---|---|---|
+| providedIn: 'root' registers the service in the root environment injector and enables tree-shaking | ✅ V | angular.dev/guide/di/defining-dependency-providers; hierarchical-dependency-injection |
+| A component's providers array creates a new instance; viewProviders scope to the component's view | ✅ V | guide/di/hierarchical-dependency-injection |
+| Resolution: first the ElementInjector hierarchy (parents), then the EnvironmentInjector hierarchy; if still not found, an error is thrown (NullInjectorError) | ✅ V | guide/di/hierarchical-dependency-injection; debugging-and-troubleshooting-di |
+| inject() works only in an injection context: constructors, field initialisers, factory functions; runInInjectionContext for callbacks | ✅ V | angular.dev/api/core/inject |
+| useClass instantiates a class, useExisting aliases a token, useFactory builds via a function, useValue supplies a value; interfaces disappear after compilation so use an InjectionToken | ✅ V | guide/di/defining-dependency-providers |
+| inject() options optional / self / skipSelf / host control where the search starts and stops | ✅ V | hierarchical-dependency-injection (host, skipSelf, optional shown; self per API reference) |
+| Environment providers (provideHttpClient, provideRouter) belong in application config or route providers; in a component they raise NG0207 | ✅ V | errors/NG0207; guide/http/setup |
+| Angular DevTools has an Injectors view | ✅ V | angular.dev/tools/devtools/injectors |
+| Newer docs mention a @Service decorator as shorthand | 🟨 K | seen only in a search summary; not used on the page |
+| Cart/draft/header examples | 🟦 I | ShopUI illustration |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

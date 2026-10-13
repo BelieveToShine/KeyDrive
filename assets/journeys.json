@@ -408,7 +408,8 @@
       "onpush-signals",
       "templates-control-flow",
       "signals-in-depth",
-      "rxjs-async-pipe"
+      "rxjs-async-pipe",
+      "dependency-injection"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

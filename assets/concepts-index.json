@@ -3358,5 +3358,31 @@
     "summary": "The classic mistake with RxJS & the async pipe.",
     "keywords": "angular rxjs observable subscribe unsubscribe memory leak async pipe takeUntilDestroyed switchMap mergeMap concatMap exhaustMap debounceTime trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-dependency-injection",
+    "title": "Dependency injection",
+    "category": "Angular",
+    "page": "angular/concepts/dependency-injection.html",
+    "summary": "inject(), services, providedIn root versus component providers, injector lookup order, provider types and InjectionToken.",
+    "keywords": "angular dependency injection inject providedIn root providers InjectionToken useClass useValue useFactory NullInjectorError injector service"
+  },
+  {
+    "id": "angular-dependency-injection-recall",
+    "title": "Dependency injection — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/dependency-injection.html",
+    "summary": "Quick recall points: Dependency injection.",
+    "keywords": "angular dependency injection inject providedIn root providers InjectionToken useClass useValue useFactory NullInjectorError injector service interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-dependency-injection-trap",
+    "title": "Dependency injection — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/dependency-injection.html",
+    "summary": "The classic mistake with Dependency injection.",
+    "keywords": "angular dependency injection inject providedIn root providers InjectionToken useClass useValue useFactory NullInjectorError injector service trap mistake",
+    "anchor": "trap"
   }
 ]

@@ -7,7 +7,7 @@
 | 4 | Templates, control flow & pipes | templates-control-flow | ✅ written |
 | 5 | Signals in depth | signals-in-depth | ✅ written |
 | 6 | RxJS & the async pipe | rxjs-async-pipe | ✅ written |
-| 7 | Dependency injection | dependency-injection | 🔒 planned |
+| 7 | Dependency injection | dependency-injection | ✅ written |
 | 8 | Forms: template-driven, reactive & signal forms | forms | 🔒 planned |
 | 9 | Routing & lazy loading | routing-lazy-loading | 🔒 planned |
 | 10 | Performance: @defer, SSR & hydration | angular-performance | 🔒 planned |
