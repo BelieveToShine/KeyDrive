@@ -4164,5 +4164,31 @@
     "summary": "The classic mistake with SOLID in React and Angular.",
     "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-what-are-patterns",
+    "title": "What Is a Design Pattern?",
+    "category": "Patterns",
+    "page": "patterns/concepts/what-are-patterns.html",
+    "summary": "What design patterns are, how a pattern is born, the four families and the patterns you already use — in pictures.",
+    "keywords": "design patterns what is pattern GoF creational structural behavioral architecture cookbook"
+  },
+  {
+    "id": "patterns-what-are-patterns-recall",
+    "title": "What Is a Design Pattern? — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/what-are-patterns.html",
+    "summary": "Quick recall points: What Is a Design Pattern?.",
+    "keywords": "design patterns what is pattern GoF creational structural behavioral architecture cookbook interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-what-are-patterns-trap",
+    "title": "What Is a Design Pattern? — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/what-are-patterns.html",
+    "summary": "The classic mistake with What Is a Design Pattern?.",
+    "keywords": "design patterns what is pattern GoF creational structural behavioral architecture cookbook trap mistake",
+    "anchor": "trap"
   }
 ]

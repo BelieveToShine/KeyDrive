@@ -10,7 +10,7 @@ def files(d): return len(glob.glob(str(R / d / 'concepts/*.html')))
 def concepts(k): return len(j[k]['written']) if 'written' in j[k] else len(j[k]['order'])
 def total(k): return len(j[k]['order'])
 def dives(k): return files(k) - concepts(k)           # files beyond the main journey pages
-G = {'ai': ['ai'], 'cloud': ['azure', 'aws'], 'data': ['sql', 'cosmos'], 'web': ['react', 'angular'], 'design': ['solid']}
+G = {'ai': ['ai'], 'cloud': ['azure', 'aws'], 'data': ['sql', 'cosmos'], 'web': ['react', 'angular'], 'design': ['solid', 'patterns']}
 G = {g: [k for k in v if k in j] for g, v in G.items()}
 G = {g: v for g, v in G.items() if v}
 def agg(g):

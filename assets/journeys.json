@@ -497,5 +497,65 @@
       "composition-vs-inheritance": "Composition over inheritance",
       "solid-in-frontend": "SOLID in React and Angular"
     }
+  },
+  "patterns": {
+    "title": "Design Patterns Lab",
+    "order": [
+      "what-are-patterns",
+      "factory-method",
+      "builder",
+      "singleton",
+      "adapter",
+      "decorator",
+      "facade",
+      "proxy",
+      "composite",
+      "strategy",
+      "observer",
+      "command",
+      "state",
+      "template-method",
+      "chain-of-responsibility",
+      "repository-unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga",
+      "circuit-breaker-retry",
+      "cache-aside",
+      "strangler-fig",
+      "choosing-patterns",
+      "patterns-clinic"
+    ],
+    "titles": {
+      "what-are-patterns": "Design patterns: named recipes for common problems",
+      "factory-method": "Factory: let one place decide what to make",
+      "builder": "Builder: build a complex thing step by step",
+      "singleton": "Singleton: exactly one of something",
+      "adapter": "Adapter: make a foreign plug fit",
+      "decorator": "Decorator: wrap it to add extras",
+      "facade": "Facade: one easy front door",
+      "proxy": "Proxy: a stand-in that guards the real thing",
+      "composite": "Composite: treat a tree like one thing",
+      "strategy": "Strategy: swap how something is done",
+      "observer": "Observer: tell everyone who subscribed",
+      "command": "Command: a request as an object",
+      "state": "State: behave differently in each mode",
+      "template-method": "Template Method: a fixed recipe with custom steps",
+      "chain-of-responsibility": "Chain of Responsibility: pass it along until handled",
+      "repository-unit-of-work": "Repository and Unit of Work: a collection-like door to storage",
+      "cqrs": "CQRS: separate counters for asking and changing",
+      "event-sourcing": "Event Sourcing: keep the history, not just the total",
+      "saga": "Saga: a long task as small steps with undo steps",
+      "circuit-breaker-retry": "Retry and Circuit Breaker: survive a flaky service",
+      "cache-aside": "Cache-Aside: check the notebook first",
+      "strangler-fig": "Strangler Fig: replace an old system piece by piece",
+      "choosing-patterns": "Choosing patterns: from problem to pattern",
+      "patterns-clinic": "Capstone: the patterns clinic"
+    },
+    "written": [
+      "what-are-patterns"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }
