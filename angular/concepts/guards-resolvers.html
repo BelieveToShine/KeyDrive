@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Route guards, resolvers &amp; params — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><a href="routing-lazy-loading.html">Routing &amp; lazy loading</a><span class="sep">›</span><span class="cur">Guards &amp; resolvers</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Angular lab · 🚪 Guards</div>
+    <h1>Guards say <span class="grad-text">“may it happen?”</span>; resolvers say <span class="grad-text">“what must be ready?”</span></h1>
+    <p class="sub">canMatch, canActivate, canDeactivate and resolve; redirecting with a UrlTree; and handing resolved data and parameters to a component as inputs.</p>
+    <div class="interview-q">❓ "How do route guards and resolvers work, and how do you redirect from a guard?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Four kinds of route guard run at different moments: canMatch decides whether a route definition applies, canActivate whether entering is allowed, canActivateChild for children, and canDeactivate whether leaving is allowed; a resolver then loads data before the component is created">
+<defs><marker id="gd1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M165,58 L165,86" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#gd1A)"/>
+<path d="M165,138 L165,166" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#gd1A)"/>
+<path d="M165,218 L165,246" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#gd1A)"/>
+<rect class="bx" x="20" y="6" width="290" height="52" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="165" y="29.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">canMatch</text>
+<text x="165" y="42.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">does this route definition apply at all?</text>
+<text class="free" x="330" y="38" text-anchor="start" font-size="10.5" font-weight="400" fill="#67e8f9">false → try the next route</text>
+<rect class="bx" x="20" y="86" width="290" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="165" y="109.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">canActivate</text>
+<text x="165" y="122.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">may the user enter this route?</text>
+<text class="free" x="330" y="118" text-anchor="start" font-size="10.5" font-weight="400" fill="#fcd34d">false cancels; a UrlTree redirects</text>
+<rect class="bx" x="20" y="166" width="290" height="52" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="165" y="189.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">canDeactivate</text>
+<text x="165" y="202.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">may the user leave?</text>
+<text class="free" x="330" y="198" text-anchor="start" font-size="10.5" font-weight="400" fill="#c4b5fd">unsaved form → ask first</text>
+<rect class="bx" x="20" y="246" width="290" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="165" y="269.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">resolve</text>
+<text x="165" y="282.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">load data before activation</text>
+<text class="free" x="330" y="278" text-anchor="start" font-size="10.5" font-weight="400" fill="#6ee7b7">the router waits for it</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the four moments you can hook into a navigation, top to bottom. <b>canMatch</b> decides whether a route definition applies at all (false makes the router try the next one). <b>canActivate</b> decides whether the user may enter. <b>canDeactivate</b> decides whether they may leave (an unsaved form). Then <b>resolvers</b> load data before the component is created — and the router waits for them. Guards run before resolvers.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Guards answer <b>“may this navigation happen?”</b>; resolvers answer <b>“what must be ready first?”</b>; route inputs hand the result to the component.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The routing page gave you the order — match, guards, resolvers, activate. This reference page covers what each hook can return, how to redirect properly, and how data and parameters arrive in the component.</p>
+      <p>The most common mistake is returning <span class="kw">false</span> and then navigating from code: it fights the router. The router offers a better answer — return a <b>UrlTree</b> — and it keeps the guard a pure function of state.</p>
+      <p>Guards shape the browser experience only; real access control happens on the server.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🚦 What each hook returns</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Hook</th><th scope="col">Question</th><th scope="col">Return</th><th scope="col">Typical use</th></tr></thead><tbody><tr><th scope="row"><span class="kw">canMatch</span></th><td>Does this route definition apply?</td><td>true / false (false → next matching route)</td><td>Feature flags, choose a component per role</td></tr><tr><th scope="row"><span class="kw">canActivate</span> (<span class="kw">CanActivateFn</span>)</th><td>May the user enter?</td><td>true, false, or a <span class="kw">UrlTree</span>/<span class="kw">RedirectCommand</span></td><td>Signed-in check</td></tr><tr><th scope="row"><span class="kw">canDeactivate</span> (<span class="kw">CanDeactivateFn</span>)</th><td>May the user leave?</td><td>Same; receives the component instance and states</td><td>Unsaved edits</td></tr><tr><th scope="row"><span class="kw">resolve</span> (<span class="kw">ResolveFn</span>)</th><td>Load data first</td><td>The data (or a redirect)</td><td>A product loaded before the page renders</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Guards receive the <span class="kw">ActivatedRouteSnapshot</span> and <span class="kw">RouterStateSnapshot</span>, run in the route’s injection context so they can <span class="kw">inject()</span> services, and for nested routes the parent’s guards and resolvers run before the child’s.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">↪️ Redirect with a UrlTree</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Returning false from a guard cancels navigation and leaves the user nowhere, while returning a UrlTree cancels it and starts a new navigation to the login page with the original URL remembered">
+<defs><marker id="gd2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gd2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">return false</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">return a UrlTree</text>
+<path d="M162,86 L162,126" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M162,172 L162,212" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M477,86 L477,126" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<path d="M477,172 L477,212" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gd2A)"/>
+<rect class="bx" x="30" y="40" width="265" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="67" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">User opens /checkout</text>
+<rect class="bx" x="30" y="126" width="265" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162.5" y="146.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Guard: not signed in</text>
+<text x="162.5" y="159.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">canActivate runs</text>
+<rect class="bx" x="30" y="212" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="236.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cancelled, nothing changes</text>
+<text x="162.5" y="249.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">guard result</text>
+<rect class="bx" x="345" y="40" width="265" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="67" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">User opens /checkout</text>
+<rect class="bx" x="345" y="126" width="265" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="477.5" y="146.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Guard: not signed in</text>
+<text x="477.5" y="159.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">canActivate runs</text>
+<rect class="bx" x="345" y="212" width="265" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="236.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Redirect to /login</text>
+<text x="477.5" y="249.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">guard result</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: the guard returns <span class="kw">false</span>; navigation is cancelled and the user sees nothing happen. <b>Right</b>: the guard returns a <b>UrlTree</b> to the login page; the router cancels the current navigation and starts a new one, optionally carrying a <span class="kw">returnUrl</span>. The docs say: to redirect, return a <span class="kw">UrlTree</span> or <span class="kw">RedirectCommand</span> — do not return false and then navigate in code.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Guards lab · the ShopUI checkout route</div>
+    <div class="code-block"><pre>export <span class="kw">const</span> signedInGuard: CanActivateFn = (route, state) =&gt; {
+  <span class="kw">const</span> auth = inject(AuthService);
+  <span class="kw">return</span> auth.isSignedIn() ? true : inject(Router).createUrlTree([<span class="str">'/login'</span>], { queryParams: { returnUrl: state.url } });
+};
+
+export <span class="kw">const</span> productResolver: ResolveFn&lt;Product&gt; = (route) =&gt; inject(ProductApi).get(route.paramMap.get(<span class="str">'id'</span>)!);
+
+{ path: <span class="str">'products/:id'</span>, component: ProductPage, resolve: { product: productResolver } }
+<span class="cmt">// with withComponentInputBinding(), ProductPage declares:  product = input.required&lt;Product&gt;();</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. With component input binding, resolved route data, path parameters and query parameters arrive as component inputs — no <span class="kw">ActivatedRoute</span> needed.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Design</th><th scope="col">Result</th></tr></thead><tbody><tr><th scope="row">Fetch in the component</th><td>Page renders empty, then fills; flicker (page 10 skeletons)</td></tr><tr><th scope="row">Resolver</th><td>Navigation waits; page renders with data; a failed resolver can redirect (e.g. to a 404)</td></tr><tr><th scope="row">Both: fast resolver + skeleton for slow parts</th><td>Meaningful first paint without a long wait</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · guard and resolver symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Navigation silently does nothing</th><td>A guard returned false</td><td>Return a UrlTree to redirect</td></tr><tr><th scope="row">A guard cannot read a service</th><td>Not in an injection context, or the service is not provided</td><td>Use <span class="kw">inject()</span> inside the guard function; provide the service</td></tr><tr><th scope="row">A slow resolver freezes navigation</th><td>The router waits for it</td><td>Make it fast, or load slow parts in the component with a skeleton</td></tr><tr><th scope="row">A resolver error leaves the user on the old page</th><td>Error not handled</td><td>Catch in the resolver and return a <span class="kw">RedirectCommand</span> to an error page</td></tr><tr><th scope="row">Route data is not on the component</th><td>Input binding not enabled</td><td>Add <span class="kw">withComponentInputBinding()</span>, or inject ActivatedRoute</td></tr><tr><th scope="row">Child route params are missing</th><td>Param inheritance</td><td><span class="kw">paramsInheritanceStrategy: 'always'</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔐</span><h5>Checkout needs a signed-in user</h5><p>Access shaping.</p><span class="sc-use">→ canActivate + UrlTree to /login</span></div>
+      <div class="scenario"><span class="sc-icon">📝</span><h5>Leaving a half-filled checkout</h5><p>Unsaved changes.</p><span class="sc-use">→ canDeactivate</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>A beta page only for some users</h5><p>Route applicability.</p><span class="sc-use">→ canMatch</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Product page needs the product first</h5><p>Data before render.</p><span class="sc-use">→ resolve + input binding</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Not security.</b> Guards run in the browser; users can bypass them. The server must authorise each request.</p>
+      <p><b>Preloading.</b> The router preloader does not load routes protected by <span class="kw">canLoad</span> guards.</p>
+      <p><b>Order.</b> For nested routes, parent and child guards run first, followed by the parent and child resolvers.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>canMatch: does the route apply (false → next); canActivate: may enter; canDeactivate: may leave; resolve: data first.</li><li>Return true, false, or a UrlTree/RedirectCommand; redirect with a UrlTree, not false + navigate().</li><li>Guards run before resolvers; both run in an injection context.</li><li>With <span class="kw">withComponentInputBinding()</span> resolved data, path, matrix and query params become inputs.</li><li>Guards are UX; the server enforces security.</li><li>A slow resolver blocks navigation.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I use canActivate with a UrlTree to redirect signed-out users, canDeactivate to protect unsaved forms, canMatch to choose route definitions, and resolvers to load data before the component exists. With component input binding the resolved data and params arrive as inputs. Guards only shape the browser experience; the server authorises."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Returning false and navigating in code.</b> Return a UrlTree.</p>
+      <p><b>Heavy resolvers.</b> The router waits; users stare at the previous page.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🚪 Guard</h5><p>Decides whether navigation proceeds, and where it goes instead.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📦 Resolver</h5><p>Provides data before the component is created.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: routing and lazy loading.</span>
+      <a class="next-link" href="routing-lazy-loading.html">Routing & lazy loading <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/routing/route-guards" target="_blank" rel="noopener">Control route access with guards</a> · <a href="https://angular.dev/guide/routing/data-resolvers" target="_blank" rel="noopener">Route data resolvers</a> · <a href="https://angular.dev/api/router/CanActivateFn" target="_blank" rel="noopener">CanActivateFn</a> · <a href="https://angular.dev/api/router/ResolveFn" target="_blank" rel="noopener">ResolveFn</a> · <a href="https://angular.dev/api/router/Route" target="_blank" rel="noopener">Route</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@
 | ➕ | Deep dive: HttpClient & interceptors | http-interceptors | ✅ written (sub page of rxjs-async-pipe) |
 | ➕ | Deep dive: State management: services, signals & NgRx | state-management | 🔒 planned (sub page of dependency-injection) |
 | ➕ | Deep dive: Forms in depth: validation & FormArray | forms-validation | 🔒 planned (sub page of forms) |
-| ➕ | Deep dive: Route guards, resolvers & params | guards-resolvers | 🔒 planned (sub page of routing-lazy-loading) |
+| ➕ | Deep dive: Route guards, resolvers & params | guards-resolvers | ✅ written (sub page of routing-lazy-loading) |
 | ➕ | Deep dive: Testing Angular | testing-angular | ✅ written (sub page of angular-clinic) |
 
 When a page ships: `scripts/page-kit/lab_ship.sh angular …`, update this table, `scripts/push3.sh`.

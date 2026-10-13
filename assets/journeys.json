@@ -422,6 +422,7 @@
       "directives-pipes": "templates-control-flow",
       "rxjs-operators": "rxjs-async-pipe",
       "http-interceptors": "rxjs-async-pipe",
+      "guards-resolvers": "routing-lazy-loading",
       "testing-angular": "angular-clinic"
     },
     "subTitles": {
@@ -430,6 +431,7 @@
       "directives-pipes": "Directives & custom pipes",
       "rxjs-operators": "RxJS operators: which one to use",
       "http-interceptors": "HttpClient & interceptors",
+      "guards-resolvers": "Route guards, resolvers & params",
       "testing-angular": "Testing Angular"
     }
   }

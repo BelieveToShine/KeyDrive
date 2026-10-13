@@ -251,5 +251,18 @@ Source root: https://angular.dev/
 | “about ten” operators, 300 ms | 🟦 I | teaching framing and value |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — guards, resolvers & params
+| Claim | Status | Note |
+|---|---|---|
+| A guard returning a UrlTree cancels the current navigation and starts a new one; true continues, false cancels; to redirect return a UrlTree or RedirectCommand, do not return false and then navigate in code | ✅ V | angular.dev/guide/routing/route-guards; api/router/CanActivateFn |
+| Guards receive ActivatedRouteSnapshot and RouterStateSnapshot and have access to route-level services | ✅ V | api/router/CanActivateFn |
+| CanDeactivateFn receives the component instance and current/next states, commonly for unsaved edits; CanMatchFn false does not block navigation, the router tries the next matching route | ✅ V | api/router/CanDeactivateFn, CanMatchFn |
+| ResolveFn: the router waits for resolver data before activating; a resolver can return a RedirectCommand (e.g. to a 404); guards run before resolvers; parent and child guards precede resolvers | ✅ V | api/router/ResolveFn; guide/routing/data-resolvers |
+| withComponentInputBinding binds static or resolved route data, path, matrix and query parameters to component inputs | ✅ V | guide/routing/data-resolvers; v19 common routing tasks |
+| The preloader does not load routes protected by canLoad guards | ✅ V | api/router/RouterPreloader |
+| Guards are UX, not security; the server must authorise | 🟨 K | general web security practice |
+| ActivatedRoute.paramMap / paramsInheritanceStrategy 'always' | 🟨 K | paramMap not re-checked; 'always' per v19 docs |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

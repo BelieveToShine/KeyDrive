@@ -3644,5 +3644,31 @@
     "summary": "The classic mistake with RxJS operators: which one to use.",
     "keywords": "rxjs operators debounceTime distinctUntilChanged switchMap combineLatest forkJoin catchError takeUntil shareReplay which operator trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-guards-resolvers",
+    "title": "Route guards, resolvers & params",
+    "category": "Angular",
+    "page": "angular/concepts/guards-resolvers.html",
+    "summary": "canMatch, canActivate, canDeactivate and resolve; redirecting with a UrlTree; route data and params as component inputs.",
+    "keywords": "angular route guards resolvers canActivate canDeactivate canMatch UrlTree redirect resolve ResolveFn route params withComponentInputBinding"
+  },
+  {
+    "id": "angular-guards-resolvers-recall",
+    "title": "Route guards, resolvers & params — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/guards-resolvers.html",
+    "summary": "Quick recall points: Route guards, resolvers & params.",
+    "keywords": "angular route guards resolvers canActivate canDeactivate canMatch UrlTree redirect resolve ResolveFn route params withComponentInputBinding interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-guards-resolvers-trap",
+    "title": "Route guards, resolvers & params — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/guards-resolvers.html",
+    "summary": "The classic mistake with Route guards, resolvers & params.",
+    "keywords": "angular route guards resolvers canActivate canDeactivate canMatch UrlTree redirect resolve ResolveFn route params withComponentInputBinding trap mistake",
+    "anchor": "trap"
   }
 ]
