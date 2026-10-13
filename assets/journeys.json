@@ -553,7 +553,10 @@
       "patterns-clinic": "Capstone: the patterns clinic"
     },
     "written": [
-      "what-are-patterns"
+      "what-are-patterns",
+      "factory-method",
+      "builder",
+      "singleton"
     ],
     "sub": {},
     "subTitles": {}

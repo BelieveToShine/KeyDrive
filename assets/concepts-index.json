@@ -4190,5 +4190,83 @@
     "summary": "The classic mistake with What Is a Design Pattern?.",
     "keywords": "design patterns what is pattern GoF creational structural behavioral architecture cookbook trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-factory-method",
+    "title": "Factory: Let One Place Decide What to Make",
+    "category": "Patterns",
+    "page": "patterns/concepts/factory-method.html",
+    "summary": "The Factory pattern with a pizza shop: one place decides which class to create.",
+    "keywords": "factory method pattern creational pizza simple factory IHttpClientFactory"
+  },
+  {
+    "id": "patterns-factory-method-recall",
+    "title": "Factory: Let One Place Decide What to Make — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/factory-method.html",
+    "summary": "Quick recall points: Factory: Let One Place Decide What to Make.",
+    "keywords": "factory method pattern creational pizza simple factory IHttpClientFactory interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-factory-method-trap",
+    "title": "Factory: Let One Place Decide What to Make — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/factory-method.html",
+    "summary": "The classic mistake with Factory: Let One Place Decide What to Make.",
+    "keywords": "factory method pattern creational pizza simple factory IHttpClientFactory trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-builder",
+    "title": "Builder: Build a Complex Thing Step by Step",
+    "category": "Patterns",
+    "page": "patterns/concepts/builder.html",
+    "summary": "The Builder pattern with a burger counter: named steps instead of long constructors.",
+    "keywords": "builder pattern creational burger telescoping constructor StringBuilder fluent"
+  },
+  {
+    "id": "patterns-builder-recall",
+    "title": "Builder: Build a Complex Thing Step by Step — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/builder.html",
+    "summary": "Quick recall points: Builder: Build a Complex Thing Step by Step.",
+    "keywords": "builder pattern creational burger telescoping constructor StringBuilder fluent interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-builder-trap",
+    "title": "Builder: Build a Complex Thing Step by Step — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/builder.html",
+    "summary": "The classic mistake with Builder: Build a Complex Thing Step by Step.",
+    "keywords": "builder pattern creational burger telescoping constructor StringBuilder fluent trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-singleton",
+    "title": "Singleton: Exactly One of Something",
+    "category": "Patterns",
+    "page": "patterns/concepts/singleton.html",
+    "summary": "The Singleton pattern with an office printer: one instance, AddSingleton, and why hand-made singletons are risky.",
+    "keywords": "singleton pattern creational one instance AddSingleton global state testing"
+  },
+  {
+    "id": "patterns-singleton-recall",
+    "title": "Singleton: Exactly One of Something — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/singleton.html",
+    "summary": "Quick recall points: Singleton: Exactly One of Something.",
+    "keywords": "singleton pattern creational one instance AddSingleton global state testing interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-singleton-trap",
+    "title": "Singleton: Exactly One of Something — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/singleton.html",
+    "summary": "The classic mistake with Singleton: Exactly One of Something.",
+    "keywords": "singleton pattern creational one instance AddSingleton global state testing trap mistake",
+    "anchor": "trap"
   }
 ]

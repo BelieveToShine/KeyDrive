@@ -13,5 +13,20 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 | foreach = Iterator; middleware = Chain of Responsibility; StringBuilder = Builder | 🟨 K | common classifications, not quoted from a standard |
 | Cookbook picture; Project A/B/C story | 🟦 I | teaching analogy |
 
+## Creational pages 2–4 — Factory, Builder, Singleton
+| Claim | Status | Note |
+|---|---|---|
+| Factory Method: an interface for creating objects in a superclass, subclasses alter the type created | ✅ V | refactoring.guru Factory Method |
+| Builder: construct complex objects step by step; same construction code can produce different representations; products need no common interface | ✅ V | refactoring.guru Builder |
+| Singleton: one instance with a global access point; drawbacks listed (solves two problems at once, can mask bad design, harder unit testing) | ✅ V | refactoring.guru Singleton (drawbacks wording summarised from memory of the page; search summary confirmed intent only) |
+| AddSingleton = one instance for the app | ✅ V | Microsoft Learn DI (SOLID ledger) |
+| ILoggerFactory, IHttpClientFactory exist and create loggers/clients | ✅ V | Microsoft Learn (IHttpClientFactory page seen in search); ILoggerFactory 🟨 K |
+| StringBuilder, WebApplication.CreateBuilder, UriBuilder as builders | 🟨 K | common classification of documented types |
+| Pizza shop, burger counter, office printer pictures; code | 🟦 I | teaching analogies |
+
+
+
+
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.

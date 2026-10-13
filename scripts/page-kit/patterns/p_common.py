@@ -69,3 +69,29 @@ def quiz(items, yes='❌ Breaks the rule', no='✅ Fine'):
 def spot_table(rows):
     """'How to spot it in your code' — [(what you see, what to do)]"""
     return table(['If you see…', 'Do this'], rows)
+
+
+def pattern_page(P):
+    """Standard fresher-first pattern page. P keys: slug, title, num, total, group, h1, sub, ivq, one, real (everyday paragraphs html),
+    prob=(Diagram, captions, caption), fix=(Diagram, captions, caption), fix_title, code=(code, note), quiz=[...], quiz_labels=(yes,no),
+    spot=[(see, do)], where=[(you write, it is)] optional, recall=[...], say, trap=[...], next=(text, href, title), facts=(text, links), prev_crumb optional."""
+    b = ''
+    b += see(story(*P['prob']))
+    b += one(P['one'])
+    b += block('🌍 In real life', '    <div class="kd-card why-box">\n' + ''.join(f'      <p>{p}</p>\n' for p in P['real']) + '    </div>', label_cls='why', id_='why')
+    b += block(P.get('fix_title', '🔧 The pattern fixes it'), story(*P['fix']), label_cls='see')
+    if P.get('roles'):
+        b += block('🎭 Who is who', table(['Role in the pattern', 'In our story', 'In code'], P['roles']), label_cls='why')
+    b += block('🧪 Tiny code', cs(*P['code']), label_cls='see')
+    if P.get('where'):
+        b += block('🔎 Where you already see it', table(['You write…', 'It is…'], P['where']) + (f'\n    <p style="margin-top:10px;color:var(--ink-soft)">{P["where_note"]}</p>' if P.get('where_note') else ''), label_cls='trap')
+    y, n = P.get('quiz_labels', ('Use it', 'Skip it'))
+    b += block('🎯 Spot it: is the pattern a good fit?', quiz(P['quiz'], y, n), label_cls='trap')
+    b += block('👀 How to spot the need in your own code', spot_table(P['spot']), label_cls='trap')
+    b += recall(P['recall'])
+    b += saythis(P['say'])
+    b += trap(P['trap'])
+    b += next_box(*P['next'])
+    b += fact_note(*P['facts'])
+    return page(P['slug'], P['title'], f"Concept {P['num']} of {P['total']} · {P['group']}", P['h1'], P['sub'], P['ivq'], b,
+                CR + ([P['prev_crumb']] if P.get('prev_crumb') else []) + [f'<span class="cur">{P["crumb"]}</span>'], '')
