@@ -76,6 +76,21 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | The exact policy JSON shape in the example | 🟨 K | confirm against docs |
 | “5 KB” note; ≈ 300 RU vs ≈ 3 RU; 10 → 7 RU; 3,000 → 2,100 RU/s; “0%/100%” index utilisation | 🟦 I | teaching numbers |
 
+## Page 6 — point reads, queries, fan-out
+| Claim | Status | Note |
+|---|---|---|
+| A cross-partition query is essentially a separate query per physical partition | ✅ V | Query performance tips (SDK) |
+| Minimum ≈ 2.5 RU charged per physical partition index check, even with no match; matters more with > 30,000 RU/s or ≈ 100 GB | ✅ V | same |
+| Equality filter (or IN) on the partition key avoids full fan-out | ✅ V | same |
+| Hierarchical keys: queries on the first level(s) are routed to a subset of partitions | ✅ V | Hierarchical partition keys |
+| Raising MaxConcurrency lowers latency but not the RU charge | ✅ V | Query performance tips |
+| Fan-out and index use are independent | ✅ V | Troubleshoot query performance (MongoDB page statement, general) |
+| Global secondary indexes (preview per docs) can make cross-partition queries in-partition | ✅ V | search result; marked “check availability” |
+| A query by id + key is not a point read | ✅ V | Request units |
+| Continuation tokens for paging | 🟨 K | standard SDK behaviour; confirm |
+| Read-model container via change feed | ✅ V | Change feed design patterns (page 10) |
+| 50 partitions, ≈ 125 RU minimum, 150 RU, 5–10 RU, 1 RU, dashboard numbers | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

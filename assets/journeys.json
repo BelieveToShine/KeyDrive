@@ -291,7 +291,8 @@
       "partition-keys",
       "request-units",
       "data-modeling",
-      "indexing-policy"
+      "indexing-policy",
+      "queries-fan-out"
     ],
     "sub": {},
     "subTitles": {}

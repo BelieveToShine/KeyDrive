@@ -2448,5 +2448,31 @@
     "summary": "The classic mistake with Indexing policy.",
     "keywords": "cosmos db indexing policy composite index included excluded paths range index order by write ru consistent none trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-queries-fan-out",
+    "title": "Point reads, queries & fan-out",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/queries-fan-out.html",
+    "summary": "Point read vs in-partition query vs cross-partition fan-out, RU per partition, MaxConcurrency, continuation tokens.",
+    "keywords": "cosmos db point read query cross-partition fan-out partition key filter maxconcurrency continuation token ru"
+  },
+  {
+    "id": "cosmos-queries-fan-out-recall",
+    "title": "Point reads, queries & fan-out — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/queries-fan-out.html",
+    "summary": "Quick recall points: Point reads, queries & fan-out.",
+    "keywords": "cosmos db point read query cross-partition fan-out partition key filter maxconcurrency continuation token ru interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-queries-fan-out-trap",
+    "title": "Point reads, queries & fan-out — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/queries-fan-out.html",
+    "summary": "The classic mistake with Point reads, queries & fan-out.",
+    "keywords": "cosmos db point read query cross-partition fan-out partition key filter maxconcurrency continuation token ru trap mistake",
+    "anchor": "trap"
   }
 ]
