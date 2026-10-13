@@ -340,7 +340,8 @@
     "written": [
       "react-mental-model",
       "state-rerenders",
-      "keys-reconciliation"
+      "keys-reconciliation",
+      "effects"
     ],
     "sub": {},
     "subTitles": {}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effects: synchronising with the outside world — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Effects</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 4 of 12 · ⚛️ Measure & optimise</div>
+    <h1>An effect is for <span class="grad-text">the world outside React</span> — nothing else.</h1>
+    <p class="sub">How an effect runs (setup, dependencies, cleanup), what Strict Mode does, and how to avoid effects you do not need.</p>
+    <div class="interview-q">❓ "When should I use useEffect — and when is it the wrong tool?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="An effect runs its setup after the commit; when a dependency changes React runs the cleanup of the old setup first, then the new setup; on unmount it runs the cleanup">
+<defs><marker id="ef1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ef1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ef1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="314" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">ONE EFFECT, TWO RENDERS</text>
+<path d="M194,85 L235,85" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ef1A)"/>
+<path d="M405,85 L446,85" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ef1A)"/>
+<path d="M531,130 L531,170 L109,170 L109,210" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ef1A)"/>
+<path d="M194,255 L235,255" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ef1A)"/>
+<path d="M405,255 L446,255" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ef1A)"/>
+<rect class="bx" x="24" y="40" width="170" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="109" y="83" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Render 1</text>
+<text x="109" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">roomId = 'shop'</text>
+<rect class="bx" x="235" y="40" width="170" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="76.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Commit</text>
+<text x="320" y="89" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">DOM updated,</text>
+<text x="320" y="101.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">browser paints</text>
+<rect class="bx" x="446" y="40" width="170" height="90" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="531" y="83" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Setup runs</text>
+<text x="531" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">connect('shop')</text>
+<rect class="bx" x="24" y="210" width="170" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="109" y="253" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Render 2</text>
+<text x="109" y="265" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">roomId = 'sale'</text>
+<rect class="bx" x="235" y="210" width="170" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="246.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Commit</text>
+<text x="320" y="259" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">DOM updated,</text>
+<text x="320" y="271.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">browser paints</text>
+<rect class="bx" x="446" y="210" width="170" height="90" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="531" y="247" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Cleanup, then setup</text>
+<text x="531" y="259" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">disconnect('shop')</text>
+<text x="531" y="271" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">connect('sale')</text>
+<g class="arrow-pill"><rect x="274" y="161" width="92" height="18" rx="9"/><text x="320" y="173.5" text-anchor="middle" font-size="9" font-style="italic">roomId changes</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> an effect’s <b>setup</b> runs after React commits the render. When a value the effect reads <b>changes</b> (here <span class="kw">roomId</span>), React renders again, commits, and then runs the old effect’s <b>cleanup</b> followed by the <b>setup</b> for the new value. When the component is removed, React runs the cleanup one last time. Setup and cleanup must be symmetrical: whatever setup starts, cleanup stops.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">An <b>effect</b> keeps your component <b>in sync with something outside React</b> (network, timer, subscription). If there is no outside system, you do not need an effect.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–3 kept everything inside the render. But real components must talk to the world: open a connection, start a timer, read the window size. Rendering must stay pure, so React gives that work its own place: <b>after the commit</b>.</p>
+      <p>The danger runs the other way: effects are so easy to write that people use them for work that never needed one — calculating a value from state, reacting to a click, resetting a form. Every such effect adds an <b>extra render</b> and a place for bugs.</p>
+      <p>So this page has two halves: how an effect lives (setup, dependencies, cleanup), and how to avoid writing one when you do not need it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Do you even need an effect?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Before writing an effect ask what the work is: a value derived from props or state is calculated during render, a reaction to a click belongs in an event handler, resetting state uses a key, and only synchronising with an outside system needs an effect">
+<defs><marker id="ef2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ef2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ef2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,64 L320,110 L80,110 L80,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ef2A)"/>
+<path d="M320,64 L320,110 L240,110 L240,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ef2A)"/>
+<path d="M320,64 L320,110 L400,110 L400,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ef2A)"/>
+<path d="M320,64 L320,110 L560,110 L560,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ef2A)"/>
+<rect class="bx" x="210" y="8" width="220" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">What is the work?</text>
+<text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">ask before you write useEffect</text>
+<rect class="bx" x="10" y="190" width="140" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="222.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Calculate it</text>
+<text x="80" y="235.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">during render</text>
+<rect class="bx" x="170" y="190" width="140" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="240" y="222.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Event handler</text>
+<text x="240" y="235.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">onClick / onChange</text>
+<rect class="bx" x="330" y="190" width="140" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="400" y="222.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">A key prop</text>
+<text x="400" y="235.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">new key = fresh state</text>
+<rect class="bx" x="490" y="190" width="140" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="560" y="222.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">An Effect</text>
+<text x="560" y="235.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">sync with outside</text>
+<text class="free" x="320" y="285" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Effects are for talking to things outside React: network, timers, subscriptions, non-React widgets.</text>
+<g class="arrow-pill"><rect x="36.5" y="141" width="87" height="18" rx="9"/><text x="80" y="153.5" text-anchor="middle" font-size="9" font-style="italic">derived value</text></g>
+<g class="arrow-pill"><rect x="204.5" y="141" width="71" height="18" rx="9"/><text x="240" y="153.5" text-anchor="middle" font-size="9" font-style="italic">user event</text></g>
+<g class="arrow-pill"><rect x="351" y="141" width="98" height="18" rx="9"/><text x="400" y="153.5" text-anchor="middle" font-size="9" font-style="italic">reset on change</text></g>
+<g class="arrow-pill"><rect x="516.5" y="141" width="87" height="18" rx="9"/><text x="560" y="153.5" text-anchor="middle" font-size="9" font-style="italic">outside world</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the questions to ask first. A value that can be <b>calculated from props or state</b> should be calculated during render (no state, no effect). Work caused by a <b>user action</b> belongs in the event handler. To <b>reset state</b> when a prop changes, give the component a <span class="kw">key</span> (page 3). Only <b>synchronising with an outside system</b> needs an effect.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 The dependency array</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write</th><th scope="col">The effect runs</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><span class="kw">useEffect(fn)</span> — no array</th><td>After every commit</td><td>Almost never; easy to cause loops</td></tr><tr><th scope="row"><span class="kw">useEffect(fn, [])</span></th><td>After the first commit (mount), cleanup on unmount</td><td>Only when the effect truly reads no props or state</td></tr><tr><th scope="row"><span class="kw">useEffect(fn, [a, b])</span></th><td>After the first commit, and again when <i>a</i> or <i>b</i> changed (compared with <span class="kw">Object.is</span>)</td><td>Normal case: list every reactive value the effect reads</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Let the linter fill the array. Forcing a wrong array (to “run only once”) is the usual cause of stale values and bugs. In development, <b>Strict Mode</b> runs one extra setup + cleanup cycle on mount to check your cleanup is correct — that is why you may see a request or a connect twice in development only.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Render lab · the effect that renders twice</div>
+    <p>ShopUI’s product list filters by the search text. Before: filtered products are copied into state by an effect. After: they are calculated during render. Type one character.</p>    <div class="code-block"><pre><span class="cmt">// ❌ Before — extra state + effect</span>
+<span class="kw">const</span> [filtered, setFiltered] = useState(products);
+useEffect(() =&gt; { setFiltered(products.filter(p =&gt; p.name.includes(query))); }, [products, query]);
+
+<span class="cmt">// ✅ After — calculate during render</span>
+<span class="kw">const</span> filtered = products.filter(p =&gt; p.name.includes(query));</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. (If the filtering is slow, page 6 shows how to cache it with useMemo.)</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Passes per keystroke</th><th scope="col">Component renders (illustrative)</th></tr></thead><tbody><tr><th scope="row">Before</th><td>render → commit → effect → setFiltered → render again</td><td>504 + 504 = 1,008, and the screen briefly shows stale results</td></tr><tr><th scope="row">After</th><td>render → commit</td><td>504 — one pass, results always match the input</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Cleanup lab · the listener that never leaves</div>
+    <div class="code-block"><pre>useEffect(() =&gt; {
+  <span class="kw">const</span> onResize = () =&gt; setWidth(window.innerWidth);
+  window.addEventListener(<span class="str">'resize'</span>, onResize);
+  <span class="kw">return</span> () =&gt; window.removeEventListener(<span class="str">'resize'</span>, onResize);   <span class="cmt">// cleanup mirrors setup</span>
+}, []);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Without the returned cleanup, every mount of the component adds another listener that is never removed — a leak that Strict Mode’s extra mount makes visible in development.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · effect symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Infinite re-render loop</th><td>The effect sets state that is in its own dependencies, or a dependency is a new object/function every render</td><td>Remove the effect (derive instead), or stabilise the dependency</td></tr><tr><th scope="row">The effect shows an old value (stale)</th><td>A missing dependency</td><td>Add it (follow the linter); do not silence the rule</td></tr><tr><th scope="row">A request or connection fires twice in development</th><td>Strict Mode’s extra cycle</td><td>Make cleanup correct (abort or ignore flag); do not remove Strict Mode</td></tr><tr><th scope="row">Responses overwrite each other (wrong data shown)</th><td>A fetch race — an older response arrived last</td><td>Cleanup sets an <span class="kw">ignore</span> flag, or use a data library (page 9)</td></tr><tr><th scope="row">Events fire several times after navigating</th><td>Missing cleanup, listeners piled up</td><td>Return a cleanup that undoes the setup</td></tr><tr><th scope="row">A render, then an immediate second render</th><td>State set in an effect that could be derived</td><td>Calculate during render</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Filtered list lags and flashes old results</h5><p>Filter copied to state in an effect.</p><span class="sc-use">→ Derive during render</span></div>
+      <div class="scenario"><span class="sc-icon">💬</span><h5>Chat shows two connections in development</h5><p>Strict Mode’s extra setup + cleanup.</p><span class="sc-use">→ Correct cleanup</span></div>
+      <div class="scenario"><span class="sc-icon">📡</span><h5>Fast typing shows results for an old search</h5><p>Fetch race.</p><span class="sc-use">→ Ignore flag in cleanup</span></div>
+      <div class="scenario"><span class="sc-icon">🪟</span><h5>Resize handler fires more each time you open a page</h5><p>No cleanup.</p><span class="sc-use">→ Return removeEventListener</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Dependencies are reactive values</b> — props, state, and anything declared in the component body. Each is compared with <span class="kw">Object.is</span> between renders.</p>
+      <p><b>Each render has its own effect.</b> An effect “sees” the props and state of the render that created it — that is the snapshot idea from page 2, applied to effects.</p>
+      <p><b>Data fetching</b> in effects works for small cases but has races and no caching; page 9 covers Suspense and data libraries.</p>
+      <p><b>Not for events.</b> “When the user clicks buy, send an order” is an event handler, not an effect.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Effects run after the commit and synchronise with an outside system.</li><li>Setup and cleanup must mirror each other; cleanup runs before the next setup and on unmount.</li><li>The dependency array lists every reactive value the effect reads, compared with <span class="kw">Object.is</span>.</li><li>Strict Mode runs one extra setup + cleanup in development only.</li><li>Derive values during render; handle user actions in event handlers; reset with a key.</li><li>An effect that only sets state from other state usually means an extra render you can remove.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Effects are for synchronising with something outside React. They run after the commit, they must clean up after themselves, and their dependencies must list everything reactive they read. Before writing one I ask whether the value can be calculated during render, whether it belongs in an event handler, or whether a key can reset the state — most effects I see in reviews are one of those."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Using an effect to “keep state in sync with other state”.</b> It doubles the renders and shows stale frames. Calculate instead.</p>
+      <p><b>Silencing the dependency lint rule.</b> It turns a warning into a stale-value bug.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🪝 Event handler</h5><p>Runs because of a specific user action. Where side effects of that action belong.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>⏱️ Effect</h5><p>Runs because the component appeared or a value it reads changed. For syncing with the outside.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You can now keep a component correct. Is it also fast? Do not guess — measure. Next: the React Profiler. <i>(coming soon: Measure first: the React Profiler)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/learn/synchronizing-with-effects" target="_blank" rel="noopener">Synchronizing with Effects</a> · <a href="https://react.dev/learn/you-might-not-need-an-effect" target="_blank" rel="noopener">You Might Not Need an Effect</a> · <a href="https://react.dev/learn/lifecycle-of-reactive-effects" target="_blank" rel="noopener">Lifecycle of Reactive Effects</a> · <a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener">useEffect</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

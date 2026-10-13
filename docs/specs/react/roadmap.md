@@ -4,7 +4,7 @@
 | 1 | Render, commit & the React mental model | react-mental-model | ✅ written |
 | 2 | State, props & why components re-render | state-rerenders | ✅ written |
 | 3 | Keys, identity & reconciliation | keys-reconciliation | ✅ written |
-| 4 | Effects: synchronising with the outside world | effects | 🔒 planned |
+| 4 | Effects: synchronising with the outside world | effects | ✅ written |
 | 5 | Measure first: the React Profiler | profiler | 🔒 planned |
 | 6 | memo, useMemo, useCallback & the Compiler | memoization | 🔒 planned |
 | 7 | The React debugging playbook | react-debugging-playbook | 🔒 planned |

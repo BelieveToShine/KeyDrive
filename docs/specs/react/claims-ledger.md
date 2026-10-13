@@ -42,5 +42,18 @@ Source root: https://react.dev/
 | 500 → 480 cards: 980 mount/unmount operations with random keys | 🟦 I | arithmetic on teaching numbers (500 + 480) |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 4 — effects
+| Claim | Status | Note |
+|---|---|---|
+| Effects run after the commit; they synchronise a component with an outside system | ✅ V | learn/synchronizing-with-effects |
+| Empty array: runs when the component mounts; no array: re-runs after every commit | ✅ V | same / reference/react/useEffect |
+| Cleanup runs before the Effect runs again and on unmount | ✅ V | same |
+| Strict Mode runs one extra setup + cleanup cycle per Effect in development | ✅ V | same / reference/react/StrictMode |
+| Dependencies are compared with Object.is; do not silence the linter | ✅ V | removing-effect-dependencies / useEffect |
+| Fetch race: use an `ignore` flag set in cleanup | ✅ V | synchronizing-with-effects |
+| Derive values during render, handle user events in handlers, reset state with key | ✅ V | learn/you-might-not-need-an-effect |
+| Effect that copies state into state: 504 + 504 = 1,008 renders | 🟦 I | teaching arithmetic |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

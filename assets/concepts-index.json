@@ -2734,5 +2734,31 @@
     "summary": "The classic mistake with Keys, identity & reconciliation.",
     "keywords": "react keys key reconciliation identity index random list state reset trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-effects",
+    "title": "Effects: synchronising with the outside world",
+    "category": "React",
+    "page": "react/concepts/effects.html",
+    "summary": "Effect setup, dependencies and cleanup, Strict Mode, and when you do not need an effect.",
+    "keywords": "react useEffect effect cleanup dependencies strict mode derived state fetch race you might not need an effect"
+  },
+  {
+    "id": "react-effects-recall",
+    "title": "Effects: synchronising with the outside world — interview recall",
+    "category": "React",
+    "page": "react/concepts/effects.html",
+    "summary": "Quick recall points: Effects: synchronising with the outside world.",
+    "keywords": "react useEffect effect cleanup dependencies strict mode derived state fetch race you might not need an effect interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-effects-trap",
+    "title": "Effects: synchronising with the outside world — common trap",
+    "category": "React",
+    "page": "react/concepts/effects.html",
+    "summary": "The classic mistake with Effects: synchronising with the outside world.",
+    "keywords": "react useEffect effect cleanup dependencies strict mode derived state fetch race you might not need an effect trap mistake",
+    "anchor": "trap"
   }
 ]
