@@ -1,0 +1,18 @@
+# React Lab — roadmap
+| # | Page | Slug | Status |
+|---|---|---|---|
+| 1 | Render, commit & the React mental model | react-mental-model | ✅ written |
+| 2 | State, props & why components re-render | state-rerenders | 🔒 planned |
+| 3 | Keys, identity & reconciliation | keys-reconciliation | 🔒 planned |
+| 4 | Effects: synchronising with the outside world | effects | 🔒 planned |
+| 5 | Measure first: the React Profiler | profiler | 🔒 planned |
+| 6 | memo, useMemo, useCallback & the Compiler | memoization | 🔒 planned |
+| 7 | The React debugging playbook | react-debugging-playbook | 🔒 planned |
+| 8 | Context, reducers & where state lives | context-state-architecture | 🔒 planned |
+| 9 | Data fetching, Suspense & transitions | data-fetching-suspense | 🔒 planned |
+| 10 | Server rendering, hydration & Server Components | server-rendering-hydration | 🔒 planned |
+| 11 | Code splitting & bundle weight | code-splitting-bundles | 🔒 planned |
+| 12 | Capstone: the React performance clinic | react-clinic | 🔒 planned |
+| ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
+
+When a page ships: `scripts/page-kit/lab_ship.sh react …`, update this table, `scripts/push3.sh`.

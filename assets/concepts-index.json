@@ -2656,5 +2656,31 @@
     "summary": "The classic mistake with Same question, two engines (SQL vs Cosmos DB).",
     "keywords": "sql versus cosmos db comparison choose azure sql cosmos db translation index partition key logical reads ru trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-react-mental-model",
+    "title": "Render, commit & the React mental model",
+    "category": "React",
+    "page": "react/concepts/react-mental-model.html",
+    "summary": "Trigger, render, commit; UI = f(state); the ShopUI practice app; children re-render with their parent.",
+    "keywords": "react render commit mental model state virtual dom purity strict mode"
+  },
+  {
+    "id": "react-react-mental-model-recall",
+    "title": "Render, commit & the React mental model — interview recall",
+    "category": "React",
+    "page": "react/concepts/react-mental-model.html",
+    "summary": "Quick recall points: Render, commit & the React mental model.",
+    "keywords": "react render commit mental model state virtual dom purity strict mode interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-react-mental-model-trap",
+    "title": "Render, commit & the React mental model — common trap",
+    "category": "React",
+    "page": "react/concepts/react-mental-model.html",
+    "summary": "The classic mistake with Render, commit & the React mental model.",
+    "keywords": "react render commit mental model state virtual dom purity strict mode trap mistake",
+    "anchor": "trap"
   }
 ]

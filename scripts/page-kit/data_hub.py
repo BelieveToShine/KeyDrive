@@ -10,6 +10,7 @@ def cnt(c):
 ns, nts = cnt('sql'); nc, ntc = cnt('cosmos')
 ntc = ntc or 12
 tot, totmax = ns + nc, nts + ntc
+wtot = sum(len(j[k]['written']) for k in ('react','angular') if k in j)
 SRC = (R / 'azure/index.html').read_text()
 HEAD = SRC[:SRC.index('<nav class="kd-crumbs wrap">')].replace('<title>Azure — KeyDrive</title>', '<title>Data Systems — KeyDrive</title>')
 def pct(a, b): return round(100 * a / b) if b else 0
@@ -79,7 +80,7 @@ if m: page = re.sub(r'\?v=\d+', '?v=' + m.group(1), page)
 h = (R / 'index.html').read_text()
 h = re.sub(r'(<h3>Data Systems</h3>.*?<div class="ct-foot"><div class="ct-stats"><span class="ct-dives">)\d+ / \d+( concepts</span></div><div class="progress"><i style="width:)\d+(%)',
            lambda mm: f'{mm.group(1)}{tot} / {totmax}{mm.group(2)}{pct(tot, totmax)}{mm.group(3)}', h, flags=re.S)
-h = re.sub(r'<b>\d+</b> <span>concepts</span>', f'<b>{57 + tot}</b> <span>concepts</span>', h)
+h = re.sub(r'<b>\d+</b> <span>concepts</span>', f'<b>{57 + tot + wtot}</b> <span>concepts</span>', h)
 h = re.sub(r'(Data Systems</h3>\s*<p>)[^<]*(</p>)', r'\1Read execution plans, tame indexes and statistics, and debug slow queries in SQL; then partition keys, request units and fan-out queries in Cosmos DB.\2', h)
 h = re.sub(r'<span class="ribbon live">(SQL lab live|SQL lab complete|SQL \+ Cosmos DB)</span>', '<span class="ribbon live">' + ('SQL + Cosmos DB' if nc else 'SQL lab live') + '</span>', h)
 (R / 'index.html').write_text(h)

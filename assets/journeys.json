@@ -306,5 +306,41 @@
     "subTitles": {
       "same-question-two-engines": "Same question, two engines"
     }
+  },
+  "react": {
+    "title": "React Lab",
+    "order": [
+      "react-mental-model",
+      "state-rerenders",
+      "keys-reconciliation",
+      "effects",
+      "profiler",
+      "memoization",
+      "react-debugging-playbook",
+      "context-state-architecture",
+      "data-fetching-suspense",
+      "server-rendering-hydration",
+      "code-splitting-bundles",
+      "react-clinic"
+    ],
+    "titles": {
+      "react-mental-model": "Render, commit & the React mental model",
+      "state-rerenders": "State, props & why components re-render",
+      "keys-reconciliation": "Keys, identity & reconciliation",
+      "effects": "Effects: synchronising with the outside world",
+      "profiler": "Measure first: the React Profiler",
+      "memoization": "memo, useMemo, useCallback & the Compiler",
+      "react-debugging-playbook": "The React debugging playbook",
+      "context-state-architecture": "Context, reducers & where state lives",
+      "data-fetching-suspense": "Data fetching, Suspense & transitions",
+      "server-rendering-hydration": "Server rendering, hydration & Server Components",
+      "code-splitting-bundles": "Code splitting & bundle weight",
+      "react-clinic": "Capstone: the React performance clinic"
+    },
+    "written": [
+      "react-mental-model"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }
