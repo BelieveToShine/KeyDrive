@@ -406,7 +406,8 @@
       "angular-mental-model",
       "change-detection",
       "onpush-signals",
-      "templates-control-flow"
+      "templates-control-flow",
+      "signals-in-depth"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

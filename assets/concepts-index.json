@@ -3306,5 +3306,31 @@
     "summary": "The classic mistake with Templates, control flow & pipes.",
     "keywords": "angular templates control flow @for @if @switch track pipes pure impure async pipe @let ngFor ngIf computed method call trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-signals-in-depth",
+    "title": "Signals in depth",
+    "category": "Angular",
+    "page": "angular/concepts/signals-in-depth.html",
+    "summary": "computed, linkedSignal, effect and untracked, resources for async data, and toSignal/toObservable interop with RxJS.",
+    "keywords": "angular signals computed linkedSignal effect untracked resource rxResource httpResource toSignal toObservable derived state"
+  },
+  {
+    "id": "angular-signals-in-depth-recall",
+    "title": "Signals in depth — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/signals-in-depth.html",
+    "summary": "Quick recall points: Signals in depth.",
+    "keywords": "angular signals computed linkedSignal effect untracked resource rxResource httpResource toSignal toObservable derived state interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-signals-in-depth-trap",
+    "title": "Signals in depth — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/signals-in-depth.html",
+    "summary": "The classic mistake with Signals in depth.",
+    "keywords": "angular signals computed linkedSignal effect untracked resource rxResource httpResource toSignal toObservable derived state trap mistake",
+    "anchor": "trap"
   }
 ]

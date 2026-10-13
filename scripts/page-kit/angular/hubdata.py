@@ -22,7 +22,7 @@ SUB = {'lifecycle-hooks': 'change-detection', 'component-communication': 'templa
 SUBT = {'lifecycle-hooks': 'Lifecycle hooks: what each does and when to use which', 'component-communication': 'Component communication', 'directives-pipes': 'Directives & custom pipes',
         'rxjs-operators': 'RxJS operators: which one to use', 'http-interceptors': 'HttpClient & interceptors', 'state-management': 'State management: services, signals & NgRx',
         'forms-validation': 'Forms in depth: validation & FormArray', 'guards-resolvers': 'Route guards, resolvers & params', 'testing-angular': 'Testing Angular', 'react-vs-angular': 'Same app, two frameworks'}
-WRITTEN = ['angular-mental-model','change-detection','onpush-signals','templates-control-flow']
+WRITTEN = ['angular-mental-model','change-detection','onpush-signals','templates-control-flow','signals-in-depth']
 LADDER = [('1 · MEASURE','📏 How slow, exactly?','Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.'),
           ('2 · READ','🔬 What was checked, and why?','Read the profiler: which components ran and what triggered them.'),
           ('3 · FIND','🎯 The biggest wrong thing','A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?'),

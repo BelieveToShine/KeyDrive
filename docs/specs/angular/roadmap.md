@@ -5,7 +5,7 @@
 | 2 | Change detection & zone.js | change-detection | ✅ written |
 | 3 | OnPush & signals | onpush-signals | ✅ written |
 | 4 | Templates, control flow & pipes | templates-control-flow | ✅ written |
-| 5 | Signals in depth | signals-in-depth | 🔒 planned |
+| 5 | Signals in depth | signals-in-depth | ✅ written |
 | 6 | RxJS & the async pipe | rxjs-async-pipe | 🔒 planned |
 | 7 | Dependency injection | dependency-injection | 🔒 planned |
 | 8 | Forms: template-driven, reactive & signal forms | forms | 🔒 planned |

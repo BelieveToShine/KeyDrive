@@ -78,5 +78,18 @@ Source root: https://angular.dev/
 | 980 vs 20 DOM operations; 500 method runs; 0 with pipe/computed | 🟦 I | teaching arithmetic (500 + 480; 500 − 480) |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 5 — signals in depth
+| Claim | Status | Note |
+|---|---|---|
+| signal .set/.update, asReadonly; computed lazy, cached, tracks only signals actually read; effects async during change detection, last resort; effect-based state propagation can cause NG0100 and circular updates; untracked reads without dependency; reads after await in async effects are not tracked | ✅ V | angular.dev/guide/signals; guide/signals/effect |
+| linkedSignal: writable signal reset by a reactive computation when its source changes (e.g. selected shipping option); stable since v20 | ✅ V | api/core/linkedSignal; guide/signals/linked-signal |
+| httpResource: reactive wrapper around HttpClient exposing status/response as signals; eager; goes through interceptors; new reactive input cancels the pending request | ✅ V | guide/http/http-resource |
+| rxResource: like resource with an RxJS stream factory called again when params change; the observable must emit a value or error before completing (NG0991) | ✅ V | api/core/rxjs-interop/rxResource |
+| resource exposes value, status and error as signals | ✅ V | guide/signals/resource (summary in search); detailed status names not re-checked |
+| toSignal: subscribes immediately (like async pipe), auto-cleanup with the injection context, manualCleanup, initialValue, requireSync, throws if the observable errors | ✅ V | api/core/rxjs-interop/toSignal |
+| toObservable: emits via an effect so asynchronous; quick updates may collapse to the last value; needs an injection context unless an injector is passed | ✅ V | api/core/rxjs-interop/toObservable |
+| Stability labels of resource / rxResource / httpResource vary by version | 🟨 K | docs show different labels per version; page tells readers to check |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
