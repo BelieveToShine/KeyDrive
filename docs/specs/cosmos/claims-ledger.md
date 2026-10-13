@@ -45,6 +45,19 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | DynamoDB capacity units as an analogue | 🟨 K | other-engine pointer |
 | 10,000 RU/s, 300 inserts/s → “3,000 RU/s” → “2,100 RU/s”, ≈ 10 RU per 2 KB insert, 30% saving, 12 orders | 🟦 I | teaching numbers |
 
+## Page 4 — data modeling
+| Claim | Status | Note |
+|---|---|---|
+| Embed for contained / one-to-few relationships, rarely changing, bounded and read together; reference for one-to-many, many-to-many, frequently changing and unbounded data | ✅ V | Data modeling in Cosmos DB for NoSQL |
+| Unbounded embedded arrays can grow infinitely; fix: one item per child with the parent id as partition key | ✅ V | same |
+| Item size limit 2 MB (UTF-8 JSON length) | ✅ V | Service quotas |
+| Multi-item transactions via stored procedures/triggers (within a partition key); hybrid approach with precalculated fields on the parent | ✅ V | modeling doc |
+| Item size drives write RU | ✅ V | Request units |
+| Change feed can propagate copies | ✅ V | Change feed design patterns (page 10) |
+| Transactional batch within one partition key | 🟨 K | SDK feature; confirm |
+| Storing blobs in Blob Storage with a reference | 🟨 K | common guidance |
+| RU/round-trip numbers for designs A–C; customer Asha, order o-1001 | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

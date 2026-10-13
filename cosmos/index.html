@@ -41,7 +41,7 @@
     <div class="eyebrow">🌌 Cosmos DB · from “why is it expensive?” to “here is the cheaper design, and the proof”</div>
     <h1>Learn to read <span class="grad-text">what a distributed database charges you for</span> — then make it cheaper.</h1>
     <p class="sub">One continuous story: the Cosmos mental model, partition keys, request units, data modelling, indexing policy, point reads versus fan-out queries, query metrics, hot partitions and 429s, consistency, change feed and global distribution. Every page has a before-and-after picture with the RU charge. Written for Azure Cosmos DB for <b>NoSQL</b> (the SQL-like query language).</p>
-    <p class="hub-note">🗺️ <b>3 of 12</b> concepts are written — the rest (9) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>4 of 12</b> concepts are written — the rest (8) are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/cosmos-mental-model.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -56,7 +56,7 @@
 <rect x="100" y="892" width="440" height="254" rx="16" fill="rgba(52,211,153,.05)" stroke="rgba(52,211,153,.3)" stroke-dasharray="4 3"/><text x="116" y="914" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🌍 AT SCALE</text>
 <path class="jm-link done" d="M320,88 V124" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,168 V204" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,248 V284" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,248 V284" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,328 V418" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,462 V498" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,542 V578" marker-end="url(#jmArrow)"/>
@@ -79,7 +79,7 @@
 <a class="jm-hit" xlink:href="concepts/cosmos-mental-model.html"><g class="jm-node done"><rect x="220" y="44" width="200" height="44" rx="12"/><text x="320" y="71" text-anchor="middle" font-size="14" font-weight="700">🌌 Mental Model</text></g></a>
 <a class="jm-hit" xlink:href="concepts/partition-keys.html"><g class="jm-node done"><rect x="220" y="124" width="200" height="44" rx="12"/><text x="320" y="151" text-anchor="middle" font-size="14" font-weight="700">🔑 Partition Keys</text></g></a>
 <a class="jm-hit" xlink:href="concepts/request-units.html"><g class="jm-node done"><rect x="220" y="204" width="200" height="44" rx="12"/><text x="320" y="231" text-anchor="middle" font-size="14" font-weight="700">💳 Request Units</text></g></a>
-<g class="jm-node locked"><rect x="220" y="284" width="200" height="44" rx="12"/><text x="320" y="311" text-anchor="middle" font-size="14" font-weight="700">🧩 Data Modeling</text></g>
+<a class="jm-hit" xlink:href="concepts/data-modeling.html"><g class="jm-node done"><rect x="220" y="284" width="200" height="44" rx="12"/><text x="320" y="311" text-anchor="middle" font-size="14" font-weight="700">🧩 Data Modeling</text></g></a>
 <g class="jm-node locked"><rect x="220" y="418" width="200" height="44" rx="12"/><text x="320" y="445" text-anchor="middle" font-size="14" font-weight="700">📇 Indexing Policy</text></g>
 <g class="jm-node locked"><rect x="220" y="498" width="200" height="44" rx="12"/><text x="320" y="525" text-anchor="middle" font-size="14" font-weight="700">🔎 Queries &amp; Fan-out</text></g>
 <g class="jm-node locked"><rect x="220" y="578" width="200" height="44" rx="12"/><text x="320" y="605" text-anchor="middle" font-size="14" font-weight="700">🔬 Query Metrics</text></g>
@@ -125,7 +125,7 @@
       <li class="concept-row done"><span class="cr-num">1</span><span class="cr-main"><a href="concepts/cosmos-mental-model.html">Items, containers &amp; the Cosmos mental model</a><span class="cr-tail">account → database → container → item; no joins; ShopDB translated to documents</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">2</span><span class="cr-main"><a href="concepts/partition-keys.html">Partition keys: the decision that rules everything</a><span class="cr-tail">logical vs physical partitions, cardinality, hot keys, hierarchical keys</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">3</span><span class="cr-main"><a href="concepts/request-units.html">Request Units: the currency of cost</a><span class="cr-tail">RU per operation, point read vs write, provisioned vs autoscale vs serverless</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">4</span><span class="cr-main"><span class="cr-name">Data modeling: embed vs reference</span><span class="cr-tail">denormalise, embed, reference, the 2 MB item, snapshots</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/data-modeling.html">Data modeling: embed vs reference</a><span class="cr-tail">denormalise, embed, reference, the 2 MB item, snapshots</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">5</span><span class="cr-main"><span class="cr-name">Indexing policy</span><span class="cr-tail">automatic indexing, included and excluded paths, composite indexes</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">6</span><span class="cr-main"><span class="cr-name">Point reads, queries &amp; fan-out</span><span class="cr-tail">point read vs query, single- vs cross-partition, continuation tokens</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">7</span><span class="cr-main"><span class="cr-name">Reading query metrics &amp; diagnostics</span><span class="cr-tail">RU charge, retrieved vs output documents, index utilisation</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -139,7 +139,7 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Data Systems · Cosmos DB Performance Lab · 3 / 12 concepts written</div>
+  <div class="wrap">KeyDrive · Data Systems · Cosmos DB Performance Lab · 4 / 12 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>

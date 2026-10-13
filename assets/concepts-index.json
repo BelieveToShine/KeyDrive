@@ -2396,5 +2396,31 @@
     "summary": "The classic mistake with Request Units: the currency of cost.",
     "keywords": "cosmos db request units ru autoscale serverless provisioned throughput request charge 429 cost trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-data-modeling",
+    "title": "Data modeling: embed vs reference",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/data-modeling.html",
+    "summary": "Embed vs reference, the unbounded-array trap, snapshots and a three-design comparison by RU.",
+    "keywords": "cosmos db data modeling embed reference denormalize item size 2 mb unbounded array one item per child"
+  },
+  {
+    "id": "cosmos-data-modeling-recall",
+    "title": "Data modeling: embed vs reference — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/data-modeling.html",
+    "summary": "Quick recall points: Data modeling: embed vs reference.",
+    "keywords": "cosmos db data modeling embed reference denormalize item size 2 mb unbounded array one item per child interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-data-modeling-trap",
+    "title": "Data modeling: embed vs reference — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/data-modeling.html",
+    "summary": "The classic mistake with Data modeling: embed vs reference.",
+    "keywords": "cosmos db data modeling embed reference denormalize item size 2 mb unbounded array one item per child trap mistake",
+    "anchor": "trap"
   }
 ]
