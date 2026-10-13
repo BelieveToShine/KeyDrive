@@ -207,5 +207,18 @@ Source root: https://react.dev/
 | Checkout numbers: 13 renders (1 + 12), 2 with memoized fields, 0 uncontrolled | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — error boundaries
+| Claim | Status | Note |
+|---|---|---|
+| Error boundary pattern: static getDerivedStateFromError renders fallback UI; componentDidCatch for side effects such as logging | ✅ V | reference/react/Component |
+| Not caught: event handlers, server-side rendering, errors in the boundary itself, asynchronous code (setTimeout, requestAnimationFrame); exception: errors inside startTransition functions are caught | ✅ V | reference/react/Component |
+| No hook equivalent for class error boundaries; docs point to the react-error-boundary package | ✅ V | reference/react/Component |
+| React 19 root options onCaughtError (error caught by a boundary) and onUncaughtError (not caught) | ✅ V | blog/2024/12/05/react-19; reference/react-dom/client/createRoot |
+| Errors thrown by a form action go to the nearest error boundary | ✅ V | reference/react-dom/components/form |
+| A rejected lazy load goes to the nearest error boundary | ✅ V | reference/react/lazy |
+| With no boundary the app has no UI left to show | 🟨 K | consequence as commonly described; docs state the error reaches the root / onUncaughtError |
+| Several small boundaries beat one at the root | 🟨 K | design advice, not a docs claim |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

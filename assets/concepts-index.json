@@ -3046,5 +3046,31 @@
     "summary": "The classic mistake with Forms & actions.",
     "keywords": "react forms controlled uncontrolled form action useActionState useFormStatus useOptimistic validation FormData checkout input trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-error-boundaries",
+    "title": "Error boundaries & error handling",
+    "category": "React",
+    "page": "react/concepts/error-boundaries.html",
+    "summary": "What error boundaries catch and miss, how to write, place and reset one, and the React 19 root error callbacks.",
+    "keywords": "react error boundary getDerivedStateFromError componentDidCatch fallback onCaughtError onUncaughtError error handling try catch"
+  },
+  {
+    "id": "react-error-boundaries-recall",
+    "title": "Error boundaries & error handling — interview recall",
+    "category": "React",
+    "page": "react/concepts/error-boundaries.html",
+    "summary": "Quick recall points: Error boundaries & error handling.",
+    "keywords": "react error boundary getDerivedStateFromError componentDidCatch fallback onCaughtError onUncaughtError error handling try catch interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-error-boundaries-trap",
+    "title": "Error boundaries & error handling — common trap",
+    "category": "React",
+    "page": "react/concepts/error-boundaries.html",
+    "summary": "The classic mistake with Error boundaries & error handling.",
+    "keywords": "react error boundary getDerivedStateFromError componentDidCatch fallback onCaughtError onUncaughtError error handling try catch trap mistake",
+    "anchor": "trap"
   }
 ]
