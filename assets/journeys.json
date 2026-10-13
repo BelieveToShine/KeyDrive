@@ -413,7 +413,8 @@
       "forms",
       "routing-lazy-loading",
       "angular-performance",
-      "angular-debugging-playbook"
+      "angular-debugging-playbook",
+      "angular-clinic"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

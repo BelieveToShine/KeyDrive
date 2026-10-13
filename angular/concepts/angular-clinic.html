@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the Angular performance clinic — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Capstone: the Angular clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 12 · 🅰️ Speed & debug</div>
+    <h1>Eight patients and a bonus: <span class="grad-text">diagnose first</span>, then open the file.</h1>
+    <p class="sub">A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.</p>
+    <div class="interview-q">❓ "An Angular page is slow and sometimes wrong. Walk me through your investigation."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The Angular case board: nine cases in four families: checks and state placement, identity and subscriptions, loading and shipping, resilience">
+<defs><marker id="ac1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ac1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ac1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="306" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">CHECKS &amp; STATE PLACEMENT</text>
+<rect class="zone" x="322" y="8" width="310" height="144" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="336" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">IDENTITY &amp; SUBSCRIPTIONS</text>
+<rect class="zone" x="8" y="164" width="216" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">LOADING &amp; SHIPPING</text>
+<rect class="zone" x="232" y="164" width="126" height="144" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="246" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">RESILIENCE</text>
+<rect class="bx" x="18" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="63" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 1</text>
+<text x="63" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Typing</text>
+<rect class="bx" x="114" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="159" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 3</text>
+<text x="159" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Method</text>
+<rect class="bx" x="210" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="255" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 5</text>
+<text x="255" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Mutation</text>
+<rect class="bx" x="332" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="377" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 2</text>
+<text x="377" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Refetch</text>
+<rect class="bx" x="428" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="473" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 4</text>
+<text x="473" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Leak</text>
+<rect class="bx" x="524" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="569" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 8</text>
+<text x="569" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Forms</text>
+<rect class="bx" x="18" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="63" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 6</text>
+<text x="63" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Search</text>
+<rect class="bx" x="114" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="159" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 7</text>
+<text x="159" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Bundle</text>
+<rect class="bx" x="242" y="202" width="90" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="287" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 9</text>
+<text x="287" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Hydration</text>
+<text class="free" x="500" y="220" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">Decide your diagnosis first,</text>
+<text class="free" x="500" y="240" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">then reveal it.</text>
+<text class="free" x="500" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Each answer points to the page</text>
+<text class="free" x="500" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">that explains it.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> eight patients and a bonus, grouped by the family of problem you have met: <b>checks and state placement</b> (cases 1, 3, 5), <b>identity and subscriptions</b> (2, 4, 8), <b>loading and shipping</b> (6, 7) and <b>resilience</b> (9). Each case gives a symptom and the evidence from Angular DevTools, the code or the build output. <b>Decide your diagnosis first</b>, then reveal it — and see which page to revisit.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You know components, change detection, OnPush and signals, templates, RxJS, services, forms, routes, defer and SSR. This is the practice ward: <b>symptom → evidence → diagnosis → one change → prove it</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Real tickets say “the checkout feels slow” or “the page went blank”, not “state too high”. The cases start the way tickets do, and all of them use the same ShopUI app and the same illustrative numbers as the lab.</p>
+      <p>Every case is solvable with the ladder: <b>measure, read the profile, find the biggest wrong thing, one hypothesis, one change, prove it</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The ladder, Angular edition</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+    <p style="margin-top:12px">Ask in this order: <b>wrong or slow?</b> → <b>how many components were checked, and why?</b> → <b>what changed in their inputs or signals?</b> → <b>does the cost come from checking, from subscriptions, from loading, or from shipping code?</b> → <b>what is the smallest change that tests my guess?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Typing in the search box lags</h4><p><b>Symptom.</b> Each keystroke takes ≈ 40 ms and the page stutters; only the list changes.</p><p><b>Evidence.</b></p><ul><li>Profiler: one cycle checks <b>504 components</b>; ProductCards ≈ 35 ms of 40.</li><li>ProductCard uses the default (Eager) strategy; its inputs never change.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Eager components are re-checked on every pass even when their inputs are unchanged.</p><p><b>Fix.</b> <code>ChangeDetectionStrategy.OnPush</code> on ProductCard. Re-record: 4 checked, ≈ 3 ms.</p><p>📖 <b>Where to review:</b> pages 2 and 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 2</div>
+    <div class="kd-card"><h4>The list flashes on every refetch</h4><p><b>Symptom.</b> After each refetch the 500 cards are rebuilt and typed notes are lost.</p><p><b>Evidence.</b></p><ul><li>DevTools: <b>980 DOM operations</b> per refetch (500 destroyed, 480 created).</li><li>Code: <code>@for (p of list(); track p)</code>.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Tracking by object identity: new objects after a refetch look like new items.</p><p><b>Fix.</b> <code>track p.id</code>. Re-record: 20 DOM operations.</p><p>📖 <b>Where to review:</b> page 4.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 3</div>
+    <div class="kd-card"><h4>A price method logs hundreds of times</h4><p><b>Symptom.</b> Support notices a template method running on every keystroke.</p><p><b>Evidence.</b></p><ul><li><code>console.log</code> in <code>formatPrice(p)</code>: 500 lines per keystroke.</li><li>The card template calls <code>formatPrice(product())</code>.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A method in a binding runs on every check of that component.</p><p><b>Fix.</b> The <code>currency</code> pipe or a <code>computed()</code>. Zero runs per keystroke.</p><p>📖 <b>Where to review:</b> page 4.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 4</div>
+    <div class="kd-card"><h4>Memory grows each time the cart page is opened</h4><p><b>Symptom.</b> After ten visits the tab is slow and the heap has ten copies of CartPage.</p><p><b>Evidence.</b></p><ul><li>Chrome heap snapshot: ten live CartPage instances.</li><li>Code: <code>ngOnInit() { this.cart$.subscribe(…) }</code> with no cleanup.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A subscription outlives the component.</p><p><b>Fix.</b> The async pipe, <code>toSignal</code> or <code>takeUntilDestroyed()</code>. One instance after ten visits.</p><p>📖 <b>Where to review:</b> page 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 5</div>
+    <div class="kd-card"><h4>An OnPush list never updates</h4><p><b>Symptom.</b> After adding OnPush to the list, “Add to cart” stops updating the cart view.</p><p><b>Evidence.</b></p><ul><li>The service does <code>this.items.push(item)</code> on a plain array field.</li><li>The Components tab shows the array reference is unchanged.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> OnPush compares references; a mutated array looks unchanged and nothing notifies Angular.</p><p><b>Fix.</b> A signal with an immutable update: <code>items.update(l =&gt; [...l, item])</code>.</p><p>📖 <b>Where to review:</b> page 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>Search sends a request per keystroke</h4><p><b>Symptom.</b> Typing “shi” sends three requests and sometimes shows results for “sh”.</p><p><b>Evidence.</b></p><ul><li>Network panel: three requests; the second answer arrives last.</li><li>Code: <code>mergeMap(q =&gt; http.get(…))</code> with no debounce.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> mergeMap runs all requests and lets answers arrive out of order.</p><p><b>Fix.</b> <code>debounceTime</code> + <code>distinctUntilChanged</code> + <code>switchMap</code>. One request, newest answer.</p><p>📖 <b>Where to review:</b> page 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 7</div>
+    <div class="kd-card"><h4>Slow first load on phones</h4><p><b>Symptom.</b> The home page takes seconds to respond on a mid-range phone; change detection is fast.</p><p><b>Evidence.</b></p><ul><li>Build output: initial JavaScript <b>420 KB</b>; checkout 90 KB and admin 150 KB are inside it.</li><li>Routes use <code>component:</code> for every page.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Download and parse cost: rarely-visited routes ship in the first bundle.</p><p><b>Fix.</b> <code>loadComponent</code> / <code>loadChildren</code>, and <code>@defer</code> for below-the-fold blocks. Initial JavaScript ≈ 180 KB.</p><p>📖 <b>Where to review:</b> pages 9 and 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 8</div>
+    <div class="kd-card"><h4>The checkout form updates the model but not the screen</h4><p><b>Symptom.</b> After migrating to zoneless, patching the form from a service no longer updates the view.</p><p><b>Evidence.</b></p><ul><li>Zoneless is the default in the new app.</li><li>The service calls <code>form.patchValue(…)</code> from a timer.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Reactive-form model updates do not schedule change detection by themselves.</p><p><b>Fix.</b> Read the form state through a signal or <code>toSignal</code>, or call <code>markForCheck()</code>.</p><p>📖 <b>Where to review:</b> pages 2 and 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 9</div>
+    <div class="kd-card"><h4>Bonus: hydration error after adding a widget</h4><p><b>Symptom.</b> After adding a third-party chart, the console shows NG0500 and the page flashes on load.</p><p><b>Evidence.</b></p><ul><li>SSR is enabled; the widget writes elements into the DOM with native APIs.</li><li>The client DOM differs from the server DOM.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> DOM changed outside Angular, so hydration cannot match.</p><p><b>Fix.</b> Create the widget in <code>afterNextRender</code> (browser only), or as a last resort <code>ngSkipHydration</code> on that component.</p><p>📖 <b>Where to review:</b> page 10, lifecycle dive.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key — case → family → page</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Root cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Typing in the search box lags</th><td>Checks & state placement</td><td>Eager components are re-checked on every pass even when their inputs are unchanged.</td><td>pages 2 and 3</td></tr><tr><th scope="row">2. The list flashes on every refetch</th><td>Identity & subscriptions</td><td>Tracking by object identity: new objects after a refetch look like new items.</td><td>page 4</td></tr><tr><th scope="row">3. A price method logs hundreds of times</th><td>Checks & state placement</td><td>A method in a binding runs on every check of that component.</td><td>page 4</td></tr><tr><th scope="row">4. Memory grows each time the cart page is opened</th><td>Identity & subscriptions</td><td>A subscription outlives the component.</td><td>page 6</td></tr><tr><th scope="row">5. An OnPush list never updates</th><td>Checks & state placement</td><td>OnPush compares references; a mutated array looks unchanged and nothing notifies Angular.</td><td>page 3</td></tr><tr><th scope="row">6. Search sends a request per keystroke</th><td>Loading & shipping</td><td>mergeMap runs all requests and lets answers arrive out of order.</td><td>page 6</td></tr><tr><th scope="row">7. Slow first load on phones</th><td>Loading & shipping</td><td>Download and parse cost: rarely-visited routes ship in the first bundle.</td><td>pages 9 and 10</td></tr><tr><th scope="row">8. The checkout form updates the model but not the screen</th><td>Identity & subscriptions</td><td>Reactive-form model updates do not schedule change detection by themselves.</td><td>pages 2 and 8</td></tr><tr><th scope="row">9. Bonus: hydration error after adding a widget</th><td>Resilience</td><td>DOM changed outside Angular, so hydration cannot match.</td><td>page 10, lifecycle dive</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>7–9 diagnosed before the reveal</h5><p>You think in the ladder. Practise on your own app’s slowest interaction.</p><span class="sc-use">→ Profile it</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>4–6</h5><p>You know the pieces; practise the order of questions.</p><span class="sc-use">→ Re-read the playbook (page 11)</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–3</h5><p>Normal on a first pass. Revisit pages 2, 3 and 6 — what gets checked, OnPush and signals, and subscriptions carry most cases.</p><span class="sc-use">→ Checks → OnPush → subscriptions</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo in a week without the evidence list.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns.</b> Cases 1, 3 and 5 all <i>look</i> like “Angular is slow” but each has a different lever: OnPush, a template method, a mutated array. The profile and the code tell you which — never the symptom alone.</p>
+      <p><b>Case 7 is not a change-detection problem.</b> The profiler showed fast cycles; only the build output exposed the cost. Match the tool to the layer (check, load, ship).</p>
+      <p><b>Make your own clinic.</b> Take five real tickets, strip the diagnosis, keep symptom and evidence, and run it with your team.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: wrong or slow? → how many components checked and why? → what changed? → check, subscribe, load or ship? → smallest test of the guess.</li><li>One change, same interaction, same build, compare the profile.</li><li>Families: checks & state placement (1, 3, 5), identity & subscriptions (2, 4, 8), loading & shipping (6, 7), resilience (9).</li><li>Similar symptoms, different causes: read the profile before theorising.</li><li>Measure the layer you suspect: DevTools profiler for checks, heap snapshot for leaks, build output for shipping.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat an Angular problem as an investigation: is it wrong or slow, how many components were checked and why, what changed in their inputs or signals, and is the cost in checking, subscriptions, loading or shipped code. I form one hypothesis, change one thing, and re-measure the same interaction in the same build."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Adding OnPush everywhere first.</b> Several cases had other causes: track, a template method, a subscription, a mutated array.</p>
+      <p><b>Skipping the evidence.</b> In every case one number — components checked, KB, or a line in the code — decided the diagnosis.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧠 Knowing the APIs</h5><p>You can explain OnPush, signals, RxJS and DI.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Doing the diagnosis</h5><p>You can read a profile and choose the one change that proves a hypothesis.</p></div>
+  </div>
+  <section class="kd-section ">
+    <div class="sec-label next">🔎 Deep dives</div>
+    <div class="deep-grid">
+      <a class="kd-card deep-card" href="testing-angular.html"><span class="dc-kicker">Deep dive · Angular clinic</span><h4>Testing Angular</h4><p>TestBed, zoneless-by-default tests and how to wait for stability — so the fixes you just made stay fixed.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the Angular lab. Open the testing deep dive, or go back to the Web Platforms hub.</span>
+      <a class="next-link" href="../../web/index.html">Web Platforms hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every technique in the cases is explained, with its sources, on the page it points to. For exact behaviour check the official docs. Official docs: <a href="https://angular.dev/tools/devtools/profiler" target="_blank" rel="noopener">Profiler</a> · <a href="https://angular.dev/best-practices/skipping-subtrees" target="_blank" rel="noopener">Skipping component subtrees</a> · <a href="https://angular.dev/guide/templates/defer" target="_blank" rel="noopener">Deferred loading with @defer</a> · <a href="https://angular.dev/guide/templates/control-flow" target="_blank" rel="noopener">Control flow</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

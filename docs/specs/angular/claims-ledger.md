@@ -178,5 +178,13 @@ Source root: https://angular.dev/
 | Playbook numbers: 40 ms, 35 ms, 504 → 4 → 3, 980 → 20 DOM operations | 🟦 I | teaching numbers, consistent with pages 1–4 |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 12 — Angular clinic
+| Claim | Status | Note |
+|---|---|---|
+| Every technique in the cases is verified on the page it points to (2, 3, 4, 6, 8, 9, 10, lifecycle dive) | ✅ V | see those sections of this ledger |
+| Case figures: 504 components, ≈ 40 ms, ≈ 3 ms, 980 → 20 DOM operations, 500 log lines per keystroke, ten instances, 420 KB → ≈ 180 KB | 🟦 I | teaching numbers consistent with overview.md and earlier pages |
+| Chrome heap snapshot shows retained component instances | 🟨 K | general Chrome DevTools capability, not from angular.dev |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
