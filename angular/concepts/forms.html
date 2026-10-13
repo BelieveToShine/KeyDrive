@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms: template-driven, reactive &amp; signal forms — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Forms</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 12 · 🅰️ App structure</div>
+    <h1>A form is <span class="grad-text">model + rules + state</span> — choose the system that keeps all three explicit.</h1>
+    <p class="sub">Template-driven, reactive and signal forms compared; the value/validity/touched state every control tracks; and the zoneless caveat.</p>
+    <div class="interview-q">❓ "What is the difference between template-driven and reactive forms in Angular?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three form systems in Angular: template-driven forms keep the logic in the template with directives and suit small forms, reactive forms build a FormGroup of FormControls in the class and suit complex forms, and signal forms keep the model in a signal with a schema of validators">
+<defs><marker id="fm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="200" height="314" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">TEMPLATE-DRIVEN</text>
+<rect class="zone" x="220" y="8" width="200" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">REACTIVE</text>
+<rect class="zone" x="430" y="8" width="200" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="444" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">SIGNAL FORMS</text>
+<path d="M110,102 L110,132" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M110,194 L110,224" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M320,102 L320,132" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M320,194 L320,224" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M530,102 L530,132" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M530,194 L530,224" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<rect class="bx" x="22" y="40" width="176" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="110" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ngModel in the template</text>
+<text x="110" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">small, simple forms</text>
+<rect class="bx" x="22" y="132" width="176" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="110" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Validation by directives</text>
+<text x="110" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">custom ones need a directive</text>
+<rect class="bx" x="22" y="224" width="176" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="110" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Needs FormsModule</text>
+<text x="110" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">less code, less control</text>
+<rect class="bx" x="232" y="40" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">FormGroup in the class</text>
+<text x="320" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">FormControl, FormArray</text>
+<rect class="bx" x="232" y="132" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Validators are functions</text>
+<text x="320" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">sync and async</text>
+<rect class="bx" x="232" y="224" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Scales to complex forms</text>
+<text x="320" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">explicit, testable</text>
+<rect class="bx" x="442" y="40" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="530" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">A model signal</text>
+<text x="530" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">form() over the model</text>
+<rect class="bx" x="442" y="132" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="530" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Schema of validators</text>
+<text x="530" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">required, email, min…</text>
+<rect class="bx" x="442" y="224" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="530" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Field state as signals</text>
+<text x="530" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">valid(), touched(), errors()</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> Angular ships <b>three form systems</b>. <b>Template-driven</b> forms put the logic in the template (<span class="kw">ngModel</span>, validation directives) — good for small, simple forms. <b>Reactive</b> forms build a <span class="kw">FormGroup</span> of <span class="kw">FormControl</span>s in the class, with validator <i>functions</i> — the scalable choice for complex forms. <b>Signal forms</b> keep the model in a signal and attach a schema of validators, exposing each field’s state as signals. For existing apps the docs say reactive forms remain a solid choice.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A form is <b>a model plus rules plus state</b>: what the values are, whether they are valid, and whether the user has touched them. Pick the system that makes those three explicit.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 7 gave you shared services. The most common thing those services feed is a <b>form</b> — and the ShopUI checkout has about <b>12 fields</b> with validation. Forms are where change detection, state and validation all meet.</p>
+      <p>Angular is unusual in offering three built-in systems. Choosing wrongly costs you: template-driven forms get hard to test and extend; heavy reactive forms need discipline about subscriptions (page 6); signal forms are the newest, so check which Angular version your project is on.</p>
+      <p>This page compares them, shows the state every control tracks, and covers the zoneless caveat that matters for change detection (page 2).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Which form system?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Template-driven</th><th scope="col">Reactive</th><th scope="col">Signal forms</th></tr></thead><tbody><tr><th scope="row">Where the form lives</th><td>Template (directives)</td><td>Class: <span class="kw">FormGroup</span> / <span class="kw">FormControl</span> / <span class="kw">FormArray</span></td><td>A model signal + <span class="kw">form()</span> and a validation schema</td></tr><tr><th scope="row">Validation</th><td>Directives in the template (custom ones need a directive)</td><td>Validator functions, sync and async</td><td>Schema rules: <span class="kw">required</span>, <span class="kw">email</span>, <span class="kw">min</span>/<span class="kw">max</span>, <span class="kw">minLength</span>…, custom, conditional</td></tr><tr><th scope="row">Imports</th><td><span class="kw">FormsModule</span></td><td><span class="kw">ReactiveFormsModule</span></td><td>Signal forms API (needs a recent Angular; check the stability label for your version)</td></tr><tr><th scope="row">Best for</th><td>Small or simple forms</td><td>Complex, dynamic, testable forms</td><td>New forms where you want signals end to end</td></tr><tr><th scope="row">Change detection</th><td>Fine with OnPush</td><td>Observables (<span class="kw">valueChanges</span>) need care</td><td>Signals: precise updates</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Versions.</b> The signal-forms overview says it requires Angular v21 or higher; one comparison page lists it as stable from v22 and the API page for <span class="kw">compatForm</span> says stable since v22.0 — always check the label for your version. Migration is supported both ways: wrap an existing reactive control with <span class="kw">compatForm</span> (top-down) or use a signal form control inside a reactive group (bottom-up).</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The state every control tracks</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A form control has separate pieces of state: its value, whether it is valid, whether the user touched it, and whether it was changed; show an error only when it is invalid and touched">
+<defs><marker id="fm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="130" width="620" height="190" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="149" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WHEN TO SHOW AN ERROR MESSAGE</text>
+<rect class="bx" x="20" y="20" width="170" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="105" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">value</text>
+<text x="105" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">what the user typed</text>
+<rect class="bx" x="235" y="20" width="170" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">valid / errors</text>
+<text x="320" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">does it pass the rules?</text>
+<rect class="bx" x="450" y="20" width="170" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="535" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">touched / dirty</text>
+<text x="535" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">did the user interact?</text>
+<rect class="bx" x="24" y="170" width="180" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="114" y="196.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Untouched, invalid</text>
+<text x="114" y="209" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">stay quiet</text>
+<text x="114" y="221.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">the user has not tried</text>
+<rect class="bx" x="230" y="170" width="180" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="196.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Touched, invalid</text>
+<text x="320" y="209" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">show the message</text>
+<text x="320" y="221.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">“Email is required”</text>
+<rect class="bx" x="436" y="170" width="180" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="526" y="196.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Touched, valid</text>
+<text x="526" y="209" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">show nothing</text>
+<text x="526" y="221.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">(or a green tick)</text>
+<text class="free" x="320" y="276" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Check touched before showing invalid, or every empty form starts out full of errors.</text>
+<text class="free" x="320" y="296" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Interaction state and validity are separate signals.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> every control (in every system) separates <b>value</b>, <b>validity and errors</b>, and <b>interaction</b> (touched, dirty). Showing errors from validity alone would paint an untouched form red, so the rule is: <b>show an error only when the control is invalid <i>and</i> touched</b>. In signal forms these are signals on each field (<span class="kw">valid()</span>, <span class="kw">touched()</span>, <span class="kw">errors()</span>).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Forms lab · the 12-field checkout</div>
+    <div class="code-block"><pre><span class="cmt">// Reactive — the model and the rules live in the class</span>
+form = inject(FormBuilder).group({
+  email:   [<span class="str">''</span>, [Validators.required, Validators.email]],
+  address: [<span class="str">''</span>, Validators.required],
+  phones:  inject(FormBuilder).array([<span class="str">''</span>]),          <span class="cmt">// FormArray: add/remove rows</span>
+});
+
+<span class="cmt">// Template: bind and show errors only after the user touched the field</span>
+&lt;input formControlName=<span class="str">"email"</span> /&gt;
+@if (form.controls.email.touched &amp;&amp; form.controls.email.invalid) { &lt;p&gt;Enter a valid email.&lt;/p&gt; }</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch (reactive forms). With 12 fields the model, validators and error rules stay in one testable class.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Template-driven</th><th scope="col">Reactive</th><th scope="col">Signal forms</th></tr></thead><tbody><tr><th scope="row">Unit-test the rules without a template?</th><td>Hard</td><td>Easy</td><td>Easy</td></tr><tr><th scope="row">Add and remove repeating rows (phone numbers)?</th><td>Awkward</td><td><span class="kw">FormArray</span></td><td>Array in the model</td></tr><tr><th scope="row">Cross-field rule (password = confirm)?</th><td>Custom directive</td><td>Group-level validator</td><td>Cross-field logic in the schema</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · form symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“Can’t bind to ‘ngModel’” / “formGroup” is not a known property</th><td>Missing <span class="kw">FormsModule</span> / <span class="kw">ReactiveFormsModule</span> import</td><td>Import it in the component</td></tr><tr><th scope="row">The submit button never enables</th><td>A control is invalid and nobody shows why</td><td>Show errors after touch; log <span class="kw">form.errors</span></td></tr><tr><th scope="row">Empty form starts full of red errors</th><td>Errors shown from validity alone</td><td>Combine with <span class="kw">touched</span></td></tr><tr><th scope="row">Zoneless: the form model changed but the view did not</th><td>Reactive-form model updates (setValue, patchValue, FormArray.push…) do not schedule change detection by themselves</td><td>Read state through signals, call <span class="kw">markForCheck()</span>, or use the async pipe / <span class="kw">toSignal</span></td></tr><tr><th scope="row">Memory grows after leaving a form screen</th><td><span class="kw">valueChanges</span> subscription never ended</td><td><span class="kw">takeUntilDestroyed()</span> (page 6)</td></tr><tr><th scope="row">Typing lags in a huge reactive form</th><td><span class="kw">valueChanges</span> handler does heavy work every keystroke</td><td><span class="kw">debounceTime</span>, or update on blur</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📝</span><h5>A contact form with three fields</h5><p>Simple.</p><span class="sc-use">→ Template-driven is fine</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>A 12-field checkout with rules and repeating rows</h5><p>Complex.</p><span class="sc-use">→ Reactive (or signal forms on a new app)</span></div>
+      <div class="scenario"><span class="sc-icon">🔄</span><h5>Migrating a big reactive form step by step</h5><p>All-or-nothing is risky.</p><span class="sc-use">→ compatForm / signal form control</span></div>
+      <div class="scenario"><span class="sc-icon">⚡</span><h5>Zoneless migration breaks form updates</h5><p>Model updates do not notify Angular.</p><span class="sc-use">→ Signals or markForCheck</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Reactive building blocks.</b> <span class="kw">FormControl</span> tracks the value and validation status of one control; <span class="kw">FormGroup</span> does the same for a collection; <span class="kw">FormArray</span> for an array of controls.</p>
+      <p><b>Signal-form validation.</b> A schema function passed as the second argument to <span class="kw">form()</span> attaches rules to field paths; per-field state is read through signals, and Standard Schema libraries such as Zod or Valibot can be used through <span class="kw">validateStandardSchema</span>.</p>
+      <p><b>Custom controls</b> (a date picker) should use a <span class="kw">model()</span> input for their primary value. The validation deep dive covers async validators and FormArray in detail.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Three systems: template-driven (small), reactive (complex, testable), signal forms (newest; check the version).</li><li>Reactive: <span class="kw">FormControl</span>, <span class="kw">FormGroup</span>, <span class="kw">FormArray</span>, validator functions.</li><li>Every control tracks value, validity/errors and interaction (touched, dirty).</li><li>Show an error only when invalid <i>and</i> touched.</li><li>Zoneless: reactive-form model updates do not schedule change detection by themselves.</li><li>End <span class="kw">valueChanges</span> subscriptions with <span class="kw">takeUntilDestroyed()</span>.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"For small forms template-driven is fine; for complex, testable forms I use reactive forms with a FormGroup, validator functions and a FormArray for repeating rows; signal forms are the newer signal-based option and I check which Angular version we are on. I show errors only when a control is invalid and touched, and in zoneless apps I make sure form updates notify Angular."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Showing errors from validity alone.</b> A fresh form looks broken.</p>
+      <p><b>Leaving valueChanges subscriptions open.</b> The classic reactive-forms leak.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📋 Template-driven</h5><p>Logic in the template via directives; simple, harder to test.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧱 Reactive</h5><p>Logic in the class via FormGroup and validator functions; explicit and scalable.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Forms collect the data. Next: moving between screens — routing and lazy loading. <i>(coming soon: Routing & lazy loading)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs and stability labels for your version. Official docs: <a href="https://angular.dev/guide/forms/reactive-forms" target="_blank" rel="noopener">Reactive forms</a> · <a href="https://angular.dev/guide/forms/template-driven-forms" target="_blank" rel="noopener">Template-driven forms</a> · <a href="https://angular.dev/guide/forms/signals/overview" target="_blank" rel="noopener">Signal forms overview</a> · <a href="https://angular.dev/guide/forms/signals/comparison" target="_blank" rel="noopener">Signal forms: comparison</a> · <a href="https://angular.dev/guide/forms/signals/migration" target="_blank" rel="noopener">Migrating from reactive forms</a> · <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">Zoneless</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

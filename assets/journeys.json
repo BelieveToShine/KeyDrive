@@ -409,7 +409,8 @@
       "templates-control-flow",
       "signals-in-depth",
       "rxjs-async-pipe",
-      "dependency-injection"
+      "dependency-injection",
+      "forms"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

@@ -3384,5 +3384,31 @@
     "summary": "The classic mistake with Dependency injection.",
     "keywords": "angular dependency injection inject providedIn root providers InjectionToken useClass useValue useFactory NullInjectorError injector service trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-forms",
+    "title": "Forms: template-driven, reactive & signal forms",
+    "category": "Angular",
+    "page": "angular/concepts/forms.html",
+    "summary": "Template-driven, reactive and signal forms compared; value, validity and touched state; showing errors; zoneless caveat.",
+    "keywords": "angular forms template-driven reactive signal forms FormGroup FormControl FormArray validators ngModel touched dirty compatForm"
+  },
+  {
+    "id": "angular-forms-recall",
+    "title": "Forms: template-driven, reactive & signal forms — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/forms.html",
+    "summary": "Quick recall points: Forms: template-driven, reactive & signal forms.",
+    "keywords": "angular forms template-driven reactive signal forms FormGroup FormControl FormArray validators ngModel touched dirty compatForm interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-forms-trap",
+    "title": "Forms: template-driven, reactive & signal forms — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/forms.html",
+    "summary": "The classic mistake with Forms: template-driven, reactive & signal forms.",
+    "keywords": "angular forms template-driven reactive signal forms FormGroup FormControl FormArray validators ngModel touched dirty compatForm trap mistake",
+    "anchor": "trap"
   }
 ]

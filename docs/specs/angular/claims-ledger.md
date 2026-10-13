@@ -119,5 +119,20 @@ Source root: https://angular.dev/
 | Cart/draft/header examples | 🟦 I | ShopUI illustration |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 8 — forms
+| Claim | Status | Note |
+|---|---|---|
+| FormControl tracks the value and validation status of an individual control; FormGroup of a collection; FormArray of an array of controls; reactive forms are model-driven; validators are functions | ✅ V | angular.dev/guide/forms/reactive-forms |
+| Template-driven forms suit small/simple forms, reactive forms are more scalable for complex forms; template-driven validation via directives, custom validators need a directive wrapping the function | ✅ V | guide/forms/template-driven-forms; v20 forms overview |
+| [(ngModel)] requires FormsModule | ✅ V | guide/forms/template-driven-forms |
+| Signal Forms manage form state on top of signals; require Angular v21 or higher; comparison page lists Stable (v22+); compatForm API page says stable since v22.0; reactive forms remain a solid choice for existing apps | ✅ V | guide/forms/signals/overview, comparison; api/forms/signals/compat/compatForm — version labels differ, page says so |
+| Signal-forms validation: schema function as second argument to form(); built-ins required, email, min/max, minLength/maxLength, pattern; state via valid(), touched(), errors(); Standard Schema libs through validateStandardSchema | ✅ V | guide/forms/signals/validation, field-state-management |
+| Migration: top-down with compatForm; bottom-up with SignalFormControl inside a FormGroup | ✅ V | guide/forms/signals/migration |
+| Custom form controls should use model() inputs for the primary value | ✅ V | guide/forms/signals/custom-controls; two-way binding docs |
+| Zoneless: reactive-form model updates (setValue, patchValue, FormArray.push…) emit observables but do not schedule component change detection | ✅ V | angular.dev/guide/zoneless |
+| FormBuilder.group/array usage in the lab snippet | 🟨 K | standard reactive-forms API; snippet is illustrative |
+| 12-field checkout | 🟦 I | ShopUI teaching data |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
