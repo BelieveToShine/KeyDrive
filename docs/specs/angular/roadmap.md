@@ -15,7 +15,7 @@
 | 12 | Capstone: the Angular performance clinic | angular-clinic | ✅ written |
 | ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
 | ➕ | Deep dive: Lifecycle hooks: what each does and when to use which | lifecycle-hooks | ✅ written (sub page of change-detection) |
-| ➕ | Deep dive: Component communication | component-communication | 🔒 planned (sub page of templates-control-flow) |
+| ➕ | Deep dive: Component communication | component-communication | ✅ written (sub page of templates-control-flow) |
 | ➕ | Deep dive: Directives & custom pipes | directives-pipes | 🔒 planned (sub page of templates-control-flow) |
 | ➕ | Deep dive: RxJS operators: which one to use | rxjs-operators | 🔒 planned (sub page of rxjs-async-pipe) |
 | ➕ | Deep dive: HttpClient & interceptors | http-interceptors | ✅ written (sub page of rxjs-async-pipe) |

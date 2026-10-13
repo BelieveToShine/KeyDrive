@@ -3566,5 +3566,31 @@
     "summary": "The classic mistake with Testing Angular.",
     "keywords": "angular testing TestBed fixture whenStable zoneless harness fake service ComponentFixtureAutoDetect unit test trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-component-communication",
+    "title": "Component communication",
+    "category": "Angular",
+    "page": "angular/concepts/component-communication.html",
+    "summary": "input, output and model, content projection with ng-content slots, signal queries and when to use a shared service.",
+    "keywords": "angular component communication input output model ng-content content projection viewChild contentChild parent child"
+  },
+  {
+    "id": "angular-component-communication-recall",
+    "title": "Component communication — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/component-communication.html",
+    "summary": "Quick recall points: Component communication.",
+    "keywords": "angular component communication input output model ng-content content projection viewChild contentChild parent child interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-component-communication-trap",
+    "title": "Component communication — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/component-communication.html",
+    "summary": "The classic mistake with Component communication.",
+    "keywords": "angular component communication input output model ng-content content projection viewChild contentChild parent child trap mistake",
+    "anchor": "trap"
   }
 ]

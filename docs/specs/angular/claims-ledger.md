@@ -213,5 +213,17 @@ Source root: https://angular.dev/
 | Fake services, unit vs end-to-end test definitions | 🟨 K | general testing practice |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — component communication
+| Claim | Status | Note |
+|---|---|---|
+| input()/input.required() expose a read-only signal; model() is a writable signal exposed as an input/output pair, output name = input name + “Change”; custom form controls should use model inputs for their primary value | ✅ V | angular.dev/guide/components/inputs; api/core/model; signal-forms custom controls |
+| output() declares an output; emit with .emit | ✅ V | angular.dev api/core/output / blog (summary in page 1 ledger) |
+| ng-content slots are chosen by CSS selector; one slot without select catches the rest; content matching no slot is not rendered without a catch-all; do not conditionally include ng-content with @if/@for/@switch | ✅ V | angular.dev/guide/components/content-projection |
+| Signal queries return signals; contentChild/contentChildren read projected content (direct children only unless descendants: true); view queries read the component's own template; contentChild resolves before ngAfterContentInit | ✅ V | angular.dev/guide/components/queries; api/core/ContentChild |
+| ng-template expressions are evaluated against the declaring component | ✅ V | guide/templates/ng-template |
+| View query results are not available in the constructor | 🟨 K | follows from view creation order; lifecycle page |
+| Boolean-input explosion / service-as-global-bag as design smells | 🟨 K | design advice |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
