@@ -145,7 +145,23 @@ Source root: https://angular.dev/
 | ResolveFn: the router waits for resolver data before activation; guards run before resolvers | ✅ V | api/router/ResolveFn; route-guards guide |
 | Route providers create an injector for that route's subtree | ✅ V | angular.dev errors/NG0207 / hierarchical DI (see page 7 ledger) |
 | Host must serve index.html for client routes | 🟨 K | general SPA hosting practice |
+| HTTP 404 on refresh of a deep link | 🟦 I | standard HTTP status in an illustrative symptom |
 | 420 KB → 330 KB → 180 KB; checkout 90 KB; admin 150 KB | 🟦 I | teaching numbers (420 − 90 − 150 = 180) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Page 10 — performance: @defer, SSR & hydration
+| Claim | Status | Note |
+|---|---|---|
+| @defer splits the components, directives and pipes in the block into a separate JS file; @placeholder, @loading and @error blocks load eagerly | ✅ V | angular.dev/guide/templates/defer |
+| Triggers: idle (default, optional timeout), viewport, interaction, hover, immediate, timer(…), when; combine with semicolons (first to fire wins); prefetch uses same syntax, loads code early without changing when content renders | ✅ V | same; api/core/@defer |
+| @placeholder is optional but recommended, minimum prevents flicker; @loading takes minimum and after timers that begin when loading is triggered; @error shows if loading fails | ✅ V | same; tutorials/deferrable-views |
+| On the server defer blocks always render their @placeholder and triggers are not invoked; a hydrate trigger (incremental hydration) renders the main template on the server; hydrate triggers idle, viewport, interaction, hover, immediate, timer, when, never; nested blocks hydrate parent-first | ✅ V | guide/templates/defer; guide/incremental-hydration |
+| Incremental hydration: developer preview in v19 per the v19 roadmap; stable in v20 per the current roadmap | ✅ V | v19 roadmap; angular.dev/roadmap (page tells readers to check) |
+| provideClientHydration() on client and server bootstrap; withEventReplay re-dispatches early clicks; incremental hydration enables event replay | ✅ V | guide/hydration; api/platform-browser/provideClientHydration, withEventReplay |
+| NG0500 hydration node mismatch: direct DOM manipulation / third-party libs; ngSkipHydration last resort on a component host (skips it and children); components that break hydration are bugs | ✅ V | errors/NG0500; guide/hydration |
+| afterNextRender/afterEveryRender run in the browser only; avoid isPlatformBrowser in templates | ✅ V | api/core/afterNextRender; lifecycle/ssr guides (see lifecycle ledger) |
+| Giving the placeholder the final size; defer above the fold flickers | 🟨 K | practical advice (layout shift reasoning) |
+| First-load figures: 420 KB, 180 KB, 150 KB; ≈ 2.1 / 1.4 / 1.2 / 0.8 s; 300–500 ms and 100 ms timers; “5s” | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
 ## Cross-page notes

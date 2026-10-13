@@ -411,7 +411,8 @@
       "rxjs-async-pipe",
       "dependency-injection",
       "forms",
-      "routing-lazy-loading"
+      "routing-lazy-loading",
+      "angular-performance"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

@@ -3436,5 +3436,31 @@
     "summary": "The classic mistake with Routing & lazy loading.",
     "keywords": "angular routing router lazy loading loadComponent loadChildren preloading guards resolvers canActivate withComponentInputBinding route params trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-angular-performance",
+    "title": "Performance: @defer, SSR & hydration",
+    "category": "Angular",
+    "page": "angular/concepts/angular-performance.html",
+    "summary": "Deferrable views and triggers, server-side rendering, hydration, event replay, NG0500 and incremental hydration.",
+    "keywords": "angular performance defer @defer triggers viewport idle SSR server side rendering hydration event replay incremental hydration NG0500 ngSkipHydration"
+  },
+  {
+    "id": "angular-angular-performance-recall",
+    "title": "Performance: @defer, SSR & hydration — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/angular-performance.html",
+    "summary": "Quick recall points: Performance: @defer, SSR & hydration.",
+    "keywords": "angular performance defer @defer triggers viewport idle SSR server side rendering hydration event replay incremental hydration NG0500 ngSkipHydration interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-angular-performance-trap",
+    "title": "Performance: @defer, SSR & hydration — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/angular-performance.html",
+    "summary": "The classic mistake with Performance: @defer, SSR & hydration.",
+    "keywords": "angular performance defer @defer triggers viewport idle SSR server side rendering hydration event replay incremental hydration NG0500 ngSkipHydration trap mistake",
+    "anchor": "trap"
   }
 ]
