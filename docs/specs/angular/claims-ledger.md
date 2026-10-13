@@ -34,5 +34,19 @@ Source root: https://angular.dev/
 | 504 components checked, ≈ 40 ms; OnPush 3 checked, ≈ 2 ms; timer every 100 ms = 10 passes per second | 🟦 I | teaching numbers; page 1 uses 504 and 40 ms |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 3 — OnPush & signals
+| Claim | Status | Note |
+|---|---|---|
+| Writable signals change with .set() / .update(); read-only via asReadonly(); computed signals are read-only, evaluated lazily on first read, cached until a dependency changes; only signals actually read are tracked | ✅ V | angular.dev/guide/signals |
+| Effects run whenever signals they read change, always asynchronously during change detection; they are the last API to reach for; use computed() for derived state; using effects to propagate state can cause ExpressionChangedAfterItHasBeenChecked and circular updates | ✅ V | angular.dev/guide/signals/effect; guide/signals |
+| Updating a signal that is read in a template notifies Angular (zoneless and otherwise); markForCheck is called by AsyncPipe | ✅ V | angular.dev/guide/zoneless |
+| OnPush checks a component when an input changes through a template binding, an event listener in it runs, or it is explicitly marked; skipped subtrees; inputs compared with Object.is | ✅ V | guide/components/advanced-configuration; best-practices/skipping-subtrees |
+| Components compatible with OnPush are mostly compatible with zoneless | ✅ V | blog.angular.dev v18 |
+| input()/input.required() are read-only signals; model() writable | ✅ V | guide/components/inputs; api/core/ModelSignal |
+| linkedSignal() exists for state derived from and writable alongside another signal | ✅ V | angular.dev tutorials/signals (deriving state with linked signals); covered on page 5 |
+| Leaf-first OnPush migration order; adding OnPush to a parent only leaves Eager children checked | 🟨 K | practical advice following from the subtree rules |
+| Numbers: 504 → 4 → 3 checked; ≈ 40 ms → ≈ 3 ms → ≈ 2 ms | 🟦 I | teaching numbers consistent with overview.md |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

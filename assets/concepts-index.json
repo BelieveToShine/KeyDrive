@@ -3228,5 +3228,31 @@
     "summary": "The classic mistake with Change detection & zone.js.",
     "keywords": "angular change detection zone.js zoneless OnPush default eager NgZone markForCheck ExpressionChangedAfterItHasBeenChecked NG0100 strategy trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-onpush-signals",
+    "title": "OnPush & signals",
+    "category": "Angular",
+    "page": "angular/concepts/onpush-signals.html",
+    "summary": "How OnPush and signals cut the number of components checked; signal, computed and input signals; leaf-first migration to zoneless.",
+    "keywords": "angular OnPush signals signal computed input model changeDetection zoneless migration markForCheck immutable update"
+  },
+  {
+    "id": "angular-onpush-signals-recall",
+    "title": "OnPush & signals — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/onpush-signals.html",
+    "summary": "Quick recall points: OnPush & signals.",
+    "keywords": "angular OnPush signals signal computed input model changeDetection zoneless migration markForCheck immutable update interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-onpush-signals-trap",
+    "title": "OnPush & signals — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/onpush-signals.html",
+    "summary": "The classic mistake with OnPush & signals.",
+    "keywords": "angular OnPush signals signal computed input model changeDetection zoneless migration markForCheck immutable update trap mistake",
+    "anchor": "trap"
   }
 ]

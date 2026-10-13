@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnPush &amp; signals — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">OnPush &amp; signals</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 3 of 12 · 🅰️ The update model</div>
+    <h1>Tell Angular <span class="grad-text">what you use</span>, and it checks only that.</h1>
+    <p class="sub">How OnPush and signals cut the number of components checked, signal(), computed() and input signals in five lines, and a leaf-first migration path to zoneless.</p>
+    <div class="interview-q">❓ "What is OnPush change detection and how do signals relate to it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="When a signal that a template reads is set, Angular marks only the components that read it as needing a check, schedules a pass, checks those components, and updates the DOM; components that did not read the signal are skipped">
+<defs><marker id="os1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="os1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="os1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="130" width="620" height="192" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="149" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WHAT THE PASS DOES</text>
+<path d="M210,48 L225,48" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#os1A)"/>
+<path d="M415,48 L430,48" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#os1A)"/>
+<path d="M320,76 L320,130" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#os1A)"/>
+<rect class="bx" x="20" y="20" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="115" y="44.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">query.set("shi")</text>
+<text x="115" y="56.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a writable signal changes</text>
+<rect class="bx" x="225" y="20" width="190" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="45.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Readers are marked</text>
+<text x="320" y="58.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">only ProductList read it</text>
+<rect class="bx" x="430" y="20" width="190" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="525" y="45.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">A pass is scheduled</text>
+<text x="525" y="58.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Angular was notified</text>
+<rect class="bx" x="30" y="166" width="180" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="120" y="192.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">ProductList</text>
+<text x="120" y="205" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">read the signal</text>
+<text x="120" y="217.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">checked ✅</text>
+<rect class="bx" x="230" y="166" width="180" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="320" y="192.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">SearchBox, Cart</text>
+<text x="320" y="205" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">did not read it</text>
+<text x="320" y="217.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">skipped</text>
+<rect class="bx" x="430" y="166" width="180" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="520" y="192.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">500 ProductCards</text>
+<text x="520" y="205" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">inputs unchanged</text>
+<text x="520" y="217.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">skipped</text>
+<text class="free" x="320" y="272" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">The DOM changes only where a checked component’s output differs.</text>
+<text class="free" x="320" y="292" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">3 components checked instead of 504 (illustrative).</text>
+<g class="arrow-pill"><rect x="300.5" y="94" width="39" height="18" rx="9"/><text x="320" y="106.5" text-anchor="middle" font-size="9" font-style="italic">then</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> what happens when a <b>signal</b> that a template reads is set. Angular <b>marks only the components that read it</b> as needing a check, schedules a pass, and checks just those. In ShopUI, setting the search signal marks <b>ProductList</b>; SearchBox, Cart and the 500 cards did not read it (or got no new input), so they are <b>skipped</b>. This is the “only when told” model from page 2 in action. (Counts are illustrative.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>OnPush</b> tells Angular “only check me when something I use changed”; <b>signals</b> are how a component says exactly what it uses.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 2 showed the cost: Eager checks every component after every task. The fix is to make each component declare when it needs checking. <b>OnPush</b> is the declaration; it also marks a component dirty when its input changes, when an event fires inside it, or when you call <span class="kw">markForCheck()</span>.</p>
+      <p>But OnPush alone puts a burden on you: you must remember to notify Angular when state changes outside those cases. <b>Signals</b> remove the burden. A signal read in a template <i>is</i> the notification — when the value changes, exactly the components that read it are scheduled.</p>
+      <p>Together they are also the bridge to <b>zoneless</b> Angular: components that are OnPush-compatible are mostly zoneless-compatible too.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 The migration staircase</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 348" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A migration path from zone.js with Eager components to zoneless: first make components OnPush, then keep state in signals, then remove zone.js; each step reduces the work Angular does after an event">
+<defs><marker id="os2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="os2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="os2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M155,48 L155,102" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#os2A)"/>
+<path d="M155,144 L155,198" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#os2A)"/>
+<path d="M155,240 L155,294" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#os2A)"/>
+<rect class="bx" x="20" y="6" width="270" height="42" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="155" y="24.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">0 · Today</text>
+<text x="155" y="37.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">zone.js + Eager components</text>
+<text class="free" x="312" y="32" text-anchor="start" font-size="10.5" font-weight="400" fill="#fda4af">504 checked per keystroke</text>
+<rect class="bx" x="20" y="102" width="270" height="42" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="155" y="120.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">1 · OnPush</text>
+<text x="155" y="133.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">add changeDetection: OnPush</text>
+<text class="free" x="312" y="128" text-anchor="start" font-size="10.5" font-weight="400" fill="#fcd34d">3 checked per keystroke</text>
+<rect class="bx" x="20" y="198" width="270" height="42" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="155" y="216.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">2 · Signals</text>
+<text x="155" y="229.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">state in signal() / computed()</text>
+<text class="free" x="312" y="224" text-anchor="start" font-size="10.5" font-weight="400" fill="#67e8f9">3 checked; updates are precise</text>
+<rect class="bx" x="20" y="294" width="270" height="42" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="155" y="312.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">3 · Zoneless</text>
+<text x="155" y="325.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">remove zone.js</text>
+<text class="free" x="312" y="320" text-anchor="start" font-size="10.5" font-weight="400" fill="#6ee7b7">no passes after unrelated tasks</text>
+<g class="arrow-pill"><rect x="98.5" y="66" width="113" height="18" rx="9"/><text x="155" y="78.5" text-anchor="middle" font-size="9" font-style="italic">opt in, leaf first</text></g>
+<g class="arrow-pill"><rect x="85" y="162" width="140" height="18" rx="9"/><text x="155" y="174.5" text-anchor="middle" font-size="9" font-style="italic">read state in templates</text></g>
+<g class="arrow-pill"><rect x="77" y="258" width="156" height="18" rx="9"/><text x="155" y="270.5" text-anchor="middle" font-size="9" font-style="italic">when nothing needs zone.js</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a path you can take one component at a time. <b>0</b>: zone.js and Eager components — every keystroke checks 504. <b>1</b>: add <span class="kw">changeDetection: ChangeDetectionStrategy.OnPush</span>, starting at the leaves (the cards) — 3 checked. <b>2</b>: move state into <b>signals</b> read by templates, so updates are precise instead of relying on events. <b>3</b>: when nothing relies on zone.js, remove it. If your Angular version already defaults to OnPush and zoneless, you start at step 2.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 Signals in five lines</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">API</th><th scope="col">What it is</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><span class="kw">signal(initial)</span></th><td>A writable value; read by calling it, change with <span class="kw">.set()</span> or <span class="kw">.update()</span></td><td>Local state: <span class="kw">query = signal('')</span></td></tr><tr><th scope="row"><span class="kw">computed(() =&gt; …)</span></th><td>A read-only value derived from other signals; evaluated lazily on first read, cached until a dependency changes</td><td>Derived data: filtered list, total price</td></tr><tr><th scope="row"><span class="kw">input()</span> / <span class="kw">input.required()</span></th><td>An input exposed as a read-only signal</td><td>Data from a parent (page 1)</td></tr><tr><th scope="row"><span class="kw">model()</span></th><td>A writable input with a matching output</td><td>Two-way binding</td></tr><tr><th scope="row"><span class="kw">effect(() =&gt; …)</span></th><td>Runs when the signals it reads change; asynchronously, during change detection</td><td>Last resort: logging, syncing with non-signal APIs (page 5)</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Read a signal by <b>calling</b> it — <span class="kw">query()</span>. Only the signals actually read while a computed or effect runs are its dependencies. Prefer <span class="kw">computed()</span> to an effect that copies state into other state — the docs warn that this can cause <span class="kw">ExpressionChangedAfterItHasBeenChecked</span> errors and circular updates.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 OnPush lab · from 504 checks to 3</div>
+    <div class="code-block"><pre><span class="cmt">// Before — Eager card, a method called from the template, mutable state in the parent</span>
+@Component({ selector: <span class="str">'app-product-card'</span>, template: `&lt;h3&gt;{{ label() }}&lt;/h3&gt;` })
+
+<span class="cmt">// After — OnPush card + signal input + computed</span>
+@Component({
+  selector: <span class="str">'app-product-card'</span>,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `&lt;h3&gt;{{ label() }}&lt;/h3&gt;`,
+})
+export class ProductCard {
+  product = input.required&lt;Product&gt;();
+  label = computed(() =&gt; this.product().name.toUpperCase());   <span class="cmt">// cached until product changes</span>
+}
+
+<span class="cmt">// App: the search text is a signal; ProductList reads it</span>
+query = signal(<span class="str">''</span>);
+&lt;app-product-list [query]=<span class="str">"query()"</span> /&gt;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. Add OnPush to the cards first; they are the leaves with the most instances.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Components checked per keystroke</th><th scope="col">Check time (illustrative)</th></tr></thead><tbody><tr><th scope="row">Eager everywhere</th><td>504</td><td>≈ 40 ms</td></tr><tr><th scope="row">OnPush cards only</th><td>4 (App, SearchBox, ProductList, Cart) + 0 cards</td><td>≈ 3 ms</td></tr><tr><th scope="row">OnPush + signals, precise reads</th><td>3 (App, SearchBox, ProductList)</td><td>≈ 2 ms</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · OnPush and signal symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">An OnPush component does not update after data arrives</th><td>The array or object was mutated, or state lives in a plain field</td><td>Put state in a signal; update immutably: <span class="kw">items.update(l =&gt; [...l, x])</span></td></tr><tr><th scope="row">The template shows <span class="kw">[Signal: …]</span> or a function</th><td>A signal was not called</td><td>Write <span class="kw">query()</span></td></tr><tr><th scope="row">A <span class="kw">markForCheck()</span> appears everywhere</th><td>State is not in signals</td><td>Replace with signals (or the async pipe, which marks for you)</td></tr><tr><th scope="row">An effect writes to another signal</th><td>State copied from state in an effect</td><td>Use <span class="kw">computed()</span> or <span class="kw">linkedSignal()</span> (page 5)</td></tr><tr><th scope="row">Still 504 checks after adding OnPush to the parent only</th><td>Child components are still Eager and get checked when the parent is</td><td>Add OnPush to the children too</td></tr><tr><th scope="row">A template method runs on every pass</th><td>It is not a signal or a pure pipe</td><td>Make it a <span class="kw">computed()</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Search box lags</h5><p>Eager tree.</p><span class="sc-use">→ OnPush + signal for the query</span></div>
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>An old app must go zoneless</h5><p>Hidden reliance on zone.js.</p><span class="sc-use">→ OnPush first, then signals</span></div>
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart total recalculated on every pass</h5><p>Method in the template.</p><span class="sc-use">→ computed()</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Parent mutates the array it passes down</h5><p>OnPush child never sees it.</p><span class="sc-use">→ Signal + immutable update</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>What marks a component dirty (OnPush).</b> A changed input from a template binding, an event listener in it or a descendant, an explicit <span class="kw">markForCheck()</span> (the async pipe does this), or a signal it reads changing.</p>
+      <p><b>Inputs are compared with Object.is</b> in current versions, so pass a new object or array when data changes.</p>
+      <p><b>Signal inputs</b> are read-only signals, so <span class="kw">computed()</span> can derive from them and the template re-checks only when they change.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>OnPush: check a component only when an input changes, an event fires in its subtree, it is marked, or a signal it reads changes.</li><li>A signal read in a template is the notification — only its readers are scheduled.</li><li><span class="kw">computed()</span> is lazy and cached; prefer it to an effect that copies state.</li><li>Update objects and arrays immutably; OnPush compares by reference.</li><li>Migrate leaf-first: OnPush on cards, then signals, then remove zone.js.</li><li>OnPush-compatible components are mostly zoneless-compatible.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I make components OnPush and keep their state in signals, so Angular checks a component only when something it reads changes. Derived values use computed, updates are immutable, and effects are a last resort. That cuts a keystroke in our shop from checking every component to checking three, and it is also the path to running without zone.js."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Adding OnPush and then mutating.</b> The component stops updating and people “fix” it with markForCheck everywhere.</p>
+      <p><b>Using effect() to copy one signal into another.</b> Use computed().</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📣 markForCheck()</h5><p>Manually says “check me next pass” — a patch for state Angular cannot see.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📡 Signal read in a template</h5><p>Automatic: the change notifies exactly the components that read it.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Components are checked less. Next: what a template itself costs — control flow, track, pipes and method calls. <i>(coming soon: Templates, control flow & pipes)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular’s defaults changed across versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/signals" target="_blank" rel="noopener">Signals overview</a> · <a href="https://angular.dev/guide/signals/effect" target="_blank" rel="noopener">Side effects for non-reactive APIs</a> · <a href="https://angular.dev/best-practices/skipping-subtrees" target="_blank" rel="noopener">Skipping component subtrees</a> · <a href="https://angular.dev/api/core/ChangeDetectionStrategy" target="_blank" rel="noopener">ChangeDetectionStrategy</a> · <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">Zoneless</a> · <a href="https://angular.dev/guide/components/advanced-configuration" target="_blank" rel="noopener">Advanced component configuration</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

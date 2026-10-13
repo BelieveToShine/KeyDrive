@@ -404,7 +404,8 @@
     },
     "written": [
       "angular-mental-model",
-      "change-detection"
+      "change-detection",
+      "onpush-signals"
     ],
     "sub": {},
     "subTitles": {}
