@@ -290,7 +290,8 @@
       "cosmos-mental-model",
       "partition-keys",
       "request-units",
-      "data-modeling"
+      "data-modeling",
+      "indexing-policy"
     ],
     "sub": {},
     "subTitles": {}

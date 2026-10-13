@@ -58,6 +58,24 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | Storing blobs in Blob Storage with a reference | 🟨 K | common guidance |
 | RU/round-trip numbers for designs A–C; customer Asha, order o-1001 | 🟦 I | teaching numbers |
 
+## Page 5 — indexing policy
+| Claim | Status | Note |
+|---|---|---|
+| Default policy indexes every property of every item; range indexes for string and number | ✅ V | Indexing overview / policies |
+| Policy must include the root `/*` as included or excluded; including the root and excluding specific paths is recommended; the more specific path wins | ✅ V | Indexing policies |
+| Modes: consistent (synchronous) and none (indexing disabled, key-value use) | ✅ V | same |
+| `id` and `_ts` always indexed in consistent mode; `_etag` excluded by default | ✅ V | same |
+| Single-property ORDER BY needs a range index and fails without it; multi-property ORDER BY always needs a composite index | ✅ V | Troubleshoot query performance |
+| Composite: paths in ORDER BY sequence and matching direction; equality first; one range filter per composite, last | ✅ V | same |
+| A new composite index is built in the background; existing range indexes serve queries meanwhile | ✅ V | same |
+| Items whose sort property is missing are not returned unless the path is explicitly indexed | ✅ V | same |
+| Inverted-index description; range index = ordered tree | ✅ V | Indexing overview |
+| Spatial index types per path; computed properties cannot have spatial index | ✅ V | Indexing policies |
+| Exclusions save write RU; “about 30% less” for the order example | 🟦 I | direction ✅ V (docs/Q&A), figure illustrative |
+| Partition key path not indexed unless included | 🟨 K | docs imply; confirm |
+| The exact policy JSON shape in the example | 🟨 K | confirm against docs |
+| “5 KB” note; ≈ 300 RU vs ≈ 3 RU; 10 → 7 RU; 3,000 → 2,100 RU/s; “0%/100%” index utilisation | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

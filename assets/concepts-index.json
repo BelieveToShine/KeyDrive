@@ -2422,5 +2422,31 @@
     "summary": "The classic mistake with Data modeling: embed vs reference.",
     "keywords": "cosmos db data modeling embed reference denormalize item size 2 mb unbounded array one item per child trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-indexing-policy",
+    "title": "Indexing policy",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/indexing-policy.html",
+    "summary": "Default indexing, included/excluded paths, range vs composite indexes, cutting write RU and serving multi-property ORDER BY.",
+    "keywords": "cosmos db indexing policy composite index included excluded paths range index order by write ru consistent none"
+  },
+  {
+    "id": "cosmos-indexing-policy-recall",
+    "title": "Indexing policy — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/indexing-policy.html",
+    "summary": "Quick recall points: Indexing policy.",
+    "keywords": "cosmos db indexing policy composite index included excluded paths range index order by write ru consistent none interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-indexing-policy-trap",
+    "title": "Indexing policy — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/indexing-policy.html",
+    "summary": "The classic mistake with Indexing policy.",
+    "keywords": "cosmos db indexing policy composite index included excluded paths range index order by write ru consistent none trap mistake",
+    "anchor": "trap"
   }
 ]
