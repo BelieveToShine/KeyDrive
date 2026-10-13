@@ -13,7 +13,7 @@
 | 10 | Server rendering, hydration & Server Components | server-rendering-hydration | ✅ written |
 | 11 | Code splitting & bundle weight | code-splitting-bundles | ✅ written |
 | 12 | Capstone: the React performance clinic | react-clinic | ✅ written |
-| ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
+| ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | ✅ written (both labs) |
 | ➕ | Deep dive: Hooks: what each does and when to use which | react-hooks-guide | ✅ written (sub page of effects) |
 | ➕ | Deep dive: Refs and the DOM | refs-and-dom | ✅ written (sub page of effects) |
 | ➕ | Deep dive: Custom hooks & the Rules of Hooks | custom-hooks | ✅ written (sub page of effects) |

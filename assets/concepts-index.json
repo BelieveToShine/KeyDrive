@@ -3722,5 +3722,57 @@
     "summary": "The classic mistake with State management: services, signals & NgRx.",
     "keywords": "angular state management service signals asReadonly NgRx SignalStore store withState shared state trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-react-vs-angular",
+    "title": "Same app, two frameworks",
+    "category": "React",
+    "page": "react/concepts/react-vs-angular.html",
+    "summary": "Concept-by-concept mapping between React and Angular, the same keystroke measured with each lever, and trade-offs for choosing.",
+    "keywords": "react vs angular comparison differences framework which to choose mapping"
+  },
+  {
+    "id": "react-react-vs-angular-recall",
+    "title": "Same app, two frameworks — interview recall",
+    "category": "React",
+    "page": "react/concepts/react-vs-angular.html",
+    "summary": "Quick recall points: Same app, two frameworks.",
+    "keywords": "react vs angular comparison differences framework which to choose mapping interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-react-vs-angular-trap",
+    "title": "Same app, two frameworks — common trap",
+    "category": "React",
+    "page": "react/concepts/react-vs-angular.html",
+    "summary": "The classic mistake with Same app, two frameworks.",
+    "keywords": "react vs angular comparison differences framework which to choose mapping trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "angular-react-vs-angular",
+    "title": "Same app, two frameworks",
+    "category": "Angular",
+    "page": "angular/concepts/react-vs-angular.html",
+    "summary": "Concept-by-concept mapping between React and Angular, the same keystroke measured with each lever, and trade-offs for choosing.",
+    "keywords": "angular vs react comparison differences framework which to choose mapping"
+  },
+  {
+    "id": "angular-react-vs-angular-recall",
+    "title": "Same app, two frameworks — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/react-vs-angular.html",
+    "summary": "Quick recall points: Same app, two frameworks.",
+    "keywords": "angular vs react comparison differences framework which to choose mapping interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-react-vs-angular-trap",
+    "title": "Same app, two frameworks — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/react-vs-angular.html",
+    "summary": "The classic mistake with Same app, two frameworks.",
+    "keywords": "angular vs react comparison differences framework which to choose mapping trap mistake",
+    "anchor": "trap"
   }
 ]

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Same app, two frameworks — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="react-clinic.html">React clinic</a><span class="sep">›</span><span class="cur">Same app, two frameworks</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 🔀 React vs Angular</div>
+    <h1>Same shop, <span class="grad-text">two frameworks</span> — different words, same method.</h1>
+    <p class="sub">A concept-by-concept mapping between React and Angular, the same keystroke measured with each framework’s lever, and trade-offs for choosing.</p>
+    <div class="interview-q">❓ "React or Angular — what are the real differences?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The same ShopUI problems mapped between React and Angular: state placement, skipping work, identity, effects, shared state, loading, and shipping each have a React answer and an Angular answer">
+<defs><marker id="br1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<text class="free" x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#67e8f9">React</text>
+<text class="free" x="500" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#fda4af">Angular</text>
+<text class="free" x="10" y="60" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Where state lives</text>
+<rect class="bx" x="150" y="34" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="55.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">useState · lift · context</text>
+<rect class="bx" x="370" y="34" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="55.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">signal · service</text>
+<text class="free" x="10" y="108" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Skip needless work</text>
+<rect class="bx" x="150" y="82" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="103.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">memo · stable props</text>
+<rect class="bx" x="370" y="82" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="103.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">OnPush · signals</text>
+<text class="free" x="10" y="156" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">List identity</text>
+<rect class="bx" x="150" y="130" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="151.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">key={id}</text>
+<rect class="bx" x="370" y="130" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="151.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">track p.id</text>
+<text class="free" x="10" y="204" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Outside world</text>
+<rect class="bx" x="150" y="178" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="199.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">useEffect + cleanup</text>
+<rect class="bx" x="370" y="178" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="199.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">effect · afterNextRender · DestroyRef</text>
+<text class="free" x="10" y="252" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Shared state</text>
+<rect class="bx" x="150" y="226" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="247.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">context + reducer</text>
+<rect class="bx" x="370" y="226" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="247.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">root service with signals</text>
+<text class="free" x="10" y="300" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Loading data</text>
+<rect class="bx" x="150" y="274" width="200" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="250" y="295.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Suspense · transitions</text>
+<rect class="bx" x="370" y="274" width="260" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="295.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">resource · async pipe · @defer</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same six ShopUI problems, answered in each framework. <b>Where state lives</b>: React uses <span class="kw">useState</span>, lifting and context; Angular uses <span class="kw">signal()</span> and services. <b>Skipping work</b>: <span class="kw">memo</span> and stable props versus <span class="kw">OnPush</span> and signals. <b>List identity</b>: <span class="kw">key</span> versus <span class="kw">track</span>. <b>Outside world</b>: effects with cleanup versus <span class="kw">effect</span>, <span class="kw">afterNextRender</span> and <span class="kw">DestroyRef</span>. <b>Shared state</b>: context plus reducer versus a root service with signals. <b>Loading</b>: Suspense and transitions versus resources, the async pipe and <span class="kw">@defer</span>.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Different words, <b>same method</b>: measure, find the biggest wrong thing, change one thing, prove it.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>You have now built the same practice shop twice. The frameworks differ in philosophy — React is a rendering library you assemble; Angular is a full framework with one official way to do most things — but the problems on a slow or wrong screen are the same: too much work per change, unstable identity, uncleaned side effects, too much shipped code.</p>
+      <p>This page puts the two side by side, so knowledge in one transfers to the other, and so you can answer the interview question “React or Angular?” with trade-offs instead of a favourite.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 Concept by concept</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Idea</th><th scope="col">React</th><th scope="col">Angular</th></tr></thead><tbody><tr><th scope="row">Unit of UI</th><td>Function component returning JSX</td><td>Standalone component: class + template</td></tr><tr><th scope="row">Data in / events out</th><td>Props / callback props</td><td><span class="kw">input()</span> / <span class="kw">output()</span> / <span class="kw">model()</span></td></tr><tr><th scope="row">What triggers an update</th><td>State set or parent render; children re-render by default</td><td>A notification (signal read in a template, event, markForCheck); Eager checks all, OnPush skips</td></tr><tr><th scope="row">Local state</th><td><span class="kw">useState</span>, <span class="kw">useReducer</span></td><td><span class="kw">signal()</span>, <span class="kw">computed()</span>, <span class="kw">linkedSignal()</span></td></tr><tr><th scope="row">Derived values</th><td>Calculate during render; <span class="kw">useMemo</span> when slow</td><td><span class="kw">computed()</span>; pure pipes</td></tr><tr><th scope="row">Lists</th><td><span class="kw">key</span> (unique among siblings)</td><td><span class="kw">@for … track</span> (required)</td></tr><tr><th scope="row">Side effects</th><td><span class="kw">useEffect</span> (+ cleanup)</td><td><span class="kw">effect()</span>, <span class="kw">afterNextRender</span>, <span class="kw">DestroyRef</span></td></tr><tr><th scope="row">Shared logic / state</th><td>Custom hooks; context + reducer</td><td>Services + dependency injection</td></tr><tr><th scope="row">Async data</th><td>Suspense, <span class="kw">use</span>, data libraries</td><td><span class="kw">resource</span>, <span class="kw">httpResource</span>, RxJS, async pipe</td></tr><tr><th scope="row">HTTP cross-cutting logic</th><td>A fetch wrapper you write</td><td>Functional interceptors (<span class="kw">withInterceptors</span>)</td></tr><tr><th scope="row">Forms</th><td>Controlled / uncontrolled, form actions</td><td>Template-driven, reactive, signal forms</td></tr><tr><th scope="row">Routing</th><td>A router library or framework</td><td>Built-in router (guards, resolvers, lazy routes)</td></tr><tr><th scope="row">Code splitting</th><td><span class="kw">lazy</span> + Suspense</td><td><span class="kw">loadComponent</span>, <span class="kw">@defer</span></td></tr><tr><th scope="row">Server rendering</th><td>Server rendering, hydration, Server Components</td><td>SSR, hydration, event replay, incremental hydration</td></tr><tr><th scope="row">Profiling</th><td>React DevTools Profiler, <span class="kw">&lt;Profiler&gt;</span></td><td>Angular DevTools Profiler, Chrome Angular track</td></tr><tr><th scope="row">Testing</th><td>React Testing Library + <span class="kw">act</span></td><td>TestBed (zoneless by default) + <span class="kw">whenStable</span>, harnesses</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📏 The same keystroke, two levers</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The same keystroke measured in both frameworks: React renders 504 components until memo and stable props bring it to 4, and Angular checks 504 components until OnPush brings it to 3, so the lever differs but the method is identical">
+<defs><marker id="br2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">REACT — render</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">ANGULAR — check</text>
+<path d="M162,98 L162,150" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#br2A)"/>
+<path d="M477,98 L477,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#br2A)"/>
+<rect class="bx" x="30" y="44" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">504 rendered</text>
+<text x="162.5" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">≈ 40 ms</text>
+<rect class="bx" x="30" y="150" width="265" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="162.5" y="174.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">memo + stable props</text>
+<text x="162.5" y="187.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">4 rendered, ≈ 3 ms</text>
+<rect class="bx" x="345" y="44" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">504 checked</text>
+<text x="477.5" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">≈ 40 ms</text>
+<rect class="bx" x="345" y="150" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="174.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">OnPush + signals</text>
+<text x="477.5" y="187.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">3 checked, ≈ 2 ms</text>
+<text class="free" x="162" y="244" text-anchor="middle" font-size="9.5" font-weight="400" fill="#67e8f9">Profiler → find → one change → prove.</text>
+<text class="free" x="477" y="244" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">DevTools profiler → same ladder.</text>
+<text class="free" x="320" y="278" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Numbers are illustrative teaching data, identical in both labs.</text>
+<g class="arrow-pill"><rect x="126.5" y="115" width="71" height="18" rx="9"/><text x="162" y="127.5" text-anchor="middle" font-size="9" font-style="italic">one change</text></g>
+<g class="arrow-pill"><rect x="441.5" y="115" width="71" height="18" rx="9"/><text x="477" y="127.5" text-anchor="middle" font-size="9" font-style="italic">one change</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> both labs start from the same ShopUI numbers. React re-renders everything below the state, so the lever is <b>memo with stable props</b> (page 6 of the React lab). Angular checks everything under an Eager tree, so the lever is <b>OnPush with signals</b> (page 3 of the Angular lab). Different mechanism, same ladder, same proof: record the same interaction again and see the number move.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚖️ Choosing: trade-offs, not a favourite</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Consideration</th><th scope="col">React tends to…</th><th scope="col">Angular tends to…</th></tr></thead><tbody><tr><th scope="row">Structure</th><td>Give freedom; you pick router, data and state tools</td><td>Give one official path for routing, forms, HTTP and DI</td></tr><tr><th scope="row">Learning curve</th><td>Small core, many choices to learn around it</td><td>More concepts up front (DI, templates, RxJS), then fewer decisions</td></tr><tr><th scope="row">Large teams</th><td>Need conventions you establish yourselves</td><td>Come with conventions built into the framework</td></tr><tr><th scope="row">Server features</th><td>Delivered mostly through a framework (Next.js etc.)</td><td>SSR, hydration and @defer are built into the framework</td></tr><tr><th scope="row">Reactivity model</th><td>Re-run components; optimise by skipping</td><td>Signals notify exactly what changed; OnPush skips subtrees</td></tr><tr><th scope="row">Tooling</th><td>Strong ecosystem; options vary by project</td><td>CLI, schematics and testing provided</td></tr></tbody></table></div>
+    <p style="margin-top:12px">These are <b>tendencies</b>, not rules — both ecosystems change quickly. Judge by your team, your product and the current docs of each framework.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · translating a bug between frameworks</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Symptom</th><th scope="col">In React, look at</th><th scope="col">In Angular, look at</th></tr></thead><tbody><tr><th scope="row">Typing lags with a long list</th><td>Components rendered per commit (Profiler); memo, stable props</td><td>Components checked per cycle; OnPush, track, signals</td></tr><tr><th scope="row">Wrong row keeps its state</th><td>Index keys; component defined inside another component</td><td><span class="kw">track</span> by index on a changing list</td></tr><tr><th scope="row">Effect runs twice in development</th><td>Strict Mode’s extra setup/cleanup</td><td>NG0100 second pass, double subscription</td></tr><tr><th scope="row">Memory grows after leaving a screen</th><td>Effect without cleanup</td><td>Subscription without takeUntilDestroyed / async pipe</td></tr><tr><th scope="row">Stale value after an update</th><td>Mutated state, missing dependency</td><td>Mutated input under OnPush, non-signal field</td></tr><tr><th scope="row">Slow first load</th><td>Bundle size, lazy, server rendering</td><td>Lazy routes, @defer, SSR</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔀</span><h5>Your company uses React; a client wants Angular</h5><p>Same problems, new words.</p><span class="sc-use">→ Use the mapping table</span></div>
+      <div class="scenario"><span class="sc-icon">🧑‍🏫</span><h5>Interviewer asks “React or Angular?”</h5><p>A favourite is not an answer.</p><span class="sc-use">→ State trade-offs for the product</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Team migrates a feature between frameworks</h5><p>State, identity and effects map one to one.</p><span class="sc-use">→ Port the model, not the syntax</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>Comparing performance claims</h5><p>Different mechanisms.</p><span class="sc-use">→ Profile your app in each</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Shared numbers.</b> Both labs use the same illustrative ShopUI: 500 products, 504 components, ≈ 40 ms before and ≈ 2–3 ms after. They are teaching data, not benchmarks of either framework.</p>
+      <p><b>Not covered.</b> Other frameworks (Vue, Svelte), CSS-in-JS, i18n and animation libraries are outside this lab.</p>
+      <p><b>Version drift.</b> Both frameworks are evolving (React’s Compiler and Server Components; Angular’s zoneless default and signal forms). Check each framework’s current docs.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Same problems on both sides: too much work per change, unstable identity, uncleaned effects, too much shipped code.</li><li>React: re-render then skip with memo/stable props; Angular: check then skip with OnPush/signals.</li><li>key ↔ track; useEffect ↔ effect/afterNextRender/DestroyRef; context+reducer ↔ service with signals.</li><li>React is a library you assemble; Angular is a full framework with built-in router, forms, HTTP and DI.</li><li>The method is identical: measure, find, one change, prove.</li><li>Answer “React or Angular?” with trade-offs for the situation.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Both frameworks solve the same problems with different mechanisms: React re-renders and you skip work with memo and stable props, Angular checks components and you skip work with OnPush and signals. Keys map to track, effects to effect and DestroyRef, context to services. React gives freedom and Angular gives a built-in path; I choose by team and product, and I measure with each framework’s profiler."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Porting syntax instead of the model.</b> Translate state placement, identity and effects, not keywords.</p>
+      <p><b>Comparing the frameworks with illustrative numbers.</b> These are teaching figures; profile real apps.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⚛️ React</h5><p>The framework of the lab you are in.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌐 Angular</h5><p>The sister lab: same ShopUI, different mechanism.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the React lab, or open the Angular lab.</span>
+      <a class="next-link" href="react-clinic.html">Capstone: the React performance clinic <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Both frameworks change between versions; check each one’s own docs. Official docs: <a href="https://react.dev/learn/render-and-commit" target="_blank" rel="noopener">Render and Commit</a> · <a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener">memo</a> · <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">Angular: Zoneless</a> · <a href="https://angular.dev/best-practices/skipping-subtrees" target="_blank" rel="noopener">Angular: Skipping component subtrees</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

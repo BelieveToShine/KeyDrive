@@ -14,7 +14,7 @@ Page rhythm = SQL/Cosmos labs: See it first → Why → how it works → tables/
 | Cart | 1–20 items |
 | Teaching rule | numbers are illustrative; real apps: measure in the Profiler |
 
-Status: in progress (started 2026-10-13). User has not reviewed — expect corrections.
+Status: **complete — 12 / 12 pages + deep dives** (2026-10-13). User has not reviewed — expect corrections.
 
 ## Coverage audit (2026-10-13, after user feedback — see lessons L12)
 | Topic a practitioner needs | Where |

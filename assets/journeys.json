@@ -359,7 +359,8 @@
       "error-boundaries": "data-fetching-suspense",
       "api-layer-caching": "data-fetching-suspense",
       "routing-navigation": "code-splitting-bundles",
-      "testing-react": "react-clinic"
+      "testing-react": "react-clinic",
+      "react-vs-angular": "react-clinic"
     },
     "subTitles": {
       "react-hooks-guide": "Hooks: what each does and when to use which",
@@ -369,7 +370,8 @@
       "error-boundaries": "Error boundaries & error handling",
       "api-layer-caching": "The API layer: fetch wrappers & caching",
       "routing-navigation": "Routing & navigation",
-      "testing-react": "Testing React"
+      "testing-react": "Testing React",
+      "react-vs-angular": "Same app, two frameworks"
     }
   },
   "angular": {
@@ -425,7 +427,8 @@
       "state-management": "dependency-injection",
       "forms-validation": "forms",
       "guards-resolvers": "routing-lazy-loading",
-      "testing-angular": "angular-clinic"
+      "testing-angular": "angular-clinic",
+      "react-vs-angular": "angular-clinic"
     },
     "subTitles": {
       "lifecycle-hooks": "Lifecycle hooks: what each does and when to use which",
@@ -436,7 +439,8 @@
       "state-management": "State management: services, signals & NgRx",
       "forms-validation": "Forms in depth: validation & FormArray",
       "guards-resolvers": "Route guards, resolvers & params",
-      "testing-angular": "Testing Angular"
+      "testing-angular": "Testing Angular",
+      "react-vs-angular": "Same app, two frameworks"
     }
   }
 }

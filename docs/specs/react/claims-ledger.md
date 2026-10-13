@@ -269,5 +269,14 @@ Source root: https://react.dev/
 | Test numbers (Cart (1), 500 renders) | 🟦 I | illustrative |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — same app, two frameworks
+| Claim | Status | Note |
+|---|---|---|
+| Every framework fact in the mapping table is verified on the page of the relevant lab (React pages 1–11 and dives; Angular pages 1–11 and dives) | ✅ V | see those ledgers |
+| React is a library you assemble; Angular is a full framework with built-in router, forms, HTTP and DI | 🟨 K | characterisation; react.dev recommends starting with a framework and routers are third-party; Angular's built-ins are in the Angular ledger |
+| Trade-off table (structure, learning curve, large teams, tooling) | 🟨 K | judgement, labelled as tendencies |
+| 504 → 4 (React memo) and 504 → 3 (Angular OnPush); ≈ 40 / ≈ 3 / ≈ 2 ms | 🟦 I | teaching numbers, identical in both labs |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
