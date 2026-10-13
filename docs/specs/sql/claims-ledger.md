@@ -164,11 +164,35 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | BigCorp case numbers (6 s, 240,000 → 400 reads, 900 → 15 ms CPU, 97%) | 🟦 I | teaching numbers, chained from pages 3, 7, 9 |
 | Troubleshoot slow-running queries doc exists | ✅ V | linked in the fact note |
 
+## Page 12 — locking and isolation
+| Claim | Status | Note |
+|---|---|---|
+| RCSI is on by default in Azure SQL Database; off by default in SQL Server and Managed Instance | ✅ V | Azure SQL deadlock/blocking docs, transaction locking guide |
+| RCSI: readers do not block writers and writers do not block readers; Microsoft recommends the row-versioning READ COMMITTED for all applications unless the app depends on blocking | ✅ V | Deadlocks guide / locking guide |
+| Blocking causes include modifications blocking each other, higher isolation levels, RCSI off; RCSI does not rule out deadlocks | ✅ V | Azure SQL blocking docs |
+| Four steps: find the head blocker; find query/transaction; understand why; redesign | ✅ V | Understand and resolve blocking |
+| `blocking_session_id = 0` means not blocked; walk the chain to the head blocker; `sys.dm_tran_locks` shows held locks | ✅ V | same |
+| Sleeping session with an open transaction (app timeout/cancel without ROLLBACK/COMMIT) does not resolve itself; KILL is a last resort; wait for a session that is rolling back | ✅ V | same |
+| Short-lived blocking is missed by point-in-time DMV queries; use the blocked-process report | ✅ V | same |
+| Deadlock capture: `sqlserver.database_xml_deadlock_report`, ring buffer capped at 4 MB (Azure SQL) | ✅ V | Analyze and prevent deadlocks |
+| Deadlock graph: victim list, process list (plan hash → Query Store), resource list; victim shown crossed out | ✅ V | same |
+| The victim's application should retry; the retry usually succeeds | ✅ V | same |
+| Engine usually picks the cheapest-to-roll-back victim; `SET DEADLOCK_PRIORITY` | ✅ V | MS Q&A answer (community-sourced) |
+| Row versioning reduces deadlocks and lock escalations; SNAPSHOT can still block/deadlock; scope snapshot to the transaction | ✅ V | older locking guide + MS Q&A (community-sourced) |
+| RCSI change in Azure SQL DB is run from `master` | ✅ V | ALTER DATABASE doc |
+| Shared/exclusive compatibility table; isolation-level descriptions (dirty read, phantom, etc.) | 🟨 K | standard definitions; docs page exists — confirm wording |
+| Lock escalation (row → page → table) | 🟨 K | general; confirm |
+| Prevention by consistent access order / short transactions / better indexes | 🟨 K | general guidance; the Azure doc only confirms retry and graph reading |
+| NOLOCK returns dirty reads | 🟨 K | standard; confirm |
+| PostgreSQL MVCC, pg_locks / pg_stat_activity | 🟨 K | other-engine pointer |
+| Session 51/77/80, order 9001, customer 42, “30 seconds”, 20 ms CPU, 30,000 ms | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label, not a technical claim |
 | “90% of rows / customers” (report and skew scenarios), “80%+ cost” (debug table), “100%” CPU example, “120” (SUBSTRING length in an example query) | 🟦 I | teaching thresholds, not engine rules |
+| “30 seconds” hang, “30,000 ms” and “20 ms” in the locking example | 🟦 I | teaching numbers |
 | Timing examples “6 seconds”, “900 ms”, “1,250 ms” (also written “1250 ms” inside a code comment) | 🟦 I | teaching numbers on pages 10 and 11 |
 
 ## Open verification list

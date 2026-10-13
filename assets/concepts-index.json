@@ -2188,5 +2188,31 @@
     "summary": "The classic mistake with The debugging playbook.",
     "keywords": "sql debugging method playbook slow query triage measure hypothesis one change investigation log trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "sql-locking-isolation",
+    "title": "Transactions, locking & isolation",
+    "category": "SQL",
+    "page": "sql/concepts/locking-isolation.html",
+    "summary": "Blocking, deadlocks and isolation levels: finding the head blocker, reading a deadlock graph, row versioning (RCSI) and what actually reduces blocking.",
+    "keywords": "sql locking blocking deadlock isolation level rcsi snapshot head blocker deadlock graph transaction lock wait"
+  },
+  {
+    "id": "sql-locking-isolation-recall",
+    "title": "Transactions, locking & isolation — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/locking-isolation.html",
+    "summary": "Quick recall points: Transactions, locking & isolation.",
+    "keywords": "sql locking blocking deadlock isolation level rcsi snapshot head blocker deadlock graph transaction lock wait interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-locking-isolation-trap",
+    "title": "Transactions, locking & isolation — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/locking-isolation.html",
+    "summary": "The classic mistake with Transactions, locking & isolation.",
+    "keywords": "sql locking blocking deadlock isolation level rcsi snapshot head blocker deadlock graph transaction lock wait trap mistake",
+    "anchor": "trap"
   }
 ]

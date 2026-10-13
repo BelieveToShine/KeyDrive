@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions, locking &amp; isolation — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Transactions, locking &amp; isolation</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 16 · 🏗️ Beyond one query</div>
+    <h1>Fast alone, slow together — because <span class="grad-text">waiting</span> is not computing.</h1>
+    <p class="sub">Locks, blocking, deadlocks and isolation levels: how to find the head blocker, how to read a deadlock graph, and the fixes that actually work.</p>
+    <div class="interview-q">❓ "A query is slow only when many users are on the system. How do you find out if blocking is the cause, and what do you do?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A blocking chain: session 51 holds an exclusive lock inside an open transaction while sessions 77 and 80 wait for the same row">
+<defs><marker id="lk1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M100,110 L100,45 L245,45" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lk1A)"/>
+<path d="M535,110 L535,45 L395,45" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#lk1A)"/>
+<path d="M320,200 L320,80" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#lk1A)"/>
+<rect class="bx" x="10" y="110" width="190" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="105" y="141.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Session 51 · head blocker</text>
+<text x="105" y="154" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">BEGIN TRAN; UPDATE order 9001</text>
+<text x="105" y="166.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">… then waits for a slow API</text>
+<rect class="bx" x="245" y="10" width="150" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="36.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔒 Exclusive lock</text>
+<text x="320" y="49" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">order 9001</text>
+<text x="320" y="61.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">held until COMMIT</text>
+<rect class="bx" x="440" y="110" width="190" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="535" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Session 77</text>
+<text x="535" y="149" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">SELECT order 9001</text>
+<text x="535" y="161.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">⏳ waits</text>
+<rect class="bx" x="245" y="200" width="150" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="226.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Session 80</text>
+<text x="320" y="239" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">UPDATE order 9001</text>
+<text x="320" y="251.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">⏳ waits</text>
+<text class="free" x="320" y="298" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Sessions 77 and 80 show blocking_session_id = 51. CPU is idle: they are waiting, not computing.</text>
+<g class="arrow-pill"><rect x="150" y="36" width="44" height="18" rx="9"/><text x="172" y="48.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g>
+<g class="arrow-pill"><rect x="445.5" y="36" width="39" height="18" rx="9"/><text x="465" y="48.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+<g class="arrow-pill"><rect x="300.5" y="131" width="39" height="18" rx="9"/><text x="320" y="143.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one session opened a transaction, changed order 9001, and then went off to do something slow (here: wait for an external API) <b>without committing</b>. Its <b>exclusive lock</b> on that row stays until COMMIT. Every other session that needs order 9001 queues up behind it — a reader (77) and a writer (80). Their queries look “slow”, but the CPU is idle: they are <b>waiting</b>. The session at the root of the chain is the <b>head blocker</b>.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Locks make concurrent changes safe — and make sessions wait. <b>Blocking</b> is one session holding a lock too long; a <b>deadlock</b> is two sessions each waiting for the other.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The last page ended on a worry: a query that is fast alone can still crawl when many run together. Everything so far (plans, indexes, statistics) was about <i>how much work one query does</i>. This page is about <b>waiting</b>.</p>
+      <p>The database promises that concurrent transactions do not see each other’s half-finished work. To keep that promise it uses <b>locks</b>. Locks are not a bug — they are the price of correctness. The trouble starts when a transaction holds them for too long, or when two transactions take them in opposite order.</p>
+      <p>This is why page 10’s very first question was “running or waiting?”. Here is the waiting side, with the tools to find the blocker and the fixes that actually work.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧱 ACID in one line each</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">A · ATOMIC</span><h4>All or nothing</h4><p>A transaction either commits completely or rolls back completely.</p></div>
+      <div class="how-step"><span class="hs-n">C · CONSISTENT</span><h4>Rules stay true</h4><p>Constraints hold before and after.</p></div>
+      <div class="how-step"><span class="hs-n">I · ISOLATED</span><h4>No peeking</h4><p>Concurrent transactions do not see each other’s half-done work. <b>Locks and row versions do this job.</b></p></div>
+      <div class="how-step"><span class="hs-n">D · DURABLE</span><h4>Committed means kept</h4><p>Once committed, the change survives a crash.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔑 Two lock kinds you must know</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Held by →<br>Asked by ↓</th><th scope="col">Shared lock (a reader)</th><th scope="col">Exclusive lock (a writer)</th></tr></thead><tbody><tr><th scope="row">Wants to read (shared)</th><td>✅ proceeds — readers share</td><td>⏳ waits for the writer to finish</td></tr><tr><th scope="row">Wants to write (exclusive)</th><td>⏳ waits for the readers to finish</td><td>⏳ waits — one writer at a time</td></tr></tbody></table></div>
+    <p style="margin-top:12px">With classic lock-based <b>READ COMMITTED</b>, a reader needs a shared lock, so a writer’s exclusive lock blocks it — exactly session 77 above. <b>Row versioning</b> (below) removes that reader-versus-writer wait.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔎 Finding the head blocker</div>
+    <p>Microsoft’s four steps: <b>(1)</b> find the head blocker, <b>(2)</b> find the query and transaction holding the locks, <b>(3)</b> understand <i>why</i> it holds them so long, <b>(4)</b> redesign the query or transaction.</p>    <div class="code-block"><pre><span class="cmt">-- who is waiting, and who are they waiting for?</span>
+<span class="kw">SELECT</span> r.session_id, r.blocking_session_id, r.wait_type, r.wait_time,
+       <span class="kw">SUBSTRING</span>(t.text, <span class="num">1</span>, <span class="num">100</span>) <span class="kw">AS</span> sql_text
+<span class="kw">FROM</span>   sys.dm_exec_requests <span class="kw">AS</span> r
+<span class="kw">CROSS APPLY</span> sys.dm_exec_sql_text(r.sql_handle) <span class="kw">AS</span> t
+<span class="kw">WHERE</span>  r.blocking_session_id <> <span class="num">0</span>;     <span class="cmt">-- 0 means “not blocked”</span>
+
+<span class="cmt">-- walk up the chain: the session that is NOT itself blocked is the head blocker.</span>
+<span class="cmt">-- then see what it holds:</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> sys.dm_tran_locks <span class="kw">WHERE</span> request_session_id = <span class="num">51</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. A point-in-time query misses blocking that has already cleared; for short-lived blocking use the blocked-process report (an Extended Events event).</p>
+    <p style="margin-top:12px"><b>Classic head-blocker pattern:</b> a session that is <i>sleeping</i> with an <i>open transaction</i> — the app timed out or cancelled without issuing the ROLLBACK or COMMIT. It will not resolve itself. <code>KILL</code> ends the session, but it is a last resort; fix the application’s transaction handling. A session that is rolling back should be left to finish.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">☠️ Deadlocks</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A deadlock: session A holds the order row and wants the customer row while session B holds the customer row and wants the order row, so neither can continue">
+<defs><marker id="lk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M95,125 L95,38 L245,38" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/>
+<path d="M545,125 L545,38 L395,38" fill="none" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#lk2A)"/>
+<path d="M545,195 L545,278 L395,278" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/>
+<path d="M95,195 L95,278 L245,278" fill="none" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#lk2A)"/>
+<rect class="bx" x="245" y="10" width="150" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔒 Order 9001</text>
+<text x="320" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a row lock</text>
+<rect class="bx" x="245" y="250" width="150" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔒 Customer 42</text>
+<text x="320" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a row lock</text>
+<rect class="bx" x="10" y="125" width="170" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="95" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Session A</text>
+<text x="95" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">has 9001, wants 42</text>
+<rect class="bx" x="460" y="125" width="170" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="545" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Session B</text>
+<text x="545" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">has 42, wants 9001</text>
+<text class="free" x="320" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#fda4af">DEADLOCK — a cycle,</text>
+<text class="free" x="320" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#fda4af">nobody can proceed</text>
+<text class="free" x="320" y="200" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The engine picks a victim and rolls it back.</text>
+<g class="arrow-pill"><rect x="148" y="29" width="44" height="18" rx="9"/><text x="170" y="41.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g>
+<g class="arrow-pill"><rect x="446" y="29" width="44" height="18" rx="9"/><text x="468" y="41.5" text-anchor="middle" font-size="9" font-style="italic">wants</text></g>
+<g class="arrow-pill"><rect x="446" y="269" width="44" height="18" rx="9"/><text x="468" y="281.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g>
+<g class="arrow-pill"><rect x="148" y="269" width="44" height="18" rx="9"/><text x="170" y="281.5" text-anchor="middle" font-size="9" font-style="italic">wants</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> session A holds the order row and wants the customer row; session B holds the customer row and wants the order row. <b>Neither can ever continue</b> — a cycle. The engine detects it, picks a <b>victim</b>, rolls that transaction back, and lets the other finish. The victim’s application receives an error and should <b>retry</b> the transaction — the retry usually succeeds once the other one has finished.</figcaption>
+</figure>
+    <p style="margin-top:12px"><b>Reading a deadlock graph</b> (captured with the <code>database_xml_deadlock_report</code> Extended Events event) has three parts: a <b>victim list</b>, a <b>process list</b> (each session’s statement — and a plan hash you can look up in Query Store), and a <b>resource list</b> (what each one held and wanted). In the visual view the processes are ovals and the victim is crossed out.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Isolation levels — how much do you want to see of other people’s changes?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Level</th><th scope="col">You may see…</th><th scope="col">How it works</th></tr></thead><tbody><tr><th scope="row">READ UNCOMMITTED</th><td>other sessions’ uncommitted (“dirty”) data</td><td>No shared locks — fast, unsafe</td></tr><tr><th scope="row">READ COMMITTED (locks)</th><td>only committed data — but values can change between two reads of yours</td><td>Shared lock while reading; blocks behind writers</td></tr><tr><th scope="row">READ COMMITTED SNAPSHOT (RCSI)</th><td>only committed data, as of the start of each statement</td><td>Row versions: readers do not block writers, writers do not block readers</td></tr><tr><th scope="row">REPEATABLE READ</th><td>the rows you read stay the same, but new rows may appear (“phantoms”)</td><td>Holds shared locks to the end of the transaction</td></tr><tr><th scope="row">SNAPSHOT</th><td>a consistent picture as of the start of your transaction</td><td>Row versions for the whole transaction</td></tr><tr><th scope="row">SERIALIZABLE</th><td>as if transactions ran one at a time</td><td>Strongest — and the most blocking</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Defaults.</b> RCSI is <b>on by default in Azure SQL Database</b>; in SQL Server it is off by default. Microsoft recommends the row-versioning form of READ COMMITTED for all applications, unless an application depends on the blocking behaviour of the lock-based form. Higher isolation levels and RCSI being turned off are listed among the causes of blocking.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 What actually reduces blocking</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>⏱️ Shorter transactions</h4><span class="pk-tag">hold locks for less time</span><span class="pk-label use">✅ Pick it when</span><ul><li>Never wait for a user, an API or a queue inside a transaction</li><li>Commit as soon as the changes are done</li><li>Fewer statements per transaction</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Splitting a transaction that must be atomic — correctness comes first</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>🧬 Row versioning (RCSI / snapshot)</h4><span class="pk-tag">readers stop waiting for writers</span><span class="pk-label use">✅ Pick it when</span><ul><li>Many readers, some writers</li><li>Already the default in Azure SQL Database</li><li>Snapshot is best scoped to the transaction, not the whole database</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>It does not stop writer-versus-writer blocking or deadlocks</li></ul></div>
+      <div class="pick-card" style="--pick:#34d399"><h4>📇 Better indexes</h4><span class="pk-tag">lock fewer rows</span><span class="pk-label use">✅ Pick it when</span><ul><li>A scan that finds the row to update touches (and may lock) more than a seek would</li><li>Indexes shorten the time a statement holds locks</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Extra indexes also add lock and write work — page 13</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>🔁 Retry logic</h4><span class="pk-tag">for deadlock victims</span><span class="pk-label use">✅ Pick it when</span><ul><li>Deadlocks cannot be fully eliminated</li><li>Retry the whole transaction a few times with a short pause</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Retrying forever hides a design problem</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · “the order page hangs for 30 seconds at 14:05”</div>
+    <p>Numbers are illustrative. Follow the ladder from page 11 — but notice that the very first rung already points somewhere else.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rung</th><th scope="col">What you do</th><th scope="col">What you see</th><th scope="col">Decision</th></tr></thead><tbody><tr><th scope="row">1 · Measure</th><td>STATISTICS TIME on the slow call</td><td>CPU 20 ms · elapsed 30,000 ms</td><td>Elapsed ≫ CPU → it waited, it did not compute</td></tr><tr><th scope="row">2 · Read</th><td>Open the plan?</td><td>The plan is a one-row seek — nothing to fix</td><td>Stop reading plans; look at waits</td></tr><tr><th scope="row">3 · Find</th><td>Which session blocks it? (<code>blocking_session_id</code>, then walk up)</td><td>Head blocker: session 51, sleeping, open transaction, last statement an UPDATE on Orders</td><td>The blocker is not a slow query — it is a transaction that never ended</td></tr><tr><th scope="row">4 · Guess</th><td>Why does it stay open?</td><td>The app calls a payment API between the UPDATE and the COMMIT</td><td>Hypothesis: lock held across an external call</td></tr><tr><th scope="row">5 · Change</th><td>Move the API call outside the transaction; commit right after the UPDATE</td><td>—</td><td>One change</td></tr><tr><th scope="row">6 · Prove</th><td>Re-run the same scenario with two sessions</td><td>Second session no longer waits; elapsed 40 ms</td><td>Fixed; keep RCSI on so readers never queue behind writers</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · blocking and deadlock symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Elapsed ≫ CPU; many sessions with the same <code>blocking_session_id</code></th><td>A head blocker holding locks</td><td>Find its statement and transaction; check for a sleeping session with an open transaction</td></tr><tr><th scope="row">Lock-wait types dominate wait statistics</th><td>Data contention</td><td>Shorten transactions; consider row versioning; check isolation level</td></tr><tr><th scope="row">Readers blocked by writers</th><td>Lock-based READ COMMITTED</td><td>Enable RCSI (default in Azure SQL Database)</td></tr><tr><th scope="row">Intermittent “chosen as the deadlock victim” errors</th><td>Two transactions taking locks in opposite order</td><td>Capture the deadlock graph; access tables in the same order; retry the victim</td></tr><tr><th scope="row">Blocking disappears before you can look</th><td>Short-lived blocking</td><td>Use the blocked-process report to capture it</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Checkout freezes at lunchtime</h5><p>The transaction waits on a payment API while holding a row lock.</p><span class="sc-use">→ Move the call out of the transaction</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>Report blocks order entry</h5><p>The report’s reads take shared locks under lock-based READ COMMITTED.</p><span class="sc-use">→ RCSI</span></div>
+      <div class="scenario"><span class="sc-icon">🔄</span><h5>“Deadlock victim” twice a day</h5><p>Transfer A→B and B→A update the two accounts in opposite order.</p><span class="sc-use">→ Same order + retry</span></div>
+      <div class="scenario"><span class="sc-icon">🧹</span><h5>Nightly purge of 5 million rows</h5><p>One giant transaction holds locks for an hour.</p><span class="sc-use">→ Delete in small batches</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Lock granularity.</b> The engine can lock a row, a page or a whole table, and may <i>escalate</i> many small locks into a bigger one. Row versioning reduces the locks a transaction needs and, with them, lock escalations and deadlocks.</p>
+      <p><b>RCSI is not magic.</b> Readers no longer block writers and writers no longer block readers, but writers still block writers, and deadlocks can still happen. SNAPSHOT can also block and deadlock because transactions may hold locks on versioned data that others need.</p>
+      <p><b>Choosing the victim.</b> The engine usually picks the transaction that is cheapest to roll back; <code>SET DEADLOCK_PRIORITY</code> can influence the choice.</p>
+      <p><b>Azure SQL Database.</b> Changing the RCSI setting is done with <code>ALTER DATABASE</code> run from the <code>master</code> database. The deadlock ring buffer used for capture is capped at 4 MB.</p>
+      <p><b>Other engines:</b> PostgreSQL uses row versions (MVCC) by default, so readers rarely block writers; deadlocks and long-held locks still occur, and <code>pg_locks</code> / <code>pg_stat_activity</code> show who waits for whom.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Blocking = one session holds a lock too long; the others wait. Deadlock = a cycle of waits; the engine kills one victim.</li><li>Elapsed ≫ CPU means waiting. Walk the <code>blocking_session_id</code> chain to the head blocker.</li><li>Classic head blocker: a sleeping session with an open transaction.</li><li>Fixes: short transactions (never wait for a user or an API inside one), row versioning, better indexes, retry for deadlock victims.</li><li>RCSI is on by default in Azure SQL Database; Microsoft recommends row-versioning READ COMMITTED for most applications.</li><li>A deadlock graph has a victim list, a process list and a resource list.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"When a query is slow but CPU is low, it’s waiting. I find the blocking_session_id chain to the head blocker and look at its transaction — often a session with an open transaction held across a slow call. I fix it by shortening the transaction, I rely on row versioning (RCSI, the Azure SQL default) so readers don’t queue behind writers, and for deadlocks I capture the graph, make access order consistent, and retry the victim."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Using NOLOCK / READ UNCOMMITTED to “fix” blocking.</b> You trade waiting for wrong answers (dirty reads). Row versioning gives you non-blocking reads that are still correct.</p>
+      <p><b>Killing the blocker every time.</b> It hides the application bug that opens transactions and never closes them.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⏳ Blocking</h5><p>One session waits for another’s lock. It ends when the holder commits or rolls back.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>☠️ Deadlock</h5><p>A cycle: A waits for B and B waits for A. It never ends by itself — the engine picks a victim.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Every index you added in pages 3–8 is not free: it has to be maintained on every write, and that work holds locks too. Next: the cost of indexes and index maintenance <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Isolation defaults and locking behaviour differ between SQL Server and Azure SQL. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide" target="_blank" rel="noopener">Transaction locking and row versioning guide</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide" target="_blank" rel="noopener">Deadlocks guide</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/analyze-prevent-deadlocks" target="_blank" rel="noopener">Analyze and prevent deadlocks (Azure SQL)</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/understand-resolve-blocking" target="_blank" rel="noopener">Understand and resolve blocking problems (Azure SQL)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

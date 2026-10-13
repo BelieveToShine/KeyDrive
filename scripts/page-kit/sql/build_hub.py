@@ -30,7 +30,7 @@ GROUPS = [('🔭 PLAN LITERACY','167,139,250','#c4b5fd'),
           ('🛠️ OPTIMISE','34,211,238','#67e8f9'),
           ('🧪 MEASURE & DEBUG','52,211,153','#6ee7b7'),
           ('🏗️ BEYOND ONE QUERY','251,191,36','#fcd34d')]
-WRITTEN = ['query-journey','storage-pages','indexes-seek-scan','reading-execution-plans','statistics-cardinality','join-algorithms','covering-indexes','sargable-queries','plan-cache-sniffing','measuring-query-store','debugging-playbook']
+WRITTEN = ['query-journey','storage-pages','indexes-seek-scan','reading-execution-plans','statistics-cardinality','join-algorithms','covering-indexes','sargable-queries','plan-cache-sniffing','measuring-query-store','debugging-playbook','locking-isolation']
 
 journeys = json.loads((REPO / 'assets/journeys.json').read_text())
 journeys['sql'] = {'title': 'SQL Performance Lab', 'order': [c[0] for c in C], 'titles': {c[0]: c[2] for c in C}, 'written': WRITTEN, 'sub': {}, 'subTitles': {}}
@@ -69,6 +69,7 @@ def row(i, c):
     return f'      <li class="concept-row soon"><span class="cr-num">{n}</span><span class="cr-main"><span class="cr-name">{e(c[2])}</span><span class="cr-tail">{e(c[3])}</span></span><span class="cr-status soon">🔒 coming soon</span></li>'
 rows = '\n'.join(row(i, c) for i, c in enumerate(C))
 nw, nt = len(WRITTEN), len(C)
+note = ('the whole journey, from a query’s first parse to the slow-query clinic.' if nw == nt else 'plan literacy, optimising a query, measuring and debugging' + (' and the first system-level pages' if nw > 11 else '') + f' are ready; the remaining {nt - nw} are on the map as locked steps.')
 
 page = HEAD.replace('<title>Azure — KeyDrive</title>', '<title>SQL Performance Lab — KeyDrive</title>') + f'''<nav class="kd-crumbs wrap">
   <a href="../index.html">KeyDrive</a><span class="sep">›</span><a href="../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><span class="cur">🔬 SQL Performance Lab</span>
@@ -79,7 +80,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', '<title>SQL Performance
     <div class="eyebrow">🗄️ SQL · from “why is it slow?” to “here is the fix, and the proof”</div>
     <h1>Learn to read <span class="grad-text">what the database really did</span> — then make it faster.</h1>
     <p class="sub">Not a list of tuning tricks. One continuous story: a query’s journey, how data sits on disk, indexes, execution plans, statistics, joins, and a debugging method you can use on any slow query. Every page has a before-and-after plan you can compare. Written for SQL Server and Azure SQL (T-SQL); the thinking transfers to other engines.</p>
-    <p class="hub-note">🗺️ <b>{nw} of {nt}</b> concepts are written — plan literacy, optimising a query, and measuring and debugging (pages 1–11) are ready. The system-level pages (12–16) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>{nw} of {nt}</b> concepts are written — {note}</p>
     <a class="kd-cta" href="concepts/query-journey.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 

@@ -112,7 +112,7 @@ f'''<span class="cmt">-- 2026-10-13  GetOrdersByCustomer slow for BigCorp</span>
         '<b>Declaring victory on one run.</b> A faster run proves nothing until the same input, the same lens, the same cache state and the other inputs agree.',
         '<b>Skipping the log.</b> Without it, the next person (or you in six months) removes the “weird” index and the slow query returns.'])
     body += confuse('🎲 Tuning by feel', 'Add an index, add a hint, restart, hope. Sometimes works. Nobody knows why.', '🧪 Tuning by experiment', 'Baseline, hypothesis, one change, same measurement. Always explainable and repeatable.')
-    body += next_box('A query that is fast alone can still crawl when many run together — the next kind of problem is <i>waiting</i>, not computing. Next: transactions, locking and isolation <i>(coming soon)</i>.')
+    body += next_box('A query that is fast alone can still crawl when many run together — the next kind of problem is <i>waiting</i>, not computing. Next: transactions, locking and isolation.', 'locking-isolation.html', 'Transactions, locking &amp; isolation')
     body += fact_note('Tool names and defaults vary by product and version. For exact details check the official docs.', [DOC_PLANS, DOC_IO, D('Troubleshoot slow-running queries', 'troubleshoot/sql/database-engine/performance/troubleshoot-slow-running-queries')])
     return page('debugging-playbook', 'The debugging playbook', 'Concept 11 of 16 · 🧪 Measure & debug',
         'Tools tell you <span class="grad-text">what</span>; a method tells you what next.',
