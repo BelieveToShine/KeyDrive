@@ -205,6 +205,27 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 
 
 
+## Rewrite (2026-10-13, L14) — pages 5–6 simple + animated
+| Claim | Status | Note |
+|---|---|---|
+| ISP wording: clients should not be forced to depend on methods they do not use | ✅ V | Martin, Principles of OOD (wording via search summary; page not reachable in session) |
+| Interface = minimal group of members for one responsibility, from the caller's point of view | ✅ V | Eric Lippert, "So many interfaces!" (archived on learn.microsoft.com) |
+| DIP wording; dependency direction points toward abstractions; DI makes it practical | ✅ V | MSDN Magazine (Martin quote), Microsoft .NET architectural principles page |
+| DateTime.Now / File.ReadAllText as hidden static dependencies | 🟨 K | Microsoft guidance says avoid stateful statics; these examples are illustrative |
+| TV remote, printer/fax, light switch/bulb/fan, wall socket pictures; Print/Scan/Fax, ISwitchable code | 🟦 I | teaching analogies, not from a source |
+
+
+
+## Rewrite (2026-10-13, L14) — page 7 simple + animated
+| Claim | Status | Note |
+|---|---|---|
+| Lifetimes: singleton one instance; scoped one per scope (per request); transient new each time | ✅ V | Microsoft Learn: Dependency injection overview / Service lifetimes |
+| Captive dependency (singleton holding scoped); ValidateScopes catches it; on by default in Development | ✅ V | Microsoft Learn DI guidelines, ValidateScopes reference |
+| Avoid service locator (GetService inside methods); avoid direct instantiation of dependent classes; avoid stateful statics | ✅ V | Microsoft Learn DI guidelines / ASP.NET Core DI |
+| Transient IDisposable: container keeps references until scope ends | ✅ V | Microsoft Learn DI guidelines |
+| Large constructor is a smell | ✅ V | .NET architecture guide (ledgered earlier) |
+| Electrician, printer/notebook/paper-cup pictures; Bulb/LightSwitch/CartCache code | 🟦 I | teaching analogies and tiny illustrations |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |

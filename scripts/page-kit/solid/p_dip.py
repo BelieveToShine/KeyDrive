@@ -1,108 +1,101 @@
 from p_common import *
 
-def d_before():
-    d = Diagram('dp1', 640, 300, 'Before inversion: OrderService creates SqlOrderRepository with new, and that class creates a SqlConnection, so the high-level business code depends directly on low-level database details')
-    d.box(190, 12, 260, 56, [('OrderService','t'),('business rules (high level)','s')], 'cyan')
-    d.box(190, 122, 260, 56, [('SqlOrderRepository','t'),('SQL details (low level)','s')], 'rose')
-    d.box(190, 232, 260, 56, [('SqlConnection','t'),('a real database','s')], 'rose')
-    d.arrow([(320,68),(320,122)], 'cyan', label='creates with new', at=(320,95))
-    d.arrow([(320,178),(320,232)], 'rose', label='uses', at=(320,205))
+def d_wired():
+    d = Diagram('dp1', 640, 280, 'A light switch that creates and controls one particular Bulb: pressing works, but to control a Fan instead the switch must be opened and rewired, so the switch depends on the bulb detail')
+    d.box(10, 30, 200, 90, [('🎚️','e'),('LightSwitch','t')], 'cyan', st=1, hl=4)
+    d.box(430, 30, 200, 90, [('💡','e'),('Bulb','t')], 'amber', st=1)
+    d.arrow([(210, 75), (430, 75)], 'cyan', id='w1', label='new Bulb() — hard-wired', at=(320, 75), st=1)
+    d.token('w1', '⚡', 15, 'amber', st='2-2')
+    d.emoji(600, 52, '✨', 22, st='2-')
+    d.box(430, 160, 200, 70, [('🌀 Fan','t'),('we want this too','s')], 'violet', st='3-', hl=3)
+    d.note(10, 160, 380, 44, 'The switch only knows how to talk|to a Bulb. A Fan does not fit.', 'amber', st='3-3')
+    d.note(10, 160, 380, 44, 'Open the switch, rewire it,|and re-test the bulb too ✏️', 'rose', st='4-4', hl=4)
+    d.note(10, 160, 380, 44, 'The switch (important) depends|on the bulb (a detail)', 'rose', st='5-', hl=5)
     return d
 
-def d_after():
-    d = Diagram('dp2', 640, 330, 'After inversion: OrderService depends on the IOrderRepository interface, which belongs to the business layer; SqlOrderRepository and FakeOrderRepository both implement it, so the source-code arrow from the database class now points up to the abstraction')
-    d.box(220, 12, 200, 56, [('OrderService','t'),('high level','s')], 'cyan')
-    d.box(120, 130, 400, 56, [('«interface» IOrderRepository','t'),('owned by the business layer','s')], 'violet')
-    d.box(20, 250, 280, 56, [('SqlOrderRepository','t'),('production','s')], 'emerald')
-    d.box(340, 250, 280, 56, [('FakeOrderRepository','t'),('tests, in memory','s')], 'amber')
-    d.arrow([(320,68),(320,130)], 'cyan', label='depends on', at=(320,99))
-    d.arrow([(160,250),(160,186)], 'emerald', label='implements', at=(160,218))
-    d.arrow([(480,250),(480,186)], 'amber', label='implements', at=(480,218))
+def d_socket():
+    d = Diagram('dp2', 640, 330, 'The switch asks an ISwitchable socket for On; Bulb and Fan both implement ISwitchable, so the same unchanged switch can control either, and both the switch and the devices now depend on the socket')
+    d.box(10, 110, 150, 90, [('🎚️','e'),('LightSwitch','t')], 'cyan', st=1, hl=5)
+    d.box(240, 110, 150, 90, [('🔌','e'),('ISwitchable','t')], 'violet', st=1)
+    d.arrow([(160, 155), (240, 155)], 'cyan', id='s1', label='asks', at=(200, 155), st=1)
+    d.box(520, 30, 110, 66, [('💡 Bulb','t'),('On() Off()','s')], 'amber', st=2)
+    d.box(520, 190, 110, 66, [('🌀 Fan','t'),('On() Off()','s')], 'rose', st=3, hl=3)
+    d.arrow([(520, 63), (390, 135)], 'amber', id='b1', label='plugs in', at=(455, 99), st=2)
+    d.arrow([(520, 223), (390, 175)], 'rose', id='f1', label='plugs in', at=(455, 199), st=3)
+    d.token('b1', '🔌', 15, 'amber', st='2-2'); d.token('f1', '🔌', 15, 'rose', st='3-3')
+    d.token('s1', '⚡', 15, 'cyan', st='4-4')
+    d.emoji(612, 54, '✨', 18, st='4-'); d.emoji(612, 214, '✨', 18, st='4-')
+    d.emoji(140, 128, '✅', 20, st='5-')
+    d.note(10, 266, 620, 48, 'Before: Switch → Bulb.  Now: Switch → socket ← Bulb, Fan.|The arrow from the detail now points at the abstraction.', 'emerald', st='5-', hl=5)
     return d
 
 def build_dependency_inversion():
     body = ''
-    body += see(figure(d_before(),
-        'The most important class — <b>OrderService</b>, with the business rules — <b>creates</b> a <b>SqlOrderRepository</b> with <span class="kw">new</span>, which uses a <b>SqlConnection</b>. The arrows run from high-level policy down to low-level detail. '
-        'Change the database and the business class changes; test the business class and you need a real database.'))
-    body += one('<b>Business code should depend on abstractions that it owns, not on details</b> — the database class conforms to the business layer, not the other way round.')
-    body += why([
-        'Robert C. Martin’s wording: high-level modules should not depend on low-level modules; both should depend on abstractions. Microsoft’s .NET architecture guidance puts it as dependency direction pointing toward abstractions rather than implementation details.',
-        'The consequence in that guidance: a calling class depends on an interface, a lower-level class implements it, and the compile-time dependency is <b>inverted</b> while runtime behaviour stays the same. This is what makes implementations swappable and code testable, and it is the idea behind the clean-architecture layout in Microsoft’s web-app guidance: infrastructure depends on the application core through interfaces defined in the core.',
-        'Martin has written that the SOLID principles are about <b>managing dependencies</b>; this is the principle where that is most literal.'])
-    body += block('🔄 After inversion', figure(d_after(),
-        'the interface <span class="kw">IOrderRepository</span> sits <b>with the business layer</b>, shaped by what OrderService needs (page 5). Both the SQL class and a test fake now point <b>up</b> to it. '
-        'The runtime call still reaches SQL — only the <b>source-code</b> dependency flipped. That flip is the “inversion”.'), label_cls='see')
-    body += block('🧪 DIP lab · stop using new inside the business class', cs('''
-// BEFORE — high-level code builds its own low-level collaborators
-public class OrderService
+    body += see(story(d_wired(), [
+        'A <b>LightSwitch</b> is wired straight to one particular <b>Bulb</b>. In code: the switch does <code>new Bulb()</code> inside itself.',
+        'Press the switch: the bulb lights up. ✅ It works…',
+        '…until we want a <b>Fan</b> 🌀 as well. The switch only knows how to talk to a Bulb. A fan does not fit.',
+        'The only way is to <b>open the switch and rewire it</b> — and then re-test the bulb, too. ✏️',
+        'The important part (the switch) depends on a <b>detail</b> (one particular bulb). That is the problem the Dependency Inversion Principle solves.'],
+        'a switch hard-wired to one bulb. It works only until something new has to be switched.'))
+    body += one('<b>Depend on a socket, not on one particular bulb.</b> Important code should depend on an abstraction (an interface), and details plug into it.')
+    body += block('🌍 In real life', '''    <div class="kd-card why-box">
+      <p>🔌 A <b>wall socket</b> does not care what you plug in: a lamp, a laptop charger, a fan. And the devices do not care which wall they are plugged into. Both sides agree on the <b>standard shape</b> of the socket — that is the interface.</p>
+      <p>Compare that with wiring a lamp straight into the wall: change the lamp and you must call an electrician.</p>
+    </div>''', label_cls='why', id_='why')
+    body += block('🔧 The fix: a socket in the middle', story(d_socket(), [
+        'Give the switch a <b>socket</b> to talk to: <code>ISwitchable</code> with <code>On()</code> and <code>Off()</code>.',
+        'The <b>Bulb</b> plugs into the socket (it implements <code>ISwitchable</code>).',
+        'The <b>Fan</b> plugs into the same socket. A new device never needs a new switch. 🔌',
+        'Press the switch: whichever device is plugged in turns on. ✨',
+        'Look at the arrows: before, the switch pointed at the bulb. Now the switch <b>and</b> the devices point at the <b>socket</b>. The dependency has been <b>inverted</b>. ✅'],
+        'the same switch with a socket in the middle. The switch never changes; only the plugged-in device does.'), label_cls='see')
+    body += block('🧪 Tiny code', cs('''
+// BEFORE — the switch creates its own bulb
+class Bulb { public void On() { } public void Off() { } }
+
+class LightSwitch
 {
-    public void Place(Order order)
-    {
-        var repo = new SqlOrderRepository(new SqlConnection(ConnectionStrings.Shop));
-        repo.Save(order);
-        new SmtpClient("smtp.shop.example").Send(/* confirmation */);
-    }
+    private Bulb _bulb = new Bulb();               // hard-wired
+    public void Press() => _bulb.On();
 }
 
-// AFTER — depend on abstractions; receive them through the constructor
-public interface IOrderRepository { void Save(Order order); }
-public interface INotifier        { void OrderPlaced(Order order); }
+// AFTER — the switch is handed something that fits the socket
+interface ISwitchable { void On(); void Off(); }
+class Bulb : ISwitchable { public void On() { } public void Off() { } }
+class Fan  : ISwitchable { public void On() { } public void Off() { } }
 
-public class OrderService
+class LightSwitch
 {
-    private readonly IOrderRepository _repo;
-    private readonly INotifier _notifier;
+    private readonly ISwitchable _device;
+    public LightSwitch(ISwitchable device) { _device = device; }   // "plug it in" from outside
+    public void Press() => _device.On();
+}
 
-    public OrderService(IOrderRepository repo, INotifier notifier)
-    {
-        _repo = repo;
-        _notifier = notifier;
-    }
-
-    public void Place(Order order)
-    {
-        _repo.Save(order);
-        _notifier.OrderPlaced(order);
-    }
-}''', 'Illustrative. Who passes the real objects in? Not this class — a single place near startup (page 7). Note that this change alone, passing interfaces into a constructor, is DIP in action; the container that automates it is a separate tool.') + table(
-        ['Question','Before','After'],
-        [['Needs a database/SMTP to unit test OrderService','Yes','No — two fakes in memory'],
-         ['Edits to OrderService when SQL is replaced by Cosmos','Yes','None'],
-         ['Direction of source-code arrow (business ↔ database)','Business → database','Database → business interface']]) + '\n' + ladder_strip([2,3,4,5,6]), label_cls='see')
-    body += block('📋 Smells of a dependency problem', table(
-        ['You see','What it means','Fix'],
-        [['<span class="kw">new</span> of a service/repository/client inside business code','The class chooses its own collaborators','Take an interface through the constructor'],
-         ['Static calls (<span class="kw">DateTime.Now</span>, <span class="kw">File.ReadAllText</span>, a static singleton) in the middle of logic','Hidden dependency you cannot replace in a test','Wrap behind an interface (for time, <span class="kw">TimeProvider</span>)'],
-         ['Business project references the EF / SQL / SMTP package','Wrong direction','Move the interface into the business project; implement it in infrastructure'],
-         ['Unit tests need a database, a file or a network','Details leaked upward','Fakes behind abstractions'],
-         ['A “service locator” pulled from inside methods','Dependencies are hidden again','Make them explicit constructor parameters']]), label_cls='trap')
-    body += block('🎬 Real-world scenarios', scenarios([
-        ('🗄️','Switch the orders store from SQL to Cosmos','OrderService is edited in 30 places.','A new class implementing IOrderRepository; zero edits'),
-        ('⏰','A discount that only applies on weekdays','Tests fail on Saturdays.','Inject the clock'),
-        ('📧','Emails sent during every test run','Real people get mail.','Inject INotifier; use a fake in tests'),
-        ('🏗️','Domain project references Entity Framework','It cannot be tested or reused without it.','Interface in the domain, implementation in infrastructure'),
-    ]), label_cls='see')
-    body += zoom('Go one level deeper (60 seconds)', '''      <p><b>Three similar words.</b> <i>Dependency Inversion</i> is the design principle (depend on abstractions you own). <i>Dependency Injection</i> is a technique for handing dependencies in. An <i>IoC container</i> is a tool that automates injection. You can follow DIP with plain constructors and no container.</p>
-      <p><b>Ownership matters.</b> An interface defined in the same project as the database class, and merely referenced by the business layer, does not invert anything. The interface lives with its <i>client</i>.</p>
-      <p><b>Not everything needs one.</b> Do not hide stable, deterministic things such as <span class="kw">string</span> or <span class="kw">List&lt;T&gt;</span> behind interfaces; invert at the boundaries that vary or are slow (I/O, time, randomness, third-party services).</p>''')
+var lamp = new LightSwitch(new Bulb());
+var cooler = new LightSwitch(new Fan());''', 'Who plugs the bulb in? Someone outside the switch — that “someone” is dependency injection (next page).'), label_cls='see')
+    body += block('🎯 Spot it: does this break the rule?', quiz([
+        ('A business method that does <code>new SqlConnection(...)</code> inside itself', True, 'It is hard-wired to one database. You cannot swap it or test it without a real database.'),
+        ('A class whose constructor takes an <code>ILogger</code>', False, 'It asks for the abstraction. Any logger that fits can be plugged in.'),
+        ('Business logic that calls <code>DateTime.Now</code> directly', True, 'The clock is a hidden dependency: a test cannot control what “now” is. Hand the clock in instead.'),
+        ('A method that creates a plain <code>new List&lt;string&gt;()</code> for its own use', False, 'A list is just data, not a service you would ever swap. Do not put sockets everywhere.')], 'Breaks the rule', 'Fine'), label_cls='trap')
+    body += block('👀 How to spot it in your own code', spot_table([
+        ['<code>new SomethingBig()</code> (database, email, web client) inside business code','Receive an interface through the constructor instead.'],
+        ['Static calls like <code>File.ReadAllText</code> or <code>DateTime.Now</code> in the middle of the logic','Hidden wiring. Wrap in an interface and hand it in.'],
+        ['The business project references the SQL / email package','Wrong direction. The business code should own the interface; the details implement it.'],
+        ['Unit tests need a real database or network','Details leaked into the important code.']]), label_cls='trap')
     body += recall([
-        'DIP: high-level code and low-level code both depend on abstractions; details depend on policy.',
-        'The source-code arrow flips; the runtime call is unchanged.',
-        'The interface is owned by the client (the business layer), not by the implementation.',
-        'Receive collaborators through the constructor instead of calling new or static methods inside logic.',
-        'DIP (principle) ≠ DI (technique) ≠ IoC container (tool).',
-        'Invert at boundaries that vary or are slow: I/O, time, randomness, external services.'])
-    body += saythis('"The Dependency Inversion Principle says high-level policy shouldn’t depend on low-level details; both depend on abstractions, and the abstraction is owned by the business side. In practice OrderService takes an IOrderRepository through its constructor instead of creating a SqlOrderRepository, so the database class depends on the business layer rather than the reverse. I’d use constructor injection, and I distinguish the principle from DI, which is a technique, and from a container, which is just a tool."')
-    body += trap([
-        '<b>“DIP means use a DI container.”</b> The principle is about the direction of dependencies; a container is optional tooling.',
-        '<b>Putting the interface next to the implementation.</b> Then the business layer still depends on the infrastructure project.',
-        '<b>An interface for every class.</b> Abstract the boundaries that vary, not every type.'])
-    body += confuse('💉 Injection', 'How a dependency gets handed in (constructor, parameter).', '🔄 Inversion', 'Which way the source-code dependency points.')
-    body += next_box('We know what to depend on. Next: how .NET hands the real objects in — the built-in dependency injection container, lifetimes and the composition root.', 'dependency-injection-dotnet.html', 'Dependency Injection in .NET')
-    body += fact_note('The wording is Robert C. Martin’s (quoted in an MSDN Magazine article); the “dependency direction toward abstractions” and clean-architecture layout follow Microsoft’s .NET architectural-principles guidance. “DIP vs DI vs container” is the usual distinction, consistent with that guidance, not a quoted definition.', [DOC_OOD, ('Architectural principles (.NET)', 'https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles'), DOC_ARCH, DOC_DI])
+        'DIP: important (high-level) code should not depend on details (low-level code); both depend on an abstraction.',
+        'Wall socket: any device fits; the socket does not care. The interface is the socket.',
+        'The arrow from the detail now points to the abstraction — the dependency is inverted.',
+        'Principle (DIP) ≠ technique (dependency injection) ≠ tool (container).'])
+    body += saythis('"The Dependency Inversion Principle says high-level code shouldn’t depend on low-level details — both should depend on an abstraction. A light switch that creates its own bulb can only switch that bulb. If it talks to an ISwitchable socket instead, any device can plug in and the switch never changes. In code that means receiving an interface through the constructor instead of calling new inside the class."')
+    body += trap(['<b>“DIP means use a DI container.”</b> The principle is about <i>which way the dependency points</i>. Injection (and containers) are just ways to plug things in — the next page.',
+                  '<b>“Put an interface in front of every class.”</b> Only where details vary or are slow to use: database, email, time, third-party services.'])
+    body += next_box('A socket is only useful if someone plugs the right thing in. Next: how .NET does the plugging — dependency injection.', 'dependency-injection-dotnet.html', 'Dependency Injection in .NET')
+    body += fact_note('The wording is Robert C. Martin’s (quoted in an MSDN Magazine article). Microsoft’s .NET architecture guidance says dependency direction should point toward abstractions rather than implementation details, so a calling class depends on an interface that a lower-level class implements; DI is the technique that makes this practical. The switch and wall-socket pictures are teaching analogies.', [DOC_OOD, ('Architectural principles (.NET)', 'https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles'), DOC_ARCH, DOC_DI])
     return page('dependency-inversion', 'D — the Dependency Inversion Principle', 'Concept 6 of 12 · 🔤 The five principles',
-        'Who depends on <span class="grad-text">whom</span>? Flip the arrow.',
-        'The Dependency Inversion Principle: high-level policy vs low-level detail, who owns the interface, and replacing new with constructor parameters.',
+        'Wire to a <span class="grad-text">socket</span>, not to one particular bulb.',
+        'The Dependency Inversion Principle with a light switch and a wall socket: why hard-wiring hurts and how an interface in the middle fixes it.',
         'What is the Dependency Inversion Principle, and how is it different from dependency injection?',
         body, CR + ['<span class="cur">D — Dependency Inversion</span>'], '')

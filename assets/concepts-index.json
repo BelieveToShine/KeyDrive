@@ -3776,84 +3776,6 @@
     "anchor": "trap"
   },
   {
-    "id": "solid-interface-segregation",
-    "title": "I — the Interface Segregation Principle",
-    "category": "SOLID",
-    "page": "solid/concepts/interface-segregation.html",
-    "summary": "Give each client only the methods it needs: fat interfaces, role interfaces, splitting without splitting the class.",
-    "keywords": "solid interface segregation principle ISP fat interface role interface IReadOnlyList"
-  },
-  {
-    "id": "solid-interface-segregation-recall",
-    "title": "I — the Interface Segregation Principle — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/interface-segregation.html",
-    "summary": "Quick recall points: I — the Interface Segregation Principle.",
-    "keywords": "solid interface segregation principle ISP fat interface role interface IReadOnlyList interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-interface-segregation-trap",
-    "title": "I — the Interface Segregation Principle — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/interface-segregation.html",
-    "summary": "The classic mistake with I — the Interface Segregation Principle.",
-    "keywords": "solid interface segregation principle ISP fat interface role interface IReadOnlyList trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-dependency-inversion",
-    "title": "D — the Dependency Inversion Principle",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-inversion.html",
-    "summary": "High-level policy vs low-level detail: who owns the interface, flipping the arrow, and replacing new with constructor parameters.",
-    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection"
-  },
-  {
-    "id": "solid-dependency-inversion-recall",
-    "title": "D — the Dependency Inversion Principle — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-inversion.html",
-    "summary": "Quick recall points: D — the Dependency Inversion Principle.",
-    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-dependency-inversion-trap",
-    "title": "D — the Dependency Inversion Principle — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-inversion.html",
-    "summary": "The classic mistake with D — the Dependency Inversion Principle.",
-    "keywords": "solid dependency inversion principle DIP abstraction constructor injection testability inversion vs injection trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-dependency-injection-dotnet",
-    "title": "Dependency Injection in .NET",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-injection-dotnet.html",
-    "summary": "The composition root, service lifetimes, captive dependencies and the service-locator trap.",
-    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes"
-  },
-  {
-    "id": "solid-dependency-injection-dotnet-recall",
-    "title": "Dependency Injection in .NET — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-injection-dotnet.html",
-    "summary": "Quick recall points: Dependency Injection in .NET.",
-    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-dependency-injection-dotnet-trap",
-    "title": "Dependency Injection in .NET — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/dependency-injection-dotnet.html",
-    "summary": "The classic mistake with Dependency Injection in .NET.",
-    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes trap mistake",
-    "anchor": "trap"
-  },
-  {
     "id": "solid-smells-refactoring",
     "title": "Smells & Safe Refactoring",
     "category": "SOLID",
@@ -4163,6 +4085,84 @@
     "page": "solid/concepts/liskov-substitution.html",
     "summary": "The classic mistake with L — the Liskov Substitution Principle.",
     "keywords": "liskov substitution LSP bird penguin IFlyable promise subtype trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-interface-segregation",
+    "title": "I — the Interface Segregation Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/interface-segregation.html",
+    "summary": "Small, focused interfaces: a plain printer should not be forced to carry a fax button; splitting IMachine into IPrinter, IScanner, IFax.",
+    "keywords": "interface segregation ISP fat interface printer remote IMachine small interfaces"
+  },
+  {
+    "id": "solid-interface-segregation-recall",
+    "title": "I — the Interface Segregation Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/interface-segregation.html",
+    "summary": "Quick recall points: I — the Interface Segregation Principle.",
+    "keywords": "interface segregation ISP fat interface printer remote IMachine small interfaces interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-interface-segregation-trap",
+    "title": "I — the Interface Segregation Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/interface-segregation.html",
+    "summary": "The classic mistake with I — the Interface Segregation Principle.",
+    "keywords": "interface segregation ISP fat interface printer remote IMachine small interfaces trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-dependency-inversion",
+    "title": "D — the Dependency Inversion Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "Depend on a socket, not one particular bulb: a light switch story, why hard-wiring hurts and how an interface in the middle fixes it.",
+    "keywords": "dependency inversion DIP light switch bulb socket interface abstraction hard-wired new"
+  },
+  {
+    "id": "solid-dependency-inversion-recall",
+    "title": "D — the Dependency Inversion Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "Quick recall points: D — the Dependency Inversion Principle.",
+    "keywords": "dependency inversion DIP light switch bulb socket interface abstraction hard-wired new interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-dependency-inversion-trap",
+    "title": "D — the Dependency Inversion Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-inversion.html",
+    "summary": "The classic mistake with D — the Dependency Inversion Principle.",
+    "keywords": "dependency inversion DIP light switch bulb socket interface abstraction hard-wired new trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet",
+    "title": "Dependency Injection in .NET",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "Who plugs things in: the container as an electrician, Program.cs as the plan, and the three lifetimes with everyday pictures.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root electrician"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet-recall",
+    "title": "Dependency Injection in .NET — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "Quick recall points: Dependency Injection in .NET.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root electrician interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-dependency-injection-dotnet-trap",
+    "title": "Dependency Injection in .NET — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/dependency-injection-dotnet.html",
+    "summary": "The classic mistake with Dependency Injection in .NET.",
+    "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root electrician trap mistake",
     "anchor": "trap"
   }
 ]

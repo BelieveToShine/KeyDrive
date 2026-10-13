@@ -37,175 +37,159 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 5 of 12 · 🔤 The five principles</div>
-    <h1>Give each client <span class="grad-text">only the methods it needs</span>.</h1>
-    <p class="sub">The Interface Segregation Principle: fat interfaces, role interfaces, splitting without splitting the class, and when to stop.</p>
-    <div class="interview-q">❓ "What is the Interface Segregation Principle, and how does it relate to LSP?"</div>
+    <h1>A plain printer should not be forced to <span class="grad-text">carry a fax button</span>.</h1>
+    <p class="sub">The Interface Segregation Principle with a printer and a TV remote: fat interfaces, small interfaces and when to stop splitting.</p>
+    <div class="interview-q">❓ "What is the Interface Segregation Principle? Give an example."</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="One fat interface IOrderStore with Save, Find, Export and Email is used by three clients that each need only one method, so every client depends on all four and a change to any method touches all of them">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="One IMachine interface with Print, Scan and Fax is implemented by an all-in-one machine, which uses all three, and by a basic printer, which is forced to implement Scan and Fax even though it cannot do them">
 <defs><marker id="is1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="is1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="is1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M105,230 L105,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#is1A)"/>
-<path d="M320,230 L320,116" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#is1A)"/>
-<path d="M535,230 L535,116" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#is1A)"/>
-<rect class="bx" x="10" y="16" width="620" height="100" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="320" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IOrderStore</text>
-<text x="320" y="69.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Save · Find · ExportCsv · SendEmail</text>
-<text x="320" y="82.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">four jobs in one contract</text>
-<rect class="bx" x="10" y="230" width="190" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="105" y="262.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">CheckoutService</text>
-<text x="105" y="275.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">needs only Save</text>
-<rect class="bx" x="225" y="230" width="190" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="262.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SupportScreen</text>
-<text x="320" y="275.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">needs only Find</text>
-<rect class="bx" x="440" y="230" width="190" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="535" y="262.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ReportJob</text>
-<text x="535" y="275.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">needs only ExportCsv</text>
-<g class="arrow-pill"><rect x="45.5" y="164" width="119" height="18" rx="9"/><text x="105" y="176.5" text-anchor="middle" font-size="9" font-style="italic">depends on all four</text></g>
-<g class="arrow-pill"><rect x="260.5" y="164" width="119" height="18" rx="9"/><text x="320" y="176.5" text-anchor="middle" font-size="9" font-style="italic">depends on all four</text></g>
-<g class="arrow-pill"><rect x="475.5" y="164" width="119" height="18" rx="9"/><text x="535" y="176.5" text-anchor="middle" font-size="9" font-style="italic">depends on all four</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> The interface <span class="kw">IOrderStore</span> bundles four jobs. <b>CheckoutService</b> only saves, <b>SupportScreen</b> only looks orders up, <b>ReportJob</b> only exports — yet all three <b>depend on the whole interface</b>. Change <span class="kw">SendEmail</span> and all three must be recompiled and retested; write a test double and you must implement four methods to use one.</figcaption>
+<g class="st" data-s="2-"><path d="M110,150 L110,112 L240,112 L240,74" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#is1A)"/></g>
+<g class="st" data-s="3-"><path d="M530,150 L530,112 L400,112 L400,74" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#is1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="170" y="10" width="300" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IMachine</text></g>
+<g class="st" data-s="1-"><text x="320" y="52" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print() · Scan() · Fax()</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="20" y="150" width="180" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text class="emo" x="110" y="195" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🖨️📠</text></g>
+<g class="st" data-s="2-"><text x="110" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">AllInOne</text></g>
+<g class="st" data-s="3-" data-hl="4"><rect class="bx" x="440" y="150" width="180" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="4"><text class="emo" x="530" y="195" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🖨️</text></g>
+<g class="st" data-s="3-" data-hl="4"><text x="530" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">BasicPrinter</text></g>
+<g class="st" data-s="2-"><text class="emo" x="178" y="172" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="440" y="250" width="56" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="468" y="273.25" text-anchor="middle" font-size="13" font-weight="400" fill="#22d3ee">✅</text></g>
+<g class="st" data-s="4-"><text x="468" y="285.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Print</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="502" y="250" width="56" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="530" y="273.25" text-anchor="middle" font-size="13" font-weight="400" fill="#22d3ee">💥</text></g>
+<g class="st" data-s="4-"><text x="530" y="285.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Scan</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="564" y="250" width="56" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="592" y="273.25" text-anchor="middle" font-size="13" font-weight="400" fill="#22d3ee">💥</text></g>
+<g class="st" data-s="4-"><text x="592" y="285.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Fax</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="262" width="380" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="200" y="280" text-anchor="middle" font-size="10" fill="#fda4af">The plain printer is forced to carry</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="200" y="294" text-anchor="middle" font-size="10" fill="#fda4af">buttons it can never use</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="139.5" y="103" width="71" height="18" rx="9"/><text x="175" y="115.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="419" y="103" width="92" height="18" rx="9"/><text x="465" y="115.5" text-anchor="middle" font-size="9" font-style="italic">must implement</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>One big interface, <code>IMachine</code>, promises <b>three things</b>: print, scan and fax.</li><li>An <b>all-in-one</b> machine can do all three. It implements <code>IMachine</code> happily. ✅</li><li>But a <b>basic printer</b> must implement <code>IMachine</code> too — because that is the only interface the program knows.</li><li>It can <b>print</b>, but it has to supply <b>Scan</b> and <b>Fax</b> as well — and it cannot do them. 💥</li><li>The basic printer is forced to depend on things it does not use. That is what the Interface Segregation Principle forbids.</li></ol>
+<figcaption><strong>What you're seeing:</strong> one fat interface. Look at the plain printer: two of its three buttons are fakes.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>Make small interfaces, shaped by what each client needs</b> — no client should be forced to depend on methods it does not use.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>No class should be forced to have methods it does not use.</b> Make small interfaces, each with one focused promise.</span></div>
   <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>This is the same pain as page 4, one step earlier: if an interface is wide, some implementer eventually cannot honour all of it, and throws <span class="kw">NotSupportedException</span>. Narrow interfaces make that impossible.</p>
-      <p>The principle is usually worded “clients should not be forced to depend on methods they do not use”. Eric Lippert’s advice on Microsoft Learn’s blog archive points the same way: an interface should be a minimal group of members needed for one responsibility, designed from the point of view of the code calling it.</p>
-      <p>Microsoft’s .NET architecture guidance also says to keep cohesion high and the interaction points between pieces few. Small interfaces are how that looks in code.</p>
+      <p>📺 A TV remote with 50 buttons when you only use 3. You can press the wrong one, and nobody can tell which buttons matter. A simple remote with just the buttons you need is safer and clearer.</p>
+      <p>In code, a <b>fat interface</b> is the 50-button remote. A <b>small interface</b> is the simple one. (It also fixes the penguin problem from the last page: <code>IFlyable</code> was a small interface.)</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">✂️ After segregation</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The same code after segregation: SqlOrderRepository implements three small interfaces IOrderWriter, IOrderReader and IOrderExporter, and each client depends only on the one interface it needs">
+    <div class="sec-label see">✂️ The fix: split it</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="After splitting: three small interfaces IPrinter, IScanner and IFax; BasicPrinter implements only IPrinter while AllInOne implements all three, and a PrintJob that needs only printing asks only for IPrinter">
 <defs><marker id="is2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="is2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="is2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M105,62 L105,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#is2A)"/>
-<path d="M320,62 L320,120" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#is2A)"/>
-<path d="M535,62 L535,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#is2A)"/>
-<path d="M105,245 L105,170" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#is2A)"/>
-<path d="M320,245 L320,170" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#is2A)"/>
-<path d="M535,245 L535,170" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#is2A)"/>
-<rect class="bx" x="10" y="12" width="620" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="320" y="41" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">SqlOrderRepository : IOrderWriter, IOrderReader, IOrderExporter</text>
-<rect class="bx" x="10" y="120" width="190" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="105" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">«interface» IOrderWriter</text>
-<text x="105" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Save</text>
-<rect class="bx" x="225" y="120" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">«interface» IOrderReader</text>
-<text x="320" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Find</text>
-<rect class="bx" x="440" y="120" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="535" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">«interface» IOrderExporter</text>
-<text x="535" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">ExportCsv</text>
-<rect class="bx" x="10" y="245" width="190" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="105" y="267.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">CheckoutService</text>
-<text x="105" y="280.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">sees one method only</text>
-<rect class="bx" x="225" y="245" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="267.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SupportScreen</text>
-<text x="320" y="280.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">sees one method only</text>
-<rect class="bx" x="440" y="245" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="535" y="267.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ReportJob</text>
-<text x="535" y="280.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">sees one method only</text>
-<g class="arrow-pill"><rect x="69.5" y="82" width="71" height="18" rx="9"/><text x="105" y="94.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
-<g class="arrow-pill"><rect x="284.5" y="82" width="71" height="18" rx="9"/><text x="320" y="94.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
-<g class="arrow-pill"><rect x="499.5" y="82" width="71" height="18" rx="9"/><text x="535" y="94.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
-<g class="arrow-pill"><rect x="69.5" y="198" width="71" height="18" rx="9"/><text x="105" y="210.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="284.5" y="198" width="71" height="18" rx="9"/><text x="320" y="210.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="499.5" y="198" width="71" height="18" rx="9"/><text x="535" y="210.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> the class can still implement everything — <b>one implementation, three views</b>. Each client is handed only the interface it needs, so it cannot call, break or even see the rest. Splitting the interface does not mean splitting the class.</figcaption>
+<g class="st" data-s="2-"><path d="M60,190 L60,66" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#is2A)"/></g>
+<g class="st" data-s="3-"><path d="M265,190 L265,150 L150,150 L150,66" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#is2A)"/></g>
+<g class="st" data-s="3-"><path d="M320,190 L320,66" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#is2A)"/></g>
+<g class="st" data-s="3-"><path d="M375,190 L375,150 L510,150 L510,66" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#is2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="10" width="190" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">«interface» IPrinter</text></g>
+<g class="st" data-s="1-"><text x="105" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print()</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="225" y="10" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">«interface» IScanner</text></g>
+<g class="st" data-s="1-"><text x="320" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Scan()</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="10" width="190" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="535" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IFax</text></g>
+<g class="st" data-s="1-"><text x="535" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Fax()</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="190" width="190" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="emo" x="105" y="235" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🖨️</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">BasicPrinter</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="225" y="190" width="190" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text class="emo" x="320" y="235" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🖨️📠</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">AllInOne</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="440" y="200" width="190" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="224" text-anchor="middle" font-size="10" fill="#67e8f9">PrintJob asks for</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="238" text-anchor="middle" font-size="10" fill="#67e8f9">an IPrinter only —</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="252" text-anchor="middle" font-size="10" fill="#67e8f9">it never sees Scan</text></g>
+<g class="st" data-s="2-"><text class="emo" x="178" y="212" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="3-"><text class="emo" x="393" y="212" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="292" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="315" text-anchor="middle" font-size="10" fill="#6ee7b7">Small, focused promises: each class takes only what it can really do</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="43" y="119" width="34" height="18" rx="9"/><text x="60" y="131.5" text-anchor="middle" font-size="9" font-style="italic">can</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="190" y="141" width="34" height="18" rx="9"/><text x="207" y="153.5" text-anchor="middle" font-size="9" font-style="italic">can</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="303" y="119" width="34" height="18" rx="9"/><text x="320" y="131.5" text-anchor="middle" font-size="9" font-style="italic">can</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="425" y="141" width="34" height="18" rx="9"/><text x="442" y="153.5" text-anchor="middle" font-size="9" font-style="italic">can</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Split the big promise into <b>three small ones</b>: <code>IPrinter</code>, <code>IScanner</code>, <code>IFax</code>.</li><li>The <b>basic printer</b> signs up for <b>IPrinter only</b>. No fake Scan, no fake Fax. ✅</li><li>The <b>all-in-one</b> signs up for all three. One class can implement many small interfaces. ✅</li><li>A <code>PrintJob</code> that only prints asks for an <code>IPrinter</code>. It works with either machine and never sees Scan.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same machines with small interfaces. Each class says only what it can really do.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧪 ISP lab · split the fat interface</div>
-    <div class="code-block"><pre><span class="cmt">// BEFORE — one interface, four jobs</span>
-<span class="kw">public</span> <span class="kw">interface</span> IOrderStore
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — one fat interface</span>
+<span class="kw">interface</span> IMachine { <span class="kw">void</span> Print(); <span class="kw">void</span> Scan(); <span class="kw">void</span> Fax(); }
+
+<span class="kw">class</span> BasicPrinter : IMachine
 {
-    <span class="kw">void</span> Save(Order order);
-    Order? Find(<span class="kw">int</span> id);
-    <span class="kw">string</span> ExportCsv(DateOnly from, DateOnly to);
-    <span class="kw">void</span> SendEmail(<span class="kw">int</span> orderId);
-}
-<span class="kw">public</span> <span class="kw">class</span> CheckoutService
-{
-    <span class="kw">public</span> CheckoutService(IOrderStore store) { /* only calls Save */ }
+    <span class="kw">public</span> <span class="kw">void</span> Print() { /* works */ }
+    <span class="kw">public</span> <span class="kw">void</span> Scan() =&gt; <span class="kw">throw</span> <span class="kw">new</span> NotSupportedException();   <span class="cmt">// forced to have it</span>
+    <span class="kw">public</span> <span class="kw">void</span> Fax()  =&gt; <span class="kw">throw</span> <span class="kw">new</span> NotSupportedException();   <span class="cmt">// forced to have it</span>
 }
 
-<span class="cmt">// AFTER — role interfaces</span>
-<span class="kw">public</span> <span class="kw">interface</span> IOrderWriter   { <span class="kw">void</span> Save(Order order); }
-<span class="kw">public</span> <span class="kw">interface</span> IOrderReader   { Order? Find(<span class="kw">int</span> id); }
-<span class="kw">public</span> <span class="kw">interface</span> IOrderExporter { <span class="kw">string</span> ExportCsv(DateOnly from, DateOnly to); }
+<span class="cmt">// AFTER — small interfaces</span>
+<span class="kw">interface</span> IPrinter { <span class="kw">void</span> Print(); }
+<span class="kw">interface</span> IScanner { <span class="kw">void</span> Scan(); }
+<span class="kw">interface</span> IFax     { <span class="kw">void</span> Fax(); }
 
-<span class="kw">public</span> <span class="kw">class</span> SqlOrderRepository : IOrderWriter, IOrderReader, IOrderExporter { /* ... */ }
+<span class="kw">class</span> BasicPrinter : IPrinter { <span class="kw">public</span> <span class="kw">void</span> Print() { /* works */ } }
+<span class="kw">class</span> AllInOne     : IPrinter, IScanner, IFax { /* all three */ }
 
-<span class="kw">public</span> <span class="kw">class</span> CheckoutService
-{
-    <span class="kw">public</span> CheckoutService(IOrderWriter writer) { /* cannot call anything <span class="kw">else</span> */ }
-}</pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. Email left the interface entirely: sending mail is a different job and belongs behind its own <span class="kw">INotifier</span>. DI registers one class under several interfaces.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Fat IOrderStore</th><th scope="col">Segregated</th></tr></thead><tbody><tr><th scope="row">Methods a test double must implement for CheckoutService</th><td>4</td><td>1</td></tr><tr><th scope="row">Clients recompiled when ExportCsv changes</th><td>3</td><td>1</td></tr><tr><th scope="row">Can a read-only implementation exist honestly?</th><td>No (throws)</td><td>Yes (IOrderReader only)</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+<span class="kw">void</span> RunJob(IPrinter printer) =&gt; printer.Print();   <span class="cmt">// works with both</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The code that only prints now depends only on <span class="kw">IPrinter</span>.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: does this break the rule?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> An <code>IWorker</code> with <code>Work()</code> and <code>Eat()</code>, and a <code>Robot</code> class that must implement <code>Eat()</code></summary><div class="zoom-inner"><p><b>Breaks the rule.</b> The robot is forced to carry a method it cannot use. Split <code>Eat</code> into <code>IFeedable</code>.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> An interface with 20 methods, used by five different classes that each call only two or three of them</summary><div class="zoom-inner"><p><b>Breaks the rule.</b> Every client depends on 17 methods it does not need. Split by what each client uses.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> An interface with just <code>Open()</code> and <code>Close()</code> — everyone who opens also closes</summary><div class="zoom-inner"><p><b>Fine.</b> These always go together. Do not split things that belong together.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A class that implements three small interfaces</summary><div class="zoom-inner"><p><b>Fine.</b> That is exactly the design: many small promises, one class can keep several.</p></div></details>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label trap">📋 Smells of a fat interface</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Implementations with empty or throwing methods</th><td>The interface is wider than the implementer’s abilities</td><td>Split by role (this page) — and see page 4</td></tr><tr><th scope="row">A test double of 10 methods used for 1</th><td>Clients depend on far more than they use</td><td>One interface per client need</td></tr><tr><th scope="row">A change to one method recompiles unrelated callers</th><td>Needless coupling</td><td>Extract the changing part</td></tr><tr><th scope="row">Interface name ends in Manager / Helper / Service with “And” in its job</th><td>Several responsibilities in one contract</td><td>Apply SRP to the interface first</td></tr><tr><th scope="row">Constructor takes the interface but uses one member</th><td>The client asks for too much</td><td>Depend on the role interface instead</td></tr></tbody></table></div>
+    <div class="sec-label trap">👀 How to spot it in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">A method that throws <code>NotImplementedException</code> because “the interface needs it”</th><td>The interface is bigger than this class. Split it.</td></tr><tr><th scope="row">A fake/mock with a long list of empty methods just to run one test</th><td>The client depends on far more than it uses.</td></tr><tr><th scope="row">An interface named <b>IManager</b> or <b>IService</b> with 15+ methods</th><td>It probably holds several jobs. Split by role.</td></tr><tr><th scope="row">A change to one method forces unrelated classes to recompile or re-test</th><td>Too much sharing. Give each client its own small interface.</td></tr></tbody></table></div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">🖨️</span><h5>A “multifunction” IMachine with Print, Scan, Fax</h5><p>A basic printer must stub out Scan and Fax.</p><span class="sc-use">→ IPrinter, IScanner, IFaxer</span></div>
-      <div class="scenario"><span class="sc-icon">👤</span><h5>IUserService with 25 methods injected everywhere</h5><p>Every controller depends on all 25.</p><span class="sc-use">→ Split by use case: IUserReader, IUserRegistrar</span></div>
-      <div class="scenario"><span class="sc-icon">🧪</span><h5>A mock needs 12 setups for a one-method test</h5><p>Test noise hides intent.</p><span class="sc-use">→ Narrow the dependency</span></div>
-      <div class="scenario"><span class="sc-icon">📖</span><h5>A read-only reporting database</h5><p>It cannot honestly implement Save.</p><span class="sc-use">→ Give it IOrderReader only</span></div>
-    </div>
-  </section>
-  <details class="zoom">
-    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
-    <div class="zoom-inner">
-      <p><b>Role interfaces.</b> Name an interface after the <i>role</i> a client needs (<span class="kw">IOrderReader</span>), not after the class that implements it (<span class="kw">IOrderRepository</span>).</p>
-      <p><b>Do not overdo it.</b> One-method interfaces everywhere become noise. Split when clients really differ in what they need; keep cohesive operations together.</p>
-      <p><b>.NET itself.</b> The base library follows the idea: <span class="kw">IReadOnlyList&lt;T&gt;</span> and <span class="kw">IList&lt;T&gt;</span> give read-only and read-write views of a list. Prefer accepting the narrower one.</p>
-    </div>
-  </details>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>ISP: no client should be forced to depend on methods it does not use.</li><li>A fat interface couples unrelated clients and forces test doubles to implement everything.</li><li>Split by role, named after what the client needs; one class may implement several.</li><li>ISP prevents LSP violations: you cannot throw from a method that is not in the interface.</li><li>Do not shatter into one-method interfaces without a reason.</li><li>Accept the narrowest type that does the job (for example IReadOnlyList instead of List).</li></ul>
+      <ul><li>ISP: no class should be forced to implement methods it does not use.</li><li>Fat interface = remote with 50 buttons. Small interfaces = remotes with just the buttons you need.</li><li>One class can implement many small interfaces.</li><li>Do not over-split: keep things that always go together in one interface.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"The Interface Segregation Principle says clients shouldn’t depend on methods they don’t use. When I see a wide interface with stubs that throw, or a test double implementing ten methods for one call, I split it into role interfaces named after what each client needs. One class can implement several, so there’s no duplication — each consumer just gets a smaller, safer view. I keep it proportionate: split where clients genuinely differ."</div>
+    <div class="kd-card saythis-box">"The Interface Segregation Principle says clients should not be forced to depend on methods they don’t use. If a basic printer has to implement an IMachine with Scan and Fax, it ends up with fake methods. I split the interface into small ones — IPrinter, IScanner, IFax — and each class implements only what it can really do."</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>“ISP means one method per interface.”</b> It means shaped by clients’ needs; cohesive methods stay together.</p>
-      <p><b>Splitting the class instead of the interface.</b> The class can implement several interfaces.</p>
+      <p><b>“ISP means one method per interface.”</b> No — group methods that belong together and are always used together.</p>
     </div>
   </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🧱 SRP</h5><p>A class (or module) has one reason to change.</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>✂️ ISP</h5><p>A client sees only the methods it needs.</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>Small interfaces tell clients what they need. Next: Dependency Inversion — who owns the interface, and which way should the arrows point?</span>
+      <span>Interfaces tell us what a class can do. Next: who should <i>own</i> the interface, and which way should the dependency arrows point?</span>
       <a class="next-link" href="dependency-inversion.html">D — the Dependency Inversion Principle <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 The principle’s wording is Robert C. Martin’s; the minimal-interface advice follows Eric Lippert’s blog (archived on Microsoft Learn) and the MSDN Magazine SOLID article. No official .NET page defines ISP; the .NET collection-interface example is a general observation, not quoted. Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="https://learn.microsoft.com/en-us/archive/blogs/ericlippert/so-many-interfaces" target="_blank" rel="noopener">Eric Lippert: So many interfaces! (archive)</a> · <a href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2014/may/csharp-best-practices-dangers-of-violating-solid-principles-in-csharp" target="_blank" rel="noopener">MSDN Magazine: Dangers of Violating SOLID Principles in C#</a></p>
+  </section>  <p class="fact-note">📌 The principle’s wording (“clients should not be forced to depend on methods they do not use”) is Robert C. Martin’s. Eric Lippert’s advice (archived on Microsoft Learn) is similar: an interface should be a minimal group of members for one responsibility, designed from the caller’s point of view. The printer and remote are teaching analogies. Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://learn.microsoft.com/en-us/archive/blogs/ericlippert/so-many-interfaces" target="_blank" rel="noopener">Eric Lippert: So many interfaces! (archive)</a> · <a href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2014/may/csharp-best-practices-dangers-of-violating-solid-principles-in-csharp" target="_blank" rel="noopener">MSDN Magazine: Dangers of Violating SOLID Principles in C#</a></p>
 
 
 </main>
