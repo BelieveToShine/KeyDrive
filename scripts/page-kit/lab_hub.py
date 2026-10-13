@@ -101,5 +101,6 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])
 </body>
 </html>
 '''
+(REPO / lab / 'concepts').mkdir(parents=True, exist_ok=True)
 (REPO / lab / 'index.html').write_text(page)
 print('wrote', lab + '/index.html', len(page), 'map height', H)

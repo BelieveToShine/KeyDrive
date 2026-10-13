@@ -135,5 +135,18 @@ Source root: https://react.dev/
 | First-load timings: content visible 0.8 s / 2.1 s; interactive 2.2 s / 2.1 s; “first second” | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 11 — code splitting & bundle weight
+| Claim | Status | Note |
+|---|---|---|
+| lazy defers a component's code until it is first rendered; the load function is not called until React first tries to render the component | ✅ V | reference/react/lazy |
+| lazy(() => import('./X')) relies on dynamic import() (may need bundler/framework support) and expects a default export | ✅ V | same |
+| A lazy component, or a parent, must be inside a Suspense boundary; the fallback shows while it loads; lazy loading activates Suspense | ✅ V | same / reference/react/Suspense |
+| The returned promise and resolved value are cached, load is never called more than once; a rejected promise goes to the nearest Error Boundary | ✅ V | reference/react/lazy |
+| Server Components' code is not sent to the browser | ✅ V | reference/rsc/server-components (renders ahead of time in a separate environment) |
+| Use a bundle analyser; preload on hover; stale chunks after deployment; over-splitting creates many requests | 🟨 K | general practice, not stated on react.dev; kept as practical advice |
+| Error text “Element type is invalid” for a missing default export | 🟨 K | React's common error message; lazy docs state the default-export requirement |
+| Bundle numbers: 420 KB → 330 KB → 180 KB (−57%); checkout 90 KB, charts 120 KB, editor 30 KB | 🟦 I | teaching numbers (420 − 90 − 120 − 30 = 180) |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

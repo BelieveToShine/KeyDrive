@@ -2916,5 +2916,31 @@
     "summary": "The classic mistake with Server rendering, hydration & Server Components.",
     "keywords": "react server rendering ssr hydration hydrateRoot server components use client use server streaming static generation mismatch trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-code-splitting-bundles",
+    "title": "Code splitting & bundle weight",
+    "category": "React",
+    "page": "react/concepts/code-splitting-bundles.html",
+    "summary": "Bundle weight, React.lazy with dynamic import and Suspense, what to split and what not to, and how to measure.",
+    "keywords": "react code splitting lazy dynamic import bundle size suspense chunk bundle analyzer performance"
+  },
+  {
+    "id": "react-code-splitting-bundles-recall",
+    "title": "Code splitting & bundle weight — interview recall",
+    "category": "React",
+    "page": "react/concepts/code-splitting-bundles.html",
+    "summary": "Quick recall points: Code splitting & bundle weight.",
+    "keywords": "react code splitting lazy dynamic import bundle size suspense chunk bundle analyzer performance interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-code-splitting-bundles-trap",
+    "title": "Code splitting & bundle weight — common trap",
+    "category": "React",
+    "page": "react/concepts/code-splitting-bundles.html",
+    "summary": "The classic mistake with Code splitting & bundle weight.",
+    "keywords": "react code splitting lazy dynamic import bundle size suspense chunk bundle analyzer performance trap mistake",
+    "anchor": "trap"
   }
 ]

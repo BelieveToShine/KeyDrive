@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code splitting &amp; bundle weight — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Bundles</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 12 · ⚛️ Shipping it</div>
+    <h1>The fastest code is the code <span class="grad-text">you never send</span>.</h1>
+    <p class="sub">What bundle weight costs, how lazy and dynamic import split it, what to split and what not to, and how to measure.</p>
+    <div class="interview-q">❓ "How do you reduce the JavaScript a React app sends on first load?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Splitting ShopUI’s 420 KB bundle: one bundle makes every visitor download the checkout, charts and editor, while a split bundle sends 180 KB first and loads the rest on demand">
+<defs><marker id="bd1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">JAVASCRIPT A VISITOR DOWNLOADS (ILLUSTRATIVE KB)</text>
+<text class="free" x="26" y="60" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">One bundle — everything, on first load</text>
+<rect class="bx" x="26" y="70" width="378" height="34" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text class="free" x="215.0" y="92" text-anchor="middle" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">app + checkout + charts + editor = 420 KB</text>
+<text class="free" x="26" y="156" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Split — only what the first page needs</text>
+<rect class="bx" x="26" y="166" width="162" height="34" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text class="free" x="107.0" y="188" text-anchor="middle" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">main 180 KB</text>
+<text class="free" x="26" y="230" text-anchor="start" font-size="10.5" font-weight="400" fill="#93a0b8">Loaded later, only if the visitor goes there:</text>
+<rect class="bx" x="26" y="238" width="81" height="34" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="bx" x="131" y="238" width="108" height="34" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="bx" x="258" y="238" width="27" height="34" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="66" y="288" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">checkout 90</text>
+<text class="free" x="185" y="288" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">charts 120</text>
+<text class="free" x="271" y="288" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">editor 30</text>
+<text class="free" x="320" y="310" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Initial JavaScript: 420 KB → 180 KB (−57%); the rest is a click away.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> ShopUI’s JavaScript, before and after splitting. <b>One bundle</b> (420 KB) makes every visitor download the checkout, the charts and the editor even if they only browse products. <b>Split</b>: the main bundle (180 KB) holds what the first page needs; the checkout, charts and editor become separate <b>chunks</b> loaded when someone actually needs them. Page 10 made the first paint fast; this page makes the JavaScript that follows lighter. (KB values are illustrative.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The fastest code is the code <b>you never send</b>. Split by <b>route and by rarely-used feature</b>, load the rest on demand.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 10 showed that even with server rendering the browser still downloads JavaScript to hydrate. Every kilobyte must be downloaded, parsed and executed before the page is interactive — on a slow phone this, not React’s render time, is often the biggest delay.</p>
+      <p>A typical app grows: checkout, admin screens, charts, rich-text editors. A single bundle sends all of it to every visitor. <b>Code splitting</b> cuts the bundle into chunks that load on demand.</p>
+      <p>React’s tool for this is <span class="kw">lazy</span> plus <span class="kw">Suspense</span> — the same Suspense boundary you met in page 9.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚙️ How lazy loading works</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="React.lazy calls its load function the first time the component renders, which starts a dynamic import; Suspense shows a fallback until the chunk arrives, and a failed load goes to the nearest error boundary">
+<defs><marker id="bd2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M140,75 L185,75" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<path d="M315,75 L360,75" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<path d="M490,75 L520,75" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<path d="M250,110 L250,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<path d="M425,110 L425,190" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<rect class="bx" x="10" y="40" width="130" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="66.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Render</text>
+<text x="75" y="78.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">&lt;Checkout /&gt;</text>
+<text x="75" y="91.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">for the first time</text>
+<rect class="bx" x="185" y="40" width="130" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="250" y="67" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">lazy runs</text>
+<text x="250" y="79" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">load()</text>
+<text x="250" y="91" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">import("./Checkout")</text>
+<rect class="bx" x="360" y="40" width="130" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="425" y="66.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Chunk downloads</text>
+<text x="425" y="79" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Suspense shows</text>
+<text x="425" y="91.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">the fallback</text>
+<rect class="bx" x="520" y="40" width="110" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="575" y="72.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Component</text>
+<text x="575" y="85.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">renders</text>
+<rect class="bx" x="185" y="190" width="130" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="250" y="222.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Cached</text>
+<text x="250" y="235.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">load() runs once</text>
+<rect class="bx" x="360" y="190" width="190" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="455" y="216.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Load fails</text>
+<text x="455" y="229" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">goes to the nearest</text>
+<text x="455" y="241.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">error boundary</text>
+<g class="arrow-pill"><rect x="212" y="141" width="76" height="18" rx="9"/><text x="250" y="153.5" text-anchor="middle" font-size="9" font-style="italic">next render</text></g>
+<g class="arrow-pill"><rect x="397.5" y="141" width="55" height="18" rx="9"/><text x="425" y="153.5" text-anchor="middle" font-size="9" font-style="italic">rejects</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <span class="kw">lazy(() =&gt; import('./Checkout'))</span> does not load anything yet. React calls the load function <b>the first time the component renders</b>, which starts a dynamic <span class="kw">import()</span>; a <b>Suspense</b> boundary shows its fallback until the chunk arrives. The loaded component is <b>cached</b>, so load runs only once. If the download fails, the error goes to the <b>nearest error boundary</b>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 What to split — and what not to</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Split it</th><th scope="col">Why</th><th scope="col">Do not split</th></tr></thead><tbody><tr><th scope="row"><b>Routes / pages</b> (checkout, account, admin)</th><td>Most visitors never open most routes</td><td>The route every visitor lands on first</td></tr><tr><th scope="row"><b>Heavy, rarely-used features</b> (charts, editors, maps, PDF viewers)</th><td>Large libraries, used by few</td><td>Tiny components — an extra request costs more than it saves</td></tr><tr><th scope="row"><b>Modals and drawers</b> opened on click</th><td>Only needed after an action</td><td>Things shown on every page load</td></tr><tr><th scope="row"><b>Server-only logic</b> (Server Components, page 10)</th><td>Their code is never sent at all</td><td>—</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Constraints from the docs: <span class="kw">lazy</span> expects a <b>default export</b>, needs a bundler or framework that supports dynamic <span class="kw">import()</span>, and the lazy component (or a parent) must sit inside a <span class="kw">&lt;Suspense&gt;</span> boundary.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Bundle lab · lazy-load the checkout</div>
+    <div class="code-block"><pre><span class="cmt">// Before — everything in the first bundle</span>
+<span class="kw">import</span> Checkout <span class="kw">from</span> <span class="str">'./Checkout'</span>;
+
+<span class="cmt">// After — the checkout becomes its own chunk</span>
+<span class="kw">const</span> Checkout = lazy(() =&gt; import(<span class="str">'./Checkout'</span>));
+&lt;Suspense fallback={&lt;CheckoutSkeleton /&gt;}&gt;
+  &lt;Checkout /&gt;
+&lt;/Suspense&gt;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Initial JavaScript</th><th scope="col">What changed</th></tr></thead><tbody><tr><th scope="row">Baseline</th><td>420 KB</td><td>One bundle</td></tr><tr><th scope="row">Lazy-load checkout (90 KB)</th><td>330 KB</td><td>Chunk loads when the user opens checkout</td></tr><tr><th scope="row">Lazy-load charts (120 KB) and editor (30 KB)</th><td>180 KB</td><td>Admin features are no longer in the first bundle</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · bundle symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">The bundle is large and you do not know why</th><td>No visibility</td><td>Run your bundler’s bundle analyser and sort by size before changing anything</td></tr><tr><th scope="row">A spinner flashes on every route change</th><td>The fallback replaces visible content</td><td>Wrap navigation in a transition (page 9) and keep boundaries small</td></tr><tr><th scope="row">“A component suspended” error</th><td>Lazy component without a Suspense boundary</td><td>Add <span class="kw">&lt;Suspense&gt;</span> above it</td></tr><tr><th scope="row">Error “Element type is invalid” from a lazy component</th><td>Named export, but <span class="kw">lazy</span> needs a default export</td><td>Add a default export or re-export it as default in a small wrapper</td></tr><tr><th scope="row">Many tiny chunks, slow navigation</th><td>Over-splitting; chunks load one after another</td><td>Split on routes and heavy features, not on every component</td></tr><tr><th scope="row">Users see a load error after a deployment</th><td>The old page asks for a chunk that no longer exists</td><td>Error boundary with a reload option; keep old chunks available for a while</td></tr><tr><th scope="row">Still big after splitting</th><td>One import pulls in a whole library</td><td>Import only what you use; check what the analyser says</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📉</span><h5>Home page is slow on 3G</h5><p>Admin code and charts are in the main bundle.</p><span class="sc-use">→ Route-level lazy loading</span></div>
+      <div class="scenario"><span class="sc-icon">📝</span><h5>A rich-text editor adds hundreds of KB</h5><p>Only editors need it.</p><span class="sc-use">→ Lazy-load the editor on first open</span></div>
+      <div class="scenario"><span class="sc-icon">🖱️</span><h5>Modal feels slow the first time</h5><p>Chunk loads on click.</p><span class="sc-use">→ Preload on hover or focus</span></div>
+      <div class="scenario"><span class="sc-icon">🚢</span><h5>Errors right after each deployment</h5><p>Old chunk names are gone.</p><span class="sc-use">→ Error boundary + refresh prompt</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>One call, cached.</b> React does not call the load function until it first tries to render the component, and both the returned promise and its resolved value are cached, so it is never called twice.</p>
+      <p><b>Preloading.</b> You can start the same <span class="kw">import()</span> early — for example when the user hovers a link — so the chunk is already there when the component renders.</p>
+      <p><b>With Server Components</b> (page 10) code that stays on the server never reaches the browser, which is the strongest form of “not sending code”.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Bundle weight is download + parse + execute time on the user’s device.</li><li><span class="kw">lazy(() =&gt; import(...))</span> defers a component’s code until it first renders; it needs a default export.</li><li>A lazy component needs a Suspense boundary; a failed load goes to the nearest error boundary.</li><li>Split by route and by heavy, rarely-used features; do not split tiny components.</li><li>Measure with a bundle analyser first; then change one thing and re-measure.</li><li>Code that never ships (Server Components) beats code that ships late.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I look at what the bundle contains with an analyser, then split by route and by heavy rarely-used features using lazy and dynamic import with a Suspense fallback, and an error boundary for failed loads. I keep the first route lean, preload on intent, and re-measure initial JavaScript to prove the saving."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Splitting everything.</b> Dozens of tiny chunks mean dozens of requests and visible loading states.</p>
+      <p><b>No error boundary around lazy parts.</b> One failed download breaks the whole screen.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📦 Bundle size</h5><p>What the visitor must download for the first screen.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>⚡ Render time</h5><p>What React spends calling components (page 5). Both matter; they need different fixes.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You now have every tool. Time to use them together: the capstone React performance clinic. <i>(coming soon: Capstone: the React performance clinic)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/lazy" target="_blank" rel="noopener">lazy</a> · <a href="https://react.dev/reference/react/Suspense" target="_blank" rel="noopener">Suspense</a> · <a href="https://react.dev/learn/build-a-react-app-from-scratch" target="_blank" rel="noopener">Build a React app from Scratch</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

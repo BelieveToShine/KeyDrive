@@ -347,7 +347,8 @@
       "react-debugging-playbook",
       "context-state-architecture",
       "data-fetching-suspense",
-      "server-rendering-hydration"
+      "server-rendering-hydration",
+      "code-splitting-bundles"
     ],
     "sub": {},
     "subTitles": {}
