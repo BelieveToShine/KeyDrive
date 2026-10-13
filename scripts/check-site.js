@@ -144,7 +144,9 @@ for (const f of conceptFiles) {
   if (new Set(allMarkerIds).size !== allMarkerIds.length) E(r, 'duplicate <marker> ids across diagrams on one page');
   const figs = [...html.matchAll(/<figure class="diagram-card">[\s\S]*?<\/figure>/g)];
   for (const [k, fg] of figs.entries()) if (!/<figcaption><strong>What you're seeing:<\/strong>/.test(fg[0])) E(r, `figure ${k + 1}: figcaption must start with "What you're seeing:"`);
-  if (/\{\{|\bundefined\b|TODO|lorem ipsum/.test(textOf(html))) E(r, 'leftover template/placeholder text');
+  // `{{ … }}` is legitimate Angular interpolation inside code spans / code blocks; only flag it in plain prose
+  const proseOnly = textOf(html.replace(/<pre[\s\S]*?<\/pre>/g, ' ').replace(/<span class="kw">[\s\S]*?<\/span>/g, ' '));
+  if (/\{\{/.test(proseOnly) || /\bundefined\b|TODO|lorem ipsum/.test(textOf(html))) E(r, 'leftover template/placeholder text');
   // volatile claims vs ledger
   const ledger = ledgerFor(cat);
   const text = textOf(html);

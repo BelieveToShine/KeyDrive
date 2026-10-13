@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Angular mental model — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Mental model</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 1 of 12 · 🅰️ The update model</div>
+    <h1>An Angular app is a <span class="grad-text">tree of components</span> wired by bindings.</h1>
+    <p class="sub">What a component is, how bindings move data down and events up, how an app starts, and the ShopUI practice app.</p>
+    <div class="interview-q">❓ "What is an Angular component, and how do components talk to each other?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A component class declares a selector, its template dependencies and an input and output; the parent template uses the selector as an element, passes data down with a property binding and receives events with an event binding">
+<defs><marker id="am1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="am1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="am1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M420,52 L330,52" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#am1A)"/>
+<path d="M420,160 L330,160" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#am1A)"/>
+<path d="M330,268 L420,268" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#am1A)"/>
+<rect class="bx" x="10" y="14" width="320" height="290" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="24" y="36" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">@Component({</text>
+<text x="34" y="53" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#fcd34d">selector: 'app-product-card',</text>
+<text x="34" y="70" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">imports: [CurrencyPipe],</text>
+<text x="34" y="87" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">template: `</text>
+<text x="44" y="104" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">&lt;h3&gt;{{ product().name }}&lt;/h3&gt;</text>
+<text x="44" y="121" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">&lt;button (click)="added.emit(1)"&gt;</text>
+<text x="34" y="138" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">`,</text>
+<text x="24" y="155" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">})</text>
+<text x="24" y="172" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">export class ProductCard {</text>
+<text x="34" y="189" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#fcd34d">product = input.required&lt;Product&gt;();</text>
+<text x="34" y="206" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#fcd34d">added = output&lt;number&gt;();</text>
+<text x="24" y="223" text-anchor="start" font-size="8.4" font-family="'JetBrains Mono'" fill="#9fe8f5">}</text>
+<rect class="bx" x="420" y="14" width="210" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="525" y="42" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">&lt;app-product-card</text>
+<text x="525" y="54.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">the selector becomes an</text>
+<text x="525" y="67" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">element in a template</text>
+<rect class="bx" x="420" y="122" width="210" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="525" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[product]="p"</text>
+<text x="525" y="162.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">property binding:</text>
+<text x="525" y="175" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">data flows down</text>
+<rect class="bx" x="420" y="230" width="210" height="76" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="525" y="258" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">(added)="add($event)"</text>
+<text x="525" y="270.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">event binding:</text>
+<text x="525" y="283" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">events flow up</text>
+<g class="arrow-pill"><rect x="347.5" y="43" width="55" height="18" rx="9"/><text x="375" y="55.5" text-anchor="middle" font-size="9" font-style="italic">creates</text></g>
+<g class="arrow-pill"><rect x="347.5" y="151" width="55" height="18" rx="9"/><text x="375" y="163.5" text-anchor="middle" font-size="9" font-style="italic">input()</text></g>
+<g class="arrow-pill"><rect x="345" y="259" width="60" height="18" rx="9"/><text x="375" y="271.5" text-anchor="middle" font-size="9" font-style="italic">output()</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> an Angular <b>component</b> is a TypeScript class decorated with <span class="kw">@Component</span>: a <b>selector</b> (how other templates create it), a <b>template</b>, the dependencies the template uses (<span class="kw">imports</span>), and its inputs and outputs. In the <b>parent’s template</b> the selector becomes an element; <span class="kw">[product]</span> passes data <b>down</b> into the <span class="kw">input()</span>, and <span class="kw">(added)</span> receives events <b>up</b> from the <span class="kw">output()</span>.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">An Angular app is a <b>tree of components</b>; each pairs a class (its state) with a template (its look), joined by <b>bindings</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>React gives you a rendering library and lets you choose the rest. Angular is a <b>full framework</b>: components, templates, dependency injection, a router, forms and an HTTP client come in one box, with one way to do each. That is why large teams like it — and why there is more to learn up front.</p>
+      <p>Everything in this lab hangs off one picture: <b>the component tree</b>. Bindings move data down and events up; services (page 7) are shared through injection. Page 2 asks the next question: when something changes, how does Angular find out which parts of the tree to update?</p>
+      <p>We use the same practice app, <b>ShopUI</b>, as the React lab — so you can compare how each framework answers the same problem.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🌳 ShopUI as an Angular app</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 352" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="An Angular app starts with bootstrapApplication, which creates the root component with the providers from the application config; the root template contains child components, and the product list contains 500 product cards">
+<defs><marker id="am2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="am2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="am2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,52 L320,100" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#am2A)"/>
+<path d="M320,144 L320,158 L110,158 L110,216" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#am2A)"/>
+<path d="M320,144 L320,216" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#am2A)"/>
+<path d="M320,144 L320,158 L530,158 L530,216" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#am2A)"/>
+<path d="M320,262 L320,296" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#am2A)"/>
+<rect class="bx" x="150" y="6" width="340" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="25.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">bootstrapApplication(App, appConfig)</text>
+<text x="320" y="37.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">main.ts · providers live in app.config.ts</text>
+<rect class="bx" x="240" y="100" width="160" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="119.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">App</text>
+<text x="320" y="132.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the root component</text>
+<rect class="bx" x="30" y="216" width="160" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="236.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SearchBox</text>
+<text x="110" y="249.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the text input</text>
+<rect class="bx" x="240" y="216" width="160" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="236.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">ProductList</text>
+<text x="320" y="249.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">filters products</text>
+<rect class="bx" x="450" y="216" width="160" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="530" y="236.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Cart</text>
+<text x="530" y="249.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">items and total</text>
+<rect class="bx" x="240" y="296" width="160" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="316.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">ProductCard × 500</text>
+<text x="320" y="329.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">one per product</text>
+<g class="arrow-pill"><rect x="292.5" y="67" width="55" height="18" rx="9"/><text x="320" y="79.5" text-anchor="middle" font-size="9" font-style="italic">creates</text></g>
+<g class="arrow-pill"><rect x="271" y="179" width="98" height="18" rx="9"/><text x="320" y="191.5" text-anchor="middle" font-size="9" font-style="italic">in its template</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <span class="kw">bootstrapApplication(App, appConfig)</span> creates the <b>root component</b>; the providers in <span class="kw">app.config.ts</span> (router, HTTP client…) are available to everything below. The root template contains child components: <b>SearchBox</b>, <b>ProductList</b> (which renders 500 <b>ProductCard</b>s) and <b>Cart</b>. This is the same tree as the React lab — 504 components for one search keystroke.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔗 The four bindings</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Syntax</th><th scope="col">Name</th><th scope="col">Direction</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row"><span class="kw">{{ value }}</span></th><td>Interpolation</td><td>Class → template (text)</td><td><span class="kw">{{ product().name }}</span></td></tr><tr><th scope="row"><span class="kw">[property]="expr"</span></th><td>Property binding</td><td>Parent → child / DOM</td><td><span class="kw">[product]="p"</span>, <span class="kw">[disabled]="busy()"</span></td></tr><tr><th scope="row"><span class="kw">(event)="handler()"</span></th><td>Event binding</td><td>Child / DOM → class</td><td><span class="kw">(click)="add()"</span></td></tr><tr><th scope="row"><span class="kw">[(x)]="state"</span></th><td>Two-way binding</td><td>Both ways (“banana in a box”)</td><td><span class="kw">[(query)]="text"</span> with <span class="kw">model()</span></td></tr></tbody></table></div>
+    <p style="margin-top:12px">Details: to bind an <i>attribute</i> (not a property) use the <span class="kw">attr.</span> prefix. Two-way binding on a component uses <span class="kw">model()</span>, which creates an input and a matching <span class="kw">…Change</span> output; on a form control <span class="kw">[(ngModel)]</span> needs <span class="kw">FormsModule</span> imported. Values that change over time should be read from <b>signals</b> (page 3).</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 Angular and React: the same ideas, different words</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Idea</th><th scope="col">React lab</th><th scope="col">Angular lab</th></tr></thead><tbody><tr><th scope="row">A piece of UI</th><td>Component (function)</td><td>Component (class + template)</td></tr><tr><th scope="row">Data from parent</th><td>Props</td><td><span class="kw">input()</span></td></tr><tr><th scope="row">Event to parent</th><td>Callback prop</td><td><span class="kw">output()</span></td></tr><tr><th scope="row">Local state</th><td><span class="kw">useState</span></td><td><span class="kw">signal()</span> (page 3)</td></tr><tr><th scope="row">Shared services / context</th><td>Context</td><td>Dependency injection (page 7)</td></tr><tr><th scope="row">Markup</th><td>JSX in the function</td><td>HTML-like template with bindings and <span class="kw">@if</span>/<span class="kw">@for</span> (page 4)</td></tr><tr><th scope="row">How it finds changes</th><td>Re-renders a function</td><td>Change detection (page 2)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Mental-model lab · read a component</div>
+    <p>Open any component in your own codebase and answer four questions — this is the skill the rest of the lab builds on.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Where to look</th><th scope="col">ShopUI ProductCard</th></tr></thead><tbody><tr><th scope="row">What creates it?</th><td>The <span class="kw">selector</span> in a parent template</td><td><span class="kw">&lt;app-product-card&gt;</span> inside ProductList</td></tr><tr><th scope="row">What does it need?</th><td><span class="kw">input()</span> / <span class="kw">input.required()</span></td><td><span class="kw">product</span></td></tr><tr><th scope="row">What does it tell its parent?</th><td><span class="kw">output()</span></td><td><span class="kw">added</span> with the product id</td></tr><tr><th scope="row">What can its template use?</th><td>The <span class="kw">imports</span> array</td><td><span class="kw">CurrencyPipe</span> only</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Numbers we will reuse.</b> ShopUI: 1 App + 1 SearchBox + 1 ProductList + 500 ProductCard + 1 Cart = <b>504 components</b>. With the old default strategy one keystroke checks all 504 — about <b>40 ms</b> (illustrative). Page 2 explains why and page 3 cuts it to 4.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · first errors</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“app-foo’ is not a known element</th><td>The component is not in the <span class="kw">imports</span> array of the component that uses it</td><td>Add it to <span class="kw">imports</span> (components are standalone by default since v19)</td></tr><tr><th scope="row">“Can’t bind to ‘x’ since it isn’t a known property”</th><td>The child has no input with that name, or a needed module/directive is not imported</td><td>Check the <span class="kw">input()</span> name; import <span class="kw">FormsModule</span> for <span class="kw">ngModel</span></td></tr><tr><th scope="row">The template shows nothing for a value</th><td>A signal was read without calling it</td><td>Call it: <span class="kw">product()</span>, not <span class="kw">product</span></td></tr><tr><th scope="row">An older tutorial uses NgModules and <span class="kw">@Input()</span></th><td>It predates standalone components and signal inputs</td><td>Prefer standalone + <span class="kw">input()</span>; check the version of the tutorial</td></tr><tr><th scope="row">A custom form control does not two-way bind</th><td>It lacks a model input</td><td>Use <span class="kw">model()</span> for the value</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🧱</span><h5>Joining a large Angular codebase</h5><p>Hundreds of components.</p><span class="sc-use">→ Read selector → inputs → outputs → imports</span></div>
+      <div class="scenario"><span class="sc-icon">🔀</span><h5>Migrating a React feature to Angular</h5><p>Same tree, new words.</p><span class="sc-use">→ Props → input(), callbacks → output()</span></div>
+      <div class="scenario"><span class="sc-icon">🧩</span><h5>A parent needs to know when a child changes</h5><p>Data goes down, events go up.</p><span class="sc-use">→ output() or model()</span></div>
+      <div class="scenario"><span class="sc-icon">📜</span><h5>A tutorial from 2019 does not compile</h5><p>NgModule-era code.</p><span class="sc-use">→ Use standalone components</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Standalone.</b> By default Angular components are standalone, so you add them directly to another component’s <span class="kw">imports</span>. Before version 19 the <span class="kw">standalone</span> option defaulted to false and apps were built from NgModules.</p>
+      <p><b>The providers.</b> <span class="kw">app.config.ts</span> exports an <span class="kw">ApplicationConfig</span> whose providers array holds things like <span class="kw">provideRouter(routes)</span> and <span class="kw">provideHttpClient()</span>. Environment providers like these belong in the application (or a route’s) providers, not in a component’s.</p>
+      <p><b>Versions.</b> This lab teaches modern Angular (signals, built-in control flow, zoneless by default in new apps). Where an older codebase differs, pages say so.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>An Angular component = a class with <span class="kw">@Component</span> (selector, template, imports) + inputs and outputs.</li><li>Bindings: <span class="kw">{{ }}</span> text, <span class="kw">[prop]</span> down, <span class="kw">(event)</span> up, <span class="kw">[(x)]</span> both ways (with <span class="kw">model()</span>).</li><li>Components are standalone by default (v19+); template dependencies go in <span class="kw">imports</span>.</li><li><span class="kw">bootstrapApplication(App, appConfig)</span> starts the app; providers live in <span class="kw">app.config.ts</span>.</li><li>Read signals by calling them: <span class="kw">name()</span>.</li><li>ShopUI = 504 components; page 2 asks how Angular finds what changed.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"An Angular app is a tree of standalone components. Each has a class for state and a template for markup, and bindings connect them: interpolation for text, property binding to pass data down into input signals, event binding to receive output events, and model for two-way. Angular is a full framework, so routing, forms, HTTP and dependency injection come built in."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Forgetting to call a signal in a template.</b> <span class="kw">product</span> is the signal object; <span class="kw">product()</span> is its value.</p>
+      <p><b>Following an NgModule-era tutorial in a standalone codebase.</b> The structure and the imports differ.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⬇️ Property binding</h5><p>[prop]="x": data flows from parent into the child.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>⬆️ Event binding</h5><p>(event)="f()": the child tells the parent something happened.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You can read an Angular component and its bindings. Next: when state changes, how does Angular decide what to update? Change detection and zone.js. <i>(coming soon: Change detection & zone.js)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes quickly between versions; check the version you use. Official docs: <a href="https://angular.dev/guide/components" target="_blank" rel="noopener">Anatomy of components</a> · <a href="https://angular.dev/guide/templates/binding" target="_blank" rel="noopener">Binding dynamic text, properties and attributes</a> · <a href="https://angular.dev/guide/templates/two-way-binding" target="_blank" rel="noopener">Two-way binding</a> · <a href="https://angular.dev/guide/components/inputs" target="_blank" rel="noopener">Accepting data with input properties</a> · <a href="https://angular.dev/guide/http/setup" target="_blank" rel="noopener">Setting up HttpClient</a> · <a href="https://angular.dev/api/router/provideRouter" target="_blank" rel="noopener">provideRouter</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

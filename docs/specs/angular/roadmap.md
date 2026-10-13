@@ -1,7 +1,7 @@
 # Angular Lab — roadmap
 | # | Page | Slug | Status |
 |---|---|---|---|
-| 1 | The Angular mental model | angular-mental-model | 🔒 planned |
+| 1 | The Angular mental model | angular-mental-model | ✅ written |
 | 2 | Change detection & zone.js | change-detection | 🔒 planned |
 | 3 | OnPush & signals | onpush-signals | 🔒 planned |
 | 4 | Templates, control flow & pipes | templates-control-flow | 🔒 planned |

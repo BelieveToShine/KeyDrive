@@ -3176,5 +3176,31 @@
     "summary": "The classic mistake with Testing React.",
     "keywords": "react testing act waitFor findBy React Testing Library user-event jest test async behaviour trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-angular-mental-model",
+    "title": "The Angular mental model",
+    "category": "Angular",
+    "page": "angular/concepts/angular-mental-model.html",
+    "summary": "Components, templates and the four bindings, input() and output(), how an app starts, and the ShopUI practice app.",
+    "keywords": "angular component template binding input output model signal standalone bootstrapApplication selector interpolation property binding event binding"
+  },
+  {
+    "id": "angular-angular-mental-model-recall",
+    "title": "The Angular mental model — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/angular-mental-model.html",
+    "summary": "Quick recall points: The Angular mental model.",
+    "keywords": "angular component template binding input output model signal standalone bootstrapApplication selector interpolation property binding event binding interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-angular-mental-model-trap",
+    "title": "The Angular mental model — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/angular-mental-model.html",
+    "summary": "The classic mistake with The Angular mental model.",
+    "keywords": "angular component template binding input output model signal standalone bootstrapApplication selector interpolation property binding event binding trap mistake",
+    "anchor": "trap"
   }
 ]

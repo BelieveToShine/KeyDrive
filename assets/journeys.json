@@ -402,7 +402,9 @@
       "angular-debugging-playbook": "Angular DevTools & the debugging playbook",
       "angular-clinic": "Capstone: the Angular performance clinic"
     },
-    "written": [],
+    "written": [
+      "angular-mental-model"
+    ],
     "sub": {},
     "subTitles": {}
   }
