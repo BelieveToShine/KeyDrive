@@ -32,7 +32,7 @@ def build():
         [('❓','Your questions','open-ended or known?'),('🧮','Open-ended','→ relational'),('⚡','Known patterns','→ DynamoDB'),('✅','Choose','by questions')],
         ['Start from the questions you will ask.','Open-ended questions suit a relational database.','Known access patterns at scale suit DynamoDB.','Choose by questions, not fashion. ✅'], 'questions decide.')
     add('dynamodb-vs-rds-aurora', 'aw-i10', 'Watch it happen: not rivals', 'awi10', 'DynamoDB wins when you know your questions and need steady speed at scale while relational wins when your questions keep changing',
-        [('🔒','Know the questions','fixed access patterns'),('⚡','DynamoDB','steady speed at scale'),('🔄','Questions keep changing','ad-hoc queries'),('🧮','RDS / Aurora','relational flexibility')],
+        [('🔒','Know the questions','fixed access patterns'),('⚡','DynamoDB','steady speed at scale'),('🔄','Changing questions','ad-hoc queries'),('🧮','RDS / Aurora','relational flexibility')],
         ['If you know your questions in advance…','…DynamoDB gives steady speed at scale.','If your questions keep changing…','…a relational database gives flexibility. ✅'], 'different tools for different questions.')
     add('sqs-sns-eventbridge', 'aw-i11', 'Watch it happen: store, announce, route', 'awi11', 'SQS stores and waits, SNS announces to everyone, EventBridge routes by content, and real systems chain them',
         [('📬','SQS','stores and waits'),('📢','SNS','announces to everyone'),('🧭','EventBridge','routes by content'),('🔗','Chain them','each does its best job')],
