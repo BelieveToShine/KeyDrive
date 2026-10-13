@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angular DevTools &amp; the debugging playbook — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">Debugging playbook</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 12 · 🅰️ Speed & debug</div>
+    <h1>A repeatable <span class="grad-text">method</span> for slow and wrong Angular screens.</h1>
+    <p class="sub">Angular DevTools’ Profiler and the Chrome Angular track, the ladder in Angular, a triage map from symptom to page, and the one-change-at-a-time habit.</p>
+    <div class="interview-q">❓ "How do you find and fix a performance problem in an Angular app?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A profile of one keystroke in Angular DevTools: each bar is a change detection cycle, and selecting it shows time per component; with Eager components the 500 product cards take about 35 of 40 milliseconds and OnPush cards are grey and skipped">
+<defs><marker id="ad1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">ONE CHANGE-DETECTION CYCLE: TYPE 1 CHARACTER (ILLUSTRATIVE ms)</text>
+<text class="free" x="176" y="66" text-anchor="end" font-size="10.5" font-weight="700" fill="#fda4af">ProductCard × 500</text>
+<rect class="bx" x="188" y="44" width="420" height="30" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text class="free" x="600.0" y="64" text-anchor="end" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">35 ms</text>
+<text class="free" x="176" y="110" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">ProductList</text>
+<rect class="bx" x="188" y="88" width="30" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="226.0" y="108" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">2.5 ms</text>
+<text class="free" x="176" y="154" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">App</text>
+<rect class="bx" x="188" y="132" width="18" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="214.0" y="152" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">1.5 ms</text>
+<text class="free" x="176" y="198" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">Cart</text>
+<rect class="bx" x="188" y="176" width="7.2" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="203.2" y="196" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0.6 ms</text>
+<text class="free" x="176" y="242" text-anchor="end" font-size="10.5" font-weight="700" fill="#93a0b8">SearchBox</text>
+<rect class="bx" x="188" y="220" width="4.8" height="30" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="200.8" y="240" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0.4 ms</text>
+<text class="free" x="320" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">After OnPush the cards are not checked at all: grey in the profiler, ≈ 0 ms.</text>
+<text class="free" x="320" y="304" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Total ≈ 40 ms before, ≈ 2 ms after.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the idea behind the <b>Angular DevTools Profiler</b>: you record an interaction, each <b>bar</b> in the sequence is one <b>change detection cycle</b> (taller = longer), and selecting a bar shows the time per component. In ShopUI one keystroke is about <b>40 ms</b>, and <b>35 ms</b> of it is the 500 product cards. After OnPush they are not checked at all — in the profiler they show grey. (Millisecond values are illustrative teaching numbers.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Measure → read → find the biggest wrong thing → one hypothesis → one change → prove.</b> Angular DevTools shows you the first three steps.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–10 gave you the model: components, change detection, OnPush, signals, templates, services, forms, routes, defer and SSR. The model tells you <i>where to look</i>; a profile tells you <i>what is actually slow</i>.</p>
+      <p>Fixing by intuition is how apps collect pointless changes — an OnPush here, a computed there, nothing measured. The playbook is the same ladder as every other lab on this site; the instruments are different.</p>
+      <p>This page covers the instruments (Angular DevTools, the Chrome Performance panel with the Angular track), a triage map from symptom to page, and the one-change-at-a-time habit.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The instruments</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tool</th><th scope="col">What it shows</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><b>Angular DevTools → Components</b></th><td>The component and directive tree; preview and edit state</td><td>“What did this component receive?”</td></tr><tr><th scope="row"><b>Angular DevTools → Profiler</b></th><td>Record an interaction; each bar is a change detection cycle; select a bar for a per-component bar chart and flame graph; “show only change detection” greys components that were skipped (OnPush)</td><td>Which components are checked, and how long each takes</td></tr><tr><th scope="row"><b>Chrome DevTools → Performance</b> with the Angular track</th><td>Enable with <span class="kw">ng.enableProfiling()</span> (Angular v20+); Angular events next to the browser’s own flame chart</td><td>Seeing Angular next to layout, paint and network</td></tr><tr><th scope="row"><b>Injectors view</b></th><td>The injector tree</td><td>Why a service has the “wrong” instance (page 7)</td></tr><tr><th scope="row"><b>Bundle analyser / build output</b></th><td>What is in each chunk</td><td>Slow first load (pages 9–10)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Where to start: triage by symptom</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Triage by symptom: a slow interaction points to the DevTools profiler and then OnPush and signals; a wrong or stale screen points to OnPush mutation, signals and zoneless notification; memory growth points to subscriptions and cleanup; a slow first load points to bundles, defer and SSR">
+<defs><marker id="ad2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,54 L320,82 L80,82 L80,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M80,170 L80,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M320,54 L320,82 L240,82 L240,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M240,170 L240,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M320,54 L320,82 L400,82 L400,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M400,170 L400,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M320,54 L320,82 L560,82 L560,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<path d="M560,170 L560,226" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ad2A)"/>
+<rect class="bx" x="220" y="8" width="200" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">What does it look like?</text>
+<text x="320" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">pick the symptom</text>
+<rect class="bx" x="10" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Slow typing</text>
+<text x="80" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">or clicking</text>
+<rect class="bx" x="10" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 2–4</text>
+<text x="80" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">profiler, OnPush, track</text>
+<rect class="bx" x="170" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="240" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Wrong or stale</text>
+<text x="240" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">screen</text>
+<rect class="bx" x="170" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="240" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 2, 3, 8</text>
+<text x="240" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">mutation, signals</text>
+<rect class="bx" x="330" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="400" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Memory grows</text>
+<text x="400" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">after navigation</text>
+<rect class="bx" x="330" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 6, lifecycle</text>
+<text x="400" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">subscriptions</text>
+<rect class="bx" x="490" y="110" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="560" y="136.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Slow first</text>
+<text x="560" y="151.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">load</text>
+<rect class="bx" x="490" y="226" width="140" height="64" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="560" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">pages 9, 10</text>
+<text x="560" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">routes, defer, SSR</text>
+<g class="arrow-pill"><rect x="52.5" y="189" width="55" height="18" rx="9"/><text x="80" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="212.5" y="189" width="55" height="18" rx="9"/><text x="240" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="372.5" y="189" width="55" height="18" rx="9"/><text x="400" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+<g class="arrow-pill"><rect x="532.5" y="189" width="55" height="18" rx="9"/><text x="560" y="201.5" text-anchor="middle" font-size="9" font-style="italic">look at</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> pick the symptom, then go to the page. <b>Slow typing or clicking</b>: profile first, then page 2 (what gets checked), 3 (OnPush and signals) and 4 (track, pipes). <b>Wrong or stale screen</b>: mutated inputs under OnPush, plain fields instead of signals, form updates under zoneless (pages 2, 3, 8). <b>Memory grows</b>: subscriptions and cleanup (page 6, lifecycle dive). <b>Slow first load</b>: routes, <span class="kw">@defer</span> and SSR (pages 9–10).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 The ladder in Angular</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Question</th><th scope="col">Tool</th><th scope="col">ShopUI example</th></tr></thead><tbody><tr><th scope="row">1 · Measure</th><td>How slow, exactly?</td><td>Profiler recording of one keystroke</td><td>40 ms, 504 components checked</td></tr><tr><th scope="row">2 · Read</th><td>Which components, how long?</td><td>Select the bar; bar chart / flame graph</td><td>ProductCards 35 ms of 40</td></tr><tr><th scope="row">3 · Find</th><td>The single biggest wrong thing</td><td>Sort by time; look for 500 of the same</td><td>500 Eager cards re-checked</td></tr><tr><th scope="row">4 · Guess</th><td>Why? One hypothesis</td><td>Model: pages 2–4</td><td>Inputs never change, but cards are Eager</td></tr><tr><th scope="row">5 · Change</th><td>Smallest change that tests it</td><td>OnPush on ProductCard</td><td>3 checked</td></tr><tr><th scope="row">6 · Prove</th><td>Did the number move?</td><td>Record the same interaction again</td><td>≈ 2 ms</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Playbook lab · three changes, one at a time</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Change</th><th scope="col">Components checked</th><th scope="col">Time (illustrative)</th><th scope="col">Keep?</th></tr></thead><tbody><tr><th scope="row">Baseline</th><td>—</td><td>504</td><td>≈ 40 ms</td><td>—</td></tr><tr><th scope="row">A</th><td>OnPush on ProductCard</td><td>4</td><td>≈ 3 ms</td><td>Yes — biggest win</td></tr><tr><th scope="row">B</th><td>Pure pipe instead of a price method in the card</td><td>4</td><td>≈ 3 ms</td><td>Cleaner, no change in time — keep for clarity</td></tr><tr><th scope="row">C</th><td><span class="kw">track p.id</span> in @for</td><td>4</td><td>≈ 3 ms (typing); refetch DOM work 980 → 20</td><td>Yes — helps refetches, not typing</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Doing A, B and C in one commit would show “40 → 3 ms” and teach you nothing about which one mattered. One change per recording shows that <b>A</b> fixed typing and <b>C</b> fixed refetches.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · six cases to practise</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">First measurement</th><th scope="col">Likely cause</th><th scope="col">Fix, then prove</th></tr></thead><tbody><tr><th scope="row">Typing lags with 500 cards</th><td>Profiler: components per cycle</td><td>Eager cards (page 2)</td><td>OnPush; re-record</td></tr><tr><th scope="row">An OnPush list does not update after a push</th><td>Components tab: is the array the same reference?</td><td>Mutated array (page 3)</td><td>Signal + immutable update</td></tr><tr><th scope="row">A template method logs hundreds of times</th><td>console.log inside it</td><td>Method in a binding (page 4)</td><td>computed() or pure pipe</td></tr><tr><th scope="row">Memory grows after visiting a screen ten times</th><td>Chrome memory snapshot, count of component instances</td><td>Open subscription (page 6)</td><td>takeUntilDestroyed / async pipe</td></tr><tr><th scope="row">NG0100 in development only</th><td>Console stack trace</td><td>Value changed after the view was checked (lifecycle)</td><td>Set it in the constructor or ngOnInit</td></tr><tr><th scope="row">First load slow on mobile</th><td>Build output sizes</td><td>Eager routes (page 9)</td><td>loadComponent; re-measure bytes</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🚨</span><h5>“The checkout feels slow” ticket</h5><p>No measurement.</p><span class="sc-use">→ Record the exact interaction first</span></div>
+      <div class="scenario"><span class="sc-icon">🧹</span><h5>Code review adds OnPush “everywhere”</h5><p>No evidence.</p><span class="sc-use">→ Ask for the profile that justifies each one</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>Tests changed after the upgrade</h5><p>Zoneless is the TestBed default.</p><span class="sc-use">→ Wait for stability instead of relying on zone.js</span></div>
+      <div class="scenario"><span class="sc-icon">🔒</span><h5>Fixed locally, slow in production</h5><p>Different build.</p><span class="sc-use">→ Profile a production build</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Production builds.</b> Development mode adds extra checks (like the NG0100 second pass), so milliseconds differ from production; compare before and after in the same build.</p>
+      <p><b>Slow computations.</b> Angular’s best-practices guides on slow computations and on profiling with Chrome DevTools cover long tasks that block the main thread.</p>
+      <p><b>Correctness first.</b> A wrong value is a model bug (pages 2–3); a slow one is a measurement problem. Do not optimise a wrong value.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>The ladder: measure → read → find the biggest wrong thing → one hypothesis → one change → prove.</li><li>Angular DevTools Profiler: each bar is a change-detection cycle; select a bar for per-component time; skipped OnPush components show grey.</li><li>Chrome’s Performance panel can show an Angular track after <span class="kw">ng.enableProfiling()</span> (v20+).</li><li>Triage: slow interaction (2–4), stale screen (2, 3, 8), memory (6), first load (9–10).</li><li>One change per recording; keep only what the profile justifies.</li><li>Compare before and after in the same build.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"When an Angular screen is slow I record the exact interaction in the DevTools profiler, find which components were checked and how long each took, form one hypothesis from change detection, OnPush, track or subscriptions, change one thing, and re-record in the same build to prove it."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Adding OnPush everywhere without a profile.</b> You get stale screens and no proof of benefit.</p>
+      <p><b>Three changes in one commit.</b> You will not know which worked.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🐞 Correctness bug</h5><p>The screen is wrong: mutation, missing notification, NG0100.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🐢 Performance bug</h5><p>The screen is right but late: too many checks, heavy templates, big bundles.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You have every tool. Time to use them together: the capstone Angular performance clinic. <i>(coming soon: Capstone: the Angular performance clinic)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular DevTools changes between versions; trust your version’s labels over these names. Official docs: <a href="https://angular.dev/tools/devtools" target="_blank" rel="noopener">Angular DevTools</a> · <a href="https://angular.dev/tools/devtools/profiler" target="_blank" rel="noopener">Profiler</a> · <a href="https://angular.dev/best-practices/profiling-with-chrome-devtools" target="_blank" rel="noopener">Profiling with Chrome DevTools</a> · <a href="https://angular.dev/best-practices/slow-computations" target="_blank" rel="noopener">Slow computations</a> · <a href="https://angular.dev/tools/devtools/injectors" target="_blank" rel="noopener">Injectors view</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

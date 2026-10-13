@@ -412,7 +412,8 @@
       "dependency-injection",
       "forms",
       "routing-lazy-loading",
-      "angular-performance"
+      "angular-performance",
+      "angular-debugging-playbook"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

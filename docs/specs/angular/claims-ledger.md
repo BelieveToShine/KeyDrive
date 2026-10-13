@@ -161,7 +161,21 @@ Source root: https://angular.dev/
 | NG0500 hydration node mismatch: direct DOM manipulation / third-party libs; ngSkipHydration last resort on a component host (skips it and children); components that break hydration are bugs | ✅ V | errors/NG0500; guide/hydration |
 | afterNextRender/afterEveryRender run in the browser only; avoid isPlatformBrowser in templates | ✅ V | api/core/afterNextRender; lifecycle/ssr guides (see lifecycle ledger) |
 | Giving the placeholder the final size; defer above the fold flickers | 🟨 K | practical advice (layout shift reasoning) |
+| Timer values 100ms / 300ms / 500ms in @placeholder/@loading examples | 🟦 I | teaching values for the syntax |
 | First-load figures: 420 KB, 180 KB, 150 KB; ≈ 2.1 / 1.4 / 1.2 / 0.8 s; 300–500 ms and 100 ms timers; “5s” | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Page 11 — Angular DevTools & the debugging playbook
+| Claim | Status | Note |
+|---|---|---|
+| Angular DevTools Profiler: record an interaction; each bar is a change-detection cycle (taller = longer); selecting a bar shows time per component as a bar chart and a flame-graph view; a “show only change detection” option keeps checked components highlighted and greys others such as skipped OnPush components | ✅ V | angular.dev/tools/devtools/profiler |
+| Components tab explores components and directives and previews/edits state; Injectors view exists | ✅ V | angular.dev/tools/devtools, /component, /injectors |
+| Since Angular v20 an Angular track can appear in Chrome's Performance panel after ng.enableProfiling() | ✅ V | blog.angular.dev custom profiling track; best-practices/profiling-with-chrome-devtools |
+| Angular guides on slow computations and on profiling with Chrome DevTools exist | ✅ V | angular.dev/best-practices/slow-computations, profiling-with-chrome-devtools |
+| NG0100 is dev-mode only (extra check after each pass) | ✅ V | angular.dev/errors/NG0100 (page 2) |
+| Zoneless is the TestBed default | ✅ V | angular.dev/guide/zoneless (page 2) |
+| Tool labels (bar chart, flame graph, “show only change detection”) can differ by DevTools version | 🟨 K | page tells readers to trust their version |
+| Playbook numbers: 40 ms, 35 ms, 504 → 4 → 3, 980 → 20 DOM operations | 🟦 I | teaching numbers, consistent with pages 1–4 |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
 ## Cross-page notes

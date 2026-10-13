@@ -11,7 +11,7 @@
 | 8 | Forms: template-driven, reactive & signal forms | forms | ✅ written |
 | 9 | Routing & lazy loading | routing-lazy-loading | ✅ written |
 | 10 | Performance: @defer, SSR & hydration | angular-performance | ✅ written |
-| 11 | Angular DevTools & the debugging playbook | angular-debugging-playbook | 🔒 planned |
+| 11 | Angular DevTools & the debugging playbook | angular-debugging-playbook | ✅ written |
 | 12 | Capstone: the Angular performance clinic | angular-clinic | 🔒 planned |
 | ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
 | ➕ | Deep dive: Lifecycle hooks: what each does and when to use which | lifecycle-hooks | ✅ written (sub page of change-detection) |

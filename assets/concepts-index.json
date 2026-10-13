@@ -3462,5 +3462,31 @@
     "summary": "The classic mistake with Performance: @defer, SSR & hydration.",
     "keywords": "angular performance defer @defer triggers viewport idle SSR server side rendering hydration event replay incremental hydration NG0500 ngSkipHydration trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-angular-debugging-playbook",
+    "title": "Angular DevTools & the debugging playbook",
+    "category": "Angular",
+    "page": "angular/concepts/angular-debugging-playbook.html",
+    "summary": "Angular DevTools profiler, the Chrome Angular track, the ladder in Angular and a triage map from symptom to page.",
+    "keywords": "angular devtools profiler debugging playbook performance triage change detection cycle ng.enableProfiling flame graph one change at a time"
+  },
+  {
+    "id": "angular-angular-debugging-playbook-recall",
+    "title": "Angular DevTools & the debugging playbook — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/angular-debugging-playbook.html",
+    "summary": "Quick recall points: Angular DevTools & the debugging playbook.",
+    "keywords": "angular devtools profiler debugging playbook performance triage change detection cycle ng.enableProfiling flame graph one change at a time interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-angular-debugging-playbook-trap",
+    "title": "Angular DevTools & the debugging playbook — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/angular-debugging-playbook.html",
+    "summary": "The classic mistake with Angular DevTools & the debugging playbook.",
+    "keywords": "angular devtools profiler debugging playbook performance triage change detection cycle ng.enableProfiling flame graph one change at a time trap mistake",
+    "anchor": "trap"
   }
 ]
