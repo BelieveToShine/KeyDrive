@@ -475,7 +475,8 @@
     },
     "written": [
       "why-design-principles",
-      "single-responsibility"
+      "single-responsibility",
+      "open-closed"
     ],
     "sub": {},
     "subTitles": {}

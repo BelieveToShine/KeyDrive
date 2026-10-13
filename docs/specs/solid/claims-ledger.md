@@ -28,5 +28,17 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Before/after lines (≈ 300 → ≈ 40), 6 → 1 reasons | 🟦 I | teaching numbers (overview.md) |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 3 — Open/Closed
+| Claim | Status | Note |
+|---|---|---|
+| Meyer defined OCP in 1988 (Object Oriented Software Construction); “open” = can be extended, “closed” = usable by other modules | ✅ V | blog.cleancoder.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html |
+| Martin's goal: extend a system's behaviour without modifying it; extending a module does not change its source or binary code; achieved by users depending on an API that services implement through inheritance or other polymorphism; related to DIP | ✅ V | same; 2013 “An Open and Closed Case” |
+| OCP cannot apply to every element; no significant program can be 100% closed | ✅ V | blog.cleancoder.com (2013/2014 posts) |
+| Dependency injection is based on the dependency inversion principle and is often key to achieving the open/closed principle | ✅ V | Microsoft Learn .NET architecture guidance (develop ASP.NET Core MVC apps / DI) |
+| Strategy, Decorator, delegates, configuration as OCP techniques; “introduce the interface at the second variation” | 🟨 K | standard design practice; patterns detailed in the patterns deep dive |
+| Rule order may matter | 🟨 K | design caution specific to the example |
+| Promotion #10: 1 class edited vs 0 | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

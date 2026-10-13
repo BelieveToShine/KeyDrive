@@ -3,7 +3,7 @@
 |---|---|---|---|
 | 1 | Why code rots: change, coupling & cohesion | why-design-principles | ✅ written |
 | 2 | S — the Single Responsibility Principle | single-responsibility | ✅ written |
-| 3 | O — the Open/Closed Principle | open-closed | 🔒 planned |
+| 3 | O — the Open/Closed Principle | open-closed | ✅ written |
 | 4 | L — the Liskov Substitution Principle | liskov-substitution | 🔒 planned |
 | 5 | I — the Interface Segregation Principle | interface-segregation | 🔒 planned |
 | 6 | D — the Dependency Inversion Principle | dependency-inversion | 🔒 planned |

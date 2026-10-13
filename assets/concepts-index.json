@@ -3826,5 +3826,31 @@
     "summary": "The classic mistake with S — the Single Responsibility Principle.",
     "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-open-closed",
+    "title": "O — the Open/Closed Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "Extend by adding code: an if-chain of promotions turned into IDiscountRule plug-ins, and the techniques that keep a class closed.",
+    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules"
+  },
+  {
+    "id": "solid-open-closed-recall",
+    "title": "O — the Open/Closed Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "Quick recall points: O — the Open/Closed Principle.",
+    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-open-closed-trap",
+    "title": "O — the Open/Closed Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "The classic mistake with O — the Open/Closed Principle.",
+    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules trap mistake",
+    "anchor": "trap"
   }
 ]
