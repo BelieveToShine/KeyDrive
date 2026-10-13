@@ -10,7 +10,7 @@ Page rhythm = SQL/Cosmos labs: See it first → Why → how it works → tables/
 | Components | `App` → `SearchBox`, `ProductList` (→ 500 `ProductCard`), `Cart`, `Checkout` (≈ 12 fields) |
 | Click the Cart toggle, state in App (page 2) | 504 renders → state moved into Cart: 1 render |
 | Typing one character in SearchBox, before fixes | state lives in `App`; 1 commit re-renders App + SearchBox + ProductList + 500 ProductCards + Cart ≈ 504 component renders, ≈ 40 ms render time (illustrative) |
-| After moving search state down / memoizing | ≈ 3 component renders, ≈ 2 ms |
+| After memo + stable props (page 6) | 4 component renders (App, SearchBox, ProductList, Cart), ≈ 3 ms |
 | Cart | 1–20 items |
 | Teaching rule | numbers are illustrative; real apps: measure in the Profiler |
 

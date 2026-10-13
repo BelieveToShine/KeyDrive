@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>memo, useMemo, useCallback &amp; the Compiler — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Memoization</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 6 of 12 · ⚛️ Measure & optimise</div>
+    <h1>If the inputs are the same, <span class="grad-text">reuse the last result</span> — but only where it pays.</h1>
+    <p class="sub">memo, useMemo and useCallback, why inline props defeat them, what the React Compiler changes, and a lab that takes ShopUI from 504 renders to 4.</p>
+    <div class="interview-q">❓ "When should you use memo, useMemo and useCallback — and why does memo sometimes do nothing?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="memo wraps a component with a gate: when all props are equal by Object.is React skips rendering it and reuses the last result; when any prop is a new object or function it renders again">
+<defs><marker id="mm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,54 L320,100" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#mm1A)"/>
+<path d="M270,156 L270,190 L140,190 L140,222" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#mm1A)"/>
+<path d="M370,156 L370,190 L500,190 L500,222" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#mm1A)"/>
+<rect class="bx" x="240" y="8" width="160" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ProductList renders</text>
+<text x="320" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">its parent state changed</text>
+<rect class="bx" x="200" y="100" width="240" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="125.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">memo(ProductCard)</text>
+<text x="320" y="138.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">compare each prop with Object.is</text>
+<rect class="bx" x="30" y="222" width="220" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="140" y="248.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Skip the render ✅</text>
+<text x="140" y="261" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">props identical → reuse</text>
+<text x="140" y="273.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the last output</text>
+<rect class="bx" x="390" y="222" width="220" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="500" y="248.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Render again ❌</text>
+<text x="500" y="261" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">a prop is a new object</text>
+<text x="500" y="273.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">or function every time</text>
+<text class="free" x="320" y="316" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The gate costs one shallow comparison per card — cheap, but not free.</text>
+<g class="arrow-pill"><rect x="255.5" y="68" width="129" height="18" rx="9"/><text x="320" y="80.5" text-anchor="middle" font-size="9" font-style="italic">for each of 500 cards</text></g>
+<g class="arrow-pill"><rect x="156" y="181" width="98" height="18" rx="9"/><text x="205" y="193.5" text-anchor="middle" font-size="9" font-style="italic">all props equal</text></g>
+<g class="arrow-pill"><rect x="383.5" y="181" width="103" height="18" rx="9"/><text x="435" y="193.5" text-anchor="middle" font-size="9" font-style="italic">any prop differs</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>memo</b> puts a gate in front of a component. When the parent renders, React compares the new props with the old ones, one by one, using <span class="kw">Object.is</span>. If <b>all are equal</b>, the card is skipped and its last output is reused. If <b>any prop differs</b> — and a function or object created inline during render is a <i>new</i> value every time — the card renders again, and memo only added a comparison. That is why most “memo does nothing” bugs are unstable props.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Memoization means <b>“if the inputs are the same, reuse the last result.”</b> It only helps when the inputs really stay the same — and only for work that was worth skipping.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 5 found the biggest wrong thing: 500 ProductCards render again after every keystroke, with exactly the same props. Rendering them again produces the same output; the work is wasted.</p>
+      <p>React gives you tools to say “skip this when nothing changed”: <b>memo</b> for a whole component, <b>useMemo</b> for a calculated value, <b>useCallback</b> for a function. They have a price — comparisons and code — so they belong where a profile shows a real cost.</p>
+      <p>The <b>React Compiler</b> can add this memoization for you at build time. Even then, you need to understand it, because the profile still decides what is worth fixing.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Four tools, one idea</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="useMemo and useCallback keep object and function props stable so memo can skip rendering; the React Compiler adds this memoization at build time">
+<defs><marker id="mm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M240,36 L105,36 L105,110" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mm2A)"/>
+<path d="M400,36 L535,36 L535,110" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mm2A)"/>
+<path d="M105,170 L105,260 L250,260" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mm2A)"/>
+<path d="M535,170 L535,260 L390,260" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mm2A)"/>
+<rect class="bx" x="240" y="8" width="160" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">⚙️ React Compiler</text>
+<text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">build-time tool</text>
+<rect class="bx" x="30" y="110" width="150" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="105" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">useMemo</text>
+<text x="105" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">caches a value</text>
+<rect class="bx" x="460" y="110" width="150" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="535" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">useCallback</text>
+<text x="535" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">keeps one function</text>
+<rect class="bx" x="250" y="226" width="140" height="68" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="251.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">memo</text>
+<text x="320" y="264" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">skips a render</text>
+<text x="320" y="276.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">if props are equal</text>
+<g class="arrow-pill"><rect x="108.5" y="27" width="113" height="18" rx="9"/><text x="165" y="39.5" text-anchor="middle" font-size="9" font-style="italic">adds at build time</text></g>
+<g class="arrow-pill"><rect x="418.5" y="27" width="113" height="18" rx="9"/><text x="475" y="39.5" text-anchor="middle" font-size="9" font-style="italic">adds at build time</text></g>
+<g class="arrow-pill"><rect x="115.5" y="251" width="113" height="18" rx="9"/><text x="172" y="263.5" text-anchor="middle" font-size="9" font-style="italic">stable object prop</text></g>
+<g class="arrow-pill"><rect x="406" y="251" width="124" height="18" rx="9"/><text x="468" y="263.5" text-anchor="middle" font-size="9" font-style="italic">stable function prop</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>memo</b> skips a component when its props are equal. Props that are objects or functions are new on every render, so <b>useMemo</b> (for values) and <b>useCallback</b> (for functions) keep them <i>the same object</i> between renders so memo’s comparison can succeed. The <b>React Compiler</b> is a build-time tool that adds this kind of memoization automatically, so you write less of it by hand.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Which one when?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tool</th><th scope="col">What it caches</th><th scope="col">Use it when</th></tr></thead><tbody><tr><th scope="row"><span class="kw">memo(Component)</span></th><td>The rendered output, until a prop changes</td><td>A profile shows a component re-rendering often with the same props, and the render is not trivial</td></tr><tr><th scope="row"><span class="kw">useMemo(() =&gt; calc, [deps])</span></th><td>The result of a calculation</td><td>The calculation is noticeably slow and its dependencies rarely change; or you need a stable object for a memoized child</td></tr><tr><th scope="row"><span class="kw">useCallback(fn, [deps])</span></th><td>The function itself (the same reference)</td><td>You pass a function to a memoized child</td></tr><tr><th scope="row"><b>React Compiler</b></th><td>Components and hooks, automatically</td><td>You want memoization without hand-writing it; it only memoizes components and hooks, and skips code that breaks the Rules of React</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Memoization is a performance optimisation, not a guarantee.</b> Your code must still be correct without it — React may still re-render a memoized component, and a memoized component still re-renders when its own state or a context it reads changes.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Memoization lab · from 504 renders to 4</div>
+    <p>ShopUI, one keystroke. Three attempts, each measured in the Profiler (illustrative numbers).</p>    <div class="code-block"><pre><span class="cmt">// Attempt 1 — memo, but a new function is created for every card on every render</span>
+<span class="kw">const</span> ProductCard = memo(ProductCardImpl);
+products.map(p =&gt; &lt;ProductCard key={p.id} product={p} onAdd={() =&gt; addToCart(p.id)} /&gt;)
+
+<span class="cmt">// Attempt 2 — stable props: one function, the card passes its own id back</span>
+<span class="kw">const</span> addToCart = useCallback(id =&gt; dispatch({ type: <span class="str">'add'</span>, id }), []);
+products.map(p =&gt; &lt;ProductCard key={p.id} product={p} onAdd={addToCart} /&gt;)</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. In attempt 2, ProductCard calls <span class="kw">onAdd(product.id)</span> itself.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Attempt</th><th scope="col">Components rendered</th><th scope="col">Render time (illustrative)</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Baseline: no memo</th><td>504</td><td>≈ 40 ms</td><td>Every card renders</td></tr><tr><th scope="row">1 · memo + inline function</th><td>504</td><td>≈ 41 ms</td><td><span class="kw">onAdd</span> is new each render, so every comparison fails — memo only added work</td></tr><tr><th scope="row">2 · memo + stable props</th><td>4 (App, SearchBox, ProductList, Cart)</td><td>≈ 3 ms</td><td>Existing cards’ props are equal; 500 cheap comparisons replace 500 renders</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 useMemo lab · only when it pays</div>
+    <div class="code-block"><pre><span class="kw">const</span> visible = useMemo(
+  () =&gt; products.filter(p =&gt; p.name.includes(query)).sort(byPrice),
+  [products, query]
+);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. This helps when <i>other</i> state changes (for example the cart drawer opens) and the list must not be recalculated. When <span class="kw">query</span> itself changes it recalculates anyway — so profile before adding it.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · memo that does not work</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">memo added, renders unchanged</th><td>A prop is a new object, array or function each render</td><td>Stabilise it (<span class="kw">useCallback</span>, <span class="kw">useMemo</span>, or pass primitives such as an id)</td></tr><tr><th scope="row">memo works for props but the child still renders</th><td>It reads a context that changed, or its own state changed</td><td>Split the context (page 8) or move the state</td></tr><tr><th scope="row">A child takes <span class="kw">children</span> JSX and still re-renders</th><td>The JSX element is created fresh in the parent each time</td><td>Lift the element above the changing state, or memoize it</td></tr><tr><th scope="row">useCallback function uses an old value</th><td>Missing dependency</td><td>Add the dependency, or use the updater form of setState</td></tr><tr><th scope="row">Code is full of memo/useMemo and nothing is faster</th><td>Memoizing without a profile</td><td>Remove what the profile does not justify; consider the Compiler</td></tr><tr><th scope="row">The profile says the cards are fast but there are thousands</th><td>Too many rows rendered at once</td><td>Reduce the work: paginate or virtualise the list (page 11 mentions it)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Typing lags with 500 cards</h5><p>Cards render with unchanged props.</p><span class="sc-use">→ memo + stable props</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>A chart recalculates when an unrelated toggle flips</h5><p>Heavy calculation in render.</p><span class="sc-use">→ useMemo on that calculation</span></div>
+      <div class="scenario"><span class="sc-icon">🧩</span><h5>memo on a component that takes an inline callback</h5><p>New function every render.</p><span class="sc-use">→ useCallback or pass an id</span></div>
+      <div class="scenario"><span class="sc-icon">🤖</span><h5>Team asks “should we memo everything?”</h5><p>Cost and noise without evidence.</p><span class="sc-use">→ Profile; try the React Compiler</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>How the comparison works.</b> memo compares each prop with <span class="kw">Object.is</span>. Two equal-looking objects are not equal unless they are the same object.</p>
+      <p><b>The React Compiler</b> is a build-time tool that automatically memoizes components and values, mainly to reduce re-renders and expensive calculations. It checks code against the Rules of React and skips components that break them; its stable release is version 1.0. If you already wrote manual memoization, the docs say it keeps working alongside the compiler.</p>
+      <p><b>Profile first.</b> Most calculations are fast, so the docs advise using <span class="kw">useMemo</span> for noticeably slow ones with rarely-changing dependencies.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Memoization = reuse the last result when the inputs are the same.</li><li><span class="kw">memo</span> skips a render when all props are equal (<span class="kw">Object.is</span>).</li><li>Inline objects, arrays and functions are new every render and defeat memo.</li><li><span class="kw">useMemo</span> caches a value; <span class="kw">useCallback</span> keeps one function.</li><li>The React Compiler adds memoization at build time; it does not replace profiling.</li><li>Memoization is an optimisation, not a guarantee — the code must be correct without it.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I find the expensive re-render in the Profiler, then skip it with memo, making sure the props are stable — useCallback for functions, useMemo for objects or slow calculations. Inline objects and functions defeat memo, and memoization is only an optimisation, so I re-profile to prove it helped. The React Compiler can add much of this at build time."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>memo with an inline function prop.</b> The comparison fails every time; you pay for the check and still render.</p>
+      <p><b>Wrapping everything in useMemo/useCallback.</b> Code gets noisy and slower to read; the profile never asked for it.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧠 memo</h5><p>Skips rendering a whole component when props are equal.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧮 useMemo</h5><p>Reuses the result of a calculation inside a component that is rendering anyway.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You can now measure and fix a needless render. Next: a checklist for the whole process — the React debugging playbook. <i>(coming soon: The React debugging playbook)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener">memo</a> · <a href="https://react.dev/reference/react/useMemo" target="_blank" rel="noopener">useMemo</a> · <a href="https://react.dev/reference/react/useCallback" target="_blank" rel="noopener">useCallback</a> · <a href="https://react.dev/learn/react-compiler" target="_blank" rel="noopener">React Compiler</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

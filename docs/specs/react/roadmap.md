@@ -6,7 +6,7 @@
 | 3 | Keys, identity & reconciliation | keys-reconciliation | ✅ written |
 | 4 | Effects: synchronising with the outside world | effects | ✅ written |
 | 5 | Measure first: the React Profiler | profiler | ✅ written |
-| 6 | memo, useMemo, useCallback & the Compiler | memoization | 🔒 planned |
+| 6 | memo, useMemo, useCallback & the Compiler | memoization | ✅ written |
 | 7 | The React debugging playbook | react-debugging-playbook | 🔒 planned |
 | 8 | Context, reducers & where state lives | context-state-architecture | 🔒 planned |
 | 9 | Data fetching, Suspense & transitions | data-fetching-suspense | 🔒 planned |

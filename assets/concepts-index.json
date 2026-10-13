@@ -2786,5 +2786,31 @@
     "summary": "The classic mistake with Measure first: the React Profiler.",
     "keywords": "react profiler devtools performance actualDuration baseDuration measure slow render performance tracks trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-memoization",
+    "title": "memo, useMemo, useCallback & the Compiler",
+    "category": "React",
+    "page": "react/concepts/memoization.html",
+    "summary": "memo, useMemo, useCallback, why inline props defeat memo, and the React Compiler; ShopUI from 504 renders to 4.",
+    "keywords": "react memo useMemo useCallback react compiler memoization stable props object is performance"
+  },
+  {
+    "id": "react-memoization-recall",
+    "title": "memo, useMemo, useCallback & the Compiler — interview recall",
+    "category": "React",
+    "page": "react/concepts/memoization.html",
+    "summary": "Quick recall points: memo, useMemo, useCallback & the Compiler.",
+    "keywords": "react memo useMemo useCallback react compiler memoization stable props object is performance interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-memoization-trap",
+    "title": "memo, useMemo, useCallback & the Compiler — common trap",
+    "category": "React",
+    "page": "react/concepts/memoization.html",
+    "summary": "The classic mistake with memo, useMemo, useCallback & the Compiler.",
+    "keywords": "react memo useMemo useCallback react compiler memoization stable props object is performance trap mistake",
+    "anchor": "trap"
   }
 ]

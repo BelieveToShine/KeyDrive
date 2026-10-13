@@ -342,7 +342,8 @@
       "state-rerenders",
       "keys-reconciliation",
       "effects",
-      "profiler"
+      "profiler",
+      "memoization"
     ],
     "sub": {},
     "subTitles": {}

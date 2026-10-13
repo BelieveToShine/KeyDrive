@@ -66,6 +66,20 @@ Source root: https://react.dev/
 | A profiling build has no dev-only checks (closest to user numbers) | 🟨 K | not stated on react.dev in the pages searched; phrase kept general |
 | DevTools UI names (commit chart, flamegraph, ranked view, “why did this render”) | 🟨 K | not found on react.dev; page says “the idea behind the ranked view” and tells readers to trust their version's labels |
 | Illustrative profile: 40 ms total, 35 ms for 500 cards (0.07 ms each) | 🟦 I | teaching numbers |
+| Scenario figures “30 ms”, “38 ms”, “0.1 ms” in examples and checklist | 🟦 I | invented illustrations, not measurements |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Page 6 — memoization
+| Claim | Status | Note |
+|---|---|---|
+| memo skips re-rendering when props are unchanged; props compared with Object.is; memoization is a performance optimisation, not a guarantee | ✅ V | reference/react/memo |
+| A memoized component still re-renders when its own state or a context it uses changes | ✅ V | same |
+| Inline objects/functions are new every render so memo cannot skip; useMemo/useCallback keep references stable | ✅ V | same |
+| Passing JSX as children avoids re-rendering when a parent's state changes | ✅ V | same (tips) |
+| useMemo is worth it for noticeably slow calculations whose dependencies rarely change; most calculations are fast | ✅ V | reference/react/useMemo |
+| React Compiler: build-time tool that automatically memoizes components and values; only components and hooks; checks Rules of React and skips code that breaks them; v1.0 stable (2025-10-07 blog) | ✅ V | learn/react-compiler/introduction; blog/2025/10/07/react-compiler-1 |
+| Compiler preserves existing manual memoization | 🟨 K | seen in earlier research summary, not re-confirmed in this page's search; page says "keeps working alongside the compiler" — re-verify |
+| Lab numbers: 504 renders ≈ 40 ms; memo with inline function ≈ 41 ms; stable props 4 renders ≈ 3 ms | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
 ## Cross-page notes
