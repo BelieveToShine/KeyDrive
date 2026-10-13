@@ -17,7 +17,7 @@
 | ➕ | Deep dive: Hooks: what each does and when to use which | react-hooks-guide | ✅ written (sub page of effects) |
 | ➕ | Deep dive: Refs and the DOM | refs-and-dom | ✅ written (sub page of effects) |
 | ➕ | Deep dive: Custom hooks & the Rules of Hooks | custom-hooks | ✅ written (sub page of effects) |
-| ➕ | Deep dive: Forms & actions | forms-actions | 🔒 planned (sub page of data-fetching-suspense) |
+| ➕ | Deep dive: Forms & actions | forms-actions | ✅ written (sub page of data-fetching-suspense) |
 | ➕ | Deep dive: Error boundaries & error handling | error-boundaries | 🔒 planned (sub page of data-fetching-suspense) |
 | ➕ | Deep dive: The API layer: fetch wrappers & caching | api-layer-caching | 🔒 planned (sub page of data-fetching-suspense) |
 | ➕ | Deep dive: Routing & navigation | routing-navigation | 🔒 planned (sub page of code-splitting-bundles) |

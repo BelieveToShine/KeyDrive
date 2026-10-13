@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms &amp; actions — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="data-fetching-suspense.html">Data &amp; Suspense</a><span class="sep">›</span><span class="cur">Forms &amp; actions</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 📨 Forms</div>
+    <h1>Choose how much React should <span class="grad-text">know about the typing</span>.</h1>
+    <p class="sub">Controlled versus uncontrolled inputs, form actions, pending state, optimistic updates and server-side validation, with the 12-field ShopUI checkout.</p>
+    <div class="interview-q">❓ "Controlled vs uncontrolled inputs — and how do form actions, useActionState and useOptimistic work?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Three ways to build a form: controlled inputs keep the text in state and render on every key, uncontrolled inputs let the DOM hold the text and read it on submit, and form actions run a function with the form data inside a transition">
+<defs><marker id="fm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="200" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">CONTROLLED</text>
+<rect class="zone" x="220" y="8" width="200" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">UNCONTROLLED</text>
+<rect class="zone" x="430" y="8" width="200" height="314" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="444" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">FORM ACTION</text>
+<path d="M110,102 L110,132" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M110,194 L110,224" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M320,102 L320,132" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M320,194 L320,224" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M530,102 L530,132" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<path d="M530,194 L530,224" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#fm1A)"/>
+<rect class="bx" x="22" y="40" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">value + onChange</text>
+<text x="110" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">state holds the text</text>
+<rect class="bx" x="22" y="132" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Renders on every key</text>
+<text x="110" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">13 renders per key</text>
+<rect class="bx" x="22" y="224" width="176" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Best for live checks</text>
+<text x="110" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">validate as you type</text>
+<rect class="bx" x="232" y="40" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">defaultValue</text>
+<text x="320" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the DOM holds the text</text>
+<rect class="bx" x="232" y="132" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">No render per key</text>
+<text x="320" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">0 renders per key</text>
+<rect class="bx" x="232" y="224" width="176" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Read on submit</text>
+<text x="320" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">FormData has the values</text>
+<rect class="bx" x="442" y="40" width="176" height="62" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="68.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">action={fn}</text>
+<text x="530" y="81.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">fn receives FormData</text>
+<rect class="bx" x="442" y="132" width="176" height="62" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Runs in a transition</text>
+<text x="530" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">pending state, no preventDefault</text>
+<rect class="bx" x="442" y="224" width="176" height="62" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="530" y="252.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Errors are caught</text>
+<text x="530" y="265.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">nearest error boundary</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same ShopUI checkout (12 fields) built three ways. <b>Controlled</b>: each input’s text lives in state (<span class="kw">value</span> + <span class="kw">onChange</span>), so every keystroke renders — 13 components if all fields sit in the Checkout’s state (illustrative). <b>Uncontrolled</b>: the DOM keeps the text (<span class="kw">defaultValue</span>) and you read it on submit with <span class="kw">FormData</span> — no render per key. <b>Form action</b>: <span class="kw">&lt;form action={fn}&gt;</span> calls your function with the form data inside a transition, with pending state and errors handled by React.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Pick how much React should <b>know about the typing</b>: everything (controlled), nothing until submit (uncontrolled), or let a <b>form action</b> own the submit.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Every real app has forms: login, search, checkout. Forms mix two jobs — <b>editing</b> (what is in each field right now?) and <b>submitting</b> (send it, show progress, show the result). The built-in tools handle them differently.</p>
+      <p>Page 9 gave you transitions and Suspense; React 19 builds <b>form actions</b> on them, so submitting becomes a transition with pending state included. This page shows which approach to choose for editing, and the hooks for submitting.</p>
+      <p>The ShopUI checkout (12 fields) is the running example: it is where a naïve “everything is state” approach starts to cost renders.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Controlled or uncontrolled?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Controlled</th><th scope="col">Uncontrolled</th></tr></thead><tbody><tr><th scope="row">Who holds the text</th><td>React state (<span class="kw">value</span> + <span class="kw">onChange</span>)</td><td>The DOM (<span class="kw">defaultValue</span>)</td></tr><tr><th scope="row">Renders per keystroke</th><td>One per key (the component that owns the state, and its children by default)</td><td>None</td></tr><tr><th scope="row">Good for</th><td>Live validation, formatting as you type, disabling a button until valid</td><td>Simple forms, big forms, reading values only on submit</td></tr><tr><th scope="row">Careful</th><td>An input must not switch between controlled and uncontrolled; <span class="kw">value</span> without <span class="kw">onChange</span> makes a read-only field</td><td>Reset and prefill need care; reading values needs <span class="kw">FormData</span> or refs</td></tr><tr><th scope="row"><span class="kw">textarea</span> / <span class="kw">select</span></th><td>Same rules: <span class="kw">value</span> + <span class="kw">onChange</span></td><td><span class="kw">defaultValue</span>; the <span class="kw">selected</span> attribute is not supported on <span class="kw">option</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📨 The submit lifecycle</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 336" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A form submission passes through submit, pending, optimistic display and a result: the action function runs in a transition, useFormStatus gives the pending state, useOptimistic shows the expected result early and useActionState returns the real result">
+<defs><marker id="fm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M155,50 L155,102" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fm2A)"/>
+<path d="M155,144 L155,196" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fm2A)"/>
+<path d="M155,238 L155,290" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#fm2A)"/>
+<rect class="bx" x="20" y="8" width="270" height="42" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="155" y="26.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · Submit</text>
+<text x="155" y="39.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">action function runs with FormData</text>
+<text class="free" x="312" y="34" text-anchor="start" font-size="11" font-weight="400" fill="#67e8f9" font-family="'JetBrains Mono'">form action</text>
+<rect class="bx" x="20" y="102" width="270" height="42" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="155" y="120.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">2 · Pending</text>
+<text x="155" y="133.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">the button can disable itself</text>
+<text class="free" x="312" y="128" text-anchor="start" font-size="11" font-weight="400" fill="#fcd34d" font-family="'JetBrains Mono'">useFormStatus</text>
+<rect class="bx" x="20" y="196" width="270" height="42" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="155" y="214.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Optimistic</text>
+<text x="155" y="227.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">show the expected result now</text>
+<text class="free" x="312" y="222" text-anchor="start" font-size="11" font-weight="400" fill="#c4b5fd" font-family="'JetBrains Mono'">useOptimistic</text>
+<rect class="bx" x="20" y="290" width="270" height="42" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="155" y="308.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">4 · Result</text>
+<text x="155" y="321.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">success, or field errors</text>
+<text class="free" x="312" y="316" text-anchor="start" font-size="11" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">useActionState</text>
+<g class="arrow-pill"><rect x="93" y="67" width="124" height="18" rx="9"/><text x="155" y="79.5" text-anchor="middle" font-size="9" font-style="italic">runs in a transition</text></g>
+<g class="arrow-pill"><rect x="111.5" y="161" width="87" height="18" rx="9"/><text x="155" y="173.5" text-anchor="middle" font-size="9" font-style="italic">while waiting</text></g>
+<g class="arrow-pill"><rect x="109" y="255" width="92" height="18" rx="9"/><text x="155" y="267.5" text-anchor="middle" font-size="9" font-style="italic">server answers</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> passing a function to <span class="kw">&lt;form action&gt;</span> runs the submission <b>in a transition</b>, and React hands your function the <b>FormData</b> — no <span class="kw">preventDefault</span>. <span class="kw">useFormStatus</span> (in a component <i>inside</i> the form) tells a button it is <b>pending</b>; <span class="kw">useOptimistic</span> shows the expected result <b>before the server answers</b>; <span class="kw">useActionState</span> returns the <b>real result</b> (success or field errors). If the action throws, the error goes to the nearest error boundary.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Forms lab · the 12-field checkout</div>
+    <div class="code-block"><pre><span class="cmt">// Controlled — one state object; every key re-renders Checkout and its fields</span>
+<span class="kw">const</span> [form, setForm] = useState(initialForm);
+
+<span class="cmt">// Form action — React passes FormData; pending and result come from hooks</span>
+<span class="kw">async function</span> placeOrder(prevState, formData) {
+  <span class="kw">const</span> errors = validate(Object.fromEntries(formData));
+  <span class="kw">if</span> (errors) <span class="kw">return</span> { errors };
+  <span class="kw">await</span> submitOrder(formData);
+  <span class="kw">return</span> { ok: true };
+}
+<span class="kw">const</span> [result, formAction, isPending] = useActionState(placeOrder, {});
+&lt;form action={formAction}&gt;…&lt;SubmitButton /&gt;&lt;/form&gt;   <span class="cmt">// SubmitButton calls useFormStatus()</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. Validate on the server too: anything the browser sends can be forged.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Components rendered per keystroke</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">All 12 fields controlled in one object</th><td>13 (Checkout + 12 fields)</td><td>State lives in Checkout; children render by default</td></tr><tr><th scope="row">Same, with memoized field components and stable handlers</th><td>2 (Checkout + the field typed in)</td><td>Other fields’ props are equal (page 6)</td></tr><tr><th scope="row">Uncontrolled fields + form action</th><td>0</td><td>The DOM holds the text; React is told only on submit</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · form symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“You provided a value prop without onChange”</th><td>Controlled input missing a handler</td><td>Add onChange, or use defaultValue</td></tr><tr><th scope="row">Input cannot be typed into</th><td><span class="kw">value</span> is fixed or set from a stale variable</td><td>Bind to state and update it in onChange</td></tr><tr><th scope="row">Typing in a 12-field form lags</th><td>All fields share one state in a parent</td><td>Uncontrolled fields, or split/memoize fields (page 6)</td></tr><tr><th scope="row"><span class="kw">useFormStatus</span> never reports pending</th><td>Called in the component that renders the form</td><td>Call it in a child rendered inside the form</td></tr><tr><th scope="row">Fields keep old text after a successful submit</th><td>Controlled fields are not reset automatically</td><td>Reset your state; React resets uncontrolled fields after a successful action, and <span class="kw">requestFormReset</span> resets manually</td></tr><tr><th scope="row">An error in the action blanks the page</th><td>Thrown errors go to the nearest error boundary</td><td>Return errors as state for expected failures; add an error boundary for the rest</td></tr><tr><th scope="row">Server accepted invalid data</th><td>Validated only in the browser</td><td>Validate again on the server</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔐</span><h5>Password strength meter while typing</h5><p>Needs every keystroke.</p><span class="sc-use">→ Controlled input for that field only</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>12-field checkout feels sluggish</h5><p>All fields in one state object.</p><span class="sc-use">→ Uncontrolled + form action</span></div>
+      <div class="scenario"><span class="sc-icon">⏳</span><h5>Place-order button can be clicked twice</h5><p>No pending state.</p><span class="sc-use">→ useFormStatus to disable the button</span></div>
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart shows the item only after the server answers</h5><p>Waiting for the round trip.</p><span class="sc-use">→ useOptimistic</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Actions are transitions.</b> A function passed to <span class="kw">action</span> runs in a transition, so the page stays responsive and React can track pending state. Unlike <span class="kw">onSubmit</span> you do not call <span class="kw">preventDefault</span>.</p>
+      <p><b>useOptimistic</b> returns the passed value unless an action is pending; then it returns the optimistic value you set. Call its setter inside an action or transition.</p>
+      <p><b>Server Functions</b> (page 10) can be passed as form actions, so a form can submit to the server directly; treat the submitted data as untrusted.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Controlled = state holds the text (<span class="kw">value</span> + <span class="kw">onChange</span>); uncontrolled = the DOM does (<span class="kw">defaultValue</span>).</li><li>An input must not switch between controlled and uncontrolled.</li><li><span class="kw">&lt;form action={fn}&gt;</span> calls fn with FormData inside a transition; no preventDefault.</li><li><span class="kw">useActionState</span> gives result, action and pending; <span class="kw">useFormStatus</span> must be called inside the form; <span class="kw">useOptimistic</span> shows the expected result early.</li><li>Errors thrown in an action go to the nearest error boundary; return expected errors as state.</li><li>Always validate on the server as well.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"For editing I choose controlled inputs when I need every keystroke — live validation, formatting — and uncontrolled fields for big forms read through FormData on submit. For submitting I use form actions: they run in a transition, useActionState gives me the result and pending flag, useFormStatus drives the button, and useOptimistic shows the expected result early. Validation always repeats on the server."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Making every field controlled “by default”.</b> A 12-field form then renders on every keystroke for no benefit.</p>
+      <p><b>Trusting browser validation.</b> The request can be forged; the server must validate.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⌨️ onChange</h5><p>Fires on every edit; use it when you need the live value.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📨 action</h5><p>Fires on submit with the form data; runs in a transition.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Suspense and transitions, which form actions are built on.</span>
+      <a class="next-link" href="data-fetching-suspense.html">Data fetching, Suspense & transitions <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react-dom/components/form" target="_blank" rel="noopener"><form></a> · <a href="https://react.dev/reference/react-dom/components/input" target="_blank" rel="noopener"><input></a> · <a href="https://react.dev/reference/react/useActionState" target="_blank" rel="noopener">useActionState</a> · <a href="https://react.dev/reference/react-dom/hooks/useFormStatus" target="_blank" rel="noopener">useFormStatus</a> · <a href="https://react.dev/reference/react/useOptimistic" target="_blank" rel="noopener">useOptimistic</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

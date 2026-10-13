@@ -191,5 +191,21 @@ Source root: https://react.dev/
 | Debounce 300 ms; “200-line file” | 🟦 I | teaching values |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — forms & actions
+| Claim | Status | Note |
+|---|---|---|
+| Passing value (or checked) makes an input controlled and requires onChange; an input cannot switch between controlled and uncontrolled; defaultValue gives only the initial value | ✅ V | reference/react-dom/components/input |
+| textarea and select follow the same rules; select does not support the `selected` attribute | ✅ V | components/textarea, components/select |
+| `<form action={fn}>`: React passes the form data (FormData) to the function; runs in a Transition; no preventDefault; thrown errors go to the nearest error boundary | ✅ V | reference/react-dom/components/form; reference/react/useActionState |
+| After a successful action React resets uncontrolled fields automatically; requestFormReset resets manually | ✅ V | components/form |
+| useActionState returns state, an action for the form action prop, and a pending flag | ✅ V | reference/react/useActionState |
+| useFormStatus.pending works only in a component rendered inside the form | ✅ V | reference/react-dom/hooks/useFormStatus |
+| useOptimistic equals the value passed unless an Action is pending; its setter should be called inside an Action or Transition | ✅ V | reference/react/useOptimistic |
+| Server Functions can be form actions; treat arguments as untrusted | ✅ V | reference/rsc/server-functions |
+| Validate on the server as well | 🟨 K | general security practice, not quoted from react.dev (Server Functions docs say to treat args as untrusted) |
+| Error text “You provided a value prop without onChange” | 🟨 K | React's warning message, not re-checked |
+| Checkout numbers: 13 renders (1 + 12), 2 with memoized fields, 0 uncontrolled | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

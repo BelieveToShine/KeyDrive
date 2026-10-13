@@ -3020,5 +3020,31 @@
     "summary": "The classic mistake with Custom hooks & the Rules of Hooks.",
     "keywords": "react custom hooks use prefix reuse logic useDebouncedValue useOnlineStatus rules of hooks useEffectEvent trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-forms-actions",
+    "title": "Forms & actions",
+    "category": "React",
+    "page": "react/concepts/forms-actions.html",
+    "summary": "Controlled vs uncontrolled inputs, form actions, useActionState, useFormStatus, useOptimistic and the 12-field checkout.",
+    "keywords": "react forms controlled uncontrolled form action useActionState useFormStatus useOptimistic validation FormData checkout input"
+  },
+  {
+    "id": "react-forms-actions-recall",
+    "title": "Forms & actions — interview recall",
+    "category": "React",
+    "page": "react/concepts/forms-actions.html",
+    "summary": "Quick recall points: Forms & actions.",
+    "keywords": "react forms controlled uncontrolled form action useActionState useFormStatus useOptimistic validation FormData checkout input interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-forms-actions-trap",
+    "title": "Forms & actions — common trap",
+    "category": "React",
+    "page": "react/concepts/forms-actions.html",
+    "summary": "The classic mistake with Forms & actions.",
+    "keywords": "react forms controlled uncontrolled form action useActionState useFormStatus useOptimistic validation FormData checkout input trap mistake",
+    "anchor": "trap"
   }
 ]
