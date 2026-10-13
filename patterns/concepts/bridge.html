@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridge: Two Things That Change Independently — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="adapter.html">Adapter</a><span class="sep">›</span><span class="cur">Bridge</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 🔧 Structural</div>
+    <h1>Remote and device: <span class="grad-text">let two lists grow separately</span>.</h1>
+    <p class="sub">The Bridge pattern: split an abstraction from its implementation so they vary independently.</p>
+    <div class="interview-q">❓ "What is the Bridge pattern?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Making a class for every remote and device combination: basic remote for TV, basic remote for radio, advanced remote for TV and advanced remote for radio, and every new device or remote doubles the list">
+<defs><marker id="br1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="140" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="80" y="49" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Basic+TV</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="170" y="20" width="140" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="240" y="49" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Basic+Radio</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="330" y="20" width="140" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="400" y="49" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Advanced+TV</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="490" y="20" width="140" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="560" y="49" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Advanced+Radio</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="110" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="135" text-anchor="middle" font-size="10" fill="#fcd34d">2 remotes × 2 devices = 4 classes</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="110" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="135" text-anchor="middle" font-size="10" fill="#fda4af">Add a Speaker: 6 classes. Add a third remote: 9.</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Remotes (basic, advanced) and devices (TV, radio) are combined in <b>one class per pair</b>.</li><li>Four classes.</li><li>Add a Speaker: <b>six</b> classes. A third remote: <b>nine</b>.</li><li>Sizes <b>multiply</b>.</li><li>The list grows much faster than the real variety.</li></ol>
+<figcaption><strong>What you're seeing:</strong> every combination is a class.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Separate “what it is” from “how it is done” into two hierarchies connected by a bridge, so each changes alone.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🔌 A universal remote and a device: you can buy a new remote without buying a new TV, and a new TV works with the same remote buttons. The “has a” link between them is the bridge.</p>
+      <p>refactoring.guru: Bridge lets you split a large class or a set of closely related classes into two separate hierarchies — abstraction and implementation — that can be developed independently.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Bridge: the remote has a device, so the remote types and the device types are two separate lists, and any remote works with any device, with sizes adding instead of multiplying">
+<defs><marker id="br2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="br2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="4-"><path id="br2-bg" d="M280,50 L360,50" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#br2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="270" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="145" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🎛️ Remote (what you press)</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="120" width="130" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="75" y="149" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Basic</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="150" y="120" width="130" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="215" y="149" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Advanced</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="360" y="20" width="270" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="495" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📺 Device (what it does)</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="360" y="120" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="425" y="149" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">TV</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="500" y="120" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="565" y="149" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Radio</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="200" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="225" text-anchor="middle" font-size="10" fill="#6ee7b7">2 + 2 = 4 classes. Add Speaker: 3 devices → 5 classes, not 6</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="255" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="320" y="280" text-anchor="middle" font-size="10" fill="#6ee7b7">Any remote works with any device ✅</text></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="298" y="41" width="44" height="18" rx="9"/><text x="320" y="53.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="br2-bg"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🌉</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>Remote</b> side (what you press)…</li><li>…with <b>Basic</b> and <b>Advanced</b> kinds.</li><li>A <b>Device</b> side (what it does) with <b>TV</b> and <b>Radio</b>.</li><li>The remote <b>has a</b> device: that link is the bridge. 🌉</li><li>Sizes <b>add</b> instead of multiplying: a Speaker is one new class.</li><li>Any remote works with any device. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> two hierarchies joined by one link.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> IDevice { <span class="kw">void</span> On(); <span class="kw">void</span> Off(); }
+<span class="kw">class</span> Tv    : IDevice { <span class="kw">public</span> <span class="kw">void</span> On() { } <span class="kw">public</span> <span class="kw">void</span> Off() { } }
+<span class="kw">class</span> Radio : IDevice { <span class="kw">public</span> <span class="kw">void</span> On() { } <span class="kw">public</span> <span class="kw">void</span> Off() { } }
+
+<span class="kw">class</span> Remote(IDevice device)                   <span class="cmt">// the bridge: a Remote HAS a Device</span>
+{
+    <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">void</span> Power() =&gt; device.On();
+}
+<span class="kw">class</span> AdvancedRemote(IDevice device) : Remote(device) { <span class="kw">public</span> <span class="kw">void</span> Mute() { } }
+
+<span class="kw">new</span> AdvancedRemote(<span class="kw">new</span> Tv()).Power();</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">This is composition over inheritance applied to two dimensions of change.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Two independent dimensions that both keep growing</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Bridge keeps the sizes additive.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Only one dimension varies</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Plain polymorphism is enough.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Platform-specific code under a cross-platform API</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> A classic use.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A one-off pair of classes</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Do not build a bridge for a single case.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Class names like <code>BasicTvRemote</code>, <code>AdvancedRadioRemote</code></th><td>Two dimensions in one hierarchy.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Bridge = abstraction and implementation as two hierarchies linked by composition.</li><li>Avoids class explosion (m × n).</li><li>Planned up front; Adapter is applied afterwards.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Bridge splits an abstraction from its implementation into two hierarchies connected by composition, so remotes and devices can grow independently and the number of classes adds instead of multiplying. Unlike Adapter, which fixes a mismatch after the fact, Bridge is designed in advance."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Confusing Bridge and Adapter.</b> Bridge is planned; Adapter fixes a mismatch.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Adapter.</span>
+      <a class="next-link" href="adapter.html">Adapter <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Bridge’s intent follows refactoring.guru (two separate hierarchies: abstraction and implementation). The remote and device are a teaching analogy; class counts are simple arithmetic. Official docs: <a href="https://refactoring.guru/design-patterns/bridge" target="_blank" rel="noopener">Bridge (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener">Structural patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

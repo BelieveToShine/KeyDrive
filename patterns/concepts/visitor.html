@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visitor: Add Operations Without Editing the Classes — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="composite.html">Composite</a><span class="sep">›</span><span class="cur">Visitor</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 💬 Behavioral</div>
+    <h1>The tax inspector: <span class="grad-text">one visitor, different work per building</span>.</h1>
+    <p class="sub">The Visitor pattern: put a new operation in a separate object that visits each class in a family.</p>
+    <div class="interview-q">❓ "What is the Visitor pattern and what is its main drawback?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Adding a new operation such as export to XML means editing every class in the family, House, Shop and Factory, even though they are otherwise finished">
+<defs><marker id="vs1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vs1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vs1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="20" width="190" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="105" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🏠 House</text></g>
+<g class="st" data-s="2-"><text x="105" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">+ ExportXml() ✏️</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="225" y="20" width="190" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="320" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🏪 Shop</text></g>
+<g class="st" data-s="2-"><text x="320" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">+ ExportXml() ✏️</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="440" y="20" width="190" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="535" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🏭 Factory</text></g>
+<g class="st" data-s="2-"><text x="535" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">+ ExportXml() ✏️</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="120" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="145" text-anchor="middle" font-size="10" fill="#fcd34d">New operation: “export to XML”</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="10" y="120" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="145" text-anchor="middle" font-size="10" fill="#fda4af">Every class must be opened and edited</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="180" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="205" text-anchor="middle" font-size="10" fill="#fda4af">Next week: “export to JSON” → edit them all again</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A family of classes: <b>House, Shop, Factory</b>.</li><li>A new operation arrives: <b>export to XML</b>.</li><li>Every class must be <b>opened and edited</b> to add it.</li><li>Next week “export to JSON” — edit them <b>all again</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> every new operation edits every class.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Move a new operation out into a “visitor” that knows how to handle each kind of object, and let objects accept visitors.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧑‍💼 A <b>tax inspector</b> visits a house, a shop and a factory. The inspector does <b>different work</b> in each, but the buildings did not have to learn how to be inspected.</p>
+      <p>refactoring.guru: Visitor lets you separate algorithms from the objects on which they operate.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A visitor object, a tax inspector, goes to each building and does the operation for that kind of building, so a new operation is a new visitor and the building classes are not edited">
+<defs><marker id="vs2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vs2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vs2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path id="vs2-v1" d="M160,190 L105,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#vs2A)"/></g>
+<g class="st" data-s="4-"><path id="vs2-v2" d="M230,190 L320,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#vs2A)"/></g>
+<g class="st" data-s="5-"><path id="vs2-v3" d="M300,190 L535,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#vs2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="190" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="53" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🏠 House</text></g>
+<g class="st" data-s="1-"><text x="105" y="65" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Accept(visitor)</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="225" y="20" width="190" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="53" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🏪 Shop</text></g>
+<g class="st" data-s="1-"><text x="320" y="65" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Accept(visitor)</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="20" width="190" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="535" y="53" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🏭 Factory</text></g>
+<g class="st" data-s="1-"><text x="535" y="65" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Accept(visitor)</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="10" y="190" width="300" height="80" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="160" y="227.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧑‍💼 TaxInspector</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="160" y="240.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Visit(House) · Visit(Shop) · Visit(Factory)</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="340" y="190" width="290" height="80" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="485" y="219" text-anchor="middle" font-size="10" fill="#6ee7b7">New operation “export”?</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="485" y="233" text-anchor="middle" font-size="10" fill="#6ee7b7">Write a new visitor.</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="485" y="247" text-anchor="middle" font-size="10" fill="#6ee7b7">Buildings stay as they are ✅</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="vs2-v1"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🧑‍💼</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="vs2-v2"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🧑‍💼</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="vs2-v3"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🧑‍💼</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Each building has one small method: <code>Accept(visitor)</code>.</li><li>A <b>TaxInspector</b> visitor has a method per kind of building.</li><li>It visits the <b>House</b>…</li><li>…the <b>Shop</b>…</li><li>…the <b>Factory</b>, doing the right work in each.</li><li>A new operation is a <b>new visitor</b>; the building classes stay untouched. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> the operation lives outside the classes.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> IVisitor { <span class="kw">void</span> Visit(House h); <span class="kw">void</span> Visit(Shop s); }
+<span class="kw">interface</span> IBuilding { <span class="kw">void</span> Accept(IVisitor v); }
+
+<span class="kw">class</span> House : IBuilding { <span class="kw">public</span> <span class="kw">void</span> Accept(IVisitor v) =&gt; v.Visit(<span class="kw">this</span>); }
+<span class="kw">class</span> Shop  : IBuilding { <span class="kw">public</span> <span class="kw">void</span> Accept(IVisitor v) =&gt; v.Visit(<span class="kw">this</span>); }
+
+<span class="kw">class</span> TaxInspector : IVisitor
+{
+    <span class="kw">public</span> <span class="kw">void</span> Visit(House h) =&gt; Console.WriteLine(<span class="str">"house tax"</span>);
+    <span class="kw">public</span> <span class="kw">void</span> Visit(Shop s)  =&gt; Console.WriteLine(<span class="str">"shop tax"</span>);
+}
+<span class="kw">foreach</span> (IBuilding b <span class="kw">in</span> <span class="kw">new</span> IBuilding[] { <span class="kw">new</span> House(), <span class="kw">new</span> Shop() }) b.Accept(<span class="kw">new</span> TaxInspector());</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Drawback: adding a new <i>class</i> to the family means updating every visitor. In modern C#, pattern matching with a switch often covers simple cases.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A stable family of classes that keeps getting new operations</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Visitor keeps the classes unchanged.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The family of classes keeps getting new members</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Every visitor must change.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Only one or two operations</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> A method on the class is simpler.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Operations that need different logic per type</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> One visit method per type.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">The same “add another method to every class” edit again and again</th><td>Move the operations into visitors.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Visitor = separate an operation from the classes it works on.</li><li>Double dispatch: Accept calls the right Visit.</li><li>Easy to add operations; hard to add classes.</li><li>C# pattern matching is a lighter alternative.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Visitor separates algorithms from the objects they operate on: classes expose Accept, and a visitor has a Visit method per type, so adding a new operation means adding a visitor rather than editing every class. The trade-off is that adding a new class forces changes to every visitor."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Wrong direction of change.</b> Visitor suits stable classes with changing operations.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Composite.</span>
+      <a class="next-link" href="composite.html">Composite <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Visitor’s intent follows refactoring.guru (separate algorithms from the objects on which they operate). The pattern-matching remark is a common C# alternative. The tax inspector is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/visitor" target="_blank" rel="noopener">Visitor (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediator: One Coordinator Instead of Everyone Talking to Everyone — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="observer.html">Observer</a><span class="sep">›</span><span class="cur">Mediator</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 💬 Behavioral</div>
+    <h1>The control tower: <span class="grad-text">planes talk to the tower, not to each other</span>.</h1>
+    <p class="sub">The Mediator pattern: reduce tangled object-to-object links by routing them through one coordinator.</p>
+    <div class="interview-q">❓ "What is the Mediator pattern?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="3">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="Four planes that all talk directly to each other need six links, every plane must know about every other plane, and a new plane means new links to all of them">
+<defs><marker id="md1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="md1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="md1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="bx" x="20" y="20" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="90" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ A</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="480" y="20" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ B</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="20" y="200" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="90" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ C</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="480" y="200" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ D</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx note" x="170" y="100" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="125" text-anchor="middle" font-size="10" fill="#fcd34d">6 links for 4 planes</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="170" y="150" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="175" text-anchor="middle" font-size="10" fill="#fda4af">10 planes → 45 links 😵</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Four planes must avoid each other.</li><li>If each talks to every other plane: <b>6 links</b> for 4 planes.</li><li>Ten planes would need <b>45</b>. Adding one plane means linking it to <b>all</b> the others. 😵</li></ol>
+<figcaption><strong>What you're seeing:</strong> every object knows every other object.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Let objects talk to one coordinator instead of to each other, so the tangle of links becomes a simple star.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🗼 Pilots do not phone each other. Everyone talks to <b>air traffic control</b>, which decides who goes first.</p>
+      <p>refactoring.guru: Mediator lets you reduce chaotic dependencies between objects by restricting direct communication and forcing them to collaborate via a mediator object.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="With a control tower in the middle each plane talks only to the tower, so four planes need four links, and the tower decides who may land">
+<defs><marker id="md2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="md2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="md2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="md2-p0" d="M90,80 L320,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#md2A)"/></g>
+<g class="st" data-s="2-"><path id="md2-p1" d="M550,80 L320,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#md2A)"/></g>
+<g class="st" data-s="2-"><path id="md2-p2" d="M90,200 L320,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#md2A)"/></g>
+<g class="st" data-s="2-"><path id="md2-p3" d="M550,200 L320,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#md2A)"/></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="250" y="110" width="140" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text class="emo" x="320" y="155" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🗼</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="320" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Tower</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="20" y="20" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="90" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ A</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="480" y="20" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ B</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="20" y="200" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="90" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ C</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="480" y="200" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">✈️ D</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="170" y="235" width="300" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="260" text-anchor="middle" font-size="10" fill="#6ee7b7">4 planes → 4 links. 10 planes → 10 links ✅</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="md2-p0"><circle r="8.06" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">📻</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>tower</b> sits in the middle.</li><li>Each plane connects <b>only to the tower</b>.</li><li>Messages go plane → tower → plane.</li><li>Four planes need four links; ten need ten. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> a star instead of a web.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> IMediator { <span class="kw">void</span> Send(<span class="kw">string</span> from, <span class="kw">string</span> message); }
+
+<span class="kw">class</span> Tower : IMediator
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> List&lt;Plane&gt; _planes = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">void</span> Register(Plane p) =&gt; _planes.Add(p);
+    <span class="kw">public</span> <span class="kw">void</span> Send(<span class="kw">string</span> from, <span class="kw">string</span> msg) { <span class="kw">foreach</span> (<span class="kw">var</span> p <span class="kw">in</span> _planes.Where(p =&gt; p.Name != from)) p.Receive(msg); }
+}
+<span class="kw">class</span> Plane(<span class="kw">string</span> name, IMediator tower)
+{
+    <span class="kw">public</span> <span class="kw">string</span> Name =&gt; name;
+    <span class="kw">public</span> <span class="kw">void</span> Say(<span class="kw">string</span> msg) =&gt; tower.Send(name, msg);        <span class="cmt">// talks to the tower only</span>
+    <span class="kw">public</span> <span class="kw">void</span> Receive(<span class="kw">string</span> msg) { }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">In .NET, libraries such as MediatR use this idea for in-process messages (a third-party library).</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Many components that all need to coordinate (a dialog with many controls)</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> A mediator keeps them from knowing each other.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Two objects that talk to each other</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Direct calls are simpler.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The mediator is becoming a huge class that knows everything</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> That is the main risk: a “god object”.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You want components reusable without each other</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Mediator decouples them.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Objects holding references to many peers</th><td>Introduce a coordinator.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Mediator = one coordinator; objects talk only to it.</li><li>Turns many-to-many into one-to-many.</li><li>Risk: the mediator becomes a god class.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Mediator replaces a web of object-to-object calls with one coordinator, like a control tower, so components no longer know each other and the links grow linearly. The risk is a mediator that becomes a god object."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>The all-knowing mediator.</b> Keep it small.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Observer.</span>
+      <a class="next-link" href="observer.html">Observer <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Mediator’s intent follows refactoring.guru. MediatR is a widely used third-party .NET library. The control tower is a teaching analogy; link counts are n(n−1)/2 arithmetic. Official docs: <a href="https://refactoring.guru/design-patterns/mediator" target="_blank" rel="noopener">Mediator (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

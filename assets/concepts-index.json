@@ -4736,5 +4736,317 @@
     "summary": "The classic mistake with Strangler Fig: Replace an Old System Piece by Piece.",
     "keywords": "strangler fig pattern legacy migration facade incremental rewrite yarp trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-choosing-patterns",
+    "title": "Choosing Patterns: From Problem to Pattern",
+    "category": "Patterns",
+    "page": "patterns/concepts/choosing-patterns.html",
+    "summary": "A problem-to-pattern map, look-alike pairs, combinations and the pattern-first trap.",
+    "keywords": "choosing design patterns problem to pattern look-alike adapter decorator proxy strategy state"
+  },
+  {
+    "id": "patterns-choosing-patterns-recall",
+    "title": "Choosing Patterns: From Problem to Pattern — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/choosing-patterns.html",
+    "summary": "Quick recall points: Choosing Patterns: From Problem to Pattern.",
+    "keywords": "choosing design patterns problem to pattern look-alike adapter decorator proxy strategy state interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-choosing-patterns-trap",
+    "title": "Choosing Patterns: From Problem to Pattern — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/choosing-patterns.html",
+    "summary": "The classic mistake with Choosing Patterns: From Problem to Pattern.",
+    "keywords": "choosing design patterns problem to pattern look-alike adapter decorator proxy strategy state trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-patterns-clinic",
+    "title": "Capstone: the Patterns Clinic",
+    "category": "Patterns",
+    "page": "patterns/concepts/patterns-clinic.html",
+    "summary": "Twelve small cases: name the pain, pick the pattern, with an answer key.",
+    "keywords": "patterns clinic capstone practice cases interview"
+  },
+  {
+    "id": "patterns-patterns-clinic-recall",
+    "title": "Capstone: the Patterns Clinic — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/patterns-clinic.html",
+    "summary": "Quick recall points: Capstone: the Patterns Clinic.",
+    "keywords": "patterns clinic capstone practice cases interview interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-patterns-clinic-trap",
+    "title": "Capstone: the Patterns Clinic — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/patterns-clinic.html",
+    "summary": "The classic mistake with Capstone: the Patterns Clinic.",
+    "keywords": "patterns clinic capstone practice cases interview trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-abstract-factory",
+    "title": "Abstract Factory: Whole Families of Objects",
+    "category": "Patterns",
+    "page": "patterns/concepts/abstract-factory.html",
+    "summary": "Matching themes: one factory per family.",
+    "keywords": "abstract factory pattern family theme"
+  },
+  {
+    "id": "patterns-abstract-factory-recall",
+    "title": "Abstract Factory: Whole Families of Objects — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/abstract-factory.html",
+    "summary": "Quick recall points: Abstract Factory: Whole Families of Objects.",
+    "keywords": "abstract factory pattern family theme interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-abstract-factory-trap",
+    "title": "Abstract Factory: Whole Families of Objects — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/abstract-factory.html",
+    "summary": "The classic mistake with Abstract Factory: Whole Families of Objects.",
+    "keywords": "abstract factory pattern family theme trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-prototype",
+    "title": "Prototype: Copy Instead of Build",
+    "category": "Patterns",
+    "page": "patterns/concepts/prototype.html",
+    "summary": "Clone a ready-made object, then tweak.",
+    "keywords": "prototype pattern clone copy record with"
+  },
+  {
+    "id": "patterns-prototype-recall",
+    "title": "Prototype: Copy Instead of Build — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/prototype.html",
+    "summary": "Quick recall points: Prototype: Copy Instead of Build.",
+    "keywords": "prototype pattern clone copy record with interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-prototype-trap",
+    "title": "Prototype: Copy Instead of Build — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/prototype.html",
+    "summary": "The classic mistake with Prototype: Copy Instead of Build.",
+    "keywords": "prototype pattern clone copy record with trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-bridge",
+    "title": "Bridge: Two Things That Change Independently",
+    "category": "Patterns",
+    "page": "patterns/concepts/bridge.html",
+    "summary": "Remote and device: two hierarchies joined by composition.",
+    "keywords": "bridge pattern abstraction implementation hierarchy"
+  },
+  {
+    "id": "patterns-bridge-recall",
+    "title": "Bridge: Two Things That Change Independently — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/bridge.html",
+    "summary": "Quick recall points: Bridge: Two Things That Change Independently.",
+    "keywords": "bridge pattern abstraction implementation hierarchy interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-bridge-trap",
+    "title": "Bridge: Two Things That Change Independently — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/bridge.html",
+    "summary": "The classic mistake with Bridge: Two Things That Change Independently.",
+    "keywords": "bridge pattern abstraction implementation hierarchy trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-flyweight",
+    "title": "Flyweight: Share to Save Memory",
+    "category": "Patterns",
+    "page": "patterns/concepts/flyweight.html",
+    "summary": "Share the repeated data across many objects.",
+    "keywords": "flyweight pattern memory share intrinsic extrinsic"
+  },
+  {
+    "id": "patterns-flyweight-recall",
+    "title": "Flyweight: Share to Save Memory — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/flyweight.html",
+    "summary": "Quick recall points: Flyweight: Share to Save Memory.",
+    "keywords": "flyweight pattern memory share intrinsic extrinsic interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-flyweight-trap",
+    "title": "Flyweight: Share to Save Memory — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/flyweight.html",
+    "summary": "The classic mistake with Flyweight: Share to Save Memory.",
+    "keywords": "flyweight pattern memory share intrinsic extrinsic trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-iterator",
+    "title": "Iterator: Walk a Collection Without Knowing Its Insides",
+    "category": "Patterns",
+    "page": "patterns/concepts/iterator.html",
+    "summary": "foreach, IEnumerable and yield return.",
+    "keywords": "iterator pattern foreach IEnumerable yield"
+  },
+  {
+    "id": "patterns-iterator-recall",
+    "title": "Iterator: Walk a Collection Without Knowing Its Insides — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/iterator.html",
+    "summary": "Quick recall points: Iterator: Walk a Collection Without Knowing Its Insides.",
+    "keywords": "iterator pattern foreach IEnumerable yield interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-iterator-trap",
+    "title": "Iterator: Walk a Collection Without Knowing Its Insides — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/iterator.html",
+    "summary": "The classic mistake with Iterator: Walk a Collection Without Knowing Its Insides.",
+    "keywords": "iterator pattern foreach IEnumerable yield trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-mediator",
+    "title": "Mediator: One Coordinator Instead of Everyone Talking to Everyone",
+    "category": "Patterns",
+    "page": "patterns/concepts/mediator.html",
+    "summary": "The control tower.",
+    "keywords": "mediator pattern coordinator MediatR"
+  },
+  {
+    "id": "patterns-mediator-recall",
+    "title": "Mediator: One Coordinator Instead of Everyone Talking to Everyone — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/mediator.html",
+    "summary": "Quick recall points: Mediator: One Coordinator Instead of Everyone Talking to Everyone.",
+    "keywords": "mediator pattern coordinator MediatR interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-mediator-trap",
+    "title": "Mediator: One Coordinator Instead of Everyone Talking to Everyone — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/mediator.html",
+    "summary": "The classic mistake with Mediator: One Coordinator Instead of Everyone Talking to Everyone.",
+    "keywords": "mediator pattern coordinator MediatR trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-memento",
+    "title": "Memento: Snapshots for Undo",
+    "category": "Patterns",
+    "page": "patterns/concepts/memento.html",
+    "summary": "Save and restore state without exposing it.",
+    "keywords": "memento pattern snapshot undo save game"
+  },
+  {
+    "id": "patterns-memento-recall",
+    "title": "Memento: Snapshots for Undo — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/memento.html",
+    "summary": "Quick recall points: Memento: Snapshots for Undo.",
+    "keywords": "memento pattern snapshot undo save game interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-memento-trap",
+    "title": "Memento: Snapshots for Undo — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/memento.html",
+    "summary": "The classic mistake with Memento: Snapshots for Undo.",
+    "keywords": "memento pattern snapshot undo save game trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-visitor",
+    "title": "Visitor: Add Operations Without Editing the Classes",
+    "category": "Patterns",
+    "page": "patterns/concepts/visitor.html",
+    "summary": "The tax inspector.",
+    "keywords": "visitor pattern double dispatch operation"
+  },
+  {
+    "id": "patterns-visitor-recall",
+    "title": "Visitor: Add Operations Without Editing the Classes — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/visitor.html",
+    "summary": "Quick recall points: Visitor: Add Operations Without Editing the Classes.",
+    "keywords": "visitor pattern double dispatch operation interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-visitor-trap",
+    "title": "Visitor: Add Operations Without Editing the Classes — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/visitor.html",
+    "summary": "The classic mistake with Visitor: Add Operations Without Editing the Classes.",
+    "keywords": "visitor pattern double dispatch operation trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-transactional-outbox",
+    "title": "Transactional Outbox: Save and Announce Reliably",
+    "category": "Patterns",
+    "page": "patterns/concepts/transactional-outbox.html",
+    "summary": "Store the message with the data, deliver later.",
+    "keywords": "transactional outbox pattern messaging reliable publish"
+  },
+  {
+    "id": "patterns-transactional-outbox-recall",
+    "title": "Transactional Outbox: Save and Announce Reliably — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/transactional-outbox.html",
+    "summary": "Quick recall points: Transactional Outbox: Save and Announce Reliably.",
+    "keywords": "transactional outbox pattern messaging reliable publish interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-transactional-outbox-trap",
+    "title": "Transactional Outbox: Save and Announce Reliably — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/transactional-outbox.html",
+    "summary": "The classic mistake with Transactional Outbox: Save and Announce Reliably.",
+    "keywords": "transactional outbox pattern messaging reliable publish trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-bulkhead",
+    "title": "Bulkhead: Keep One Leak from Sinking the Ship",
+    "category": "Patterns",
+    "page": "patterns/concepts/bulkhead.html",
+    "summary": "Separate resource pools per dependency.",
+    "keywords": "bulkhead pattern isolation resilience pool"
+  },
+  {
+    "id": "patterns-bulkhead-recall",
+    "title": "Bulkhead: Keep One Leak from Sinking the Ship — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/bulkhead.html",
+    "summary": "Quick recall points: Bulkhead: Keep One Leak from Sinking the Ship.",
+    "keywords": "bulkhead pattern isolation resilience pool interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-bulkhead-trap",
+    "title": "Bulkhead: Keep One Leak from Sinking the Ship — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/bulkhead.html",
+    "summary": "The classic mistake with Bulkhead: Keep One Leak from Sinking the Ship.",
+    "keywords": "bulkhead pattern isolation resilience pool trap mistake",
+    "anchor": "trap"
   }
 ]

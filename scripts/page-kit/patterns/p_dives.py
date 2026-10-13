@@ -151,7 +151,7 @@ def d_fl_f():
         d.box(x, 170, 70, 70, [('🌲','e'),('x, y','s')], 'cyan', st=3)
         d.arrow([(x + 35, 170), (320, 100)], 'emerald', st=3)
     d.note(10, 260, 620, 44, 'Each tree: only its position (≈ 24 bytes). Shared part: stored once.', 'violet', st='4-', hl=4)
-    d.note(10, 100, 200, 44, '≈ 500 MB → ≈ 0.3 MB', 'emerald', st='5-', hl=5, size=10)
+    d.note(440, 20, 190, 44, '≈ 500 MB → ≈ 0.3 MB', 'emerald', st='5-', hl=5, size=10)
     return d
 def build_flyweight():
     return dive('flyweight', 'Flyweight: Share to Save Memory', 'proxy', 'Proxy', fam='🔧 Structural',

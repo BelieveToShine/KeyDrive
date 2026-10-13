@@ -41,7 +41,7 @@
     <div class="eyebrow">🧩 Design patterns · named recipes, explained with pictures you know</div>
     <h1>Every design pattern as a <span class="grad-text">story you can watch</span> — creational, structural, behavioral and whole-system patterns.</h1>
     <p class="sub">Each pattern starts with an everyday picture (a pizza shop, a travel plug, a bell, a fuse box), then an <b>animated story</b> shows the problem and the pattern fixing it, then a few lines of <b>C#</b>. Includes <b>CQRS</b>, Event Sourcing, Saga, Circuit Breaker, Cache-Aside and Strangler Fig for whole systems.</p>
-    <p class="hub-note">🗺️ <b>22 of 24</b> concepts are written — the rest (2) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>24 of 24</b> concepts are written — from your first pattern to patterns for whole systems.</p>
     <a class="kd-cta" href="concepts/what-are-patterns.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -77,8 +77,8 @@
 <path class="jm-link done" d="M320,1744 V1780" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,1824 V1860" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,1904 V1940" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,1984 V2074" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,2118 V2154" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,1984 V2074" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,2118 V2154" marker-end="url(#jmArrow)"/>
 <g class="arrow-pill"><rect x="330" y="124" width="140" height="18" rx="9"/><text x="400" y="137" text-anchor="middle" font-size="9" font-style="italic">how do we make objects?</text></g>
 <g class="arrow-pill"><rect x="330" y="231" width="193" height="18" rx="9"/><text x="426.5" y="244" text-anchor="middle" font-size="9" font-style="italic">how do we build a complex object?</text></g>
 <g class="arrow-pill"><rect x="330" y="311" width="182" height="18" rx="9"/><text x="421" y="324" text-anchor="middle" font-size="9" font-style="italic">how many of these should exist?</text></g>
@@ -124,8 +124,8 @@
 <a class="jm-hit" xlink:href="concepts/circuit-breaker-retry.html"><g class="jm-node done"><rect x="220" y="1780" width="200" height="44" rx="12"/><text x="320" y="1807" text-anchor="middle" font-size="14" font-weight="700">⚡ Circuit Breaker &amp; Retry</text></g></a>
 <a class="jm-hit" xlink:href="concepts/cache-aside.html"><g class="jm-node done"><rect x="220" y="1860" width="200" height="44" rx="12"/><text x="320" y="1887" text-anchor="middle" font-size="14" font-weight="700">📓 Cache-Aside</text></g></a>
 <a class="jm-hit" xlink:href="concepts/strangler-fig.html"><g class="jm-node done"><rect x="220" y="1940" width="200" height="44" rx="12"/><text x="320" y="1967" text-anchor="middle" font-size="14" font-weight="700">🌿 Strangler Fig</text></g></a>
-<g class="jm-node locked"><rect x="220" y="2074" width="200" height="44" rx="12"/><text x="320" y="2101" text-anchor="middle" font-size="14" font-weight="700">🧭 Choosing a Pattern</text></g>
-<g class="jm-node locked"><rect x="220" y="2154" width="200" height="44" rx="12"/><text x="320" y="2181" text-anchor="middle" font-size="14" font-weight="700">🏥 Patterns Clinic</text></g>
+<a class="jm-hit" xlink:href="concepts/choosing-patterns.html"><g class="jm-node done"><rect x="220" y="2074" width="200" height="44" rx="12"/><text x="320" y="2101" text-anchor="middle" font-size="14" font-weight="700">🧭 Choosing a Pattern</text></g></a>
+<a class="jm-hit" xlink:href="concepts/patterns-clinic.html"><g class="jm-node done"><rect x="220" y="2154" width="200" height="44" rx="12"/><text x="320" y="2181" text-anchor="middle" font-size="14" font-weight="700">🏥 Patterns Clinic</text></g></a>
 </svg>
       <div class="jm-legend">
         <span class="jm-legend-item"><span class="jm-legend-swatch" style="border:2px solid var(--cyan);background:transparent;"></span>Written</span>
@@ -175,15 +175,30 @@
       <li class="concept-row done"><span class="cr-num">20</span><span class="cr-main"><a href="concepts/circuit-breaker-retry.html">Retry and Circuit Breaker: survive a flaky service</a><span class="cr-tail">the fuse box</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">21</span><span class="cr-main"><a href="concepts/cache-aside.html">Cache-Aside: check the notebook first</a><span class="cr-tail">the notebook of answers</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">22</span><span class="cr-main"><a href="concepts/strangler-fig.html">Strangler Fig: replace an old system piece by piece</a><span class="cr-tail">the vine around the old tree</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">23</span><span class="cr-main"><span class="cr-name">Choosing patterns: from problem to pattern</span><span class="cr-tail">a decision table, combinations and common mistakes</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">24</span><span class="cr-main"><span class="cr-name">Capstone: the patterns clinic</span><span class="cr-tail">twelve small cases to diagnose</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">23</span><span class="cr-main"><a href="concepts/choosing-patterns.html">Choosing patterns: from problem to pattern</a><span class="cr-tail">a decision table, combinations and common mistakes</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">24</span><span class="cr-main"><a href="concepts/patterns-clinic.html">Capstone: the patterns clinic</a><span class="cr-tail">twelve small cases to diagnose</span></span><span class="cr-status done">✅ written</span></li>
     </ol>
   </section>
 
+  <section class="kd-section">
+    <div class="sec-label" style="color:var(--ink-soft)">🔎 Deep dives — reference pages you will use every day</div>
+    <div class="deep-grid">
+      <a class="kd-card deep-card" href="concepts/abstract-factory.html"><span class="dc-kicker">Deep dive · from “Factory: let one place decide what to make”</span><h4>Abstract Factory: whole families of objects</h4><p>A factory of factories: matching families such as a dark theme’s button and checkbox.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/prototype.html"><span class="dc-kicker">Deep dive · from “Builder: build a complex thing step by step”</span><h4>Prototype: copy instead of build</h4><p>Make a new object by copying an existing one.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/bridge.html"><span class="dc-kicker">Deep dive · from “Adapter: make a foreign plug fit”</span><h4>Bridge: two things that change independently</h4><p>Split “what it is” from “how it is done” so each can change on its own.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/flyweight.html"><span class="dc-kicker">Deep dive · from “Proxy: a stand-in that guards the real thing”</span><h4>Flyweight: share to save memory</h4><p>Share the repeating parts of many similar objects to save memory.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/iterator.html"><span class="dc-kicker">Deep dive · from “Composite: treat a tree like one thing”</span><h4>Iterator: walk a collection without knowing its insides</h4><p>How foreach works: walking a collection one item at a time.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/mediator.html"><span class="dc-kicker">Deep dive · from “Observer: tell everyone who subscribed”</span><h4>Mediator: one coordinator instead of everyone talking to everyone</h4><p>A control tower that stops every object from talking to every other object.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/memento.html"><span class="dc-kicker">Deep dive · from “Command: a request as an object”</span><h4>Memento: snapshots for undo</h4><p>Save a snapshot so you can go back (undo).</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/visitor.html"><span class="dc-kicker">Deep dive · from “Composite: treat a tree like one thing”</span><h4>Visitor: add operations without editing the classes</h4><p>Add a new operation to a family of classes without editing each one.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/transactional-outbox.html"><span class="dc-kicker">Deep dive · from “Saga: a long task as small steps with undo steps”</span><h4>Transactional Outbox: save and announce reliably</h4><p>Write the data and the “message to send” in one go, so neither is lost.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/bulkhead.html"><span class="dc-kicker">Deep dive · from “Retry and Circuit Breaker: survive a flaky service”</span><h4>Bulkhead: keep one leak from sinking the ship</h4><p>Separate compartments so a failure in one cannot flood the rest.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+    </div>
+  </section>
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Software Design · Design Patterns Lab · 22 / 24 concepts written</div>
+  <div class="wrap">KeyDrive · Software Design · Design Patterns Lab · 24 / 24 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>

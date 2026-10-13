@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memento: Snapshots for Undo — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="command.html">Command</a><span class="sep">›</span><span class="cur">Memento</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 💬 Behavioral</div>
+    <h1>A game save: <span class="grad-text">take a snapshot, go back to it later</span>.</h1>
+    <p class="sub">The Memento pattern: save and restore an object’s state without breaking its privacy.</p>
+    <div class="interview-q">❓ "What is the Memento pattern and how does it relate to undo?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="To undo a change an outside helper would need to read and rewrite the private details of the editor, which breaks its encapsulation">
+<defs><marker id="mm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path id="mm1-pk" d="M380,90 L260,90" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#mm1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="40" width="250" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="135" y="87.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📝 Editor</text></g>
+<g class="st" data-s="1-"><text x="135" y="100.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">private: text, cursor, font…</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="380" y="40" width="250" height="100" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="505" y="87.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🧑‍🔧 Undo helper</text></g>
+<g class="st" data-s="2-"><text x="505" y="100.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">wants to peek inside</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="170" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="195" text-anchor="middle" font-size="10" fill="#fda4af">Every new editor field means updating the helper too</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="279" y="81" width="82" height="18" rx="9"/><text x="320" y="93.5" text-anchor="middle" font-size="9" font-style="italic">peeks inside</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="mm1-pk"><circle r="8.68" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">👀</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>An <b>editor</b> keeps its text, cursor and font <b>private</b>.</li><li>An <b>undo helper</b> wants to restore an earlier state.</li><li>To do so it must <b>peek inside</b> the editor.</li><li>And every new field means updating the helper too.</li></ol>
+<figcaption><strong>What you're seeing:</strong> undo needs access to private details.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Let the object itself save a sealed snapshot of its state, and hand it back later to restore itself.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🎮 In a video game you <b>save</b> at a checkpoint. The save file is a sealed snapshot; the game itself knows how to load it. The save menu does not need to understand the game’s insides.</p>
+      <p>Memento is listed in the classic behavioral catalog; this page paraphrases its usual intent (save and restore state without exposing internals).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="The editor saves a sealed snapshot of its own state, a caretaker keeps the snapshots without opening them, and undo hands the last snapshot back so the editor restores itself">
+<defs><marker id="mm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="mm2-sv" d="M180,135 L250,60" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mm2A)"/></g>
+<g class="st" data-s="5-"><path id="mm2-rs" d="M450,80 L180,170" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#mm2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="110" width="170" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="95" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📝 Editor</text></g>
+<g class="st" data-s="1-"><text x="95" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">hello world</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="250" y="20" width="160" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="330" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📸 Snapshot #1</text></g>
+<g class="st" data-s="2-"><text x="330" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">sealed: “hello”</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="450" y="20" width="180" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="540" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🗃️ Caretaker</text></g>
+<g class="st" data-s="3-"><text x="540" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">keeps the stack</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="230" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="160" y="255" text-anchor="middle" font-size="10" fill="#fcd34d">Editor continues typing…</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="230" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="255" text-anchor="middle" font-size="10" fill="#6ee7b7">Editor restores itself from the snapshot: “hello” ✅</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="193" y="89" width="44" height="18" rx="9"/><text x="215" y="101.5" text-anchor="middle" font-size="9" font-style="italic">saves</text></g></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="280.5" y="121" width="39" height="18" rx="9"/><text x="300" y="133.5" text-anchor="middle" font-size="9" font-style="italic">undo</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="mm2-sv"><circle r="8.06" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">📸</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="mm2-rs"><circle r="8.06" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">↩️</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The editor holds its state: “hello world”.</li><li>It creates a <b>snapshot</b> of itself — sealed.</li><li>A <b>caretaker</b> keeps the snapshots but never opens them.</li><li>The editor carries on typing.</li><li>On <b>undo</b> the snapshot goes back to the editor, which <b>restores itself</b>. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> the owner makes and reads the snapshot.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">record</span> EditorSnapshot(<span class="kw">string</span> Text);                       <span class="cmt">// sealed state</span>
+
+<span class="kw">class</span> Editor
+{
+    <span class="kw">public</span> <span class="kw">string</span> Text { <span class="kw">get</span>; <span class="kw">private</span> <span class="kw">set</span>; } = <span class="str">""</span>;
+    <span class="kw">public</span> <span class="kw">void</span> Type(<span class="kw">string</span> s) =&gt; Text += s;
+    <span class="kw">public</span> EditorSnapshot Save() =&gt; <span class="kw">new</span>(Text);             <span class="cmt">// the owner makes the snapshot</span>
+    <span class="kw">public</span> <span class="kw">void</span> Restore(EditorSnapshot s) =&gt; Text = s.Text; <span class="cmt">// and restores from it</span>
+}
+<span class="kw">var</span> history = <span class="kw">new</span> Stack&lt;EditorSnapshot&gt;();
+<span class="kw">var</span> ed = <span class="kw">new</span> Editor(); ed.Type(<span class="str">"hello"</span>); history.Push(ed.Save()); ed.Type(<span class="str">" world"</span>); ed.Restore(history.Pop());</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Command + Memento together give robust undo: commands record what to reverse, snapshots record what to restore.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Undo/redo or checkpoints where internals must stay private</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Snapshots keep encapsulation.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> State is tiny and public</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Just copy it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Snapshots are huge and frequent</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Memory cost: consider storing only changes (Command).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Saving game or document states</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> The classic use.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">External code copying private fields to “back them up”</th><td>Let the object make its own snapshot.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Memento = the owner creates and restores snapshots; others only store them.</li><li>Pairs with Command for undo.</li><li>Cost: memory for many snapshots.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Memento lets an object save a sealed snapshot of its own state and restore it later, so undo works without exposing private fields. A caretaker stores the snapshots; I watch memory use and often pair it with Command."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Memory blow-up.</b> Many full snapshots add up.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Command.</span>
+      <a class="next-link" href="command.html">Command <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Memento is part of the classic behavioral catalog (refactoring.guru lists it); this page paraphrases its usual intent from general knowledge — the page itself was not opened in this session. The game save is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/memento" target="_blank" rel="noopener">Memento (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

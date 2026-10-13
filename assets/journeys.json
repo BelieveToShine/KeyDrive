@@ -574,9 +574,33 @@
       "saga",
       "circuit-breaker-retry",
       "cache-aside",
-      "strangler-fig"
+      "strangler-fig",
+      "choosing-patterns",
+      "patterns-clinic"
     ],
-    "sub": {},
-    "subTitles": {}
+    "sub": {
+      "abstract-factory": "factory-method",
+      "prototype": "builder",
+      "bridge": "adapter",
+      "flyweight": "proxy",
+      "iterator": "composite",
+      "mediator": "observer",
+      "memento": "command",
+      "visitor": "composite",
+      "transactional-outbox": "saga",
+      "bulkhead": "circuit-breaker-retry"
+    },
+    "subTitles": {
+      "abstract-factory": "Abstract Factory: whole families of objects",
+      "prototype": "Prototype: copy instead of build",
+      "bridge": "Bridge: two things that change independently",
+      "flyweight": "Flyweight: share to save memory",
+      "iterator": "Iterator: walk a collection without knowing its insides",
+      "mediator": "Mediator: one coordinator instead of everyone talking to everyone",
+      "memento": "Memento: snapshots for undo",
+      "visitor": "Visitor: add operations without editing the classes",
+      "transactional-outbox": "Transactional Outbox: save and announce reliably",
+      "bulkhead": "Bulkhead: keep one leak from sinking the ship"
+    }
   }
 }

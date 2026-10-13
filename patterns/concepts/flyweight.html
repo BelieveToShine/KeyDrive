@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flyweight: Share to Save Memory — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="proxy.html">Proxy</a><span class="sep">›</span><span class="cur">Flyweight</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 🔧 Structural</div>
+    <h1>A forest of trees: <span class="grad-text">store the same picture once</span>.</h1>
+    <p class="sub">The Flyweight pattern: share the repeated parts of many similar objects to fit more in memory.</p>
+    <div class="interview-q">❓ "What is the Flyweight pattern?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A game forest with ten thousand trees where each tree object stores its own copy of the same large texture uses an enormous amount of memory">
+<defs><marker id="fw1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fw1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fw1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="70" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="45" y="71.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="1-"><text x="45" y="83.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">50 KB</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="90" y="20" width="70" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="125" y="71.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="1-"><text x="125" y="83.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">50 KB</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="170" y="20" width="70" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="205" y="71.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="1-"><text x="205" y="83.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">50 KB</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx note" x="260" y="40" width="370" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="445" y="71" text-anchor="middle" font-size="10" fill="#fcd34d">… ×10,000 trees, each with its own copy of the same picture</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="10" y="140" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="165" text-anchor="middle" font-size="10" fill="#fda4af">10,000 × 50 KB = 500,000 KB (≈ 500 MB) for one repeated picture</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="200" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="225" text-anchor="middle" font-size="10" fill="#fda4af">The phone runs out of memory 💥</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A game forest has <b>10,000 trees</b>. Each tree object holds a <b>50 KB</b> texture.</li><li>They are all the <b>same picture</b>.</li><li>10,000 × 50 KB ≈ <b>500 MB</b> for one repeated picture.</li><li>The phone runs out of memory. 💥</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same data copied thousands of times.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Share the parts that are the same across many objects, and keep only the parts that differ inside each object.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📚 A school gives each pupil <b>their own name tag</b> but there is only <b>one copy of the textbook</b> on the shelf that everyone reads. You would not print the whole book for every pupil.</p>
+      <p>refactoring.guru: Flyweight lets you fit more objects into the available RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With a flyweight the texture is stored once and shared; each tree keeps only its own small position, so memory drops from about 500 megabytes to about 0.25 megabytes">
+<defs><marker id="fw2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fw2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fw2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path d="M45,170 L320,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fw2A)"/></g>
+<g class="st" data-s="3-"><path d="M125,170 L320,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fw2A)"/></g>
+<g class="st" data-s="3-"><path d="M205,170 L320,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fw2A)"/></g>
+<g class="st" data-s="3-"><path d="M485,170 L320,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fw2A)"/></g>
+<g class="st" data-s="3-"><path d="M565,170 L320,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fw2A)"/></g>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="220" y="20" width="200" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🖼️ Shared texture</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">stored ONCE · 50 KB</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="10" y="170" width="70" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="45" y="211.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="3-"><text x="45" y="223.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">x, y</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="90" y="170" width="70" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="125" y="211.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="3-"><text x="125" y="223.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">x, y</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="170" y="170" width="70" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="205" y="211.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="3-"><text x="205" y="223.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">x, y</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="450" y="170" width="70" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="485" y="211.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="3-"><text x="485" y="223.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">x, y</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="530" y="170" width="70" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="565" y="211.25" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🌲</text></g>
+<g class="st" data-s="3-"><text x="565" y="223.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">x, y</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="260" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="285" text-anchor="middle" font-size="10" fill="#c4b5fd">Each tree: only its position (≈ 24 bytes). Shared part: stored once.</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="440" y="20" width="190" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="535" y="45" text-anchor="middle" font-size="10" fill="#6ee7b7">≈ 500 MB → ≈ 0.3 MB</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The texture is stored <b>once</b>.</li><li>Every tree points to it.</li><li>Each tree keeps only its own <b>position</b>.</li><li>Shared (intrinsic) part once; per-tree (extrinsic) part small.</li><li>Memory drops from ≈ 500 MB to a fraction of a megabyte. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> shared part once, small part per object.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> TreeType(<span class="kw">string</span> name, byte[] texture) { }           <span class="cmt">// the heavy, shared part</span>
+
+<span class="kw">class</span> TreeTypeFactory
+{
+    <span class="kw">private</span> <span class="kw">static</span> <span class="kw">readonly</span> Dictionary&lt;<span class="kw">string</span>, TreeType&gt; _types = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">static</span> TreeType Get(<span class="kw">string</span> name) =&gt;
+        _types.TryGetValue(name, out <span class="kw">var</span> t) ? t : _types[name] = <span class="kw">new</span> TreeType(name, LoadTexture(name));
+}
+
+<span class="kw">record</span> Tree(<span class="kw">int</span> X, <span class="kw">int</span> Y, TreeType Type);                  <span class="cmt">// small: position + a reference to the shared part</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The shared part is called intrinsic state; the part that differs per object is extrinsic.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Hundreds of thousands of similar objects and memory is tight</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Share the repeated data.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A few dozen objects</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Not worth the complexity.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The shared part never changes (read-only)</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Shared data must be safe to share.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Every object differs completely</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Nothing to share.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Many objects holding identical big fields (images, meshes, strings)</th><td>Move that data into a shared object.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Flyweight = share common (intrinsic) state; keep unique (extrinsic) state per object.</li><li>Saves memory with huge numbers of objects.</li><li>Shared parts should be immutable.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Flyweight saves memory by sharing the common, read-only part of many similar objects — one texture for ten thousand trees — and keeping only the small unique part, like position, in each object."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Mutating shared state.</b> Everyone sees the change.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Proxy.</span>
+      <a class="next-link" href="proxy.html">Proxy <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Flyweight’s intent follows refactoring.guru (sharing common parts of state to fit more objects in RAM). String interning in .NET is a related, documented idea. The forest, tag and textbook pictures and the 50 KB / 10,000 figures are illustrative. Official docs: <a href="https://refactoring.guru/design-patterns/flyweight" target="_blank" rel="noopener">Flyweight (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener">Structural patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

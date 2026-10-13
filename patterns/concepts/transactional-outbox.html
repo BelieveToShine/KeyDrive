@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactional Outbox: Save and Announce Reliably — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="saga.html">Saga</a><span class="sep">›</span><span class="cur">Transactional Outbox</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · ☁️ Architecture</div>
+    <h1>The “to send” tray: <span class="grad-text">save the message in the same step as the data</span>.</h1>
+    <p class="sub">The Transactional Outbox pattern: record the message to send in the same database transaction as the data change, then deliver it separately.</p>
+    <div class="interview-q">❓ "What problem does the Transactional Outbox solve?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="An app saves an order and then sends a message; if it crashes between the two steps the order exists but nobody is told, or the message was sent but the order was never saved">
+<defs><marker id="ox1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ox1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ox1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M160,125 L250,55" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ox1A)"/></g>
+<g class="st" data-s="3-"><path d="M160,145 L250,205" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ox1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="100" width="150" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="85" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧾 Order service</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="250" y="20" width="150" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="325" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🗄️ Save order</text></g>
+<g class="st" data-s="2-"><text x="325" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">step 1 ✅</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="250" y="180" width="150" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="325" y="207.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">📨 Send message</text></g>
+<g class="st" data-s="3-"><text x="325" y="220.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">step 2 💥</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="440" y="100" width="190" height="70" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="124" text-anchor="middle" font-size="10" fill="#fda4af">Crash between 1 and 2:</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="138" text-anchor="middle" font-size="10" fill="#fda4af">order saved,</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="535" y="152" text-anchor="middle" font-size="10" fill="#fda4af">nobody told 😬</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>An order service must <b>save the order</b> and <b>send a message</b> about it.</li><li>Step 1: the order is saved. ✅</li><li>Step 2: sending the message… 💥 the app crashes.</li><li>Now the order exists but <b>nobody was told</b> (or the other way round).</li></ol>
+<figcaption><strong>What you're seeing:</strong> two separate actions, no common rollback.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Write the data and the “message to send” in one database transaction, and let a separate worker deliver the message.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📮 An office keeps an <b>outgoing-mail tray</b>. When you finish a form you put the form in the file <i>and</i> a note in the tray in one go. A clerk later empties the tray and posts the letters, trying again if the post office is closed.</p>
+      <p>This pattern is widely used with messaging; the Azure Architecture Center’s messaging and saga guidance discusses reliable publishing. This page describes the usual form.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="The order and an outbox row are saved in one database transaction; a separate relay later reads the outbox and sends the message, retrying until it succeeds, so nothing is lost">
+<defs><marker id="ox2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ox2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ox2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-" data-hl="2"><rect class="zone" x="250" y="10" width="380" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="zone-title" x="264" y="29" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🗄️ ONE database transaction</text></g>
+<g class="st" data-s="2-"><path id="ox2-tx" d="M180,75 L250,75" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ox2A)"/></g>
+<g class="st" data-s="3-"><path id="ox2-rl" d="M530,110 L530,200" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ox2A)"/></g>
+<g class="st" data-s="4-"><path id="ox2-sd" d="M450,235 L410,235" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ox2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="40" width="170" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="95" y="79" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧾 Order service</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="270" y="50" width="160" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="350" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Orders table</text></g>
+<g class="st" data-s="2-"><text x="350" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new order</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="450" y="50" width="160" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="530" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Outbox table</text></g>
+<g class="st" data-s="2-"><text x="530" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">“send OrderPlaced”</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="450" y="200" width="180" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="540" y="232.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🔁 Relay</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="540" y="245.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reads outbox, sends</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="250" y="200" width="160" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="330" y="239" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📨 Message broker</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="190" width="220" height="80" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="120" y="219" text-anchor="middle" font-size="10" fill="#6ee7b7">Crash? The outbox row is</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="120" y="233" text-anchor="middle" font-size="10" fill="#6ee7b7">still there: the relay</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="120" y="247" text-anchor="middle" font-size="10" fill="#6ee7b7">tries again ✅</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="508" y="146" width="44" height="18" rx="9"/><text x="530" y="158.5" text-anchor="middle" font-size="9" font-style="italic">reads</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="ox2-tx"><circle r="8.06" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">💾</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ox2-sd"><circle r="8.06" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">📨</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The order service saves both rows in <b>one transaction</b>.</li><li>The <b>order</b> and an <b>outbox row</b> (“send OrderPlaced”) commit together — or neither does.</li><li>A separate <b>relay</b> reads the outbox.</li><li>It sends the message to the <b>broker</b>.</li><li>If anything crashes, the outbox row is still there and the relay <b>tries again</b>. ✅ (Receivers should handle duplicates.)</li></ol>
+<figcaption><strong>What you're seeing:</strong> save together, deliver later.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">using</span> <span class="kw">var</span> tx = db.Database.BeginTransaction();
+db.Orders.Add(order);
+db.Outbox.Add(<span class="kw">new</span> OutboxMessage(<span class="str">"OrderPlaced"</span>, JsonSerializer.Serialize(order)));
+db.SaveChanges();
+tx.Commit();                                   <span class="cmt">// both saved, or neither</span>
+
+<span class="cmt">// separate background worker</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> m <span class="kw">in</span> db.Outbox.Where(m =&gt; m.SentAt == <span class="kw">null</span>))
+{
+    broker.Publish(m.Type, m.Payload);          <span class="cmt">// may be sent more than once → receivers must be idempotent</span>
+    m.SentAt = DateTime.UtcNow; db.SaveChanges();
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Sketch only. Delivery is “at least once”, so consumers must tolerate duplicates.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You must update a database AND publish an event, reliably</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Outbox gives you that.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Everything stays inside one database</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> No messaging, no outbox.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Losing an occasional message is acceptable</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Then simpler publishing may do.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Consumers cannot cope with duplicates</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Fix idempotency first.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Code that saves to the database and then publishes in the next line</th><td>A crash between the two loses the event.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Outbox = store the outgoing message in the same transaction as the data; deliver later.</li><li>Avoids lost messages without distributed transactions.</li><li>At-least-once delivery → idempotent consumers.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Transactional Outbox stores the message to publish in the same database transaction as the data change, and a separate relay delivers it, retrying on failure. It avoids the gap where the data is saved but the event is lost, at the cost of at-least-once delivery, so consumers must be idempotent."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Forgetting idempotency.</b> Duplicates will happen.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Saga.</span>
+      <a class="next-link" href="saga.html">Saga <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 The Transactional Outbox is a widely used messaging pattern; the Azure Architecture Center’s Saga and messaging pages discuss reliable publishing, but the outbox page itself was not opened in this session (🟨). The mail tray is a teaching analogy; the code is a sketch. Official docs: <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/" target="_blank" rel="noopener">Cloud Design Patterns (Azure Architecture Center)</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/saga" target="_blank" rel="noopener">Saga pattern (Azure Architecture Center)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

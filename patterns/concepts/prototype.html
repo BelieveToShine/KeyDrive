@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype: Copy Instead of Build — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="builder.html">Builder</a><span class="sep">›</span><span class="cur">Prototype</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Patterns lab · 🏭 Creational</div>
+    <h1>A photocopy of a template: <span class="grad-text">copy it, then tweak it</span>.</h1>
+    <p class="sub">The Prototype pattern: make a new object by cloning an existing one.</p>
+    <div class="interview-q">❓ "What is the Prototype pattern and when is cloning better than constructing?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Building a complicated report object from scratch every time means setting the same ten options again and again">
+<defs><marker id="pr1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pr1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pr1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="10" y="20" width="300" height="100" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text x="160" y="61.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">📄 new Report()</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="160" y="74" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">font, margins, header, footer,</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="160" y="86.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">logo, language … (10 options)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="330" y="20" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="480" y="45" text-anchor="middle" font-size="10" fill="#fcd34d">Report for Monday: set 10 options</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="330" y="20" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="480" y="45" text-anchor="middle" font-size="10" fill="#fcd34d">Report for Tuesday: set the same 10 again</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="330" y="20" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="480" y="45" text-anchor="middle" font-size="10" fill="#fda4af">Only one thing differs: the date</text></g>
+<g class="st" data-s="3-"><rect class="bx note" x="10" y="160" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-"><text x="320" y="185" text-anchor="middle" font-size="10" fill="#fda4af">✏️ Same setup repeated, and the chance of a typo each time</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A report object has <b>ten options</b> to set.</li><li>Monday’s report: set all ten.</li><li>Tuesday’s report: set the <b>same ten</b> again.</li><li>Only the date differs. Repeating the setup is slow and typo-prone.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same setup repeated.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Make a new object by copying an existing, ready-made one, then change what differs.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧾 An office keeps a <b>template form</b>. Nobody redraws it every time; they photocopy it and fill in the blanks.</p>
+      <p>refactoring.guru: Prototype lets you copy existing objects without making your code dependent on their classes; the cloning process is delegated to the objects being cloned.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔧 The pattern fixes it</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A ready-made template report is cloned to make a copy, and only the date is changed on the copy, so the ten options are set once">
+<defs><marker id="pr2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pr2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pr2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="pr2-cl" d="M210,130 L430,130" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pr2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="80" width="200" height="100" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="110" y="127.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📄 Template</text></g>
+<g class="st" data-s="1-"><text x="110" y="140.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">10 options set once</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="430" y="80" width="200" height="100" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="530" y="127.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">📄 Copy</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="530" y="140.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">same 10 options</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="330" y="200" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="480" y="225" text-anchor="middle" font-size="10" fill="#fcd34d">Change only the date ✏️</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="200" width="300" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="160" y="225" text-anchor="middle" font-size="10" fill="#67e8f9">The template stays untouched</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="292.5" y="121" width="55" height="18" rx="9"/><text x="320" y="133.5" text-anchor="middle" font-size="9" font-style="italic">Clone()</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="pr2-cl"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📄</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A ready-made <b>template</b> is set up once.</li><li><b>Clone()</b> makes a copy with the same ten options.</li><li>Change only the <b>date</b> on the copy.</li><li>The template stays untouched for the next copy.</li></ol>
+<figcaption><strong>What you're seeing:</strong> copy, then tweak.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Report
+{
+    <span class="kw">public</span> <span class="kw">string</span> Font = <span class="str">"Arial"</span>; <span class="kw">public</span> <span class="kw">string</span> Header = <span class="str">"ACME"</span>; <span class="kw">public</span> DateOnly Date;
+    <span class="kw">public</span> Report Clone() =&gt; (Report)MemberwiseClone();       <span class="cmt">// shallow copy of the fields</span>
+}
+
+<span class="kw">var</span> template = <span class="kw">new</span> Report { Font = <span class="str">"Calibri"</span>, Header = <span class="str">"ACME Ltd"</span> };
+<span class="kw">var</span> tuesday = template.Clone(); tuesday.Date = <span class="kw">new</span> DateOnly(2026, 10, 14);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">MemberwiseClone copies fields shallowly; objects holding other objects (like lists) need a deep copy. C# records offer <span class="kw">with</span> expressions for a similar effect.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">C# <code>record</code> with <code>with { … }</code></th><td>non-destructive copy-and-change</td></tr><tr><th scope="row"><code>ICloneable</code></th><td>exists in .NET but its documentation does not say whether Clone is deep or shallow, so many teams avoid it</td></tr></tbody></table></div>
+    <p style="margin-top:10px;color:var(--ink-soft)">Verify against the current .NET docs before relying on these remarks.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Objects that are expensive or fiddly to set up, and many are almost the same</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Clone a prepared one.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Simple objects with two fields</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Just construct them.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A copy must not share inner lists with the original</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Remember deep versus shallow copies.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You want the copy to stay linked to the original</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Then it is a reference, not a clone.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Repeated blocks of property assignments building “almost the same” objects</th><td>Clone a template.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Prototype = new objects by cloning existing ones.</li><li>Shallow versus deep copy matters.</li><li>Handy for presets and templates.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Prototype makes new objects by cloning a prepared one and changing what differs, like photocopying a template form. I watch for shallow versus deep copies, and in modern C# a record with a with-expression often does the job."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Shallow copy surprises.</b> Both copies share the same inner list.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Builder.</span>
+      <a class="next-link" href="builder.html">Builder <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Prototype’s intent follows refactoring.guru. The C# record/with remark and MemberwiseClone are standard language features; the ICloneable remark is common guidance (re-check current docs). The template form is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/prototype" target="_blank" rel="noopener">Prototype (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/creational-patterns" target="_blank" rel="noopener">Creational patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

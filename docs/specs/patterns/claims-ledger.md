@@ -97,5 +97,45 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 
 
 
+## Pages 23–24 — Choosing patterns, Patterns clinic
+| Claim | Status | Note |
+|---|---|---|
+| Choose a pattern based on the problem, not the technology; combine patterns (Retry+Circuit Breaker, Saga on Compensating Transaction, CQRS+Event Sourcing) | ✅ V | Azure Architecture Center: Cloud Design Patterns catalog, Reliability design patterns (search summaries) |
+| Decorator vs Adapter: decorator keeps/extends the interface, adapter changes it | ✅ V | refactoring.guru Decorator |
+| Decorator vs Proxy (same structure, different intent); Strategy vs State; Factory vs Builder; Observer vs Command | 🟨 K | common distinctions, not individually quoted |
+| Tool-shop picture; the twelve clinic cases and their figures | 🟦 I | teaching analogy / illustrative |
+
+
+
+## Deep dives — remaining GoF patterns + Outbox + Bulkhead
+| Claim | Status | Note |
+|---|---|---|
+| Abstract Factory: families of related objects without specifying concrete classes | ✅ V | refactoring.guru Abstract Factory |
+| Prototype: copy existing objects without depending on their classes; cloning delegated to the objects | ✅ V | refactoring.guru Prototype |
+| Bridge: split into abstraction and implementation hierarchies developed independently | ✅ V | refactoring.guru Bridge |
+| Flyweight: fit more objects in RAM by sharing common parts of state | ✅ V | refactoring.guru Flyweight |
+| Iterator: sequential traversal without exposing internals; Mediator: reduce chaotic dependencies via a mediator; Visitor: separate algorithms from objects | ✅ V | refactoring.guru Iterator / Mediator / Visitor |
+| C# foreach over IEnumerable, yield return | ✅ V | Microsoft Learn C# reference (yield) |
+| Memento intent; ICloneable docs ambiguity; MediatR; Polly bulkhead; transactional outbox; Azure Bulkhead page | 🟨 K | known from general knowledge; pages not opened this session |
+| All analogies, tree/texture sizes, link counts (n(n-1)/2), worker counts | 🟦 I | illustrative |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.
