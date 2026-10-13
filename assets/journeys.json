@@ -489,11 +489,13 @@
     ],
     "sub": {
       "design-patterns-solid": "dependency-inversion",
-      "composition-vs-inheritance": "liskov-substitution"
+      "composition-vs-inheritance": "liskov-substitution",
+      "solid-in-frontend": "solid-together"
     },
     "subTitles": {
       "design-patterns-solid": "Patterns that realise the principles",
-      "composition-vs-inheritance": "Composition over inheritance"
+      "composition-vs-inheritance": "Composition over inheritance",
+      "solid-in-frontend": "SOLID in React and Angular"
     }
   }
 }

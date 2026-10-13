@@ -4138,5 +4138,31 @@
     "summary": "The classic mistake with Composition over Inheritance.",
     "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-solid-in-frontend",
+    "title": "SOLID in React and Angular",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "How the five principles show up in React components and hooks and in Angular services, content projection and dependency injection.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end"
+  },
+  {
+    "id": "solid-solid-in-frontend-recall",
+    "title": "SOLID in React and Angular — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "Quick recall points: SOLID in React and Angular.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-solid-in-frontend-trap",
+    "title": "SOLID in React and Angular — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "The classic mistake with SOLID in React and Angular.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end trap mistake",
+    "anchor": "trap"
   }
 ]

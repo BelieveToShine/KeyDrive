@@ -175,7 +175,21 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | 3 features → 7 combinations (2³ − 1) | ✅ V | arithmetic |
 | Class names and code (OrderProcessor, LoggedDiscounted…) | 🟦 I | illustrative |
 
+## Deep dive — SOLID in React and Angular
+| Claim | Status | Note |
+|---|---|---|
+| Custom hooks share stateful logic, not state itself; each hook call is independent; wrapping a single useState in a custom hook is probably unnecessary | ✅ V | react.dev: Reusing Logic with Custom Hooks (via search summary) |
+| Components and hooks must be pure; props and hook arguments are read-only | ✅ V | react.dev: Rules of React / Keeping Components Pure |
+| { provide: Logger, useClass: EvenBetterLogger } substitutes an alternative implementation | ✅ V | angular.dev: Defining dependency providers |
+| TypeScript interfaces cannot be DI keys (erased at runtime); use InjectionToken with inject() | ✅ V | angular.dev DI guides (via search summary) |
+| Lightweight injection token: small abstract class as token, real implementation provided later | ✅ V | angular.dev: Optimizing injection tokens |
+| useExisting aliases to the same instance; useClass creates separate instances | ✅ V | angular.dev providers / ClassProvider API |
+| Mapping of S/O/L/I/D onto components, hooks, services | 🟦 I | this site's teaching view; neither framework's docs use the SOLID names |
+| React and Angular code sketches (useOrders, ORDER_REPO, HttpOrderRepository…) | 🟦 I | illustrative, not compiled |
+| React children prop / render props as the open-for-extension mechanism | 🟨 K | common React idiom; this search did not return the react.dev page on it |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |
 | "80%" shared code between Invoice/CreditNote/ProformaInvoice (composition page scenario) | 🟦 I | illustrative scenario figure |
+| "600-line component" (front-end smells table) | 🟦 I | illustrative figure |

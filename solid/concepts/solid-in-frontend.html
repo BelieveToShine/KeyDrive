@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLID in React and Angular — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><a href="solid-together.html">SOLID Together</a><span class="sep">›</span><span class="cur">SOLID in React and Angular</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · SOLID lab · 🌐 Front end</div>
+    <h1>The same problems, <span class="grad-text">different tools</span>.</h1>
+    <p class="sub">How the five principles show up in React components and hooks and in Angular services, content projection and dependency injection.</p>
+    <div class="interview-q">❓ "How do SOLID principles apply to React or Angular code?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 345" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="How the five principles appear in front-end code: single responsibility as UI versus data hook or component versus service; open/closed as children and content projection; Liskov as same props or inputs; interface segregation as passing only what is needed; dependency inversion as props and hooks in React and inject with providers in Angular">
+<defs><marker id="fe1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fe1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fe1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="bx" x="10" y="6" width="140" height="34" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="80" y="27" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Principle</text>
+<rect class="bx" x="165" y="6" width="225" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="27" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">React</text>
+<rect class="bx" x="405" y="6" width="225" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="27" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Angular</text>
+<rect class="bx" x="10" y="52" width="140" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="81" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">S · Single</text>
+<rect class="bx" x="165" y="52" width="225" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="79.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">UI vs data hook</text>
+<rect class="bx" x="405" y="52" width="225" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="79.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">component vs service</text>
+<rect class="bx" x="10" y="110" width="140" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">O · Open/Closed</text>
+<rect class="bx" x="165" y="110" width="225" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="137.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">children, render props</text>
+<rect class="bx" x="405" y="110" width="225" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="137.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">content projection</text>
+<rect class="bx" x="10" y="168" width="140" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="197" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">L · Liskov</text>
+<rect class="bx" x="165" y="168" width="225" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="195.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">same props, same promise</text>
+<rect class="bx" x="405" y="168" width="225" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="195.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">same inputs and outputs</text>
+<rect class="bx" x="10" y="226" width="140" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="255" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">I · Interface</text>
+<rect class="bx" x="165" y="226" width="225" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="253.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">pass only needed props</text>
+<rect class="bx" x="405" y="226" width="225" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="253.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">narrow inputs, small services</text>
+<rect class="bx" x="10" y="284" width="140" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="80" y="313" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">D · Dependency</text>
+<rect class="bx" x="165" y="284" width="225" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="277.5" y="311.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">props, hooks, context</text>
+<rect class="bx" x="405" y="284" width="225" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="517.5" y="311.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">inject() + providers</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> The principles were named for object-oriented code, but the <b>problems</b> they describe — a unit that changes for many reasons, behaviour you cannot extend, dependencies you cannot swap — are the same in a React component tree or an Angular app. Only the <b>tools</b> change: hooks, props, children and context in React; services, content projection and dependency injection in Angular.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Same problems, different tools.</b> Ask the same questions of a component: why does it change, what does it need, who creates its dependencies?</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>This site’s React and Angular labs already contain the mechanics: custom hooks, context and state architecture, an API layer, Angular’s dependency injection, services and state management. This page connects them to the principles.</p>
+      <p>React’s documentation says custom hooks let you share <i>stateful logic</i> but not <i>state itself</i> — each call to a hook is independent — and warns that wrapping a single <span class="kw">useState</span> in a custom hook is probably unnecessary. Components and hooks are also expected to be pure, with props treated as read-only. Those are SRP-and-contract ideas, even though the docs do not use the SOLID names.</p>
+      <p>Angular’s docs show the Dependency Inversion Principle in framework form: <span class="kw">{ provide: Logger, useClass: EvenBetterLogger }</span> substitutes an alternative implementation; a TypeScript interface cannot be a DI key because interfaces disappear after compilation, so you use an <span class="kw">InjectionToken</span> (or an abstract class) as the key.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🅰️ DIP in Angular</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="In Angular the component injects an InjectionToken for an OrderRepository interface; providers map the token to HttpOrderRepository in production and InMemoryOrderRepository in tests, so the component never names the implementation">
+<defs><marker id="fe2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fe2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fe2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,68 L320,130" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fe2A)"/>
+<path d="M160,250 L160,186" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fe2A)"/>
+<path d="M480,250 L480,186" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fe2A)"/>
+<rect class="bx" x="220" y="12" width="200" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrdersComponent</text>
+<text x="320" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">inject(ORDER_REPO)</text>
+<rect class="bx" x="120" y="130" width="400" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">InjectionToken&lt;OrderRepository&gt;</text>
+<text x="320" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">an interface cannot be a runtime key</text>
+<rect class="bx" x="20" y="250" width="280" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="160" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">HttpOrderRepository</text>
+<text x="160" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">production provider</text>
+<rect class="bx" x="340" y="250" width="280" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="480" y="275.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">InMemoryOrderRepository</text>
+<text x="480" y="288.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">test provider</text>
+<g class="arrow-pill"><rect x="290" y="90" width="60" height="18" rx="9"/><text x="320" y="102.5" text-anchor="middle" font-size="9" font-style="italic">asks for</text></g>
+<g class="arrow-pill"><rect x="122" y="209" width="76" height="18" rx="9"/><text x="160" y="221.5" text-anchor="middle" font-size="9" font-style="italic">provided as</text></g>
+<g class="arrow-pill"><rect x="442" y="209" width="76" height="18" rx="9"/><text x="480" y="221.5" text-anchor="middle" font-size="9" font-style="italic">provided as</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> The component asks for a <b>token</b>, not a class. The <b>providers</b> (in the app config or in a test) decide the implementation. This is the same inversion as page 6, with <span class="kw">inject()</span> and providers in place of constructor parameters and a container.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Lab · the same refactoring in React and Angular</div>
+    <div class="code-block"><pre><span class="cmt">// REACT — before: one component fetches, transforms and renders</span>
+function Orders() {
+  const [orders, setOrders] = useState([]);
+  useEffect(() =&gt; { fetch('/api/orders').then(r =&gt; r.json()).then(setOrders); }, []);
+  <span class="kw">return</span> &lt;ul&gt;{orders.map(o =&gt; &lt;li key={o.id}&gt;{o.total}&lt;/li&gt;)}&lt;/ul&gt;;
+}
+
+<span class="cmt">// REACT — after: a hook owns the data, the component only renders; the source is a parameter</span>
+function useOrders(load) { /* load() -&gt; Promise&lt;Order[]&gt;; state, loading, error live here */ }
+function OrdersView({ orders }) { <span class="kw">return</span> &lt;ul&gt;{orders.map(o =&gt; &lt;li key={o.id}&gt;{o.total}&lt;/li&gt;)}&lt;/ul&gt;; }
+function Orders({ load = fetchOrders }) { const orders = useOrders(load); <span class="kw">return</span> &lt;OrdersView orders={orders} /&gt;; }
+<span class="cmt">// tests pass a fake load; OrdersView needs no hook at all</span>
+
+<span class="cmt">// ANGULAR — token + providers</span>
+export <span class="kw">interface</span> OrderRepository { list(): Observable&lt;Order[]&gt;; }
+export const ORDER_REPO = <span class="kw">new</span> InjectionToken&lt;OrderRepository&gt;('ORDER_REPO');
+
+@Component({ /* ... */ })
+export <span class="kw">class</span> OrdersComponent {
+  <span class="kw">private</span> repo = inject(ORDER_REPO);
+  orders$ = <span class="kw">this</span>.repo.list();
+}
+<span class="cmt">// app.config.ts:  providers: [{ provide: ORDER_REPO, useClass: HttpOrderRepository }]</span>
+<span class="cmt">// in a test:      providers: [{ provide: ORDER_REPO, useClass: InMemoryOrderRepository }]</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketches in TypeScript/JSX (not compiled). React has no container: the “injection” is a parameter, a prop, a custom hook or context. Angular has one: providers and <span class="kw">inject()</span>.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">React</th><th scope="col">Angular</th></tr></thead><tbody><tr><th scope="row">Where does data-fetching live?</th><td>A custom hook or an API layer</td><td>A service</td></tr><tr><th scope="row">How do I swap the data source for a test?</th><td>Pass it as a parameter/prop, or provide it by context</td><td>Override the provider for the token</td></tr><tr><th scope="row">How do I extend a component without editing it?</th><td><span class="kw">children</span>, props that take components</td><td>Content projection, directives</td></tr><tr><th scope="row">What is the “interface”?</th><td>The props type</td><td>The inputs, outputs and service API</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">📋 Front-end smells</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Principle</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">A 600-line component that fetches, filters, validates and renders</th><td>SRP</td><td>Split a hook/service from the view</td></tr><tr><th scope="row">A prop that is a big “config” object where each child needs one field</th><td>ISP</td><td>Pass only what each child needs</td></tr><tr><th scope="row"><span class="kw">fetch(...)</span> or <span class="kw">HttpClient</span> calls directly in many components</th><td>DIP</td><td>Move behind a hook, API layer or service</td></tr><tr><th scope="row">A new variant means another <span class="kw">if (type === …)</span> in a component</th><td>OCP</td><td>Pass a component or template for the variable part</td></tr><tr><th scope="row">A “Button” variant that ignores the props of the base button</th><td>LSP</td><td>Keep the same props contract; or make it a different component</td></tr><tr><th scope="row">Services that call each other in a circle</th><td>Coupling</td><td>Extract the shared piece</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart page logic is duplicated in two screens</h5><p>Both fetch and transform the same data.</p><span class="sc-use">→ One hook (React) / one service (Angular)</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>A component test hits the network</h5><p>The fetch is hard-coded.</p><span class="sc-use">→ Inject or pass the loader</span></div>
+      <div class="scenario"><span class="sc-icon">🎨</span><h5>A card needs a custom footer on one page</h5><p>Another boolean prop is proposed.</p><span class="sc-use">→ Accept <span class="kw">children</span> or project content</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Replace REST with GraphQL</h5><p>Changes in 40 components.</p><span class="sc-use">→ They all depended on one repository abstraction</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Do not import OO ceremony.</b> React in particular rewards small functions and composition; you rarely need classes or interfaces. Use the principles as questions, not as a requirement to add layers.</p>
+      <p><b>Lightweight tokens.</b> Angular documents a “lightweight injection token” pattern: a small abstract class used as the token while the real implementation is provided later.</p>
+      <p><b>See the labs.</b> React: custom hooks, context and state architecture, API layer. Angular: dependency injection, state management, component communication.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>The same design problems exist in components; only the tools differ.</li><li>React: logic in custom hooks, variation through children/props, dependencies as parameters or context.</li><li>Angular: services, content projection, providers and InjectionTokens.</li><li>Interfaces vanish at runtime in TypeScript, so Angular uses an InjectionToken (or abstract class) as the DI key.</li><li>Custom hooks share logic, not state; do not wrap a single useState without reason.</li><li>Use the principles as questions, not as a mandate for layers.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The same problems appear in front-end code. In React I keep components pure and focused on rendering, put data logic in custom hooks or an API layer, let children and props carry the variable parts, and pass the data source as a parameter so tests can fake it. In Angular I use services, content projection, and providers with an InjectionToken so a component asks for an abstraction and the app config or test decides the implementation."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Class-style ceremony in React.</b> You do not need an interface for every hook.</p>
+      <p><b>Injecting a TypeScript interface directly.</b> It does not exist at runtime; use a token.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⚛️ React “injection”</h5><p>Parameters, props, context: explicit and manual.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🅰️ Angular injection</h5><p>Providers and inject(): resolved by the framework’s injector.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the worked example: where all five principles were applied step by step to one service class.</span>
+      <a class="next-link" href="solid-together.html">SOLID Together: a Worked Refactoring <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 The React statements (hooks share logic not state, purity, avoid unnecessary wrappers) follow react.dev; the Angular provider, InjectionToken and lightweight-token statements follow angular.dev. The mapping of SOLID onto components is this site’s teaching view, not official guidance from either framework. Check each framework’s current docs. Official docs: <a href="https://react.dev/learn/reusing-logic-with-custom-hooks" target="_blank" rel="noopener">Reusing logic with custom hooks (react.dev)</a> · <a href="https://react.dev/reference/rules" target="_blank" rel="noopener">Rules of React (react.dev)</a> · <a href="https://angular.dev/guide/di/defining-dependency-providers" target="_blank" rel="noopener">Defining dependency providers (angular.dev)</a> · <a href="https://angular.dev/guide/di/lightweight-injection-tokens" target="_blank" rel="noopener">Optimizing injection tokens (angular.dev)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
