@@ -188,6 +188,23 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | React and Angular code sketches (useOrders, ORDER_REPO, HttpOrderRepository…) | 🟦 I | illustrative, not compiled |
 | React children prop / render props as the open-for-extension mechanism | 🟨 K | common React idiom; this search did not return the react.dev page on it |
 
+## Rewrite (2026-10-13, L14) — pages 1–4 simple + animated
+| Claim | Status | Note |
+|---|---|---|
+| SOLID is a set of heuristics popularised by Robert C. Martin; no single official standard; about managing dependencies and keeping code easy to change | ✅ V | Uncle Bob, Principles of OOD / Solid Relevance (ledgered earlier) |
+| SRP wording “one reason to change”; the “who asks for the change” (accountant/designer/engineer) explanation | ✅ V | Uncle Bob, The Single Responsibility Principle (2014 blog) — via search summary earlier; the three roles are this site's illustration |
+| OCP is Bertrand Meyer's (1988), restated by Martin; no program can be 100% closed | ✅ V | Uncle Bob, The Open Closed Principle (ledgered earlier) |
+| LSP: derived classes must be usable wherever base classes are; Square/Rectangle classic example | ✅ V | Martin, Principles of OOD; MSDN Magazine 2011 (ledgered earlier) |
+| NotSupportedException / IReadOnlyList as the honest read-only interface | 🟨 K | standard .NET types, not re-verified this session |
+| Restaurant, earphones, power strip, Bird/Penguin pictures; Discount/Cart/Invoice/Report/Email shop; Invoice code | 🟦 I | teaching analogies and tiny illustrations, not from a source |
+| Percentages (0%, 10%, 15%, 5% → 8% tax), “5 customers waiting”, ten years | 🟦 I | illustrative numbers |
+
+
+
+
+
+
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |

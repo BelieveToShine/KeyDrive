@@ -38,10 +38,10 @@
 
 <main class="wrap">
   <section class="kd-hero">
-    <div class="eyebrow">🧱 SOLID · from “why does every change break something?” to “here is the small, safe refactoring”</div>
-    <h1>Learn the five principles that keep code <span class="grad-text">cheap to change</span> — by refactoring one real class.</h1>
-    <p class="sub">One continuous story: why code rots, then S, O, L, I and D one at a time on a single ShopCore <b>OrderService</b>, dependency injection in .NET, a smell-to-refactoring playbook, a full worked refactoring, testability as proof, and the judgement to know when <i>not</i> to apply a principle. Examples are in <b>C#</b>.</p>
-    <p class="hub-note">🗺️ <b>12 of 12</b> concepts are written — the whole journey, from a class that does everything to a design that is easy to change.</p>
+    <div class="eyebrow">🧱 SOLID · five simple habits that keep code easy to change</div>
+    <h1>Five everyday pictures that make <span class="grad-text">SOLID easy</span> — watch each one happen.</h1>
+    <p class="sub">Every principle starts with something from real life — a restaurant, a power strip, a bird that cannot fly, a printer, a light switch — then an <b>animated story</b> shows the problem and the fix, then a few lines of <b>C#</b>. No background needed.</p>
+    <p class="hub-note">🗺️ <b>12 of 12</b> concepts are written — the whole journey, from “why does every change break something?” to a design that is easy to change.</p>
     <a class="kd-cta" href="concepts/why-design-principles.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -65,13 +65,13 @@
 <path class="jm-link done" d="M320,836 V926" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,970 V1006" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,1050 V1086" marker-end="url(#jmArrow)"/>
-<g class="arrow-pill"><rect x="330" y="124" width="145" height="18" rx="9"/><text x="402.5" y="137" text-anchor="middle" font-size="9" font-style="italic">what is one class’s job?</text></g>
-<g class="arrow-pill"><rect x="330" y="231" width="177" height="18" rx="9"/><text x="418.5" y="244" text-anchor="middle" font-size="9" font-style="italic">how do we add without editing?</text></g>
-<g class="arrow-pill"><rect x="330" y="311" width="172" height="18" rx="9"/><text x="416" y="324" text-anchor="middle" font-size="9" font-style="italic">what makes a substitute safe?</text></g>
-<g class="arrow-pill"><rect x="330" y="391" width="209" height="18" rx="9"/><text x="434.5" y="404" text-anchor="middle" font-size="9" font-style="italic">who is forced to depend on too much?</text></g>
-<g class="arrow-pill"><rect x="330" y="471" width="161" height="18" rx="9"/><text x="410.5" y="484" text-anchor="middle" font-size="9" font-style="italic">what should depend on what?</text></g>
-<g class="arrow-pill"><rect x="330" y="578" width="219" height="18" rx="9"/><text x="439.5" y="591" text-anchor="middle" font-size="9" font-style="italic">how do objects get their dependencies?</text></g>
-<g class="arrow-pill"><rect x="330" y="685" width="156" height="18" rx="9"/><text x="408" y="698" text-anchor="middle" font-size="9" font-style="italic">how do I spot a violation?</text></g>
+<g class="arrow-pill"><rect x="330" y="124" width="150" height="18" rx="9"/><text x="405" y="137" text-anchor="middle" font-size="9" font-style="italic">what should one class do?</text></g>
+<g class="arrow-pill"><rect x="330" y="231" width="188" height="18" rx="9"/><text x="424" y="244" text-anchor="middle" font-size="9" font-style="italic">how do we add new things safely?</text></g>
+<g class="arrow-pill"><rect x="330" y="311" width="177" height="18" rx="9"/><text x="418.5" y="324" text-anchor="middle" font-size="9" font-style="italic">what makes a replacement safe?</text></g>
+<g class="arrow-pill"><rect x="330" y="391" width="166" height="18" rx="9"/><text x="413" y="404" text-anchor="middle" font-size="9" font-style="italic">how big should a promise be?</text></g>
+<g class="arrow-pill"><rect x="330" y="471" width="172" height="18" rx="9"/><text x="416" y="484" text-anchor="middle" font-size="9" font-style="italic">who should own the interface?</text></g>
+<g class="arrow-pill"><rect x="330" y="578" width="156" height="18" rx="9"/><text x="408" y="591" text-anchor="middle" font-size="9" font-style="italic">who plugs things together?</text></g>
+<g class="arrow-pill"><rect x="330" y="685" width="145" height="18" rx="9"/><text x="402.5" y="698" text-anchor="middle" font-size="9" font-style="italic">how do I spot a problem?</text></g>
 <g class="arrow-pill"><rect x="330" y="765" width="156" height="18" rx="9"/><text x="408" y="778" text-anchor="middle" font-size="9" font-style="italic">how do they work together?</text></g>
 <g class="arrow-pill"><rect x="330" y="872" width="145" height="18" rx="9"/><text x="402.5" y="885" text-anchor="middle" font-size="9" font-style="italic">how do I know it worked?</text></g>
 <g class="arrow-pill"><rect x="330" y="979" width="103" height="18" rx="9"/><text x="381.5" y="992" text-anchor="middle" font-size="9" font-style="italic">can I overdo it?</text></g>
@@ -93,7 +93,7 @@
         <span class="jm-legend-item"><span class="jm-legend-swatch" style="border:2px solid var(--cyan);background:transparent;"></span>Written</span>
         <span class="jm-legend-item"><span class="jm-legend-swatch" style="border:2px dashed var(--border);background:transparent;"></span>Planned</span>
       </div>
-      <figcaption>In this exact order — each connector is labeled with the limit that made the next concept necessary. Click a written node to jump straight in. <b>The problem</b> = why change gets expensive · <b>The five principles</b> = S, O, L, I, D · <b>Making it real</b> = DI, smells, a worked refactoring · <b>Judgement</b> = tests, trade-offs, a clinic.</figcaption>
+      <figcaption>In this exact order — each connector is labeled with the limit that made the next concept necessary. Click a written node to jump straight in. <b>The problem</b> = why change gets expensive · <b>The five principles</b> = S, O, L, I, D · <b>Making it real</b> = DI, smells, a worked example · <b>Judgement</b> = tests, trade-offs, a clinic.</figcaption>
     </figure>
   </section>
 
@@ -105,37 +105,37 @@
   </section>
 
   <section class="kd-section">
-    <div class="sec-label" style="color:var(--ink-soft)">🛒 The practice code: ShopCore OrderService</div>
-    <p style="color:var(--ink-soft); max-width:760px">Every page uses the same small shop back-end class, so each principle fixes a visible part of it. The line counts and numbers are <b>illustrative teaching data</b>.</p>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Part of OrderService</th><th scope="col">What it does</th><th scope="col">Teaching size</th></tr></thead><tbody>
-<tr><th scope="row">Validation</th><td>checks stock and address</td><td>≈ 40 lines</td></tr><tr><th scope="row">Pricing</th><td>totals, discounts, tax</td><td>≈ 120 lines, grows with every promotion</td></tr><tr><th scope="row">Persistence</th><td>saves to a SQL database</td><td>≈ 60 lines</td></tr><tr><th scope="row">Notifications</th><td>emails the customer</td><td>≈ 50 lines</td></tr><tr><th scope="row">Whole class</th><td>all of the above in one place</td><td>≈ 300 lines, 6 reasons to change</td></tr>
+    <div class="sec-label" style="color:var(--ink-soft)">🖼️ One everyday picture for each letter</div>
+    <p style="color:var(--ink-soft); max-width:760px">Each page uses one picture you already know, then a tiny code example (a few lines, two or three classes).</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Letter</th><th scope="col">Everyday picture</th><th scope="col">The tiny code example</th></tr></thead><tbody>
+<tr><th scope="row">S · Single Responsibility</th><td>a restaurant where one person cooks, serves and bills</td><td>an Invoice that calculates, prints and saves</td></tr><tr><th scope="row">O · Open / Closed</th><td>a power strip: plug in anything new</td><td>discounts for Regular, Gold, Student customers</td></tr><tr><th scope="row">L · Liskov Substitution</th><td>birds: not every bird can fly</td><td>Bird, Sparrow, Penguin, IFlyable</td></tr><tr><th scope="row">I · Interface Segregation</th><td>an all-in-one machine vs a plain printer</td><td>IPrinter, IScanner, IFax</td></tr><tr><th scope="row">D · Dependency Inversion</th><td>a light switch wired to one bulb vs a socket</td><td>Switch, Bulb, Fan, ISwitchable</td></tr>
 </tbody></table></div>
   </section>
 
   <section class="kd-section">
     <div class="sec-label" style="color:var(--ink-soft)">Full concept list</div>
     <ol class="concept-list">
-      <li class="concept-row done"><span class="cr-num">1</span><span class="cr-main"><a href="concepts/why-design-principles.html">Why code rots: change, coupling &amp; cohesion</a><span class="cr-tail">the cost of change; ShopCore’s OrderService introduced</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">2</span><span class="cr-main"><a href="concepts/single-responsibility.html">S — the Single Responsibility Principle</a><span class="cr-tail">one reason to change; splitting OrderService</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">3</span><span class="cr-main"><a href="concepts/open-closed.html">O — the Open/Closed Principle</a><span class="cr-tail">extend by adding code; a new discount without edits</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/liskov-substitution.html">L — the Liskov Substitution Principle</a><span class="cr-tail">subtypes must honour the contract</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">5</span><span class="cr-main"><a href="concepts/interface-segregation.html">I — the Interface Segregation Principle</a><span class="cr-tail">small interfaces per client; fat interfaces hurt</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">6</span><span class="cr-main"><a href="concepts/dependency-inversion.html">D — the Dependency Inversion Principle</a><span class="cr-tail">depend on abstractions; high-level policy owns the interface</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">7</span><span class="cr-main"><a href="concepts/dependency-injection-dotnet.html">Dependency injection in .NET: making D real</a><span class="cr-tail">constructor injection, lifetimes, the container</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">8</span><span class="cr-main"><a href="concepts/smells-refactoring.html">Smells and the refactoring playbook</a><span class="cr-tail">symptom → violated principle → safe refactoring</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">9</span><span class="cr-main"><a href="concepts/solid-together.html">Refactoring OrderService step by step</a><span class="cr-tail">a worked example, one principle at a time</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">10</span><span class="cr-main"><a href="concepts/testing-solid.html">Testability: the proof that it worked</a><span class="cr-tail">fakes, seams, tests that need no database</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">11</span><span class="cr-main"><a href="concepts/when-not-solid.html">Judgement: YAGNI, KISS, DRY and over-engineering</a><span class="cr-tail">when not to apply a principle</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row done"><span class="cr-num">12</span><span class="cr-main"><a href="concepts/solid-clinic.html">Capstone: the SOLID clinic</a><span class="cr-tail">eight code reviews to diagnose with the ladder</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">1</span><span class="cr-main"><a href="concepts/why-design-principles.html">Why code gets harder to change</a><span class="cr-tail">one small change breaks other things — and how five habits stop that</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">2</span><span class="cr-main"><a href="concepts/single-responsibility.html">S — one class, one job</a><span class="cr-tail">the restaurant where one person does everything</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">3</span><span class="cr-main"><a href="concepts/open-closed.html">O — add new things without editing old code</a><span class="cr-tail">the power strip: plug in a new device, never rewire</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/liskov-substitution.html">L — a child must keep its parent’s promises</a><span class="cr-tail">the bird that cannot fly: Bird only promises Eat</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">5</span><span class="cr-main"><a href="concepts/interface-segregation.html">I — small, focused interfaces</a><span class="cr-tail">the all-in-one machine and the plain printer</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">6</span><span class="cr-main"><a href="concepts/dependency-inversion.html">D — depend on the socket, not the bulb</a><span class="cr-tail">the light switch wired to one bulb, then to any device</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">7</span><span class="cr-main"><a href="concepts/dependency-injection-dotnet.html">Dependency injection in .NET</a><span class="cr-tail">the electrician (container), and three lifetimes: shared, per-meeting, throw-away</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">8</span><span class="cr-main"><a href="concepts/smells-refactoring.html">Smells and safe refactoring</a><span class="cr-tail">symptom → which principle → one small safe step</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">9</span><span class="cr-main"><a href="concepts/solid-together.html">One messy class, fixed step by step</a><span class="cr-tail">a coffee-shop OrderService split into small parts</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">10</span><span class="cr-main"><a href="concepts/testing-solid.html">Testing: the proof that it worked</a><span class="cr-tail">a fake instead of the real mail server</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">11</span><span class="cr-main"><a href="concepts/when-not-solid.html">When not to apply SOLID</a><span class="cr-tail">do not buy a truck to carry one bag</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">12</span><span class="cr-main"><a href="concepts/solid-clinic.html">Capstone: the SOLID clinic</a><span class="cr-tail">nine small cases to diagnose</span></span><span class="cr-status done">✅ written</span></li>
     </ol>
   </section>
 
   <section class="kd-section">
     <div class="sec-label" style="color:var(--ink-soft)">🔎 Deep dives — reference pages you will use every day</div>
     <div class="deep-grid">
-      <a class="kd-card deep-card" href="concepts/design-patterns-solid.html"><span class="dc-kicker">Deep dive · from “D — the Dependency Inversion Principle”</span><h4>Patterns that realise the principles</h4><p>Strategy, Decorator, Factory, Adapter and Observer — which principle each one serves.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
-      <a class="kd-card deep-card" href="concepts/composition-vs-inheritance.html"><span class="dc-kicker">Deep dive · from “L — the Liskov Substitution Principle”</span><h4>Composition over inheritance</h4><p>Why inheritance breaks substitutability and what composition offers instead.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
-      <a class="kd-card deep-card" href="concepts/solid-in-frontend.html"><span class="dc-kicker">Deep dive · from “Refactoring OrderService step by step”</span><h4>SOLID in React and Angular</h4><p>How the five principles show up in components, hooks, services and DI in React and Angular.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/design-patterns-solid.html"><span class="dc-kicker">Deep dive · from “D — depend on the socket, not the bulb”</span><h4>Patterns that realise the principles</h4><p>Strategy, Decorator, Factory, Adapter and Observer — which principle each one serves.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/composition-vs-inheritance.html"><span class="dc-kicker">Deep dive · from “L — a child must keep its parent’s promises”</span><h4>Composition over inheritance</h4><p>Why inheritance breaks substitutability and what composition offers instead.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+      <a class="kd-card deep-card" href="concepts/solid-in-frontend.html"><span class="dc-kicker">Deep dive · from “One messy class, fixed step by step”</span><h4>SOLID in React and Angular</h4><p>How the five principles show up in components, hooks, services and DI in React and Angular.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
     </div>
   </section>
 </main>

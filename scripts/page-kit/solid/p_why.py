@@ -1,113 +1,80 @@
 from p_common import *
 
-def d_cost():
-    d = Diagram('wy1', 640, 330, 'Cost of one change over time: with tangled code each new promotion touches more files and the cost per change rises, while with well-separated code the cost per change stays flat; the bars show files touched for the first, fifth and tenth promotion')
-    d.zone(10, 8, 620, 314, 'cyan', 'FILES TOUCHED PER PROMOTION (ILLUSTRATIVE)')
-    rows = [('Tangled OrderService', [(1, 2, 'rose'), (5, 6, 'rose'), (10, 11, 'rose')]), ('Separated design', [(1, 1, 'emerald'), (5, 1, 'emerald'), (10, 1, 'emerald')])]
-    for r, (name, bars) in enumerate(rows):
-        y0 = 58 + r * 126
-        d.text(26, y0 - 6, name, 'n', size=10.5, anchor='start', weight=700)
-        for i, (nth, files, col) in enumerate(bars):
-            y = y0 + i * 34
-            f, s = COL[col][0], COL[col][1]
-            d.text(120, y + 20, f'promotion {nth}', size=9.5, anchor='end')
-            d.add(f'<rect class="bx" x="132" y="{y}" width="{files * 40}" height="26" rx="6" fill="{f}" stroke="{s}" stroke-width="1.3"/>')
-            d.text(132 + files * 40 + 8, y + 18, f'{files} file' + ('s' if files > 1 else ''), col, size=10, anchor='start', mono=True)
-    d.text(320, 306, 'Same feature, same team — only the structure differs.', size=9.5)
+DEPS = [('🛒','Cart',10,'cyan'),('🧾','Invoice',80,'emerald'),('📊','Report',150,'amber'),('✉️','Email',220,'violet')]
+
+def d_tangled():
+    d = Diagram('wy1', 640, 310, 'A shop program where one Discount piece is used by Cart, Invoice, Report and Email; a change to Discount ripples out to all four and breaks some of them')
+    d.box(20, 105, 170, 90, [('🏷️','e'),('Discount','t')], 'rose', st=1, hl=2)
+    for i, (em, name, y, c) in enumerate(DEPS):
+        d.box(440, y, 180, 60, [(f'{em} {name}','t'),('uses Discount','s')], c, st=1)
+        d.arrow([(190, 150), (440, y + 30)], c, id=f'r{i}', st=1)
+    d.note(210, 8, 200, 44, 'New rule: students|get 10% off', 'amber', st='2-4', hl=2)
+    for i, (em, name, y, c) in enumerate(DEPS):
+        d.token(f'r{i}', '🌊', 15, 'rose', st='3-3')
+        d.emoji(600, y + 18, '💥', 20, st='4-') if i != 1 else d.emoji(600, y + 18, '✅', 20, st='4-')
+    d.note(210, 252, 220, 44, 'Nobody edited Cart or Report —|but they still broke', 'rose', st='4-4', hl=4)
+    d.note(210, 252, 220, 44, 'Tangled code:|every change is scary', 'rose', st='5-', hl=5)
     return d
 
-def d_cc():
-    d = Diagram('wy2', 640, 330, 'Cohesion is how closely the parts inside one class belong together, and coupling is how strongly classes depend on each other; the goal is high cohesion inside and low coupling between')
-    d.zone(10, 8, 305, 314, 'rose', 'LOW COHESION · HIGH COUPLING')
-    d.zone(325, 8, 305, 314, 'emerald', 'HIGH COHESION · LOW COUPLING')
-    d.box(40, 50, 245, 80, [('OrderService','t'),('validate · price · save','s'),('email · log · tax','s')], 'rose')
-    for i, n in enumerate(('SQL', 'SMTP', 'Tax API')):
-        d.box(24 + i * 96, 210, 86, 40, [(n,'t')], 'n')
-        d.arrow([(162,130),(162,170),(67 + i * 96,170),(67 + i * 96,210)] if i != 1 else [(162,130),(162,210)], 'rose')
-    d.text(162, 286, 'One class, six jobs, three concrete', 'rose', size=9.5); d.text(162, 304, 'dependencies: change one, retest all.', 'rose', size=9.5)
-    xs = [345, 420, 495, 570]
-    for x, n in zip(xs, ('Pricing', 'Persist', 'Notify', 'Validate')):
-        d.box(x - 10, 50, 68, 44, [(n,'t')], 'emerald')
-    d.box(340, 150, 280, 44, [('OrderService','t'),('orchestrates through interfaces','s')], 'cyan')
-    for x in (379, 454, 529, 604): d.arrow([(x, 150), (x, 94)], 'cyan')
-    d.text(477, 240, 'Each class has one job;', 'emerald', size=9.5); d.text(477, 258, 'they meet at small interfaces.', 'emerald', size=9.5)
-    d.text(477, 286, 'Change one, retest one.', 'emerald', size=9.5)
+def d_tidy():
+    d = Diagram('wy2', 640, 310, 'A tidy shop program: Discount is used by Cart only; the same new rule changes just the Discount box, Cart keeps working and Invoice, Report and Email are not affected')
+    d.box(20, 105, 170, 90, [('🏷️','e'),('Discount','t')], 'rose', st=1, hl=2)
+    d.box(440, 10, 180, 60, [('🛒 Cart','t'),('uses Discount','s')], 'cyan', st=1)
+    d.arrow([(190, 135), (440, 40)], 'cyan', id='t0', st=1)
+    for em, name, y, c in DEPS[1:]:
+        d.box(440, y, 180, 60, [(f'{em} {name}','t'),('has its own rules','s')], c, st=1)
+    d.note(210, 8, 200, 44, 'New rule: students|get 10% off', 'amber', st='2-', hl=2)
+    d.token('t0', '🌊', 15, 'cyan', st='3-3')
+    d.emoji(600, 28, '✅', 20, st='3-')
+    d.emoji(600, 98, '✅', 20, st='3-'); d.emoji(600, 168, '✅', 20, st='3-'); d.emoji(600, 238, '✅', 20, st='3-')
+    d.note(210, 252, 220, 44, 'One place changed.|Everything else is safe.', 'emerald', st='4-', hl=4)
     return d
 
 def build_why_design_principles():
     body = ''
-    body += see(figure(d_cost(),
-        'the same team adds promotions to ShopCore. In the <b>tangled</b> OrderService each new promotion touches more files than the last, because pricing, saving and e-mailing are woven together (the numbers are illustrative). In the <b>separated</b> design each promotion touches one new file. '
-        'Nothing about the <i>feature</i> changed — only the <b>structure</b> — and that is the whole case for design principles.'))
-    body += one('Design principles are not style rules. They exist to keep the <b>cost of the next change</b> low.')
-    body += why([
-        'Software is never finished: tax rules change, a new payment provider arrives, marketing wants another promotion. The first version of any program is cheap; the <i>hundredth change</i> is where code is judged. Code that was easy to write but hard to change slowly “rots”: every change takes longer and breaks something unrelated.',
-        'Robert C. Martin, who named the SOLID principles, says they expose the <b>dependency-management</b> side of object-oriented design, as opposed to the modeling side, and that poor dependency management leads to code that is hard to change, fragile and non-reusable. In other words: <b>what depends on what</b> decides whether change is cheap.',
-        'This page gives you the vocabulary — <b>cohesion</b>, <b>coupling</b>, <b>reason to change</b> — and introduces the practice class we will refactor in every page of this lab.'])
-    body += block('🔬 Cohesion and coupling', figure(d_cc(),
-        '<b>Left</b>: OrderService has <b>low cohesion</b> (six unrelated jobs inside one class) and <b>high coupling</b> (it creates its own SQL, SMTP and tax-API clients). A change to any one job risks all the others, and a test needs real infrastructure. '
-        '<b>Right</b>: four classes each have <b>one job</b> (high cohesion) and OrderService just orchestrates them through small interfaces (low coupling). Microsoft’s architecture guidance states the goal as minimising the points where parts of an application interact, to reach high cohesion and low coupling.'), label_cls='see')
-    body += block('📚 Words you will use all lab', table(
-        ['Word','Meaning','Why it matters'],
-        [['<b>Cohesion</b>','How closely the members of one class belong together','Low cohesion = a class that changes for many reasons'],
-         ['<b>Coupling</b>','How strongly one piece depends on another; low coupling lets pieces change independently','High coupling = one change ripples'],
-         ['<b>Reason to change</b>','A person or rule that can force an edit (marketing, tax law, the DBA)','The measuring stick for the Single Responsibility Principle'],
-         ['<b>Abstraction</b>','An interface or base type that hides details','The tool that lowers coupling'],
-         ['<b>Seam</b>','A place where behaviour can be swapped without editing code','Where tests and new features plug in'],
-         ['<b>Rigidity / fragility</b>','Hard to change / breaks in unexpected places','The two classic symptoms of bad dependencies']]), label_cls='see')
-    body += block('🛒 The practice class: ShopCore OrderService', cs('''
-public class OrderService
-{
-    public void PlaceOrder(Order order)
-    {
-        if (order.Items.Count == 0) throw new Exception("empty");              // validation
-        decimal total = 0;
-        foreach (var i in order.Items) total += i.Price * i.Quantity;          // pricing
-        if (order.Customer.IsVip) total *= 0.9m;                               // a promotion
-        if (order.Country == "DE") total *= 1.19m;                             // tax rules
-        using var db = new SqlConnection("Server=...");                        // persistence
-        db.Execute("INSERT INTO Orders ...", order);
-        new SmtpClient("smtp.shop.local").Send("shop@x", order.Email, "Thanks"); // notification
-        File.AppendAllText("log.txt", "order " + order.Id);                    // logging
-    }
-}''', 'Illustrative. Every line shows a different reason to change. We will take this class apart, one principle at a time.') + table(
-        ['Question','Answer for OrderService'],
-        [['How many reasons to change?','6 — validation, pricing, tax, persistence, notification, logging'],
-         ['What does a unit test need?','A SQL Server and an SMTP server (nothing can be faked)'],
-         ['Adding a promotion means…','Editing this class and retesting everything'],
-         ['Who is afraid to edit it?','Everyone']]) + '\n' + ladder_strip([1,2]), label_cls='see')
-    body += block('🩺 Debug checklist · early warning signs', table(
-        ['You see','What it usually means','First move'],
-        [['One feature request touches many unrelated files','Low cohesion or high coupling (shotgun surgery)','List the reasons each file changes'],
-         ['“I do not dare touch that class”','Rigid, no tests, too many jobs','Pin behaviour with tests, then split'],
-         ['A unit test needs a database or an e-mail server','Concrete dependencies created inside the class','Introduce an interface at the seam (D)'],
-         ['A constructor with many parameters','Too many responsibilities (Microsoft guidance: a code smell)','Split the class by reason to change'],
-         ['A bug fix in one place breaks another feature','Fragility from hidden coupling','Make dependencies explicit']]), label_cls='trap')
-    body += block('🎬 Real-world scenarios', scenarios([
-        ('🎟️','Marketing adds a seasonal promotion every month','Pricing logic keeps growing in one class.','Open/Closed (page 3)'),
-        ('💳','A second payment provider arrives','Code is hard-wired to the first.','Dependency Inversion (page 6)'),
-        ('🧪','Nobody can unit-test the order flow','Real infrastructure is created inside.','Seams and DI (pages 6–7)'),
-        ('🧓','A legacy class nobody understands','Many jobs, no tests.','Smells & refactoring (page 8)'),
-    ]), label_cls='see')
-    body += zoom('Go one level deeper (60 seconds)', '''      <p><b>Not a law of nature.</b> “High cohesion, low coupling” has been the guiding idea for decades, though some researchers argue it is an incomplete definition of good design. Treat it as a strong heuristic, not a proof.</p>
-      <p><b>SOLID is five heuristics, not five rules.</b> Martin himself says OCP is strategic and no significant program can be 100% closed. Page 11 is about knowing when to stop.</p>
-      <p><b>Who coined what.</b> The five principles were collected by Robert C. Martin; page citations link to his own writing. The acronym SOLID itself is a mnemonic added later.</p>''')
+    body += see(story(d_tangled(), [
+        'A small shop program. The <b>Discount</b> code is used by <b>Cart, Invoice, Report and Email</b> — they all depend on it.',
+        'A new rule arrives: <b>students get 10% off</b>. A programmer edits the Discount code. Only one place was touched.',
+        'But the change <b>ripples out</b> to everything that uses Discount…',
+        '…and some of those pieces break — even though nobody edited them. 💥',
+        'This is how code “rots”: the more tangled it is, the scarier every change becomes.'],
+        'a tangled design. One edit in the middle travels along every arrow — that is why a “small” change can break far-away things.'))
+    body += one('<b>Good design means a small change touches one small place.</b> SOLID is five habits that make that true.')
+    body += block('🌍 In real life', '''    <div class="kd-card why-box">
+      <p>🎧 Think of earphones in a bag. If the cable is tangled, pulling one end tugs everything else. If each cable is wound neatly, you can pull one out without touching the rest.</p>
+      <p>Code is the same. Pieces that know too much about each other get “tangled”. SOLID is the set of habits for keeping them neat.</p>
+    </div>''', label_cls='why', id_='why')
+    body += block('🧹 The tidy version', story(d_tidy(), [
+        'Same program, tidier. <b>Discount</b> is used by <b>Cart only</b>. The other pieces have their own small rules.',
+        'The same new rule: <b>students get 10% off</b>. We edit the Discount code.',
+        'The change reaches only <b>Cart</b>, which keeps working. The other pieces are untouched and safe. ✅',
+        'One reason, one place. That is the goal of the next five pages.'],
+        'the same change in a tidy design: it touches one box and cannot ripple.'), label_cls='see')
+    body += block('🗺️ The five habits (one page each)', table(
+        ['Letter','The habit in plain words','Picture'],
+        [['<b>S</b> · Single Responsibility','Each class does <b>one job</b>.','🍽️ a restaurant with a chef, a waiter and a cashier'],
+         ['<b>O</b> · Open / Closed','Add new things <b>without editing</b> old code.','🔌 a power strip'],
+         ['<b>L</b> · Liskov Substitution','A child class must <b>keep its parent’s promises</b>.','🐧 a bird that cannot fly'],
+         ['<b>I</b> · Interface Segregation','Keep interfaces <b>small and focused</b>.','🖨️ a plain printer, not an all-in-one'],
+         ['<b>D</b> · Dependency Inversion','Depend on a <b>socket</b>, not on one particular bulb.','💡 a light switch']]), label_cls='see')
+    body += block('🧭 Words you will meet', table(
+        ['Word','Plain meaning'],
+        [['<b>Class</b>','a blueprint for objects (a piece of the program)'],
+         ['<b>Interface</b>','a list of promises: “anything of this kind can do these things”'],
+         ['<b>Dependency</b>','something a class needs in order to work'],
+         ['<b>Coupling</b>','how tightly two pieces are tied together (tight = tangled)'],
+         ['<b>Refactoring</b>','tidying code <b>without changing what it does</b>']]), label_cls='why')
     body += recall([
-        'Principles exist to keep the cost of the next change low.',
-        'Cohesion: how well the parts of a class belong together; coupling: how strongly things depend on each other; aim for high cohesion, low coupling.',
-        'A “reason to change” is a person or rule that can force an edit.',
-        'SOLID is about dependency management more than modeling (Martin).',
-        'Warning signs: shotgun surgery, tests needing infrastructure, fear of editing, big constructors.',
-        'SOLID is a set of heuristics; judgement still applies.'])
-    body += saythis('"Design principles exist to keep the cost of change low. High cohesion means a class has one job, low coupling means classes depend on small abstractions rather than on each other’s details. SOLID gives five concrete heuristics for that, centred on dependency management — and I apply them when I see pain, not by default."')
-    body += trap([
-        '<b>Treating SOLID as a checklist to satisfy.</b> The goal is cheaper change, not more interfaces.',
-        '<b>Refactoring for beauty with no pain.</b> Without a real change pressure you add complexity for nothing (page 11).'])
-    body += confuse('🧲 Cohesion', 'Inside one class: do its parts belong together?', '🔗 Coupling', 'Between classes: how much does one need to know about the other?')
-    body += next_box('You have the vocabulary and the practice class. Next: the first principle — what is one class’s job?', 'single-responsibility.html', 'S — the Single Responsibility Principle')
-    body += fact_note('SOLID has no single official standard. Microsoft statements come from .NET architecture guides; the principles’ wording from Robert C. Martin’s own writing.', [DOC_ARCH, ('Microsoft: Key principles of software architecture', 'https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ee658124(v=pandp.10)'), DOC_OOD, DOC_REL])
-    return page('why-design-principles', 'Why code rots: change, coupling & cohesion', 'Concept 1 of 12 · 🧱 The problem',
-        'Code is judged on the <span class="grad-text">hundredth change</span>, not the first.',
-        'The cost of change, cohesion, coupling and reasons to change, and the ShopCore OrderService we will refactor in every page.',
-        'Why do design principles exist, and what do cohesion and coupling mean?',
-        body, CR + ['<span class="cur">Why code rots</span>'], '')
+        'Code “rots” when pieces are tangled: one change ripples into many places.',
+        'Good design: a change touches one small place.',
+        'SOLID = five habits: S, O, L, I, D — each prevents a different kind of tangle.',
+        'SOLID is a set of tools to use when there is pain, not a score to maximise.'])
+    body += saythis('"Code gets expensive to change when its pieces are tightly coupled, so one edit ripples through many places. SOLID is five design habits — single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion — that keep pieces small, replaceable and independent, so a change stays in one place."')
+    body += trap(['<b>“SOLID means more classes and more interfaces.”</b> It means the <i>right</i> pieces, only where change really happens. Page 11 shows when to stop.'])
+    body += next_box('Let’s start with the first habit: one class, one job — told with a restaurant.', 'single-responsibility.html', 'S — the Single Responsibility Principle')
+    body += fact_note('SOLID is a set of design heuristics popularised by Robert C. Martin; there is no single official standard. Martin has described them as being about managing dependencies and keeping code easy to change. The earphones and shop pictures are teaching analogies.', [DOC_OOD, DOC_REL, DOC_ARCH])
+    return page('why-design-principles', 'Why Code Gets Hard to Change', 'Concept 1 of 12 · 🧱 The problem',
+        'Why does one small change <span class="grad-text">break far-away things</span>?',
+        'Tangled code, in pictures: how a change ripples, and the five SOLID habits that stop it.',
+        'What is SOLID and why do we need it?',
+        body, CR + ['<span class="cur">Why code gets hard to change</span>'], '')

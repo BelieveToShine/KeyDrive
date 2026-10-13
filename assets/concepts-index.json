@@ -3776,110 +3776,6 @@
     "anchor": "trap"
   },
   {
-    "id": "solid-why-design-principles",
-    "title": "Why code rots: change, coupling & cohesion",
-    "category": "SOLID",
-    "page": "solid/concepts/why-design-principles.html",
-    "summary": "The cost of change, cohesion and coupling, reasons to change, and the ShopCore OrderService we refactor in every page.",
-    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService"
-  },
-  {
-    "id": "solid-why-design-principles-recall",
-    "title": "Why code rots: change, coupling & cohesion — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/why-design-principles.html",
-    "summary": "Quick recall points: Why code rots: change, coupling & cohesion.",
-    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-why-design-principles-trap",
-    "title": "Why code rots: change, coupling & cohesion — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/why-design-principles.html",
-    "summary": "The classic mistake with Why code rots: change, coupling & cohesion.",
-    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-single-responsibility",
-    "title": "S — the Single Responsibility Principle",
-    "category": "SOLID",
-    "page": "solid/concepts/single-responsibility.html",
-    "summary": "One reason to change; reasons are stakeholders; the actor test; splitting OrderService into four focused classes.",
-    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split"
-  },
-  {
-    "id": "solid-single-responsibility-recall",
-    "title": "S — the Single Responsibility Principle — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/single-responsibility.html",
-    "summary": "Quick recall points: S — the Single Responsibility Principle.",
-    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-single-responsibility-trap",
-    "title": "S — the Single Responsibility Principle — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/single-responsibility.html",
-    "summary": "The classic mistake with S — the Single Responsibility Principle.",
-    "keywords": "solid single responsibility principle SRP reason to change cohesion actor refactor class split trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-open-closed",
-    "title": "O — the Open/Closed Principle",
-    "category": "SOLID",
-    "page": "solid/concepts/open-closed.html",
-    "summary": "Extend by adding code: an if-chain of promotions turned into IDiscountRule plug-ins, and the techniques that keep a class closed.",
-    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules"
-  },
-  {
-    "id": "solid-open-closed-recall",
-    "title": "O — the Open/Closed Principle — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/open-closed.html",
-    "summary": "Quick recall points: O — the Open/Closed Principle.",
-    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-open-closed-trap",
-    "title": "O — the Open/Closed Principle — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/open-closed.html",
-    "summary": "The classic mistake with O — the Open/Closed Principle.",
-    "keywords": "solid open closed principle OCP extension modification interface strategy decorator discount rules trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-liskov-substitution",
-    "title": "L — the Liskov Substitution Principle",
-    "category": "SOLID",
-    "page": "solid/concepts/liskov-substitution.html",
-    "summary": "Subtypes must honour the base contract: the substitution rules, Square/Rectangle, and repairing a repository that throws on Save.",
-    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions"
-  },
-  {
-    "id": "solid-liskov-substitution-recall",
-    "title": "L — the Liskov Substitution Principle — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/liskov-substitution.html",
-    "summary": "Quick recall points: L — the Liskov Substitution Principle.",
-    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-liskov-substitution-trap",
-    "title": "L — the Liskov Substitution Principle — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/liskov-substitution.html",
-    "summary": "The classic mistake with L — the Liskov Substitution Principle.",
-    "keywords": "solid liskov substitution principle LSP subtype contract NotSupportedException square rectangle preconditions postconditions trap mistake",
-    "anchor": "trap"
-  },
-  {
     "id": "solid-interface-segregation",
     "title": "I — the Interface Segregation Principle",
     "category": "SOLID",
@@ -4163,6 +4059,110 @@
     "page": "solid/concepts/solid-in-frontend.html",
     "summary": "The classic mistake with SOLID in React and Angular.",
     "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-why-design-principles",
+    "title": "Why Code Gets Hard to Change",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "Tangled code in pictures: how one change ripples, and the five SOLID habits that stop it.",
+    "keywords": "solid why code rots coupling tangled change ripple"
+  },
+  {
+    "id": "solid-why-design-principles-recall",
+    "title": "Why Code Gets Hard to Change — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "Quick recall points: Why Code Gets Hard to Change.",
+    "keywords": "solid why code rots coupling tangled change ripple interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-why-design-principles-trap",
+    "title": "Why Code Gets Hard to Change — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "The classic mistake with Why Code Gets Hard to Change.",
+    "keywords": "solid why code rots coupling tangled change ripple trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-single-responsibility",
+    "title": "S — the Single Responsibility Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "One class, one job: a restaurant story, the Invoice example and how to spot classes with too many jobs.",
+    "keywords": "single responsibility SRP restaurant one reason to change invoice"
+  },
+  {
+    "id": "solid-single-responsibility-recall",
+    "title": "S — the Single Responsibility Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "Quick recall points: S — the Single Responsibility Principle.",
+    "keywords": "single responsibility SRP restaurant one reason to change invoice interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-single-responsibility-trap",
+    "title": "S — the Single Responsibility Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/single-responsibility.html",
+    "summary": "The classic mistake with S — the Single Responsibility Principle.",
+    "keywords": "single responsibility SRP restaurant one reason to change invoice trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-open-closed",
+    "title": "O — the Open/Closed Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "Add new things without editing old code: a power strip, a discount calculator and an IDiscount socket.",
+    "keywords": "open closed OCP power strip discount interface extension"
+  },
+  {
+    "id": "solid-open-closed-recall",
+    "title": "O — the Open/Closed Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "Quick recall points: O — the Open/Closed Principle.",
+    "keywords": "open closed OCP power strip discount interface extension interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-open-closed-trap",
+    "title": "O — the Open/Closed Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/open-closed.html",
+    "summary": "The classic mistake with O — the Open/Closed Principle.",
+    "keywords": "open closed OCP power strip discount interface extension trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-liskov-substitution",
+    "title": "L — the Liskov Substitution Principle",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "Not every bird can fly: Bird only promises Eat, IFlyable carries Fly. Promises, penguins and Square/Rectangle.",
+    "keywords": "liskov substitution LSP bird penguin IFlyable promise subtype"
+  },
+  {
+    "id": "solid-liskov-substitution-recall",
+    "title": "L — the Liskov Substitution Principle — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "Quick recall points: L — the Liskov Substitution Principle.",
+    "keywords": "liskov substitution LSP bird penguin IFlyable promise subtype interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-liskov-substitution-trap",
+    "title": "L — the Liskov Substitution Principle — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/liskov-substitution.html",
+    "summary": "The classic mistake with L — the Liskov Substitution Principle.",
+    "keywords": "liskov substitution LSP bird penguin IFlyable promise subtype trap mistake",
     "anchor": "trap"
   }
 ]

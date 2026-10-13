@@ -1,112 +1,91 @@
 from p_common import *
 
-def d_actors():
-    d = Diagram('sr1', 640, 330, 'Four different people can ask for changes to OrderService: finance changes pricing, operations changes the e-mail, the database team changes persistence and compliance changes tax; all four edit the same class, so their changes collide')
-    actors = [('💼 Finance','promotions, prices','amber'), ('📣 Operations','e-mail wording','cyan'), ('🗄️ Database team','schema, storage','violet'), ('⚖️ Compliance','tax rules','rose')]
-    for i, (n, s, c) in enumerate(actors):
-        d.box(10 + i * 158, 20, 148, 54, [(n,'t'),(s,'s')], c)
-    d.box(130, 200, 380, 60, [('OrderService.cs','t'),('pricing · e-mail · persistence · tax in one file','s')], 'n')
-    xs = [84, 242, 400, 558]
-    tx = [210, 290, 370, 450]
-    for x, t, (n, s, c) in zip(xs, tx, actors):
-        d.arrow([(x, 74), (x, 130), (t, 130), (t, 200)], c)
-    d.pill(320, 130, 'all edit the same file')
-    d.text(320, 296, 'Four reasons to change → merge conflicts, retesting everything, surprise breakage.', size=9.5)
+JOBS = [('🍳','Cook',10,'amber'),('🍽️','Serve',165,'emerald'),('🧾','Bill',320,'cyan'),('🧹','Clean',475,'violet')]
+
+def d_one():
+    d = Diagram('sr1', 640, 320, 'A restaurant run by one person, Ravi, who cooks, serves, bills and cleans; when the billing rule changes, the change is mixed up with cooking and serving and can break them')
+    d.box(10, 10, 620, 64, [('🧑‍🍳 Ravi — the only employee','t'),('he does every job himself','s')], 'rose', st=1)
+    for i, (em, name, x, c) in enumerate(JOBS):
+        d.box(x, 150, 145, 64, [(f'{em} {name}','t'),('done by Ravi','s')], c, st=1, hl=3 if name == 'Bill' else None)
+        d.arrow([(x + 72, 74), (x + 72, 150)], c, label='also does', at=(x + 72, 112), id=f'j{i}', st=1)
+    d.note(10, 236, 190, 44, '😫 5 customers waiting|for Ravi to finish', 'amber', st='2-4')
+    d.note(220, 236, 200, 44, 'New rule: tax goes|from 5% to 8%', 'amber', st='3-', hl=3)
+    d.token('j0', '🌊', 15, 'rose', st='4-4')
+    d.token('j1', '🌊', 15, 'rose', st='4-4')
+    d.emoji(110, 176, '💥', 20, st='4-'); d.emoji(265, 176, '💥', 20, st='4-')
+    d.note(440, 236, 190, 44, 'Billing change broke|cooking and serving', 'rose', st='4-4', hl=4)
+    d.note(440, 236, 190, 44, 'One person = four|reasons to panic', 'rose', st='5-', hl=5)
     return d
 
 def d_split():
-    d = Diagram('sr2', 640, 330, 'After applying the Single Responsibility Principle each actor changes its own class: PricingCalculator for finance, OrderNotifier for operations, OrderRepository for the database team and TaxCalculator for compliance, and OrderService only orchestrates')
-    actors = [('Finance','PricingCalculator','amber'), ('Operations','OrderNotifier','cyan'), ('Database team','OrderRepository','violet'), ('Compliance','TaxCalculator','rose')]
-    for i, (a, cls, c) in enumerate(actors):
-        x = 10 + i * 158
-        d.box(x, 20, 148, 40, [(a,'t')], 'n')
-        d.box(x, 130, 148, 50, [(cls,'t'),('one reason to change','s')], c)
-        d.arrow([(x + 74, 60), (x + 74, 130)], c, label='asks', at=(x + 74, 95))
-    d.box(130, 250, 380, 50, [('OrderService','t'),('orchestrates: validate → price → tax → save → notify','s')], 'emerald')
-    for i, (a, cls, c) in enumerate(actors):
-        x = 10 + i * 158
-        d.arrow([(x + 74, 250 if False else 180), (x + 74, 212), (320, 212), (320, 250)] if False else [(x + 74, 180), (x + 74, 250)] if 130 <= x + 74 <= 510 else [(x + 74, 180), (x + 74, 215), (x + 74 + (60 if x < 130 else -60), 215), (x + 74 + (60 if x < 130 else -60), 250)], c)
+    d = Diagram('sr2', 640, 320, 'The restaurant with one person per job: a chef, a waiter, a cashier and a cleaner; when the tax rule changes only the cashier changes and everyone else keeps working')
+    team = [('🍳','Chef','cooks the food',10,'amber'),('🍽️','Waiter','serves tables',165,'emerald'),('🧾','Cashier','handles the bill',320,'cyan'),('🧹','Cleaner','keeps it tidy',475,'violet')]
+    for em, name, job, x, c in team:
+        d.box(x, 40, 145, 110, [(em,'e'),(name,'t'),(job,'s')], c, st=1, hl=3 if name == 'Cashier' else None)
+    d.note(292, 208, 200, 44, 'New rule: tax goes|from 5% to 8%', 'amber', st='2-', hl=2)
+    d.arrow([(392, 208), (392, 150)], 'cyan', id='c1', st='3-', label='only here', at=(392, 182))
+    d.token('c1', '🌊', 15, 'cyan', st='3-3')
+    for x in (10, 165, 475):
+        d.emoji(x + 122, 66, '✅', 18, st='3-')
+    d.emoji(320 + 122, 66, '✏️', 18, st='3-')
+    d.note(10, 266, 620, 40, 'One class = one job = one reason to change', 'emerald', st='4-', hl=4)
     return d
 
 def build_single_responsibility():
     body = ''
-    body += see(figure(d_actors(),
-        'four people want different things from the same class. <b>Finance</b> changes promotions, <b>operations</b> rewrites the e-mail, the <b>database team</b> changes storage, <b>compliance</b> changes tax rules — and all of them edit <span class="kw">OrderService.cs</span>. '
-        'Their changes collide in version control, and any edit risks breaking the other three jobs. Four reasons to change in one place is exactly what the Single Responsibility Principle forbids.'))
-    body += one('<b>A class should have one, and only one, reason to change</b> — gather together the things that change for the same reason, and separate the things that change for different reasons.')
-    body += why([
-        'Page 1 introduced the cost of change. The first principle tells you <i>where to cut</i>. Robert C. Martin’s answer is about <b>people</b>: a module’s “reasons to change” are the people (or tightly-knit groups, like a business function) who can ask for changes. In his payroll example, pay calculation changes come from finance, report format from operations, and database saving from technology — three reasons, so three modules.',
-        'He describes SRP as another way to define cohesion and coupling: cohesion should rise among things that change for the same reasons, and coupling should fall between things that change for different reasons.',
-        'A practical test follows: <b>ask who could request a change to this class.</b> If the answer names more than one stakeholder, there is more than one responsibility.'])
-    body += block('✂️ Splitting OrderService by actor', figure(d_split(),
-        'each actor now owns one class: <b>PricingCalculator</b> (finance), <b>OrderNotifier</b> (operations), <b>OrderRepository</b> (database team) and <b>TaxCalculator</b> (compliance). OrderService is left with one job — <b>coordinating</b> the steps — and changes only if the order process itself changes. '
-        'A new promotion now touches one class, owned by one group.'), label_cls='see')
-    body += block('🧪 SRP lab · before and after', cs('''
-// AFTER — each class has one reason to change
-public class PricingCalculator   { public decimal Price(Order o) { /* promotions and totals */ return 0m; } }
-public class TaxCalculator       { public decimal Tax(Order o, decimal net) { /* tax rules */ return 0m; } }
-public class OrderRepository     { public void Save(Order o) { /* SQL only */ } }
-public class OrderNotifier       { public void Confirm(Order o) { /* e-mail only */ } }
-
-public class OrderService
+    body += see(story(d_one(), [
+        'Meet <b>Ravi</b>. He runs a restaurant <b>alone</b>: he cooks, serves, handles the bill and cleans.',
+        'When it gets busy, everything waits for Ravi: customers wait to order, to be served, to pay.',
+        'Now a billing rule changes: <b>tax goes from 5% to 8%</b>. Only the billing needs to change…',
+        '…but it is all mixed up inside Ravi. A mistake in billing can spoil the cooking and the serving too. 💥',
+        'One person doing four jobs has <b>four reasons to be disturbed</b>. A class doing four jobs has four reasons to change.'],
+        'one restaurant, one overworked person. Each job is a “reason to change”. Watch the billing change reach jobs it has nothing to do with.'))
+    body += one('<b>Give each class one job — one reason to change.</b> If two different people could ask you to change it for different reasons, split it.')
+    body += block('🔧 The fix: one person per job', story(d_split(), [
+        'Hire a team: a <b>chef</b> who cooks, a <b>waiter</b> who serves, a <b>cashier</b> who bills, a <b>cleaner</b> who cleans.',
+        'The same rule arrives: <b>tax goes from 5% to 8%</b>.',
+        'Only the <b>cashier</b> has to change. The chef, waiter and cleaner keep working and are completely safe. ✅',
+        'That is the Single Responsibility Principle: <b>one class, one job, one reason to change</b>.'],
+        'the same restaurant after splitting. The tax change has exactly one place to go.'), label_cls='see')
+    body += block('🧪 Tiny code', cs('''
+// BEFORE — one class, three jobs (three reasons to change)
+class Invoice
 {
-    private readonly PricingCalculator _pricing = new();     // still created here — page 6 fixes this
-    private readonly TaxCalculator _tax = new();
-    private readonly OrderRepository _repo = new();
-    private readonly OrderNotifier _notifier = new();
+    public decimal Total() { /* maths: changes when tax rules change */ return 0; }
+    public void Print()    { /* layout: changes when the design changes */ }
+    public void SaveToDb() { /* storage: changes when the database changes */ }
+}
 
-    public void PlaceOrder(Order order)
-    {
-        var net = _pricing.Price(order);
-        order.Total = net + _tax.Tax(order, net);
-        _repo.Save(order);
-        _notifier.Confirm(order);
-    }
-}''', 'Illustrative. OrderService shrinks from ≈ 300 to ≈ 40 lines. It still creates its own collaborators with <span class="kw">new</span>; fixing that is the Dependency Inversion Principle (page 6).') + table(
-        ['Measure','Before','After SRP'],
-        [['Reasons to change in OrderService','6','1 (the order process)'],
-         ['Classes a promotion edits','1 (and retests all 6 jobs)','1 (PricingCalculator)'],
-         ['Merge conflicts between finance and operations','Likely — same file','None — different files'],
-         ['Lines in OrderService','≈ 300','≈ 40']]) + '\n' + ladder_strip([2,3,4,5]), label_cls='see')
-    body += block('📏 Telling responsibilities apart', table(
-        ['Test','Question','Violation looks like'],
-        [['<b>Actor test</b>','Who could ask me to change this class?','More than one department or role'],
-         ['<b>Sentence test</b>','Can I describe the class without “and”?','“It validates and prices and saves and e-mails”'],
-         ['<b>Constructor test</b>','How many dependencies does it take?','Many parameters — Microsoft’s DI guidance calls a big constructor a code smell for too many jobs'],
-         ['<b>Change test</b>','Do unrelated changes edit this file?','Every sprint touches it for different reasons'],
-         ['<b>Import test</b>','Does it reference SQL, SMTP, HTTP and business rules?','Infrastructure and policy in one place']]), label_cls='see')
-    body += block('🩺 Debug checklist · SRP symptoms', table(
-        ['You see','Likely cause','What to try'],
-        [['A “Manager”, “Helper” or “Utils” class with dozens of methods','A dumping ground; no single reason to change','Group methods by who changes them; extract classes'],
-         ['Merge conflicts in the same file from different teams','Two actors share one class','Split by actor'],
-         ['A change in tax rules breaks e-mail sending','Shared state or ordering between jobs','Separate the jobs; pass data explicitly'],
-         ['Tests need many mocks for one class','Too many collaborators = too many jobs','Split the class'],
-         ['You split too far: one-method classes everywhere','Over-applying SRP (a “responsibility” is not “a method”)','Merge things that always change together (page 11)']]), label_cls='trap')
-    body += block('🎬 Real-world scenarios', scenarios([
-        ('📬','Marketing and legal both edit the e-mail class','Two actors in one class.','Separate template content from sending'),
-        ('💼','A pricing class also reads the database','Policy mixed with infrastructure.','Extract a repository'),
-        ('🧰','A giant `Utils` class','No reason to change at all, so every reason.','Move each function to its owner'),
-        ('🌐','A controller that validates, prices and saves','Web layer doing the domain’s job.','Controllers delegate; services own rules'),
-    ]), label_cls='see')
-    body += zoom('Go one level deeper (60 seconds)', '''      <p><b>What SRP is not.</b> It does not say “a class should do only one thing” in the sense of one method. Martin’s own wording is about <i>reasons to change</i>, and he admits the definition shifted over time and asks “what defines a reason to change?” — answering with people and business functions.</p>
-      <p><b>Related idea.</b> Microsoft’s architecture guidance describes separation of concerns the same way: break an application up by its responsibilities so a growing codebase stays navigable.</p>
-      <p><b>Functions too.</b> The same test works for methods, modules and services; a microservice with six reasons to change has the same problem at a bigger scale.</p>''')
+// AFTER — one job each
+class Invoice           { public decimal Total() { return 0; } }
+class InvoicePrinter    { public void Print(Invoice invoice) { } }
+class InvoiceRepository { public void Save(Invoice invoice) { } }''', 'Each class now has one reason to change: tax rules, layout, or storage. A class that <i>coordinates</i> these small classes has one job too: coordinating.'), label_cls='see')
+    body += block('🙋 Who asks for the change?', table(
+        ['If this changes…','…who asks?','…which class changes'],
+        [['the tax rate','🧮 the accountant','the one that calculates'],
+         ['the printed layout','🎨 the designer','the one that prints'],
+         ['the database','🛠️ the engineer','the one that saves']]) + '\n    <p style="margin-top:10px;color:var(--ink-soft)">Different people, different reasons — so they should not share a class. (This is Robert C. Martin’s way of explaining “one reason to change”.)</p>', label_cls='why', id_='why')
+    body += block('🎯 Spot it: does this class have one job?', quiz([
+        ('<code>UserManager</code> that checks the email, saves the user to the database <i>and</i> sends a welcome email', True, 'Three jobs: validation, storage, email. Three different reasons to change.'),
+        ('<code>EmailValidator</code> that only checks whether an email looks right', False, 'One job, one reason to change.'),
+        ('<code>OrderService.Place()</code> that calls a validator, a saver and a notifier — and does nothing else itself', False, 'Its one job is coordinating the steps. The real work lives in small classes.'),
+        ('<code>Logger</code> with a method that also formats HTML reports', True, 'Writing logs and producing reports are different jobs.')], 'Breaks the rule', 'Fine'), label_cls='trap')
+    body += block('👀 How to spot it in your own code', spot_table([
+        ['A class name with <b>Manager</b>, <b>Helper</b>, <b>Utils</b> or an “and” in what it does','Probably several jobs. List them and split.'],
+        ['One file that imports SQL, email <i>and</i> UI code','Each of those is a different job.'],
+        ['Different teammates keep editing the same file for unrelated reasons','Each reason deserves its own class.'],
+        ['Testing it needs a database <i>and</i> a mail server','Too many jobs in one place.']]), label_cls='trap')
     body += recall([
-        'SRP: a class (module) should have one, and only one, reason to change.',
-        'Reasons to change are people/business functions: ask “who could request a change here?”.',
-        'Gather things that change for the same reasons; separate things that change for different reasons.',
-        'Smells: “and” in the description, many constructor parameters, “Manager/Utils” classes, conflicts in one file.',
-        'SRP is cohesion and coupling made practical; it is not “one method per class”.',
-        'After SRP, OrderService only orchestrates; it still creates its collaborators (fixed by D).'])
-    body += saythis('"The Single Responsibility Principle says a module should have one reason to change, and in practice a reason to change is a stakeholder who can ask for it. I test a class by asking who could request changes to it; if the answer is finance and operations and the database team, I split it by actor so each change lands in one place, and the original class just orchestrates."')
-    body += trap([
-        '<b>Reading SRP as “one method per class”.</b> You end up with a hundred tiny classes that always change together.',
-        '<b>Splitting by technical layer only.</b> Splitting “data functions” from “rules” can group things that change for different reasons.'])
-    body += confuse('🎯 Responsibility', 'A reason to change — usually one stakeholder or business function.', '🔧 Method', 'A unit of code. One class can have many methods and still one responsibility.')
-    body += next_box('OrderService now has one reason to change. But how do we add the tenth promotion without editing PricingCalculator? Next: open for extension, closed for modification.', 'open-closed.html', 'O — the Open/Closed Principle')
-    body += fact_note('SOLID has no single standard. The wording quoted is Robert C. Martin’s; Microsoft statements come from .NET guidance.', [DOC_SRP, DOC_REL, DOC_OOD, DOC_MVC])
+        'SRP: one class, one job, one reason to change.',
+        'Ask: “who would ask me to change this, and why?” Different answers → different classes.',
+        'A coordinator that only calls small classes also has one job.',
+        'Do not split too far: one tiny method per class is not the goal.'])
+    body += saythis('"The Single Responsibility Principle says a class should have one reason to change. I look at who would ask for changes — the accountant for tax, the designer for layout, the engineer for storage — and if those are different people, I split the class so each change has exactly one place to go."')
+    body += trap(['<b>“One responsibility means one method.”</b> No — it means one <i>reason to change</i>. A class can have several methods that all serve the same job.'])
+    body += next_box('Next: what if you need to add something new (a new customer type, a new payment method) without editing working code?', 'open-closed.html', 'O — the Open/Closed Principle')
+    body += fact_note('The wording “one reason to change” and the explanation by people who ask for changes are Robert C. Martin’s. The restaurant is a teaching analogy; the Invoice code is a tiny illustration.', [DOC_SRP, DOC_OOD, DOC_REL])
     return page('single-responsibility', 'S — the Single Responsibility Principle', 'Concept 2 of 12 · 🔤 The five principles',
-        'One class, <span class="grad-text">one reason to change</span> — and a reason is a person.',
-        'The Single Responsibility Principle as Martin states it, the actor test, and splitting ShopCore’s OrderService into four focused classes.',
-        'What does the Single Responsibility Principle mean, and how do you tell when a class breaks it?',
+        'One person doing <span class="grad-text">every job</span> in a restaurant — and one class doing the same.',
+        'The Single Responsibility Principle with a restaurant: why a class should have one reason to change, and how to split it.',
+        'What is the Single Responsibility Principle? Give an example.',
         body, CR + ['<span class="cur">S — Single Responsibility</span>'], '')

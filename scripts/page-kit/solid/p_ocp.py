@@ -1,121 +1,97 @@
 from p_common import *
 
 def d_edit():
-    d = Diagram('oc1', 640, 330, 'Adding a promotion to an if-chain means editing and retesting PricingCalculator every time, while adding it as a new class that implements IDiscountRule leaves PricingCalculator untouched')
-    d.zone(10, 8, 305, 314, 'rose', 'BEFORE: EDIT THE CALCULATOR')
-    d.zone(325, 8, 305, 314, 'emerald', 'AFTER: ADD A CLASS')
-    d.box(30, 40, 265, 70, [('PricingCalculator','t'),('if VIP … else if BlackFriday …','s'),('else if Coupon …  (edited again)','s')], 'rose')
-    d.box(60, 170, 205, 44, [('New promotion arrives','t')], 'amber')
-    d.arrow([(162,170),(162,110)], 'rose', label='modifies', at=(162,140))
-    d.text(162, 252, 'Risk: break VIP/Black Friday', 'rose', size=9.5); d.text(162, 270, 'Retest: every promotion', 'rose', size=9.5); d.text(162, 288, 'Merge conflicts: yes', 'rose', size=9.5)
-    d.box(345, 40, 265, 56, [('PricingCalculator','t'),('applies every IDiscountRule','s')], 'emerald')
-    d.box(345, 160, 265, 40, [('NewYearDiscount : IDiscountRule','m')], 'amber')
-    d.arrow([(477,160),(477,96)], 'emerald', label='plugs in', at=(477,128))
-    d.text(477, 222, 'Risk: only the new class', 'emerald', size=9.5); d.text(477, 240, 'Retest: only the new class', 'emerald', size=9.5); d.text(477, 258, 'Edits to calculator: 0', 'emerald', size=9.5)
+    d = Diagram('oc1', 640, 330, 'A discount calculator built from if and else-if: when a new Student customer type arrives, the working calculator code must be edited, which risks breaking the Regular and Gold customers that already worked')
+    d.box(10, 20, 150, 60, [('👤 Regular','t'),('0% off','s')], 'emerald', st=1)
+    d.box(10, 110, 150, 60, [('⭐ Gold','t'),('10% off','s')], 'amber', st=1)
+    d.box(10, 200, 150, 60, [('🎓 Student','t'),('new! 15% off','s')], 'violet', st='2-', hl=2)
+    d.code_box(300, 20, 210, 150, [(0, 'PriceCalculator', 'k'), (0, 'if Regular → 0%', ''), (0, 'else if Gold → 10%', ''), (0, 'else → 0%', '')], 'cyan', 10, 17, st='1-2')
+    d.code_box(300, 20, 210, 150, [(0, 'PriceCalculator ✏️', 'k'), (0, 'if Regular → 0%', ''), (0, 'else if Gold → 10%', ''), (0, 'else if Student → 15%', 'k'), (0, 'else → 0%', '')], 'rose', 10, 17, st='3-', hl=3)
+    d.arrow([(300, 50), (160, 50)], 'emerald', id='e1', label='could break', at=(230, 50), st='4-4')
+    d.arrow([(300, 140), (160, 140)], 'amber', id='e2', label='could break', at=(230, 140), st='4-4')
+    d.token('e1', '⚠️', 15, 'amber', st='4-4'); d.token('e2', '⚠️', 15, 'amber', st='4-4')
+    d.emoji(138, 36, '🧪', 18, st='5-'); d.emoji(138, 126, '🧪', 18, st='5-')
+    d.note(300, 205, 330, 44, 'Every new customer type = open the|working code and edit it again', 'rose', st='3-', hl=3)
+    d.note(300, 262, 330, 44, 'Re-test Regular and Gold, too. Risky!', 'amber', st='4-', hl=4)
+    d.note(10, 280, 270, 40, 'Safer: do not edit working code', 'emerald', st='5-', hl=5)
     return d
 
-def d_shape():
-    d = Diagram('oc2', 640, 330, 'The shape of the Open Closed design: the calculator depends on the IDiscountRule interface, and each promotion is a class implementing the interface; adding one more class extends behaviour without changing the calculator')
-    d.box(220, 20, 200, 56, [('PricingCalculator','t'),('closed for modification','s')], 'cyan')
-    d.box(80, 130, 480, 56, [('«interface»  IDiscountRule','t'),('decimal Apply(Order, decimal)','m')], 'violet')
-    d.arrow([(320,76),(320,130)], 'cyan', label='uses', at=(320,103))
-    rules = [('VipDiscount','amber',10), ('BlackFriday','amber',170), ('CouponCode','amber',330), ('+ your new rule','emerald',490)]
-    for n, c, x in rules:
-        d.box(x, 250, 140, 44, [(n,'t')], c)
-        d.arrow([(x + 70, 250), (x + 70, 186)], c)
-    d.pill(320, 218, 'implements')
-    d.text(320, 316, 'Open for extension: add a class. Closed for modification: do not edit the calculator.', size=9.5)
+def d_plug():
+    d = Diagram('oc2', 640, 330, 'The same calculator asks one IDiscount question; Regular and Gold implement IDiscount and a new Student class plugs in the same way without any edit to the calculator')
+    d.box(10, 110, 150, 90, [('🧮','e'),('Calculator','t')], 'cyan', st=1, hl=4)
+    d.box(240, 110, 150, 90, [('🔌','e'),('IDiscount','t')], 'violet', st=1)
+    d.arrow([(160, 155), (240, 155)], 'cyan', label='asks', at=(200, 155), st=1)
+    d.box(520, 10, 110, 60, [('👤 Regular','t'),('0%','s')], 'emerald', st=2)
+    d.box(520, 95, 110, 60, [('⭐ Gold','t'),('10%','s')], 'amber', st=2)
+    d.box(520, 180, 110, 60, [('🎓 Student','t'),('15%','s')], 'rose', st=3, hl=3)
+    d.arrow([(520, 40), (390, 125)], 'emerald', label='is a', at=(455, 82), st=2)
+    d.arrow([(520, 125), (390, 155)], 'amber', label='is a', at=(455, 140), st=2)
+    d.arrow([(520, 210), (390, 185)], 'rose', id='p1', label='plugs in', at=(455, 198), st=3)
+    d.token('p1', '🔌', 15, 'rose', st='3-3')
+    d.emoji(138, 128, '✅', 20, st='4-')
+    d.note(10, 262, 620, 50, 'Open for extension: add a new class|Closed for editing: the calculator did not change', 'emerald', st='4-', hl=4)
     return d
 
 def build_open_closed():
     body = ''
-    body += see(figure(d_edit(),
-        'the same request — “add a promotion” — handled two ways. <b>Left</b>: promotions are branches of an if-chain in <span class="kw">PricingCalculator</span>; every new one means <b>editing</b> that class, risking the old promotions and retesting them all. '
-        '<b>Right</b>: each promotion is a class implementing <span class="kw">IDiscountRule</span>; a new one is <b>added</b> and the calculator is not touched. The behaviour of the system was extended without modifying it.'))
-    body += one('Software entities should be <b>open for extension</b> but <b>closed for modification</b>: add behaviour by adding code, not by editing code that already works.')
-    body += why([
-        'Page 2 isolated pricing in one class, owned by finance. But finance adds a promotion every month, and a class that grows by editing the same <span class="kw">if</span>-chain is risky: each edit can break an older promotion that no one remembers.',
-        'Bertrand Meyer defined the principle in 1988; Robert C. Martin restates the goal as extending the behaviour of a system without having to modify that system, and ties its achievement to abstractions and the Dependency Inversion Principle: users depend on an API, and services implement it through inheritance or other polymorphism.',
-        'Martin is also clear that it is strategic, not absolute: no significant program can be 100% closed. You choose <i>which</i> axis of change to protect — here, “new promotions”.'])
-    body += block('🧱 The shape of the design', figure(d_shape(),
-        '<span class="kw">PricingCalculator</span> depends only on the <span class="kw">IDiscountRule</span> interface. Each promotion — VIP, Black Friday, coupon, and the next one — is a class that <b>implements</b> it. '
-        'Adding the fourth rule is adding a class; the calculator’s code, and the tests for the other rules, are unchanged. The interface is the <b>seam</b> where new behaviour plugs in.'), label_cls='see')
-    body += block('🧪 OCP lab · before and after', cs('''
-// BEFORE — closed to extension, open to edits
-public decimal Price(Order o)
+    body += see(story(d_edit(), [
+        'A shop works out discounts with <b>if / else-if</b>. <b>Regular</b> customers get 0%, <b>Gold</b> customers get 10%.',
+        'A new customer type arrives: <b>Student</b>, 15% off. 🎓',
+        'To support them we have to <b>open the working calculator and edit it</b>. We add one more <code>else if</code>.',
+        'Every edit can accidentally break what already worked. Regular and Gold customers now need to be re-tested. ⚠️',
+        'Wouldn’t it be safer if adding something new never meant editing old, working code?'],
+        'every new customer type means editing the same working code again. Watch the arrows: the edit reaches the customers who already worked.'))
+    body += one('<b>Add new behaviour by adding new code — not by editing old, working code.</b> “Open for extension, closed for modification.”')
+    body += block('🌍 In real life', '''    <div class="kd-card why-box">
+      <p>🔌 A <b>power strip</b> has sockets. When you buy a new device you just <b>plug it in</b>. You never open the power strip and rewire it. The strip is <i>closed</i> for editing but <i>open</i> for new devices.</p>
+      <p>Good code works the same way: it has “sockets” (an interface) and each new case is one more thing you plug in.</p>
+    </div>''', label_cls='why', id_='why')
+    body += block('🔧 The fix: make a socket', story(d_plug(), [
+        'Give the calculator <b>one question</b> to ask anything of kind <code>IDiscount</code>: “how much discount?” That is our <b>socket</b>.',
+        '<b>Regular</b> and <b>Gold</b> become small classes that fit the socket (“is a” IDiscount).',
+        'New customer type? Write a new <b>Student</b> class and <b>plug it in</b>. 🔌',
+        'The calculator did <b>not change at all</b>, so nothing that worked before can break. ✅'],
+        'the same calculator redesigned: new types are plugged in, the calculator stays the same.'), label_cls='see')
+    body += block('🧪 Tiny code', cs('''
+// BEFORE — a new customer type means editing this method again
+decimal GetDiscount(string type)
 {
-    decimal total = o.Items.Sum(i => i.Price * i.Quantity);
-    if (o.Customer.IsVip) total *= 0.90m;
-    else if (o.Date.Month == 11) total *= 0.80m;
-    else if (o.Coupon == "SAVE5") total -= 5m;          // every new promotion = another branch
-    return total;
+    if (type == "Regular") return 0m;
+    if (type == "Gold")    return 0.10m;
+    return 0m;                          // add Student here... and re-test everything
 }
 
-// AFTER — add a class, do not edit the calculator
-public interface IDiscountRule { decimal Apply(Order o, decimal total); }
+// AFTER — one small class per type; the calculator never changes
+interface IDiscount { decimal Percent(); }
+class RegularDiscount : IDiscount { public decimal Percent() => 0m; }
+class GoldDiscount    : IDiscount { public decimal Percent() => 0.10m; }
+class StudentDiscount : IDiscount { public decimal Percent() => 0.15m; }   // the only new code
 
-public class VipDiscount : IDiscountRule
+class PriceCalculator
 {
-    public decimal Apply(Order o, decimal t) => o.Customer.IsVip ? t * 0.90m : t;
-}
-
-public class PricingCalculator
-{
-    private readonly IEnumerable<IDiscountRule> _rules;
-    public PricingCalculator(IEnumerable<IDiscountRule> rules) => _rules = rules;
-
-    public decimal Price(Order o)
-    {
-        decimal total = o.Items.Sum(i => i.Price * i.Quantity);
-        foreach (var rule in _rules) total = rule.Apply(o, total);
-        return total;
-    }
-}''', 'Illustrative. The rules arrive through the constructor, so registering one more class is enough (page 7). Note the rule order may matter — a design decision to make explicit.') + table(
-        ['Adding promotion number 10','Before','After OCP'],
-        [['Classes edited','1 (the calculator)','0'],
-         ['New classes','0','1 (plus its tests)'],
-         ['Tests to rerun for old promotions','All of them (risk of regression)','Only the new rule’s tests, plus one integration check'],
-         ['Merge conflicts with other promotion work','Likely','None']]) + '\n' + ladder_strip([3,4,5,6]), label_cls='see')
-    body += block('📋 How to get “open”', table(
-        ['Technique','How it keeps code closed','Use it when'],
-        [['<b>Interface + implementations</b>','Callers depend on the interface; add an implementation','Behaviour varies (discounts, payment providers)'],
-         ['<b>Strategy</b> (pattern)','Swap an algorithm object at runtime','A choice of algorithm per case (see the patterns deep dive)'],
-         ['<b>Decorator</b>','Wrap an object to add behaviour (logging, caching) without changing it','Cross-cutting additions'],
-         ['<b>Delegates / lambdas</b>','Pass behaviour as a function','A small, simple variation'],
-         ['<b>Configuration / data</b>','Behaviour comes from data, not code','Rules are simple and change often'],
-         ['<b>Inheritance</b>','Override a virtual method','Careful: it couples subclasses to the base class (see Liskov, and composition vs inheritance)']]), label_cls='see')
-    body += block('🩺 Debug checklist · OCP symptoms', table(
-        ['You see','Likely cause','What to try'],
-        [['A long <span class="kw">if/else if</span> or <span class="kw">switch</span> on a “type” that grows every month','Behaviour varies but is hard-coded','Introduce an interface; one class per case'],
-         ['Every new feature edits the same central class','The class is open for edit, closed for extension','Find the axis of change and put a seam there'],
-         ['You added an interface for something that never varies','Premature abstraction (OCP applied everywhere)','Wait for the second variation; page 11'],
-         ['New rule classes behave differently depending on order','Hidden ordering between rules','Make order explicit (priority) and test it'],
-         ['An <span class="kw">is</span>/<span class="kw">as</span> type check on rule classes','The abstraction leaks (a Liskov problem)','Move the behaviour into the interface']]), label_cls='trap')
-    body += block('🎬 Real-world scenarios', scenarios([
-        ('🎟️','Marketing launches a promotion each month','Pricing grows by edits.','IDiscountRule per promotion'),
-        ('💳','Support for a new payment provider','A switch on provider name.','IPaymentGateway + one class per provider'),
-        ('📤','Export to CSV, then JSON, then PDF','A format switch everywhere.','An exporter interface'),
-        ('📝','Add logging to every repository call','Edit every method.','A decorator'),
-    ]), label_cls='see')
-    body += zoom('Go one level deeper (60 seconds)', '''      <p><b>Two meanings.</b> Meyer (1988) used “open” for a module that can be extended and “closed” for one that others can use; Martin’s later reading is that extending a module’s behaviour does not change its source or binary code.</p>
-      <p><b>Strategic.</b> Martin: no significant program can be 100% closed; you guess where change will come from and protect that axis — and the guess can be wrong.</p>
-      <p><b>Link to D.</b> Microsoft’s architecture guidance says dependency injection is built on the dependency inversion principle and is often key to achieving the open/closed principle.</p>''')
+    public decimal Price(decimal amount, IDiscount discount) => amount * (1 - discount.Percent());
+}''', 'Adding <span class="kw">StudentDiscount</span> is a new file. <span class="kw">PriceCalculator</span> is untouched.'), label_cls='see')
+    body += block('🎯 Spot it: does this break the rule?', quiz([
+        ('Adding a new <code>else if (type == "Student")</code> to a long method every time a customer type appears', True, 'Each new case edits old, working code.'),
+        ('Adding a new class <code>StudentDiscount : IDiscount</code> and nothing else', False, 'New behaviour = new code. The old code is not touched.'),
+        ('The same <code>switch (paymentType)</code> copied in five different files', True, 'A new payment type means hunting down five places and editing all of them.'),
+        ('One small <code>if</code> for a rule that has never changed in ten years', False, 'Do not build sockets for things that never change. Wait until the second or third case appears.')], 'Breaks the rule', 'Fine'), label_cls='trap')
+    body += block('👀 How to spot it in your own code', spot_table([
+        ['A long <code>if / else if</code> or <code>switch</code> on a “type” or “kind”','Each new type edits it. Replace with one small class per type behind an interface.'],
+        ['The same <code>switch</code> appears in many places','A new case means many edits (“shotgun surgery”). Move the behaviour into the types.'],
+        ['Every feature request starts with “open this file and add…”','Create a socket (interface) where change keeps happening.'],
+        ['You are afraid to touch a class because everything depends on it','Stop editing it; extend it from outside.']]), label_cls='trap')
     body += recall([
-        'OCP: open for extension, closed for modification — add code, do not edit working code.',
-        'Achieved with abstractions (interfaces, polymorphism), strategy, decorators, delegates.',
-        'It is strategic: choose the axis of change you protect; nothing is 100% closed.',
-        'Smell: a growing if/else or switch on a type; every feature edits one central class.',
-        'Do not add the interface until a second variation exists.',
-        'Dependency injection (D) is what usually delivers OCP in .NET.'])
-    body += saythis('"The Open/Closed Principle says extend behaviour by adding code, not editing it. For promotions I define an IDiscountRule interface and one class per promotion, so the calculator is closed for modification while the system is open to new rules. It is strategic — I protect the axis I expect to change — and I introduce the interface when the second variation shows up, not before."')
-    body += trap([
-        '<b>Abstracting everything “just in case”.</b> Interfaces for things that never vary add noise and indirection.',
-        '<b>Extending through inheritance by default.</b> It couples subclasses to the base class and can break substitutability.'])
-    body += confuse('🔒 Closed for modification', 'The calculator’s code does not change when behaviour is added.', '🔓 Open for extension', 'New behaviour is added through new classes that plug into a seam.')
-    body += next_box('New rules plug in through an interface — but only if every implementation behaves like the interface promises. Next: what makes a substitute safe.', 'liskov-substitution.html', 'L — the Liskov Substitution Principle')
-    body += fact_note('Quotes and framing come from Robert C. Martin’s own writing; the DI statement comes from Microsoft’s .NET architecture guidance.', [DOC_OCP, ('Uncle Bob: An Open and Closed Case', 'https://blog.cleancoder.com/uncle-bob/2013/03/08/AnOpenAndClosedCase.html'), DOC_REL, DOC_MVC])
+        'OCP: open for extension (add new classes), closed for modification (do not edit working code).',
+        'Make a “socket”: an interface where new things plug in.',
+        'Smells: long if/else or switch on a type; the same switch in many places.',
+        'Do it where change really keeps happening, not everywhere.'])
+    body += saythis('"The Open/Closed Principle says I should be able to add new behaviour without editing working code. If discounts are an if/else chain, every new customer type means editing and re-testing it. I introduce an IDiscount interface and one small class per type; the calculator stays the same and a new type is just a new class — like plugging a new device into a power strip."')
+    body += trap(['<b>“Always make everything extensible.”</b> No — only where change really happens. A rule that never changes needs no socket (see page 11).'])
+    body += next_box('A socket only works if everything that plugs in <i>behaves</i> properly. Next: the bird that cannot fly.', 'liskov-substitution.html', 'L — the Liskov Substitution Principle')
+    body += fact_note('The principle is Bertrand Meyer’s (1988), restated by Robert C. Martin: no program can be 100% closed, so choose where to expect change. The power strip is a teaching analogy; the discount code is a tiny illustration.', [DOC_OCP, DOC_OOD, DOC_ARCH])
     return page('open-closed', 'O — the Open/Closed Principle', 'Concept 3 of 12 · 🔤 The five principles',
-        'Add behaviour by <span class="grad-text">adding code</span>, not by editing code that works.',
-        'The Open/Closed Principle, an if-chain turned into IDiscountRule plug-ins, and the techniques that keep a class closed.',
-        'What is the Open/Closed Principle, and how do you apply it without over-engineering?',
+        'Add new things <span class="grad-text">without opening old code</span> — like plugging into a power strip.',
+        'The Open/Closed Principle with a discount calculator and a power strip: why editing working code is risky, and how a socket (interface) avoids it.',
+        'What is the Open/Closed Principle? Give an example.',
         body, CR + ['<span class="cur">O — Open/Closed</span>'], '')

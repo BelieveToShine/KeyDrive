@@ -54,7 +54,7 @@ def build_liskov_substitution():
     body += block('🌍 In real life', '''    <div class="kd-card why-box">
       <p>🔌 Imagine a plug that <b>fits</b> the wall socket but gives <b>no electricity</b>. It fits, but it does not <i>work</i>. In code the compiler only checks that the plug <i>fits</i>. The Liskov Substitution Principle (<b>L</b> in SOLID) is about whether it <b>works</b>.</p>
       <p>The rule: a child class must keep <b>every promise</b> its parent made. If it cannot, it should not be that parent’s child.</p>
-    </div>''', label_cls='why')
+    </div>''', label_cls='why', id_='why')
     body += block('🔧 The fix: make small promises', story(d_fix(), [
         'Every bird eats, so <b>Bird</b> only promises <code>Eat()</code>. Nothing else.',
         'Flying is a <b>separate</b> promise, so it gets its own small interface: <code>IFlyable</code> with <code>Fly()</code>.',

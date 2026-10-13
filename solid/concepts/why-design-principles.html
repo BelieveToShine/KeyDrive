@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Why code rots: change, coupling &amp; cohesion — SOLID — KeyDrive</title>
+<title>Why Code Gets Hard to Change — SOLID — KeyDrive</title>
 <link rel="stylesheet" href="../../assets/style.css?v=20261018">
 </head>
 <body data-root="../../">
@@ -31,185 +31,143 @@
 </header>
 
 <nav class="kd-crumbs wrap">
-  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">Why code rots</span>
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">Why code gets hard to change</span>
 </nav>
 
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 1 of 12 · 🧱 The problem</div>
-    <h1>Code is judged on the <span class="grad-text">hundredth change</span>, not the first.</h1>
-    <p class="sub">The cost of change, cohesion, coupling and reasons to change, and the ShopCore OrderService we will refactor in every page.</p>
-    <div class="interview-q">❓ "Why do design principles exist, and what do cohesion and coupling mean?"</div>
+    <h1>Why does one small change <span class="grad-text">break far-away things</span>?</h1>
+    <p class="sub">Tangled code, in pictures: how a change ripples, and the five SOLID habits that stop it.</p>
+    <div class="interview-q">❓ "What is SOLID and why do we need it?"</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Cost of one change over time: with tangled code each new promotion touches more files and the cost per change rises, while with well-separated code the cost per change stays flat; the bars show files touched for the first, fifth and tenth promotion">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A shop program where one Discount piece is used by Cart, Invoice, Report and Email; a change to Discount ripples out to all four and breaks some of them">
 <defs><marker id="wy1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="wy1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="wy1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="8" width="620" height="314" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">FILES TOUCHED PER PROMOTION (ILLUSTRATIVE)</text>
-<text class="free" x="26" y="52" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Tangled OrderService</text>
-<text class="free" x="120" y="78" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 1</text>
-<rect class="bx" x="132" y="58" width="80" height="26" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text class="free" x="220" y="76" text-anchor="start" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">2 files</text>
-<text class="free" x="120" y="112" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 5</text>
-<rect class="bx" x="132" y="92" width="240" height="26" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text class="free" x="380" y="110" text-anchor="start" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">6 files</text>
-<text class="free" x="120" y="146" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 10</text>
-<rect class="bx" x="132" y="126" width="440" height="26" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text class="free" x="580" y="144" text-anchor="start" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">11 files</text>
-<text class="free" x="26" y="178" text-anchor="start" font-size="10.5" font-weight="700" fill="#93a0b8">Separated design</text>
-<text class="free" x="120" y="204" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 1</text>
-<rect class="bx" x="132" y="184" width="40" height="26" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text class="free" x="180" y="202" text-anchor="start" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">1 file</text>
-<text class="free" x="120" y="238" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 5</text>
-<rect class="bx" x="132" y="218" width="40" height="26" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text class="free" x="180" y="236" text-anchor="start" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">1 file</text>
-<text class="free" x="120" y="272" text-anchor="end" font-size="9.5" font-weight="400" fill="#93a0b8">promotion 10</text>
-<rect class="bx" x="132" y="252" width="40" height="26" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text class="free" x="180" y="270" text-anchor="start" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">1 file</text>
-<text class="free" x="320" y="306" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Same feature, same team — only the structure differs.</text>
-</svg>
-<figcaption><strong>What you're seeing:</strong> the same team adds promotions to ShopCore. In the <b>tangled</b> OrderService each new promotion touches more files than the last, because pricing, saving and e-mailing are woven together (the numbers are illustrative). In the <b>separated</b> design each promotion touches one new file. Nothing about the <i>feature</i> changed — only the <b>structure</b> — and that is the whole case for design principles.</figcaption>
+<g class="st" data-s="1-"><path id="wy1-r0" d="M190,150 L440,40" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy1A)"/></g>
+<g class="st" data-s="1-"><path id="wy1-r1" d="M190,150 L440,110" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#wy1A)"/></g>
+<g class="st" data-s="1-"><path id="wy1-r2" d="M190,150 L440,180" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#wy1A)"/></g>
+<g class="st" data-s="1-"><path id="wy1-r3" d="M190,150 L440,250" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#wy1A)"/></g>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="20" y="105" width="170" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text class="emo" x="105" y="155" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🏷️</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="105" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="10" width="180" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🛒 Cart</text></g>
+<g class="st" data-s="1-"><text x="530" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">uses Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="80" width="180" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="107.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🧾 Invoice</text></g>
+<g class="st" data-s="1-"><text x="530" y="120.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">uses Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="150" width="180" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="177.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📊 Report</text></g>
+<g class="st" data-s="1-"><text x="530" y="190.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">uses Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="220" width="180" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">✉️ Email</text></g>
+<g class="st" data-s="1-"><text x="530" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">uses Discount</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx note" x="210" y="8" width="200" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="310" y="26" text-anchor="middle" font-size="10" fill="#fcd34d">New rule: students</text></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="310" y="40" text-anchor="middle" font-size="10" fill="#fcd34d">get 10% off</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="28" text-anchor="middle" font-size="20">💥</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="98" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="168" text-anchor="middle" font-size="20">💥</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="238" text-anchor="middle" font-size="20">💥</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx note" x="210" y="252" width="220" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="320" y="270" text-anchor="middle" font-size="10" fill="#fda4af">Nobody edited Cart or Report —</text></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fda4af">but they still broke</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="210" y="252" width="220" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="270" text-anchor="middle" font-size="10" fill="#fda4af">Tangled code:</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fda4af">every change is scary</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="wy1-r0"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🌊</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="wy1-r1"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🌊</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="wy1-r2"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🌊</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="wy1-r3"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🌊</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A small shop program. The <b>Discount</b> code is used by <b>Cart, Invoice, Report and Email</b> — they all depend on it.</li><li>A new rule arrives: <b>students get 10% off</b>. A programmer edits the Discount code. Only one place was touched.</li><li>But the change <b>ripples out</b> to everything that uses Discount…</li><li>…and some of those pieces break — even though nobody edited them. 💥</li><li>This is how code “rots”: the more tangled it is, the scarier every change becomes.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a tangled design. One edit in the middle travels along every arrow — that is why a “small” change can break far-away things.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text">Design principles are not style rules. They exist to keep the <b>cost of the next change</b> low.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Good design means a small change touches one small place.</b> SOLID is five habits that make that true.</span></div>
   <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>Software is never finished: tax rules change, a new payment provider arrives, marketing wants another promotion. The first version of any program is cheap; the <i>hundredth change</i> is where code is judged. Code that was easy to write but hard to change slowly “rots”: every change takes longer and breaks something unrelated.</p>
-      <p>Robert C. Martin, who named the SOLID principles, says they expose the <b>dependency-management</b> side of object-oriented design, as opposed to the modeling side, and that poor dependency management leads to code that is hard to change, fragile and non-reusable. In other words: <b>what depends on what</b> decides whether change is cheap.</p>
-      <p>This page gives you the vocabulary — <b>cohesion</b>, <b>coupling</b>, <b>reason to change</b> — and introduces the practice class we will refactor in every page of this lab.</p>
+      <p>🎧 Think of earphones in a bag. If the cable is tangled, pulling one end tugs everything else. If each cable is wound neatly, you can pull one out without touching the rest.</p>
+      <p>Code is the same. Pieces that know too much about each other get “tangled”. SOLID is the set of habits for keeping them neat.</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🔬 Cohesion and coupling</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Cohesion is how closely the parts inside one class belong together, and coupling is how strongly classes depend on each other; the goal is high cohesion inside and low coupling between">
+    <div class="sec-label see">🧹 The tidy version</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A tidy shop program: Discount is used by Cart only; the same new rule changes just the Discount box, Cart keeps working and Invoice, Report and Email are not affected">
 <defs><marker id="wy2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="wy2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="wy2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">LOW COHESION · HIGH COUPLING</text>
-<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">HIGH COHESION · LOW COUPLING</text>
-<path d="M162,130 L162,170 L67,170 L67,210" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M162,130 L162,210" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M162,130 L162,170 L259,170 L259,210" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M379,150 L379,94" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M454,150 L454,94" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M529,150 L529,94" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<path d="M604,150 L604,94" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy2A)"/>
-<rect class="bx" x="40" y="50" width="245" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="162.5" y="81.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">OrderService</text>
-<text x="162.5" y="94" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">validate · price · save</text>
-<text x="162.5" y="106.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">email · log · tax</text>
-<rect class="bx" x="24" y="210" width="86" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="67" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">SQL</text>
-<rect class="bx" x="120" y="210" width="86" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="163" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">SMTP</text>
-<rect class="bx" x="216" y="210" width="86" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="259" y="234" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Tax API</text>
-<text class="free" x="162" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">One class, six jobs, three concrete</text>
-<text class="free" x="162" y="304" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">dependencies: change one, retest all.</text>
-<rect class="bx" x="335" y="50" width="68" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="369" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Pricing</text>
-<rect class="bx" x="410" y="50" width="68" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="444" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Persist</text>
-<rect class="bx" x="485" y="50" width="68" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="519" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Notify</text>
-<rect class="bx" x="560" y="50" width="68" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="594" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Validate</text>
-<rect class="bx" x="340" y="150" width="280" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="480" y="169.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
-<text x="480" y="182.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">orchestrates through interfaces</text>
-<text class="free" x="477" y="240" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Each class has one job;</text>
-<text class="free" x="477" y="258" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">they meet at small interfaces.</text>
-<text class="free" x="477" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Change one, retest one.</text>
-</svg>
-<figcaption><strong>What you're seeing:</strong> <b>Left</b>: OrderService has <b>low cohesion</b> (six unrelated jobs inside one class) and <b>high coupling</b> (it creates its own SQL, SMTP and tax-API clients). A change to any one job risks all the others, and a test needs real infrastructure. <b>Right</b>: four classes each have <b>one job</b> (high cohesion) and OrderService just orchestrates them through small interfaces (low coupling). Microsoft’s architecture guidance states the goal as minimising the points where parts of an application interact, to reach high cohesion and low coupling.</figcaption>
+<g class="st" data-s="1-"><path id="wy2-t0" d="M190,135 L440,40" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#wy2A)"/></g>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="20" y="105" width="170" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text class="emo" x="105" y="155" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🏷️</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="105" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="10" width="180" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🛒 Cart</text></g>
+<g class="st" data-s="1-"><text x="530" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">uses Discount</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="80" width="180" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="107.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🧾 Invoice</text></g>
+<g class="st" data-s="1-"><text x="530" y="120.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">has its own rules</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="150" width="180" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="177.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📊 Report</text></g>
+<g class="st" data-s="1-"><text x="530" y="190.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">has its own rules</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="440" y="220" width="180" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="530" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">✉️ Email</text></g>
+<g class="st" data-s="1-"><text x="530" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">has its own rules</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx note" x="210" y="8" width="200" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="310" y="26" text-anchor="middle" font-size="10" fill="#fcd34d">New rule: students</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="310" y="40" text-anchor="middle" font-size="10" fill="#fcd34d">get 10% off</text></g>
+<g class="st" data-s="3-"><text class="emo" x="600" y="28" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="3-"><text class="emo" x="600" y="98" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="3-"><text class="emo" x="600" y="168" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="3-"><text class="emo" x="600" y="238" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="210" y="252" width="220" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="270" text-anchor="middle" font-size="10" fill="#6ee7b7">One place changed.</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#6ee7b7">Everything else is safe.</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="wy2-t0"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🌊</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Same program, tidier. <b>Discount</b> is used by <b>Cart only</b>. The other pieces have their own small rules.</li><li>The same new rule: <b>students get 10% off</b>. We edit the Discount code.</li><li>The change reaches only <b>Cart</b>, which keeps working. The other pieces are untouched and safe. ✅</li><li>One reason, one place. That is the goal of the next five pages.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same change in a tidy design: it touches one box and cannot ripple.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">📚 Words you will use all lab</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Word</th><th scope="col">Meaning</th><th scope="col">Why it matters</th></tr></thead><tbody><tr><th scope="row"><b>Cohesion</b></th><td>How closely the members of one class belong together</td><td>Low cohesion = a class that changes for many reasons</td></tr><tr><th scope="row"><b>Coupling</b></th><td>How strongly one piece depends on another; low coupling lets pieces change independently</td><td>High coupling = one change ripples</td></tr><tr><th scope="row"><b>Reason to change</b></th><td>A person or rule that can force an edit (marketing, tax law, the DBA)</td><td>The measuring stick for the Single Responsibility Principle</td></tr><tr><th scope="row"><b>Abstraction</b></th><td>An interface or base type that hides details</td><td>The tool that lowers coupling</td></tr><tr><th scope="row"><b>Seam</b></th><td>A place where behaviour can be swapped without editing code</td><td>Where tests and new features plug in</td></tr><tr><th scope="row"><b>Rigidity / fragility</b></th><td>Hard to change / breaks in unexpected places</td><td>The two classic symptoms of bad dependencies</td></tr></tbody></table></div>
+    <div class="sec-label see">🗺️ The five habits (one page each)</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Letter</th><th scope="col">The habit in plain words</th><th scope="col">Picture</th></tr></thead><tbody><tr><th scope="row"><b>S</b> · Single Responsibility</th><td>Each class does <b>one job</b>.</td><td>🍽️ a restaurant with a chef, a waiter and a cashier</td></tr><tr><th scope="row"><b>O</b> · Open / Closed</th><td>Add new things <b>without editing</b> old code.</td><td>🔌 a power strip</td></tr><tr><th scope="row"><b>L</b> · Liskov Substitution</th><td>A child class must <b>keep its parent’s promises</b>.</td><td>🐧 a bird that cannot fly</td></tr><tr><th scope="row"><b>I</b> · Interface Segregation</th><td>Keep interfaces <b>small and focused</b>.</td><td>🖨️ a plain printer, not an all-in-one</td></tr><tr><th scope="row"><b>D</b> · Dependency Inversion</th><td>Depend on a <b>socket</b>, not on one particular bulb.</td><td>💡 a light switch</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🛒 The practice class: ShopCore OrderService</div>
-    <div class="code-block"><pre><span class="kw">public</span> <span class="kw">class</span> OrderService
-{
-    <span class="kw">public</span> <span class="kw">void</span> PlaceOrder(Order order)
-    {
-        <span class="kw">if</span> (order.Items.Count == 0) <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="str">"empty"</span>);              <span class="cmt">// validation</span>
-        <span class="kw">decimal</span> total = 0;
-        <span class="kw">foreach</span> (<span class="kw">var</span> i <span class="kw">in</span> order.Items) total += i.Price * i.Quantity;          <span class="cmt">// pricing</span>
-        <span class="kw">if</span> (order.Customer.IsVip) total *= 0.9m;                               <span class="cmt">// a promotion</span>
-        <span class="kw">if</span> (order.Country == <span class="str">"DE"</span>) total *= 1.19m;                             <span class="cmt">// tax rules</span>
-        <span class="kw">using</span> <span class="kw">var</span> db = <span class="kw">new</span> SqlConnection(<span class="str">"Server=..."</span>);                        <span class="cmt">// persistence</span>
-        db.Execute(<span class="str">"INSERT INTO Orders ..."</span>, order);
-        <span class="kw">new</span> SmtpClient(<span class="str">"smtp.shop.local"</span>).Send(<span class="str">"shop@x"</span>, order.Email, <span class="str">"Thanks"</span>); <span class="cmt">// notification</span>
-        File.AppendAllText(<span class="str">"log.txt"</span>, <span class="str">"order "</span> + order.Id);                    <span class="cmt">// logging</span>
-    }
-}</pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. Every line shows a different reason to change. We will take this class apart, one principle at a time.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Answer for OrderService</th></tr></thead><tbody><tr><th scope="row">How many reasons to change?</th><td>6 — validation, pricing, tax, persistence, notification, logging</td></tr><tr><th scope="row">What does a unit test need?</th><td>A SQL Server and an SMTP server (nothing can be faked)</td></tr><tr><th scope="row">Adding a promotion means…</th><td>Editing this class and retesting everything</td></tr><tr><th scope="row">Who is afraid to edit it?</th><td>Everyone</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL ★</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
-    </div>
+    <div class="sec-label why">🧭 Words you will meet</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Word</th><th scope="col">Plain meaning</th></tr></thead><tbody><tr><th scope="row"><b>Class</b></th><td>a blueprint for objects (a piece of the program)</td></tr><tr><th scope="row"><b>Interface</b></th><td>a list of promises: “anything of this kind can do these things”</td></tr><tr><th scope="row"><b>Dependency</b></th><td>something a class needs in order to work</td></tr><tr><th scope="row"><b>Coupling</b></th><td>how tightly two pieces are tied together (tight = tangled)</td></tr><tr><th scope="row"><b>Refactoring</b></th><td>tidying code <b>without changing what it does</b></td></tr></tbody></table></div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label trap">🩺 Debug checklist · early warning signs</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it usually means</th><th scope="col">First move</th></tr></thead><tbody><tr><th scope="row">One feature request touches many unrelated files</th><td>Low cohesion or high coupling (shotgun surgery)</td><td>List the reasons each file changes</td></tr><tr><th scope="row">“I do not dare touch that class”</th><td>Rigid, no tests, too many jobs</td><td>Pin behaviour with tests, then split</td></tr><tr><th scope="row">A unit test needs a database or an e-mail server</th><td>Concrete dependencies created inside the class</td><td>Introduce an interface at the seam (D)</td></tr><tr><th scope="row">A constructor with many parameters</th><td>Too many responsibilities (Microsoft guidance: a code smell)</td><td>Split the class by reason to change</td></tr><tr><th scope="row">A bug fix in one place breaks another feature</th><td>Fragility from hidden coupling</td><td>Make dependencies explicit</td></tr></tbody></table></div>
-  </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">🎟️</span><h5>Marketing adds a seasonal promotion every month</h5><p>Pricing logic keeps growing in one class.</p><span class="sc-use">→ Open/Closed (page 3)</span></div>
-      <div class="scenario"><span class="sc-icon">💳</span><h5>A second payment provider arrives</h5><p>Code is hard-wired to the first.</p><span class="sc-use">→ Dependency Inversion (page 6)</span></div>
-      <div class="scenario"><span class="sc-icon">🧪</span><h5>Nobody can unit-test the order flow</h5><p>Real infrastructure is created inside.</p><span class="sc-use">→ Seams and DI (pages 6–7)</span></div>
-      <div class="scenario"><span class="sc-icon">🧓</span><h5>A legacy class nobody understands</h5><p>Many jobs, no tests.</p><span class="sc-use">→ Smells & refactoring (page 8)</span></div>
-    </div>
-  </section>
-  <details class="zoom">
-    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
-    <div class="zoom-inner">
-      <p><b>Not a law of nature.</b> “High cohesion, low coupling” has been the guiding idea for decades, though some researchers argue it is an incomplete definition of good design. Treat it as a strong heuristic, not a proof.</p>
-      <p><b>SOLID is five heuristics, not five rules.</b> Martin himself says OCP is strategic and no significant program can be 100% closed. Page 11 is about knowing when to stop.</p>
-      <p><b>Who coined what.</b> The five principles were collected by Robert C. Martin; page citations link to his own writing. The acronym SOLID itself is a mnemonic added later.</p>
-    </div>
-  </details>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>Principles exist to keep the cost of the next change low.</li><li>Cohesion: how well the parts of a class belong together; coupling: how strongly things depend on each other; aim for high cohesion, low coupling.</li><li>A “reason to change” is a person or rule that can force an edit.</li><li>SOLID is about dependency management more than modeling (Martin).</li><li>Warning signs: shotgun surgery, tests needing infrastructure, fear of editing, big constructors.</li><li>SOLID is a set of heuristics; judgement still applies.</li></ul>
+      <ul><li>Code “rots” when pieces are tangled: one change ripples into many places.</li><li>Good design: a change touches one small place.</li><li>SOLID = five habits: S, O, L, I, D — each prevents a different kind of tangle.</li><li>SOLID is a set of tools to use when there is pain, not a score to maximise.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"Design principles exist to keep the cost of change low. High cohesion means a class has one job, low coupling means classes depend on small abstractions rather than on each other’s details. SOLID gives five concrete heuristics for that, centred on dependency management — and I apply them when I see pain, not by default."</div>
+    <div class="kd-card saythis-box">"Code gets expensive to change when its pieces are tightly coupled, so one edit ripples through many places. SOLID is five design habits — single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion — that keep pieces small, replaceable and independent, so a change stays in one place."</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>Treating SOLID as a checklist to satisfy.</b> The goal is cheaper change, not more interfaces.</p>
-      <p><b>Refactoring for beauty with no pain.</b> Without a real change pressure you add complexity for nothing (page 11).</p>
+      <p><b>“SOLID means more classes and more interfaces.”</b> It means the <i>right</i> pieces, only where change really happens. Page 11 shows when to stop.</p>
     </div>
   </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🧲 Cohesion</h5><p>Inside one class: do its parts belong together?</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🔗 Coupling</h5><p>Between classes: how much does one need to know about the other?</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>You have the vocabulary and the practice class. Next: the first principle — what is one class’s job?</span>
+      <span>Let’s start with the first habit: one class, one job — told with a restaurant.</span>
       <a class="next-link" href="single-responsibility.html">S — the Single Responsibility Principle <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 SOLID has no single official standard. Microsoft statements come from .NET architecture guides; the principles’ wording from Robert C. Martin’s own writing. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ee658124(v=pandp.10)" target="_blank" rel="noopener">Microsoft: Key principles of software architecture</a> · <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a></p>
+  </section>  <p class="fact-note">📌 SOLID is a set of design heuristics popularised by Robert C. Martin; there is no single official standard. Martin has described them as being about managing dependencies and keeping code easy to change. The earphones and shop pictures are teaching analogies. Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a></p>
 
 
 </main>
