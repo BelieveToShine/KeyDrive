@@ -30,7 +30,7 @@ GROUPS = [('🔭 PLAN LITERACY','167,139,250','#c4b5fd'),
           ('🛠️ OPTIMISE','34,211,238','#67e8f9'),
           ('🧪 MEASURE & DEBUG','52,211,153','#6ee7b7'),
           ('🏗️ BEYOND ONE QUERY','251,191,36','#fcd34d')]
-WRITTEN = ['query-journey','storage-pages','indexes-seek-scan','reading-execution-plans','statistics-cardinality','join-algorithms','covering-indexes','sargable-queries','plan-cache-sniffing','measuring-query-store','debugging-playbook','locking-isolation','index-maintenance-cost']
+WRITTEN = ['query-journey','storage-pages','indexes-seek-scan','reading-execution-plans','statistics-cardinality','join-algorithms','covering-indexes','sargable-queries','plan-cache-sniffing','measuring-query-store','debugging-playbook','locking-isolation','index-maintenance-cost','partitioning-columnstore']
 
 journeys = json.loads((REPO / 'assets/journeys.json').read_text())
 journeys['sql'] = {'title': 'SQL Performance Lab', 'order': [c[0] for c in C], 'titles': {c[0]: c[2] for c in C}, 'written': WRITTEN, 'sub': {}, 'subTitles': {}}

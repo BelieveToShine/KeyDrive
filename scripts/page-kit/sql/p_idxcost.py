@@ -118,7 +118,7 @@ f'''<span class="cmt">-- keep the CREATE scripts first, then:</span>
         '<b>Rebuilding every index every night.</b> It burns CPU, I/O and log for indexes that were barely fragmented, and does little for seek-heavy workloads.',
         '<b>Dropping an “unused” index right after a restart.</b> The counters were reset, and the quarterly job has not run yet.'])
     body += confuse('🔧 REORGANIZE', 'In-place, light, interruptible. Does not update statistics. For moderate fragmentation.', '🏗️ REBUILD', 'Builds the index again: heavier and slower, removes all fragmentation, and refreshes its statistics.')
-    body += next_box('Everything so far reads rows through B-trees. What if a query must aggregate hundreds of millions of rows? Next: partitioning and columnstore for big-data reads <i>(coming soon)</i>.')
+    body += next_box('Everything so far reads rows through B-trees. What if a query must aggregate hundreds of millions of rows? Next: partitioning and columnstore for big-data reads.', 'partitioning-columnstore.html', 'Big-data reads: partitioning &amp; columnstore')
     body += fact_note('Thresholds and defaults change between versions. For exact guidance check the official docs.', [DOC_REORG, DOC_USAGE, DOC_AUTOAZ, DOC_IDX])
     return page('index-maintenance-cost', 'The cost of indexes & maintenance', 'Concept 13 of 16 · 🏗️ Beyond one query',
         'Every index <span class="grad-text">slows every write</span> — keep the ones that earn it.',

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big-data reads: partitioning &amp; columnstore — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Big-data reads: partitioning &amp; columnstore</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 14 of 16 · 🏗️ Beyond one query</div>
+    <h1>To aggregate hundreds of millions of rows, <span class="grad-text">read less</span> — by column and by range.</h1>
+    <p class="sub">Why B-trees stop helping for analytics, how columnstore and batch mode work, what partition elimination really does, and when not to use either.</p>
+    <div class="interview-q">❓ "A report aggregates 500 million rows and takes 90 seconds. How would you make it faster?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Rowstore keeps whole rows together so a query reading two columns still reads every column of every page; columnstore keeps each column apart so only the two needed columns are read">
+<defs><marker id="bd1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="316" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">ROWSTORE · rows together</text>
+<rect class="zone" x="325" y="8" width="305" height="316" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">COLUMNSTORE · columns apart</text>
+<rect class="bx" x="26" y="36" width="273" height="110" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="40" y="58" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#fcc3cb">1001 · 42 · 2026-01-05 · 99.00 · Paid</text>
+<text x="40" y="71" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#fcc3cb">1002 · 17 · 2026-01-05 · 12.50 · Paid</text>
+<text x="40" y="84" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#fcc3cb">1003 · 42 · 2026-01-06 · 45.00 · Open</text>
+<text x="40" y="97" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#fcc3cb">1004 · 91 · 2026-01-06 · 70.20 · Paid</text>
+<text x="40" y="110" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#fcc3cb">… every row, every column …</text>
+<rect class="bx" x="40" y="170" width="245" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="196.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">SUM(Total) for 2026</text>
+<text x="162.5" y="209" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">reads all 5 columns</text>
+<text x="162.5" y="221.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">of every page it touches</text>
+<text class="free" x="162" y="270" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Fast for “give me order 1003” —</text>
+<text class="free" x="162" y="285" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">wasteful for “sum one column”.</text>
+<rect class="bx" x="333" y="36" width="52" height="110" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="359" y="93.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Id</text>
+<rect class="bx" x="391" y="36" width="52" height="110" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="417" y="93.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Cust</text>
+<rect class="bx" x="449" y="36" width="52" height="110" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="475" y="93.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Date</text>
+<rect class="bx" x="507" y="36" width="52" height="110" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="533" y="93.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Total</text>
+<rect class="bx" x="565" y="36" width="52" height="110" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="591" y="93.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Status</text>
+<rect class="bx" x="355" y="170" width="245" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="196.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SUM(Total) for 2026</text>
+<text x="477.5" y="209" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">reads 2 of 5 columns,</text>
+<text x="477.5" y="221.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">compressed, skipping segments</text>
+<text class="free" x="477" y="270" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Each column segment keeps its min/max,</text>
+<text class="free" x="477" y="285" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">so whole segments can be skipped.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same table stored two ways. <b>Rowstore</b> (left) keeps every column of a row together — perfect for “fetch order 1003” and for updating one order, but a query that only needs the <b>Total</b> column still drags all five columns of every page through memory. <b>Columnstore</b> (right) keeps each column apart and compressed, so “sum the Total for 2026” reads just two column segments — and each segment’s min/max lets the engine skip whole segments that cannot match.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">B-trees are built for finding a few rows. For <b>aggregating hundreds of millions</b>, store data by column (columnstore) and split it by range (partitioning) so the engine reads less.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Everything so far was about <i>finding a few rows fast</i>: seeks, lookups, covering indexes. But an analytics question — “total sales per month for the last three years” — touches <b>every</b> row of a huge table. No B-tree seek can help: the work is a big scan and an aggregate.</p>
+      <p>For those workloads the cost is dominated by <b>how many bytes you must read</b>. Two ideas cut that number: <b>store by column</b> so only the needed columns are read (and compress well, because a column holds similar values), and <b>partition by range</b> so old data is skipped entirely.</p>
+      <p>This page covers both, and — just as important — when <i>not</i> to use them.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Four tools for big tables</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#34d399"><h4>🌲 Rowstore B-tree</h4><span class="pk-tag">the default; point lookups and updates</span><span class="pk-label use">✅ Pick it when</span><ul><li>Transactions: find, insert and update individual rows</li><li>Selective queries that seek a few rows</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Scanning and aggregating huge tables all day</li></ul></div>
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🧱 Clustered columnstore</h4><span class="pk-tag">the table stored by column</span><span class="pk-label use">✅ Pick it when</span><ul><li>Big fact tables in a data warehouse</li><li>Scans and aggregates over many rows — typically about 10× compression</li><li>Queries touching a few columns of many</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Single-row lookups and frequent single-row updates (DML runs row by row)</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>➕ Nonclustered columnstore on a rowstore table</h4><span class="pk-tag">analytics on live OLTP data</span><span class="pk-label use">✅ Pick it when</span><ul><li>Real-time analytics without a separate warehouse</li><li>Costs on average about 10% more storage</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>It is an extra index to maintain on every write (page 13)</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>🗂️ Table partitioning</h4><span class="pk-tag">split one table by a range</span><span class="pk-label use">✅ Pick it when</span><ul><li>Archiving and loading by whole ranges (sliding window)</li><li>Queries that filter on the partitioning column — partitions that cannot match are skipped</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Queries that do not filter on the partitioning column — no benefit, and can even get worse</li><li>Using it as a “make everything faster” switch</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧬 How columnstore stores data</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">ROWGROUP</span><h4>📦 A slice of rows</h4><p>The table is cut into rowgroups; each is compressed column by column.</p></div>
+      <div class="how-step"><span class="hs-n">SEGMENT</span><h4>🧱 One column of a rowgroup</h4><p>Stores its min and max, so whole segments can be skipped without being read.</p></div>
+      <div class="how-step"><span class="hs-n">DELTASTORE</span><h4>🧺 A waiting room</h4><p>Small inserts land in a B-tree deltastore until enough rows exist to compress.</p></div>
+      <div class="how-step"><span class="hs-n">BATCH MODE</span><h4>⚡ Rows in groups</h4><p>Operators process batches (usually up to about 900 rows) instead of one row at a time — typically 2–4× faster.</p></div>
+    </div>
+    <p style="margin-top:12px">Bulk loads of at least 102,400 rows compress straight into the columnstore and skip the deltastore, so load in big batches.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗂️ Partition elimination</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Partition elimination: a query for 2026 reads only the 2026 partition and skips 2023 to 2025; old partitions can be switched out to an archive table as a metadata operation">
+<defs><marker id="bd2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,56 L320,96 L80,96 L80,150" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#bd2A)"/>
+<path d="M320,56 L320,96 L240,96 L240,150" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#bd2A)"/>
+<path d="M320,56 L320,96 L400,96 L400,150" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#bd2A)"/>
+<path d="M320,56 L320,96 L560,96 L560,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<path d="M80,220 L80,278" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#bd2A)"/>
+<rect class="bx" x="185" y="10" width="270" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="36.5" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">WHERE OrderDate &gt;= 2026-01-01</text>
+<rect class="bx" x="10" y="150" width="140" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="80" y="182.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Orders 2023</text>
+<text x="80" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">partition · skipped</text>
+<rect class="bx" x="170" y="150" width="140" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="240" y="182.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Orders 2024</text>
+<text x="240" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">partition · skipped</text>
+<rect class="bx" x="330" y="150" width="140" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="400" y="182.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Orders 2025</text>
+<text x="400" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">partition · skipped</text>
+<rect class="bx" x="490" y="150" width="140" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="560" y="182.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Orders 2026</text>
+<text x="560" y="195.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">partition · READ</text>
+<rect class="bx" x="10" y="278" width="140" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="80" y="298.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🗄️ Archive table</text>
+<text x="80" y="311.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">cheap storage</text>
+<text class="free" x="400" y="300" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Moving a whole partition in or out is mostly a</text>
+<text class="free" x="400" y="316" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">metadata operation — rows are not copied.</text>
+<g class="arrow-pill"><rect x="60.5" y="114" width="39" height="18" rx="9"/><text x="80" y="126.5" text-anchor="middle" font-size="9" font-style="italic">skip</text></g>
+<g class="arrow-pill"><rect x="220.5" y="114" width="39" height="18" rx="9"/><text x="240" y="126.5" text-anchor="middle" font-size="9" font-style="italic">skip</text></g>
+<g class="arrow-pill"><rect x="380.5" y="114" width="39" height="18" rx="9"/><text x="400" y="126.5" text-anchor="middle" font-size="9" font-style="italic">skip</text></g>
+<g class="arrow-pill"><rect x="540.5" y="114" width="39" height="18" rx="9"/><text x="560" y="126.5" text-anchor="middle" font-size="9" font-style="italic">read</text></g>
+<g class="arrow-pill"><rect x="55" y="240" width="50" height="18" rx="9"/><text x="80" y="252.5" text-anchor="middle" font-size="9" font-style="italic">SWITCH</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the table is split by <code>OrderDate</code> into yearly partitions. A query that filters on the <b>partitioning column</b> lets the optimizer skip every partition that cannot match — here only 2026 is read. A <b>partition function</b> decides which partition a row belongs to; a <b>partition scheme</b> maps partitions to storage. The second superpower is manageability: loading or removing a whole partition with <code>ALTER TABLE … SWITCH</code> is largely a metadata operation, so archiving a year does not copy rows.</figcaption>
+</figure>
+    <p style="margin-top:12px"><b>Warning:</b> partitioning rarely speeds up queries on its own. If a query does not filter on the partitioning column nothing is skipped — and the overhead of many partitions can make it worse. Query design and indexes remain the main performance levers.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · a 500-million-row aggregate</div>
+    <p>Question: <i>total of <code>Total</code> for 2026</i> on a 500-million-row <code>Orders</code> history table (about 50 GB as rowstore). <b>All numbers illustrative.</b></p>    <div class="code-block"><pre><span class="kw">SELECT</span> <span class="kw">SUM</span>(Total) <span class="kw">FROM</span> dbo.Orders
+<span class="kw">WHERE</span> OrderDate >= <span class="str">'20260101'</span> <span class="kw">AND</span> OrderDate < <span class="str">'20270101'</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Bare-column range, as in page 8 — a function around OrderDate would block segment and partition elimination too.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Rowstore plan: a clustered index scan of 500 million rows feeds a row-mode aggregate">
+<defs><marker id="bd3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M480,62 L360,62" fill="none" stroke="#fb7185" stroke-width="9" marker-end="url(#bd3T)"/>
+<path d="M230,62 L110,62" fill="none" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#bd3A)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">SUM(Total)</text>
+<rect class="bx" x="230" y="24" width="130" height="76" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="295" y="53.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Stream Aggregate</text>
+<text x="295" y="66" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">row mode</text>
+<text x="295" y="78.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">one row at a time</text>
+<rect class="bx" x="480" y="14" width="150" height="96" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="555" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Clustered Index Scan</text>
+<text x="555" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders (rowstore)</text>
+<text x="555" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">500,000,000 rows</text>
+<text x="555" y="84.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">all 5 columns</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Illustrative: ≈ 6,100,000 page reads, ≈ 90 s.</text>
+<g class="arrow-pill"><rect x="387" y="37" width="66" height="18" rx="9"/><text x="420" y="49.5" text-anchor="middle" font-size="9" font-style="italic">500M rows</text></g>
+<g class="arrow-pill"><rect x="148" y="37" width="44" height="18" rx="9"/><text x="170" y="49.5" text-anchor="middle" font-size="9" font-style="italic">1 row</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the rowstore plan scans the clustered index: every row, every column, one row at a time. The arrow is as thick as it gets — 500 million rows — and nothing a seek can do helps.</figcaption>
+</figure>
+    <div class="code-block"><pre><span class="kw">CREATE CLUSTERED COLUMNSTORE INDEX</span> CCI_Orders <span class="kw">ON</span> dbo.OrdersHistory;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative: converts the history table to columnstore. For an active OLTP table you would add a nonclustered columnstore index instead.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Columnstore plan: a columnstore index scan reads two columns, skips segments, and feeds a batch-mode aggregate">
+<defs><marker id="bd4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bd4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M480,62 L360,62" fill="none" stroke="#fb7185" stroke-width="9" marker-end="url(#bd4T)"/>
+<path d="M230,62 L110,62" fill="none" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#bd4A)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">SUM(Total)</text>
+<rect class="bx" x="230" y="24" width="130" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="295" y="53.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Hash Match</text>
+<text x="295" y="66" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">aggregate</text>
+<text x="295" y="78.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">BATCH mode</text>
+<rect class="bx" x="480" y="14" width="150" height="96" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="555" y="47.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Columnstore Scan</text>
+<text x="555" y="59.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Orders (columnstore)</text>
+<text x="555" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">2 of 5 columns</text>
+<text x="555" y="84.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">segments skipped</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Illustrative: ≈ 260,000 page-equivalents, ≈ 22 s — before partition elimination.</text>
+<g class="arrow-pill"><rect x="387" y="37" width="66" height="18" rx="9"/><text x="420" y="49.5" text-anchor="middle" font-size="9" font-style="italic">120M rows</text></g>
+<g class="arrow-pill"><rect x="148" y="37" width="44" height="18" rx="9"/><text x="170" y="49.5" text-anchor="middle" font-size="9" font-style="italic">1 row</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> now the scan reads only <b>two of five columns</b>, compressed, skipping segments whose min/max cannot contain 2026; the aggregate runs in <b>batch mode</b>. The plan has the same shape as before — but it moves a fraction of the bytes.</figcaption>
+</figure>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Layout (illustrative)</th><th scope="col">Reads about</th><th scope="col">Elapsed</th></tr></thead><tbody><tr><th scope="row">Rowstore, full scan</th><td>6,100,000 pages</td><td>≈ 90 s</td></tr><tr><th scope="row">Rowstore, partitioned by year (2026 only)</th><td>1,500,000 pages</td><td>≈ 25 s</td></tr><tr><th scope="row">Columnstore (2 of 5 columns, ~10× compression)</th><td>260,000 pages</td><td>≈ 22 s</td></tr><tr><th scope="row">Columnstore + partitioned by year</th><td>65,000 pages</td><td>≈ 5 s</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · big-table symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">A report scans a huge table and aggregates</th><td>Row-by-row storage; all columns read for two</td><td>Consider a (clustered or nonclustered) columnstore index</td></tr><tr><th scope="row">Columnstore queries are fast but single-row lookups got slow</th><td>Columnstore is not built for point lookups</td><td>Keep a rowstore (B-tree) index for lookups, or use a nonclustered columnstore on a rowstore table</td></tr><tr><th scope="row">Partitioned table, query unchanged</th><td>The query does not filter on the partitioning column</td><td>Filter on it with a bare-column range; check the plan for partitions accessed</td></tr><tr><th scope="row">Many tiny rowgroups / slow loads</th><td>Small, frequent inserts all land in the deltastore</td><td>Load in large batches (≥ 102,400 rows)</td></tr><tr><th scope="row">Function on the date column</th><td>Blocks partition and segment elimination</td><td>Rewrite as a range (page 8)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📈</span><h5>Monthly revenue dashboard over 5 years</h5><p>Aggregates two columns across hundreds of millions of rows.</p><span class="sc-use">→ Columnstore</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Order entry: lookups and updates by id</h5><p>Single-row operations all day.</p><span class="sc-use">→ Rowstore B-tree</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Archive 2023 at year-end</h5><p>Moving a year of rows must not take the table offline.</p><span class="sc-use">→ Partition SWITCH</span></div>
+      <div class="scenario"><span class="sc-icon">⚡</span><h5>Live “sales today” on the OLTP database</h5><p>Analytics on fresh data without a warehouse.</p><span class="sc-use">→ Nonclustered columnstore</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Ordered columnstore.</b> Sorting data before compression reduces the overlap of segment ranges so segment elimination works better — mostly for the first key column. Since SQL Server 2022 segment elimination also works on string, binary and GUID types.</p>
+      <p><b>Batch mode limits.</b> Not every operator supports batch mode, and DML (insert, update, delete) runs one row at a time.</p>
+      <p><b>Index alignment.</b> Indexes built on the same partition function and scheme are storage-aligned, which simplifies sliding-window management (it is not required).</p>
+      <p><b>Static vs dynamic elimination.</b> With a constant in the query the optimizer can eliminate partitions at compile time; with a parameter it can eliminate at run time.</p>
+      <p><b>Other engines:</b> PostgreSQL has declarative partitioning and uses partition pruning the same way; column-store layouts exist as extensions or in warehouse products (the idea transfers; the commands do not).</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Rowstore B-tree: best for finding and changing a few rows. Columnstore: best for scanning and aggregating many rows over a few columns.</li><li>Columnstore = rowgroups → column segments with min/max → skipping; typically ~10× compression; batch mode typically 2–4× faster.</li><li>Small inserts go to the deltastore; bulk loads of ≥ 102,400 rows compress directly.</li><li>Partitioning = partition function + scheme; elimination only works when the query filters on the partitioning column.</li><li>ALTER TABLE … SWITCH moves whole partitions as a metadata operation.</li><li>Partitioning alone rarely speeds queries up; it is mainly a manageability tool.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"B-trees are made for finding a few rows. For analytic scans over hundreds of millions of rows I use columnstore: data stored and compressed by column, so only the needed columns are read, segments are skipped using min/max, and operators run in batch mode. I add range partitioning when I need fast archiving or when queries filter on the partition column, and I keep a rowstore index if I also need point lookups."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Partitioning to “speed things up”.</b> Without a filter on the partitioning column nothing is skipped; you only added complexity.</p>
+      <p><b>Columnstore on an OLTP table.</b> Single-row updates and lookups are not what it is for — use a nonclustered columnstore beside the B-tree, or keep the workloads apart.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🌲 Rowstore</h5><p>Rows together. Fast to find and change one row; reads whole rows even when you need one column.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧱 Columnstore</h5><p>Columns apart and compressed. Fast to scan and aggregate; slow for single-row work.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Everything on these pages ran on “a SQL Server”. In Azure SQL the service has limits and helpers of its own. Next: Azure SQL specifics <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Columnstore and partitioning features vary by version and service tier. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-overview" target="_blank" rel="noopener">Columnstore indexes: overview</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-query-performance" target="_blank" rel="noopener">Columnstore indexes: query performance</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-design-guidance" target="_blank" rel="noopener">Columnstore indexes: design guidance</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/partitions/create-partitioned-tables-and-indexes" target="_blank" rel="noopener">Create partitioned tables and indexes</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

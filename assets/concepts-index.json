@@ -2240,5 +2240,31 @@
     "summary": "The classic mistake with The cost of indexes & maintenance.",
     "keywords": "sql index maintenance cost write amplification unused index duplicate index fragmentation page split reorganize rebuild index usage stats trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "sql-partitioning-columnstore",
+    "title": "Big-data reads: partitioning & columnstore",
+    "category": "SQL",
+    "page": "sql/concepts/partitioning-columnstore.html",
+    "summary": "Rowstore vs columnstore, rowgroups and segment elimination, batch mode, partition elimination and SWITCH — and when not to use them.",
+    "keywords": "sql columnstore partitioning partition elimination batch mode rowgroup segment deltastore switch data warehouse analytics clustered columnstore"
+  },
+  {
+    "id": "sql-partitioning-columnstore-recall",
+    "title": "Big-data reads: partitioning & columnstore — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/partitioning-columnstore.html",
+    "summary": "Quick recall points: Big-data reads: partitioning & columnstore.",
+    "keywords": "sql columnstore partitioning partition elimination batch mode rowgroup segment deltastore switch data warehouse analytics clustered columnstore interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-partitioning-columnstore-trap",
+    "title": "Big-data reads: partitioning & columnstore — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/partitioning-columnstore.html",
+    "summary": "The classic mistake with Big-data reads: partitioning & columnstore.",
+    "keywords": "sql columnstore partitioning partition elimination batch mode rowgroup segment deltastore switch data warehouse analytics clustered columnstore trap mistake",
+    "anchor": "trap"
   }
 ]

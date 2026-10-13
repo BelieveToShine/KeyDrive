@@ -248,7 +248,8 @@
       "measuring-query-store",
       "debugging-playbook",
       "locking-isolation",
-      "index-maintenance-cost"
+      "index-maintenance-cost",
+      "partitioning-columnstore"
     ],
     "sub": {},
     "subTitles": {}

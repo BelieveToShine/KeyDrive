@@ -204,6 +204,28 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | PostgreSQL pg_stat_user_indexes / VACUUM / REINDEX; MySQL sys.schema_unused_indexes | 🟨 K | other-engine pointers |
 | Reads/writes counts (2,300,000, 1,800,000, 12,000, 1,100,000), “8 seconds” → 3.5 s for 10,000 inserts | 🟦 I | teaching numbers |
 
+## Page 14 — partitioning and columnstore
+| Claim | Status | Note |
+|---|---|---|
+| Columnstore slices a table into rowgroups, compresses each column-wise; each segment has min/max metadata for fast elimination | ✅ V | Columnstore overview / query performance |
+| Deltastore: B-tree structures staging small inserts until enough rows exist to compress | ✅ V | same |
+| Compression typically ~10× vs rowstore (varies) | ✅ V | same |
+| Queries read only the columns referenced | ✅ V | same |
+| Batch mode: rows in groups, usually up to ~900; typically 2–4× faster; not every operator supports it; DML runs row by row | ✅ V | same |
+| Bulk loads ≥ 102,400 rows compress directly into the columnstore | ✅ V | Data loading guidance |
+| Nonclustered columnstore on a rowstore table for real-time analytics; ≈ 10% more storage on average | ✅ V | design guidance |
+| Ordered columnstore reduces segment overlap; SQL Server 2022 extends segment elimination to string/binary/GUID | ✅ V | ordered columnstore / query performance |
+| Rowstore B-trees suit point lookups and frequent row-level updates; columnstore suits large fact tables/analytics | ✅ V | design guidance |
+| Partition function maps rows to partitions; partition scheme maps partitions to filegroups; reusable | ✅ V | Create partitioned tables and indexes |
+| Partition elimination needs a filter on the partitioning column (static at compile time; dynamic for parameters) | ✅ V | partitioning docs / MS blog |
+| SWITCH partitions in/out is largely a metadata operation; main advantage is manageability | ✅ V | same |
+| Aligned indexes (same function and scheme) simplify management but are not required | ✅ V | same |
+| Partitioning alone rarely speeds queries; can make things worse if the partition column is not used | ✅ V | MS Q&A (community-sourced) |
+| `CREATE CLUSTERED COLUMNSTORE INDEX` syntax | 🟨 K | standard T-SQL; confirm |
+| Batch-mode aggregate shows as Hash Match | 🟨 K | plan detail; confirm |
+| PostgreSQL declarative partitioning and partition pruning | 🟨 K | other-engine pointer |
+| “90 seconds”, years 2023–2026 (partition labels), order id 1003, 500 M rows, 50 GB, 6,100,000 / 1,500,000 / 260,000 / 65,000 pages, 90 / 25 / 22 / 5 s, 120M rows | 🟦 I | teaching arithmetic: 50 GB ÷ 8 KB ≈ 6.1 M pages; ¼ for one year; ×2/5 ÷10 for columnstore |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|
