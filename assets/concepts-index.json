@@ -3802,58 +3802,6 @@
     "anchor": "trap"
   },
   {
-    "id": "solid-composition-vs-inheritance",
-    "title": "Composition over Inheritance",
-    "category": "SOLID",
-    "page": "solid/concepts/composition-vs-inheritance.html",
-    "summary": "Why inheritance couples code and breaks substitutability, how composition fixes it in C#, and when a base class is still the right tool.",
-    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP"
-  },
-  {
-    "id": "solid-composition-vs-inheritance-recall",
-    "title": "Composition over Inheritance — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/composition-vs-inheritance.html",
-    "summary": "Quick recall points: Composition over Inheritance.",
-    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-composition-vs-inheritance-trap",
-    "title": "Composition over Inheritance — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/composition-vs-inheritance.html",
-    "summary": "The classic mistake with Composition over Inheritance.",
-    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP trap mistake",
-    "anchor": "trap"
-  },
-  {
-    "id": "solid-solid-in-frontend",
-    "title": "SOLID in React and Angular",
-    "category": "SOLID",
-    "page": "solid/concepts/solid-in-frontend.html",
-    "summary": "How the five principles show up in React components and hooks and in Angular services, content projection and dependency injection.",
-    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end"
-  },
-  {
-    "id": "solid-solid-in-frontend-recall",
-    "title": "SOLID in React and Angular — interview recall",
-    "category": "SOLID",
-    "page": "solid/concepts/solid-in-frontend.html",
-    "summary": "Quick recall points: SOLID in React and Angular.",
-    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "solid-solid-in-frontend-trap",
-    "title": "SOLID in React and Angular — common trap",
-    "category": "SOLID",
-    "page": "solid/concepts/solid-in-frontend.html",
-    "summary": "The classic mistake with SOLID in React and Angular.",
-    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end trap mistake",
-    "anchor": "trap"
-  },
-  {
     "id": "solid-why-design-principles",
     "title": "Why Code Gets Hard to Change",
     "category": "SOLID",
@@ -4163,6 +4111,58 @@
     "page": "solid/concepts/solid-clinic.html",
     "summary": "The classic mistake with Capstone: the SOLID Clinic.",
     "keywords": "solid clinic capstone practice diagnose cases interview trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-composition-vs-inheritance",
+    "title": "Composition over Inheritance",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "Build with Lego bricks, not a family tree: a pizza example of why one subclass per combination explodes and how composition fixes it.",
+    "keywords": "composition over inheritance pizza lego sealed fragile base class abstract class interface LSP"
+  },
+  {
+    "id": "solid-composition-vs-inheritance-recall",
+    "title": "Composition over Inheritance — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "Quick recall points: Composition over Inheritance.",
+    "keywords": "composition over inheritance pizza lego sealed fragile base class abstract class interface LSP interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-composition-vs-inheritance-trap",
+    "title": "Composition over Inheritance — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "The classic mistake with Composition over Inheritance.",
+    "keywords": "composition over inheritance pizza lego sealed fragile base class abstract class interface LSP trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-solid-in-frontend",
+    "title": "SOLID in React and Angular",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "The same SOLID problems in components: a hook-and-view split in React and an InjectionToken socket in Angular.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end"
+  },
+  {
+    "id": "solid-solid-in-frontend-recall",
+    "title": "SOLID in React and Angular — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "Quick recall points: SOLID in React and Angular.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-solid-in-frontend-trap",
+    "title": "SOLID in React and Angular — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-in-frontend.html",
+    "summary": "The classic mistake with SOLID in React and Angular.",
+    "keywords": "SOLID React Angular custom hooks InjectionToken inject providers content projection components services front end trap mistake",
     "anchor": "trap"
   }
 ]

@@ -37,169 +37,147 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Deep dive · SOLID lab · 🧩 Composition</div>
-    <h1>Build from <span class="grad-text">parts</span>, not from a family tree.</h1>
-    <p class="sub">Why inheritance couples code and breaks substitutability, how composition fixes it in C#, and when a base class is still the right tool.</p>
+    <h1>Build with <span class="grad-text">Lego bricks</span>, not a family tree.</h1>
+    <p class="sub">Why one subclass per combination explodes, how composition fixes it with a pizza example, and when a base class is still the right tool.</p>
     <div class="interview-q">❓ "Why is composition often preferred over inheritance, and when is inheritance appropriate?"</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="An inheritance hierarchy where each feature needs a subclass: one base OrderProcessor and subclasses for discount, for logging, for discount plus logging, and for discount plus logging plus tax, with more combinations still to come">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Pizza by inheritance: one class per topping, then one per pair of toppings, then one for all three; three toppings already need seven classes and ten toppings would need 1,023">
 <defs><marker id="ci1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M105,130 L105,98 L260,98 L260,66" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ci1A)"/>
-<path d="M320,130 L320,66" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ci1A)"/>
-<path d="M535,130 L535,98 L380,98 L380,66" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ci1A)"/>
-<path d="M320,250 L320,186" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ci1A)"/>
-<rect class="bx" x="190" y="10" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="320" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderProcessor</text>
-<text x="320" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the base class</text>
-<rect class="bx" x="10" y="130" width="190" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="105" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DiscountedProcessor</text>
-<text x="105" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">adds discount</text>
-<rect class="bx" x="225" y="130" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="320" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">LoggedProcessor</text>
-<text x="320" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">adds logging</text>
-<rect class="bx" x="440" y="130" width="190" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="535" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">LoggedDiscounted…</text>
-<text x="535" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">both</text>
-<rect class="bx" x="150" y="250" width="340" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="320" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">LoggedDiscountedTaxed…  and 3 more</text>
-<text x="320" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">3 features → 7 possible combinations</text>
-<g class="arrow-pill"><rect x="75" y="89" width="60" height="18" rx="9"/><text x="105" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
-<g class="arrow-pill"><rect x="290" y="89" width="60" height="18" rx="9"/><text x="320" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
-<g class="arrow-pill"><rect x="505" y="89" width="60" height="18" rx="9"/><text x="535" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
-<g class="arrow-pill"><rect x="290" y="209" width="60" height="18" rx="9"/><text x="320" y="221.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> The tempting design: every new feature gets a subclass. Discount, logging, then discount-and-logging, then tax… With <b>three</b> optional features there are already <b>seven</b> combinations, and each one is a class that is permanently tied to its parent’s internals. Change the base class and every branch of the tree may break.</figcaption>
+<g class="st" data-s="1-"><rect class="bx" x="220" y="8" width="200" height="52" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="31.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🍕 Pizza</text></g>
+<g class="st" data-s="1-"><text x="320" y="44.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the base class</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="90" width="190" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="105" y="118" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🧀 CheesePizza</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="225" y="90" width="190" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="320" y="118" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🍄 MushroomPizza</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="440" y="90" width="190" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="535" y="118" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🫒 OlivePizza</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="10" y="158" width="190" height="48" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="105" y="186" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧀🍄 CheeseMushroom</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="225" y="158" width="190" height="48" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="186" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧀🫒 CheeseOlive</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="158" width="190" height="48" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="186" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🍄🫒 MushroomOlive</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="225" y="226" width="190" height="48" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="254" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧀🍄🫒 AllThree</text></g>
+<g class="st" data-s="4-"><rect class="bx note" x="10" y="226" width="200" height="48" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-"><text x="110" y="253" text-anchor="middle" font-size="10" fill="#fda4af">3 toppings = 7 classes</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="430" y="226" width="200" height="48" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="530" y="253" text-anchor="middle" font-size="10" fill="#fda4af">10 toppings = 1,023 😱</text></g>
+<g class="st" data-s="5-"><rect class="bx note" x="10" y="286" width="620" height="38" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-"><text x="320" y="308" text-anchor="middle" font-size="10" fill="#fda4af">And every new topping doubles the work</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A pizza shop models pizzas with <b>inheritance</b>. Start with a base class, <b>Pizza</b>.</li><li>Every topping gets its own subclass: <b>CheesePizza, MushroomPizza, OlivePizza</b>.</li><li>Customers want combinations, so every <b>pair</b> needs a class too: CheeseMushroom, CheeseOlive, MushroomOlive.</li><li>…and one for <b>all three</b>. Three toppings already need <b>seven</b> classes.</li><li>With ten toppings it would be <b>1,023 classes</b>, and every new topping doubles the work. 😱</li></ol>
+<figcaption><strong>What you're seeing:</strong> what happens when every combination becomes a subclass. Watch the number of boxes grow.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>Inherit to say “is a kind of, and behaves like it”. Compose to say “uses, has, or is built from”.</b> When in doubt, compose.</span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Inherit to say “is a kind of”. Compose to say “has” or “is built from”.</b> When in doubt, compose.</span></div>
   <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>Page 4 showed that the compiler allowing a subclass does not make it substitutable. Inheritance is the strongest coupling in C#: a subclass depends on the base class’s fields, its call order and its virtual methods, so changes to the base can break it (the “fragile base class” problem is discussed in community sources; there is no single official Microsoft page using that name).</p>
-      <p>Microsoft’s Framework Design Guidelines are cautious about base classes: they add API surface and deepen hierarchies, so use them only where they give significant value, and consider delegating to an internal implementation instead of inheriting when they would only help the implementer. The F# coding conventions on Microsoft Learn state the same idea directly: prefer composition over inheritance.</p>
-      <p>The usual advice (it appears in the design-patterns literature, not in an official C# standard) is “favour composition over inheritance”. Composition also fits DIP: you hand in an interface instead of binding to a class.</p>
+      <p>🧱 A family tree is fixed: you cannot change who your grandparents are. <b>Lego bricks</b> are different: you can build any shape by snapping different bricks onto the same base, and change your mind later.</p>
+      <p>Inheritance is the family tree. Composition is Lego.</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧩 The compositional answer</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Composition: one OrderProcessor class has a list of discount rules, an optional logger and a tax policy, each behind an interface, so any combination is a matter of what you pass in">
+    <div class="sec-label see">🧩 The fix: parts, not a family tree</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Pizza by composition: one Pizza class holds a list of toppings, each topping a small class behind an ITopping interface, so any combination is just the list you pass in">
 <defs><marker id="ci2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M105,80 L105,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ci2A)"/>
-<path d="M320,80 L320,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ci2A)"/>
-<path d="M535,80 L535,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ci2A)"/>
-<rect class="bx" x="10" y="10" width="620" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="320" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">OrderProcessor · one class</text>
-<text x="320" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">combines whatever you hand it</text>
-<rect class="bx" x="10" y="190" width="190" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="105" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">IDiscountRule[ ]</text>
-<text x="105" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">zero or more rules</text>
-<rect class="bx" x="225" y="190" width="190" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="320" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ILogger</text>
-<text x="320" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">optional</text>
-<rect class="bx" x="440" y="190" width="190" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="535" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">ITaxPolicy</text>
-<text x="535" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">swap per country</text>
-<g class="arrow-pill"><rect x="83" y="126" width="44" height="18" rx="9"/><text x="105" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
-<g class="arrow-pill"><rect x="298" y="126" width="44" height="18" rx="9"/><text x="320" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
-<g class="arrow-pill"><rect x="513" y="126" width="44" height="18" rx="9"/><text x="535" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> One <b>OrderProcessor</b>, with parts behind interfaces. “Discount + logging + tax” is not a class; it is what you <b>pass in</b>. Adding a fourth feature means adding one part, not doubling the number of subclasses — and each part can be tested alone.</figcaption>
+<g class="st" data-s="2-"><path id="ci2-t0" d="M105,80 L105,180" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ci2A)"/></g>
+<g class="st" data-s="3-"><path id="ci2-t1" d="M320,80 L320,180" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ci2A)"/></g>
+<g class="st" data-s="4-"><path id="ci2-t2" d="M535,80 L535,180" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ci2A)"/></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="10" y="10" width="620" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="320" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🍕 Pizza — one class</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="320" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">has a list of toppings; adds up their price</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="180" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="105" y="205.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧀 Cheese</text></g>
+<g class="st" data-s="2-"><text x="105" y="218.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">implements ITopping</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="225" y="180" width="190" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="320" y="205.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🍄 Mushroom</text></g>
+<g class="st" data-s="3-"><text x="320" y="218.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">implements ITopping</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="440" y="180" width="190" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="535" y="205.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🫒 Olive</text></g>
+<g class="st" data-s="4-"><text x="535" y="218.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">implements ITopping</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#6ee7b7">Any combination = the list you pass in. A new topping = one new small class.</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="83" y="121" width="44" height="18" rx="9"/><text x="105" y="133.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="298" y="121" width="44" height="18" rx="9"/><text x="320" y="133.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="513" y="121" width="44" height="18" rx="9"/><text x="535" y="133.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="ci2-t0"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🧀</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ci2-t1"><circle r="9.3" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🍄</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ci2-t2"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🫒</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>One <b>Pizza</b> class. It does not know any toppings by name; it just has a <b>list of toppings</b>.</li><li><b>Cheese</b> is a small class that fits the <code>ITopping</code> shape. Snap it on.</li><li>Snap on <b>Mushroom</b>.</li><li>Snap on <b>Olive</b>.</li><li>Any combination is just the list you pass in. A new topping is <b>one</b> new small class — not a doubled family tree.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same pizzas built from parts.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧪 Lab · replace the hierarchy with parts</div>
-    <div class="code-block"><pre><span class="cmt">// BEFORE — one subclass per combination, tied to the base class's internals</span>
-<span class="kw">public</span> <span class="kw">class</span> OrderProcessor
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// INHERITANCE — one class per combination</span>
+<span class="kw">class</span> Pizza { <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">decimal</span> Price() =&gt; 8m; }
+<span class="kw">class</span> CheesePizza : Pizza { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Price() =&gt; base.Price() + 1m; }
+<span class="kw">class</span> CheeseMushroomPizza : CheesePizza { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Price() =&gt; base.Price() + 1.5m; }
+<span class="cmt">// ... and so on, for every combination</span>
+
+<span class="cmt">// COMPOSITION — one class, toppings are parts</span>
+<span class="kw">interface</span> ITopping { <span class="kw">decimal</span> Price(); }
+<span class="kw">class</span> Cheese   : ITopping { <span class="kw">public</span> <span class="kw">decimal</span> Price() =&gt; 1m; }
+<span class="kw">class</span> Mushroom : ITopping { <span class="kw">public</span> <span class="kw">decimal</span> Price() =&gt; 1.5m; }
+
+<span class="kw">sealed</span> <span class="kw">class</span> Pizza(IEnumerable&lt;ITopping&gt; toppings)
 {
-    <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">decimal</span> Total(Order o) =&gt; o.Subtotal;
-}
-<span class="kw">public</span> <span class="kw">class</span> DiscountedProcessor : OrderProcessor
-{
-    <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Total(Order o) =&gt; base.Total(o) * 0.9m;
-}
-<span class="kw">public</span> <span class="kw">class</span> LoggedDiscountedProcessor : DiscountedProcessor
-{
-    <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Total(Order o) { Console.WriteLine(<span class="str">"total"</span>); <span class="kw">return</span> base.Total(o); }
+    <span class="kw">public</span> <span class="kw">decimal</span> Price() =&gt; 8m + toppings.Sum(t =&gt; t.Price());
 }
 
-<span class="cmt">// AFTER — one sealed class; features are collaborators</span>
-<span class="kw">public</span> <span class="kw">sealed</span> <span class="kw">class</span> OrderProcessor(IEnumerable&lt;IDiscountRule&gt; rules, ITaxPolicy tax)
-{
-    <span class="kw">public</span> <span class="kw">decimal</span> Total(Order o)
-    {
-        <span class="kw">var</span> discounted = o.Subtotal - rules.Sum(r =&gt; r.Discount(o));
-        <span class="kw">return</span> discounted + tax.Tax(discounted);
-    }
-}
-<span class="cmt">// logging is a decorator around the interface the caller uses (previous deep dive) — not a subclass</span></pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. <span class="kw">sealed</span> states that the class is not designed for inheritance; Microsoft’s C# reference describes it as preventing other classes from inheriting from it.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Inheritance</th><th scope="col">Composition</th></tr></thead><tbody><tr><th scope="row">Relationship it expresses</th><td>is a kind of (and behaves like)</td><td>has / uses</td></tr><tr><th scope="row">Coupling</th><td>To base class internals</td><td>To an interface</td></tr><tr><th scope="row">Combine two features</th><td>New subclass per combination</td><td>Pass both in</td></tr><tr><th scope="row">Change behaviour at runtime</th><td>No — fixed at compile time</td><td>Yes — swap the part</td></tr><tr><th scope="row">Test one feature alone</th><td>Needs the whole hierarchy</td><td>Test the part by itself</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+<span class="kw">var</span> order = <span class="kw">new</span> Pizza(<span class="kw">new</span> ITopping[] { <span class="kw">new</span> Cheese(), <span class="kw">new</span> Mushroom() });</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;"><span class="kw">sealed</span> says “this class is not designed to be inherited” — Microsoft’s C# reference describes sealed as preventing other classes from inheriting from it.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: inheritance or composition?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>Dog</code> and <code>Cat</code> are both kinds of <code>Animal</code> that really behave like one</summary><div class="zoom-inner"><p><b>Fine.</b> A true “is a kind of”, and children keep the parent’s promises (Liskov). Inheritance is fine.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>LoggedDiscountedTaxedOrder</code> class, plus <code>LoggedDiscountedOrder</code>, plus <code>LoggedTaxedOrder</code>…</summary><div class="zoom-inner"><p><b>Prefer composition.</b> One class per combination. Use parts: logging, discount and tax as small pluggable pieces.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A child class that overrides most parent methods to do nothing</summary><div class="zoom-inner"><p><b>Prefer composition.</b> It is not really a kind of parent. Compose instead (or split the interface).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A base class created only so two classes can share five lines of code</summary><div class="zoom-inner"><p><b>Prefer composition.</b> Inheritance used for reuse. Put the shared code in a helper class and use it.</p></div></details>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">✅ When inheritance is still right</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Situation</th><th scope="col">Why it is fine</th></tr></thead><tbody><tr><th scope="row">A true subtype that honours the whole base contract (passes the contract tests)</th><td>Substitutable — LSP holds</td></tr><tr><th scope="row">A framework extension point designed for it (a documented base class or abstract class)</th><td>The framework author planned for it</td></tr><tr><th scope="row">A small abstract base that supplies a fixed algorithm skeleton (template method) in one place</th><td>Shared code with one clear variation point; keep it shallow</td></tr><tr><th scope="row">Exception types and other marker hierarchies</th><td>Hierarchy is the point, with little behaviour to break</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Situation</th><th scope="col">Why it is fine</th></tr></thead><tbody><tr><th scope="row">A true “is a kind of” where the child keeps every promise (Liskov passes)</th><td>Substitutable; nothing breaks</td></tr><tr><th scope="row">A base class the framework designed for you to extend</th><td>The framework author planned for it</td></tr><tr><th scope="row">A small, shallow base class with one clear variation point</th><td>Shared code in one place; keep it shallow</td></tr></tbody></table></div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label trap">📋 Smells of misused inheritance</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Subclass overrides most methods and ignores the base</th><td>It is not really a kind of base</td><td>Compose, or extract an interface</td></tr><tr><th scope="row">A subclass throws NotSupported</th><td>LSP violation (page 4)</td><td>Split the abstraction</td></tr><tr><th scope="row">Depth of hierarchy of four or more</th><td>Fragile and hard to read</td><td>Flatten with parts</td></tr><tr><th scope="row">Names like <span class="kw">LoggedDiscountedTaxedProcessor</span></th><td>Combinatorial subclasses</td><td>One class plus injected parts</td></tr><tr><th scope="row"><span class="kw">protected</span> fields shared with subclasses</th><td>Subclasses depend on internals</td><td>Make state private; expose behaviour</td></tr><tr><th scope="row">“Utility” base class inherited only to reuse code</th><td>Inheritance used for reuse</td><td>Move the code into a collaborator</td></tr></tbody></table></div>
-  </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">🐧</span><h5>Penguin extends Bird, and Bird.Fly() exists</h5><p>Penguins cannot fly.</p><span class="sc-use">→ Separate capabilities (IFlyer) instead of one base</span></div>
-      <div class="scenario"><span class="sc-icon">🧾</span><h5>Invoice, CreditNote, ProformaInvoice share 80% of code</h5><p>A deep hierarchy appears.</p><span class="sc-use">→ One document type + a rules collaborator</span></div>
-      <div class="scenario"><span class="sc-icon">🔧</span><h5>A base class gets a new virtual method</h5><p>Three subclasses silently change behaviour.</p><span class="sc-use">→ Seal; expose a stable interface</span></div>
-      <div class="scenario"><span class="sc-icon">🧪</span><h5>A test must build a 5-level hierarchy</h5><p>Setup mirrors the tree.</p><span class="sc-use">→ Test the parts alone</span></div>
-    </div>
-  </section>
-  <details class="zoom">
-    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
-    <div class="zoom-inner">
-      <p><b>sealed and design for inheritance.</b> Microsoft’s guidance on sealing weighs the benefit of letting derived classes customise against the risk that they break the class. Marking a class <span class="kw">sealed</span> by default (and unsealing deliberately) documents that it was not designed to be inherited.</p>
-      <p><b>Abstract class or interface?</b> Older Microsoft guidance favoured base classes for versioning (adding to an interface breaks implementers), while C# 8 default interface members changed that trade-off. Treat the old guidance as historical.</p>
-      <p><b>Mixins and traits.</b> Some languages share code between unrelated classes without inheritance. C# does not have them; delegation to a collaborator is the usual replacement.</p>
-    </div>
-  </details>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>Inheritance = strong coupling to the base class; subclasses must honour its whole contract (LSP).</li><li>Composition = parts behind interfaces; combinations are what you pass in.</li><li>Microsoft’s guidelines are cautious about base classes; F# conventions say prefer composition.</li><li>Seal classes not designed for inheritance.</li><li>Inherit for true, substitutable subtypes and documented extension points.</li><li>Combinatorial subclass names are a smell.</li></ul>
+      <ul><li>Inheritance = a fixed family tree: strongest coupling, one class per combination.</li><li>Composition = Lego: small parts behind interfaces, any combination, changeable at runtime.</li><li>Inherit only for true “is a kind of” that keeps every promise (Liskov).</li><li>Seal classes that are not designed to be inherited.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"I use inheritance only for true subtypes that honour the whole base contract, or documented extension points. Otherwise I compose: one class with collaborators behind interfaces, so combinations are just what I inject, behaviour can change at runtime, and each part is testable alone. Subclass-per-feature hierarchies explode combinatorially and couple everything to the base class internals, and sealing classes not designed for inheritance makes that intent explicit."</div>
+    <div class="kd-card saythis-box">"I use inheritance only for a true is-a relationship where the child honours the whole parent contract, or for a base class a framework designed for extension. Otherwise I compose: one class holds small parts behind interfaces, so any combination is just what I pass in, instead of one subclass per combination."</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>“Inheritance is bad.”</b> It is a tool with a high coupling cost; use it where substitutability genuinely holds.</p>
-      <p><b>Inheriting just to reuse code.</b> Reuse by delegation instead.</p>
+      <p><b>“Inheritance is bad.”</b> It is a tool with a high coupling cost. Use it where substitutability genuinely holds.</p>
+      <p><b>Inheriting just to reuse code.</b> Reuse by calling a helper instead.</p>
     </div>
   </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🧬 Inherits</h5><p>“Is a kind of”: shares the contract and the implementation.</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🧩 Composes</h5><p>“Has / uses”: collaborates through an interface.</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>Back to the main journey: Liskov’s rules are what make inheritance safe, and interfaces (next page) are what make composition cheap.</span>
+      <span>Back to the main journey: Liskov’s rules are what make inheritance safe, and small interfaces (next page) are what make composition cheap.</span>
       <a class="next-link" href="liskov-substitution.html">L — the Liskov Substitution Principle <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 The Framework Design Guidelines (base classes), the F# “prefer composition over inheritance” convention and the C# reference on sealed/abstract are from Microsoft Learn. The slogan “favour composition over inheritance” is common design-patterns advice, not an official C# rule; the fragile-base-class remark comes from community sources. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/base-classes-for-implementing-abstractions" target="_blank" rel="noopener">Base classes for implementing abstractions (Framework Design Guidelines)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/fsharp/style-guide/conventions" target="_blank" rel="noopener">F# coding conventions</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/sealed" target="_blank" rel="noopener">sealed modifier (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract" target="_blank" rel="noopener">abstract keyword (C# reference)</a></p>
+  </section>  <p class="fact-note">📌 The Framework Design Guidelines (base classes add API surface and deepen hierarchies; consider delegating to an internal implementation), the F# “prefer composition over inheritance” convention and the C# reference on sealed/abstract are from Microsoft Learn. The slogan “favour composition over inheritance” is common design-patterns advice, not an official C# rule. The pizza and Lego pictures are teaching analogies; 2³−1 = 7 and 2¹⁰−1 = 1,023 are simple arithmetic. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/base-classes-for-implementing-abstractions" target="_blank" rel="noopener">Base classes for implementing abstractions (Framework Design Guidelines)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/fsharp/style-guide/conventions" target="_blank" rel="noopener">F# coding conventions</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/sealed" target="_blank" rel="noopener">sealed modifier (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract" target="_blank" rel="noopener">abstract keyword (C# reference)</a></p>
 
 
 </main>

@@ -249,6 +249,19 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 
 
 
+## Rewrite (2026-10-13, L14) — deep dives composition + front end
+| Claim | Status | Note |
+|---|---|---|
+| Base classes add surface area and deepen hierarchies; use only when significant value; consider delegation to an internal implementation | ✅ V | Microsoft Learn: Base Classes for Implementing Abstractions (Framework Design Guidelines) |
+| F# coding conventions: prefer composition over inheritance | ✅ V | Microsoft Learn F# conventions |
+| sealed prevents inheritance; abstract/sealed mutually exclusive | ✅ V | C# reference |
+| 2^3−1 = 7 classes for three toppings; 2^10−1 = 1,023 | ✅ V | arithmetic (every non-empty combination) |
+| Pizza/Lego pictures; Pizza/Topping code and prices | 🟦 I | teaching analogies, illustrative |
+| React: custom hooks share logic not state; purity; useOrders/OrdersView sketch | ✅ V / 🟦 I | react.dev (earlier ledger) / sketch is illustrative |
+| Angular: InjectionToken as DI key; providers swap implementation | ✅ V | angular.dev (earlier ledger) |
+
+
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |

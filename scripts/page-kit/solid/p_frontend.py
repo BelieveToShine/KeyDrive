@@ -17,28 +17,54 @@ def d_map():
         d.box(405, y, 225, 50, [(g,'s')], 'rose')
     return d
 
+def d_react():
+    d = Diagram('fe0', 640, 320, 'A React component that fetches, formats and draws the orders list is split into a data hook, which can be given a fake loader in tests, and a plain view component that only draws what it receives')
+    d.box(10, 10, 620, 80, [('⚛️ Orders component','t'),('fetches the data · formats it · draws the screen — all in one place','s')], 'rose', st='1-1', hl=1)
+    d.box(10, 10, 300, 60, [('⚛️ Orders','t'),('puts the two parts together','s')], 'cyan', st='2-')
+    d.box(10, 140, 300, 70, [('🪝 useOrders(load)','t'),('data logic: loading, errors','s')], 'emerald', st='2-', hl=2)
+    d.box(340, 140, 290, 70, [('🖼️ OrdersView','t'),('just draws what it receives','s')], 'amber', st='2-')
+    d.arrow([(160, 70), (160, 140)], 'emerald', label='uses', at=(160, 105), st='2-')
+    d.arrow([(310, 40), (485, 40), (485, 140)], 'amber', label='passes data to', at=(400, 40), st='2-')
+    d.box(10, 262, 300, 50, [('🧪 fake load()','t'),('a test passes this in','s')], 'violet', st='3-', hl=3)
+    d.arrow([(160, 262), (160, 210)], 'violet', id='fk', label='plugs in', at=(160, 236), st='3-')
+    d.token('fk', '🔌', 14, 'violet', st='3-3')
+    d.note(340, 246, 290, 62, 'Component = pure picture.|Data logic = a hook.|The source = a parameter.', 'emerald', st='4-', hl=4)
+    return d
+
 def d_token():
     d = Diagram('fe2', 640, 330, 'In Angular the component injects an InjectionToken for an OrderRepository interface; providers map the token to HttpOrderRepository in production and InMemoryOrderRepository in tests, so the component never names the implementation')
-    d.box(220, 12, 200, 56, [('OrdersComponent','t'),('inject(ORDER_REPO)','s')], 'cyan')
-    d.box(120, 130, 400, 56, [('InjectionToken<OrderRepository>','t'),('an interface cannot be a runtime key','s')], 'violet')
-    d.box(20, 250, 280, 56, [('HttpOrderRepository','t'),('production provider','s')], 'emerald')
-    d.box(340, 250, 280, 56, [('InMemoryOrderRepository','t'),('test provider','s')], 'amber')
-    d.arrow([(320,68),(320,130)], 'cyan', label='asks for', at=(320,99))
-    d.arrow([(160,250),(160,186)], 'emerald', label='provided as', at=(160,218))
-    d.arrow([(480,250),(480,186)], 'amber', label='provided as', at=(480,218))
+    d.box(220, 12, 200, 56, [('OrdersComponent','t'),('inject(ORDER_REPO)','s')], 'cyan', st=1)
+    d.box(120, 130, 400, 56, [('InjectionToken<OrderRepository>','t'),('an interface cannot be a runtime key','s')], 'violet', st=1, hl=1)
+    d.box(20, 250, 280, 56, [('HttpOrderRepository','t'),('production provider','s')], 'emerald', st='2-2')
+    d.box(340, 250, 280, 56, [('InMemoryOrderRepository','t'),('test provider','s')], 'amber', st='3-', hl=3)
+    d.arrow([(320, 68), (320, 130)], 'cyan', label='asks for', at=(320, 99), st=1)
+    d.arrow([(160, 250), (160, 186)], 'emerald', id='pa', label='provided as', at=(160, 218), st='2-2')
+    d.arrow([(480, 250), (480, 186)], 'amber', id='pb', label='provided as', at=(480, 218), st='3-')
+    d.token('pa', '🔌', 14, 'emerald', st='2-2'); d.token('pb', '🔌', 14, 'amber', st='3-3')
+    d.note(20, 250, 280, 56, 'Same component, either way ✅', 'emerald', st='4-', hl=4)
     return d
 
 def build_solid_in_frontend():
     body = ''
-    body += see(figure(d_map(),
-        'The principles were named for object-oriented code, but the <b>problems</b> they describe — a unit that changes for many reasons, behaviour you cannot extend, dependencies you cannot swap — are the same in a React component tree or an Angular app. Only the <b>tools</b> change: hooks, props, children and context in React; services, content projection and dependency injection in Angular.'))
+    body += see(story(d_react(), [
+        'A React component that <b>fetches</b> the data, <b>formats</b> it and <b>draws</b> the screen — all in one place.',
+        'Split it: a <b>hook</b> (<code>useOrders</code>) owns the data logic and a <b>view</b> component only draws what it is given. (One job each — page 2.)',
+        'The hook takes the data source as a <b>parameter</b>. A test can plug in a fake loader instead of the network. (The socket idea — page 6.)',
+        'Result: a pure-picture component, a hook for data, and a source you can swap.'],
+        'the same refactoring you already know, in React.'))
+    body += block('🗺️ The five principles, front-end version', figure(d_map(),
+        'the same problems in a component tree or an Angular app — only the <b>tools</b> change: hooks, props, children and context in React; services, content projection and dependency injection in Angular.'), label_cls='see')
     body += one('<b>Same problems, different tools.</b> Ask the same questions of a component: why does it change, what does it need, who creates its dependencies?')
     body += why([
         'This site’s React and Angular labs already contain the mechanics: custom hooks, context and state architecture, an API layer, Angular’s dependency injection, services and state management. This page connects them to the principles.',
         'React’s documentation says custom hooks let you share <i>stateful logic</i> but not <i>state itself</i> — each call to a hook is independent — and warns that wrapping a single <span class="kw">useState</span> in a custom hook is probably unnecessary. Components and hooks are also expected to be pure, with props treated as read-only. Those are SRP-and-contract ideas, even though the docs do not use the SOLID names.',
         'Angular’s docs show the Dependency Inversion Principle in framework form: <span class="kw">{ provide: Logger, useClass: EvenBetterLogger }</span> substitutes an alternative implementation; a TypeScript interface cannot be a DI key because interfaces disappear after compilation, so you use an <span class="kw">InjectionToken</span> (or an abstract class) as the key.'])
-    body += block('🅰️ DIP in Angular', figure(d_token(),
-        'The component asks for a <b>token</b>, not a class. The <b>providers</b> (in the app config or in a test) decide the implementation. This is the same inversion as page 6, with <span class="kw">inject()</span> and providers in place of constructor parameters and a container.'), label_cls='see')
+    body += block('🅰️ The socket in Angular', story(d_token(), [
+        'The component asks for a <b>token</b> (<code>ORDER_REPO</code>), not for a particular class. The token is the <b>socket</b>.',
+        'In the real app, the providers plug in the <b>HttpOrderRepository</b>.',
+        'In a test, the providers plug in the <b>InMemoryOrderRepository</b> instead.',
+        'The component did not change. It never names the implementation.'],
+        'the same inversion as page 6, with <span class="kw">inject()</span> and providers instead of constructor parameters.'), label_cls='see')
     body += block('🧪 Lab · the same refactoring in React and Angular', cs('''
 // REACT — before: one component fetches, transforms and renders
 function Orders() {
