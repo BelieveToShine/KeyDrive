@@ -31,7 +31,7 @@ def build_patterns_clinic():
     b = ''
     b += see(figure(d_board(), 'twelve small cases in four families: <b>creating</b> (1–2), <b>shaping</b> (3–5), <b>behaving</b> (6–8) and <b>whole systems</b> (9–12). Each shows a symptom and the evidence you would really find. <b>Decide your pattern first</b>, then reveal the answer.'))
     b += one('You have seen creational, structural, behavioral and whole-system patterns. This is the practice ward: <b>symptom → evidence → pattern → why → where to review</b>.')
-    b += block('🧭 How to decide', '    <p>Ask in this order: <b>what hurts?</b> → <b>which family of question is it</b> (making, shaping, behaving, or whole system)? → <b>which pattern removes exactly that pain?</b> → <b>is the next change cheaper?</b></p>', label_cls='see')
+    b += block('🧭 How to decide', '    <p>Ask in this order: <b>what hurts?</b> → <b>which family of question is it</b> (making, shaping, behaving, or whole system)? → <b>which pattern removes exactly that pain?</b> → <b>is the next change cheaper?</b></p>', label_cls='why', id_='why')
     for n, (zi, short, title, sym, ev, dg, fx, ref) in enumerate(CASES, 1):
         evh = '<ul>' + ''.join(f'<li>{e}</li>' for e in ev) + '</ul>'
         ans = f'<p><b>Diagnosis.</b> {dg}</p><p><b>Pattern.</b> {fx}</p><p>📖 <b>Where to review:</b> {ref}.</p>'

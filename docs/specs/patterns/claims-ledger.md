@@ -137,5 +137,8 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 
 
 
+## Illustrative literals (🟦 I)
+Numbers and words used only in teaching stories: "100" and "800" (refund amounts), "30 seconds" (timeout), "50 KB" and "500 MB" (texture sizes), "2026" (a date in the Prototype code), "Three copies" (Singleton story), "retire" (switching off the old system in Strangler Fig). None is a product claim.
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.
