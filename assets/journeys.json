@@ -407,7 +407,8 @@
       "change-detection",
       "onpush-signals",
       "templates-control-flow",
-      "signals-in-depth"
+      "signals-in-depth",
+      "rxjs-async-pipe"
     ],
     "sub": {
       "lifecycle-hooks": "change-detection"

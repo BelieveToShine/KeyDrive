@@ -91,5 +91,18 @@ Source root: https://angular.dev/
 | Stability labels of resource / rxResource / httpResource vary by version | 🟨 K | docs show different labels per version; page tells readers to check |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 6 — RxJS & the async pipe
+| Claim | Status | Note |
+|---|---|---|
+| takeUntilDestroyed completes the observable when the calling context is destroyed; stable since v19.0; omit the argument in an injection context, otherwise pass a DestroyRef | ✅ V | angular.dev/api/core/rxjs-interop/takeUntilDestroyed; ecosystem/rxjs-interop/take-until-destroyed |
+| AsyncPipe: subscribes, marks for check on each value, unsubscribes on destroy, switches subscription when the expression reference changes | ✅ V | angular.dev/api/common/AsyncPipe |
+| toSignal subscribes immediately like the async pipe and cleans up with the injection context | ✅ V | api/core/rxjs-interop/toSignal |
+| switchMap stops the earlier inner observable when a new one arrives; mergeMap runs inner observables concurrently, interleaving outputs; concatMap = mergeMap with concurrency 1 and can cause memory issues if sources outpace inners; exhaustMap ignores new projections until the previous completes | ✅ V | rxjs.dev/api/operators/{switchMap,mergeMap,concatMap}, exhaustMap |
+| debounceTime, distinctUntilChanged, catchError, combineLatest, forkJoin exist and behave as described | 🟨 K | only their names appear in the RxJS API index in the search; descriptions from general knowledge — verify before relying |
+| HttpClient requests are cold observables: each subscription can start its own request | 🟨 K | not confirmed in this search; stated as “normally” |
+| Handling errors inside the inner observable so one failure does not end the stream | 🟨 K | standard RxJS practice |
+| 300 ms debounce, 3 requests/2 cancelled/1 request | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

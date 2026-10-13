@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxJS &amp; the async pipe — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><span class="cur">RxJS &amp; async pipe</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 6 of 12 · 🅰️ Templates & state</div>
+    <h1>Streams over time — and <span class="grad-text">every subscription needs an end</span>.</h1>
+    <p class="sub">When RxJS beats signals, the three safe ways to subscribe, and how switchMap, mergeMap, concatMap and exhaustMap decide what happens to an earlier request.</p>
+    <div class="interview-q">❓ "How do you avoid memory leaks with RxJS in Angular, and when do you use switchMap?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A manual subscription keeps running after the component is removed and leaks, while the async pipe, toSignal and takeUntilDestroyed unsubscribe automatically when the component is destroyed">
+<defs><marker id="rx1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rx1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rx1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">MANUAL subscribe() — LEAKS</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">ASYNC PIPE / toSignal / takeUntilDestroyed</text>
+<path d="M162,90 L162,130" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#rx1A)"/>
+<path d="M162,180 L162,220" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#rx1A)"/>
+<path d="M477,90 L477,130" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rx1A)"/>
+<path d="M477,180 L477,220" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rx1A)"/>
+<rect class="bx" x="30" y="40" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Component created</text>
+<text x="162.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">calls obs$.subscribe(…)</text>
+<rect class="bx" x="30" y="130" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Component destroyed</text>
+<text x="162.5" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">user leaves the screen</text>
+<rect class="bx" x="30" y="220" width="265" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Subscription still alive</text>
+<text x="162.5" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">keeps running, holds memory</text>
+<rect class="bx" x="345" y="40" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Component created</text>
+<text x="477.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">template uses obs$ | async</text>
+<rect class="bx" x="345" y="130" width="265" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Component destroyed</text>
+<text x="477.5" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">user leaves the screen</text>
+<rect class="bx" x="345" y="220" width="265" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Unsubscribed for you</text>
+<text x="477.5" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">nothing left running</text>
+<text class="free" x="162" y="306" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">Every visit adds another live subscription.</text>
+<text class="free" x="477" y="306" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">The framework cleans up at the right moment.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> what happens when a user visits and leaves a screen. <b>Left</b>: a manual <span class="kw">subscribe()</span> that nobody cancels — the subscription outlives the component, holds memory and keeps reacting, and every visit adds another one. <b>Right</b>: the <b>async pipe</b>, <span class="kw">toSignal</span> and <span class="kw">takeUntilDestroyed</span> unsubscribe automatically when the component is destroyed.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">An <b>Observable</b> is a stream of values over time. Angular uses it for HTTP, router events and forms — and <b>you must make sure subscriptions end</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Signals (page 5) hold <i>the current value</i>. But much of the web is <i>events over time</i>: keystrokes, HTTP responses, websocket messages, route changes. RxJS models those as <b>observables</b> and gives you operators to combine, delay, cancel and retry them. Angular’s HttpClient, router and forms are built on observables.</p>
+      <p>The cost is the <b>subscription</b>: someone must listen, and someone must stop listening. A forgotten subscription is the classic Angular memory leak.</p>
+      <p>This page covers when RxJS is the right tool, the three ways to subscribe safely, and the flattening operators that decide what happens when a new event arrives while the last is unfinished. The operator reference has its own deep dive.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🛡️ Subscribing safely</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Way</th><th scope="col">How it works</th><th scope="col">Use it for</th></tr></thead><tbody><tr><th scope="row"><b>Async pipe</b> — <span class="kw">items$ | async</span></th><td>Subscribes in the template, marks the component for check on each value, unsubscribes on destroy, and switches subscription when the expression’s reference changes</td><td>Showing a stream in a template</td></tr><tr><th scope="row"><b><span class="kw">toSignal(obs$)</span></b></th><td>Subscribes immediately, cleans up with the injection context, needs an initial value (or <span class="kw">requireSync</span>)</td><td>Reading a stream as a signal (page 5)</td></tr><tr><th scope="row"><b><span class="kw">takeUntilDestroyed()</span></b></th><td>Completes the stream when the component, directive or service is destroyed; stable since v19; call in an injection context or pass a <span class="kw">DestroyRef</span></td><td>A manual <span class="kw">subscribe()</span> you cannot avoid</td></tr><tr><th scope="row"><b>Manual <span class="kw">unsubscribe()</span></b></th><td>You keep the <span class="kw">Subscription</span> and call it in <span class="kw">ngOnDestroy</span></td><td>Rarely; easy to forget</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔀 What happens to the old request?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Four ways to handle a new request while an earlier one is still running: switchMap cancels the earlier one, mergeMap runs them together, concatMap queues them in order, exhaustMap ignores the new one">
+<defs><marker id="rx2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rx2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rx2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="bx" x="20" y="8" width="270" height="62" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="155" y="36.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">switchMap</text>
+<text x="155" y="49.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">cancel the old, keep the newest</text>
+<text class="free" x="312" y="36" text-anchor="start" font-size="9.5" font-weight="400" fill="#67e8f9">Use for:</text>
+<text class="free" x="312" y="54" text-anchor="start" font-size="11" font-weight="700" fill="#67e8f9">search-as-you-type</text>
+<rect class="bx" x="20" y="90" width="270" height="62" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="155" y="118.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">mergeMap</text>
+<text x="155" y="131.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">run all at once; results interleave</text>
+<text class="free" x="312" y="118" text-anchor="start" font-size="9.5" font-weight="400" fill="#c4b5fd">Use for:</text>
+<text class="free" x="312" y="136" text-anchor="start" font-size="11" font-weight="700" fill="#c4b5fd">independent saves</text>
+<rect class="bx" x="20" y="172" width="270" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="155" y="200.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">concatMap</text>
+<text x="155" y="213.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">one after another, in order</text>
+<text class="free" x="312" y="200" text-anchor="start" font-size="9.5" font-weight="400" fill="#fcd34d">Use for:</text>
+<text class="free" x="312" y="218" text-anchor="start" font-size="11" font-weight="700" fill="#fcd34d">ordered updates</text>
+<rect class="bx" x="20" y="254" width="270" height="62" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="155" y="282.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">exhaustMap</text>
+<text x="155" y="295.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">ignore new ones until done</text>
+<text class="free" x="312" y="282" text-anchor="start" font-size="9.5" font-weight="400" fill="#fda4af">Use for:</text>
+<text class="free" x="312" y="300" text-anchor="start" font-size="11" font-weight="700" fill="#fda4af">a submit button</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the user types “s”, “sh”, “shi”; each keystroke starts a request while the previous may still be running. The <b>flattening operator</b> you choose decides what happens: <b>switchMap</b> cancels the old request and keeps the newest (search-as-you-type); <b>mergeMap</b> runs all of them concurrently, results interleaving; <b>concatMap</b> queues them one after another; <b>exhaustMap</b> ignores new events until the current one finishes (a submit button).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 Signals or RxJS?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Situation</th><th scope="col">Prefer</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">A value the template shows (“current state”)</th><td>Signal</td><td>Simple, synchronous, fine-grained updates</td></tr><tr><th scope="row">Events over time with timing logic (debounce, retry, cancel previous)</th><td>RxJS</td><td>Operators for time and cancellation</td></tr><tr><th scope="row">HTTP request</th><td>Observable from <span class="kw">HttpClient</span> (or <span class="kw">httpResource</span>)</td><td>Built in; convert with <span class="kw">toSignal</span> for display</td></tr><tr><th scope="row">Combining several async sources</th><td>RxJS (<span class="kw">combineLatest</span>, <span class="kw">forkJoin</span>)</td><td>Operators express it directly</td></tr><tr><th scope="row">Server data that depends on signals</th><td><span class="kw">resource</span> / <span class="kw">rxResource</span></td><td>Restarts when inputs change (page 5)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 RxJS lab · the search box</div>
+    <div class="code-block"><pre>results = toSignal(
+  toObservable(this.query).pipe(
+    debounceTime(300),                       <span class="cmt">// wait for a pause in typing</span>
+    distinctUntilChanged(),                  <span class="cmt">// skip repeats</span>
+    switchMap(q =&gt; this.http.get&lt;Product[]&gt;(`/api/products?q=${q}`)),   <span class="cmt">// cancel the old request</span>
+  ),
+  { initialValue: [] },
+);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. The 300 ms pause is a teaching value. The pipeline is created once; <span class="kw">toSignal</span> cleans it up with the component.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Requests while typing “shi”</th><th scope="col">What the user sees</th></tr></thead><tbody><tr><th scope="row">No debounce, <span class="kw">mergeMap</span></th><td>3 requests, answers can arrive out of order</td><td>Results can flash and the last answer shown may be an old one</td></tr><tr><th scope="row"><span class="kw">switchMap</span> only</th><td>3 started, 2 cancelled</td><td>Always the newest answer</td></tr><tr><th scope="row"><span class="kw">debounceTime</span> + <span class="kw">switchMap</span></th><td>1 request</td><td>Newest answer, fewer requests</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · RxJS symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Memory grows and handlers fire after leaving a screen</th><td>A subscription was never ended</td><td>Async pipe, <span class="kw">toSignal</span> or <span class="kw">takeUntilDestroyed</span></td></tr><tr><th scope="row">An old answer overwrites a new one</th><td><span class="kw">mergeMap</span> where order matters</td><td><span class="kw">switchMap</span></td></tr><tr><th scope="row">A submit fires twice on double click</th><td>No guard on repeated events</td><td><span class="kw">exhaustMap</span></td></tr><tr><th scope="row">The same request fires twice</th><td>Two subscriptions to one cold observable (e.g. two async pipes on the same stream)</td><td>Subscribe once (<span class="kw">toSignal</span>), or share the stream</td></tr><tr><th scope="row">A stream stops after one error</th><td>The error ended the stream</td><td>Handle with <span class="kw">catchError</span> inside the inner observable</td></tr><tr><th scope="row"><span class="kw">takeUntilDestroyed</span> throws outside a constructor</th><td>No injection context</td><td>Pass a <span class="kw">DestroyRef</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Search-as-you-type</h5><p>Cancel stale requests.</p><span class="sc-use">→ debounceTime + switchMap</span></div>
+      <div class="scenario"><span class="sc-icon">💳</span><h5>Pay button double-click</h5><p>Ignore repeats while busy.</p><span class="sc-use">→ exhaustMap</span></div>
+      <div class="scenario"><span class="sc-icon">📡</span><h5>A websocket price feed</h5><p>Events over time.</p><span class="sc-use">→ Observable → toSignal</span></div>
+      <div class="scenario"><span class="sc-icon">🧹</span><h5>Leak found in the profiler</h5><p>Subscription outlives component.</p><span class="sc-use">→ takeUntilDestroyed</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Flattening operators</b> (from the RxJS docs): <span class="kw">switchMap</span> stops the earlier inner observable when a new one arrives; <span class="kw">mergeMap</span> subscribes to each as it arrives and interleaves outputs; <span class="kw">concatMap</span> equals mergeMap with concurrency 1; <span class="kw">exhaustMap</span> ignores new inner observables until the previous completes. The operator deep dive covers each with a diagram.</p>
+      <p><b>Cold observables.</b> An HttpClient call is normally a cold observable: it starts when subscribed, so each subscription can start its own request. Share or convert once if you read it in several places.</p>
+      <p><b>Async pipe</b> also switches subscription when the bound expression’s reference changes.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>An Observable is a stream of values over time; HttpClient, the router and forms use them.</li><li>Every subscription needs an end: async pipe, <span class="kw">toSignal</span>, <span class="kw">takeUntilDestroyed</span> (stable since v19) — or manual unsubscribe.</li><li>switchMap cancels the old; mergeMap runs all; concatMap queues; exhaustMap ignores new until done.</li><li>Use signals for current state; RxJS for events over time and cancellation.</li><li>debounceTime + distinctUntilChanged + switchMap is the classic search pipeline.</li><li>Handle errors inside the inner observable so one failure does not end the stream.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I use signals for state the template reads and RxJS for events over time. I never leave a subscription open: the async pipe, toSignal and takeUntilDestroyed clean up when the component is destroyed. For search I debounce, drop repeats and switchMap so stale requests are cancelled, and I choose the flattening operator by what should happen when a new event arrives mid-request."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>subscribe() in ngOnInit with no cleanup.</b> The most common Angular leak.</p>
+      <p><b>mergeMap for search.</b> Answers arrive out of order; use switchMap.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📡 Observable</h5><p>A stream over time; lazy until subscribed; may complete or error.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🎯 Signal</h5><p>A current value; always has one; read by calling it.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Streams under control. Next: how Angular builds and shares the objects your code depends on — dependency injection. <i>(coming soon: Dependency injection)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Angular and RxJS change between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/ecosystem/rxjs-interop/take-until-destroyed" target="_blank" rel="noopener">takeUntilDestroyed</a> · <a href="https://angular.dev/api/common/AsyncPipe" target="_blank" rel="noopener">AsyncPipe</a> · <a href="https://angular.dev/ecosystem/rxjs-interop" target="_blank" rel="noopener">RxJS interop</a> · <a href="https://rxjs.dev/api/operators/switchMap" target="_blank" rel="noopener">RxJS: switchMap</a> · <a href="https://rxjs.dev/api/index/function/exhaustMap" target="_blank" rel="noopener">RxJS: exhaustMap</a> · <a href="https://rxjs.dev/api/operators/concatMap" target="_blank" rel="noopener">RxJS: concatMap</a> · <a href="https://rxjs.dev/api/operators/mergeMap" target="_blank" rel="noopener">RxJS: mergeMap</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
