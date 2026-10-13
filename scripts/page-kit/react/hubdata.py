@@ -17,8 +17,12 @@ GROUPS = [('⚛️ THE RENDER MODEL','34,211,238','#67e8f9'),
           ('🔬 MEASURE & OPTIMISE','167,139,250','#c4b5fd'),
           ('🏗️ APP ARCHITECTURE','251,191,36','#fcd34d'),
           ('🚀 SHIPPING IT','52,211,153','#6ee7b7')]
-SUB = {'react-vs-angular': 'react-clinic'}
-SUBT = {'react-vs-angular': 'Same app, two frameworks'}
+SUB = {'react-hooks-guide': 'effects', 'refs-and-dom': 'effects', 'custom-hooks': 'effects',
+       'forms-actions': 'data-fetching-suspense', 'error-boundaries': 'data-fetching-suspense', 'api-layer-caching': 'data-fetching-suspense',
+       'routing-navigation': 'code-splitting-bundles', 'testing-react': 'react-clinic', 'react-vs-angular': 'react-clinic'}
+SUBT = {'react-hooks-guide': 'Hooks: what each does and when to use which', 'refs-and-dom': 'Refs and the DOM', 'custom-hooks': 'Custom hooks & the Rules of Hooks',
+        'forms-actions': 'Forms & actions', 'error-boundaries': 'Error boundaries & error handling', 'api-layer-caching': 'The API layer: fetch wrappers & caching',
+        'routing-navigation': 'Routing & navigation', 'testing-react': 'Testing React', 'react-vs-angular': 'Same app, two frameworks'}
 WRITTEN = ['react-mental-model','state-rerenders','keys-reconciliation','effects','profiler','memoization','react-debugging-playbook','context-state-architecture','data-fetching-suspense','server-rendering-hydration']
 LADDER = [('1 · MEASURE','📏 How slow, exactly?','Commits and render milliseconds in the Profiler — a number, not a feeling.'),
           ('2 · READ','🔬 What rendered, and why?','Read the flamegraph: which components, and what triggered them.'),

@@ -351,5 +351,39 @@
     ],
     "sub": {},
     "subTitles": {}
+  },
+  "angular": {
+    "title": "Angular Lab",
+    "order": [
+      "angular-mental-model",
+      "change-detection",
+      "onpush-signals",
+      "templates-control-flow",
+      "signals-in-depth",
+      "rxjs-async-pipe",
+      "dependency-injection",
+      "forms",
+      "routing-lazy-loading",
+      "angular-performance",
+      "angular-debugging-playbook",
+      "angular-clinic"
+    ],
+    "titles": {
+      "angular-mental-model": "The Angular mental model",
+      "change-detection": "Change detection & zone.js",
+      "onpush-signals": "OnPush & signals",
+      "templates-control-flow": "Templates, control flow & pipes",
+      "signals-in-depth": "Signals in depth",
+      "rxjs-async-pipe": "RxJS & the async pipe",
+      "dependency-injection": "Dependency injection",
+      "forms": "Forms: template-driven, reactive & signal forms",
+      "routing-lazy-loading": "Routing & lazy loading",
+      "angular-performance": "Performance: @defer, SSR & hydration",
+      "angular-debugging-playbook": "Angular DevTools & the debugging playbook",
+      "angular-clinic": "Capstone: the Angular performance clinic"
+    },
+    "written": [],
+    "sub": {},
+    "subTitles": {}
   }
 }

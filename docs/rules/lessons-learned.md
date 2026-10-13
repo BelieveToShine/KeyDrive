@@ -58,3 +58,10 @@ The goal: the same mistake never reaches the user twice, in any category or any 
 - Free-floating arrows (no box at either end) fail the linter; use two side boxes as axis labels.
 - Words like “undefined” in prose trip the placeholder check; “two regions”, “five levels” and sizes trip the ledger check — add the literal token to the ledger row.
 - Never leave a case-board label truncated by `[:11]` — write short labels by hand.
+
+## L12 — Concept pages alone are not enough: add the everyday-API deep dives (2026-10-13, Web Platforms)
+User feedback while the React lab was half-built: *"useState, useContext, etc — what it does, when to use what — that has to come in a sub level. Interceptors, routing and other important topics can also go in sub-level pages. Think deeply; we should not miss any important topic, otherwise the content is not useful."*
+- A lab built only from "concept → performance" pages misses what a practitioner touches every day: the **hook/API reference ("what does it do, when do I use which")**, **forms**, **routing/navigation**, **HTTP/API layer (interceptors)**, **error handling**, **testing**, **lifecycle**, **component communication**, **RxJS operator choice**.
+- Rule: before building a lab, write a **coverage audit** in `docs/specs/<lab>/overview.md`: list every topic an interviewer or a new teammate would expect, and mark each as a main page, a deep dive (sub page), or consciously out of scope with a reason. Re-run the audit when half the main pages exist.
+- Sub pages ("deep dives") hang off the concept that needs them (`SUB` in `hubdata.py`); several per parent are fine. They follow the same page rhythm (picture, lab, checklist, scenarios, recall, trap) — reference pages get a **"what to use when" decision table** as their core.
+- Only claim what the framework's own docs say; for third-party tools (React Router, TanStack Query, NgRx, axios) say so, cite their own docs, and keep claims minimal.

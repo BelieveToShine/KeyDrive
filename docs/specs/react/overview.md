@@ -15,3 +15,17 @@ Page rhythm = SQL/Cosmos labs: See it first → Why → how it works → tables/
 | Teaching rule | numbers are illustrative; real apps: measure in the Profiler |
 
 Status: in progress (started 2026-10-13). User has not reviewed — expect corrections.
+
+## Coverage audit (2026-10-13, after user feedback — see lessons L12)
+| Topic a practitioner needs | Where |
+|---|---|
+| Render/commit, state, keys, effects, Profiler, memo, debugging, context/reducers, Suspense/transitions, SSR/RSC, bundles, clinic | main pages 1–12 |
+| **Hooks reference: what each hook does and when to use which** (useState, useReducer, useContext, useRef, useEffect, useLayoutEffect, useMemo, useCallback, useId, useTransition, useDeferredValue, useSyncExternalStore, use, rules of hooks) | deep dive `react-hooks-guide` (parent: effects) |
+| Refs and the DOM (useRef, ref as prop, focus, measuring, useLayoutEffect, escape hatches) | deep dive `refs-and-dom` (parent: effects) |
+| Custom hooks and the Rules of Hooks | deep dive `custom-hooks` (parent: effects) |
+| Forms: controlled vs uncontrolled, form actions, useActionState, useFormStatus, useOptimistic, validation (ShopUI Checkout, 12 fields) | deep dive `forms-actions` (parent: data-fetching-suspense) |
+| Error handling: error boundaries, root error callbacks, Suspense + errors | deep dive `error-boundaries` (parent: data-fetching-suspense) |
+| API layer: fetch wrapper, auth header, retries, caching libraries (TanStack Query / SWR named by the docs) — React's analogue of interceptors | deep dive `api-layer-caching` (parent: data-fetching-suspense) |
+| Routing & navigation (React has no router; frameworks / React Router; route-level code splitting, nested layouts, loaders) | deep dive `routing-navigation` (parent: code-splitting-bundles) |
+| Testing React (act, what to test, async) | deep dive `testing-react` (parent: react-clinic) — sources limited to react.dev `act` and testing guidance |
+| Out of scope (stated): styling/CSS-in-JS, i18n, state libraries beyond a mention, React Native, animation libraries |

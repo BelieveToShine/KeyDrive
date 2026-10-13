@@ -14,5 +14,14 @@
 | 11 | Angular DevTools & the debugging playbook | angular-debugging-playbook | 🔒 planned |
 | 12 | Capstone: the Angular performance clinic | angular-clinic | 🔒 planned |
 | ➕ | Deep dive: Same app, two frameworks (React vs Angular) | react-vs-angular | 🔒 planned (built once, linked from both labs; sub page of the clinic) |
+| ➕ | Deep dive: Lifecycle hooks: what each does and when to use which | lifecycle-hooks | 🔒 planned (sub page of change-detection) |
+| ➕ | Deep dive: Component communication | component-communication | 🔒 planned (sub page of templates-control-flow) |
+| ➕ | Deep dive: Directives & custom pipes | directives-pipes | 🔒 planned (sub page of templates-control-flow) |
+| ➕ | Deep dive: RxJS operators: which one to use | rxjs-operators | 🔒 planned (sub page of rxjs-async-pipe) |
+| ➕ | Deep dive: HttpClient & interceptors | http-interceptors | 🔒 planned (sub page of rxjs-async-pipe) |
+| ➕ | Deep dive: State management: services, signals & NgRx | state-management | 🔒 planned (sub page of dependency-injection) |
+| ➕ | Deep dive: Forms in depth: validation & FormArray | forms-validation | 🔒 planned (sub page of forms) |
+| ➕ | Deep dive: Route guards, resolvers & params | guards-resolvers | 🔒 planned (sub page of routing-lazy-loading) |
+| ➕ | Deep dive: Testing Angular | testing-angular | 🔒 planned (sub page of angular-clinic) |
 
 When a page ships: `scripts/page-kit/lab_ship.sh angular …`, update this table, `scripts/push3.sh`.
