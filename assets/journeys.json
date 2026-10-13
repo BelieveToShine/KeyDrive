@@ -352,11 +352,13 @@
     ],
     "sub": {
       "react-hooks-guide": "effects",
-      "refs-and-dom": "effects"
+      "refs-and-dom": "effects",
+      "custom-hooks": "effects"
     },
     "subTitles": {
       "react-hooks-guide": "Hooks: what each does and when to use which",
-      "refs-and-dom": "Refs and the DOM"
+      "refs-and-dom": "Refs and the DOM",
+      "custom-hooks": "Custom hooks & the Rules of Hooks"
     }
   },
   "angular": {

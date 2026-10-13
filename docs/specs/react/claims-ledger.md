@@ -179,5 +179,17 @@ Source root: https://react.dev/
 | Debounce 300 ms, 13 renders for a 12-field checkout (1 + 12) | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — custom hooks
+| Claim | Status | Note |
+|---|---|---|
+| Hook names start with `use` followed by a capital letter; the convention shows where state/effects may hide; if a function calls no Hooks, avoid the `use` prefix | ✅ V | learn/reusing-logic-with-custom-hooks |
+| Custom hooks share stateful logic, not state; each call is completely independent; to share state, lift it up and pass it down | ✅ V | same |
+| useEffectEvent wraps an event-style callback so that changing it does not make the effect reconnect | ✅ V | same (chat example); stability by version → readers told to check docs |
+| Rules of Hooks apply: top level of a component or custom hook, not in loops/conditions/nested functions/try-catch-finally | ✅ V | reference/rules/rules-of-hooks |
+| useSyncExternalStore subscribes to an external store / browser API | ✅ V | reference/react/hooks; useSyncExternalStore |
+| Linter treats functions named use… as hooks | 🟨 K | convention described in docs; linter internals not re-checked |
+| Debounce 300 ms; “200-line file” | 🟦 I | teaching values |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

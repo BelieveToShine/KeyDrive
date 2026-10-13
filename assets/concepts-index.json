@@ -2994,5 +2994,31 @@
     "summary": "The classic mistake with Refs and the DOM.",
     "keywords": "react refs useRef dom focus scroll forwardRef ref callback flushSync useImperativeHandle timer debounce trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-custom-hooks",
+    "title": "Custom hooks & the Rules of Hooks",
+    "category": "React",
+    "page": "react/concepts/custom-hooks.html",
+    "summary": "What a custom hook is, why two components do not share its state, how to extract one and the rules for naming and calling.",
+    "keywords": "react custom hooks use prefix reuse logic useDebouncedValue useOnlineStatus rules of hooks useEffectEvent"
+  },
+  {
+    "id": "react-custom-hooks-recall",
+    "title": "Custom hooks & the Rules of Hooks — interview recall",
+    "category": "React",
+    "page": "react/concepts/custom-hooks.html",
+    "summary": "Quick recall points: Custom hooks & the Rules of Hooks.",
+    "keywords": "react custom hooks use prefix reuse logic useDebouncedValue useOnlineStatus rules of hooks useEffectEvent interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-custom-hooks-trap",
+    "title": "Custom hooks & the Rules of Hooks — common trap",
+    "category": "React",
+    "page": "react/concepts/custom-hooks.html",
+    "summary": "The classic mistake with Custom hooks & the Rules of Hooks.",
+    "keywords": "react custom hooks use prefix reuse logic useDebouncedValue useOnlineStatus rules of hooks useEffectEvent trap mistake",
+    "anchor": "trap"
   }
 ]
