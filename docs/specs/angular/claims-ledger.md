@@ -277,5 +277,17 @@ Source root: https://angular.dev/
 | 20 characters → up to 20 requests vs 1 | 🟦 I | teaching arithmetic |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — state management
+| Claim | Status | Note |
+|---|---|---|
+| Writable signals change with set/update; asReadonly() exposes a read-only view; computed is lazy and cached | ✅ V | angular.dev/guide/signals |
+| providedIn: 'root' = one app-wide instance; a component's providers = a new instance per component | ✅ V | angular.dev/guide/di (see page 7 ledger) |
+| NgRx Signals: standalone library for reactive state with Angular signals; SignalStore built from withState, withComputed, withMethods (patchState), reusable signalStoreFeature; SignalState is a lighter utility for component/service state | ✅ V | ngrx.io/guide/signals, /signal-store |
+| Classic NgRx Store (actions, reducers, selectors) | 🟨 K | named only; not covered by the search — read ngrx.io |
+| Resources expose data, status and error as signals | ✅ V | angular.dev/guide/signals/resource (page 5 ledger) |
+| React context+reducer ↔ root service with signals analogy | 🟦 I | teaching analogy |
+| Dev tooling comparison row | 🟨 K | Angular DevTools Injectors view is verified; library DevTools not checked |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

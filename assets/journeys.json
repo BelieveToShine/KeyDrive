@@ -422,6 +422,7 @@
       "directives-pipes": "templates-control-flow",
       "rxjs-operators": "rxjs-async-pipe",
       "http-interceptors": "rxjs-async-pipe",
+      "state-management": "dependency-injection",
       "forms-validation": "forms",
       "guards-resolvers": "routing-lazy-loading",
       "testing-angular": "angular-clinic"
@@ -432,6 +433,7 @@
       "directives-pipes": "Directives & custom pipes",
       "rxjs-operators": "RxJS operators: which one to use",
       "http-interceptors": "HttpClient & interceptors",
+      "state-management": "State management: services, signals & NgRx",
       "forms-validation": "Forms in depth: validation & FormArray",
       "guards-resolvers": "Route guards, resolvers & params",
       "testing-angular": "Testing Angular"
