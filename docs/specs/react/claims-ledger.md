@@ -165,5 +165,19 @@ Source root: https://react.dev/
 | useReducer dispatch has a stable identity | ✅ V | reference/react/useReducer |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — refs and the DOM
+| Claim | Status | Note |
+|---|---|---|
+| useRef references a value not needed for rendering; changing ref.current does not re-render; a ref is a plain object; do not read/write ref.current during render (initialisation excepted) | ✅ V | reference/react/useRef; learn/referencing-values-with-refs; eslint-plugin-react-hooks refs rule |
+| Refs give access to DOM nodes for focus, scroll, measure; there is no built-in way otherwise | ✅ V | learn/manipulating-the-dom-with-refs |
+| Ref callbacks receive the node and can return a cleanup; used to build a Map of item ids to nodes; do not call useRef in a loop | ✅ V | same |
+| By default a ref on your own component is null; React 19: ref is a regular prop; React 18 and earlier: forwardRef | ✅ V | same; reference/react/useImperativeHandle |
+| useImperativeHandle exposes chosen methods instead of the full DOM node; rarely used | ✅ V | reference/react/useImperativeHandle; hooks page |
+| flushSync updates the DOM immediately; can hurt performance, last resort; calling it in an Effect errors | ✅ V | reference/react-dom/flushSync |
+| Refs are set at commit (DOM exists only after render) | ✅ V | learn/render-and-commit; manipulating-the-dom-with-refs |
+| Error text “flushSync was called from inside a lifecycle method” | 🟨 K | React's warning message, wording not re-checked |
+| Debounce 300 ms, 13 renders for a 12-field checkout (1 + 12) | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

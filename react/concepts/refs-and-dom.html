@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refs and the DOM — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="effects.html">Effects</a><span class="sep">›</span><span class="cur">Refs and the DOM</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 📦 Refs</div>
+    <h1>A ref remembers <span class="grad-text">without rendering</span> — and reaches the DOM.</h1>
+    <p class="sub">Refs versus state, how DOM refs are filled, ref callbacks, passing refs to your own components, and when flushSync is justified.</p>
+    <div class="interview-q">❓ "When should you use a ref instead of state, and how do you focus an input in React?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Setting state tells React to render again so the screen updates, while changing a ref value tells React nothing so nothing re-renders; a ref can also hold a DOM node for focusing or measuring">
+<defs><marker id="rf1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="304" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">useState — the screen shows it</text>
+<rect class="zone" x="325" y="8" width="305" height="304" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">useRef — the screen does not</text>
+<path d="M162,80 L162,132" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf1A)"/>
+<path d="M162,176 L162,228" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf1A)"/>
+<path d="M477,80 L477,132" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rf1A)"/>
+<path d="M477,176 L477,228" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rf1A)"/>
+<rect class="bx" x="40" y="36" width="245" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="162.5" y="54.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">setQuery(“shi”)</text>
+<text x="162.5" y="66.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">you set state</text>
+<rect class="bx" x="40" y="132" width="245" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="162.5" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">React renders</text>
+<text x="162.5" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">your component runs again</text>
+<rect class="bx" x="40" y="228" width="245" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="162.5" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Screen updates</text>
+<text x="162.5" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">new text in the list</text>
+<rect class="bx" x="355" y="36" width="245" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="54.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">timerRef.current = id</text>
+<text x="477.5" y="66.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">you change a ref</text>
+<rect class="bx" x="355" y="132" width="245" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">React is not told</text>
+<text x="477.5" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">a ref is a plain object</text>
+<rect class="bx" x="355" y="228" width="245" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Nothing re-renders</text>
+<text x="477.5" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the value is just remembered</text>
+<text class="free" x="162" y="298" text-anchor="middle" font-size="9.5" font-weight="400" fill="#67e8f9">Use for values the user sees.</text>
+<text class="free" x="477" y="298" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">Use for timers, DOM nodes, last values.</text>
+<g class="arrow-pill"><rect x="124" y="97" width="76" height="18" rx="9"/><text x="162" y="109.5" text-anchor="middle" font-size="9" font-style="italic">tells React</text></g>
+<g class="arrow-pill"><rect x="137" y="193" width="50" height="18" rx="9"/><text x="162" y="205.5" text-anchor="middle" font-size="9" font-style="italic">commit</text></g>
+<g class="arrow-pill"><rect x="452" y="97" width="50" height="18" rx="9"/><text x="477" y="109.5" text-anchor="middle" font-size="9" font-style="italic">silent</text></g>
+<g class="arrow-pill"><rect x="444" y="193" width="66" height="18" rx="9"/><text x="477" y="205.5" text-anchor="middle" font-size="9" font-style="italic">no render</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: setting <b>state</b> tells React, which renders your component again and updates the screen. <b>Right</b>: changing <span class="kw">ref.current</span> tells React <i>nothing</i> — a ref is a plain object — so nothing re-renders. That is the whole difference: use state for what the user sees, a ref for what you must remember without showing, such as a timer id or a DOM node.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A <b>ref</b> is a box React keeps for you between renders; filling it does <b>not</b> cause a render. It is also how you reach a <b>DOM node</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Hooks guide: state is for values the screen shows. But two kinds of work do not fit state — remembering something <i>without</i> re-rendering (a timer id, the previous value) and talking to the DOM directly (focus an input, scroll to an item, measure a size). React has no built-in way to do the DOM jobs, so it gives you refs.</p>
+      <p>Refs are an <b>escape hatch</b>: they step outside React’s declarative model. Used for the right jobs they are small and safe; used to store displayed values they cause stale screens.</p>
+      <p>This page covers when a ref is the right tool, how DOM refs are filled, how to hand a ref to your own component, and the one-line tool for reading the DOM right after an update (<span class="kw">flushSync</span>).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⏱️ When is a DOM ref filled?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A DOM ref is null while rendering because the DOM does not exist yet; React sets it during commit; read it in event handlers or effects, for example to focus an input">
+<defs><marker id="rf2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="160" width="620" height="130" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">REFS ON YOUR OWN COMPONENTS</text>
+<path d="M190,85 L230,85" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#rf2A)"/>
+<path d="M410,85 L450,85" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rf2A)"/>
+<rect class="bx" x="10" y="40" width="180" height="90" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="100" y="70.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">1 · Render</text>
+<text x="100" y="82.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">ref.current is null</text>
+<text x="100" y="95.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">do not read or write it</text>
+<text x="100" y="107.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">during render</text>
+<rect class="bx" x="230" y="40" width="180" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="70.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">2 · Commit</text>
+<text x="320" y="82.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">React creates the DOM</text>
+<text x="320" y="95.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">and sets ref.current</text>
+<text x="320" y="107.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">to the node</text>
+<rect class="bx" x="450" y="40" width="180" height="90" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="540" y="70.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Use it</text>
+<text x="540" y="83" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">in an event handler</text>
+<text x="540" y="95.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">or an effect:</text>
+<text x="540" y="107.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">ref.current.focus()</text>
+<rect class="bx" x="24" y="190" width="280" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="164" y="221.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">React 19</text>
+<text x="164" y="234" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">ref is a regular prop —</text>
+<text x="164" y="246.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">pass it down yourself</text>
+<rect class="bx" x="336" y="190" width="280" height="80" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="476" y="221.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">React 18 and earlier</text>
+<text x="476" y="234" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">forwardRef was required</text>
+<text x="476" y="246.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">to expose a DOM node</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> during <b>render</b> the DOM does not exist yet, so a DOM ref is still null — reading or writing it there is a mistake. During <b>commit</b> React creates the nodes and sets the ref. After that, use it in an <b>event handler or an effect</b>. To give a ref to <i>your own</i> component: in React 19 it arrives as an ordinary prop; in React 18 and earlier you needed <span class="kw">forwardRef</span>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Ref jobs and the tool for each</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Job</th><th scope="col">How</th><th scope="col">Watch out</th></tr></thead><tbody><tr><th scope="row">Focus an input, scroll to an element, measure a size</th><td><span class="kw">ref</span> on the element; call <span class="kw">ref.current.focus()</span> in a handler or effect</td><td>Never read it during render</td></tr><tr><th scope="row">Many items, one ref each (scroll to item 7)</th><td>A <b>ref callback</b>: a function passed to <span class="kw">ref</span> that receives the node (and can return a cleanup)</td><td>Do not call <span class="kw">useRef</span> in a loop</td></tr><tr><th scope="row">Remember a timer id, a previous value, an “is mounted” flag</th><td><span class="kw">useRef</span> holding a plain value</td><td>If the screen must show it, use state</td></tr><tr><th scope="row">Expose only some methods of a child (<span class="kw">focus</span>, <span class="kw">scrollIntoView</span>)</th><td><span class="kw">useImperativeHandle</span></td><td>Rare; a deliberate escape hatch</td></tr><tr><th scope="row">Read the DOM immediately after a state update</th><td><span class="kw">flushSync</span> around the update</td><td>Can hurt performance; last resort; not inside an effect</td></tr><tr><th scope="row">Measure before the browser paints</th><td><span class="kw">useLayoutEffect</span></td><td>Blocks painting; prefer useEffect when you can</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Refs lab · three ShopUI jobs</div>
+    <div class="code-block"><pre><span class="cmt">// 1. Focus the search box when the page opens</span>
+<span class="kw">const</span> inputRef = useRef(null);
+useEffect(() =&gt; { inputRef.current.focus(); }, []);
+&lt;input ref={inputRef} /&gt;
+
+<span class="cmt">// 2. Debounce: remember the timer id without re-rendering</span>
+<span class="kw">const</span> timer = useRef(0);
+<span class="kw">function</span> onType(text) { clearTimeout(timer.current); timer.current = setTimeout(() =&gt; search(text), 300); }
+
+<span class="cmt">// 3. Scroll to the item just added to the cart (needs the DOM updated first)</span>
+flushSync(() =&gt; setItems([...items, newItem]));
+lastItemRef.current.scrollIntoView();</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketches. In (2) the 300 ms wait is a teaching value; the ref changes on every keystroke but nothing needs to re-render.</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Job</th><th scope="col">Re-renders per keystroke</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Timer id in state</th><td>1 extra per keystroke (13 renders for a 12-field checkout)</td><td>Every set is a render the user never sees</td></tr><tr><th scope="row">Timer id in a ref</th><td>0 extra</td><td>A ref change is silent</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · ref symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row"><span class="kw">ref.current</span> is null</th><td>Read during render, or the element is not rendered (yet)</td><td>Read in a handler or effect, after commit</td></tr><tr><th scope="row">The screen does not update when a ref changes</th><td>Refs never trigger renders</td><td>Use state for displayed values</td></tr><tr><th scope="row">A ref on my own component is null</th><td>The component did not pass the ref on</td><td>React 19: take <span class="kw">ref</span> as a prop and put it on the DOM node; React 18: <span class="kw">forwardRef</span></td></tr><tr><th scope="row">Scroll lands one item behind after adding</th><td>State updates are queued; the DOM is not updated yet</td><td><span class="kw">flushSync</span>, as a last resort</td></tr><tr><th scope="row">“flushSync was called from inside a lifecycle method”</th><td>flushSync inside an effect</td><td>Move it into an event handler</td></tr><tr><th scope="row">Lint error about reading a ref in render</th><td>Reading or writing <span class="kw">ref.current</span> during render</td><td>Move it to a handler or effect (initialisation is the one exception)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">⌨️</span><h5>Focus the first invalid field after a failed submit</h5><p>DOM method, not a display value.</p><span class="sc-use">→ Refs + focus() in a handler</span></div>
+      <div class="scenario"><span class="sc-icon">📜</span><h5>Chat list scrolls to the newest message</h5><p>Needs the DOM after the update.</p><span class="sc-use">→ Ref + flushSync (sparingly)</span></div>
+      <div class="scenario"><span class="sc-icon">⏳</span><h5>Debounced search fires twice</h5><p>Timer id lost between renders.</p><span class="sc-use">→ Keep it in a ref</span></div>
+      <div class="scenario"><span class="sc-icon">🎛️</span><h5>A parent must call child.focus() only</h5><p>Expose less than the whole node.</p><span class="sc-use">→ useImperativeHandle</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Ref callbacks.</b> Instead of an object, you can pass a function to <span class="kw">ref</span>; React calls it with the DOM node when the ref is set and calls its cleanup when it is cleared. This is how you build a Map from item ids to nodes.</p>
+      <p><b>Why not read in render.</b> Reading or writing a ref during render breaks the assumption that a component behaves like a pure function (page 1), and the lint rule flags it. Lazy initialisation of a ref is the allowed exception.</p>
+      <p><b>flushSync cost.</b> It forces React to update the DOM right away, which the docs warn can hurt performance; they recommend avoiding it unless you really need it.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A ref holds a value that is not needed for rendering; changing it does not re-render.</li><li>State for what the screen shows; refs for timers, previous values and DOM nodes.</li><li>Never read or write <span class="kw">ref.current</span> during render; use handlers or effects.</li><li>DOM refs are set at commit; for many items use a ref callback.</li><li>React 19 passes <span class="kw">ref</span> as a prop; earlier versions need <span class="kw">forwardRef</span>.</li><li><span class="kw">flushSync</span> and <span class="kw">useLayoutEffect</span> are last resorts with a performance cost.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I use state for anything the screen shows and a ref for what I must remember without rendering — timer ids, previous values, DOM nodes. DOM refs are filled at commit, so I read them in handlers or effects, never during render, and I treat flushSync and useLayoutEffect as last resorts."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Showing a ref’s value on screen.</b> It will be stale until something else renders.</p>
+      <p><b>Reaching into the DOM for things React can do declaratively.</b> Changing text or classes by hand fights React.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📦 Ref</h5><p>Remembers a value silently; also the handle to a DOM node.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📸 State</h5><p>Remembers a value and re-renders when it changes.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: effects are where refs usually get used.</span>
+      <a class="next-link" href="effects.html">Effects: synchronising with the outside world <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/learn/referencing-values-with-refs" target="_blank" rel="noopener">Referencing Values with Refs</a> · <a href="https://react.dev/learn/manipulating-the-dom-with-refs" target="_blank" rel="noopener">Manipulating the DOM with Refs</a> · <a href="https://react.dev/reference/react/useRef" target="_blank" rel="noopener">useRef</a> · <a href="https://react.dev/reference/react/useImperativeHandle" target="_blank" rel="noopener">useImperativeHandle</a> · <a href="https://react.dev/reference/react-dom/flushSync" target="_blank" rel="noopener">flushSync</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

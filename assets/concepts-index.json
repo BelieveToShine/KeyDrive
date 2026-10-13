@@ -2968,5 +2968,31 @@
     "summary": "The classic mistake with Hooks: what each does and when to use which.",
     "keywords": "react hooks useState useReducer useContext useRef useEffect useLayoutEffect useMemo useCallback useId useTransition useSyncExternalStore rules of hooks which hook trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-refs-and-dom",
+    "title": "Refs and the DOM",
+    "category": "React",
+    "page": "react/concepts/refs-and-dom.html",
+    "summary": "useRef versus state, how DOM refs are filled, ref callbacks, ref as a prop in React 19, flushSync and useImperativeHandle.",
+    "keywords": "react refs useRef dom focus scroll forwardRef ref callback flushSync useImperativeHandle timer debounce"
+  },
+  {
+    "id": "react-refs-and-dom-recall",
+    "title": "Refs and the DOM — interview recall",
+    "category": "React",
+    "page": "react/concepts/refs-and-dom.html",
+    "summary": "Quick recall points: Refs and the DOM.",
+    "keywords": "react refs useRef dom focus scroll forwardRef ref callback flushSync useImperativeHandle timer debounce interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-refs-and-dom-trap",
+    "title": "Refs and the DOM — common trap",
+    "category": "React",
+    "page": "react/concepts/refs-and-dom.html",
+    "summary": "The classic mistake with Refs and the DOM.",
+    "keywords": "react refs useRef dom focus scroll forwardRef ref callback flushSync useImperativeHandle timer debounce trap mistake",
+    "anchor": "trap"
   }
 ]

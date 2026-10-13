@@ -351,10 +351,12 @@
       "code-splitting-bundles"
     ],
     "sub": {
-      "react-hooks-guide": "effects"
+      "react-hooks-guide": "effects",
+      "refs-and-dom": "effects"
     },
     "subTitles": {
-      "react-hooks-guide": "Hooks: what each does and when to use which"
+      "react-hooks-guide": "Hooks: what each does and when to use which",
+      "refs-and-dom": "Refs and the DOM"
     }
   },
   "angular": {
