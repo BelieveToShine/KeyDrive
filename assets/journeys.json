@@ -482,7 +482,8 @@
       "dependency-inversion",
       "dependency-injection-dotnet",
       "smells-refactoring",
-      "solid-together"
+      "solid-together",
+      "testing-solid"
     ],
     "sub": {},
     "subTitles": {}

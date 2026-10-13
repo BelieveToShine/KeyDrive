@@ -114,5 +114,19 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | ShopCore numbers: ≈300 → ≈40 lines, 6 reasons → 1, 4 constructor parameters, ≈40/120/60/50 line parts | 🟦 I | illustrative, canonical in docs/specs/solid/overview.md |
 | Code sketches (OrderValidator, PricingCalculator, IDiscountRule…) | 🟦 I | illustrative, not compiled |
 
+## Page 10 — Testing SOLID Code
+| Claim | Status | Note |
+|---|---|---|
+| Arrange / Act / Assert: arrange objects, act on one, assert something is as expected | ✅ V | Microsoft Learn: Best practices for writing unit tests (.NET), via search summary |
+| Mock vs stub: mocks are like stubs except you assert against them; calling stubs "mocks" misleads | ✅ V | same page |
+| Isolate a component by replacing a dependency with a fake implementation | ✅ V | Microsoft patterns & practices "Unit Testing: Testing the Inside" (older) and Web API testing guidance |
+| ConfigureTestServices on the host builder (with WithWebHostBuilder per test) replaces registrations in integration tests; DbContextOptions descriptor can be swapped | ✅ V | Microsoft Learn: Integration tests in ASP.NET Core |
+| EF Core has a page "Testing without your production database" | ✅ V | page title seen in search results; content not read |
+| xUnit attributes ([Fact], IClassFixture), Assert.Single/Equal, PostAsJsonAsync | 🟨 K | standard APIs recalled, not compiled/verified this session |
+| "Fake" as the general term for any test stand-in | 🟨 K | common usage; Microsoft's page distinguishes mock/stub only |
+| Contract-test pattern (abstract test class subclassed per implementation) | 🟨 K | common practice, not quoted |
+| TimeProvider for injecting time | 🟨 K | .NET 8+ API recalled |
+| Numbers (≈40 vs ≈6 setup lines) | 🟦 I | illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

@@ -4008,5 +4008,31 @@
     "summary": "The classic mistake with SOLID Together: a Worked Refactoring.",
     "keywords": "solid together worked refactoring OrderService golden master extract class strategy dependency injection step by step trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-testing-solid",
+    "title": "Testing SOLID Code",
+    "category": "SOLID",
+    "page": "solid/concepts/testing-solid.html",
+    "summary": "Fakes, stubs and mocks, a unit test and an integration test in C#, contract tests for LSP, and what bad tests say about your design.",
+    "keywords": "testing SOLID unit test fake stub mock xUnit WebApplicationFactory ConfigureTestServices contract test arrange act assert testability"
+  },
+  {
+    "id": "solid-testing-solid-recall",
+    "title": "Testing SOLID Code — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/testing-solid.html",
+    "summary": "Quick recall points: Testing SOLID Code.",
+    "keywords": "testing SOLID unit test fake stub mock xUnit WebApplicationFactory ConfigureTestServices contract test arrange act assert testability interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-testing-solid-trap",
+    "title": "Testing SOLID Code — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/testing-solid.html",
+    "summary": "The classic mistake with Testing SOLID Code.",
+    "keywords": "testing SOLID unit test fake stub mock xUnit WebApplicationFactory ConfigureTestServices contract test arrange act assert testability trap mistake",
+    "anchor": "trap"
   }
 ]

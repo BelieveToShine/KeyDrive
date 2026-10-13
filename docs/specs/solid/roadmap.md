@@ -10,7 +10,7 @@
 | 7 | Dependency injection in .NET: making D real | dependency-injection-dotnet | ✅ written |
 | 8 | Smells and the refactoring playbook | smells-refactoring | ✅ written |
 | 9 | Refactoring OrderService step by step | solid-together | ✅ written |
-| 10 | Testability: the proof that it worked | testing-solid | 🔒 planned |
+| 10 | Testability: the proof that it worked | testing-solid | ✅ written |
 | 11 | Judgement: YAGNI, KISS, DRY and over-engineering | when-not-solid | 🔒 planned |
 | 12 | Capstone: the SOLID clinic | solid-clinic | 🔒 planned |
 | ➕ | Deep dive: Patterns that realise the principles | design-patterns-solid | 🔒 planned (sub page of dependency-inversion) |
