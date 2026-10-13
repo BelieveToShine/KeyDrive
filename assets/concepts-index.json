@@ -3254,5 +3254,31 @@
     "summary": "The classic mistake with OnPush & signals.",
     "keywords": "angular OnPush signals signal computed input model changeDetection zoneless migration markForCheck immutable update trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-lifecycle-hooks",
+    "title": "Lifecycle hooks: what each does and when to use which",
+    "category": "Angular",
+    "page": "angular/concepts/lifecycle-hooks.html",
+    "summary": "Every Angular lifecycle hook and render callback: when it runs, what is safe there, and modern replacements computed, afterNextRender and DestroyRef.",
+    "keywords": "angular lifecycle hooks ngOnInit ngOnChanges ngOnDestroy ngDoCheck ngAfterViewInit afterNextRender afterEveryRender DestroyRef constructor"
+  },
+  {
+    "id": "angular-lifecycle-hooks-recall",
+    "title": "Lifecycle hooks: what each does and when to use which — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/lifecycle-hooks.html",
+    "summary": "Quick recall points: Lifecycle hooks: what each does and when to use which.",
+    "keywords": "angular lifecycle hooks ngOnInit ngOnChanges ngOnDestroy ngDoCheck ngAfterViewInit afterNextRender afterEveryRender DestroyRef constructor interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-lifecycle-hooks-trap",
+    "title": "Lifecycle hooks: what each does and when to use which — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/lifecycle-hooks.html",
+    "summary": "The classic mistake with Lifecycle hooks: what each does and when to use which.",
+    "keywords": "angular lifecycle hooks ngOnInit ngOnChanges ngOnDestroy ngDoCheck ngAfterViewInit afterNextRender afterEveryRender DestroyRef constructor trap mistake",
+    "anchor": "trap"
   }
 ]

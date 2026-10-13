@@ -407,7 +407,11 @@
       "change-detection",
       "onpush-signals"
     ],
-    "sub": {},
-    "subTitles": {}
+    "sub": {
+      "lifecycle-hooks": "change-detection"
+    },
+    "subTitles": {
+      "lifecycle-hooks": "Lifecycle hooks: what each does and when to use which"
+    }
   }
 }

@@ -48,5 +48,21 @@ Source root: https://angular.dev/
 | Numbers: 504 → 4 → 3 checked; ≈ 40 ms → ≈ 3 ms → ≈ 2 ms | 🟦 I | teaching numbers consistent with overview.md |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — lifecycle hooks
+| Claim | Status | Note |
+|---|---|---|
+| ngOnChanges fires before ngOnInit on first initialisation; ngOnInit runs once after all inputs have their initial values, before the component's own template is initialised | ✅ V | angular.dev/guide/components/lifecycle; api/core/OnInit, OnChanges |
+| The first ngDoCheck runs after ngOnInit; ngDoCheck is invoked after the default change detector runs | ✅ V | lifecycle guide; api/core/DoCheck |
+| ngAfterViewInit is called after Angular has fully initialised a component's view | ✅ V | api/core/AfterViewInit |
+| ngOnDestroy runs once before the component is destroyed; DestroyRef.onDestroy registers a callback and DestroyRef has a destroyed property | ✅ V | lifecycle guide; api/core/DestroyRef |
+| afterNextRender / afterEveryRender: standalone functions, must be called in an injection context (usually the constructor), run only in the browser, phases earlyRead → write → mixedReadWrite → read, avoid earlyRead and mixedReadWrite when possible | ✅ V | api/core/afterNextRender, afterEveryRender; guide/signals/effect |
+| Browser-specific init should use afterNextRender/afterEveryRender, not isPlatformBrowser in templates (hydration mismatches, layout shift) | ✅ V | guide/ssr / lifecycle guide |
+| No ordering guarantee for a lifecycle hook between a component and directives on the same element | ✅ V | lifecycle guide |
+| NG0100: set initial values in the constructor/ngOnInit, not ngAfterViewInit | ✅ V | angular.dev/errors/NG0100 |
+| Signal inputs do not trigger ngOnChanges; use computed/effect | 🟨 K | consistent with the signal-inputs docs; not quoted verbatim |
+| ngAfterContentInit, ngAfterContentChecked, ngAfterViewChecked exist and what they are for | 🟨 K | standard lifecycle hooks; wording not re-checked on this page |
+| takeUntilDestroyed for streams | 🟨 K | covered with sources on the RxJS page |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
