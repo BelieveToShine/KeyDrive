@@ -247,7 +247,8 @@
       "plan-cache-sniffing",
       "measuring-query-store",
       "debugging-playbook",
-      "locking-isolation"
+      "locking-isolation",
+      "index-maintenance-cost"
     ],
     "sub": {},
     "subTitles": {}

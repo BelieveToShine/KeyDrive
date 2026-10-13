@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The cost of indexes &amp; maintenance — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">The cost of indexes &amp; maintenance</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 13 of 16 · 🏗️ Beyond one query</div>
+    <h1>Every index <span class="grad-text">slows every write</span> — keep the ones that earn it.</h1>
+    <p class="sub">Write amplification, how to find unused and duplicate indexes, and what fragmentation really is — with Microsoft’s rough rules for when to reorganize or rebuild.</p>
+    <div class="interview-q">❓ "How do you decide which indexes to keep, drop or maintain on a busy table?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="One INSERT into Orders must also update every index on the table: the clustered table and four nonclustered indexes, including one that no query ever reads">
+<defs><marker id="ic1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ic1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ic1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M140,155 L290,155 L290,35 L440,35" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ic1A)"/>
+<path d="M140,155 L290,155 L290,97 L440,97" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ic1A)"/>
+<path d="M140,155 L290,155 L290,159 L440,159" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ic1A)"/>
+<path d="M140,155 L290,155 L290,221 L440,221" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ic1A)"/>
+<path d="M140,155 L290,155 L290,283 L440,283" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ic1A)"/>
+<rect class="bx" x="10" y="120" width="130" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">➕ One INSERT</text>
+<text x="75" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">into Orders</text>
+<rect class="bx" x="440" y="10" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="535" y="32.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🌲 Clustered table (PK)</text>
+<text x="535" y="45.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the row itself</text>
+<rect class="bx" x="440" y="72" width="190" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="535" y="94.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📇 IX_CustomerId</text>
+<text x="535" y="107.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">read by queries</text>
+<rect class="bx" x="440" y="134" width="190" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="535" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📇 IX_Customer_Date</text>
+<text x="535" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">covering, read a lot</text>
+<rect class="bx" x="440" y="196" width="190" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="535" y="218.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">📇 IX_Status</text>
+<text x="535" y="231.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">never read</text>
+<rect class="bx" x="440" y="258" width="190" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="535" y="280.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">📇 IX_Total</text>
+<text x="535" y="293.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">never read</text>
+<text class="free" x="75" y="235" text-anchor="middle" font-size="10" font-weight="700" fill="#fcd34d">1 write becomes 5</text>
+<text class="free" x="75" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="#fcd34d">pieces of work</text>
+<text class="free" x="75" y="280" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">The two red ones cost</text>
+<text class="free" x="75" y="294" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">every insert and give</text>
+<text class="free" x="75" y="308" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">nothing back.</text>
+<g class="arrow-pill"><rect x="332" y="26" width="66" height="18" rx="9"/><text x="365" y="38.5" text-anchor="middle" font-size="9" font-style="italic">write row</text></g>
+<g class="arrow-pill"><rect x="345.5" y="88" width="39" height="18" rx="9"/><text x="365" y="100.5" text-anchor="middle" font-size="9" font-style="italic">also</text></g>
+<g class="arrow-pill"><rect x="345.5" y="150" width="39" height="18" rx="9"/><text x="365" y="162.5" text-anchor="middle" font-size="9" font-style="italic">also</text></g>
+<g class="arrow-pill"><rect x="345.5" y="212" width="39" height="18" rx="9"/><text x="365" y="224.5" text-anchor="middle" font-size="9" font-style="italic">also</text></g>
+<g class="arrow-pill"><rect x="345.5" y="274" width="39" height="18" rx="9"/><text x="365" y="286.5" text-anchor="middle" font-size="9" font-style="italic">also</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one <b>INSERT</b> into <code>Orders</code> looks like one operation. But the table has a clustered index and four nonclustered ones, and every one of them must receive the new row, <b>in sorted position</b>. Two of those indexes — red — are never read by any query: they cost the same as the useful ones and give nothing back. Every index is a second (or third, or fifth) sorted copy you promised to keep up to date.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Every index speeds up some reads and <b>slows down every write</b>. Index work is a budget — spend it on the indexes that earn it, and clean up the rest.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 3, 7 and 8 taught you how to add indexes, and each time the plan got faster. It would be easy to conclude: <i>more indexes = faster</i>. Page 12 hinted at the catch — writes hold locks while they update every index.</p>
+      <p>Over months a database collects indexes: one for a report that no longer exists, one added “just in case”, two that overlap, one suggested by a tool. Reads stay fast, but inserts, updates and deletes quietly get slower, the database grows, and backups and maintenance take longer.</p>
+      <p>This page is about the other side of the ledger: what an index costs, how to <b>find the indexes that no longer earn their keep</b>, and what “fragmentation” really is — and when it matters.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">💸 What each kind of write costs</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Operation</th><th scope="col">What it must update</th><th scope="col">Why it matters</th></tr></thead><tbody><tr><th scope="row">INSERT</th><td>The clustered table <b>and every</b> nonclustered index</td><td>Index count multiplies insert cost</td></tr><tr><th scope="row">DELETE</th><td>The clustered table and every nonclustered index</td><td>Same — a purge of millions of rows touches every index</td></tr><tr><th scope="row">UPDATE of a non-key column</th><td>The table, plus only the indexes that contain that column (as key or INCLUDE)</td><td>Wide INCLUDE lists make more updates expensive</td></tr><tr><th scope="row">UPDATE of the clustered key</th><td>The table <b>and every</b> nonclustered index (they all store the clustered key)</td><td>Why the clustered key should be immutable (page 2)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🕵️ Finding indexes that do not earn their keep</div>
+    <p>SQL Server counts how each index is used. The counters tell you how many times an index was <i>read</i> (seeks, scans, lookups) versus <i>written</i> (updates).</p>    <div class="code-block"><pre><span class="kw">SELECT</span> OBJECT_NAME(s.object_id) <span class="kw">AS</span> table_name, i.name <span class="kw">AS</span> index_name,
+       s.user_seeks + s.user_scans + s.user_lookups <span class="kw">AS</span> reads,
+       s.user_updates <span class="kw">AS</span> writes
+<span class="kw">FROM</span>   sys.dm_db_index_usage_stats <span class="kw">AS</span> s
+<span class="kw">JOIN</span>   sys.indexes <span class="kw">AS</span> i <span class="kw">ON</span> i.object_id = s.object_id <span class="kw">AND</span> i.index_id = s.index_id
+<span class="kw">WHERE</span>  s.database_id = DB_ID() <span class="kw">AND</span> OBJECTPROPERTY(s.object_id, <span class="str">'IsUserTable'</span>) = <span class="num">1</span>
+<span class="kw">ORDER BY</span> writes <span class="kw">DESC</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative query. The counters start empty whenever the service starts, so “zero reads” soon after a restart proves nothing. Observe across a full business cycle (month-end!) before deciding.</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Index (illustrative)</th><th scope="col">Reads</th><th scope="col">Writes</th><th scope="col">Verdict</th></tr></thead><tbody><tr><th scope="row">PK_Orders (clustered)</th><td>2,300,000</td><td>1,100,000</td><td>Keep — it is the table</td></tr><tr><th scope="row">IX_Orders_Customer_Date</th><td>1,800,000</td><td>1,100,000</td><td>Keep — heavily read (page 7)</td></tr><tr><th scope="row">IX_Orders_CustomerId</th><td>12,000</td><td>1,100,000</td><td>Candidate — its job is covered by the index above</td></tr><tr><th scope="row">IX_Orders_Status</th><td>0</td><td>1,100,000</td><td>Candidate — never read</td></tr><tr><th scope="row">IX_Orders_Total</th><td>0</td><td>1,100,000</td><td>Candidate — never read</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>These are candidates, not automatic drops.</b> Confirm with whoever owns the workload, remember rarely-run jobs, and keep the <code>CREATE INDEX</code> script so you can restore it. Azure SQL Database can do this for you (automatic tuning’s DROP INDEX option targets indexes unused for 90 days and duplicates, never unique or primary-key indexes) — but that option is off by default.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · drop three indexes, speed up every insert</div>
+    <p><b>Before.</b> The table has five indexes. A batch of 10,000 inserts takes about 8 seconds. <b>Change one thing:</b> drop the three candidates above (after saving their scripts and watching a full cycle).</p>    <div class="code-block"><pre><span class="cmt">-- keep the CREATE scripts first, then:</span>
+<span class="kw">DROP INDEX</span> IX_Orders_CustomerId <span class="kw">ON</span> dbo.Orders;
+<span class="kw">DROP INDEX</span> IX_Orders_Status     <span class="kw">ON</span> dbo.Orders;
+<span class="kw">DROP INDEX</span> IX_Orders_Total      <span class="kw">ON</span> dbo.Orders;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. Dropping the “duplicate” relies on the covering index having CustomerId as its first key column — queries that only filter on CustomerId can still seek it.</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure (illustrative)</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody><tr><th scope="row">Indexes to maintain per insert</th><td>5</td><td>2</td></tr><tr><th scope="row">Time for 10,000 inserts</th><td>≈ 8.0 s</td><td>≈ 3.5 s</td></tr><tr><th scope="row">Logical reads for “My orders” (page 7 query)</th><td>≈ 400</td><td>≈ 400 — unchanged</td></tr><tr><th scope="row">Space used by the table’s indexes</th><td>larger</td><td>smaller (and so are backups)</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧩 Fragmentation: what it is, and when it matters</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A page split: inserting into a full page splits it into two half-empty pages, which lowers page density and can put the new page out of order on disk">
+<defs><marker id="ic2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ic2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ic2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M180,70 L260,70" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ic2A)"/>
+<path d="M380,70 L460,70" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ic2A)"/>
+<path d="M320,150 L320,100" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ic2A)"/>
+<text class="free" x="320" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#93a0b8">BEFORE — three full pages in key order</text>
+<rect class="bx" x="60" y="40" width="120" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="120" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Page 1</text>
+<rect x="70" y="78" width="100" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="70" y="78" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="260" y="40" width="120" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="320" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Page 2</text>
+<rect x="270" y="78" width="100" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="270" y="78" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="460" y="40" width="120" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="520" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Page 3</text>
+<rect x="470" y="78" width="100" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="470" y="78" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="230" y="150" width="180" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">➕ INSERT lands in Page 2</text>
+<text class="free" x="320" y="215" text-anchor="middle" font-size="10" font-weight="700" fill="#93a0b8">AFTER — Page 2 split into two half-empty pages</text>
+<rect class="bx" x="20" y="235" width="120" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="80" y="269" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Page 1</text>
+<rect x="30" y="273" width="100" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="30" y="273" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="180" y="235" width="120" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="240" y="269" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Page 2a</text>
+<rect x="190" y="273" width="50" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="190" y="273" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="340" y="235" width="120" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="400" y="269" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Page 2b (new)</text>
+<rect x="350" y="273" width="50" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="350" y="273" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<rect class="bx" x="500" y="235" width="120" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="560" y="269" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Page 3</text>
+<rect x="510" y="273" width="100" height="10" rx="3" fill="#a78bfa" fill-opacity=".55"/>
+<rect x="510" y="273" width="100" height="10" rx="3" fill="none" stroke="#5b6577" stroke-width=".8"/>
+<text class="free" x="320" y="316" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Same rows, more pages to read; the new page may sit far away on disk. Fragmentation = out of order and low density.</text>
+<g class="arrow-pill"><rect x="200.5" y="61" width="39" height="18" rx="9"/><text x="220" y="73.5" text-anchor="middle" font-size="9" font-style="italic">next</text></g>
+<g class="arrow-pill"><rect x="400.5" y="61" width="39" height="18" rx="9"/><text x="420" y="73.5" text-anchor="middle" font-size="9" font-style="italic">next</text></g>
+<g class="arrow-pill"><rect x="292.5" y="117" width="55" height="18" rx="9"/><text x="320" y="129.5" text-anchor="middle" font-size="9" font-style="italic">no room</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> pages hold rows in key order. When a row has to go into a <b>full</b> page, the page <b>splits</b> into two roughly half-empty pages, and the new one can land anywhere on disk. The result is two things people call fragmentation: <b>low page density</b> (more pages to read for the same rows) and <b>out-of-order pages</b>. Ever-increasing keys (page 2) avoid splits because new rows always go at the end.</figcaption>
+</figure>
+    <p style="margin-top:14px"><b>Does it matter?</b> Mostly for <i>scans</i>: if an index is used mainly for scan operations, removing fragmentation can speed them up; for indexes used mainly for seeks the benefit is much less noticeable. It is not the first suspect when a query is slow — plans, estimates and indexes are (pages 4–9).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Fragmentation (from <code>sys.dm_db_index_physical_stats</code>)</th><th scope="col">Microsoft’s guidance</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">up to ≈ 5%</th><td>Leave it alone</td><td>The benefit is almost always outweighed by the cost of fixing it</td></tr><tr><th scope="row">between ≈ 5% and ≈ 30%</th><td><code>ALTER INDEX … REORGANIZE</code></td><td>Light on resources; does <b>not</b> update statistics</td></tr><tr><th scope="row">above ≈ 30%</th><td><code>ALTER INDEX … REBUILD</code></td><td>Heavier and slower; <b>also refreshes that index’s statistics</b></td></tr></tbody></table></div>
+    <p style="margin-top:12px">Microsoft stresses these cut-offs <b>may vary from case to case</b> — experiment to find what suits your environment. Also check <code>avg_page_space_used_in_percent</code>: page density can drop sharply without fragmentation rising, so a threshold script alone can miss a bloated index. Tiny indexes are not worth maintaining.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · index-cost symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Inserts/updates slowed over months; reads still fast</th><td>Index count grew; some never read</td><td>Inventory usage stats; drop unused and duplicate candidates</td></tr><tr><th scope="row">A table’s indexes are bigger than the table</th><td>Many overlapping, wide INCLUDE lists</td><td>Merge overlapping indexes; trim INCLUDE</td></tr><tr><th scope="row">Big range scans slower than they used to be</th><td>Low page density / splits</td><td>Check density and fragmentation; reorganize or rebuild; use an ever-increasing key</td></tr><tr><th scope="row">Rebuild job runs for hours every night</th><td>Rebuilding everything regardless of benefit</td><td>Use thresholds; skip small indexes; prefer reorganize in the middle band</td></tr><tr><th scope="row">Estimates got wrong after a “reorganize only” job</th><td>Reorganize does not refresh statistics</td><td>Update statistics separately (page 5)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📥</span><h5>Nightly import got slower every quarter</h5><p>Four new indexes for four reports; the import maintains all of them.</p><span class="sc-use">→ Review index usage</span></div>
+      <div class="scenario"><span class="sc-icon">🧹</span><h5>“Rebuild all indexes every night”</h5><p>Hours of work, log growth, and plans recompiled — for indexes that were 2% fragmented.</p><span class="sc-use">→ Thresholds + statistics</span></div>
+      <div class="scenario"><span class="sc-icon">🆔</span><h5>Random GUID clustered key</h5><p>Every insert lands mid-structure and splits a page.</p><span class="sc-use">→ Ever-increasing key</span></div>
+      <div class="scenario"><span class="sc-icon">🕵️</span><h5>An index with 0 reads</h5><p>Last used by the quarterly audit report, which has not run since the restart.</p><span class="sc-use">→ Observe a full cycle first</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Usage statistics caveat.</b> <code>user_updates</code> counts maintenance caused by inserts, updates and deletes; the seek/scan/lookup columns count reads and record when they last happened. All counters reset when the service restarts.</p>
+      <p><b>Rebuild vs reorganize.</b> A reorganize defragments the leaf level in place and is interruptible and light; a rebuild creates the index afresh (and rebuilds its statistics). Cut-offs of 5%/30% are Microsoft’s starting point, not a law.</p>
+      <p><b>Missing-index suggestions</b> are the opposite problem: they add indexes. Use both lists together (page 7).</p>
+      <p><b>Azure SQL automatic tuning.</b> CREATE INDEX and DROP INDEX options verify the effect and revert if there is no significant improvement; index recommendations are not made for tables whose clustered index or heap is larger than 10 GB. FORCE LAST GOOD PLAN is enabled by default; CREATE and DROP INDEX are disabled by default.</p>
+      <p><b>Other engines:</b> PostgreSQL reports usage in <code>pg_stat_user_indexes</code> and reclaims space with <code>VACUUM</code> / <code>REINDEX</code>; MySQL InnoDB uses <code>sys.schema_unused_indexes</code>.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Every index must be updated on every INSERT and DELETE; an UPDATE touches the indexes containing the changed columns.</li><li>Find unused indexes with sys.dm_db_index_usage_stats: reads (seeks + scans + lookups) vs user_updates — counters reset on restart.</li><li>Candidates, not automatic drops: save the CREATE script, observe a full business cycle.</li><li>Fragmentation = out-of-order pages and low page density, caused by page splits; it mostly matters for scans.</li><li>Microsoft’s starting points: under ~5% ignore, 5–30% reorganize, over ~30% rebuild — experiment.</li><li>Rebuild refreshes statistics; reorganize does not.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Every index is a sorted copy that every insert and delete must maintain, so I treat indexes as a budget. I look at index usage statistics — reads versus updates — over a full business cycle, drop unused and duplicate candidates after saving their scripts, and keep covering indexes that are heavily read. For fragmentation I follow Microsoft’s rough 5 and 30 percent bands, but only where scans benefit, and I remember that rebuild refreshes statistics and reorganize does not."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Rebuilding every index every night.</b> It burns CPU, I/O and log for indexes that were barely fragmented, and does little for seek-heavy workloads.</p>
+      <p><b>Dropping an “unused” index right after a restart.</b> The counters were reset, and the quarterly job has not run yet.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔧 REORGANIZE</h5><p>In-place, light, interruptible. Does not update statistics. For moderate fragmentation.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🏗️ REBUILD</h5><p>Builds the index again: heavier and slower, removes all fragmentation, and refreshes its statistics.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Everything so far reads rows through B-trees. What if a query must aggregate hundreds of millions of rows? Next: partitioning and columnstore for big-data reads <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Thresholds and defaults change between versions. For exact guidance check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/indexes/reorganize-and-rebuild-indexes" target="_blank" rel="noopener">Reorganize and rebuild indexes</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-index-usage-stats-transact-sql" target="_blank" rel="noopener">sys.dm_db_index_usage_stats</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/automatic-tuning-overview" target="_blank" rel="noopener">Automatic tuning overview (Azure SQL)</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide" target="_blank" rel="noopener">Index design guide</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

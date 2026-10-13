@@ -2214,5 +2214,31 @@
     "summary": "The classic mistake with Transactions, locking & isolation.",
     "keywords": "sql locking blocking deadlock isolation level rcsi snapshot head blocker deadlock graph transaction lock wait trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "sql-index-maintenance-cost",
+    "title": "The cost of indexes & maintenance",
+    "category": "SQL",
+    "page": "sql/concepts/index-maintenance-cost.html",
+    "summary": "Write amplification, finding unused and duplicate indexes with usage statistics, page splits and fragmentation, and Microsoft's rough reorganize/rebuild thresholds.",
+    "keywords": "sql index maintenance cost write amplification unused index duplicate index fragmentation page split reorganize rebuild index usage stats"
+  },
+  {
+    "id": "sql-index-maintenance-cost-recall",
+    "title": "The cost of indexes & maintenance — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/index-maintenance-cost.html",
+    "summary": "Quick recall points: The cost of indexes & maintenance.",
+    "keywords": "sql index maintenance cost write amplification unused index duplicate index fragmentation page split reorganize rebuild index usage stats interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-index-maintenance-cost-trap",
+    "title": "The cost of indexes & maintenance — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/index-maintenance-cost.html",
+    "summary": "The classic mistake with The cost of indexes & maintenance.",
+    "keywords": "sql index maintenance cost write amplification unused index duplicate index fragmentation page split reorganize rebuild index usage stats trap mistake",
+    "anchor": "trap"
   }
 ]

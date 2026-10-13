@@ -187,6 +187,23 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | PostgreSQL MVCC, pg_locks / pg_stat_activity | 🟨 K | other-engine pointer |
 | Session 51/77/80, order 9001, customer 42, “30 seconds”, 20 ms CPU, 30,000 ms | 🟦 I | teaching numbers |
 
+## Page 13 — cost of indexes and maintenance
+| Claim | Status | Note |
+|---|---|---|
+| `sys.dm_db_index_usage_stats` counts seeks, scans, lookups and updates per index; `user_updates` = maintenance caused by inserts/updates/deletes; counters reset when the service starts | ✅ V | dm_db_index_usage_stats doc |
+| Zero reads soon after a restart does not prove an index is unused; verify with the owner; candidates, not automatic drops | ✅ V | MS Q&A / docs notes |
+| Compare user_updates with the sum of reads to find write-heavy indexes | ✅ V | community queries cited in MS Q&A (kept as “candidates”) |
+| Reorganize when fragmentation is above ~5% and up to ~30%; rebuild above ~30%; below ~5% not worth acting on; values vary — experiment | ✅ V | Reorganize and rebuild indexes docs |
+| Rebuild refreshes that index’s statistics; reorganize does not; reorganize uses minimal resources, rebuild is heavier | ✅ V | same / MS Q&A |
+| Fragmentation matters mostly for scans; less for seek-heavy indexes | ✅ V | same |
+| Page density (`avg_page_space_used_in_percent`) can drop without fragmentation rising | ✅ V | MS blog “Index maintenance — fragmentation should not be your only concern” |
+| Avoid page splits with ever-increasing keys (new rows at the end) | ✅ V | index design guide |
+| Azure SQL automatic tuning: CREATE INDEX (no recommendations for tables with clustered index/heap > 10 GB), DROP INDEX (unused 90 days + duplicates; never unique/PK), FORCE LAST GOOD PLAN; defaults: force plan on, create/drop index off; changes are verified and reverted if no significant improvement | ✅ V | Automatic tuning overview / enable pages |
+| INSERT/DELETE touch every index; UPDATE touches only indexes containing changed columns; clustered key update touches all nonclustered indexes | 🟨 K | standard storage-engine behaviour; clustered-key part follows from “key copied into every index” (✅ V, page 2) |
+| An index on (CustomerId, OrderDate) makes an index on (CustomerId) alone redundant for seeks | 🟨 K | left-prefix rule; general index-design guidance |
+| PostgreSQL pg_stat_user_indexes / VACUUM / REINDEX; MySQL sys.schema_unused_indexes | 🟨 K | other-engine pointers |
+| Reads/writes counts (2,300,000, 1,800,000, 12,000, 1,100,000), “8 seconds” → 3.5 s for 10,000 inserts | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

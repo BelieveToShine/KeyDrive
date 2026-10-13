@@ -130,7 +130,7 @@ f'''<span class="cmt">-- who is waiting, and who are they waiting for?</span>
         '<b>Using NOLOCK / READ UNCOMMITTED to “fix” blocking.</b> You trade waiting for wrong answers (dirty reads). Row versioning gives you non-blocking reads that are still correct.',
         '<b>Killing the blocker every time.</b> It hides the application bug that opens transactions and never closes them.'])
     body += confuse('⏳ Blocking', 'One session waits for another’s lock. It ends when the holder commits or rolls back.', '☠️ Deadlock', 'A cycle: A waits for B and B waits for A. It never ends by itself — the engine picks a victim.')
-    body += next_box('Every index you added in pages 3–8 is not free: it has to be maintained on every write, and that work holds locks too. Next: the cost of indexes and index maintenance <i>(coming soon)</i>.')
+    body += next_box('Every index you added in pages 3–8 is not free: it has to be maintained on every write, and that work holds locks too. Next: the cost of indexes and index maintenance.', 'index-maintenance-cost.html', 'The cost of indexes &amp; maintenance')
     body += fact_note('Isolation defaults and locking behaviour differ between SQL Server and Azure SQL. For exact details check the official docs.', [DOC_LOCK, DOC_DEAD, DOC_AZDEAD, DOC_BLOCK])
     return page('locking-isolation', 'Transactions, locking & isolation', 'Concept 12 of 16 · 🏗️ Beyond one query',
         'Fast alone, slow together — because <span class="grad-text">waiting</span> is not computing.',

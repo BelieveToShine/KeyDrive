@@ -41,7 +41,7 @@
     <div class="eyebrow">🗄️ SQL · from “why is it slow?” to “here is the fix, and the proof”</div>
     <h1>Learn to read <span class="grad-text">what the database really did</span> — then make it faster.</h1>
     <p class="sub">Not a list of tuning tricks. One continuous story: a query’s journey, how data sits on disk, indexes, execution plans, statistics, joins, and a debugging method you can use on any slow query. Every page has a before-and-after plan you can compare. Written for SQL Server and Azure SQL (T-SQL); the thinking transfers to other engines.</p>
-    <p class="hub-note">🗺️ <b>12 of 16</b> concepts are written — plan literacy, optimising a query, measuring and debugging and the first system-level pages are ready; the remaining 4 are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>13 of 16</b> concepts are written — plan literacy, optimising a query, measuring and debugging and the first system-level pages are ready; the remaining 3 are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/query-journey.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -65,7 +65,7 @@
 <path class="jm-link done" d="M320,782 V872" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,916 V952" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,996 V1086" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,1130 V1166" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,1130 V1166" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1210 V1246" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1290 V1326" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1370 V1406" marker-end="url(#jmArrow)"/>
@@ -96,7 +96,7 @@
 <a class="jm-hit" xlink:href="concepts/measuring-query-store.html"><g class="jm-node done"><rect x="220" y="872" width="200" height="44" rx="12"/><text x="320" y="899" text-anchor="middle" font-size="14" font-weight="700">📏 Measuring</text></g></a>
 <a class="jm-hit" xlink:href="concepts/debugging-playbook.html"><g class="jm-node done"><rect x="220" y="952" width="200" height="44" rx="12"/><text x="320" y="979" text-anchor="middle" font-size="14" font-weight="700">🧭 Debug Playbook</text></g></a>
 <a class="jm-hit" xlink:href="concepts/locking-isolation.html"><g class="jm-node done"><rect x="220" y="1086" width="200" height="44" rx="12"/><text x="320" y="1113" text-anchor="middle" font-size="14" font-weight="700">🔒 Locking</text></g></a>
-<g class="jm-node locked"><rect x="220" y="1166" width="200" height="44" rx="12"/><text x="320" y="1193" text-anchor="middle" font-size="14" font-weight="700">⚖️ Index Costs</text></g>
+<a class="jm-hit" xlink:href="concepts/index-maintenance-cost.html"><g class="jm-node done"><rect x="220" y="1166" width="200" height="44" rx="12"/><text x="320" y="1193" text-anchor="middle" font-size="14" font-weight="700">⚖️ Index Costs</text></g></a>
 <g class="jm-node locked"><rect x="220" y="1246" width="200" height="44" rx="12"/><text x="320" y="1273" text-anchor="middle" font-size="14" font-weight="700">🧱 Partitioning</text></g>
 <g class="jm-node locked"><rect x="220" y="1326" width="200" height="44" rx="12"/><text x="320" y="1353" text-anchor="middle" font-size="14" font-weight="700">☁️ Azure SQL</text></g>
 <g class="jm-node locked"><rect x="220" y="1406" width="200" height="44" rx="12"/><text x="320" y="1433" text-anchor="middle" font-size="14" font-weight="700">🏥 Slow-Query Clinic</text></g>
@@ -147,7 +147,7 @@
       <li class="concept-row done"><span class="cr-num">10</span><span class="cr-main"><a href="concepts/measuring-query-store.html">Measuring: STATISTICS IO/TIME, waits, Query Store</a><span class="cr-tail">logical reads, wait types, regressions, forcing a plan</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">11</span><span class="cr-main"><a href="concepts/debugging-playbook.html">The debugging playbook</a><span class="cr-tail">the six-step ladder, symptom → tool → cause, what NOT to do</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">12</span><span class="cr-main"><a href="concepts/locking-isolation.html">Transactions, locking &amp; isolation</a><span class="cr-tail">blocking vs deadlocks, isolation levels, snapshot, deadlock graphs</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">13</span><span class="cr-main"><span class="cr-name">The cost of indexes &amp; maintenance</span><span class="cr-tail">write cost, fragmentation, unused and duplicate indexes</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">13</span><span class="cr-main"><a href="concepts/index-maintenance-cost.html">The cost of indexes &amp; maintenance</a><span class="cr-tail">write cost, fragmentation, unused and duplicate indexes</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">14</span><span class="cr-main"><span class="cr-name">Big-data reads: partitioning &amp; columnstore</span><span class="cr-tail">partition elimination, columnstore, batch mode</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">15</span><span class="cr-main"><span class="cr-name">Azure SQL specifics</span><span class="cr-tail">resource limits, Query Performance Insight, automatic tuning, IQP</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">16</span><span class="cr-main"><span class="cr-name">Capstone: the slow-query clinic</span><span class="cr-tail">ten mixed cases to diagnose with the ladder</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -156,7 +156,7 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Data Systems · SQL Performance Lab · 12 / 16 concepts written</div>
+  <div class="wrap">KeyDrive · Data Systems · SQL Performance Lab · 13 / 16 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>
