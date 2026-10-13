@@ -345,7 +345,8 @@
       "profiler",
       "memoization",
       "react-debugging-playbook",
-      "context-state-architecture"
+      "context-state-architecture",
+      "data-fetching-suspense"
     ],
     "sub": {},
     "subTitles": {}

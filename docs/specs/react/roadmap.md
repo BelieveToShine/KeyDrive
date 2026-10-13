@@ -9,7 +9,7 @@
 | 6 | memo, useMemo, useCallback & the Compiler | memoization | ✅ written |
 | 7 | The React debugging playbook | react-debugging-playbook | ✅ written |
 | 8 | Context, reducers & where state lives | context-state-architecture | ✅ written |
-| 9 | Data fetching, Suspense & transitions | data-fetching-suspense | 🔒 planned |
+| 9 | Data fetching, Suspense & transitions | data-fetching-suspense | ✅ written |
 | 10 | Server rendering, hydration & Server Components | server-rendering-hydration | 🔒 planned |
 | 11 | Code splitting & bundle weight | code-splitting-bundles | 🔒 planned |
 | 12 | Capstone: the React performance clinic | react-clinic | 🔒 planned |

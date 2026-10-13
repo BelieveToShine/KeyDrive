@@ -105,5 +105,18 @@ Source root: https://react.dev/
 | 502 vs 2 readers; 500 cards, cart/theme example | 🟦 I | teaching numbers |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 9 — data fetching, Suspense & transitions
+| Claim | Status | Note |
+|---|---|---|
+| Suspense displays a fallback until its children finish loading | ✅ V | reference/react/Suspense |
+| Suspense activates for lazy components, promises read with `use`, stylesheets with a precedence prop, and Suspense-enabled frameworks; it does not detect fetching in Effects or event handlers | ✅ V | reference/react/Suspense |
+| `use` reads a promise during render; the promise must be cached, one created during render is recreated each render | ✅ V | reference/react/use |
+| useTransition renders part of the UI in the background, returns isPending, update can be interrupted; already-visible content is not replaced by a fallback, new Suspense boundaries still show fallbacks | ✅ V | reference/react/useTransition, Suspense |
+| useDeferredValue: if the background update suspends, the user sees the old value until data loads; you must opt in (urgent updates still show fallbacks) | ✅ V | reference/react/useDeferredValue |
+| Effects don't run on the server; fetching in effects leads to waterfalls, usually no preloading or caching, race-condition boilerplate; docs recommend framework data fetching or a client cache (TanStack Query, SWR, React Router 6.4+) | ✅ V | reference/react/useEffect, learn/synchronizing-with-effects, blog/2025/02/14/sunsetting-create-react-app |
+| Boundaries around sections, not the whole page | 🟨 K | general guidance, not quoted from the docs |
+| Waterfall 300 + 300 ms vs 300 ms parallel (“300 ms”, “300”, “600 ms”) | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

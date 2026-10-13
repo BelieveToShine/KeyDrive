@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data fetching, Suspense &amp; transitions — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Data &amp; Suspense</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 9 of 12 · ⚛️ App architecture</div>
+    <h1>Loading is a <span class="grad-text">design decision</span> — and the request should start early.</h1>
+    <p class="sub">Why fetching in effects makes waterfalls, what Suspense can and cannot see, and how transitions and deferred values stop spinner flicker.</p>
+    <div class="interview-q">❓ "How do you handle loading states in React without flicker or request waterfalls?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="When the search results are loading a Suspense fallback replaces the old results with a spinner on every keystroke, while a deferred value keeps the old results on screen until the new ones are ready">
+<defs><marker id="da1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="da1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="da1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">FALLBACK EVERY TIME</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">useDeferredValue / transition</text>
+<path d="M162,86 L162,136" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#da1A)"/>
+<path d="M162,184 L162,234" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#da1A)"/>
+<path d="M477,86 L477,136" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#da1A)"/>
+<path d="M477,184 L477,234" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#da1A)"/>
+<rect class="bx" x="50" y="38" width="225" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Results for “sh”</text>
+<text x="162.5" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">what the user is reading</text>
+<rect class="bx" x="50" y="136" width="225" height="48" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Spinner (fallback)</text>
+<text x="162.5" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">old results are hidden</text>
+<rect class="bx" x="50" y="234" width="225" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Results for “shi”</text>
+<text x="162.5" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">data arrived</text>
+<rect class="bx" x="365" y="38" width="225" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Results for “sh”</text>
+<text x="477.5" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">what the user is reading</text>
+<rect class="bx" x="365" y="136" width="225" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Old results stay</text>
+<text x="477.5" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">dimmed while loading</text>
+<rect class="bx" x="365" y="234" width="225" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="255.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Results for “shi”</text>
+<text x="477.5" y="268.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">data arrived</text>
+<g class="arrow-pill"><rect x="126" y="102" width="72" height="18" rx="9"/><text x="162" y="114.5" text-anchor="middle" font-size="9" font-style="italic">type “i”</text></g>
+<g class="arrow-pill"><rect x="126.5" y="200" width="71" height="18" rx="9"/><text x="162" y="212.5" text-anchor="middle" font-size="9" font-style="italic">data ready</text></g>
+<g class="arrow-pill"><rect x="441" y="102" width="72" height="18" rx="9"/><text x="477" y="114.5" text-anchor="middle" font-size="9" font-style="italic">type “i”</text></g>
+<g class="arrow-pill"><rect x="441.5" y="200" width="71" height="18" rx="9"/><text x="477" y="212.5" text-anchor="middle" font-size="9" font-style="italic">data ready</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a search box that loads results from a server, typing “sh” then “i”. <b>Left</b>: the new results suspend, so the nearest Suspense boundary swaps the results the user was reading for a <b>spinner</b> — on every keystroke. <b>Right</b>: the update is marked as non-urgent (<span class="kw">useDeferredValue</span> or a transition), so React <b>keeps the old results on screen</b> (you can dim them) until the new ones are ready. The input stays responsive in both.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Loading is a <b>design decision</b>: where the spinner goes, what stays visible, and when the request <b>starts</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Up to now every ShopUI component had its data at hand. In a real shop the products, reviews and search results come from a server — and that adds waiting. Waiting creates three problems: <b>loading states</b> (what do we show?), <b>flicker</b> (spinners flashing as the user types), and <b>waterfalls</b> (requests that start one after another).</p>
+      <p>Page 4 showed the do-it-yourself way: fetch in an effect. It works for small cases, but it starts late (after render), repeats itself (no cache) and has races. React gives better building blocks: <b>Suspense</b> for “show this while loading”, and <b>transitions</b> for “keep the old screen while the new one loads”.</p>
+      <p>This page is about those building blocks and about when each one helps.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⏱️ Start fetching early</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Fetching in effects makes a waterfall because the second component only starts fetching after the first has rendered; starting both requests together halves the wait">
+<defs><marker id="da2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="da2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="da2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">WATERFALL — about 600 ms</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">PARALLEL — about 300 ms</text>
+<text class="free" x="22" y="54" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">ProductList fetch</text>
+<rect class="bx" x="20" y="60" width="135" height="30" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text class="free" x="87" y="80" text-anchor="middle" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">300 ms</text>
+<text class="free" x="22" y="134" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">Reviews fetch</text>
+<rect class="bx" x="155" y="140" width="135" height="30" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text class="free" x="222" y="160" text-anchor="middle" font-size="10" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">300 ms</text>
+<text class="free" x="337" y="54" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">ProductList fetch</text>
+<rect class="bx" x="335" y="60" width="135" height="30" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text class="free" x="402" y="80" text-anchor="middle" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">300 ms</text>
+<text class="free" x="337" y="134" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">Reviews fetch</text>
+<rect class="bx" x="335" y="140" width="135" height="30" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text class="free" x="402" y="160" text-anchor="middle" font-size="10" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">300 ms</text>
+<text class="free" x="162" y="190" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Reviews cannot start until its parent</text>
+<text class="free" x="162" y="208" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">has rendered and its effect has run.</text>
+<text class="free" x="477" y="190" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Start both requests at the top (a framework</text>
+<text class="free" x="477" y="208" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">loader, a cache, or a Suspense-enabled source).</text>
+<text class="free" x="162" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#fda4af">Total ≈ 600 ms until both are visible</text>
+<text class="free" x="477" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#6ee7b7">Total ≈ 300 ms until both are visible</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> two components that each need data. <b>Left</b>: both fetch inside an effect. The child cannot render — and so cannot start its effect — until the parent has rendered, so the requests run one after the other: <b>a waterfall</b> (300 + 300 ms). <b>Right</b>: the requests start together, so the wait is the slower one (300 ms). Effects also do not run on the server and do not cache, which is why the docs recommend a framework’s data loading or a client-side cache. (Times are illustrative.)</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The tools</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tool</th><th scope="col">What it does</th><th scope="col">Careful</th></tr></thead><tbody><tr><th scope="row"><span class="kw">&lt;Suspense fallback={…}&gt;</span></th><td>Shows the fallback until the children have finished loading, then swaps in the content</td><td>Only works with Suspense-enabled sources: <span class="kw">lazy</span> components, a promise read with <span class="kw">use</span>, or a framework — <b>not</b> data fetched in an effect or event handler</td></tr><tr><th scope="row"><span class="kw">use(promise)</span></th><td>Reads a promise during render and suspends until it resolves</td><td>The promise must be cached; one created during render is new each time and causes repeated fallbacks</td></tr><tr><th scope="row"><span class="kw">useTransition</span></th><td>Marks an update as non-urgent; you get <span class="kw">isPending</span> for feedback; the update can be interrupted</td><td>Already-visible content is not replaced by a fallback; a <i>new</i> Suspense boundary still shows its fallback</td></tr><tr><th scope="row"><span class="kw">useDeferredValue(value)</span></th><td>Lets one part of the UI lag behind; if the update suspends, the old value stays on screen</td><td>You must opt in — urgent updates still show fallbacks</td></tr><tr><th scope="row">Framework loader or a data library (the docs mention TanStack Query, SWR, React Router)</th><td>Starts fetching early, caches, de-duplicates, avoids waterfalls</td><td>Pick one; do not hand-roll it in effects for anything but small cases</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Data lab · the flickering search</div>
+    <p>ShopUI’s search now asks the server. The user types “shi” — three keystrokes.</p>    <div class="code-block"><pre><span class="kw">function</span> Search() {
+  <span class="kw">const</span> [query, setQuery] = useState(<span class="str">''</span>);
+  <span class="kw">const</span> deferredQuery = useDeferredValue(query);          <span class="cmt">// the lagging copy</span>
+  <span class="kw">const</span> isStale = query !== deferredQuery;                <span class="cmt">// show “updating…” feedback</span>
+  <span class="kw">const</span> dim = { opacity: isStale ? 0.5 : 1 };
+  <span class="kw">return</span> (&lt;&gt;
+    &lt;input value={query} onChange={e =&gt; setQuery(e.target.value)} /&gt;
+    &lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+      &lt;div style={dim}&gt;&lt;Results query={deferredQuery} /&gt;&lt;/div&gt;
+    &lt;/Suspense&gt;
+  &lt;/&gt;);
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch; <span class="kw">Results</span> must read its data in a Suspense-enabled way (a framework, or a cached promise with <span class="kw">use</span>).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Spinner flashes while typing “shi”</th><th scope="col">Input responsive?</th><th scope="col">What the user sees</th></tr></thead><tbody><tr><th scope="row">Plain Suspense, no deferral</th><td>3 (one per keystroke)</td><td>Yes</td><td>Results vanish, spinner, results — flicker</td></tr><tr><th scope="row"><span class="kw">useDeferredValue</span></th><td>0 after the first load</td><td>Yes</td><td>Old results dimmed, then new ones</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · data and loading symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Suspense fallback never shows</th><td>Data is fetched in an effect or handler — Suspense cannot see it</td><td>Use a Suspense-enabled source (framework, <span class="kw">use</span> with a cached promise)</td></tr><tr><th scope="row">Fallback flashes again and again</th><td>A new promise is created on every render</td><td>Cache the promise outside the render</td></tr><tr><th scope="row">Spinner replaces content the user was reading</th><td>The update is urgent, not a transition</td><td><span class="kw">startTransition</span> or <span class="kw">useDeferredValue</span></td></tr><tr><th scope="row">Second request starts late</th><td>Waterfall: child fetches after parent renders</td><td>Start both requests at the top; use a loader or cache</td></tr><tr><th scope="row">Old response overwrites a newer one</th><td>Race in effect-based fetching</td><td>Ignore flag in cleanup (page 4), or a data library</td></tr><tr><th scope="row">Back-and-forth navigation refetches everything</th><td>No cache</td><td>Add a client-side cache or framework data layer</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Live search flickers</h5><p>Fallback replaces results every keystroke.</p><span class="sc-use">→ useDeferredValue</span></div>
+      <div class="scenario"><span class="sc-icon">🗂️</span><h5>Tab switch shows a spinner for tabs already loaded</h5><p>Urgent update hides visible content.</p><span class="sc-use">→ useTransition</span></div>
+      <div class="scenario"><span class="sc-icon">⛓️</span><h5>Product page loads in two steps</h5><p>Child fetches after the parent.</p><span class="sc-use">→ Fetch both at the route level</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Revisiting a page refetches</h5><p>No cache.</p><span class="sc-use">→ Data library or framework cache</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>What suspends.</b> Per the docs, a Suspense boundary activates for lazy-loaded components, a promise read with <span class="kw">use</span>, stylesheets with a precedence prop, and Suspense-enabled frameworks. It does not detect fetches in effects or event handlers.</p>
+      <p><b>Transitions are interruptible.</b> If the user types again, React can abandon the in-progress render and start over with the newest value.</p>
+      <p><b>Fallbacks and layout.</b> Place boundaries around sections, not the whole page, so one slow part does not hide everything else.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Suspense shows a fallback until its children finish loading; it only detects Suspense-enabled sources, not effect-based fetching.</li><li><span class="kw">use</span> reads a promise during render; the promise must be cached.</li><li><span class="kw">useTransition</span> / <span class="kw">useDeferredValue</span> keep already-visible content instead of showing a fallback.</li><li>Effects start fetching late, do not run on the server and do not cache — hence waterfalls.</li><li>Start requests early (framework loader or data library) so they run in parallel.</li><li>Always give the user feedback while stale: <span class="kw">isPending</span> or a dimmed result.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"For server data I avoid waterfalls by starting requests early — through a framework or a data library, not nested effects. I wrap slow parts in Suspense boundaries, and I mark non-urgent updates with useTransition or useDeferredValue so the old content stays visible instead of flashing a spinner, with a pending indicator for feedback."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Expecting Suspense to catch an effect’s fetch.</b> It cannot; the fallback will never show.</p>
+      <p><b>One giant Suspense boundary at the root.</b> One slow component hides the whole page.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>⏳ Suspense</h5><p>Declares what to show while something is loading.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🛋️ Transition</h5><p>Declares which updates may wait, so the old UI stays instead of a fallback.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Data arrives after JavaScript loads and renders. Can the server send finished HTML instead? Next: server rendering, hydration and Server Components. <i>(coming soon: Server rendering, hydration & Server Components)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/reference/react/Suspense" target="_blank" rel="noopener">Suspense</a> · <a href="https://react.dev/reference/react/useTransition" target="_blank" rel="noopener">useTransition</a> · <a href="https://react.dev/reference/react/useDeferredValue" target="_blank" rel="noopener">useDeferredValue</a> · <a href="https://react.dev/reference/react/use" target="_blank" rel="noopener">use</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

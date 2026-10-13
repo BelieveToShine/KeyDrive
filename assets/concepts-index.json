@@ -2864,5 +2864,31 @@
     "summary": "The classic mistake with Context, reducers & where state lives.",
     "keywords": "react context useContext useReducer reducer provider prop drilling state management lift state up re-render split context trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-data-fetching-suspense",
+    "title": "Data fetching, Suspense & transitions",
+    "category": "React",
+    "page": "react/concepts/data-fetching-suspense.html",
+    "summary": "Fetch waterfalls, what Suspense can and cannot see, use, useTransition and useDeferredValue to stop spinner flicker.",
+    "keywords": "react data fetching suspense use useTransition useDeferredValue loading waterfall fallback flicker"
+  },
+  {
+    "id": "react-data-fetching-suspense-recall",
+    "title": "Data fetching, Suspense & transitions — interview recall",
+    "category": "React",
+    "page": "react/concepts/data-fetching-suspense.html",
+    "summary": "Quick recall points: Data fetching, Suspense & transitions.",
+    "keywords": "react data fetching suspense use useTransition useDeferredValue loading waterfall fallback flicker interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-data-fetching-suspense-trap",
+    "title": "Data fetching, Suspense & transitions — common trap",
+    "category": "React",
+    "page": "react/concepts/data-fetching-suspense.html",
+    "summary": "The classic mistake with Data fetching, Suspense & transitions.",
+    "keywords": "react data fetching suspense use useTransition useDeferredValue loading waterfall fallback flicker trap mistake",
+    "anchor": "trap"
   }
 ]
