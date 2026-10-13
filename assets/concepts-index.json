@@ -2552,5 +2552,31 @@
     "summary": "The classic mistake with Consistency levels.",
     "keywords": "cosmos db consistency levels strong bounded staleness session consistent prefix eventual session token ru latency trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "cosmos-change-feed",
+    "title": "Change feed & event-driven reads",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/change-feed.html",
+    "summary": "The ordered change record, change feed processor with lease container, at-least-once handlers and read models priced in RU.",
+    "keywords": "cosmos db change feed processor lease container read model materialized view event driven at least once idempotent"
+  },
+  {
+    "id": "cosmos-change-feed-recall",
+    "title": "Change feed & event-driven reads — interview recall",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/change-feed.html",
+    "summary": "Quick recall points: Change feed & event-driven reads.",
+    "keywords": "cosmos db change feed processor lease container read model materialized view event driven at least once idempotent interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "cosmos-change-feed-trap",
+    "title": "Change feed & event-driven reads — common trap",
+    "category": "Cosmos DB",
+    "page": "cosmos/concepts/change-feed.html",
+    "summary": "The classic mistake with Change feed & event-driven reads.",
+    "keywords": "cosmos db change feed processor lease container read model materialized view event driven at least once idempotent trap mistake",
+    "anchor": "trap"
   }
 ]

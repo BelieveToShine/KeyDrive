@@ -295,7 +295,8 @@
       "queries-fan-out",
       "query-metrics",
       "hot-partitions-429",
-      "consistency-levels"
+      "consistency-levels",
+      "change-feed"
     ],
     "sub": {},
     "subTitles": {}

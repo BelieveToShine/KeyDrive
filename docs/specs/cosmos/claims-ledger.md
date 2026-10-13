@@ -142,6 +142,19 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 | Isolation vs consistency analogy | 🟦 I | analogy |
 | RU table for reads/s (≈ 1–4 RU) and scene examples | 🟦 I | teaching numbers |
 
+## Page 10 — change feed
+| Claim | Status | Note |
+|---|---|---|
+| Change feed = persistent, ordered record of changes; parallel by partition key ranges; client manages checkpointing | ✅ V | Change feed docs |
+| Processor: monitored container, lease container (state/coordination across workers), delegate; at-least-once; unhandled exception → batch resent | ✅ V | Change feed processor |
+| Processor library available for .NET and Java; Python/Node use the pull model | ✅ V | same |
+| Typical uses: sync to cache, search engine, data warehouse, cold storage; real-time replication is eventually consistent | ✅ V | Change feed design patterns |
+| Change feed estimator measures lag | ✅ V | How to use the change feed estimator (exists) |
+| Azure Functions Cosmos DB trigger uses the change feed | 🟨 K | well-known; confirm |
+| Dual-write inconsistency argument | 🟨 K | general design guidance |
+| SQL change tracking/CDC, DynamoDB streams analogies | 🟨 K | other-engine pointers |
+| 150 RU dashboard, “150,000 RU/s”, 1,000 reads/s, read-model RU figures, 100 managers × 10/s | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|
