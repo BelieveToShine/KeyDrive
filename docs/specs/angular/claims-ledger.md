@@ -186,5 +186,18 @@ Source root: https://angular.dev/
 | Chrome heap snapshot shows retained component instances | 🟨 K | general Chrome DevTools capability, not from angular.dev |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — HttpClient & interceptors
+| Claim | Status | Note |
+|---|---|---|
+| HttpInterceptorFn is middleware that can modify outgoing requests and incoming responses, with a next handler; withInterceptors adds functional interceptors to provideHttpClient; docs recommend functional interceptors for more predictable ordering over DI-based ones | ✅ V | angular.dev/api/common/http/HttpInterceptorFn, withInterceptors; guide/http/setup |
+| Requests are immutable: an auth interceptor creates a modified copy with an added header and passes it to next | ✅ V | guide/http/testing; guide/http/interceptors |
+| HttpClient reports failures as HttpErrorResponse on the error channel; network/timeout errors have status 0; catchError can map errors to UI state; retry re-subscribes; interceptors are a common place for retry with exponential backoff; HttpContext is mutable, unlike other request properties | ✅ V | angular.dev/guide/http/interceptors; best-practices/error-handling |
+| catchError(() => EMPTY) in an interceptor or rxResource can complete with no value and no error; let the error propagate or return a fallback | ✅ V | angular.dev/best-practices/error-handling; errors/NG0991 |
+| By default HttpClient uses the fetch API; withXhr switches to XMLHttpRequest; withInterceptorsFromDi keeps class interceptors | ✅ V | angular.dev/guide/http/setup |
+| Retry only idempotent requests; refresh token once on 401 and exclude the refresh call | 🟨 K | general HTTP/engineering practice |
+| HTTP status meanings (401, 404, 503) | 🟨 K | standard HTTP semantics |
+| 7 services, 3 error shapes | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

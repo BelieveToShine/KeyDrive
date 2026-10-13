@@ -3514,5 +3514,31 @@
     "summary": "The classic mistake with Capstone: the Angular performance clinic.",
     "keywords": "angular clinic capstone performance diagnosis cases devtools practice trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-http-interceptors",
+    "title": "HttpClient & interceptors",
+    "category": "Angular",
+    "page": "angular/concepts/http-interceptors.html",
+    "summary": "Functional interceptors for auth headers, logging, error shaping, loading indicators and safe retries; HttpClient error handling.",
+    "keywords": "angular http interceptor HttpClient withInterceptors auth token 401 retry HttpErrorResponse catchError backoff HttpContext"
+  },
+  {
+    "id": "angular-http-interceptors-recall",
+    "title": "HttpClient & interceptors — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/http-interceptors.html",
+    "summary": "Quick recall points: HttpClient & interceptors.",
+    "keywords": "angular http interceptor HttpClient withInterceptors auth token 401 retry HttpErrorResponse catchError backoff HttpContext interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-http-interceptors-trap",
+    "title": "HttpClient & interceptors — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/http-interceptors.html",
+    "summary": "The classic mistake with HttpClient & interceptors.",
+    "keywords": "angular http interceptor HttpClient withInterceptors auth token 401 retry HttpErrorResponse catchError backoff HttpContext trap mistake",
+    "anchor": "trap"
   }
 ]

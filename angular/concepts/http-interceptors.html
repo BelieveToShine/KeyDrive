@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HttpClient &amp; interceptors — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><a href="rxjs-async-pipe.html">RxJS &amp; async pipe</a><span class="sep">›</span><span class="cur">HttpClient &amp; interceptors</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Angular lab · 🌐 HTTP</div>
+    <h1>Cross-cutting HTTP logic belongs <span class="grad-text">in one place</span>.</h1>
+    <p class="sub">Functional interceptors: adding auth headers, logging, error shaping, loading indicators and safe retries, plus error handling with HttpClient.</p>
+    <div class="interview-q">❓ "What are Angular interceptors and how would you add an auth token and handle 401s?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A request passes through interceptors in order before reaching the server, and the response passes back through them in reverse: an auth interceptor adds a header, a logging interceptor times the call, and an error interceptor turns failures into one error shape">
+<defs><marker id="ht1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ht1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ht1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="124" width="620" height="190" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WHAT EACH INTERCEPTOR DOES</text>
+<path d="M130,44 L165,44" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M275,44 L295,44" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M405,44 L425,44" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M535,44 L550,44" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M550,66 L535,66" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M425,66 L405,66" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M295,66 L275,66" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<path d="M165,66 L130,66" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ht1A)"/>
+<rect class="bx" x="10" y="24" width="120" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="70" y="52" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Component</text>
+<text x="70" y="64" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">http.get(…)</text>
+<rect class="bx" x="165" y="24" width="110" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="220" y="51.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Auth</text>
+<text x="220" y="64.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">adds header</text>
+<rect class="bx" x="295" y="24" width="110" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="350" y="51.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Logging</text>
+<text x="350" y="64.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">times the call</text>
+<rect class="bx" x="425" y="24" width="110" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="480" y="51.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Errors</text>
+<text x="480" y="64.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">one error shape</text>
+<rect class="bx" x="550" y="24" width="80" height="60" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="590" y="58" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Server</text>
+<text class="free" x="30" y="168" text-anchor="start" font-size="10.5" font-weight="700" fill="#6ee7b7">Request, outgoing</text>
+<text class="free" x="30" y="186" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">req.clone({ setHeaders }) — requests are immutable, so you pass a modified copy to next(req)</text>
+<text class="free" x="30" y="208" text-anchor="start" font-size="10.5" font-weight="700" fill="#6ee7b7">Response, incoming</text>
+<text class="free" x="30" y="226" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">pipe the observable returned by next(): tap, catchError, retry</text>
+<text class="free" x="30" y="248" text-anchor="start" font-size="10.5" font-weight="700" fill="#6ee7b7">Order</text>
+<text class="free" x="30" y="266" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">registered in the array given to withInterceptors([a, b, c])</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> an <b>interceptor</b> is middleware around every HttpClient call. A component calls <span class="kw">http.get(…)</span>; the request passes through your interceptors in order (here auth → logging → errors) and then reaches the server; the response travels back through them in reverse. Requests are <b>immutable</b>, so an interceptor passes a modified <i>copy</i> to <span class="kw">next()</span>. This is the place for one-off cross-cutting logic, such as adding an <span class="kw">Authorization</span> header once instead of in every service.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Put cross-cutting HTTP logic — auth, logging, errors, retries, loading indicators — in <b>interceptors</b>, once.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 6 showed that HttpClient returns observables. Page 7 showed services receive HttpClient by injection. But every service repeating “add the token, handle 401, log the error” is exactly the scatter that interceptors remove.</p>
+      <p>In the React lab, the API-layer dive built the same idea by hand with a fetch wrapper. Angular gives it a name and a registration point: <span class="kw">provideHttpClient(withInterceptors([…]))</span>.</p>
+      <p>This page covers the functional interceptor shape, the common jobs, error handling and the careful rules for retries.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧱 A functional interceptor</div>
+    <div class="code-block"><pre><span class="cmt">// auth.interceptor.ts</span>
+export <span class="kw">const</span> authInterceptor: HttpInterceptorFn = (req, next) =&gt; {
+  <span class="kw">const</span> token = inject(AuthService).token();
+  <span class="kw">const</span> authed = req.clone({ setHeaders: { Authorization: <span class="str">`Bearer ${token}`</span> } });   <span class="cmt">// a modified copy</span>
+  <span class="kw">return</span> next(authed);                                                              <span class="cmt">// pass it on</span>
+};
+
+<span class="cmt">// app.config.ts</span>
+provideHttpClient(withInterceptors([authInterceptor, loggingInterceptor, errorInterceptor]))</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. Functional interceptors run in an injection context, so they can call <span class="kw">inject()</span>; the docs recommend them over DI-based class interceptors for their more predictable ordering.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Common interceptor jobs</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Job</th><th scope="col">How</th><th scope="col">Careful</th></tr></thead><tbody><tr><th scope="row">Add an auth header</th><td><span class="kw">req.clone({ setHeaders })</span></td><td>Never put secrets in client code; the token comes from a service</td></tr><tr><th scope="row">Log or time requests</th><td><span class="kw">tap</span> / <span class="kw">finalize</span> on the response stream</td><td>Do not log sensitive bodies</td></tr><tr><th scope="row">Turn failures into one error shape</th><td><span class="kw">catchError</span> → throw a consistent error</td><td>Do not swallow errors with <span class="kw">catchError(() =&gt; EMPTY)</span>: the request can complete with no value and no error — let the error propagate or return a fallback value</td></tr><tr><th scope="row">Show a global loading indicator</th><td>Count in-flight requests in a signal</td><td>Decrement in <span class="kw">finalize</span></td></tr><tr><th scope="row">Retry with backoff</th><td><span class="kw">retry</span> operators, often in an interceptor</td><td>Only for safe (idempotent) requests</td></tr><tr><th scope="row">Share state across retries</th><td><span class="kw">HttpContext</span> is mutable, unlike other request properties</td><td>Use for tokens like “already refreshed”</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Errors.</b> HttpClient reports failures as an <span class="kw">HttpErrorResponse</span> on the observable’s error channel; network and timeout errors have status <span class="kw">0</span>.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 What to retry</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Retry only safe requests with backoff: a GET that fails with a network error or 503 is retried after growing waits, a POST that creates an order is not retried blindly, and a 401 triggers a single token refresh and replay">
+<defs><marker id="ht2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ht2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ht2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,54 L320,86 L80,86 L80,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M80,180 L80,236" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M320,54 L320,86 L240,86 L240,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M240,180 L240,236" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M320,54 L320,86 L400,86 L400,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M400,180 L400,236" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M320,54 L320,86 L560,86 L560,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<path d="M560,180 L560,236" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ht2A)"/>
+<rect class="bx" x="220" y="8" width="200" height="46" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">A request fails</text>
+<text x="320" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">what kind of failure?</text>
+<rect class="bx" x="10" y="120" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Network / 503</text>
+<text x="80" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">on a GET</text>
+<rect class="bx" x="10" y="236" width="140" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="80" y="262.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">retry</text>
+<text x="80" y="277.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">with backoff</text>
+<rect class="bx" x="170" y="120" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="240" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">400 / 404</text>
+<text x="240" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">client error</text>
+<rect class="bx" x="170" y="236" width="140" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="240" y="262.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">do not retry</text>
+<text x="240" y="277.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">show the error</text>
+<rect class="bx" x="330" y="120" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="400" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">401</text>
+<text x="400" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">not signed in</text>
+<rect class="bx" x="330" y="236" width="140" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="262.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">refresh once</text>
+<text x="400" y="277.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">then replay</text>
+<rect class="bx" x="490" y="120" width="140" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="560" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">POST that creates</text>
+<text x="560" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">a payment or order</text>
+<rect class="bx" x="490" y="236" width="140" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="560" y="262.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">do not retry</text>
+<text x="560" y="277.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">blindly</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> decide by the kind of failure. A <b>network error or 503 on a GET</b> is safe to retry with growing waits. <b>400/404</b> are the client’s mistake — show them. A <b>401</b> means “not signed in”: refresh the token <b>once</b> and replay. A <b>POST that creates a payment or order</b> must not be retried blindly, or it may be applied twice.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Interceptor lab · three services, one place</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure</th><th scope="col">Before: each service handles it</th><th scope="col">After: interceptors</th></tr></thead><tbody><tr><th scope="row">Places to edit when the auth header changes</th><td>7 services</td><td>1 interceptor</td></tr><tr><th scope="row">Places that handle a 401</th><td>1 of 7 (inconsistent)</td><td>1</td></tr><tr><th scope="row">Error shape components see</th><td>3 different shapes</td><td>1</td></tr><tr><th scope="row">Orders created twice after a retry</th><td>Possible</td><td>0 — POST not retried</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · interceptor symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">The header is missing on some requests</th><td>The interceptor is not registered with <span class="kw">provideHttpClient</span>, or the request bypasses HttpClient (plain fetch)</td><td>Register it; use HttpClient everywhere</td></tr><tr><th scope="row">“HttpClientModule is deprecated” advice in old tutorials</th><td>Pre-standalone setup</td><td>Use <span class="kw">provideHttpClient(...)</span> with features</td></tr><tr><th scope="row">A request completes with no value and no error</th><td><span class="kw">catchError(() =&gt; EMPTY)</span> swallowed it</td><td>Let the error propagate or return a fallback value</td></tr><tr><th scope="row">An infinite loop on 401</th><td>Refresh request is intercepted and fails with 401 again</td><td>Skip the interceptor for the refresh call (e.g. with an HttpContext flag)</td></tr><tr><th scope="row">Request body changes do not take effect</th><td>Requests are immutable</td><td><span class="kw">req.clone({ … })</span> and pass the clone to next</td></tr><tr><th scope="row">Interceptor order surprises</th><td>Order is the array order</td><td>Reorder the array given to <span class="kw">withInterceptors</span></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔑</span><h5>Token format changes</h5><p>Header added in seven services.</p><span class="sc-use">→ One auth interceptor</span></div>
+      <div class="scenario"><span class="sc-icon">🚪</span><h5>Session expires mid-use</h5><p>Nobody handles 401.</p><span class="sc-use">→ Refresh once, then sign out cleanly</span></div>
+      <div class="scenario"><span class="sc-icon">⏳</span><h5>Global spinner</h5><p>Count in-flight requests.</p><span class="sc-use">→ Interceptor + signal + finalize</span></div>
+      <div class="scenario"><span class="sc-icon">💳</span><h5>Order created twice</h5><p>POST retried.</p><span class="sc-use">→ Retry only safe requests</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Registration.</b> <span class="kw">withInterceptors</span> is a feature passed to <span class="kw">provideHttpClient</span>; it adds one or more functional interceptors. The older <span class="kw">withInterceptorsFromDi()</span> keeps class-based interceptors working during a migration.</p>
+      <p><b>Fetch backend.</b> By default HttpClient uses the fetch API; <span class="kw">withXhr()</span> switches to XMLHttpRequest. Interceptors work the same either way.</p>
+      <p><b>Testing.</b> The docs’ HTTP testing guide shows an auth-header interceptor test with a modified request copy.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>An interceptor is middleware around HttpClient: modify the request (clone), observe or change the response (pipe).</li><li>Functional interceptors via <span class="kw">provideHttpClient(withInterceptors([…]))</span>; order = array order.</li><li>Requests are immutable; HttpContext is mutable and carries state across retries.</li><li>Failures arrive as <span class="kw">HttpErrorResponse</span>; network errors have status 0.</li><li>Never swallow errors with <span class="kw">catchError(() =&gt; EMPTY)</span>.</li><li>Retry only idempotent requests, with backoff; refresh a token once on 401.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I register functional interceptors with provideHttpClient: one adds the auth header by cloning the request, one logs and times calls, one normalises errors. I never swallow errors, I retry only safe requests with backoff, and I refresh the token once on a 401 while excluding the refresh call itself from the interceptor."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Retrying every failure.</b> A retried POST can create two orders.</p>
+      <p><b>Mutating the request.</b> It is immutable — clone it.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧱 Interceptor</h5><p>Cross-cutting logic for every HTTP call, registered once.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔧 Service method</h5><p>Logic specific to one endpoint or feature.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: RxJS and the async pipe.</span>
+      <a class="next-link" href="rxjs-async-pipe.html">RxJS & the async pipe <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/http/interceptors" target="_blank" rel="noopener">Intercepting requests and responses</a> · <a href="https://angular.dev/guide/http/setup" target="_blank" rel="noopener">Setting up HttpClient</a> · <a href="https://angular.dev/api/common/http/HttpInterceptorFn" target="_blank" rel="noopener">HttpInterceptorFn</a> · <a href="https://angular.dev/api/common/http/withInterceptors" target="_blank" rel="noopener">withInterceptors</a> · <a href="https://angular.dev/guide/http/making-requests" target="_blank" rel="noopener">Making requests</a> · <a href="https://angular.dev/best-practices/error-handling" target="_blank" rel="noopener">Unhandled errors in Angular</a> · <a href="https://angular.dev/guide/http/testing" target="_blank" rel="noopener">HTTP testing</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

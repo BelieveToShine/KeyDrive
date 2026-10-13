@@ -18,7 +18,7 @@
 | ➕ | Deep dive: Component communication | component-communication | 🔒 planned (sub page of templates-control-flow) |
 | ➕ | Deep dive: Directives & custom pipes | directives-pipes | 🔒 planned (sub page of templates-control-flow) |
 | ➕ | Deep dive: RxJS operators: which one to use | rxjs-operators | 🔒 planned (sub page of rxjs-async-pipe) |
-| ➕ | Deep dive: HttpClient & interceptors | http-interceptors | 🔒 planned (sub page of rxjs-async-pipe) |
+| ➕ | Deep dive: HttpClient & interceptors | http-interceptors | ✅ written (sub page of rxjs-async-pipe) |
 | ➕ | Deep dive: State management: services, signals & NgRx | state-management | 🔒 planned (sub page of dependency-injection) |
 | ➕ | Deep dive: Forms in depth: validation & FormArray | forms-validation | 🔒 planned (sub page of forms) |
 | ➕ | Deep dive: Route guards, resolvers & params | guards-resolvers | 🔒 planned (sub page of routing-lazy-loading) |
