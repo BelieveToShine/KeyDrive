@@ -16,7 +16,17 @@ const { chromium } = require('playwright');
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(400);
   const figs = await p.locator('figure.diagram-card').all();
-  for (let i = 0; i < figs.length; i++) await figs[i].screenshot({ path: `${prefix}-${i + 1}.png` });
-  console.log(`${figs.length} diagram(s) → ${prefix}-N.png`);
+  let shots = 0;
+  for (let i = 0; i < figs.length; i++) {
+    const n = await figs[i].evaluate((f) => (f.classList.contains('kd-story') ? +f.getAttribute('data-steps') : 0));
+    if (!n) { await figs[i].screenshot({ path: `${prefix}-${i + 1}.png` }); shots++; continue; }
+    // animated Story: one picture per step (tokens parked at the end of their path) — LOOK at every step
+    for (let k = 1; k <= n; k++) {
+      await figs[i].evaluate((f, k) => window.kdStory.set(f, k, true), k);
+      await p.waitForTimeout(650);
+      await figs[i].screenshot({ path: `${prefix}-${i + 1}-s${k}.png` }); shots++;
+    }
+  }
+  console.log(`${figs.length} diagram(s), ${shots} picture(s) → ${prefix}-N[-sK].png`);
   await browser.close();
 })();

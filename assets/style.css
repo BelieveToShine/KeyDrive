@@ -568,3 +568,37 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* paragraphs and list items anywhere in main (including inside the zoom <details>) may break long identifiers (lessons L9) */
 main p, main li{ overflow-wrap:anywhere; }
+
+/* ---------- animated Story figures + flow pulses (assets/site.js) ---------- */
+.kd-story .st-stage{ position:relative; }
+.kd-story.st-live .st-caps{ display:none; }
+.kd-story .st-caps{ margin:14px 0 0 20px; color:var(--ink-soft); font-size:14px; line-height:1.6; }
+.kd-story.st-live .st{ transition:opacity .5s ease; }
+.kd-story.st-live .st.st-off{ opacity:0; pointer-events:none; }
+.kd-story .st.st-hl > rect.bx{ stroke-width:3.4; filter:drop-shadow(0 0 9px rgba(255,255,255,.4)); }
+.kd-story .st.st-hl > path{ stroke-width:3; filter:drop-shadow(0 0 5px currentColor); }
+.kd-story .st.st-hl > text.emo{ filter:drop-shadow(0 0 10px rgba(255,255,255,.55)); }
+.kd-story .tok{ filter:drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
+.kd-story .emo{ font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif; }
+.st-bar{ display:flex; align-items:center; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.st-btn{ background:var(--surface-2); color:var(--ink); border:1px solid var(--border); border-radius:10px; width:38px; height:34px; font-size:15px; cursor:pointer; transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.st-btn:hover{ transform:translateY(-2px); border-color:var(--accent,#22d3ee); box-shadow:0 6px 16px rgba(34,211,238,.18); }
+.st-btn:active{ transform:translateY(-1px) scale(.96); }
+.st-dots{ display:inline-flex; gap:0; margin-left:8px; align-items:center; }
+.st-dot{ position:relative; width:22px; height:30px; border:0; background:none; padding:0; cursor:pointer; }
+.st-dot::before{ content:''; position:absolute; left:5px; top:9px; width:12px; height:12px; border-radius:50%; border:1.5px solid var(--border); background:transparent; transition:transform .15s ease, background .15s ease; }
+.st-dot.done::before{ background:var(--border); }
+.st-dot.on::before{ background:#22d3ee; border-color:#22d3ee; transform:scale(1.3); }
+.st-hint{ margin-left:auto; font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-faint); }
+.st-cap{ margin:12px 0 0; padding:12px 16px; background:rgba(34,211,238,.07); border-left:3px solid #22d3ee; border-radius:0 12px 12px 0; font-size:16px; line-height:1.55; color:var(--ink); min-height:3.3em; }
+.st-cap .st-n{ font-family:'JetBrains Mono'; font-size:11px; color:#22d3ee; margin-right:6px; }
+.concept-diagram .pulse{ pointer-events:none; filter:drop-shadow(0 0 3px currentColor); }
+@media (prefers-reduced-motion: reduce){ .kd-story.st-live .st{ transition:none; } }
+@media (max-width:560px){ .st-hint{ display:none; } .st-cap{ font-size:15px; } }
+.kd-story.st-playing .st-hint{ visibility:hidden; }
+
+/* 'spot it' mini-quiz: click a question to reveal the answer */
+.quiz{ display:grid; gap:10px; }
+.quiz-item{ margin:0; }
+.quiz-item summary{ overflow-wrap:anywhere; }
+.quiz-item .zoom-inner p{ margin:0; }

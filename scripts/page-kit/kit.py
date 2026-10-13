@@ -37,11 +37,32 @@ def emoji_w(t):  # rough width units (em) of a string
         else: w += .56
     return w
 
+
+def _steps(v):
+    """step spec -> 'a-b' string. int n => from n on ('n-'); 'a-b' / 'a-' / '-b' kept; (a,b) tuple => 'a-b'"""
+    if isinstance(v, int): return f'{v}-'
+    if isinstance(v, (tuple, list)): return f'{v[0]}-{v[1]}'
+    return str(v)
+def _hl(v):
+    if isinstance(v, int): return str(v)
+    return ','.join(str(x) for x in v)
+
 class Diagram:
     def __init__(self, mid, w=640, h=300, label=''):
         self.mid, self.w, self.h, self.label = mid, w, h, label
         self.parts = []
-    def add(self, s): self.parts.append(s)
+        self.meta = {}      # part index -> (steps, highlight) for animated Stories
+        self._ctx = None
+        self.steps = 0      # highest step number used by any element
+    def _begin(self, s=None, hl=None):
+        self._ctx = (s, hl) if (s is not None or hl is not None) else None
+        if self._ctx:
+            for v in (s, hl):
+                for n in re.findall(r'\d+', str(v if v is not None else '')): self.steps = max(self.steps, int(n))
+    def _end(self): self._ctx = None
+    def add(self, s):
+        if self._ctx: self.meta[len(self.parts)] = self._ctx
+        self.parts.append(s)
 
     def zone(self, x, y, w, h, color='n', title=None, dash=True):
         f, s, ti, _ = COL[color]
@@ -54,7 +75,7 @@ class Diagram:
         """lines: list of (text, kind) kind in t(title) s(sub) m(mono) b(bold sub)"""
         f, s, ti, so = COL[color]
         self.add(f'<rect class="bx" x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{f}" stroke="{s}" stroke-width="1.3"/>')
-        spec = {'t':(11.5,15,700,ti,None),'s':(9.5,12.5,400,so,None),'m':(8.8,12,400,so,"'JetBrains Mono'"),'b':(9.5,12.5,700,ti,None),'d':(13,16,400,'#22d3ee',None),'u':(11,14,600,ti,"'JetBrains Mono'")}
+        spec = {'t':(11.5,15,700,ti,None),'s':(9.5,12.5,400,so,None),'m':(8.8,12,400,so,"'JetBrains Mono'"),'b':(9.5,12.5,700,ti,None),'d':(13,16,400,'#22d3ee',None),'u':(11,14,600,ti,"'JetBrains Mono'"),'e':(26,32,400,'#ffffff',None)}
         total = sum(spec[k][1] for _, k in lines)
         cy = y + (h - total)/2
         for text, k in lines:
@@ -64,7 +85,7 @@ class Diagram:
             if fam: tw = len(text) * fs * .6
             if tw > w - 14:
                 raise ValueError(f'[{self.mid}] text too wide for box ({tw:.0f}>{w-14}): {text!r}')
-            self.add(f'<text x="{x+w/2:g}" y="{cy-3.5:g}" text-anchor="middle" font-size="{fs}" font-weight="{fw}" fill="{fill}"'
+            self.add(f'<text' + (' class="emo"' if k == 'e' else '') + f' x="{x+w/2:g}" y="{cy-3.5:g}" text-anchor="middle" font-size="{fs}" font-weight="{fw}" fill="{fill}"'
                      + (f' font-family="{fam}"' if fam else '') + f'>{esc(text)}</text>')
         if strike:
             pass
@@ -94,32 +115,94 @@ class Diagram:
         self.add(f'<g class="arrow-pill"><rect x="{x:g}" y="{cy-9:g}" width="{w}" height="18" rx="9"/>'
                  f'<text x="{cx:g}" y="{cy+3.5:g}" text-anchor="middle" font-size="9" font-style="italic">{esc(text)}</text></g>')
 
-    def arrow(self, pts, color='n', label=None, at=None, flow=False, both=False, dash=False, sw=1.6):
+    def arrow(self, pts, color='n', label=None, at=None, flow=False, both=False, dash=False, sw=1.6, id=None):
         """sw > 2.5 = thick 'row-flow' arrow (execution plans): uses a fixed-size head so the head stays readable."""
         d = 'M' + ' L'.join(f'{x:g},{y:g}' for x, y in pts)
         cls = ' class="flow-arrow"' if flow else ''
-        self.add(f'<path{cls} d="{d}" fill="none" stroke="{ARROW[color]}" stroke-width="{sw:g}"'
+        idattr = f' id="{self.mid}-{id}"' if id else ''
+        self.add(f'<path{idattr}{cls} d="{d}" fill="none" stroke="{ARROW[color]}" stroke-width="{sw:g}"'
                  + (' stroke-dasharray="4 3"' if dash else '')
                  + f' marker-end="url(#{self.mid}{"T" if sw > 2.5 else "A"})"' + (f' marker-start="url(#{self.mid}S)"' if both else '') + '/>')
         if label:
             self.add_label_after = True
             self.pill(*(at or ((pts[0][0]+pts[-1][0])/2, (pts[0][1]+pts[-1][1])/2)), label)
 
+
+    def emoji(self, x, y, ch, size=30, anchor='middle', cls='emo'):
+        """a big everyday-life picture (emoji) — the 'real world' part of a Story"""
+        self.add(f'<text class="{cls}" x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}">{ch}</text>')
+
+    def token(self, path_id, ch='●', size=18, color='cyan'):
+        """something that travels along the arrow `path_id` when its step starts (use st='3-3' etc.)"""
+        fill = ARROW.get(color, '#22d3ee')
+        inner = (f'<circle r="{size*0.62:g}" fill="#0b0f19" stroke="{fill}" stroke-width="1.4"/>'
+                 f'<text class="tok-t" y="{size*0.35:g}" text-anchor="middle" font-size="{size}">{ch}</text>') if ch != '●' else f'<circle r="6" fill="{fill}"/>'
+        self.add(f'<g class="tok" data-path="{self.mid}-{path_id}">{inner}</g>')
+
+    def note(self, x, y, w, h, text, color='amber', size=10):
+        """a small sticky-note / speech bubble with one or two short lines (split on |)"""
+        f, st, ti, so = COL[color]
+        lines = text.split('|')
+        self.add(f'<rect class="bx note" x="{x}" y="{y}" width="{w}" height="{h}" rx="9" fill="{f}" stroke="{st}" stroke-width="1.2" stroke-dasharray="4 3"/>')
+        lh = size + 4; cy = y + (h - lh*len(lines))/2
+        for ln in lines:
+            cy += lh
+            if emoji_w(ln) * size > w - 12: raise ValueError(f'[{self.mid}] note text too wide ({emoji_w(ln)*size:.0f}>{w-12}): {ln!r}')
+            self.add(f'<text x="{x+w/2:g}" y="{cy-4:g}" text-anchor="middle" font-size="{size}" fill="{ti}">{esc(ln)}</text>')
+
+    def story_attr(self): return f' data-steps="{self.steps}"' if self.steps else ''
+
     def render(self):
         defs = (f'<defs><marker id="{self.mid}A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker>'
                 f'<marker id="{self.mid}S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker>'
                 f'<marker id="{self.mid}T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>')
         # draw order: zones first, then everything else (pills last so they sit on top of lines)
-        zones = [p for p in self.parts if 'class="zone' in p]
-        pills = [p for p in self.parts if 'class="arrow-pill"' in p]
-        rest = [p for p in self.parts if p not in zones and p not in pills]
-        paths = [p for p in rest if p.startswith('<path')]
-        other = [p for p in rest if not p.startswith('<path')]
-        body = '\n'.join(zones + paths + other + pills)
-        return (f'<svg viewBox="0 0 {self.w} {self.h}" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="{esc(self.label)}">\n{defs}\n{body}\n</svg>')
+        def wrap(i, p):
+            m = self.meta.get(i)
+            if not m: return p
+            st, hl = m
+            a = f' data-s="{_steps(st)}"' if st is not None else ''
+            b = f' data-hl="{_hl(hl)}"' if hl is not None else ''
+            return f'<g class="st"{a}{b}>{p}</g>'
+        items = list(enumerate(self.parts))
+        zones = [wrap(i, p) for i, p in items if 'class="zone' in p]
+        pills = [wrap(i, p) for i, p in items if 'class="arrow-pill"' in p]
+        paths = [wrap(i, p) for i, p in items if p.startswith('<path') and 'class="zone' not in p]
+        toks = [wrap(i, p) for i, p in items if p.startswith('<g class="tok"')]
+        other = [wrap(i, p) for i, p in items if not (p.startswith('<path') or 'class="zone' in p or 'class="arrow-pill"' in p or p.startswith('<g class="tok"'))]
+        body = '\n'.join(zones + paths + other + pills + toks)
+        return (f'<svg viewBox="0 0 {self.w} {self.h}" xmlns="http://www.w3.org/2000/svg" class="concept-diagram"{self.story_attr()} role="img" aria-label="{esc(self.label)}">\n{defs}\n{body}\n</svg>')
+
+
+def _animated(fn):
+    def w(self, *a, st=None, hl=None, **k):
+        began = st is not None or hl is not None
+        if began: self._begin(st, hl)
+        try: return fn(self, *a, **k)
+        finally:
+            if began: self._end()
+    w.__name__ = fn.__name__
+    return w
+for _n in ('zone', 'box', 'code_box', 'text', 'pill', 'arrow', 'emoji', 'token', 'note'):
+    setattr(Diagram, _n, _animated(getattr(Diagram, _n)))
 
 def figure(d, caption):
     return f'<figure class="diagram-card">\n{d.render()}\n<figcaption><strong>What you\'re seeing:</strong> {caption}</figcaption>\n</figure>'
+
+
+def story(d, captions, caption, hint='Press ▶ to watch'):
+    """An animated, step-by-step picture. `captions` = one short sentence per step (step 1..N).
+    Elements get st=<from> / st='a-b' / hl=<step>; tokens travel along arrows (see Diagram.token).
+    Without JavaScript every element is visible and the numbered captions are shown as a list."""
+    assert d.steps == len(captions), f'[{d.mid}] story has {d.steps} steps but {len(captions)} captions'
+    caps = ''.join(f'<li>{c}</li>' for c in captions)
+    return (f'<figure class="diagram-card kd-story" data-steps="{d.steps}">\n<div class="st-stage">{d.render()}</div>\n'
+            f'<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button>'
+            f'<button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button>'
+            f'<button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button>'
+            f'<span class="st-dots" aria-hidden="true"></span><span class="st-hint">{hint}</span></div>\n'
+            f'<p class="st-cap" aria-live="polite" hidden></p>\n<ol class="st-caps">{caps}</ol>\n'
+            f'<figcaption><strong>What you\'re seeing:</strong> {caption}</figcaption>\n</figure>')
 
 # ------------------------------------------------------------------ page shell
 SRC = (REPO / 'ai/concepts/rag.html').read_text()   # the shared header/crumb template

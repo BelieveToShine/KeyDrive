@@ -1,101 +1,104 @@
 from p_common import *
 
-def d_swap():
-    d = Diagram('ls1', 640, 330, 'OrderService calls Save through the IOrderRepository interface; SqlOrderRepository honours the contract and the order is saved, but ReadOnlyOrderRepository throws NotSupportedException, so substituting it crashes the caller')
-    d.box(230, 16, 180, 56, [('OrderService','t'),('repo.Save(order)','m')], 'cyan')
-    d.box(210, 120, 220, 50, [('«interface» IOrderRepository','t'),('Save(Order) : saves it','s')], 'violet')
-    d.arrow([(320,72),(320,120)], 'cyan', label='depends on', at=(320,96))
-    d.box(30, 240, 270, 60, [('SqlOrderRepository','t'),('saves the order ✅','s'),('contract honoured','s')], 'emerald')
-    d.box(340, 240, 270, 60, [('ReadOnlyOrderRepository','t'),('throws NotSupportedException ❌','s'),('contract broken','s')], 'rose')
-    d.arrow([(165,240),(165,205),(290,205),(290,170)], 'emerald', label='implements', at=(165,205))
-    d.arrow([(475,240),(475,205),(350,205),(350,170)], 'rose', label='implements', at=(475,205))
+def d_problem():
+    d = Diagram('ls1', 640, 340, 'Every bird inherits Fly from Bird; a loop that calls Fly on every bird works for the sparrow and the eagle but crashes on the penguin')
+    d.box(220, 8, 200, 60, [('Bird','t'),('Eat() · Fly()','m')], 'violet', st=1)
+    d.box(20, 128, 180, 92, [('🐦','e'),('Sparrow','t')], 'emerald', st=1, hl=3)
+    d.box(230, 128, 180, 92, [('🦅','e'),('Eagle','t')], 'emerald', st=1, hl=4)
+    d.box(440, 128, 180, 92, [('🐧','e'),('Penguin','t')], 'rose', st=1, hl=5)
+    d.arrow([(110,128),(110,98),(262,98),(262,68)], 'emerald', label='is a', at=(186,98), st=1)
+    d.arrow([(320,128),(320,68)], 'emerald', label='is a', at=(320,98), st=1)
+    d.arrow([(530,128),(530,98),(380,98),(380,68)], 'rose', label='is a', at=(455,98), st=1)
+    d.note(440, 8, 180, 60, 'Bird promises|“every bird can Fly()”', 'amber', st='2-5', hl=2)
+    d.note(440, 8, 180, 60, 'Promise broken!|(LSP violated)', 'rose', st='6-', hl=6)
+    d.box(20, 282, 600, 48, [('foreach (var b in birds) b.Fly();','u')], 'cyan', st='3-4')
+    d.box(20, 282, 600, 48, [('💥 NotSupportedException — a penguin cannot fly!','u')], 'rose', st='5-')
+    d.arrow([(110,282),(110,220)], 'cyan', label='Fly()', at=(110,251), id='f1', st='3-')
+    d.arrow([(320,282),(320,220)], 'cyan', label='Fly()', at=(320,251), id='f2', st='4-')
+    d.arrow([(530,282),(530,220)], 'rose', label='Fly()', at=(530,251), id='f3', st='5-')
+    d.token('f1', '✈', 15, 'cyan', st='3-3')
+    d.token('f2', '✈', 15, 'cyan', st='4-4')
+    d.token('f3', '✈', 15, 'rose', st='5-5')
+    d.emoji(184, 150, '✅', 20, st='3-')
+    d.emoji(394, 150, '✅', 20, st='4-')
+    d.emoji(604, 150, '💥', 22, st='5-')
     return d
 
-def d_rules():
-    d = Diagram('ls2', 640, 330, 'Substitutability rules for a subtype: it may accept the same or more inputs, must promise the same or more in its results, must not throw new kinds of exceptions the caller does not expect, and must keep the base type invariants')
-    rules = [('Inputs (preconditions)','may accept the same or MORE','never demand more than the base type','cyan'),
-             ('Results (postconditions)','must promise the same or MORE','never deliver less than the base type','emerald'),
-             ('Errors','must not throw new surprises','callers cannot catch what they were never told about','amber'),
-             ('Invariants','must keep the base type’s rules','e.g. “width and height can change independently”','violet')]
-    for i, (a, b, c, col) in enumerate(rules):
-        x = 10 + (i % 2) * 315; y = 12 + (i // 2) * 150
-        d.box(x, y, 305, 130, [(a,'t'),(b,'b'),(c,'s')], col)
+def d_fix():
+    d = Diagram('ls2', 640, 340, 'The fix: Bird only promises Eat; Fly lives in a separate IFlyable interface that Sparrow implements and Penguin does not, so the flying loop only ever receives birds that can fly')
+    d.box(20, 8, 200, 60, [('Bird','t'),('Eat()','m')], 'violet', st=1)
+    d.box(420, 8, 200, 60, [('«interface» IFlyable','t'),('Fly()','m')], 'cyan', st=2)
+    d.box(20, 140, 200, 92, [('🐧','e'),('Penguin','t')], 'rose', st=3)
+    d.box(230, 140, 180, 92, [('🐦','e'),('Sparrow','t')], 'emerald', st=3, hl=4)
+    d.arrow([(60,140),(60,68)], 'rose', label='is a', at=(60,104), st=3)
+    d.arrow([(290,140),(290,104),(180,104),(180,68)], 'emerald', label='is a', at=(235,104), st=3)
+    d.arrow([(350,140),(350,104),(520,104),(520,68)], 'cyan', label='can', at=(435,104), st=3)
+    d.box(20, 284, 600, 46, [('foreach (IFlyable f in flyers) f.Fly();','u')], 'cyan', st='4-')
+    d.arrow([(320,284),(320,232)], 'cyan', label='Fly()', at=(320,258), id='g1', st='4-')
+    d.token('g1', '✈', 15, 'cyan', st='4-4')
+    d.emoji(394, 162, '✅', 20, st='4-')
+    d.note(440, 150, 180, 70, 'Penguin is still a Bird:|it eats, it swims.|Nobody asks it to fly.', 'amber', st='5-', hl=5)
     return d
 
 def build_liskov_substitution():
     body = ''
-    body += see(figure(d_swap(),
-        'OrderService depends on the <span class="kw">IOrderRepository</span> interface, which promises “<span class="kw">Save</span> stores the order”. <b>SqlOrderRepository</b> keeps that promise. <b>ReadOnlyOrderRepository</b> implements the interface too — the code compiles — but its <span class="kw">Save</span> throws <span class="kw">NotSupportedException</span>. '
-        'The compiler accepted the substitute; the <i>behaviour</i> rejects it. That gap is what the Liskov Substitution Principle is about.'))
-    body += one('<b>Anywhere you use a base type, any subtype must work</b> — without the caller knowing which one it got and without surprises.')
-    body += why([
-        'Page 3 made behaviour pluggable through interfaces: the calculator accepts any <span class="kw">IDiscountRule</span>. That only works if every implementation <b>behaves</b> as the interface promises. A rule that returns a negative total, or a repository that refuses to save, makes the plug-in model unsafe.',
-        'Robert C. Martin’s summary is that derived classes must be usable wherever their base classes are. In type-theory terms, objects of type T may be replaced with objects of subtype S without altering the main behavioural properties of the program.',
-        'The classic illustration is Square and Rectangle: mathematically a square is a rectangle, but a square’s width and height are locked together, so code that sets width and height independently gets a surprise. “Is-a” in English is not enough; <b>behaves-like-a</b> is the test.'])
-    body += block('📜 The substitution rules', figure(d_rules(),
-        'think of the base type as a <b>contract</b>. A subtype may be <b>more generous</b> — accept more inputs, promise more in its results — but never <b>stricter</b>: it must not demand more of callers, deliver less, throw errors callers were not told about, or break the base type’s invariants. '
-        'These are the design-by-contract rules usually summarised as “preconditions cannot be strengthened, postconditions cannot be weakened”.'), label_cls='see')
-    body += block('🧪 LSP lab · repair the repository', cs('''
-// BEFORE — compiles, but breaks the contract
-public interface IOrderRepository
-{
-    void Save(Order order);
-    Order? Find(int id);
-}
-public class ReadOnlyOrderRepository : IOrderRepository
-{
-    public void Save(Order order) => throw new NotSupportedException();   // callers did not expect this
-    public Order? Find(int id) => /* query */ null;
-}
+    body += see(story(d_problem(), [
+        'Meet the class <b>Bird</b>. We put <code>Eat()</code> and <code>Fly()</code> inside it, and Sparrow, Eagle and Penguin all <b>inherit</b> from it.',
+        'Bird makes a <b>promise</b>: “every Bird can Fly().” Everybody who uses a Bird trusts that promise.',
+        'The program loops over all birds and calls <code>Fly()</code>. The <b>sparrow</b> flies. ✅',
+        'The <b>eagle</b> flies. ✅',
+        'The <b>penguin</b> cannot fly, so its <code>Fly()</code> throws an error. 💥 The whole loop crashes.',
+        'The penguin <b>broke the promise</b> that Bird made. That is exactly what the Liskov Substitution Principle forbids.'],
+        'a story of one loop and three birds. Watch the <b>Fly()</b> call travel from the program down to each bird — and see where the promise breaks.'))
+    body += one('<b>If something says “I am a Bird”, it must really work everywhere a Bird is expected — no surprises.</b>')
+    body += block('🌍 In real life', '''    <div class="kd-card why-box">
+      <p>🔌 Imagine a plug that <b>fits</b> the wall socket but gives <b>no electricity</b>. It fits, but it does not <i>work</i>. In code the compiler only checks that the plug <i>fits</i>. The Liskov Substitution Principle (<b>L</b> in SOLID) is about whether it <b>works</b>.</p>
+      <p>The rule: a child class must keep <b>every promise</b> its parent made. If it cannot, it should not be that parent’s child.</p>
+    </div>''', label_cls='why')
+    body += block('🔧 The fix: make small promises', story(d_fix(), [
+        'Every bird eats, so <b>Bird</b> only promises <code>Eat()</code>. Nothing else.',
+        'Flying is a <b>separate</b> promise, so it gets its own small interface: <code>IFlyable</code> with <code>Fly()</code>.',
+        'The sparrow is a Bird <i>and</i> can fly (“is a” + “can”). The penguin is just a Bird. It never promised to fly.',
+        'The loop now asks for <code>IFlyable</code> only. The sparrow flies. ✅ No penguin can ever be in that list, so nothing can crash.',
+        'The penguin is still a perfectly good Bird — it eats and swims. The fix did not remove the penguin; it stopped <b>lying</b> about it.'],
+        'the same birds, redesigned: <b>Bird</b> keeps the promise every bird can keep, and <b>IFlyable</b> carries the promise only some can.'), label_cls='see')
+    body += block('🧪 Tiny code', cs('''
+// BEFORE — Bird promises something not every bird can do
+class Bird      { public virtual void Eat() { } public virtual void Fly() { } }
+class Sparrow : Bird { public override void Fly() => Console.WriteLine("flap flap"); }
+class Penguin : Bird { public override void Fly() => throw new NotSupportedException(); }  // 💥
 
-// AFTER — say what each client really needs (ISP and LSP work together)
-public interface IOrderReader { Order? Find(int id); }
-public interface IOrderWriter { void Save(Order order); }
+foreach (var b in birds) b.Fly();       // crashes when it reaches the penguin
 
-public class SqlOrderRepository : IOrderReader, IOrderWriter { /* both */ }
-public class ReportingOrderReader : IOrderReader { /* read only: honest type */ }
+// AFTER — small promises
+abstract class Bird { public void Eat() { } }
+interface IFlyable { void Fly(); }
+class Sparrow : Bird, IFlyable { public void Fly() => Console.WriteLine("flap flap"); }
+class Penguin : Bird { }                // no Fly() at all: nothing to break
 
-public class OrderService
-{
-    public OrderService(IOrderWriter writer) { /* needs Save: cannot be given a reader */ }
-}''', 'Illustrative. The fix is not a cleverer subclass; it is a more honest <b>abstraction</b>: a type that cannot save should not claim to be able to (next page: Interface Segregation).') + table(
-        ['Substitution check','ReadOnlyOrderRepository as IOrderRepository','After the split'],
-        [['Honours “Save stores the order”','No — throws','Cannot be passed where a writer is required'],
-         ['Caller needs <span class="kw">is</span>/<span class="kw">as</span> checks to be safe','Yes (smell)','No'],
-         ['Discovered','At runtime, in production','At compile time']]) + '\n' + ladder_strip([2,3,4,5]), label_cls='see')
-    body += block('📋 Smells of an LSP violation', table(
-        ['You see','What it means','Fix'],
-        [['A subclass throws <span class="kw">NotImplementedException</span> / <span class="kw">NotSupportedException</span>','It cannot honour the base contract','Do not inherit; split the interface (I) or use composition'],
-         ['Callers write <span class="kw">if (x is SpecialRule)</span>','The abstraction leaks; callers know the subtype','Move the behaviour into the base contract, or separate abstractions'],
-         ['An override does nothing or returns a dummy','It silently weakens a postcondition','Same as above'],
-         ['An override rejects values the base accepts','It strengthens a precondition','Accept the same inputs, or change the abstraction'],
-         ['An override changes shared state the base promised not to touch','It breaks an invariant','Use composition (see the deep dive)'],
-         ['Tests written for the base class fail for a subclass','The subtype is not substitutable','Run the same contract tests against every implementation']]), label_cls='trap')
-    body += block('🎬 Real-world scenarios', scenarios([
-        ('💳','A “GiftCardPayment” cannot refund','It implements IPaymentMethod but throws on Refund.','Separate refundable from non-refundable'),
-        ('📦','A “DiscountRule” returns a negative total in one case','It breaks the postcondition.','Contract tests for every rule'),
-        ('🟦','Square extends Rectangle','Locked width and height.','Do not inherit; model both as shapes with area'),
-        ('🔌','A mock that returns null where the real one never does','Tests pass, production fails.','Make fakes honour the contract'),
-    ]), label_cls='see')
-    body += zoom('Go one level deeper (60 seconds)', '''      <p><b>Contract tests.</b> Write one test suite against the interface and run it against every implementation; a new rule class must pass the same suite. This is how LSP becomes automatic.</p>
-      <p><b>Dynamic languages.</b> Michael Feathers notes LSP still applies where inheritance is not required for substitution: what matters is behavioural compatibility.</p>
-      <p><b>Code Contracts.</b> The older .NET Code Contracts tooling modelled preconditions, postconditions and invariants explicitly; check current guidance, since the tooling is dated.</p>''')
+foreach (var f in flyers) f.Fly();      // flyers is a List<IFlyable>''', 'The after-version is also the Interface Segregation Principle (the next page) in action: small interfaces, each with one promise.'), label_cls='see')
+    body += block('🎯 Spot it: does this break the rule?', quiz([
+        ('A <code>Penguin : Bird</code> whose <code>Fly()</code> throws an exception', True, 'Callers trust “every Bird flies”. The penguin breaks that trust.'),
+        ('A <code>Sparrow : Bird, IFlyable</code> with a working <code>Fly()</code>', False, 'It keeps every promise it made. Substituting it anywhere is safe.'),
+        ('A <code>Square : Rectangle</code> where setting the width also changes the height', True, 'Code that sets width and height separately gets a surprise. A square is a rectangle in maths, but it does not <i>behave</i> like one.'),
+        ('A <code>ReadOnlyList : IList</code> whose <code>Add()</code> throws', True, 'The interface promises you can add. This type cannot keep that promise. Give it a read-only interface instead (<code>IReadOnlyList</code>).'),
+        ('A child class that does the same thing in a faster way', False, 'Same promise, kept. Different inside is fine — that is the whole point of substitution.')]), label_cls='trap')
+    body += block('👀 How to spot it in your own code', spot_table([
+        ['A method that does <code>throw new NotSupportedException()</code> or <code>NotImplementedException()</code>', 'The child cannot keep the parent’s promise. Split the interface (I) or stop inheriting.'],
+        ['<code>if (animal is Penguin)</code> checks before calling a method', 'The caller already knows the child breaks the rule. Move that method into a separate interface.'],
+        ['An override that is empty or returns a fake value', 'It pretends to keep the promise. Same fix.'],
+        ['A subclass that rejects input the parent accepted', 'It demands more than the parent did. The child must accept at least what the parent accepts.']]), label_cls='trap')
     body += recall([
-        'LSP: subtypes must be usable wherever their base types are, without altering the program’s main behaviour.',
-        'A subtype may accept more and promise more; never demand more, deliver less, add new exceptions, or break invariants.',
-        'Compiling is not substituting: Square/Rectangle and ReadOnlyRepository both compile.',
-        'Smells: NotSupportedException overrides, is/as checks on subtypes, do-nothing overrides.',
-        'Fix by making the abstraction honest (smaller interfaces) or by using composition.',
-        'Run the same contract tests against every implementation.'])
-    body += saythis('"The Liskov Substitution Principle says any subtype must work wherever its base type is expected. Compiling isn’t enough — the subtype must honour the contract: accept at least the same inputs, promise at least the same results and not add surprising exceptions. When I see a subclass throwing NotSupportedException or callers checking the concrete type, I fix the abstraction, by splitting interfaces or using composition, and I run shared contract tests against every implementation."')
-    body += trap([
-        '<b>“It is-a in real life, so it can inherit.”</b> Square is-a rectangle in geometry, not in behaviour.',
-        '<b>Throwing NotSupportedException to “comply” with a fat interface.</b> The violation just moves to runtime.'])
-    body += confuse('🏷️ Same type', 'The compiler is satisfied: the method signatures match.', '🤝 Same behaviour', 'The runtime is satisfied: the promises of the contract hold.')
-    body += next_box('A class that cannot honour a method should not be forced to claim it. Next: Interface Segregation — small interfaces tailored to each client.', 'interface-segregation.html', 'I — the Interface Segregation Principle')
-    body += fact_note('The principle’s wording is Robert C. Martin’s summary; the contract rules follow standard design-by-contract guidance, with .NET examples from Microsoft’s MSDN Magazine archive (dated).', [DOC_OOD, DOC_REL, ('MSDN Magazine: Code Contracts, inheritance and the Liskov principle', 'https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/july/msdn-magazine-cutting-edge-code-contracts-inheritance-and-the-liskov-principle')])
+        'LSP: a child must work everywhere its parent works — without surprises.',
+        'Compiling is not enough; the child must keep the parent’s <b>promises</b> (behaviour).',
+        'Bird → Eat() only; IFlyable → Fly() — small promises, the penguin never lies.',
+        'Smells: NotSupportedException overrides, <code>is</code>/<code>as</code> type checks, empty overrides.'])
+    body += saythis('"The Liskov Substitution Principle says anywhere you use a parent type, a child must work without surprises. If Bird promises Fly() but Penguin throws, the loop that flies every bird crashes. I fix it by making smaller promises: Bird only has Eat(), and flying moves into an IFlyable interface that only flying birds implement."')
+    body += trap(['<b>“A penguin <i>is</i> a bird, so it must inherit Fly().”</b> In real life yes; in code, inheriting means <i>promising the behaviour</i>. Model what the type can really do.'])
+    body += next_box('Our fix used a small interface, <code>IFlyable</code>. Making interfaces small on purpose is the next letter: Interface Segregation.', 'interface-segregation.html', 'I — the Interface Segregation Principle')
+    body += fact_note('The principle’s wording is Robert C. Martin’s; the Bird and Square/Rectangle examples are the classic textbook illustrations. Contract rules follow design-by-contract (an MSDN Magazine article from 2011, dated).', [DOC_OOD, DOC_REL, ('MSDN Magazine: Code Contracts, inheritance and the Liskov principle', 'https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/july/msdn-magazine-cutting-edge-code-contracts-inheritance-and-the-liskov-principle')])
     return page('liskov-substitution', 'L — the Liskov Substitution Principle', 'Concept 4 of 12 · 🔤 The five principles',
-        'It compiles — but does it <span class="grad-text">behave</span> like the type it claims to be?',
-        'The Liskov Substitution Principle: contracts, the substitution rules, Square/Rectangle, and repairing a repository that throws on Save.',
-        'What is the Liskov Substitution Principle, and what is a classic example of violating it?',
+        'Not every bird can fly — so <span class="grad-text">Bird should not promise it</span>.',
+        'The Liskov Substitution Principle with the Bird example: promises, penguins, and fixing it with small interfaces.',
+        'What is the Liskov Substitution Principle? Give an example.',
         body, CR + ['<span class="cur">L — Liskov Substitution</span>'], '')

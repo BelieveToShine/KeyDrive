@@ -297,3 +297,134 @@
   box.innerHTML = out + "</ol>";
   wrap.insertBefore(box, svg.nextSibling);
 })();
+
+/* ---------- Animated explanations (docs/rules/diagram-style.md "Diagram animation") ----------
+   1. Story figures  (figure.kd-story): step-by-step animated diagrams with captions + play/pause/step.
+      Elements carry data-s="a-b" (visible from step a to b), data-hl="n" (highlighted at step n);
+      .tok groups travel along the <path id=data-path> when their step starts.
+   2. Flow pulses: every other svg.concept-diagram gets a small dot travelling along each arrow
+      (direction of the relationship). Both are off for prefers-reduced-motion and pause off-screen. */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var NS = "http://www.w3.org/2000/svg";
+  function range(el, n) {
+    var m = /^(\d*)-(\d*)$/.exec(el.getAttribute("data-s") || "-");
+    return [m && m[1] ? +m[1] : 1, m && m[2] ? +m[2] : n + 999];
+  }
+  var registry = [];
+
+  function Story(fig) {
+    var self = this;
+    this.fig = fig; this.svg = fig.querySelector("svg"); this.n = +fig.getAttribute("data-steps");
+    this.k = 0; this.timer = null; this.playing = false; this.visible = false; this.raf = [];
+    this.caps = [].map.call(fig.querySelectorAll(".st-caps li"), function (li) { return li.innerHTML; });
+    this.els = [].map.call(this.svg.querySelectorAll(".st"), function (g) {
+      var r = range(g, self.n), hl = (g.getAttribute("data-hl") || "").split(",").filter(Boolean).map(Number);
+      return { g: g, lo: r[0], hi: r[1], hl: hl, tok: g.querySelector(".tok") };
+    });
+    this.bar = fig.querySelector(".st-bar"); this.cap = fig.querySelector(".st-cap");
+    this.playBtn = fig.querySelector(".st-play"); this.dots = fig.querySelector(".st-dots");
+    fig.classList.add("st-live"); this.bar.hidden = false; this.cap.hidden = false;
+    for (var i = 1; i <= this.n; i++) {
+      var d = document.createElement("button"); d.type = "button"; d.className = "st-dot"; d.setAttribute("aria-label", "Step " + i);
+      d.addEventListener("click", (function (j) { return function () { self.pause(); self.set(j); }; })(i));
+      this.dots.appendChild(d);
+    }
+    fig.querySelector('[data-act="prev"]').addEventListener("click", function () { self.pause(); self.set(self.k > 1 ? self.k - 1 : self.n); });
+    fig.querySelector('[data-act="next"]').addEventListener("click", function () { self.pause(); self.set(self.k < self.n ? self.k + 1 : 1); });
+    this.playBtn.addEventListener("click", function () { self.playing ? self.pause() : self.play(true); });
+    this.set(reduce ? this.n : 1, true);
+    registry.push(this);
+  }
+  Story.prototype.set = function (k, instant) {
+    var self = this; this.k = k;
+    this.raf.forEach(cancelAnimationFrame); this.raf = [];
+    this.els.forEach(function (e) {
+      e.g.classList.toggle("st-off", !(k >= e.lo && k <= e.hi));
+      e.g.classList.toggle("st-hl", e.hl.indexOf(k) > -1);
+      if (e.tok) self.place(e, k, instant);
+    });
+    this.cap.innerHTML = '<span class="st-n">' + k + "/" + this.n + "</span> " + (this.caps[k - 1] || "");
+    [].forEach.call(this.dots.children, function (d, i) { d.classList.toggle("on", i + 1 === k); d.classList.toggle("done", i + 1 < k); });
+  };
+  Story.prototype.place = function (e, k, instant) {
+    var path = this.svg.getElementById ? this.svg.getElementById(e.tok.getAttribute("data-path")) : null;
+    if (!path) return;
+    var L = path.getTotalLength(), self = this;
+    function at(t) { var p = path.getPointAtLength(L * t); e.tok.setAttribute("transform", "translate(" + p.x + "," + p.y + ")"); }
+    if (k > e.lo || instant || reduce) { at(k >= e.lo ? 1 : 0); return; }
+    at(0);
+    if (k < e.lo) return;
+    var t0 = null, dur = Math.max(900, Math.min(1800, L * 5));
+    var step = function (ts) {
+      if (t0 === null) t0 = ts + 350;                       // short pause before it sets off
+      var t = Math.max(0, Math.min(1, (ts - t0) / dur)), ease = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      at(ease);
+      if (t < 1) self.raf.push(requestAnimationFrame(step));
+    };
+    this.raf.push(requestAnimationFrame(step));
+  };
+  Story.prototype.play = function (restart) {
+    this.playing = true; this.playBtn.textContent = "⏸"; this.fig.classList.add("st-playing");
+    if (restart && this.k >= this.n) this.set(1);
+    this.schedule();
+  };
+  Story.prototype.pause = function () { this.playing = false; this.playBtn.textContent = "▶"; this.fig.classList.remove("st-playing"); clearTimeout(this.timer); };
+  Story.prototype.schedule = function () {
+    var self = this; clearTimeout(this.timer);
+    if (!this.playing || !this.visible) return;
+    var dwell = this.k >= this.n ? 4200 : 3400;
+    this.timer = setTimeout(function () { self.set(self.k >= self.n ? 1 : self.k + 1); self.schedule(); }, dwell);
+  };
+
+  function initStories() {
+    var figs = [].slice.call(document.querySelectorAll("figure.kd-story"));
+    if (!figs.length) return;
+    var io = "IntersectionObserver" in window ? new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var s = en.target.__story; if (!s) return;
+        s.visible = en.isIntersecting;
+        if (en.isIntersecting && !s.started && !reduce) { s.started = true; s.play(); }
+        else if (s.playing) s.schedule(); else clearTimeout(s.timer);
+        if (!en.isIntersecting) clearTimeout(s.timer);
+      });
+    }, { threshold: 0.45 }) : null;
+    figs.forEach(function (f) {
+      var s = new Story(f); f.__story = s;
+      if (io) io.observe(f); else if (!reduce) { s.visible = true; s.play(); }
+      if (reduce) s.pause();
+    });
+  }
+  window.kdStory = { set: function (fig, k, instant) { var s = fig.__story; if (s) { s.pause(); s.set(k, instant !== false); } }, all: registry };
+
+  /* flow pulses on ordinary diagrams */
+  function initPulses() {
+    if (reduce || !document.createElementNS) return;
+    var svgs = [].slice.call(document.querySelectorAll("svg.concept-diagram")).filter(function (s) { return !s.closest(".kd-story") && !s.closest(".journey-wrap"); });
+    svgs.forEach(function (svg) {
+      var paths = [].slice.call(svg.querySelectorAll("path[marker-end]")).filter(function (p) { return !p.classList.contains("flow-arrow") && p.getTotalLength() > 40; });
+      paths.forEach(function (p, i) {
+        var c = document.createElementNS(NS, "circle");
+        c.setAttribute("r", "3.2"); c.setAttribute("fill", p.getAttribute("stroke") || "#22d3ee"); c.setAttribute("class", "pulse"); c.setAttribute("aria-hidden", "true");
+        var len = p.getTotalLength(), dur = Math.max(1.6, len / 70) + 1.6;
+        var m = document.createElementNS(NS, "animateMotion");
+        m.setAttribute("dur", dur + "s"); m.setAttribute("repeatCount", "indefinite"); m.setAttribute("begin", (i * 0.45) + "s");
+        m.setAttribute("keyPoints", "0;1;1"); m.setAttribute("keyTimes", "0;" + (1 - 1.6 / dur).toFixed(3) + ";1"); m.setAttribute("calcMode", "linear");
+        var mp = document.createElementNS(NS, "mpath"); mp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#" + (p.id || (p.id = "pp" + Math.random().toString(36).slice(2, 8))));
+        m.appendChild(mp);
+        var o = document.createElementNS(NS, "animate");
+        o.setAttribute("attributeName", "opacity"); o.setAttribute("dur", dur + "s"); o.setAttribute("repeatCount", "indefinite"); o.setAttribute("begin", (i * 0.45) + "s");
+        o.setAttribute("values", "0;.95;.95;0;0"); o.setAttribute("keyTimes", "0;.06;" + (1 - 1.8 / dur).toFixed(3) + ";" + (1 - 1.6 / dur).toFixed(3) + ";1");
+        c.appendChild(m); c.appendChild(o); svg.appendChild(c);
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (en) { try { en.isIntersecting ? en.target.unpauseAnimations() : en.target.pauseAnimations(); } catch (e) {} });
+      }, { threshold: 0.1 });
+      svgs.forEach(function (s) { io.observe(s); });
+    }
+  }
+  function boot() { initStories(); initPulses(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();

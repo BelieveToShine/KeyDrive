@@ -306,3 +306,11 @@ Extra conventions learned while building 21 diagrams:
   last box ("None of these? Probably a database").
 - Free-text notes inside a zone are fine; keep them ≤ 2 lines and away from arrows.
 - `scripts/page-kit/kit.py` produces boxes/zones/pills/arrows in these conventions (`rect.bx`, `rect.zone`, `g.arrow-pill`).
+
+## Stories (animated, step-by-step pictures) — added 2026-10-13 (L14)
+Use `kit.story(d, captions, caption)` for any concept a fresher must *see happen* (a promise breaking, a request travelling, a class splitting). Real GIFs are never used: a Story is an ordinary SVG diagram whose elements appear/glow/move by step, driven by `assets/site.js` (autoplay when ≥45 % visible, loop, ⏮ ⏸ ⏭ and clickable step dots, caption under the picture, `prefers-reduced-motion` ⇒ no autoplay, last step shown).
+- Authoring: every `Diagram` method takes `st=` (visible steps: `3` = from step 3 on, `'2-4'` = steps 2–4, `'-3'` = up to 3) and `hl=` (step(s) where the element glows). `d.arrow(..., id='x')` names a path; `d.token('x', '✈', st='3-3')` makes a token travel along it when step 3 starts and park at the end afterwards. `d.emoji(x, y, '✅', 20, st=3)` is the everyday picture/feedback mark; `d.note(x, y, w, h, 'line1|line2')` is a sticky note; box line kind `'e'` = a big emoji line. Captions are one short sentence per step; count must equal the number of steps (asserted).
+- Design for **morphing in place**: elements that replace each other (the loop box that turns red) share coordinates but have disjoint step ranges; the linter checks each step on its own (`diagram-lint.js` sets every step and ignores hidden elements, tokens and emoji).
+- Keep every step readable on its own: the caption and picture of step k must match. Avoid large empty areas in early steps (show the next row dimmed or start it earlier).
+- **Ordinary diagrams** get automatic flow pulses (a small dot travelling each arrow, direction only, off for reduced motion, paused off-screen). They say nothing about *data*; only Stories carry meaning.
+- Verify: `node scripts/shoot-diagrams.js … prefix` writes one PNG **per step** (`prefix-N-sK.png`): look at every one, then run `diagram-lint.js` and `layout-check.js`.

@@ -54,3 +54,17 @@ def cs(code, note=''):
         else:
             lines.append(_hl(line))
     return code_block('\n'.join(lines), note)
+
+from kit import story, sec as _sec
+
+def quiz(items, yes='❌ Breaks the rule', no='✅ Fine'):
+    """'Spot it' mini-quiz. items: (question, breaks: bool, explanation). Click to reveal the answer."""
+    out = '    <div class="quiz">\n'
+    for q, breaks, why in items:
+        out += (f'      <details class="zoom quiz-item"><summary><span class="chev">▾</span> {q}</summary>'
+                f'<div class="zoom-inner"><p><b>{yes if breaks else no}.</b> {why}</p></div></details>\n')
+    return out + '    </div>'
+
+def spot_table(rows):
+    """'How to spot it in your code' — [(what you see, what to do)]"""
+    return table(['If you see…', 'Do this'], rows)

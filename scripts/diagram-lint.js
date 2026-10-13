@@ -18,8 +18,9 @@ const BROWSER = { executablePath: process.env.PW_CHROMIUM || '/opt/pw-browsers/c
 
 function inPage() {
   const out = [];
-  document.querySelectorAll('svg.concept-diagram').forEach((svg, si) => {
-    const id = svg.getAttribute('aria-label') || ('diagram #' + (si + 1));
+  const vis = (el) => !el.closest('.st-off') && !el.closest('.tok') && !el.classList.contains('emo');
+  const check = (svg, si, k) => {
+    const id = (svg.getAttribute('aria-label') || ('diagram #' + (si + 1))) + (k ? ` [step ${k}]` : '');
     const vb = svg.viewBox.baseVal;
     const issues = [];
     const R = (el) => { const b = el.getBBox(); return { x: b.x, y: b.y, w: b.width, h: b.height }; };
@@ -33,11 +34,11 @@ function inPage() {
       return Math.min(p.x - r.x, r.x + r.w - p.x, p.y - r.y, r.y + r.h - p.y); // inside: distance to nearest edge
     };
 
-    const boxes = [...svg.querySelectorAll('rect.bx')].map(R);
-    const zones = [...svg.querySelectorAll('rect.zone')].map(R);
-    const pills = [...svg.querySelectorAll('g.arrow-pill')].map((g) => ({ rect: R(g.querySelector('rect')), text: R(g.querySelector('text')) }));
-    const texts = [...svg.querySelectorAll('text')].filter((t) => !t.closest('g.arrow-pill')).map((t) => ({ r: R(t), s: t.textContent.slice(0, 32), zoneTitle: t.classList.contains('zone-title') }));
-    const arrows = [...svg.querySelectorAll('path[marker-end]')];
+    const boxes = [...svg.querySelectorAll('rect.bx')].filter(vis).map(R);
+    const zones = [...svg.querySelectorAll('rect.zone')].filter(vis).map(R);
+    const pills = [...svg.querySelectorAll('g.arrow-pill')].filter(vis).map((g) => ({ rect: R(g.querySelector('rect')), text: R(g.querySelector('text')) }));
+    const texts = [...svg.querySelectorAll('text')].filter((t) => !t.closest('g.arrow-pill') && vis(t)).map((t) => ({ r: R(t), s: t.textContent.slice(0, 32), zoneTitle: t.classList.contains('zone-title') }));
+    const arrows = [...svg.querySelectorAll('path[marker-end]')].filter(vis);
     const add = (kind, msg) => issues.push(kind + ': ' + msg);
 
     // 1. everything inside the viewBox
@@ -92,6 +93,11 @@ function inPage() {
       pills.forEach((pl) => { if (distToRectEdge(P1, pl.rect) < 14 && !ptIn(P1, pl.rect)) add('pill-near-tip', `${tag}: a pill sits ${distToRectEdge(P1, pl.rect).toFixed(0)}px from the arrow tip (need ≥14)`); else if (ptIn(P1, pl.rect)) add('pill-on-tip', `${tag}: a pill covers the arrow tip`); });
     });
     out.push({ id, boxes: boxes.length, arrows: arrows.length, pills: pills.length, issues: [...new Set(issues)] });
+  };
+  document.querySelectorAll('svg.concept-diagram').forEach((svg, si) => {
+    const fig = svg.closest('figure.kd-story');
+    if (fig && window.kdStory) { const n = +fig.getAttribute('data-steps'); for (let k = 1; k <= n; k++) { window.kdStory.set(fig, k, true); check(svg, si, k); } window.kdStory.set(fig, n, true); }
+    else check(svg, si, 0);
   });
   return out;
 }

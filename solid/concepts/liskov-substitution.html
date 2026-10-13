@@ -37,159 +37,166 @@
 <main class="wrap">
   <section class="kd-hero left">
     <div class="eyebrow">Concept 4 of 12 · 🔤 The five principles</div>
-    <h1>It compiles — but does it <span class="grad-text">behave</span> like the type it claims to be?</h1>
-    <p class="sub">The Liskov Substitution Principle: contracts, the substitution rules, Square/Rectangle, and repairing a repository that throws on Save.</p>
-    <div class="interview-q">❓ "What is the Liskov Substitution Principle, and what is a classic example of violating it?"</div>
+    <h1>Not every bird can fly — so <span class="grad-text">Bird should not promise it</span>.</h1>
+    <p class="sub">The Liskov Substitution Principle with the Bird example: promises, penguins, and fixing it with small interfaces.</p>
+    <div class="interview-q">❓ "What is the Liskov Substitution Principle? Give an example."</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="OrderService calls Save through the IOrderRepository interface; SqlOrderRepository honours the contract and the order is saved, but ReadOnlyOrderRepository throws NotSupportedException, so substituting it crashes the caller">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Every bird inherits Fly from Bird; a loop that calls Fly on every bird works for the sparrow and the eagle but crashes on the penguin">
 <defs><marker id="ls1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<path d="M320,72 L320,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls1A)"/>
-<path d="M165,240 L165,205 L290,205 L290,170" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ls1A)"/>
-<path d="M475,240 L475,205 L350,205 L350,170" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ls1A)"/>
-<rect class="bx" x="230" y="16" width="180" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="320" y="42" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
-<text x="320" y="54" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">repo.Save(order)</text>
-<rect class="bx" x="210" y="120" width="220" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="320" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">«interface» IOrderRepository</text>
-<text x="320" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Save(Order) : saves it</text>
-<rect class="bx" x="30" y="240" width="270" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="165" y="261.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SqlOrderRepository</text>
-<text x="165" y="274" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">saves the order ✅</text>
-<text x="165" y="286.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">contract honoured</text>
-<rect class="bx" x="340" y="240" width="270" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
-<text x="475" y="261.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">ReadOnlyOrderRepository</text>
-<text x="475" y="274" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">throws NotSupportedException ❌</text>
-<text x="475" y="286.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">contract broken</text>
-<g class="arrow-pill"><rect x="284.5" y="87" width="71" height="18" rx="9"/><text x="320" y="99.5" text-anchor="middle" font-size="9" font-style="italic">depends on</text></g>
-<g class="arrow-pill"><rect x="129.5" y="196" width="71" height="18" rx="9"/><text x="165" y="208.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
-<g class="arrow-pill"><rect x="439.5" y="196" width="71" height="18" rx="9"/><text x="475" y="208.5" text-anchor="middle" font-size="9" font-style="italic">implements</text></g>
-</svg>
-<figcaption><strong>What you're seeing:</strong> OrderService depends on the <span class="kw">IOrderRepository</span> interface, which promises “<span class="kw">Save</span> stores the order”. <b>SqlOrderRepository</b> keeps that promise. <b>ReadOnlyOrderRepository</b> implements the interface too — the code compiles — but its <span class="kw">Save</span> throws <span class="kw">NotSupportedException</span>. The compiler accepted the substitute; the <i>behaviour</i> rejects it. That gap is what the Liskov Substitution Principle is about.</figcaption>
+<g class="st" data-s="1-"><path d="M110,128 L110,98 L262,98 L262,68" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="1-"><path d="M320,128 L320,68" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="1-"><path d="M530,128 L530,98 L380,98 L380,68" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="3-"><path id="ls1-f1" d="M110,282 L110,220" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="4-"><path id="ls1-f2" d="M320,282 L320,220" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="5-"><path id="ls1-f3" d="M530,282 L530,220" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ls1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="220" y="8" width="200" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="320" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Bird</text></g>
+<g class="st" data-s="1-"><text x="320" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Eat() · Fly()</text></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="20" y="128" width="180" height="92" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text class="emo" x="110" y="179" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🐦</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="110" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Sparrow</text></g>
+<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="230" y="128" width="180" height="92" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4"><text class="emo" x="320" y="179" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🦅</text></g>
+<g class="st" data-s="1-" data-hl="4"><text x="320" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Eagle</text></g>
+<g class="st" data-s="1-" data-hl="5"><rect class="bx" x="440" y="128" width="180" height="92" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="5"><text class="emo" x="530" y="179" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🐧</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="530" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Penguin</text></g>
+<g class="st" data-s="2-5" data-hl="2"><rect class="bx note" x="440" y="8" width="180" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-5" data-hl="2"><text x="530" y="34" text-anchor="middle" font-size="10" fill="#fcd34d">Bird promises</text></g>
+<g class="st" data-s="2-5" data-hl="2"><text x="530" y="48" text-anchor="middle" font-size="10" fill="#fcd34d">“every bird can Fly()”</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="440" y="8" width="180" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="530" y="34" text-anchor="middle" font-size="10" fill="#fda4af">Promise broken!</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="530" y="48" text-anchor="middle" font-size="10" fill="#fda4af">(LSP violated)</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="20" y="282" width="600" height="48" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="320" y="309.5" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">foreach (var b in birds) b.Fly();</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="20" y="282" width="600" height="48" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="320" y="309.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fda4af" font-family="'JetBrains Mono'">💥 NotSupportedException — a penguin cannot fly!</text></g>
+<g class="st" data-s="3-"><text class="emo" x="184" y="150" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="4-"><text class="emo" x="394" y="150" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="5-"><text class="emo" x="604" y="150" text-anchor="middle" font-size="22">💥</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="166.5" y="89" width="39" height="18" rx="9"/><text x="186" y="101.5" text-anchor="middle" font-size="9" font-style="italic">is a</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="300.5" y="89" width="39" height="18" rx="9"/><text x="320" y="101.5" text-anchor="middle" font-size="9" font-style="italic">is a</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="435.5" y="89" width="39" height="18" rx="9"/><text x="455" y="101.5" text-anchor="middle" font-size="9" font-style="italic">is a</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="88" y="242" width="44" height="18" rx="9"/><text x="110" y="254.5" text-anchor="middle" font-size="9" font-style="italic">Fly()</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="298" y="242" width="44" height="18" rx="9"/><text x="320" y="254.5" text-anchor="middle" font-size="9" font-style="italic">Fly()</text></g></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="508" y="242" width="44" height="18" rx="9"/><text x="530" y="254.5" text-anchor="middle" font-size="9" font-style="italic">Fly()</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ls1-f1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✈</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ls1-f2"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✈</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="ls1-f3"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✈</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Meet the class <b>Bird</b>. We put <code>Eat()</code> and <code>Fly()</code> inside it, and Sparrow, Eagle and Penguin all <b>inherit</b> from it.</li><li>Bird makes a <b>promise</b>: “every Bird can Fly().” Everybody who uses a Bird trusts that promise.</li><li>The program loops over all birds and calls <code>Fly()</code>. The <b>sparrow</b> flies. ✅</li><li>The <b>eagle</b> flies. ✅</li><li>The <b>penguin</b> cannot fly, so its <code>Fly()</code> throws an error. 💥 The whole loop crashes.</li><li>The penguin <b>broke the promise</b> that Bird made. That is exactly what the Liskov Substitution Principle forbids.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a story of one loop and three birds. Watch the <b>Fly()</b> call travel from the program down to each bird — and see where the promise breaks.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>Anywhere you use a base type, any subtype must work</b> — without the caller knowing which one it got and without surprises.</span></div>
-  <section class="kd-section " id="why">
-    <div class="sec-label why">📖 Why did this need to exist?</div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>If something says “I am a Bird”, it must really work everywhere a Bird is expected — no surprises.</b></span></div>
+  <section class="kd-section ">
+    <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
-      <p>Page 3 made behaviour pluggable through interfaces: the calculator accepts any <span class="kw">IDiscountRule</span>. That only works if every implementation <b>behaves</b> as the interface promises. A rule that returns a negative total, or a repository that refuses to save, makes the plug-in model unsafe.</p>
-      <p>Robert C. Martin’s summary is that derived classes must be usable wherever their base classes are. In type-theory terms, objects of type T may be replaced with objects of subtype S without altering the main behavioural properties of the program.</p>
-      <p>The classic illustration is Square and Rectangle: mathematically a square is a rectangle, but a square’s width and height are locked together, so code that sets width and height independently gets a surprise. “Is-a” in English is not enough; <b>behaves-like-a</b> is the test.</p>
+      <p>🔌 Imagine a plug that <b>fits</b> the wall socket but gives <b>no electricity</b>. It fits, but it does not <i>work</i>. In code the compiler only checks that the plug <i>fits</i>. The Liskov Substitution Principle (<b>L</b> in SOLID) is about whether it <b>works</b>.</p>
+      <p>The rule: a child class must keep <b>every promise</b> its parent made. If it cannot, it should not be that parent’s child.</p>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">📜 The substitution rules</div>
-<figure class="diagram-card">
-<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Substitutability rules for a subtype: it may accept the same or more inputs, must promise the same or more in its results, must not throw new kinds of exceptions the caller does not expect, and must keep the base type invariants">
+    <div class="sec-label see">🔧 The fix: make small promises</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="The fix: Bird only promises Eat; Fly lives in a separate IFlyable interface that Sparrow implements and Penguin does not, so the flying loop only ever receives birds that can fly">
 <defs><marker id="ls2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ls2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="bx" x="10" y="12" width="305" height="130" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="162.5" y="68.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Inputs (preconditions)</text>
-<text x="162.5" y="81" text-anchor="middle" font-size="9.5" font-weight="700" fill="#67e8f9">may accept the same or MORE</text>
-<text x="162.5" y="93.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">never demand more than the base type</text>
-<rect class="bx" x="325" y="12" width="305" height="130" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="477.5" y="68.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Results (postconditions)</text>
-<text x="477.5" y="81" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">must promise the same or MORE</text>
-<text x="477.5" y="93.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">never deliver less than the base type</text>
-<rect class="bx" x="10" y="162" width="305" height="130" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
-<text x="162.5" y="218.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Errors</text>
-<text x="162.5" y="231" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fcd34d">must not throw new surprises</text>
-<text x="162.5" y="243.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">callers cannot catch what they were never told about</text>
-<rect class="bx" x="325" y="162" width="305" height="130" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
-<text x="477.5" y="218.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Invariants</text>
-<text x="477.5" y="231" text-anchor="middle" font-size="9.5" font-weight="700" fill="#c4b5fd">must keep the base type’s rules</text>
-<text x="477.5" y="243.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">e.g. “width and height can change independently”</text>
-</svg>
-<figcaption><strong>What you're seeing:</strong> think of the base type as a <b>contract</b>. A subtype may be <b>more generous</b> — accept more inputs, promise more in its results — but never <b>stricter</b>: it must not demand more of callers, deliver less, throw errors callers were not told about, or break the base type’s invariants. These are the design-by-contract rules usually summarised as “preconditions cannot be strengthened, postconditions cannot be weakened”.</figcaption>
+<g class="st" data-s="3-"><path d="M60,140 L60,68" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ls2A)"/></g>
+<g class="st" data-s="3-"><path d="M290,140 L290,104 L180,104 L180,68" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ls2A)"/></g>
+<g class="st" data-s="3-"><path d="M350,140 L350,104 L520,104 L520,68" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls2A)"/></g>
+<g class="st" data-s="4-"><path id="ls2-g1" d="M320,284 L320,232" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ls2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="20" y="8" width="200" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="120" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Bird</text></g>
+<g class="st" data-s="1-"><text x="120" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Eat()</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="420" y="8" width="200" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="520" y="36" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">«interface» IFlyable</text></g>
+<g class="st" data-s="2-"><text x="520" y="48" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Fly()</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="20" y="140" width="200" height="92" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text class="emo" x="120" y="191" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🐧</text></g>
+<g class="st" data-s="3-"><text x="120" y="206" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Penguin</text></g>
+<g class="st" data-s="3-" data-hl="4"><rect class="bx" x="230" y="140" width="180" height="92" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="4"><text class="emo" x="320" y="191" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🐦</text></g>
+<g class="st" data-s="3-" data-hl="4"><text x="320" y="206" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Sparrow</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="20" y="284" width="600" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="320" y="310.5" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">foreach (IFlyable f in flyers) f.Fly();</text></g>
+<g class="st" data-s="4-"><text class="emo" x="394" y="162" text-anchor="middle" font-size="20">✅</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="440" y="150" width="180" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="530" y="174" text-anchor="middle" font-size="10" fill="#fcd34d">Penguin is still a Bird:</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="530" y="188" text-anchor="middle" font-size="10" fill="#fcd34d">it eats, it swims.</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="530" y="202" text-anchor="middle" font-size="10" fill="#fcd34d">Nobody asks it to fly.</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="40.5" y="95" width="39" height="18" rx="9"/><text x="60" y="107.5" text-anchor="middle" font-size="9" font-style="italic">is a</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="215.5" y="95" width="39" height="18" rx="9"/><text x="235" y="107.5" text-anchor="middle" font-size="9" font-style="italic">is a</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="418" y="95" width="34" height="18" rx="9"/><text x="435" y="107.5" text-anchor="middle" font-size="9" font-style="italic">can</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="298" y="249" width="44" height="18" rx="9"/><text x="320" y="261.5" text-anchor="middle" font-size="9" font-style="italic">Fly()</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ls2-g1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✈</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Every bird eats, so <b>Bird</b> only promises <code>Eat()</code>. Nothing else.</li><li>Flying is a <b>separate</b> promise, so it gets its own small interface: <code>IFlyable</code> with <code>Fly()</code>.</li><li>The sparrow is a Bird <i>and</i> can fly (“is a” + “can”). The penguin is just a Bird. It never promised to fly.</li><li>The loop now asks for <code>IFlyable</code> only. The sparrow flies. ✅ No penguin can ever be in that list, so nothing can crash.</li><li>The penguin is still a perfectly good Bird — it eats and swims. The fix did not remove the penguin; it stopped <b>lying</b> about it.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same birds, redesigned: <b>Bird</b> keeps the promise every bird can keep, and <b>IFlyable</b> carries the promise only some can.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🧪 LSP lab · repair the repository</div>
-    <div class="code-block"><pre><span class="cmt">// BEFORE — compiles, but breaks the contract</span>
-<span class="kw">public</span> <span class="kw">interface</span> IOrderRepository
-{
-    <span class="kw">void</span> Save(Order order);
-    Order? Find(<span class="kw">int</span> id);
-}
-<span class="kw">public</span> <span class="kw">class</span> ReadOnlyOrderRepository : IOrderRepository
-{
-    <span class="kw">public</span> <span class="kw">void</span> Save(Order order) =&gt; <span class="kw">throw</span> <span class="kw">new</span> NotSupportedException();   <span class="cmt">// callers did not expect this</span>
-    <span class="kw">public</span> Order? Find(<span class="kw">int</span> id) =&gt; /* query */ <span class="kw">null</span>;
-}
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — Bird promises something not every bird can do</span>
+<span class="kw">class</span> Bird      { <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">void</span> Eat() { } <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">void</span> Fly() { } }
+<span class="kw">class</span> Sparrow : Bird { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">void</span> Fly() =&gt; Console.WriteLine(<span class="str">"flap flap"</span>); }
+<span class="kw">class</span> Penguin : Bird { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">void</span> Fly() =&gt; <span class="kw">throw</span> <span class="kw">new</span> NotSupportedException(); }  <span class="cmt">// 💥</span>
 
-<span class="cmt">// AFTER — say what each client really needs (ISP and LSP work together)</span>
-<span class="kw">public</span> <span class="kw">interface</span> IOrderReader { Order? Find(<span class="kw">int</span> id); }
-<span class="kw">public</span> <span class="kw">interface</span> IOrderWriter { <span class="kw">void</span> Save(Order order); }
+<span class="kw">foreach</span> (<span class="kw">var</span> b <span class="kw">in</span> birds) b.Fly();       <span class="cmt">// crashes when it reaches the penguin</span>
 
-<span class="kw">public</span> <span class="kw">class</span> SqlOrderRepository : IOrderReader, IOrderWriter { /* both */ }
-<span class="kw">public</span> <span class="kw">class</span> ReportingOrderReader : IOrderReader { /* read only: honest type */ }
+<span class="cmt">// AFTER — small promises</span>
+<span class="kw">abstract</span> <span class="kw">class</span> Bird { <span class="kw">public</span> <span class="kw">void</span> Eat() { } }
+<span class="kw">interface</span> IFlyable { <span class="kw">void</span> Fly(); }
+<span class="kw">class</span> Sparrow : Bird, IFlyable { <span class="kw">public</span> <span class="kw">void</span> Fly() =&gt; Console.WriteLine(<span class="str">"flap flap"</span>); }
+<span class="kw">class</span> Penguin : Bird { }                <span class="cmt">// no Fly() at all: nothing to break</span>
 
-<span class="kw">public</span> <span class="kw">class</span> OrderService
-{
-    <span class="kw">public</span> OrderService(IOrderWriter writer) { /* needs Save: cannot be given a reader */ }
-}</pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. The fix is not a cleverer subclass; it is a more honest <b>abstraction</b>: a type that cannot save should not claim to be able to (next page: Interface Segregation).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Substitution check</th><th scope="col">ReadOnlyOrderRepository as IOrderRepository</th><th scope="col">After the split</th></tr></thead><tbody><tr><th scope="row">Honours “Save stores the order”</th><td>No — throws</td><td>Cannot be passed where a writer is required</td></tr><tr><th scope="row">Caller needs <span class="kw">is</span>/<span class="kw">as</span> checks to be safe</th><td>Yes (smell)</td><td>No</td></tr><tr><th scope="row">Discovered</th><td>At runtime, in production</td><td>At compile time</td></tr></tbody></table></div>
-    <div class="how-strip">
-      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
-      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
-      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
-      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
-      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
-      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+<span class="kw">foreach</span> (<span class="kw">var</span> f <span class="kw">in</span> flyers) f.Fly();      <span class="cmt">// flyers is a List&lt;IFlyable&gt;</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The after-version is also the Interface Segregation Principle (the next page) in action: small interfaces, each with one promise.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: does this break the rule?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>Penguin : Bird</code> whose <code>Fly()</code> throws an exception</summary><div class="zoom-inner"><p><b>❌ Breaks the rule.</b> Callers trust “every Bird flies”. The penguin breaks that trust.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>Sparrow : Bird, IFlyable</code> with a working <code>Fly()</code></summary><div class="zoom-inner"><p><b>✅ Fine.</b> It keeps every promise it made. Substituting it anywhere is safe.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>Square : Rectangle</code> where setting the width also changes the height</summary><div class="zoom-inner"><p><b>❌ Breaks the rule.</b> Code that sets width and height separately gets a surprise. A square is a rectangle in maths, but it does not <i>behave</i> like one.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>ReadOnlyList : IList</code> whose <code>Add()</code> throws</summary><div class="zoom-inner"><p><b>❌ Breaks the rule.</b> The interface promises you can add. This type cannot keep that promise. Give it a read-only interface instead (<code>IReadOnlyList</code>).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A child class that does the same thing in a faster way</summary><div class="zoom-inner"><p><b>✅ Fine.</b> Same promise, kept. Different inside is fine — that is the whole point of substitution.</p></div></details>
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label trap">📋 Smells of an LSP violation</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">A subclass throws <span class="kw">NotImplementedException</span> / <span class="kw">NotSupportedException</span></th><td>It cannot honour the base contract</td><td>Do not inherit; split the interface (I) or use composition</td></tr><tr><th scope="row">Callers write <span class="kw">if (x is SpecialRule)</span></th><td>The abstraction leaks; callers know the subtype</td><td>Move the behaviour into the base contract, or separate abstractions</td></tr><tr><th scope="row">An override does nothing or returns a dummy</th><td>It silently weakens a postcondition</td><td>Same as above</td></tr><tr><th scope="row">An override rejects values the base accepts</th><td>It strengthens a precondition</td><td>Accept the same inputs, or change the abstraction</td></tr><tr><th scope="row">An override changes shared state the base promised not to touch</th><td>It breaks an invariant</td><td>Use composition (see the deep dive)</td></tr><tr><th scope="row">Tests written for the base class fail for a subclass</th><td>The subtype is not substitutable</td><td>Run the same contract tests against every implementation</td></tr></tbody></table></div>
+    <div class="sec-label trap">👀 How to spot it in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">A method that does <code>throw new NotSupportedException()</code> or <code>NotImplementedException()</code></th><td>The child cannot keep the parent’s promise. Split the interface (I) or stop inheriting.</td></tr><tr><th scope="row"><code>if (animal is Penguin)</code> checks before calling a method</th><td>The caller already knows the child breaks the rule. Move that method into a separate interface.</td></tr><tr><th scope="row">An override that is empty or returns a fake value</th><td>It pretends to keep the promise. Same fix.</td></tr><tr><th scope="row">A subclass that rejects input the parent accepted</th><td>It demands more than the parent did. The child must accept at least what the parent accepts.</td></tr></tbody></table></div>
   </section>
-  <section class="kd-section ">
-    <div class="sec-label see">🎬 Real-world scenarios</div>
-    <div class="scenario-grid">
-      <div class="scenario"><span class="sc-icon">💳</span><h5>A “GiftCardPayment” cannot refund</h5><p>It implements IPaymentMethod but throws on Refund.</p><span class="sc-use">→ Separate refundable from non-refundable</span></div>
-      <div class="scenario"><span class="sc-icon">📦</span><h5>A “DiscountRule” returns a negative total in one case</h5><p>It breaks the postcondition.</p><span class="sc-use">→ Contract tests for every rule</span></div>
-      <div class="scenario"><span class="sc-icon">🟦</span><h5>Square extends Rectangle</h5><p>Locked width and height.</p><span class="sc-use">→ Do not inherit; model both as shapes with area</span></div>
-      <div class="scenario"><span class="sc-icon">🔌</span><h5>A mock that returns null where the real one never does</h5><p>Tests pass, production fails.</p><span class="sc-use">→ Make fakes honour the contract</span></div>
-    </div>
-  </section>
-  <details class="zoom">
-    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
-    <div class="zoom-inner">
-      <p><b>Contract tests.</b> Write one test suite against the interface and run it against every implementation; a new rule class must pass the same suite. This is how LSP becomes automatic.</p>
-      <p><b>Dynamic languages.</b> Michael Feathers notes LSP still applies where inheritance is not required for substitution: what matters is behavioural compatibility.</p>
-      <p><b>Code Contracts.</b> The older .NET Code Contracts tooling modelled preconditions, postconditions and invariants explicitly; check current guidance, since the tooling is dated.</p>
-    </div>
-  </details>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>LSP: subtypes must be usable wherever their base types are, without altering the program’s main behaviour.</li><li>A subtype may accept more and promise more; never demand more, deliver less, add new exceptions, or break invariants.</li><li>Compiling is not substituting: Square/Rectangle and ReadOnlyRepository both compile.</li><li>Smells: NotSupportedException overrides, is/as checks on subtypes, do-nothing overrides.</li><li>Fix by making the abstraction honest (smaller interfaces) or by using composition.</li><li>Run the same contract tests against every implementation.</li></ul>
+      <ul><li>LSP: a child must work everywhere its parent works — without surprises.</li><li>Compiling is not enough; the child must keep the parent’s <b>promises</b> (behaviour).</li><li>Bird → Eat() only; IFlyable → Fly() — small promises, the penguin never lies.</li><li>Smells: NotSupportedException overrides, <code>is</code>/<code>as</code> type checks, empty overrides.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">"The Liskov Substitution Principle says any subtype must work wherever its base type is expected. Compiling isn’t enough — the subtype must honour the contract: accept at least the same inputs, promise at least the same results and not add surprising exceptions. When I see a subclass throwing NotSupportedException or callers checking the concrete type, I fix the abstraction, by splitting interfaces or using composition, and I run shared contract tests against every implementation."</div>
+    <div class="kd-card saythis-box">"The Liskov Substitution Principle says anywhere you use a parent type, a child must work without surprises. If Bird promises Fly() but Penguin throws, the loop that flies every bird crashes. I fix it by making smaller promises: Bird only has Eat(), and flying moves into an IFlyable interface that only flying birds implement."</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p><b>“It is-a in real life, so it can inherit.”</b> Square is-a rectangle in geometry, not in behaviour.</p>
-      <p><b>Throwing NotSupportedException to “comply” with a fat interface.</b> The violation just moves to runtime.</p>
+      <p><b>“A penguin <i>is</i> a bird, so it must inherit Fly().”</b> In real life yes; in code, inheriting means <i>promising the behaviour</i>. Model what the type can really do.</p>
     </div>
   </section>
-  <div class="confuse-pair">
-    <div class="cp-side"><h5>🏷️ Same type</h5><p>The compiler is satisfied: the method signatures match.</p></div>
-    <div class="cp-vs">vs.</div>
-    <div class="cp-side"><h5>🤝 Same behaviour</h5><p>The runtime is satisfied: the promises of the contract hold.</p></div>
-  </div>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>A class that cannot honour a method should not be forced to claim it. Next: Interface Segregation — small interfaces tailored to each client.</span>
+      <span>Our fix used a small interface, <code>IFlyable</code>. Making interfaces small on purpose is the next letter: Interface Segregation.</span>
       <a class="next-link" href="interface-segregation.html">I — the Interface Segregation Principle <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 The principle’s wording is Robert C. Martin’s summary; the contract rules follow standard design-by-contract guidance, with .NET examples from Microsoft’s MSDN Magazine archive (dated). Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/july/msdn-magazine-cutting-edge-code-contracts-inheritance-and-the-liskov-principle" target="_blank" rel="noopener">MSDN Magazine: Code Contracts, inheritance and the Liskov principle</a></p>
+  </section>  <p class="fact-note">📌 The principle’s wording is Robert C. Martin’s; the Bird and Square/Rectangle examples are the classic textbook illustrations. Contract rules follow design-by-contract (an MSDN Magazine article from 2011, dated). Official docs: <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a> · <a href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/july/msdn-magazine-cutting-edge-code-contracts-inheritance-and-the-liskov-principle" target="_blank" rel="noopener">MSDN Magazine: Code Contracts, inheritance and the Liskov principle</a></p>
 
 
 </main>
