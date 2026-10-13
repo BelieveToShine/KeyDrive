@@ -126,6 +126,22 @@ Source roots (all https://learn.microsoft.com/en-us/azure/cosmos-db/): `partitio
 
 
 
+## Page 9 — consistency levels
+| Claim | Status | Note |
+|---|---|---|
+| “Five levels” / “five levels”: Strong, Bounded Staleness, Session, Consistent Prefix, Eventual; Session is the default | ✅ V | Consistency level choices |
+| Strong: linearizable reads; write latency = 2× RTT between two farthest regions + 10 ms at p99; blocked by default beyond ≈ 5,000 miles (8,000 km) | ✅ V | same |
+| Bounded staleness: lag limit K versions or T time; writes throttled when lag exceeds the bound | ✅ V | same |
+| Session: read-your-writes/monotonic via session token; latency/availability/throughput comparable to eventual | ✅ V | same |
+| Consistent prefix: A / A,B / A,B,C never out of order; latency comparable to eventual | ✅ V | same |
+| Strong and bounded-staleness reads use two replicas → read RU doubled; ≈ 2× read throughput for relaxed levels | ✅ V | same |
+| Read latency < “10 ms” at p99 for all levels (exception: multi-region strong writes) | ✅ V | same |
+| Integrated cache serves only session and eventual reads | ✅ V | Integrated cache doc (in search) |
+| Per-request: can relax, not strengthen; newer options (LATEST_COMMITTED) | ✅ V | Manage consistency levels |
+| Multi-region writes exclude strong | 🟨 K | confirm; stated as a deeper-dive note |
+| Isolation vs consistency analogy | 🟦 I | analogy |
+| RU table for reads/s (≈ 1–4 RU) and scene examples | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|
