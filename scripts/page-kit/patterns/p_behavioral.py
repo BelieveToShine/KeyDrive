@@ -67,8 +67,8 @@ def d_ob_prob():
     for i, (n, y) in enumerate([('👩 Asha', 10), ('👨 Ben', 105), ('🧑 Chen', 200)]):
         d.box(470, y, 160, 70, [(n, 't'), ('called by name', 's')], 'amber', st=2)
         d.arrow([(180, 145), (470, y + 35)], 'rose', st=2)
-    d.note(200, 235, 250, 44, 'New fan Dev wants updates…', 'amber', st='3-', hl=3)
-    d.note(200, 10, 250, 56, 'Channel code must be edited|to add “call Dev”  ✏️', 'rose', st='4-', hl=4)
+    d.note(200, 235, 250, 44, 'New fan Dev wants updates…', 'amber', st='3-3', hl=3)
+    d.note(200, 235, 250, 56, 'Channel code must be edited|to add “call Dev”  ✏️', 'rose', st='4-', hl=4)
     return d
 
 def d_ob_fix():
@@ -251,7 +251,8 @@ def d_tm_prob():
         d.box(x, 110, 300, 40, [(f'2. {brew}', 's')], 'amber', st=2)
         d.box(x, 160, 300, 40, [('3. pour into cup', 's')], 'rose', st=2, hl=3)
         d.box(x, 210, 300, 40, [(f'4. {add}', 's')], 'amber', st=2)
-    d.note(10, 266, 620, 40, 'Steps 1 and 3 are copied. Fix a bug in one → fix it in both', 'rose', st='3-', hl=3)
+    d.note(10, 266, 620, 40, 'Steps 1 and 3 are copied', 'amber', st='3-3', hl=3)
+    d.note(10, 266, 620, 40, 'Fix a bug in one → you must fix it in both', 'rose', st='4-', hl=4)
     return d
 
 def d_tm_fix():
@@ -259,7 +260,7 @@ def d_tm_fix():
     d.box(10, 10, 620, 40, [('📋 Drink.Make()  — the fixed recipe','t')], 'violet', st=1)
     steps = [('1. boil water', 'fixed', 'rose'), ('2. Brew()', 'differs', 'amber'), ('3. pour into cup', 'fixed', 'rose'), ('4. AddExtras()', 'differs', 'amber')]
     for i, (n, k, c) in enumerate(steps):
-        d.box(10 + i * 160, 80, 150, 60, [(n, 't'), (k, 's')], c, st=2, hl=3)
+        d.box(10 + i * 157, 80, 148, 60, [(n, 't'), (k, 's')], c, st=2, hl=3)
     d.box(170, 190, 150, 50, [('🍵 Tea','t'),('steep · lemon','s')], 'emerald', st='4-', hl=4)
     d.box(330, 190, 150, 50, [('☕ Coffee','t'),('brew · milk','s')], 'emerald', st='4-')
     d.arrow([(245, 190), (245, 140)], 'emerald', st='4-'); d.arrow([(405, 190), (485, 140)], 'emerald', st='4-') if False else None

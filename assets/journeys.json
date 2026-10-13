@@ -561,7 +561,13 @@
       "decorator",
       "facade",
       "proxy",
-      "composite"
+      "composite",
+      "strategy",
+      "observer",
+      "command",
+      "state",
+      "template-method",
+      "chain-of-responsibility"
     ],
     "sub": {},
     "subTitles": {}

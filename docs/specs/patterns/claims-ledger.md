@@ -48,5 +48,28 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 
 
 
+## Behavioral pages 10–15 — Strategy, Observer, Command, State, Template Method, Chain of Responsibility
+| Claim | Status | Note |
+|---|---|---|
+| Strategy: define a family of algorithms, each in a separate class, make objects interchangeable | ✅ V | refactoring.guru Strategy |
+| Observer: subscription mechanism notifying multiple objects about events; IObservable/IObserver, Subscribe returns IDisposable | ✅ V | refactoring.guru catalog; Microsoft Learn Observer design pattern |
+| Command: request as a stand-alone object; queue, delay, undo | ✅ V (wording) | refactoring.guru Command page was listed in search results; sentence paraphrased from the pattern's well-known intent — page not opened |
+| State: alters behaviour when internal state changes | 🟨 K | refactoring.guru State intent from memory; page not opened |
+| Template Method: skeleton of an algorithm in the superclass, subclasses override steps | 🟨 K | refactoring.guru intent from memory; page not opened |
+| Chain of Responsibility: handlers decide to process or pass to next | 🟨 K | refactoring.guru intent from memory; page not opened |
+| ASP.NET Core middleware: each component may act, short-circuit or call next | ✅ V | Microsoft Learn middleware |
+| IComparer<T> as strategy; ICommand in UI frameworks; C# event as observer; framework override points | 🟨 K | common classifications |
+| Map app, YouTube bell, order slip, traffic light, tea/coffee, support escalation pictures; numbers (25/60/35 min, 2.00 prices, 50/500 limits) | 🟦 I | teaching analogies, illustrative |
+
+
+
+
+
+
+
+
+
+
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.

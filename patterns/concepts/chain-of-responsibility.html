@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chain of Responsibility: Pass It Along Until Handled — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="template-method.html">Template Method</a><span class="sep">›</span><span class="cur">Chain of Responsibility</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 15 of 24 · 💬 Behavioral</div>
+    <h1>Customer-support escalation: <span class="grad-text">pass it along until someone handles it</span>.</h1>
+    <p class="sub">The Chain of Responsibility pattern with support levels: each link handles a request or passes it on, so rules stay separate and easy to rearrange.</p>
+    <div class="interview-q">❓ "What is the Chain of Responsibility pattern and where do you see it in ASP.NET Core?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="One big function decides who handles every refund request with a long if-else on the amount, and any change to the rules means editing that function">
+<defs><marker id="ch1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ch1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ch1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-" data-hl="2"><rect class="bx" x="10" y="20" width="620" height="130" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🎫 HandleRefund(amount)</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="83" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">if amount &lt; 50 → agent …</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">else if amount &lt; 500 → supervisor …</text></g>
+<g class="st" data-s="1-" data-hl="2"><text x="320" y="107" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">else → manager …  (and checks, logging, approvals…)</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx note" x="10" y="175" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="160" y="200" text-anchor="middle" font-size="10" fill="#fcd34d">New rule: add a “team lead” level</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="330" y="175" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="480" y="200" text-anchor="middle" font-size="10" fill="#fda4af">Edit the big function again ✏️</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="235" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="260" text-anchor="middle" font-size="10" fill="#fda4af">Everything about who-handles-what is tangled in one place</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>One big function, <code>HandleRefund</code>, decides who handles a refund with a long <b>if / else on the amount</b>.</li><li>A new rule arrives: add a <b>team lead</b> level.</li><li>We <b>edit the big function</b> again. ✏️</li><li>Everything about “who handles what” is tangled in one place.</li></ol>
+<figcaption><strong>What you're seeing:</strong> one function knows every level.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Line up handlers; each one either handles the request or passes it to the next.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📞 In a support centre, a small refund is handled by the <b>agent</b>. A bigger one is passed to a <b>supervisor</b>, a huge one to a <b>manager</b>. Nobody needs the whole rulebook: each person knows their own limit and who is next.</p>
+      <p>refactoring.guru: Chain of Responsibility lets you pass requests along a chain of handlers; upon receiving a request, each handler decides either to process it or to pass it to the next handler in the chain.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⛓️ The fix: a chain</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Refund requests pass along a chain of agent, supervisor and manager; each either handles the request if it is within their limit or passes it to the next, so a 20 refund is handled by the agent and an 800 refund travels to the manager">
+<defs><marker id="ch2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ch2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ch2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="ch2-c1" d="M180,140 L235,140" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ch2A)"/></g>
+<g class="st" data-s="2-"><path id="ch2-c2" d="M405,140 L460,140" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ch2A)"/></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="10" y="90" width="170" height="100" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text class="emo" x="95" y="138.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧑‍💻</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="95" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Agent</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="95" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">up to 50</text></g>
+<g class="st" data-s="1-" data-hl="5"><rect class="bx" x="235" y="90" width="170" height="100" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="5"><text class="emo" x="320" y="138.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">👩‍💼</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="320" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Supervisor</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="320" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">up to 500</text></g>
+<g class="st" data-s="1-" data-hl="6"><rect class="bx" x="460" y="90" width="170" height="100" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="6"><text class="emo" x="545" y="138.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧑‍⚖️</text></g>
+<g class="st" data-s="1-" data-hl="6"><text x="545" y="153.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Manager</text></g>
+<g class="st" data-s="1-" data-hl="6"><text x="545" y="166.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">anything</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="10" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="35" text-anchor="middle" font-size="10" fill="#c4b5fd">Each one: “can I handle it? if not, pass it on”</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="10" y="10" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="320" y="35" text-anchor="middle" font-size="10" fill="#6ee7b7">Ticket 1: refund 20 → Agent handles it ✅</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx note" x="10" y="10" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="320" y="35" text-anchor="middle" font-size="10" fill="#fcd34d">Ticket 2: refund 800 → Agent: “not mine, passing on”</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx note" x="10" y="10" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="320" y="35" text-anchor="middle" font-size="10" fill="#fcd34d">Supervisor: “over my limit, passing on”</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="10" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="320" y="35" text-anchor="middle" font-size="10" fill="#6ee7b7">Manager handles it ✅ — the chain decided, not one big function</text></g>
+<g class="st" data-s="6-"><rect class="bx note" x="10" y="230" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-"><text x="320" y="255" text-anchor="middle" font-size="10" fill="#67e8f9">Add a Team Lead: insert one link — nothing else changes</text></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ch2-c1"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🎫</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="ch2-c2"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🎫</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Three people in a line: <b>Agent</b> (up to 50), <b>Supervisor</b> (up to 500), <b>Manager</b> (anything). Each asks: “can I handle it? if not, pass it on.”</li><li>The rule each one follows.</li><li><b>Ticket 1</b>: refund 20. The agent handles it. ✅</li><li><b>Ticket 2</b>: refund 800. The agent says “not mine” and passes it on.</li><li>The supervisor says “over my limit” and passes it on.</li><li>The <b>manager</b> handles it. ✅ Add a Team Lead later by inserting one link.</li></ol>
+<figcaption><strong>What you're seeing:</strong> tickets travelling along the chain.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Handler</b> (shared shape)</th><td>“someone who can take a ticket”</td><td><code>IHandler.Handle(request)</code></td></tr><tr><th scope="row"><b>Concrete handlers</b></th><td>agent, supervisor, manager</td><td><code>AgentHandler</code> …</td></tr><tr><th scope="row"><b>Next link</b></th><td>who to pass to</td><td><code>_next</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">abstract</span> <span class="kw">class</span> Handler
+{
+    <span class="kw">private</span> Handler? _next;
+    <span class="kw">public</span> Handler SetNext(Handler next) { _next = next; <span class="kw">return</span> next; }
+    <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">string</span> Handle(<span class="kw">int</span> amount) =&gt; _next?.Handle(amount) ?? <span class="str">"nobody can handle it"</span>;
+}
+<span class="kw">class</span> Agent : Handler      { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">string</span> Handle(<span class="kw">int</span> a) =&gt; a &lt;= 50  ? <span class="str">"Agent handled it"</span>      : base.Handle(a); }
+<span class="kw">class</span> Supervisor : Handler { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">string</span> Handle(<span class="kw">int</span> a) =&gt; a &lt;= 500 ? <span class="str">"Supervisor handled it"</span> : base.Handle(a); }
+<span class="kw">class</span> Manager : Handler    { <span class="kw">public</span> <span class="kw">override</span> <span class="kw">string</span> Handle(<span class="kw">int</span> a) =&gt; <span class="str">"Manager handled it"</span>; }
+
+<span class="kw">var</span> agent = <span class="kw">new</span> Agent(); agent.SetNext(<span class="kw">new</span> Supervisor()).SetNext(<span class="kw">new</span> Manager());
+Console.WriteLine(agent.Handle(800));      <span class="cmt">// Manager handled it</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Each link decides: handle, or call <span class="kw">base.Handle</span> to pass on.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">ASP.NET Core middleware pipeline</th><td>each middleware may handle the request, short-circuit, or call the next one (documented)</td></tr><tr><th scope="row">Validation or approval pipelines</th><td>a series of checks, each may stop the request</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A request may be handled by one of several handlers, decided at run time</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Chain them.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You always know exactly who must handle it</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Call them directly.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Steps should be rearrangeable or optional</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Chains are easy to reorder.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Every request must be handled by someone</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> A chain can end with nobody handling it — make sure you plan for that.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">A long if/else deciding who handles something</th><td>Turn each branch into a handler.</td></tr><tr><th scope="row">Pipelines where each step may stop processing</th><td>That is a chain.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Chain of Responsibility = handlers in a line; each handles or passes on.</li><li>The sender does not know who will handle it.</li><li>ASP.NET Core middleware is a chain.</li><li>Plan for “nobody handled it”.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Chain of Responsibility passes a request along a line of handlers; each either handles it or passes it to the next. A support escalation is the picture, and ASP.NET Core middleware is the .NET example. It keeps each rule separate and the chain easy to rearrange, but I plan for the case where nobody handles the request."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Request falls off the end.</b> Add a default handler.</p>
+      <p><b>Long chains are hard to debug.</b> Log which link handled it.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>That completes the <b>behavioral</b> patterns for now. Next: patterns for <b>whole systems</b>. First the Repository and Unit of Work — a librarian and a shopping basket. <i>(coming soon: Repository and Unit of Work)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Chain of Responsibility’s intent follows refactoring.guru (each handler decides to process the request or pass it on). The ASP.NET Core middleware pipeline (each component may act, short-circuit or call the next) is documented by Microsoft Learn. The support escalation is a teaching analogy; the amounts are illustrative. Official docs: <a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank" rel="noopener">Chain of Responsibility (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/" target="_blank" rel="noopener">ASP.NET Core middleware</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -4398,5 +4398,161 @@
     "summary": "The classic mistake with Composite: Treat a Tree Like One Thing.",
     "keywords": "composite pattern structural tree folder file recursive uniform trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-strategy",
+    "title": "Strategy: Swap How Something Is Done",
+    "category": "Patterns",
+    "page": "patterns/concepts/strategy.html",
+    "summary": "The Strategy pattern with a map app: each way of doing something in its own class.",
+    "keywords": "strategy pattern behavioral interchangeable algorithm IComparer open closed"
+  },
+  {
+    "id": "patterns-strategy-recall",
+    "title": "Strategy: Swap How Something Is Done — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/strategy.html",
+    "summary": "Quick recall points: Strategy: Swap How Something Is Done.",
+    "keywords": "strategy pattern behavioral interchangeable algorithm IComparer open closed interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-strategy-trap",
+    "title": "Strategy: Swap How Something Is Done — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/strategy.html",
+    "summary": "The classic mistake with Strategy: Swap How Something Is Done.",
+    "keywords": "strategy pattern behavioral interchangeable algorithm IComparer open closed trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-observer",
+    "title": "Observer: Tell Everyone Who Subscribed",
+    "category": "Patterns",
+    "page": "patterns/concepts/observer.html",
+    "summary": "The Observer pattern with the YouTube bell: publishers notify a subscriber list.",
+    "keywords": "observer pattern behavioral event subscribe IObservable publisher subscriber"
+  },
+  {
+    "id": "patterns-observer-recall",
+    "title": "Observer: Tell Everyone Who Subscribed — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/observer.html",
+    "summary": "Quick recall points: Observer: Tell Everyone Who Subscribed.",
+    "keywords": "observer pattern behavioral event subscribe IObservable publisher subscriber interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-observer-trap",
+    "title": "Observer: Tell Everyone Who Subscribed — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/observer.html",
+    "summary": "The classic mistake with Observer: Tell Everyone Who Subscribed.",
+    "keywords": "observer pattern behavioral event subscribe IObservable publisher subscriber trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-command",
+    "title": "Command: A Request as an Object",
+    "category": "Patterns",
+    "page": "patterns/concepts/command.html",
+    "summary": "The Command pattern with an order slip: requests as objects you can queue, log and undo.",
+    "keywords": "command pattern behavioral undo redo queue request object"
+  },
+  {
+    "id": "patterns-command-recall",
+    "title": "Command: A Request as an Object — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/command.html",
+    "summary": "Quick recall points: Command: A Request as an Object.",
+    "keywords": "command pattern behavioral undo redo queue request object interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-command-trap",
+    "title": "Command: A Request as an Object — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/command.html",
+    "summary": "The classic mistake with Command: A Request as an Object.",
+    "keywords": "command pattern behavioral undo redo queue request object trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-state",
+    "title": "State: Behave Differently in Each Mode",
+    "category": "Patterns",
+    "page": "patterns/concepts/state.html",
+    "summary": "The State pattern with a traffic light: one class per state instead of repeated if/else.",
+    "keywords": "state pattern behavioral traffic light state machine status"
+  },
+  {
+    "id": "patterns-state-recall",
+    "title": "State: Behave Differently in Each Mode — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/state.html",
+    "summary": "Quick recall points: State: Behave Differently in Each Mode.",
+    "keywords": "state pattern behavioral traffic light state machine status interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-state-trap",
+    "title": "State: Behave Differently in Each Mode — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/state.html",
+    "summary": "The classic mistake with State: Behave Differently in Each Mode.",
+    "keywords": "state pattern behavioral traffic light state machine status trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-template-method",
+    "title": "Template Method: A Fixed Recipe with Custom Steps",
+    "category": "Patterns",
+    "page": "patterns/concepts/template-method.html",
+    "summary": "The Template Method pattern with tea and coffee: shared skeleton, custom steps.",
+    "keywords": "template method pattern behavioral skeleton recipe base class override"
+  },
+  {
+    "id": "patterns-template-method-recall",
+    "title": "Template Method: A Fixed Recipe with Custom Steps — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/template-method.html",
+    "summary": "Quick recall points: Template Method: A Fixed Recipe with Custom Steps.",
+    "keywords": "template method pattern behavioral skeleton recipe base class override interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-template-method-trap",
+    "title": "Template Method: A Fixed Recipe with Custom Steps — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/template-method.html",
+    "summary": "The classic mistake with Template Method: A Fixed Recipe with Custom Steps.",
+    "keywords": "template method pattern behavioral skeleton recipe base class override trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-chain-of-responsibility",
+    "title": "Chain of Responsibility: Pass It Along Until Handled",
+    "category": "Patterns",
+    "page": "patterns/concepts/chain-of-responsibility.html",
+    "summary": "The Chain of Responsibility pattern with support escalation and ASP.NET Core middleware.",
+    "keywords": "chain of responsibility pattern behavioral middleware handler escalation pipeline"
+  },
+  {
+    "id": "patterns-chain-of-responsibility-recall",
+    "title": "Chain of Responsibility: Pass It Along Until Handled — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/chain-of-responsibility.html",
+    "summary": "Quick recall points: Chain of Responsibility: Pass It Along Until Handled.",
+    "keywords": "chain of responsibility pattern behavioral middleware handler escalation pipeline interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-chain-of-responsibility-trap",
+    "title": "Chain of Responsibility: Pass It Along Until Handled — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/chain-of-responsibility.html",
+    "summary": "The classic mistake with Chain of Responsibility: Pass It Along Until Handled.",
+    "keywords": "chain of responsibility pattern behavioral middleware handler escalation pipeline trap mistake",
+    "anchor": "trap"
   }
 ]

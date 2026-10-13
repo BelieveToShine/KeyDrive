@@ -40,7 +40,7 @@ SUBD = {'abstract-factory': 'A factory of factories: matching families such as a
         'iterator': 'How foreach works: walking a collection one item at a time.', 'mediator': 'A control tower that stops every object from talking to every other object.',
         'memento': 'Save a snapshot so you can go back (undo).', 'visitor': 'Add a new operation to a family of classes without editing each one.',
         'transactional-outbox': 'Write the data and the “message to send” in one go, so neither is lost.', 'bulkhead': 'Separate compartments so a failure in one cannot flood the rest.'}
-WRITTEN = ['what-are-patterns','factory-method','builder','singleton','adapter','decorator','facade','proxy','composite']
+WRITTEN = ['what-are-patterns','factory-method','builder','singleton','adapter','decorator','facade','proxy','composite','strategy','observer','command','state','template-method','chain-of-responsibility']
 LADDER = [('1 · PICTURE','🌍 The everyday picture','A pizza shop, a travel plug, a bell, a fuse box — something you already know.'),
           ('2 · PROBLEM','💥 See the problem happen','An animated story of the code without the pattern.'),
           ('3 · PATTERN','🧩 Apply the pattern','Name the roles; watch the same story with the pattern.'),
