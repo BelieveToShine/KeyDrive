@@ -314,3 +314,6 @@ Use `kit.story(d, captions, caption)` for any concept a fresher must *see happen
 - Keep every step readable on its own: the caption and picture of step k must match. Avoid large empty areas in early steps (show the next row dimmed or start it earlier).
 - **Ordinary diagrams** get automatic flow pulses (a small dot travelling each arrow, direction only, off for reduced motion, paused off-screen). They say nothing about *data*; only Stories carry meaning.
 - Verify: `node scripts/shoot-diagrams.js … prefix` writes one PNG **per step** (`prefix-N-sK.png`): look at every one, then run `diagram-lint.js` and `layout-check.js`.
+
+### Stories on hand-written pages (added 2026-10-13)
+Older categories are hand-written HTML. Their Stories come from `scripts/page-kit/story_inject.py <category>` + `scripts/page-kit/stories/<category>.py` (`common.pipeline()`: 4–8 boxes, a token per arrow, one caption per step). Edit the story file and re-run; never hand-edit between the `kd-story` markers. Wording must restate what the page already says — no new factual claims.
