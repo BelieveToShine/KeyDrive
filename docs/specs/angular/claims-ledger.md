@@ -236,5 +236,20 @@ Source root: https://angular.dev/
 | 6 forms, 20 templates | 🟦 I | teaching illustrations |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — RxJS operators
+| Claim | Status | Note |
+|---|---|---|
+| debounceTime waits for a pause; only the most recent value survives each quiet window; errors forwarded immediately and a pending value dropped | ✅ V | rxjs.dev/api/operators/debounceTime |
+| distinctUntilChanged suppresses values equal to the previous one; optional comparator | ✅ V | rxjs.dev/api/operators/distinctUntilChanged |
+| catchError handles errors by swapping in a new observable | ✅ V | rxjs.dev/api/operators/catchError |
+| forkJoin waits for every input to complete then emits once with the last value from each; docs recommend combineLatest or zip for values throughout; array-argument signatures of forkJoin/combineLatest deprecated since RxJS 6.5 | ✅ V | rxjs.dev/api/index/function/forkJoin; deprecations/array-argument |
+| takeUntil passes values until a notifier emits then completes | ✅ V | rxjs.dev/api/operators/takeUntil |
+| switchMap / mergeMap / concatMap / exhaustMap behaviours | ✅ V | rxjs.dev (see page 6 ledger) |
+| combineLatest emits when any input emits after all have emitted once | 🟨 K | no dedicated page text retrieved; standard behaviour |
+| share / shareReplay let subscribers share one source | 🟨 K | only in the RxJS operator index in the search |
+| catchError(() => EMPTY) completes with no value and no error in interceptors / rxResource | ✅ V | angular.dev/best-practices/error-handling (see HTTP ledger) |
+| “about ten” operators, 300 ms | 🟦 I | teaching framing and value |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

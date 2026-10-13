@@ -420,6 +420,7 @@
       "lifecycle-hooks": "change-detection",
       "component-communication": "templates-control-flow",
       "directives-pipes": "templates-control-flow",
+      "rxjs-operators": "rxjs-async-pipe",
       "http-interceptors": "rxjs-async-pipe",
       "testing-angular": "angular-clinic"
     },
@@ -427,6 +428,7 @@
       "lifecycle-hooks": "Lifecycle hooks: what each does and when to use which",
       "component-communication": "Component communication",
       "directives-pipes": "Directives & custom pipes",
+      "rxjs-operators": "RxJS operators: which one to use",
       "http-interceptors": "HttpClient & interceptors",
       "testing-angular": "Testing Angular"
     }

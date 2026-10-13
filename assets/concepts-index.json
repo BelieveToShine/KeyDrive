@@ -3618,5 +3618,31 @@
     "summary": "The classic mistake with Directives & custom pipes.",
     "keywords": "angular directive attribute directive hostDirectives host binding custom pipe PipeTransform pure impure component vs directive NG8024 trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-rxjs-operators",
+    "title": "RxJS operators: which one to use",
+    "category": "Angular",
+    "page": "angular/concepts/rxjs-operators.html",
+    "summary": "A decision map from question to operator: debounce, distinct, flattening operators, combineLatest vs forkJoin, catchError, takeUntil.",
+    "keywords": "rxjs operators debounceTime distinctUntilChanged switchMap combineLatest forkJoin catchError takeUntil shareReplay which operator"
+  },
+  {
+    "id": "angular-rxjs-operators-recall",
+    "title": "RxJS operators: which one to use — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/rxjs-operators.html",
+    "summary": "Quick recall points: RxJS operators: which one to use.",
+    "keywords": "rxjs operators debounceTime distinctUntilChanged switchMap combineLatest forkJoin catchError takeUntil shareReplay which operator interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-rxjs-operators-trap",
+    "title": "RxJS operators: which one to use — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/rxjs-operators.html",
+    "summary": "The classic mistake with RxJS operators: which one to use.",
+    "keywords": "rxjs operators debounceTime distinctUntilChanged switchMap combineLatest forkJoin catchError takeUntil shareReplay which operator trap mistake",
+    "anchor": "trap"
   }
 ]
