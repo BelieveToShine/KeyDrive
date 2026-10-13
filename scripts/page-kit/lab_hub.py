@@ -55,7 +55,7 @@ deep = f'''  <section class="kd-section">
 first = C[0][0]
 cta = f'<a class="kd-cta" href="concepts/{first}.html">Start at the beginning <span class="arrow">→</span></a>' if first in WRITTEN else '<p class="hub-note">🔒 The first page is being written — check back soon.</p>'
 page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])} — KeyDrive</title>') + f'''<nav class="kd-crumbs wrap">
-  <a href="../index.html">KeyDrive</a><span class="sep">›</span><a href="../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><span class="cur">{T["icon"]} {e(T["title"])}</span>
+  <a href="../index.html">KeyDrive</a><span class="sep">›</span><a href="{T.get('parent_href','../web/index.html')}">{T.get('parent_label','🌐 Web Platforms')}</a><span class="sep">›</span><span class="cur">{T["icon"]} {e(T["title"])}</span>
 </nav>
 
 <main class="wrap">
@@ -104,7 +104,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])
 {deep}</main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Web Platforms · {e(T["title"])} · {nw} / {nt} concepts written</div>
+  <div class="wrap">KeyDrive · {T.get('parent_name','Web Platforms')} · {e(T["title"])} · {nw} / {nt} concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>

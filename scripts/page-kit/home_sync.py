@@ -10,7 +10,9 @@ def files(d): return len(glob.glob(str(R / d / 'concepts/*.html')))
 def concepts(k): return len(j[k]['written']) if 'written' in j[k] else len(j[k]['order'])
 def total(k): return len(j[k]['order'])
 def dives(k): return files(k) - concepts(k)           # files beyond the main journey pages
-G = {'ai': ['ai'], 'cloud': ['azure', 'aws'], 'data': ['sql', 'cosmos'], 'web': ['react', 'angular']}
+G = {'ai': ['ai'], 'cloud': ['azure', 'aws'], 'data': ['sql', 'cosmos'], 'web': ['react', 'angular'], 'design': ['solid']}
+G = {g: [k for k in v if k in j] for g, v in G.items()}
+G = {g: v for g, v in G.items() if v}
 def agg(g):
     c = sum(concepts(k) for k in G[g]); t = sum(total(k) for k in G[g]); d = sum(dives(k) for k in G[g])
     if g == 'web': d -= 1                                # 'Same app, two frameworks' exists once in each lab
@@ -21,10 +23,12 @@ h = (R / 'index.html').read_text()
 # stat row
 h = re.sub(r'<b>\d+</b> <span>concepts</span>', f'<b>{all_c}</b> <span>concepts</span>', h)
 h = re.sub(r'<b>\d+</b> <span>deep dives</span>', f'<b>{all_d}</b> <span>deep dives</span>', h)
+h = re.sub(r'<b>\d+</b> <span>journeys live</span>', f'<b>{len(G)}</b> <span>journeys live</span>', h)
 h = re.sub(r'<b>[\d+]+</b> <span>diagrams</span>', f'<b>{diagrams // 50 * 50}+</b> <span>diagrams</span>', h)
 # tiles: same footer shape for all four  ✓ n / n  + k deep dives  + progress bar
-hrefs = {'ai': 'ai/index.html', 'cloud': 'cloud/index.html', 'data': 'data/index.html', 'web': 'web/index.html'}
+hrefs = {'ai': 'ai/index.html', 'cloud': 'cloud/index.html', 'data': 'data/index.html', 'web': 'web/index.html', 'design': 'design/index.html'}
 for g, href in hrefs.items():
+    if g not in G or f'href="{href}"' not in h: continue
     c, t, d = agg(g)
     done = f'<span class="ct-done">✓ {c} / {t}</span>' if c == t else f'<span class="ct-dives">{c} / {t} concepts</span>'
     dv = f'<span class="ct-dives">{d} deep dive{"s" if d != 1 else ""}</span>' if d else ''

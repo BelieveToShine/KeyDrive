@@ -8,4 +8,4 @@ python3 scripts/page-kit/lab_ledger.py $lab "$8"
 python3 scripts/page-kit/lab_wire.py $lab "$4" "$5" "$6" "$7" >/dev/null
 node scripts/check-site.js $lab | tail -6
 node scripts/diagram-lint.js http://localhost:5931 $lab/concepts/$4.html | tail -2
-node scripts/layout-check.js http://localhost:5931 $lab/index.html $lab/concepts/$4.html web/index.html index.html | tail -4
+node scripts/layout-check.js http://localhost:5931 $lab/index.html $lab/concepts/$4.html web/index.html design/index.html index.html | tail -4

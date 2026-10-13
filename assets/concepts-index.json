@@ -3774,5 +3774,31 @@
     "summary": "The classic mistake with Same app, two frameworks.",
     "keywords": "angular vs react comparison differences framework which to choose mapping trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-why-design-principles",
+    "title": "Why code rots: change, coupling & cohesion",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "The cost of change, cohesion and coupling, reasons to change, and the ShopCore OrderService we refactor in every page.",
+    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService"
+  },
+  {
+    "id": "solid-why-design-principles-recall",
+    "title": "Why code rots: change, coupling & cohesion — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "Quick recall points: Why code rots: change, coupling & cohesion.",
+    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-why-design-principles-trap",
+    "title": "Why code rots: change, coupling & cohesion — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/why-design-principles.html",
+    "summary": "The classic mistake with Why code rots: change, coupling & cohesion.",
+    "keywords": "solid design principles cohesion coupling code rot cost of change maintainability OrderService trap mistake",
+    "anchor": "trap"
   }
 ]

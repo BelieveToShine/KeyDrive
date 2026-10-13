@@ -442,5 +442,41 @@
       "testing-angular": "Testing Angular",
       "react-vs-angular": "Same app, two frameworks"
     }
+  },
+  "solid": {
+    "title": "SOLID Lab",
+    "order": [
+      "why-design-principles",
+      "single-responsibility",
+      "open-closed",
+      "liskov-substitution",
+      "interface-segregation",
+      "dependency-inversion",
+      "dependency-injection-dotnet",
+      "smells-refactoring",
+      "solid-together",
+      "testing-solid",
+      "when-not-solid",
+      "solid-clinic"
+    ],
+    "titles": {
+      "why-design-principles": "Why code rots: change, coupling & cohesion",
+      "single-responsibility": "S — the Single Responsibility Principle",
+      "open-closed": "O — the Open/Closed Principle",
+      "liskov-substitution": "L — the Liskov Substitution Principle",
+      "interface-segregation": "I — the Interface Segregation Principle",
+      "dependency-inversion": "D — the Dependency Inversion Principle",
+      "dependency-injection-dotnet": "Dependency injection in .NET: making D real",
+      "smells-refactoring": "Smells and the refactoring playbook",
+      "solid-together": "Refactoring OrderService step by step",
+      "testing-solid": "Testability: the proof that it worked",
+      "when-not-solid": "Judgement: YAGNI, KISS, DRY and over-engineering",
+      "solid-clinic": "Capstone: the SOLID clinic"
+    },
+    "written": [
+      "why-design-principles"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }

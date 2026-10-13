@@ -5,7 +5,7 @@ import json, re, subprocess, sys
 from pathlib import Path
 HERE = Path(__file__).resolve().parent; R = HERE.parents[1]
 lab, slug, title, summ, kw = sys.argv[1:6]
-cat = {'react': 'React', 'angular': 'Angular'}[lab]
+cat = {'react': 'React', 'angular': 'Angular', 'solid': 'SOLID'}[lab]
 f = HERE / lab / 'hubdata.py'; s = f.read_text()
 m = re.search(r"WRITTEN = \[([^\]]*)\]", s); items = re.findall(r"'([^']+)'", m.group(1))
 if slug not in items and slug in [c for c in re.findall(r"\('([a-z0-9-]+)',", s)]:
@@ -18,5 +18,5 @@ idx += [dict(id=base, title=title, category=cat, page=page, summary=summ, keywor
         dict(id=base + '-recall', title=f'{title} — interview recall', category=cat, page=page, summary=f'Quick recall points: {title}.', keywords=kw + ' interview recall', anchor='recall'),
         dict(id=base + '-trap', title=f'{title} — common trap', category=cat, page=page, summary=f'The classic mistake with {title}.', keywords=kw + ' trap mistake', anchor='trap')]
 (R / 'assets/concepts-index.json').write_text(json.dumps(idx, indent=2, ensure_ascii=False) + '\n')
-subprocess.run([sys.executable, str(HERE / 'web_hub.py')], check=True)
+subprocess.run([sys.executable, str(HERE / ('design_hub.py' if lab == 'solid' else 'web_hub.py'))], check=True)
 print('wired', lab, slug)
