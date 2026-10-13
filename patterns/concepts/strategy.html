@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategy: Swap How Something Is Done — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="composite.html">Composite</a><span class="sep">›</span><span class="cur">Strategy</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 10 of 24 · 💬 Behavioral</div>
+    <h1>The map app: <span class="grad-text">drive, walk or cycle</span> — same trip, different method.</h1>
+    <p class="sub">The Strategy pattern with a route planner: put each way of doing something in its own class and swap them.</p>
+    <div class="interview-q">❓ "What is the Strategy pattern and how does it relate to the Open/Closed Principle?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A route planner with an if-else on travel mode: adding a bus option means opening and editing the working planner code">
+<defs><marker id="sy1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sy1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sy1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="10" y="20" width="250" height="150" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text x="135" y="81" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">🗺️ RoutePlanner</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="135" y="93" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">if car → …</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="135" y="105" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">else if walk → …</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="135" y="117" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">else if bike → …</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="440" y="20" width="190" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="535" y="46" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🚗 Car</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="440" y="75" width="190" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="535" y="101" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🚶 Walk</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="440" y="130" width="190" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="535" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🚲 Bike</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="190" width="190" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="216" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🚌 Bus (new)</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="200" width="400" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="210" y="223" text-anchor="middle" font-size="10" fill="#fda4af">To add Bus we must edit RoutePlanner ✏️</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="252" width="620" height="36" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="273" text-anchor="middle" font-size="10" fill="#fda4af">Every new mode = open the working code again</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A route planner decides the route with an <b>if / else if</b> on the travel mode: car, walk, bike.</li><li>Each mode is a block of code inside the planner.</li><li>A new request: <b>add Bus</b>. 🚌</li><li>We must <b>open the planner and edit it</b>.</li><li>Every new mode means opening the working code again.</li></ol>
+<figcaption><strong>What you're seeing:</strong> all the ways live inside one class.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Put each way of doing something in its own small class behind one interface, and let the user of it choose which to plug in.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🗺️ A map app asks “how do you want to travel?”. The <b>goal is the same</b> (get there); the <b>method differs</b>: drive, walk or cycle. You can switch with one tap and the app itself is not rebuilt.</p>
+      <p>refactoring.guru: Strategy lets you define a family of algorithms, put each of them into a separate class, and make their objects interchangeable.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔌 The fix: plug in a method</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="RoutePlanner holds an IRouteStrategy; plugging in the car, walking or bike strategy changes how the route is worked out without changing the planner, and a new bus strategy is simply added">
+<defs><marker id="sy2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sy2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sy2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><path d="M180,155 L250,155" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sy2A)"/></g>
+<g class="st" data-s="2-"><path d="M480,40 L380,155" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sy2A)"/></g>
+<g class="st" data-s="2-"><path d="M480,120 L380,155" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sy2A)"/></g>
+<g class="st" data-s="2-"><path d="M480,200 L380,155" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sy2A)"/></g>
+<g class="st" data-s="5-"><path d="M480,280 L380,175" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#sy2A)"/></g>
+<g class="st" data-s="1-" data-hl="6"><rect class="bx" x="10" y="110" width="170" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="6"><text class="emo" x="95" y="160" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🗺️</text></g>
+<g class="st" data-s="1-" data-hl="6"><text x="95" y="175" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">RoutePlanner</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="250" y="110" width="130" height="90" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="315" y="160" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🔌</text></g>
+<g class="st" data-s="1-"><text x="315" y="175" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">IRouteStrategy</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="480" y="10" width="150" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="555" y="37.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🚗 Car</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="555" y="50.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">25 min</text></g>
+<g class="st" data-s="2-" data-hl="3"><rect class="bx" x="480" y="90" width="150" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="3"><text x="555" y="117.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🚶 Walk</text></g>
+<g class="st" data-s="2-" data-hl="3"><text x="555" y="130.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">60 min</text></g>
+<g class="st" data-s="2-" data-hl="4"><rect class="bx" x="480" y="170" width="150" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="4"><text x="555" y="197.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🚲 Bike</text></g>
+<g class="st" data-s="2-" data-hl="4"><text x="555" y="210.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">35 min</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="480" y="250" width="150" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="555" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🚌 Bus (new)</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="555" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">40 min</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="230" width="220" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="120" y="255" text-anchor="middle" font-size="10" fill="#6ee7b7">Planner never changed ✅</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The planner holds <b>one socket</b>: <code>IRouteStrategy</code>.</li><li>Each travel mode is a small class that plugs into it.</li><li>Plug in <b>Car</b>: 25 min.</li><li>Plug in <b>Walk</b>: 60 min.</li><li>Add <b>Bus</b>: one new class and it plugs in. 🚌</li><li>The planner was never edited. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> the planner works with whichever strategy is plugged in.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Context</b> (uses a method)</th><td>the map app</td><td><code>RoutePlanner</code></td></tr><tr><th scope="row"><b>Strategy</b> (the socket)</th><td>“a way to travel”</td><td><code>IRouteStrategy</code></td></tr><tr><th scope="row"><b>Concrete strategies</b></th><td>drive, walk, cycle, bus</td><td><code>CarStrategy</code> …</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> IRouteStrategy { <span class="kw">int</span> Minutes(<span class="kw">int</span> km); }
+<span class="kw">class</span> Car  : IRouteStrategy { <span class="kw">public</span> <span class="kw">int</span> Minutes(<span class="kw">int</span> km) =&gt; km * 2; }
+<span class="kw">class</span> Walk : IRouteStrategy { <span class="kw">public</span> <span class="kw">int</span> Minutes(<span class="kw">int</span> km) =&gt; km * 12; }
+<span class="kw">class</span> Bike : IRouteStrategy { <span class="kw">public</span> <span class="kw">int</span> Minutes(<span class="kw">int</span> km) =&gt; km * 4; }
+
+<span class="kw">class</span> RoutePlanner(IRouteStrategy strategy)
+{
+    <span class="kw">public</span> <span class="kw">int</span> Plan(<span class="kw">int</span> km) =&gt; strategy.Minutes(km);    <span class="cmt">// does not know which one</span>
+}
+
+<span class="kw">new</span> RoutePlanner(<span class="kw">new</span> Car()).Plan(10);     <span class="cmt">// 20</span>
+<span class="kw">new</span> RoutePlanner(<span class="kw">new</span> Bike()).Plan(10);    <span class="cmt">// 40</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">This is the Open/Closed Principle in a named form — the <span class="kw">IDiscount</span> socket from the SOLID lab is a Strategy.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row"><code>IComparer&lt;T&gt;</code> passed to <code>List.Sort</code></th><td>you choose how items are compared (a documented .NET interface used as a strategy)</td></tr><tr><th scope="row">Payment methods, tax rules, shipping rates, sorting</th><td>the usual business uses</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Several interchangeable ways to compute the same thing (pricing, tax, shipping)</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Perfect: one class per way.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> One way, and it will never vary</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Keep it simple.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You choose the method at run time from user input</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Strategy lets you swap it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A growing if/else on a “type” in many places</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Replace with strategies.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row"><code>if (mode == …) … else if …</code> that grows with every new option</th><td>Make each option a strategy.</td></tr><tr><th scope="row">A class with several “flavour” flags</th><td>Extract each flavour into a strategy.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Strategy = interchangeable algorithms, each in its own class behind one interface.</li><li>The context uses the interface; callers choose the strategy.</li><li>It is Open/Closed in a named form.</li><li>Delegates and lambdas can act as lightweight strategies.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Strategy pattern puts each interchangeable way of doing something in its own class behind a common interface, and the context just uses the interface. Like a map app choosing drive, walk or cycle, adding a new option is a new class and the context never changes. It’s the Open/Closed Principle in a named form."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>A strategy for something that never varies.</b> Overkill.</p>
+      <p><b>Strategy vs State.</b> Strategy is chosen from outside; State changes itself (next but one).</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Next: how do we tell <i>many</i> listeners that something happened? The Observer — the YouTube bell. <i>(coming soon: Observer: tell everyone who subscribed)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Strategy’s intent follows refactoring.guru. IComparer&lt;T&gt; being used as a strategy is a common observation about a documented .NET interface. The map app is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/strategy" target="_blank" rel="noopener">Strategy (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -556,7 +556,12 @@
       "what-are-patterns",
       "factory-method",
       "builder",
-      "singleton"
+      "singleton",
+      "adapter",
+      "decorator",
+      "facade",
+      "proxy",
+      "composite"
     ],
     "sub": {},
     "subTitles": {}

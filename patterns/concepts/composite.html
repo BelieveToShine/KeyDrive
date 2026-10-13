@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composite: Treat a Tree Like One Thing — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="proxy.html">Proxy</a><span class="sep">›</span><span class="cur">Composite</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 9 of 24 · 🔧 Structural</div>
+    <h1>Folders and files: <span class="grad-text">treat a whole tree like a single thing</span>.</h1>
+    <p class="sub">The Composite pattern with folders and files: let single items and groups answer the same question so callers need no type checks.</p>
+    <div class="interview-q">❓ "What is the Composite pattern and where is it used?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="To find the size of a folder tree, the code needs one branch for files and another for folders, and the folder branch must loop and recurse, so every caller has to know which kind it is holding">
+<defs><marker id="cp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="10" y="10" width="620" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="320" y="36.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fda4af" font-family="'JetBrains Mono'">if (item is File) size = f.Size;</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="320" y="50.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fda4af" font-family="'JetBrains Mono'">else foreach (child in folder) … (and again for sub-folders…)</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="10" y="120" width="150" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="85" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📁 Photos</text></g>
+<g class="st" data-s="2-"><text x="85" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">folder</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="230" y="120" width="150" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="305" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📄 notes.txt</text></g>
+<g class="st" data-s="2-"><text x="305" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">10 KB</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="450" y="120" width="150" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="525" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📁 Music</text></g>
+<g class="st" data-s="2-"><text x="525" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">folder</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="10" y="210" width="300" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="160" y="235" text-anchor="middle" font-size="10" fill="#fcd34d">Is it a file or a folder?</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="330" y="210" width="300" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="480" y="235" text-anchor="middle" font-size="10" fill="#fda4af">Every caller must check — again and again</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>To get the <b>size</b> of something, the code has a branch for files and a branch for folders — and the folder branch must loop and recurse.</li><li>The tree has <b>folders</b> and <b>files</b> mixed together.</li><li>Every piece of code must ask: <b>“is this a file or a folder?”</b></li><li>And it must do so again and again, everywhere it touches the tree.</li></ol>
+<figcaption><strong>What you're seeing:</strong> type checks everywhere.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Make single things and groups look the same, so one call works on both — and groups pass the call down to their children.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🗂️ On your computer you can right-click a <b>file</b> or a <b>folder</b> and choose “Properties”: you see a size either way. You do not think about whether it is one thing or a thousand.</p>
+      <p>refactoring.guru: Composite lets you compose objects into tree structures and then work with these structures as if they were individual objects.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🌳 The fix: both answer the same question</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With Composite, files and folders both answer Size: a file returns its own size, a folder adds up the sizes of its children, so a tree of 10, 20, 5 and 15 kilobytes totals 50 without any caller checking types">
+<defs><marker id="cp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M320,64 L320,92 L120,92 L120,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cp2A)"/></g>
+<g class="st" data-s="2-"><path d="M320,64 L320,92 L340,92 L340,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cp2A)"/></g>
+<g class="st" data-s="2-"><path d="M320,64 L320,92 L545,92 L545,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cp2A)"/></g>
+<g class="st" data-s="3-"><path d="M545,176 L545,204 L485,204 L485,232" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cp2A)"/></g>
+<g class="st" data-s="3-"><path d="M545,176 L545,204 L585,204 L585,232" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#cp2A)"/></g>
+<g class="st" data-s="1-" data-hl="5"><rect class="bx" x="220" y="8" width="200" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="5"><text x="320" y="33.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📁 Root</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="320" y="46.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Size() = sum of children</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="30" y="120" width="180" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="120" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📄 A.txt</text></g>
+<g class="st" data-s="2-"><text x="120" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">10 KB</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="250" y="120" width="180" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="340" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📄 B.txt</text></g>
+<g class="st" data-s="2-"><text x="340" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">20 KB</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="460" y="120" width="170" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="545" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📁 Sub</text></g>
+<g class="st" data-s="2-"><text x="545" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">sum of children</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="440" y="232" width="90" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="485" y="254.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📄 C</text></g>
+<g class="st" data-s="3-"><text x="485" y="267.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">5</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="540" y="232" width="90" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="585" y="254.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📄 D</text></g>
+<g class="st" data-s="3-"><text x="585" y="267.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">15</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx note" x="10" y="200" width="400" height="36" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="210" y="221" text-anchor="middle" font-size="10" fill="#c4b5fd">Sub = 5 + 15 = 20</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="10" y="200" width="400" height="36" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="210" y="221" text-anchor="middle" font-size="10" fill="#6ee7b7">Root = 10 + 20 + 20 = 50 KB</text></g>
+<g class="st" data-s="5-"><rect class="bx note" x="10" y="270" width="400" height="48" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-"><text x="210" y="290" text-anchor="middle" font-size="10" fill="#67e8f9">Nobody checked file-or-folder.</text></g>
+<g class="st" data-s="5-"><text x="210" y="304" text-anchor="middle" font-size="10" fill="#67e8f9">Both answer Size().</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><b>Root</b> is a folder. A folder’s <code>Size()</code> = the sum of its children’s sizes.</li><li>Its children: <b>A.txt (10)</b>, <b>B.txt (20)</b> and a sub-folder <b>Sub</b>.</li><li>Sub has two files: <b>C (5)</b> and <b>D (15)</b>.</li><li>Sub answers 5 + 15 = <b>20</b>.</li><li>Root answers 10 + 20 + 20 = <b>50 KB</b>. Nobody checked what kind of thing it was.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a small tree; watch the sizes add up from the leaves to the root.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Component</b> (common shape)</th><td>“anything with a size”</td><td><code>IItem.Size()</code></td></tr><tr><th scope="row"><b>Leaf</b></th><td>a file</td><td><code>FileItem</code></td></tr><tr><th scope="row"><b>Composite</b></th><td>a folder</td><td><code>FolderItem</code> with children</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> IItem { long Size(); }
+
+<span class="kw">class</span> FileItem(long size) : IItem { <span class="kw">public</span> long Size() =&gt; size; }
+
+<span class="kw">class</span> FolderItem : IItem
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> List&lt;IItem&gt; _children = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">void</span> Add(IItem item) =&gt; _children.Add(item);
+    <span class="kw">public</span> long Size() =&gt; _children.Sum(c =&gt; c.Size());      <span class="cmt">// asks children — files or folders</span>
+}
+
+<span class="kw">var</span> root = <span class="kw">new</span> FolderItem();
+root.Add(<span class="kw">new</span> FileItem(10)); root.Add(<span class="kw">new</span> FileItem(20));
+<span class="kw">var</span> sub = <span class="kw">new</span> FolderItem(); sub.Add(<span class="kw">new</span> FileItem(5)); sub.Add(<span class="kw">new</span> FileItem(15));
+root.Add(sub);
+Console.WriteLine(root.Size());                              <span class="cmt">// 50</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The caller only ever talks to <span class="kw">IItem</span>.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">UI control trees (a panel contains buttons and other panels)</th><td>a standard Composite example</td></tr><tr><th scope="row">Menus with sub-menus, org charts, file systems</th><td>tree-shaped data</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Data that is naturally a tree: folders, menus, org chart</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Composite lets callers treat leaf and group alike.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A flat list of equal items</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> No tree; no pattern needed.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You keep writing “if leaf … else loop children”</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Move that into the types.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Leaves and groups need totally different operations</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> A common interface will be awkward.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Type checks like <code>is Folder</code> before every operation on a tree</th><td>Give both types the same method.</td></tr><tr><th scope="row">Recursion code repeated in many places</th><td>Put it inside the composite once.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Composite = leaves and groups share one interface; groups hold children and delegate.</li><li>Callers never check the kind.</li><li>Natural for trees: files, menus, UI, org charts.</li><li>Watch for operations that make no sense on leaves.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Composite lets me treat individual objects and groups of objects uniformly. A file and a folder both implement the same interface; a folder implements it by asking its children. The caller can compute a whole tree’s size with one call and never checks types."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Forcing every operation onto leaves.</b> Adding children to a file makes no sense.</p>
+      <p><b>Cycles.</b> A folder containing itself recurses forever.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>That completes the <b>structural</b> patterns for now. Next: <b>behavioral</b> patterns — how objects talk to each other. First, the Strategy: choose how to travel. <i>(coming soon: Strategy: swap how something is done)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Composite’s intent follows refactoring.guru (compose objects into trees and treat them as individual objects). UI control trees are a standard textbook example. The folder analogy and the sizes are illustrative. Official docs: <a href="https://refactoring.guru/design-patterns/composite" target="_blank" rel="noopener">Composite (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener">Structural patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

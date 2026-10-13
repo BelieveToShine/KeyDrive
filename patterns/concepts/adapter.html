@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adapter: Make a Foreign Plug Fit — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="singleton.html">Singleton</a><span class="sep">›</span><span class="cur">Adapter</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 5 of 24 · 🔧 Structural</div>
+    <h1>The travel plug: <span class="grad-text">make a foreign thing fit your shape</span>.</h1>
+    <p class="sub">The Adapter pattern with a travel plug: wrap a class that has the wrong shape so the rest of your code can use it unchanged.</p>
+    <div class="interview-q">❓ "What is the Adapter pattern and when would you use it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A laptop with a UK plug cannot be plugged into a hotel wall socket abroad that has a different shape, and you cannot rewire either the laptop or the wall">
+<defs><marker id="ad1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path id="ad1-tr" d="M160,135 L480,135" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ad1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="90" width="150" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="85" y="133.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">💻</text></g>
+<g class="st" data-s="1-"><text x="85" y="148.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Laptop</text></g>
+<g class="st" data-s="1-"><text x="85" y="161.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">UK plug</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="480" y="90" width="150" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text class="emo" x="555" y="133.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🔌</text></g>
+<g class="st" data-s="2-"><text x="555" y="148.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Hotel socket</text></g>
+<g class="st" data-s="2-"><text x="555" y="161.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">EU shape</text></g>
+<g class="st" data-s="3-"><text class="emo" x="560" y="110" text-anchor="middle" font-size="24">❌</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="110" y="210" width="420" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="235" text-anchor="middle" font-size="10" fill="#fda4af">Cannot change the laptop. Cannot change the wall.</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="292.5" y="126" width="55" height="18" rx="9"/><text x="320" y="138.5" text-anchor="middle" font-size="9" font-style="italic">plug in</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ad1-tr"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">💻</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>You have a <b>laptop</b> with a UK plug.</li><li>The hotel abroad has a <b>socket</b> with a different shape.</li><li>You try to plug in… and it <b>does not fit</b>. ❌</li><li>You cannot change the laptop and you cannot change the wall.</li></ol>
+<figcaption><strong>What you're seeing:</strong> two things that both work, but have incompatible shapes.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Wrap the thing with the wrong shape in a small adapter, so your code can use it the way it already expects.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧳 A <b>travel adapter</b> does not change your laptop or the hotel wall. It has your plug shape on one side and the wall’s shape on the other.</p>
+      <p>refactoring.guru: Adapter lets objects with incompatible interfaces collaborate.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧳 The fix: a small adapter in the middle</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A travel adapter sits between the laptop and the socket, accepting the laptop UK plug on one side and fitting the EU socket on the other, so power flows without changing either">
+<defs><marker id="ad2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ad2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="3-"><path id="ad2-a1" d="M140,135 L255,135" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ad2A)"/></g>
+<g class="st" data-s="3-"><path id="ad2-a2" d="M385,135 L500,135" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ad2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="90" width="130" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="75" y="133.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">💻</text></g>
+<g class="st" data-s="1-"><text x="75" y="148.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Laptop</text></g>
+<g class="st" data-s="1-"><text x="75" y="161.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">UK plug</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="500" y="90" width="130" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="565" y="133.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🔌</text></g>
+<g class="st" data-s="1-"><text x="565" y="148.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Hotel socket</text></g>
+<g class="st" data-s="1-"><text x="565" y="161.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">EU shape</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="255" y="90" width="130" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="emo" x="320" y="133.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧳</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="148.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Adapter</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="161.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">UK in · EU out</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="110" y="210" width="420" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="320" y="235" text-anchor="middle" font-size="10" fill="#6ee7b7">Neither side changed — only a small adapter was added</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="177.5" y="126" width="39" height="18" rx="9"/><text x="197" y="138.5" text-anchor="middle" font-size="9" font-style="italic">fits</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="422.5" y="126" width="39" height="18" rx="9"/><text x="442" y="138.5" text-anchor="middle" font-size="9" font-style="italic">fits</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ad2-a1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">⚡</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ad2-a2"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">⚡</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Same laptop, same socket.</li><li>Add a <b>travel adapter</b> between them.</li><li>The laptop’s plug fits the adapter; the adapter fits the socket.</li><li>Power flows. ⚡</li><li>Neither side changed — the only new thing is the small adapter.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same trip with an adapter.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Client</b> (expects one shape)</th><td>the laptop</td><td>your code using <code>IPaymentGateway</code></td></tr><tr><th scope="row"><b>Adaptee</b> (has another shape)</th><td>the hotel socket</td><td>a vendor SDK with <code>CreateCharge(cents)</code></td></tr><tr><th scope="row"><b>Adapter</b></th><td>the travel adapter</td><td><code>VendorPaymentAdapter : IPaymentGateway</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// Your code expects THIS shape</span>
+<span class="kw">interface</span> IPaymentGateway { <span class="kw">bool</span> Charge(<span class="kw">decimal</span> amount); }
+
+<span class="cmt">// The vendor SDK has a different shape (you cannot change it)</span>
+<span class="kw">class</span> VendorClient { <span class="kw">public</span> <span class="kw">int</span> CreateCharge(long cents) { <span class="kw">return</span> 200; } }
+
+<span class="cmt">// The adapter translates between the two</span>
+<span class="kw">class</span> VendorPaymentAdapter(VendorClient vendor) : IPaymentGateway
+{
+    <span class="kw">public</span> <span class="kw">bool</span> Charge(<span class="kw">decimal</span> amount) =&gt; vendor.CreateCharge((long)(amount * 100)) == 200;
+}
+
+IPaymentGateway gateway = <span class="kw">new</span> VendorPaymentAdapter(<span class="kw">new</span> VendorClient());
+gateway.Charge(9.99m);               <span class="cmt">// your code never knows about VendorClient</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">VendorClient is invented for illustration. When the vendor changes, only the adapter changes.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">Wrapping a third-party SDK behind your own interface</th><td>the classic Adapter use</td></tr><tr><th scope="row"><code>StreamReader</code> over a <code>Stream</code></th><td>commonly described as an adapter from bytes to text (a classification, not a quote)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You depend on a vendor SDK in 30 places and might switch vendors</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Wrap it once in an adapter behind your interface.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You own both classes and can simply make them match</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Just change one of them; no adapter needed.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A legacy class has the right behaviour but the wrong method names</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> An adapter gives it the names your code expects.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You add an adapter around every class “just in case”</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Overkill. Adapt only foreign or legacy shapes.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Vendor types (<code>VendorClient</code>, <code>VendorResponse</code>) used all over your code</th><td>Wrap them in one adapter behind your own interface.</td></tr><tr><th scope="row">Conversions (cents ↔ decimal, XML ↔ object) repeated in many places</th><td>Put the translation in one adapter.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Adapter = a wrapper that converts one interface into the one your code expects.</li><li>Use for third-party/legacy code you cannot change.</li><li>Client and adaptee stay unchanged.</li><li>Adapter changes the interface; Decorator keeps it and adds behaviour.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"An Adapter wraps an object whose interface doesn’t match what my code expects — like a travel plug. I define the interface my code wants, write a small adapter that translates to the vendor’s API, and keep all vendor types out of the rest of the system, so switching vendors only changes the adapter."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Confusing Adapter and Decorator.</b> An adapter changes the interface; a decorator keeps it and adds behaviour.</p>
+      <p><b>Leaking vendor types through the adapter.</b> Return your own types.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: instead of changing the shape, what if you want to <i>add</i> something — milk and sugar in a coffee? The Decorator.</span>
+      <a class="next-link" href="decorator.html">Decorator: wrap it to add extras <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Adapter’s intent follows refactoring.guru (objects with incompatible interfaces collaborate); the Decorator page there also notes an adapter changes the interface while a decorator keeps or extends it. The StreamReader remark is a common classification. The travel plug is a teaching analogy; VendorClient is invented. Official docs: <a href="https://refactoring.guru/design-patterns/adapter" target="_blank" rel="noopener">Adapter (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener">Structural patterns (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/decorator" target="_blank" rel="noopener">Decorator (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

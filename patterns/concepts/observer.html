@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observer: Tell Everyone Who Subscribed — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="strategy.html">Strategy</a><span class="sep">›</span><span class="cur">Observer</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 24 · 💬 Behavioral</div>
+    <h1>The YouTube bell: <span class="grad-text">tell everyone who subscribed</span>.</h1>
+    <p class="sub">The Observer pattern with a channel and its fans: a publisher keeps a list of subscribers and notifies them without knowing who they are.</p>
+    <div class="interview-q">❓ "What is the Observer pattern and how is it implemented in .NET?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A channel that calls each fan by name must be edited every time someone new wants updates">
+<defs><marker id="ob1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ob1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ob1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M180,145 L470,45" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ob1A)"/></g>
+<g class="st" data-s="2-"><path d="M180,145 L470,140" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ob1A)"/></g>
+<g class="st" data-s="2-"><path d="M180,145 L470,235" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ob1A)"/></g>
+<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="10" y="100" width="170" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4"><text class="emo" x="95" y="150" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">📺</text></g>
+<g class="st" data-s="1-" data-hl="4"><text x="95" y="165" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Channel</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="10" width="160" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">👩 Asha</text></g>
+<g class="st" data-s="2-"><text x="550" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">called by name</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="105" width="160" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">👨 Ben</text></g>
+<g class="st" data-s="2-"><text x="550" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">called by name</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="200" width="160" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="232.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧑 Chen</text></g>
+<g class="st" data-s="2-"><text x="550" y="245.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">called by name</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="200" y="235" width="250" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="325" y="260" text-anchor="middle" font-size="10" fill="#fcd34d">New fan Dev wants updates…</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="200" y="10" width="250" height="56" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="325" y="34" text-anchor="middle" font-size="10" fill="#fda4af">Channel code must be edited</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="325" y="48" text-anchor="middle" font-size="10" fill="#fda4af">to add “call Dev”  ✏️</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>channel</b> wants to tell its fans about new videos.</li><li>It calls each fan <b>by name</b>: Asha, Ben, Chen.</li><li>A new fan, <b>Dev</b>, wants updates too.</li><li>The channel’s code must be <b>edited</b> to add “call Dev”. Every new fan means editing the channel. ✏️</li></ol>
+<figcaption><strong>What you're seeing:</strong> the channel knows every fan.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Let listeners subscribe; the publisher just notifies “whoever is on my list” — and never needs to know who they are.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🔔 You press the <b>bell</b> on a channel. You do not email the creator; the platform keeps a list and sends you a notification when something new appears. You can switch it off any time.</p>
+      <p>refactoring.guru: Observer is a subscription mechanism that notifies multiple objects about events that happen to the object they observe. Microsoft’s .NET docs describe IObservable&lt;T&gt;/IObserver&lt;T&gt;: the provider’s Subscribe returns an IDisposable so observers can unsubscribe.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔔 The fix: a subscriber list</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Fans subscribe to the channel, which keeps a list; when a new video is published it notifies everyone on the list, an unsubscribed fan hears nothing, and the channel code never changes">
+<defs><marker id="ob2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ob2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ob2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M470,50 L180,160" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="3-"><path id="ob2-n0" d="M180,160 L470,50" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="2-"><path d="M470,150 L180,160" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="3-"><path id="ob2-n1" d="M180,160 L470,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="2-"><path d="M470,250 L180,160" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="3-"><path id="ob2-n2" d="M180,160 L470,250" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ob2A)"/></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="10" y="110" width="170" height="100" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text class="emo" x="95" y="158.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">📺</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="95" y="173.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Channel</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="95" y="186.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">keeps a list</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="10" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔔 👩 Asha</text></g>
+<g class="st" data-s="2-"><text x="550" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">subscribed</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="110" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="147.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔔 👨 Ben</text></g>
+<g class="st" data-s="2-"><text x="550" y="160.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">subscribed</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="470" y="210" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="550" y="247.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🔔 🧑 Chen</text></g>
+<g class="st" data-s="2-"><text x="550" y="260.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">subscribed</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="200" y="262" width="250" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="325" y="287" text-anchor="middle" font-size="10" fill="#6ee7b7">New video! → everyone on the list</text></g>
+<g class="st" data-s="4-"><text class="emo" x="600" y="128" text-anchor="middle" font-size="22">🔕</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx note" x="200" y="262" width="250" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="325" y="287" text-anchor="middle" font-size="10" fill="#fcd34d">Ben unsubscribed → hears nothing</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="200" y="262" width="250" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="325" y="287" text-anchor="middle" font-size="10" fill="#6ee7b7">Dev joins: channel unchanged ✅</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ob2-n0"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔔</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ob2-n1"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔔</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="ob2-n2"><circle r="8.68" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔔</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The channel keeps a <b>list of subscribers</b>.</li><li>Fans <b>subscribe</b> — Asha, Ben and Chen.</li><li>A <b>new video</b> is published: the channel notifies everyone on the list. 🔔</li><li><b>Ben unsubscribes</b>: he is off the list and hears nothing. 🔕</li><li><b>Dev</b> joins: just one more entry. The channel’s code did not change. ✅</li></ol>
+<figcaption><strong>What you're seeing:</strong> the channel never mentions a fan by name.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Publisher / Subject</b></th><td>the channel</td><td><code>Channel</code> with <code>event</code></td></tr><tr><th scope="row"><b>Subscriber / Observer</b></th><td>a fan</td><td>a handler method</td></tr><tr><th scope="row"><b>Subscribe / Unsubscribe</b></th><td>press / unpress the bell</td><td><code>+=</code> / <code>-=</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Channel
+{
+    <span class="kw">public</span> event Action&lt;<span class="kw">string</span>&gt;? NewVideo;                 <span class="cmt">// the subscriber list lives here</span>
+    <span class="kw">public</span> <span class="kw">void</span> Publish(<span class="kw">string</span> title) =&gt; NewVideo?.Invoke(title);
+}
+
+<span class="kw">var</span> channel = <span class="kw">new</span> Channel();
+channel.NewVideo += t =&gt; Console.WriteLine($<span class="str">"Asha sees: {t}"</span>);
+channel.NewVideo += t =&gt; Console.WriteLine($<span class="str">"Ben sees: {t}"</span>);
+
+channel.Publish(<span class="str">"Design patterns!"</span>);     <span class="cmt">// both are told</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">C# <span class="kw">event</span> is built-in Observer. Remember to unsubscribe (<span class="kw">-=</span>) when a listener is no longer needed, or it stays alive.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row">C# <code>event</code> and <code>+=</code></th><td>built-in observer support</td></tr><tr><th scope="row"><code>IObservable&lt;T&gt;</code> / <code>IObserver&lt;T&gt;</code></th><td>the .NET interfaces for push-based notifications (documented)</td></tr><tr><th scope="row">UI button clicks</th><td>the button notifies whoever subscribed</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Many unrelated parts must react when one thing changes</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Publish once; whoever subscribed is told.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Exactly one fixed listener, always</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> A direct call is clearer.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Listeners come and go at run time</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Subscribe/unsubscribe is built for it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Listeners must run in a strict order that matters</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Hidden ordering makes bugs; call them explicitly.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Publisher code that lists every listener by name</th><td>Replace with a subscriber list or event.</td></tr><tr><th scope="row">Objects polling “has it changed?” in a loop</th><td>Let the source notify instead.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Observer = publisher keeps a subscriber list and notifies them; it never knows who they are.</li><li>C# events are built-in observers; IObservable/IObserver are the interfaces.</li><li>Always unsubscribe to avoid leaks.</li><li>Do not rely on the order listeners run.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Observer decouples a publisher from its listeners: subscribers register, the publisher notifies the list, and neither side knows the other’s details — like the YouTube bell. In C# that’s an event, or IObservable/IObserver, and I make sure listeners unsubscribe so they don’t leak."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Forgetting to unsubscribe.</b> The publisher keeps the listener alive — a memory leak.</p>
+      <p><b>Surprise cascades.</b> A listener that triggers more events can be hard to follow.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Next: what if we want a <i>request</i> to be an object we can queue, log or undo? The Command — an order slip. <i>(coming soon: Command: a request as an object)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Observer’s intent follows refactoring.guru. IObservable&lt;T&gt;/IObserver&lt;T&gt; and the IDisposable returned by Subscribe are documented on Microsoft Learn (Observer design pattern). C# events as built-in observer support is common knowledge. The YouTube bell is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/observer" target="_blank" rel="noopener">Observer (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern" target="_blank" rel="noopener">Observer design pattern (.NET)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

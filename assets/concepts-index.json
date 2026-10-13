@@ -4268,5 +4268,135 @@
     "summary": "The classic mistake with Singleton: Exactly One of Something.",
     "keywords": "singleton pattern creational one instance AddSingleton global state testing trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "patterns-adapter",
+    "title": "Adapter: Make a Foreign Plug Fit",
+    "category": "Patterns",
+    "page": "patterns/concepts/adapter.html",
+    "summary": "The Adapter pattern with a travel plug: wrap the thing with the wrong shape so your code can use it unchanged.",
+    "keywords": "adapter pattern structural travel plug wrapper vendor sdk interface"
+  },
+  {
+    "id": "patterns-adapter-recall",
+    "title": "Adapter: Make a Foreign Plug Fit — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/adapter.html",
+    "summary": "Quick recall points: Adapter: Make a Foreign Plug Fit.",
+    "keywords": "adapter pattern structural travel plug wrapper vendor sdk interface interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-adapter-trap",
+    "title": "Adapter: Make a Foreign Plug Fit — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/adapter.html",
+    "summary": "The classic mistake with Adapter: Make a Foreign Plug Fit.",
+    "keywords": "adapter pattern structural travel plug wrapper vendor sdk interface trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-decorator",
+    "title": "Decorator: Wrap It to Add Extras",
+    "category": "Patterns",
+    "page": "patterns/concepts/decorator.html",
+    "summary": "The Decorator pattern with coffee, milk and sugar: stackable wrappers with the same shape.",
+    "keywords": "decorator pattern structural wrapper coffee logging caching middleware"
+  },
+  {
+    "id": "patterns-decorator-recall",
+    "title": "Decorator: Wrap It to Add Extras — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/decorator.html",
+    "summary": "Quick recall points: Decorator: Wrap It to Add Extras.",
+    "keywords": "decorator pattern structural wrapper coffee logging caching middleware interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-decorator-trap",
+    "title": "Decorator: Wrap It to Add Extras — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/decorator.html",
+    "summary": "The classic mistake with Decorator: Wrap It to Add Extras.",
+    "keywords": "decorator pattern structural wrapper coffee logging caching middleware trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-facade",
+    "title": "Facade: One Easy Front Door",
+    "category": "Patterns",
+    "page": "patterns/concepts/facade.html",
+    "summary": "The Facade pattern with a hotel concierge: one simple entry point in front of many subsystems.",
+    "keywords": "facade pattern structural concierge simplified interface subsystem"
+  },
+  {
+    "id": "patterns-facade-recall",
+    "title": "Facade: One Easy Front Door — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/facade.html",
+    "summary": "Quick recall points: Facade: One Easy Front Door.",
+    "keywords": "facade pattern structural concierge simplified interface subsystem interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-facade-trap",
+    "title": "Facade: One Easy Front Door — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/facade.html",
+    "summary": "The classic mistake with Facade: One Easy Front Door.",
+    "keywords": "facade pattern structural concierge simplified interface subsystem trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-proxy",
+    "title": "Proxy: A Stand-in That Guards the Real Thing",
+    "category": "Patterns",
+    "page": "patterns/concepts/proxy.html",
+    "summary": "The Proxy pattern with a receptionist: control, delay or cache access while looking like the real thing.",
+    "keywords": "proxy pattern structural receptionist protection lazy caching remote"
+  },
+  {
+    "id": "patterns-proxy-recall",
+    "title": "Proxy: A Stand-in That Guards the Real Thing — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/proxy.html",
+    "summary": "Quick recall points: Proxy: A Stand-in That Guards the Real Thing.",
+    "keywords": "proxy pattern structural receptionist protection lazy caching remote interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-proxy-trap",
+    "title": "Proxy: A Stand-in That Guards the Real Thing — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/proxy.html",
+    "summary": "The classic mistake with Proxy: A Stand-in That Guards the Real Thing.",
+    "keywords": "proxy pattern structural receptionist protection lazy caching remote trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "patterns-composite",
+    "title": "Composite: Treat a Tree Like One Thing",
+    "category": "Patterns",
+    "page": "patterns/concepts/composite.html",
+    "summary": "The Composite pattern with folders and files: leaves and groups answer the same question.",
+    "keywords": "composite pattern structural tree folder file recursive uniform"
+  },
+  {
+    "id": "patterns-composite-recall",
+    "title": "Composite: Treat a Tree Like One Thing — interview recall",
+    "category": "Patterns",
+    "page": "patterns/concepts/composite.html",
+    "summary": "Quick recall points: Composite: Treat a Tree Like One Thing.",
+    "keywords": "composite pattern structural tree folder file recursive uniform interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "patterns-composite-trap",
+    "title": "Composite: Treat a Tree Like One Thing — common trap",
+    "category": "Patterns",
+    "page": "patterns/concepts/composite.html",
+    "summary": "The classic mistake with Composite: Treat a Tree Like One Thing.",
+    "keywords": "composite pattern structural tree folder file recursive uniform trap mistake",
+    "anchor": "trap"
   }
 ]

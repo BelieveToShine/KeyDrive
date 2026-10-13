@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facade: One Easy Front Door — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="decorator.html">Decorator</a><span class="sep">›</span><span class="cur">Facade</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 7 of 24 · 🔧 Structural</div>
+    <h1>The hotel concierge: <span class="grad-text">one easy front door</span> to a messy system.</h1>
+    <p class="sub">The Facade pattern with a hotel concierge: give callers one simple method instead of making them learn many subsystems.</p>
+    <div class="interview-q">❓ "What is the Facade pattern and when would you use it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A guest has to deal directly with the taxi company, the restaurant and the ticket office, three different systems with three different ways of asking">
+<defs><marker id="fc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><path d="M150,155 L400,50" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#fc1A)"/></g>
+<g class="st" data-s="2-"><path d="M150,155 L400,155" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#fc1A)"/></g>
+<g class="st" data-s="3-"><path d="M150,155 L400,260" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#fc1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="110" width="140" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="80" y="160" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧳</text></g>
+<g class="st" data-s="1-"><text x="80" y="175" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Guest</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="400" y="10" width="230" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="515" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🚕 Taxi company</text></g>
+<g class="st" data-s="1-"><text x="515" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">call, give address</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="400" y="115" width="230" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="515" y="152.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🍽️ Restaurant</text></g>
+<g class="st" data-s="2-"><text x="515" y="165.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">book online, pick time</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="400" y="220" width="230" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="515" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🎫 Ticket office</text></g>
+<g class="st" data-s="3-"><text x="515" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">visit, pay cash</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="170" y="262" width="210" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="275" y="287" text-anchor="middle" font-size="10" fill="#fda4af">Three systems, three ways 😵</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A hotel guest wants a good evening out.</li><li>They must call the <b>taxi company</b>…</li><li>…book the <b>restaurant</b> on its website…</li><li>…and visit the <b>ticket office</b> in person. Three systems, three ways of asking. 😵</li></ol>
+<figcaption><strong>What you're seeing:</strong> the guest talks to every system directly.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Hide a complicated set of pieces behind one simple, easy-to-use entry point.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🏨 A hotel <b>concierge</b> takes one request — “plan my evening” — and does the phoning, booking and ticket-buying for you. You never learn how the taxi company works.</p>
+      <p>refactoring.guru: Facade provides a simplified (but limited) interface to a complex system of classes, a library or a framework.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🏨 The fix: a concierge</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="The guest tells the concierge one thing, plan my evening, and the concierge calls the taxi company, the restaurant and the ticket office behind the scenes">
+<defs><marker id="fc2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fc2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fc2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="fc2-gq" d="M150,155 L210,155" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fc2A)"/></g>
+<g class="st" data-s="3-"><path id="fc2-cc0" d="M360,155 L470,50" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fc2A)"/></g>
+<g class="st" data-s="3-"><path id="fc2-cc1" d="M360,155 L470,155" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fc2A)"/></g>
+<g class="st" data-s="3-"><path id="fc2-cc2" d="M360,155 L470,260" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#fc2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="110" width="140" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="80" y="160" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🧳</text></g>
+<g class="st" data-s="1-"><text x="80" y="175" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Guest</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="210" y="100" width="150" height="110" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text class="emo" x="285" y="153.75" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🏨</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="285" y="168.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Concierge</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="285" y="181.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">one front door</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="470" y="10" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="54" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🚕 Taxi company</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="470" y="115" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="159" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🍽️ Restaurant</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="470" y="220" width="160" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="264" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🎫 Ticket office</text></g>
+<g class="st" data-s="4-"><text class="emo" x="110" y="120" text-anchor="middle" font-size="22">😌</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="240" width="340" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="180" y="265" text-anchor="middle" font-size="10" fill="#6ee7b7">Guest knows nothing about the three systems</text></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="fc2-gq"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📝</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="fc2-cc0"><circle r="8.06" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">☎️</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="fc2-cc1"><circle r="8.06" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">☎️</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="fc2-cc2"><circle r="8.06" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="4.55" text-anchor="middle" font-size="13">☎️</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The same guest, the same three services.</li><li>The guest gives <b>one request</b> to the concierge.</li><li>The concierge calls the taxi company, restaurant and ticket office <b>behind the scenes</b>. ☎️</li><li>The guest is happy and knows nothing about the three systems. 😌</li></ol>
+<figcaption><strong>What you're seeing:</strong> one request in, three calls out.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Facade</b></th><td>the concierge</td><td><code>EveningPlanner.Plan()</code></td></tr><tr><th scope="row"><b>Subsystems</b></th><td>taxi, restaurant, tickets</td><td><code>TaxiService</code>, <code>BookingService</code>, <code>TicketService</code></td></tr><tr><th scope="row"><b>Client</b></th><td>the guest</td><td>calling code</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — the caller must know every subsystem</span>
+taxi.Call(address); booking.Reserve(<span class="str">"19:30"</span>, 2); tickets.Buy(<span class="str">"show"</span>, 2);
+
+<span class="cmt">// AFTER — a facade with one simple method</span>
+<span class="kw">class</span> EveningPlanner(TaxiService taxi, BookingService booking, TicketService tickets)
+{
+    <span class="kw">public</span> <span class="kw">void</span> Plan(<span class="kw">string</span> address)
+    {
+        tickets.Buy(<span class="str">"show"</span>, 2);
+        booking.Reserve(<span class="str">"19:30"</span>, 2);
+        taxi.Call(address);
+    }
+}
+<span class="kw">new</span> EveningPlanner(t, b, k).Plan(<span class="str">"12 Main St"</span>);     <span class="cmt">// one call</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">A facade is deliberately limited: it offers the common jobs, and the subsystems remain available for special cases.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row"><code>File.ReadAllText(path)</code></th><td>one call hides opening, reading, decoding and closing a stream (a common example of a facade-style API)</td></tr><tr><th scope="row">A service class that coordinates several repositories and an email sender</th><td>an application-level facade</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A caller must use five classes in the right order to do one common job</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> A facade gives that job one method.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The subsystem has only one simple method already</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> A facade adds nothing.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You want to hide a messy legacy library from the rest of the app</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> A facade is a good boundary.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The facade slowly grows every feature of the subsystems</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Then it becomes a “god class”. Keep it small and focused.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">The same 4–5 calls repeated in several places</th><td>Wrap them in one facade method.</td></tr><tr><th scope="row">Callers need to know the right order of many calls</th><td>Hide the sequence.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Facade = one simple interface in front of a complex subsystem.</li><li>It is limited on purpose: common jobs only.</li><li>Subsystems stay usable directly.</li><li>Facade simplifies; Adapter converts shapes.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A Facade is one simple entry point in front of a complicated set of classes, like a hotel concierge. Callers make one call instead of learning several subsystems and their order. I keep it small so it doesn’t become a god class, and the subsystems stay available for unusual cases."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>The facade that does everything.</b> It becomes a god class.</p>
+      <p><b>Hiding the subsystems completely</b> so advanced users are stuck.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what if you want to <i>guard</i> or <i>delay</i> access to something? The Proxy — a receptionist.</span>
+      <a class="next-link" href="proxy.html">Proxy: a stand-in that guards the real thing <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Facade’s intent follows refactoring.guru (a simplified but limited interface to a complex system). The File.ReadAllText remark is a common example, not a quote. The concierge is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/facade" target="_blank" rel="noopener">Facade (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener">Structural patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command: A Request as an Object — Patterns — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧩 Design Patterns Lab</a><span class="sep">›</span><a href="observer.html">Observer</a><span class="sep">›</span><span class="cur">Command</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 24 · 💬 Behavioral</div>
+    <h1>The order slip: <span class="grad-text">turn a request into a thing</span> you can keep, queue or undo.</h1>
+    <p class="sub">The Command pattern with a restaurant order slip: wrap a request in an object so it can be stored, delayed, logged and undone.</p>
+    <div class="interview-q">❓ "What is the Command pattern and how does it support undo?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A remote button hard-wired to call lamp.On directly cannot be queued, logged or undone, because the request disappears the moment it is made">
+<defs><marker id="cm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="cm1-dir" d="M180,135 L460,135" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cm1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="90" width="170" height="90" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="95" y="140" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">🔘</text></g>
+<g class="st" data-s="1-"><text x="95" y="155" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Button</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="460" y="90" width="170" height="90" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text class="emo" x="545" y="140" text-anchor="middle" font-size="26" font-weight="400" fill="#ffffff">💡</text></g>
+<g class="st" data-s="1-"><text x="545" y="155" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Lamp</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="100" y="210" width="440" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="320" y="235" text-anchor="middle" font-size="10" fill="#fcd34d">Done — and gone. No record of what was asked.</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="100" y="260" width="440" height="34" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="280" text-anchor="middle" font-size="10" fill="#fda4af">Undo? Queue it for later? Not possible</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="287" y="126" width="66" height="18" rx="9"/><text x="320" y="138.5" text-anchor="middle" font-size="9" font-style="italic">lamp.On()</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="cm1-dir"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">⚡</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>remote</b> has a button and a <b>lamp</b>.</li><li>Press the button and the code calls <code>lamp.On()</code> directly.</li><li>Done — and the request is <b>gone</b>. Nothing remembers it was asked.</li><li>So you cannot <b>undo</b> it, <b>queue</b> it for later, or <b>log</b> it.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a direct call leaves no trace.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Wrap a request in an object (a “command”) that knows what to do, so you can keep it, queue it, log it or undo it.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧾 A waiter does not shout into the kitchen. They write an <b>order slip</b>. The slip is a <b>thing</b>: it can wait on a spike, be passed between cooks, be logged, or be cancelled.</p>
+      <p>refactoring.guru: Command turns a request into a stand-alone object that contains all information about the request, which lets you pass requests as arguments, delay or queue them, and support undoable operations.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧾 The fix: the request becomes an object</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Pressing the button creates a LightOn command object that knows its lamp; executing it turns the lamp on and the command is kept in a history list, so Undo can take the last command back out and reverse it">
+<defs><marker id="cm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path id="cm2-mk" d="M160,55 L230,55" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cm2A)"/></g>
+<g class="st" data-s="3-"><path id="cm2-ex" d="M420,55 L490,55" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cm2A)"/></g>
+<g class="st" data-s="4-"><path d="M325,90 L325,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cm2A)"/></g>
+<g class="st" data-s="5-"><path id="cm2-un" d="M325,240 L325,290 L560,290 L560,90" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cm2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="20" width="150" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="85" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🔘 Button</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="230" y="20" width="190" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="325" y="52.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧾 LightOn command</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="325" y="65.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">knows: lamp, On, Off</text></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="490" y="20" width="140" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text x="560" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">💡 Lamp</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="230" y="150" width="190" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="325" y="192.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">📚 History</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="325" y="205.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">LightOn  ← kept</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="150" width="190" height="90" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="177" text-anchor="middle" font-size="10" fill="#67e8f9">Because the request is</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="191" text-anchor="middle" font-size="10" fill="#67e8f9">an object, we can</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="205" text-anchor="middle" font-size="10" fill="#67e8f9">store it, queue it,</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="105" y="219" text-anchor="middle" font-size="10" fill="#67e8f9">log it — and reverse it</text></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="420.5" y="281" width="39" height="18" rx="9"/><text x="440" y="293.5" text-anchor="middle" font-size="9" font-style="italic">Undo</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="cm2-mk"><circle r="8.68" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🧾</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="cm2-ex"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">⚡</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="cm2-un"><circle r="8.68" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">↩️</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Pressing the button no longer calls the lamp. It <b>creates a command</b>.</li><li>The <b>LightOn command</b> remembers its lamp and knows how to do and undo the job.</li><li><b>Executing</b> it turns the lamp on. ⚡</li><li>The command is <b>kept in a history</b> list.</li><li><b>Undo</b> takes the last command out of the history and reverses it. ↩️</li><li>Because the request is an object, we can store, queue, log and reverse it.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the same button, now with a history.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎭 Who is who</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Role in the pattern</th><th scope="col">In our story</th><th scope="col">In code</th></tr></thead><tbody><tr><th scope="row"><b>Command</b></th><td>the order slip</td><td><code>ICommand { Execute(); Undo(); }</code></td></tr><tr><th scope="row"><b>Receiver</b></th><td>the kitchen / lamp</td><td><code>Lamp</code></td></tr><tr><th scope="row"><b>Invoker</b></th><td>the waiter / button</td><td><code>RemoteControl</code></td></tr><tr><th scope="row"><b>History</b></th><td>the spike of slips</td><td><code>Stack&lt;ICommand&gt;</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">interface</span> ICommand { <span class="kw">void</span> Execute(); <span class="kw">void</span> Undo(); }
+
+<span class="kw">class</span> Lamp { <span class="kw">public</span> <span class="kw">void</span> On() { } <span class="kw">public</span> <span class="kw">void</span> Off() { } }
+
+<span class="kw">class</span> LightOn(Lamp lamp) : ICommand
+{
+    <span class="kw">public</span> <span class="kw">void</span> Execute() =&gt; lamp.On();
+    <span class="kw">public</span> <span class="kw">void</span> Undo()    =&gt; lamp.Off();
+}
+
+<span class="kw">class</span> Remote
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> Stack&lt;ICommand&gt; _history = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">void</span> Press(ICommand cmd) { cmd.Execute(); _history.Push(cmd); }
+    <span class="kw">public</span> <span class="kw">void</span> Undo() { <span class="kw">if</span> (_history.Count &gt; 0) _history.Pop().Undo(); }
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Queues, logs and macros are the same idea: keep a list of command objects.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🔎 Where you already see it</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write…</th><th scope="col">It is…</th></tr></thead><tbody><tr><th scope="row"><code>ICommand</code> in WPF/MAUI</th><td>UI buttons bound to command objects (a documented UI feature)</td></tr><tr><th scope="row">A background job queue</th><td>each job is an object describing work to do later (a common use)</td></tr></tbody></table></div>
+    <p style="margin-top:10px;color:var(--ink-soft)">Mapping these to the pattern is a common classification.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Spot it: is the pattern a good fit?</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You need undo/redo for user actions</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> Commands with Undo and a history are the standard answer.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You must queue work to run later or on another thread</summary><div class="zoom-inner"><p><b>✅ Good fit.</b> A command object is the unit of work.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A one-off call nobody will ever log or undo</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Just call the method.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Every tiny method wrapped in a command class</summary><div class="zoom-inner"><p><b>❌ Overkill.</b> Overkill.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">👀 How to spot the need in your own code</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">If you see…</th><th scope="col">Do this</th></tr></thead><tbody><tr><th scope="row">Requirements for undo, redo, audit logs or retry</th><td>Model requests as commands.</td></tr><tr><th scope="row">Buttons or menu items hard-wired to specific methods</th><td>Bind them to command objects.</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Command = a request wrapped as an object with Execute (and Undo).</li><li>Enables queuing, logging, retry and undo.</li><li>Invoker triggers, receiver does the work.</li><li>History stack gives undo.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The Command pattern turns a request into an object that knows how to execute — and possibly undo — itself. Like a waiter’s order slip, it can be queued, logged, retried or reversed. I keep a history stack for undo, and the invoker needs to know nothing about the receiver."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Commands that cannot truly undo</b> (emails already sent). Say so.</p>
+      <p><b>Too many tiny command classes</b> for trivial actions.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Next: an object that behaves differently depending on its <i>mode</i>. The State — a traffic light. <i>(coming soon: State: behave differently in each mode)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Command’s intent follows refactoring.guru (request as a stand-alone object; queue, delay, undo). ICommand in UI frameworks and job queues are common examples. The order slip is a teaching analogy. Official docs: <a href="https://refactoring.guru/design-patterns/command" target="_blank" rel="noopener">Command (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/behavioral-patterns" target="_blank" rel="noopener">Behavioral patterns (refactoring.guru)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Patterns · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -28,5 +28,25 @@ Sources: refactoring.guru (Design Patterns catalog — the standard GoF patterns
 
 
 
+## Structural pages 5–9 — Adapter, Decorator, Facade, Proxy, Composite
+| Claim | Status | Note |
+|---|---|---|
+| Adapter: objects with incompatible interfaces collaborate; adapter changes the interface while a decorator keeps/extends it | ✅ V | refactoring.guru Adapter catalog line; Decorator page |
+| Decorator: attach behaviours by placing objects inside wrapper objects with the same interface | ✅ V | refactoring.guru Decorator |
+| Facade: simplified (but limited) interface to a complex system of classes, library or framework | ✅ V | refactoring.guru Facade |
+| Proxy: controls access to the original object, acting before or after the request gets through | ✅ V | refactoring.guru Proxy (via search summary) |
+| Composite: compose objects into tree structures and work with them as if individual objects | ✅ V | refactoring.guru Composite (via search summary) |
+| Middleware: each component may act before/after calling the next or short-circuit; DelegatingHandler chains | ✅ V | Microsoft Learn: ASP.NET Core middleware; IHttpClientFactory |
+| StreamReader as adapter; File.ReadAllText as facade; Lazy<T> as lazy proxy; UI control trees as composites | 🟨 K | common classifications, not quotes |
+| Travel plug, coffee, concierge, receptionist, folder pictures; VendorClient, prices (2.00/0.50/0.20), sizes (10/20/5/15) | 🟦 I | teaching analogies and illustrative numbers |
+
+
+
+
+
+
+
+
+
 ## Cross-page notes
 - Everyday pictures (pizza shop, travel plug, bell, fuse box, …) and all tiny code samples are 🟦 I teaching illustrations.
