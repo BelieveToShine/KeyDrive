@@ -220,5 +220,20 @@ Source root: https://react.dev/
 | Several small boundaries beat one at the root | 🟨 K | design advice, not a docs claim |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — API layer & caching
+| Claim | Status | Note |
+|---|---|---|
+| React docs recommend a framework's data fetching or a client-side cache; they name TanStack Query, SWR and React Router; fetching in Effects: no server run, waterfalls, usually no preloading/caching, race-condition boilerplate | ✅ V | react.dev reference/react/useEffect, blog/2025/02/14/sunsetting-create-react-app |
+| A fetch() promise does not reject on HTTP error statuses (404, 504…); it rejects on network failure or a badly formed request; check Response.ok / status | ✅ V | developer.mozilla.org Using the Fetch API; Response.ok |
+| fetch can throw AbortError when the request was aborted via AbortController.abort() | ✅ V | MDN Window.fetch() |
+| TanStack Query: cached data stale by default; stale queries refetch in the background on mount/refocus/reconnect/interval; invalidation by hierarchical key marks queries stale and refetches active ones | ✅ V | tanstack.com query important-defaults, query-invalidation |
+| SWR and TanStack Query both support stale-while-revalidate | ✅ V | tanstack.com query comparison table |
+| Request de-duplication by these libraries | 🟨 K | not confirmed in this search — page tells readers to read the library docs |
+| Interceptors exist in some HTTP libraries and frameworks (e.g. Angular); with fetch you write the wrapper | 🟨 K | general; Angular's interceptors are verified in the Angular lab |
+| Retry only idempotent requests; refresh a token once; share one in-flight refresh; never put secrets in client code | 🟨 K | general engineering practice |
+| Status code 401 (unauthorised) triggers a token refresh in the example | 🟨 K | standard HTTP meaning; example flow is a pattern, not a docs claim |
+| 7 places, 3 identical GETs, 1 after | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

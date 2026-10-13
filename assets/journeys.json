@@ -355,14 +355,16 @@
       "refs-and-dom": "effects",
       "custom-hooks": "effects",
       "forms-actions": "data-fetching-suspense",
-      "error-boundaries": "data-fetching-suspense"
+      "error-boundaries": "data-fetching-suspense",
+      "api-layer-caching": "data-fetching-suspense"
     },
     "subTitles": {
       "react-hooks-guide": "Hooks: what each does and when to use which",
       "refs-and-dom": "Refs and the DOM",
       "custom-hooks": "Custom hooks & the Rules of Hooks",
       "forms-actions": "Forms & actions",
-      "error-boundaries": "Error boundaries & error handling"
+      "error-boundaries": "Error boundaries & error handling",
+      "api-layer-caching": "The API layer: fetch wrappers & caching"
     }
   },
   "angular": {

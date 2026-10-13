@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The API layer: fetch wrappers &amp; caching — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="data-fetching-suspense.html">Data &amp; Suspense</a><span class="sep">›</span><span class="cur">API layer</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 🌐 API layer</div>
+    <h1>One place that knows <span class="grad-text">how to call the server</span>.</h1>
+    <p class="sub">Why components should not call fetch directly, what a fetch wrapper (React’s answer to interceptors) does, and what a cache adds.</p>
+    <div class="interview-q">❓ "Where should API calls live in a React app, and how do you handle auth, errors and caching?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 394" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Layers between a component and the server: the component asks a data hook, a cache returns known data or asks the API client, and the API client is the one place that adds headers, checks errors and retries before calling the server">
+<defs><marker id="ap1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ap1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ap1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,42 L320,90" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ap1A)"/>
+<path d="M320,128 L320,176" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ap1A)"/>
+<path d="M320,214 L320,262" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ap1A)"/>
+<path d="M320,300 L320,348" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ap1A)"/>
+<rect class="bx" x="150" y="4" width="340" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="20.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Components</text>
+<text x="320" y="33.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">render data, show loading and errors</text>
+<rect class="bx" x="150" y="90" width="340" height="38" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="106.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Data hook / Server Component</text>
+<text x="320" y="119.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">useProducts(), one name per query</text>
+<rect class="bx" x="150" y="176" width="340" height="38" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="192.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Cache (library or framework)</text>
+<text x="320" y="205.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">remembers results; refetches when stale</text>
+<rect class="bx" x="150" y="262" width="340" height="38" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="278.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">API client (one module)</text>
+<text x="320" y="291.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">base URL, auth header, errors, retry</text>
+<rect class="bx" x="150" y="348" width="340" height="38" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="320" y="364.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Server</text>
+<text x="320" y="377.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">your API</text>
+<g class="arrow-pill"><rect x="276.5" y="57" width="87" height="18" rx="9"/><text x="320" y="69.5" text-anchor="middle" font-size="9" font-style="italic">asks for data</text></g>
+<g class="arrow-pill"><rect x="260.5" y="143" width="119" height="18" rx="9"/><text x="320" y="155.5" text-anchor="middle" font-size="9" font-style="italic">cache miss or stale</text></g>
+<g class="arrow-pill"><rect x="298" y="229" width="44" height="18" rx="9"/><text x="320" y="241.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g>
+<g class="arrow-pill"><rect x="279" y="315" width="82" height="18" rx="9"/><text x="320" y="327.5" text-anchor="middle" font-size="9" font-style="italic">HTTP request</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> where network code belongs. <b>Components</b> do not call <span class="kw">fetch</span> themselves; they ask a <b>data hook</b> (or a Server Component). A <b>cache</b> answers from memory when it can and calls the <b>API client</b> when the data is missing or stale. The API client is the <b>single module</b> that adds headers, checks errors and retries before talking to the server. Change auth once, in one place.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Put network code in <b>one small module</b> and let a <b>cache</b> remember the answers — so components just ask for data.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 9 and 4 showed that fetching inside components causes waterfalls, races, repeated requests and scattered error handling. In a real shop the same request — products, current user — is needed in many places.</p>
+      <p>Frameworks like Angular give you an official place for cross-cutting request logic (interceptors). React does not prescribe one: <b>you build the place yourself</b> — usually a thin <b>API client</b> function, plus a cache library or a framework’s data layer.</p>
+      <p>This page shows what belongs in that layer and what the cache adds, so ShopUI has one answer to “how do we call the server?”.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧱 The API client, step by step</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A fetch wrapper acts like an interceptor pipeline: build the request with headers, send it, check response.ok because fetch does not reject on HTTP errors, retry once after refreshing a token on 401, and return data or a normalised error">
+<defs><marker id="ap2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ap2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ap2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M150,68 L170,68" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ap2A)"/>
+<path d="M310,68 L330,68" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ap2A)"/>
+<path d="M470,68 L490,68" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#ap2A)"/>
+<path d="M400,106 L400,196" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ap2A)"/>
+<path d="M330,234 L240,234 L240,106" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ap2A)"/>
+<rect class="bx" x="10" y="30" width="140" height="76" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="80" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · Build</text>
+<text x="80" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">base URL, headers,</text>
+<text x="80" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Authorization</text>
+<rect class="bx" x="170" y="30" width="140" height="76" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="240" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">2 · Send</text>
+<text x="240" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">fetch with an</text>
+<text x="240" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">abort signal</text>
+<rect class="bx" x="330" y="30" width="140" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="400" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">3 · Check</text>
+<text x="400" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">response.ok?</text>
+<text x="400" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">status code</text>
+<rect class="bx" x="490" y="30" width="140" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="560" y="59.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">4 · Return</text>
+<text x="560" y="72" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">data, or one</text>
+<text x="560" y="84.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">typed error</text>
+<rect class="bx" x="330" y="196" width="140" height="76" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="400" y="225.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">On 401</text>
+<text x="400" y="238" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">refresh the token</text>
+<text x="400" y="250.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">once</text>
+<text class="free" x="560" y="130" text-anchor="middle" font-size="9.5" font-weight="400" fill="#6ee7b7">ok → data</text>
+<text class="free" x="560" y="148" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fda4af">other → typed error</text>
+<g class="arrow-pill"><rect x="364.5" y="142" width="71" height="18" rx="9"/><text x="400" y="154.5" text-anchor="middle" font-size="9" font-style="italic">status 401</text></g>
+<g class="arrow-pill"><rect x="249.5" y="225" width="71" height="18" rx="9"/><text x="285" y="237.5" text-anchor="middle" font-size="9" font-style="italic">retry once</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the same job an interceptor does in other frameworks, written as one function. <b>Build</b> the request (base URL, <span class="kw">Authorization</span> header). <b>Send</b> it with <span class="kw">fetch</span> and an abort signal. <b>Check</b> the response: <b>fetch only rejects on network failure — a 404 or 500 still resolves</b>, so you must test <span class="kw">response.ok</span>. On a <b>401</b> refresh the token and <b>retry once</b>. <b>Return</b> data, or one consistent error type that components and error boundaries understand.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 What goes where</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Concern</th><th scope="col">Where</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Base URL, JSON parsing, headers (<span class="kw">Authorization</span>)</th><td>API client</td><td>One change affects every request</td></tr><tr><th scope="row">Turning HTTP errors into one error type</th><td>API client</td><td><span class="kw">fetch</span> resolves on 404/500; <span class="kw">response.ok</span> must be checked</td></tr><tr><th scope="row">Cancelling stale requests</th><td>API client + <span class="kw">AbortController</span></td><td>A cancelled request rejects with an AbortError, which callers can ignore</td></tr><tr><th scope="row">Retry and token refresh</th><td>API client — only for safe (idempotent) requests</td><td>Retrying a payment twice is a bug</td></tr><tr><th scope="row">Remembering results, de-duplicating, refetching when stale</th><td>Cache library or framework</td><td>Not the job of components (page 9)</td></tr><tr><th scope="row">Loading and error display</th><td>Components with Suspense and error boundaries (pages 9 and error-boundaries)</td><td>Keep UI decisions in the UI</td></tr><tr><th scope="row">Secrets</th><td>Never in client code</td><td>Everything in the bundle is readable by users</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Caches.</b> The React docs recommend a framework’s data fetching or a client-side cache and name TanStack Query, SWR and React Router. For example, TanStack Query treats cached data as stale by default, refetches stale queries in the background when a component mounts, the window is refocused or the network reconnects, and lets you invalidate queries by hierarchical key. Details differ per library — read its docs.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 API-layer lab · seven places to change</div>
+    <div class="code-block"><pre><span class="cmt">// api.js — the one place that knows how to call the server</span>
+<span class="kw">export async function</span> api(path, { signal } = {}) {
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(BASE_URL + path, {
+    headers: { Authorization: <span class="str">`Bearer ${getToken()}`</span> },
+    signal,
+  });
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw</span> <span class="kw">new</span> ApiError(res.status, <span class="kw">await</span> res.text());   <span class="cmt">// fetch does not reject on 404/500</span>
+  <span class="kw">return</span> res.json();
+}</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch; token refresh and retry would live in the same function.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Measure</th><th scope="col">Before: each component calls fetch</th><th scope="col">After: client + cache</th></tr></thead><tbody><tr><th scope="row">Places to edit when the auth header changes</th><td>7</td><td>1</td></tr><tr><th scope="row">Identical GET /products requests on one page</th><td>3</td><td>1 (cache answers the others)</td></tr><tr><th scope="row">Places that handle a 401</th><td>0 of 7</td><td>1</td></tr><tr><th scope="row">Revisit a page already loaded</th><td>Request again</td><td>Cached data shown, refetched in the background if stale</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · API-layer symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Code treats a 404 as success and fails later on missing data</th><td><span class="kw">fetch</span> did not reject, and <span class="kw">response.ok</span> was not checked</td><td>Check <span class="kw">ok</span> in the client and throw a typed error</td></tr><tr><th scope="row">Same endpoint called three times on page load</th><td>No cache or de-duplication</td><td>Use a cache library or framework data layer</td></tr><tr><th scope="row">Old response appears after a newer one</th><td>Race between requests</td><td>Abort the previous request (<span class="kw">AbortController</span>) or let the cache library own it</td></tr><tr><th scope="row">Stale data after a mutation</th><td>The cache was not invalidated</td><td>Invalidate or update the affected keys after the mutation</td></tr><tr><th scope="row">Token refresh runs many times at once</th><td>Several 401s each trigger a refresh</td><td>Share one in-flight refresh promise</td></tr><tr><th scope="row">Retries made a payment twice</th><td>Retrying a non-idempotent request</td><td>Retry only safe requests; use idempotency keys on the server</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔑</span><h5>Token format changes</h5><p>Header built in seven components.</p><span class="sc-use">→ One API client</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>The product list loads three times</h5><p>No de-duplication.</p><span class="sc-use">→ Cache keyed by query</span></div>
+      <div class="scenario"><span class="sc-icon">🚪</span><h5>Session expires mid-use</h5><p>Nobody handles 401.</p><span class="sc-use">→ Refresh once, then sign out cleanly</span></div>
+      <div class="scenario"><span class="sc-icon">🐢</span><h5>Back navigation refetches everything</h5><p>No cache.</p><span class="sc-use">→ Cache with stale-while-revalidate behaviour</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Interceptors elsewhere.</b> Some frameworks and HTTP libraries have built-in interceptors; with plain <span class="kw">fetch</span> the wrapper function above plays that role. The idea is identical: a pipeline every request passes through.</p>
+      <p><b>Server Components</b> (page 10) can read data directly on the server, so this layer matters most for client-side interactions and for what runs in the browser.</p>
+      <p><b>Cancellation.</b> A request cancelled with an abort signal rejects with an AbortError; treat it as “ignore”, not as a failure.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Components should not call fetch directly; use one API client and a data hook.</li><li><span class="kw">fetch</span> rejects only on network failure — check <span class="kw">response.ok</span> for HTTP errors.</li><li>Add auth headers, error normalisation, cancellation and (careful) retries in the client.</li><li>A cache library remembers results, refetches when stale and invalidates by key.</li><li>React has no built-in interceptor; the wrapper plays that role.</li><li>Never put secrets in client code.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I keep network code in one API client — base URL, auth header, response.ok check, abort signal, token refresh and a single error type — and put a cache or the framework’s data layer in front, so components only ask for data. Because fetch does not reject on HTTP errors, the client turns them into errors the UI and error boundaries can handle."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Assuming a 404 makes fetch fail.</b> It resolves; you must check <span class="kw">ok</span>.</p>
+      <p><b>Retrying everything.</b> Non-idempotent requests (payments) can be applied twice.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧱 API client</h5><p>How to talk to the server: headers, errors, retries.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🗃️ Cache</h5><p>What to remember and when to refetch.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Suspense, transitions and data loading.</span>
+      <a class="next-link" href="data-fetching-suspense.html">Data fetching, Suspense & transitions <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; the third-party library and web API docs are the authority for their behaviour. Official docs: <a href="https://react.dev/learn/synchronizing-with-effects" target="_blank" rel="noopener">Synchronizing with Effects</a> · <a href="https://react.dev/learn/build-a-react-app-from-scratch" target="_blank" rel="noopener">Build a React app from Scratch</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener">MDN: Using the Fetch API</a> · <a href="https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults" target="_blank" rel="noopener">TanStack Query: important defaults</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

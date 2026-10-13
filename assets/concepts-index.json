@@ -3072,5 +3072,31 @@
     "summary": "The classic mistake with Error boundaries & error handling.",
     "keywords": "react error boundary getDerivedStateFromError componentDidCatch fallback onCaughtError onUncaughtError error handling try catch trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-api-layer-caching",
+    "title": "The API layer: fetch wrappers & caching",
+    "category": "React",
+    "page": "react/concepts/api-layer-caching.html",
+    "summary": "Where API calls belong: one API client (React's answer to interceptors), response.ok, abort, auth and retry, plus a cache layer.",
+    "keywords": "react api layer fetch wrapper interceptor axios cache TanStack Query SWR response.ok AbortController auth token 401 retry"
+  },
+  {
+    "id": "react-api-layer-caching-recall",
+    "title": "The API layer: fetch wrappers & caching — interview recall",
+    "category": "React",
+    "page": "react/concepts/api-layer-caching.html",
+    "summary": "Quick recall points: The API layer: fetch wrappers & caching.",
+    "keywords": "react api layer fetch wrapper interceptor axios cache TanStack Query SWR response.ok AbortController auth token 401 retry interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-api-layer-caching-trap",
+    "title": "The API layer: fetch wrappers & caching — common trap",
+    "category": "React",
+    "page": "react/concepts/api-layer-caching.html",
+    "summary": "The classic mistake with The API layer: fetch wrappers & caching.",
+    "keywords": "react api layer fetch wrapper interceptor axios cache TanStack Query SWR response.ok AbortController auth token 401 retry trap mistake",
+    "anchor": "trap"
   }
 ]
