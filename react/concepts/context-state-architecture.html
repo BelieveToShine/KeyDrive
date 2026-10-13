@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Context, reducers &amp; where state lives — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">State architecture</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 12 · ⚛️ App architecture</div>
+    <h1>Decide who <span class="grad-text">owns</span> each piece of state — and who reads it.</h1>
+    <p class="sub">Local state, lifting, context and reducers; the context re-render rule; and how to split contexts so a cart change does not re-render 500 cards.</p>
+    <div class="interview-q">❓ "When should state be global, and why does changing a context re-render so much?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="With one big context every consumer re-renders when the cart changes, including the 500 product cards that only read the theme; with split contexts only the cart readers re-render">
+<defs><marker id="cx1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cx1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cx1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">ONE BIG CONTEXT — 502 RENDERS</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">SPLIT CONTEXTS — 2 RENDERS</text>
+<path d="M162,90 L162,118 L63,118 L63,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<path d="M162,90 L162,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<path d="M162,90 L162,118 L261,118 L261,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<path d="M405,90 L405,118 L370,118 L370,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<path d="M405,90 L405,118 L460,118 L460,150" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<path d="M552,90 L552,150" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#cx1A)"/>
+<rect class="bx" x="50" y="38" width="225" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="162.5" y="62" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">AppContext</text>
+<text x="162.5" y="74" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">value = { cart, theme }</text>
+<rect class="bx" x="20" y="150" width="86" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="63" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cart</text>
+<rect class="bx" x="112" y="150" width="98" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="161" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">CartBadge</text>
+<rect class="bx" x="216" y="150" width="90" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="261" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Cards × 500</text>
+<text class="free" x="162" y="232" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Add to cart changes the cart</text>
+<text class="free" x="162" y="250" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">so the value is a new object:</text>
+<text class="free" x="162" y="268" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">every reader renders, even</text>
+<text class="free" x="162" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">cards that only need the theme</text>
+<rect class="bx" x="335" y="38" width="140" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="405" y="61.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">CartContext</text>
+<text x="405" y="74.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">cart items</text>
+<rect class="bx" x="485" y="38" width="135" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="552.5" y="61.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">ThemeContext</text>
+<text x="552.5" y="74.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">light / dark</text>
+<rect class="bx" x="335" y="150" width="70" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="370" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Cart</text>
+<rect class="bx" x="415" y="150" width="90" height="46" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="460" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">CartBadge</text>
+<rect class="bx" x="520" y="150" width="100" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="570" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Cards × 500</text>
+<text class="free" x="477" y="232" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Add to cart changes only</text>
+<text class="free" x="477" y="250" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">CartContext, so only Cart and</text>
+<text class="free" x="477" y="268" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">CartBadge render; the cards read</text>
+<text class="free" x="477" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">ThemeContext, which did not change</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a ShopUI cart that lives in context. <b>Left</b>: the cart and the theme sit in one context value. Adding an item makes a new value, and React re-renders <b>every component that reads the context</b> — including the 500 cards that only wanted the theme. <b>Right</b>: two contexts. The cart change only reaches the components that read <span class="kw">CartContext</span>; the cards read <span class="kw">ThemeContext</span>, which did not change. (Counts are illustrative.)</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Keep state <b>as low as possible</b>, lift it only as far as needed, and use <b>context</b> for the rest — remembering that <b>every reader re-renders when the value changes</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 2 said: move state down to where it is used. But some state really is shared — the cart is shown in the header, the product page and checkout. Passing it through ten components as props (“prop drilling”) is painful.</p>
+      <p>Context solves the plumbing: a provider high up, any component below can read. But it has a performance rule that surprises people: when the provider’s value changes, <b>all components that read it re-render</b>, and <span class="kw">memo</span> does not stop that.</p>
+      <p>So the design question is “who owns this state, and who reads it?” — and this page gives you a ladder of answers.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 Where should state live?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Where state should live, from smallest to widest scope: local state, lifted to the nearest common parent, context for distant readers, and a reducer with context for many kinds of updates">
+<defs><marker id="cx2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cx2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cx2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M150,48 L150,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#cx2A)"/>
+<path d="M150,140 L150,192" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#cx2A)"/>
+<path d="M150,232 L150,284" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#cx2A)"/>
+<rect class="bx" x="20" y="8" width="260" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="150" y="25.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">1 · Local state</text>
+<text x="150" y="38.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">useState in the component that uses it</text>
+<text class="free" x="300" y="32" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">the default choice</text>
+<rect class="bx" x="20" y="100" width="260" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="150" y="117.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">2 · Lift up</text>
+<text x="150" y="130.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">state in the nearest common parent</text>
+<text class="free" x="300" y="124" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">shared by two siblings</text>
+<rect class="bx" x="20" y="192" width="260" height="40" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="150" y="209.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Context</text>
+<text x="150" y="222.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">a provider above the readers</text>
+<text class="free" x="300" y="216" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">shared by many distant readers</text>
+<rect class="bx" x="20" y="284" width="260" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="150" y="301.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">4 · Reducer + context</text>
+<text x="150" y="314.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">state and dispatch in two contexts</text>
+<text class="free" x="300" y="308" text-anchor="start" font-size="10" font-weight="400" fill="#93a0b8">shared, with complex updates</text>
+<g class="arrow-pill"><rect x="98.5" y="65" width="103" height="18" rx="9"/><text x="150" y="77.5" text-anchor="middle" font-size="9" font-style="italic">siblings need it</text></g>
+<g class="arrow-pill"><rect x="82.5" y="157" width="135" height="18" rx="9"/><text x="150" y="169.5" text-anchor="middle" font-size="9" font-style="italic">too many props to pass</text></g>
+<g class="arrow-pill"><rect x="96" y="249" width="108" height="18" rx="9"/><text x="150" y="261.5" text-anchor="middle" font-size="9" font-style="italic">many update kinds</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> start at the top and move down only when you must. <b>Local state</b> is cheapest and the simplest. When two siblings need it, <b>lift it</b> to their nearest common parent. When passing props becomes too painful, use <b>context</b>. When many different actions update it, put the update logic in a <b>reducer</b> and share state and dispatch through context. Every step down costs more complexity and a wider re-render.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 Context rules that save you</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rule</th><th scope="col">Why</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row">Readers re-render when the value changes (<span class="kw">Object.is</span>)</th><td>Everything that calls <span class="kw">useContext</span> for it renders again</td><td>Cart change renders Cart and CartBadge</td></tr><tr><th scope="row"><span class="kw">memo</span> does not block context updates</th><td>A memoized component still re-renders when a context it reads changes</td><td>Memoized card reading the theme still renders on theme change</td></tr><tr><th scope="row">A value created inline is new every render</th><td>An object or function in <span class="kw">value={…}</span> changes each time the provider renders</td><td>Wrap with <span class="kw">useMemo</span> / <span class="kw">useCallback</span></td></tr><tr><th scope="row">Split by how often things change</th><td>Unrelated data in one value forces unrelated renders</td><td>CartContext vs ThemeContext</td></tr><tr><th scope="row">Separate state and dispatch contexts</th><td><span class="kw">dispatch</span> has a stable identity, so components that only dispatch need not re-render when state changes</td><td>CartStateContext + CartDispatchContext</td></tr><tr><th scope="row">Prefer local state; do not lift further than necessary</th><td>Lifted state widens the re-render and the coupling</td><td>Keep search text near the search box</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Context lab · split the big context</div>
+    <p>ShopUI before: one <span class="kw">AppContext</span> holds <span class="kw">cart</span> and <span class="kw">theme</span>. Click “Add to cart”.</p>    <div class="code-block"><pre><span class="cmt">// Before — one value, rebuilt whenever cart or theme changes</span>
+&lt;AppContext.Provider value={{ cart, theme, dispatch }}&gt;
+
+<span class="cmt">// After — split by what changes together; dispatch is stable</span>
+&lt;CartStateContext.Provider value={cart}&gt;
+  &lt;CartDispatchContext.Provider value={dispatch}&gt;
+    &lt;ThemeContext.Provider value={theme}&gt;{children}&lt;/ThemeContext.Provider&gt;
+  &lt;/CartDispatchContext.Provider&gt;
+&lt;/CartStateContext.Provider&gt;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. “children” passed from outside stays the same JSX element, so the provider’s state change does not re-render them by itself (page 2).</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Version</th><th scope="col">Readers re-rendered by “Add to cart”</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">One big context</th><td>502 (Cart, CartBadge and 500 cards)</td><td>The value is a new object; every reader renders</td></tr><tr><th scope="row">Split contexts</th><td>2 (Cart, CartBadge)</td><td>Only CartStateContext changed; cards read ThemeContext</td></tr><tr><th scope="row">Add-to-cart button reads only dispatch</th><td>0 re-renders for that button</td><td><span class="kw">dispatch</span> never changes</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · state-architecture symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">The whole app re-renders when one setting changes</th><td>One huge context value</td><td>Split contexts by change frequency</td></tr><tr><th scope="row">memo has no effect on a component</th><td>It reads a context that keeps changing</td><td>Split the context, or read it in a parent and pass a prop to a memoized child</td></tr><tr><th scope="row">Provider re-renders all consumers on every parent render</th><td>Inline object in <span class="kw">value</span></td><td><span class="kw">useMemo</span> the value (and <span class="kw">useCallback</span> the functions)</td></tr><tr><th scope="row">Ten components pass the same props along</th><td>Prop drilling</td><td>Context, or restructure with <span class="kw">children</span></td></tr><tr><th scope="row">Two components show different versions of the same data</th><td>Duplicated state</td><td>One owner per piece of state; derive the rest</td></tr><tr><th scope="row">Updates are scattered across many handlers</th><td>Update logic spread out</td><td>A reducer: one function that decides how state changes</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Cart badge, cart page and checkout all need the cart</h5><p>Shared by distant components.</p><span class="sc-use">→ Context (state + dispatch split)</span></div>
+      <div class="scenario"><span class="sc-icon">🌗</span><h5>Theme toggle repaints the whole app slowly</h5><p>Everything reads the theme.</p><span class="sc-use">→ Keep theme in its own context; keep it small</span></div>
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Search text read by the box and the list only</h5><p>Siblings share it.</p><span class="sc-use">→ Lift to their nearest common parent</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Checkout has 12 fields and many rules</h5><p>Scattered handlers.</p><span class="sc-use">→ useReducer for the form</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Reducer.</b> A reducer is a function <span class="kw">(state, action) =&gt; newState</span>. Components send actions with <span class="kw">dispatch</span>; the reducer is the one place that decides how state changes, which makes it easy to test and read.</p>
+      <p><b>Splitting a context inside a component.</b> If one component needs only part of a context, it can read the context in an outer component and pass that part as a prop to a memoized inner component.</p>
+      <p><b>External stores.</b> Libraries outside React (Redux, Zustand, and others) are a further option when shared state grows; they are outside this lab’s scope, and the same “who reads what” thinking applies.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Own each piece of state in one place; keep it low; lift it to the nearest common parent when siblings share it.</li><li>Context removes prop drilling but re-renders every reader when the value changes.</li><li>memo does not stop a component re-rendering for a context it reads.</li><li>Inline objects/functions in a provider value re-render all consumers on every provider render.</li><li>Split contexts by change frequency; keep state and dispatch in separate contexts.</li><li>A reducer centralises update logic; <span class="kw">dispatch</span> has a stable identity.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I keep state local, lift it to the nearest common parent, and use context only for state that many distant components read. Because every reader re-renders when a context value changes and memo doesn’t prevent that, I split contexts by how often they change, keep the value stable, and put state and dispatch in separate contexts, with a reducer when updates get complicated."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>One giant “AppContext”.</b> Every setting change re-renders every consumer in the app.</p>
+      <p><b>Assuming memo shields you from context.</b> It does not.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧱 Props</h5><p>Explicit, visible, easy to trace; verbose when drilled through many layers.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌐 Context</h5><p>Implicit sharing to any depth; every reader re-renders on change.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>State has a home. Much of it comes from a server, though — which brings loading and error states. Next: data fetching, Suspense and transitions. <i>(coming soon: Data fetching, Suspense & transitions)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 React’s documentation changes between versions; check the version you use. Official docs: <a href="https://react.dev/learn/passing-data-deeply-with-context" target="_blank" rel="noopener">Passing Data Deeply with Context</a> · <a href="https://react.dev/learn/scaling-up-with-reducer-and-context" target="_blank" rel="noopener">Scaling Up with Reducer and Context</a> · <a href="https://react.dev/reference/react/useContext" target="_blank" rel="noopener">useContext</a> · <a href="https://react.dev/learn/sharing-state-between-components" target="_blank" rel="noopener">Sharing State Between Components</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

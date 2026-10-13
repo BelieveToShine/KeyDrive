@@ -2838,5 +2838,31 @@
     "summary": "The classic mistake with The React debugging playbook.",
     "keywords": "react debugging playbook performance triage profiler one change at a time measure prove trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-context-state-architecture",
+    "title": "Context, reducers & where state lives",
+    "category": "React",
+    "page": "react/concepts/context-state-architecture.html",
+    "summary": "Where state should live: local, lifted, context, reducer; the context re-render rule and splitting contexts.",
+    "keywords": "react context useContext useReducer reducer provider prop drilling state management lift state up re-render split context"
+  },
+  {
+    "id": "react-context-state-architecture-recall",
+    "title": "Context, reducers & where state lives — interview recall",
+    "category": "React",
+    "page": "react/concepts/context-state-architecture.html",
+    "summary": "Quick recall points: Context, reducers & where state lives.",
+    "keywords": "react context useContext useReducer reducer provider prop drilling state management lift state up re-render split context interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-context-state-architecture-trap",
+    "title": "Context, reducers & where state lives — common trap",
+    "category": "React",
+    "page": "react/concepts/context-state-architecture.html",
+    "summary": "The classic mistake with Context, reducers & where state lives.",
+    "keywords": "react context useContext useReducer reducer provider prop drilling state management lift state up re-render split context trap mistake",
+    "anchor": "trap"
   }
 ]

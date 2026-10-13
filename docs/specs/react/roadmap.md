@@ -8,7 +8,7 @@
 | 5 | Measure first: the React Profiler | profiler | ✅ written |
 | 6 | memo, useMemo, useCallback & the Compiler | memoization | ✅ written |
 | 7 | The React debugging playbook | react-debugging-playbook | ✅ written |
-| 8 | Context, reducers & where state lives | context-state-architecture | 🔒 planned |
+| 8 | Context, reducers & where state lives | context-state-architecture | ✅ written |
 | 9 | Data fetching, Suspense & transitions | data-fetching-suspense | 🔒 planned |
 | 10 | Server rendering, hydration & Server Components | server-rendering-hydration | 🔒 planned |
 | 11 | Code splitting & bundle weight | code-splitting-bundles | 🔒 planned |

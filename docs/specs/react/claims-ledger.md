@@ -91,5 +91,19 @@ Source root: https://react.dev/
 | Playbook numbers: 40 ms, 35 ms, 4 renders, ≈ 3 ms, “memo −36 ms”, “0 ms” per change | 🟦 I | teaching numbers consistent with overview.md |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 8 — context & state architecture
+| Claim | Status | Note |
+|---|---|---|
+| React re-renders all children that use a context, starting from the provider that receives a different value; old and new values compared with Object.is | ✅ V | reference/react/useContext |
+| memo does not prevent children receiving fresh context values | ✅ V | reference/react/useContext / memo |
+| An object or function created during render in a provider value is new each time; wrap with useMemo/useCallback | ✅ V | reference/react/useContext |
+| To re-render only when part of a context changes, read it in an outer component and pass the part as a prop to a memoized child | ✅ V | reference/react/memo |
+| Lift state to the nearest common parent; single source of truth; prefer local state, do not lift further than necessary; prop drilling is a reason to consider context | ✅ V | learn/sharing-state-between-components; memo tips |
+| Context + reducer pattern with separate state and dispatch contexts | ✅ V | learn/scaling-up-with-reducer-and-context |
+| dispatch (useReducer) and set functions (useState) have a stable identity | ✅ V | reference/react/useReducer, useState |
+| Redux / Zustand named as libraries outside this lab's scope | 🟨 K | only a mention; not documented on react.dev |
+| 502 vs 2 readers; 500 cards, cart/theme example | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.
