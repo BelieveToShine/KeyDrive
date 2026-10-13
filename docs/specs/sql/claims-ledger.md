@@ -226,6 +226,29 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | PostgreSQL declarative partitioning and partition pruning | 🟨 K | other-engine pointer |
 | “90 seconds”, years 2023–2026 (partition labels), order id 1003, 500 M rows, 50 GB, 6,100,000 / 1,500,000 / 260,000 / 65,000 pages, 90 / 25 / 22 / 5 s, 120M rows | 🟦 I | teaching arithmetic: 50 GB ÷ 8 KB ≈ 6.1 M pages; ¼ for one year; ×2/5 ÷10 for columnstore |
 
+## Page 15 — Azure SQL specifics
+| Claim | Status | Note |
+|---|---|---|
+| Resource governance: limits per tier on CPU, data I/O, log rate, workers/sessions, memory; delays when log rate is exceeded | ✅ V | Resource management in Azure SQL Database |
+| Log-rate wait types LOG_RATE_GOVERNOR / POOL_LOG_RATE_GOVERNOR / INSTANCE_LOG_RATE_GOVERNOR and HADR_THROTTLE_*; delay applied while log is generated | ✅ V | same |
+| `sys.dm_db_resource_stats`: one row per “15 seconds”, about “1 hour” of history; columns avg_cpu_percent, avg_log_write_percent, max_worker_percent; percentages are of the tier limit (pool limit for pooled databases); `sys.resource_stats` for longer history; not in Managed Instance (use `sys.server_resource_stats`) | ✅ V | sys.dm_db_resource_stats doc |
+| Keep avg log write below ~90%; occasional spikes to 100% acceptable; near 100% modifications slow down | ✅ V | same / resource limits |
+| `avg_data_io_percent` column name | 🟨 K | exists in the view; confirm |
+| DTU = bundled compute/storage/IO; vCore = separate; only vCore has Serverless, Hyperscale options, Azure Hybrid Benefit | ✅ V | Purchasing models |
+| Roughly 1 vCore ≈ 100–125 DTU; `sys.dm_user_db_resource_governance` | ✅ V | Migrate DTU→vCore / resource limits |
+| Basic/Standard → General Purpose, Premium → Business Critical; Hyperscale possible from any DTU tier | ✅ V | Migrate DTU→vCore |
+| Latency: General Purpose Gen5 read 5–10 ms, write ~5–7 ms; Business Critical 1–2 ms; Hyperscale 1–2 ms for frequently accessed data | ✅ V | vCore resource-limits tables (figures change — page says “per the docs’ tables”) |
+| Business Critical includes 3 extra HA replicas; ≈ 2.7× General Purpose cost | ✅ V | vCore model page (price ratio may change) |
+| Hyperscale: HA replicas 0–4 (read via ApplicationIntent=ReadOnly), named replicas up to 30 with own compute, not failover targets, geo-replicas; slow named replica makes the primary slow its log generation | ✅ V | Hyperscale secondary replicas |
+| Serverless: first connection to a paused database fails with 40613 and retry succeeds; resume usually < 1 minute; GP auto-pause delay min “15 minutes”, default 60; open sessions and some features block auto-pause; pay for storage only while paused | ✅ V | Serverless overview / auto-pause docs |
+| Automatic tuning options and defaults; Managed Instance supports force-last-good-plan only | ✅ V | Automatic tuning overview |
+| Query Performance Insight: portal → Intelligent Performance; top five CPU queries by default; shows only top 5–20; use database watcher for wider coverage | ✅ V | QPI doc |
+| IQP: batch-mode adaptive joins and batch-mode memory grant feedback at compat 140; row-mode feedback at 150; PSP at 160; scoped switches BATCH_MODE_ON_ROWSTORE and DEFERRED_COMPILATION_TV default ON | ✅ V | IQP pages / scoped configuration |
+| Changing compatibility level can change plans; check Query Store | 🟨 K | consequence of the above; widely documented |
+| Workers high → pool/queue connections | 🟨 K | remediation advice, general |
+| AWS RDS/Aurora and Azure PostgreSQL meter resources per instance size | 🟨 K | other-engine pointer |
+| Gauge percentages (62%, 99%, 35%, 48%), nightly import “40 minutes” → “12 minutes”, CPU 30% | 🟦 I | teaching numbers |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

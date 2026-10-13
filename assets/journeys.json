@@ -249,7 +249,8 @@
       "debugging-playbook",
       "locking-isolation",
       "index-maintenance-cost",
-      "partitioning-columnstore"
+      "partitioning-columnstore",
+      "azure-sql-specifics"
     ],
     "sub": {},
     "subTitles": {}

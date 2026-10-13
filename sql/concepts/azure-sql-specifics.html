@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure SQL specifics — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Azure SQL specifics</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 15 of 16 · 🏗️ Beyond one query</div>
+    <h1>On Azure SQL, check <span class="grad-text">the tier’s limits</span> before you blame the query.</h1>
+    <p class="sub">Resource governance, the tiers and purchasing models, serverless cold starts, automatic tuning, Query Performance Insight, Intelligent Query Processing and read replicas.</p>
+    <div class="interview-q">❓ "A query is slow in Azure SQL Database. How do you tell whether it is the query or the service tier?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Resource governance in Azure SQL Database: each resource has a ceiling set by the service tier; when a gauge reaches 100 percent the service slows the workload on purpose">
+<defs><marker id="az1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="az1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="az1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="620" height="260" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">ONE DATABASE · usage as % of its tier’s limit (illustrative)</text>
+<text class="free" x="26" y="66" text-anchor="start" font-size="11" font-weight="600" fill="#93a0b8">CPU</text>
+<rect x="190" y="52" width="300" height="22" rx="6" fill="#171c28" stroke="#2d364a"/>
+<rect x="190" y="52" width="186" height="22" rx="6" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<text class="free" x="500" y="67" text-anchor="start" font-size="8.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">avg_cpu_percent</text>
+<text class="free" x="26" y="118" text-anchor="start" font-size="11" font-weight="600" fill="#93a0b8">Log write rate</text>
+<rect x="190" y="104" width="300" height="22" rx="6" fill="#171c28" stroke="#2d364a"/>
+<rect x="190" y="104" width="297" height="22" rx="6" fill="#fb7185" fill-opacity=".45" stroke="#fb7185"/>
+<text class="free" x="500" y="119" text-anchor="start" font-size="8.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">avg_log_write_percent</text>
+<text class="free" x="26" y="170" text-anchor="start" font-size="11" font-weight="600" fill="#93a0b8">Concurrent workers</text>
+<rect x="190" y="156" width="300" height="22" rx="6" fill="#171c28" stroke="#2d364a"/>
+<rect x="190" y="156" width="105" height="22" rx="6" fill="#34d399" fill-opacity=".45" stroke="#34d399"/>
+<text class="free" x="500" y="171" text-anchor="start" font-size="8.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">max_worker_percent</text>
+<text class="free" x="26" y="222" text-anchor="start" font-size="11" font-weight="600" fill="#93a0b8">Data I/O</text>
+<rect x="190" y="208" width="300" height="22" rx="6" fill="#171c28" stroke="#2d364a"/>
+<rect x="190" y="208" width="144" height="22" rx="6" fill="#fbbf24" fill-opacity=".45" stroke="#fbbf24"/>
+<text class="free" x="500" y="223" text-anchor="start" font-size="8.5" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">avg_data_io_percent</text>
+<line x1="490" y1="44" x2="490" y2="250" stroke="#fb7185" stroke-dasharray="4 3"/>
+<text class="free" x="490" y="262" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">100% = the tier’s limit</text>
+<rect class="bx" x="90" y="282" width="460" height="32" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="302" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Near 100%: the service slows you down on purpose — not a bad plan</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> in Azure SQL Database every resource has a <b>ceiling that depends on the service tier</b> — CPU, log write rate, concurrent workers, data I/O. The gauges are percentages of those ceilings. Most of the time they sit comfortably low. When one reaches 100% (here the <b>log write rate</b>), the service <b>slows the workload on purpose</b>. Nothing is wrong with the plan; the query is simply asking for more than the tier allows.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Azure SQL adds one more suspect to every investigation: <b>the tier’s limits</b>. Check the resource percentages <i>before</i> you blame — or buy your way out of — a query.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Pages 1–14 treated the database as one unlimited machine and asked: is the work reasonable? On a managed cloud database that is only half the question. The service gives you a <b>slice</b> of a machine, with hard ceilings and with helper features that a plain SQL Server does not have.</p>
+      <p>Two mistakes follow. <b>Scaling up too early</b> pays more to run the same bad plan. <b>Tuning forever</b> when the tier is simply too small wastes weeks. The method is the same as page 11 — measure first — with one extra measurement.</p>
+      <p>This page covers: how to read the limits, which tier does what, the built-in helpers (automatic tuning, Query Store, Intelligent Query Processing), and how to offload reads.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📏 Is it the query or the tier?</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Is it the query or the tier: check resource percentages first; if none is near the limit it is a query problem, otherwise decide between tuning the heavy queries and scaling">
+<defs><marker id="az2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="az2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="az2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,48 L320,100" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#az2A)"/>
+<path d="M185,123 L95,123 L95,214" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#az2A)"/>
+<path d="M455,123 L530,123 L530,214" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#az2A)"/>
+<path d="M295,270 L295,336" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#az2A)"/>
+<path d="M435,270 L435,336" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#az2A)"/>
+<path d="M570,270 L570,336" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#az2A)"/>
+<rect class="bx" x="220" y="8" width="200" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="32" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🐢 Slow in Azure SQL</text>
+<rect class="bx" x="185" y="100" width="270" height="46" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="121" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Any resource near 100%?</text>
+<text x="320" y="133" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sys.dm_db_resource_stats</text>
+<rect class="bx" x="10" y="214" width="170" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="95" y="240.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Query problem</text>
+<text x="95" y="253" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">use the ladder</text>
+<text x="95" y="265.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">(pages 1–11)</text>
+<rect class="bx" x="230" y="214" width="400" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="430" y="239.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Which one?</text>
+<text x="430" y="252.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">CPU · log write · workers · data I/O</text>
+<rect class="bx" x="230" y="336" width="130" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="295" y="360.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">CPU high</text>
+<text x="295" y="373.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">tune heavy queries</text>
+<rect class="bx" x="375" y="336" width="120" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="435" y="360.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Log ~100%</text>
+<text x="435" y="373.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">batch, then scale</text>
+<rect class="bx" x="510" y="336" width="120" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="570" y="360.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Workers high</text>
+<text x="570" y="373.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">queue / pool</text>
+<g class="arrow-pill"><rect x="282" y="65" width="76" height="18" rx="9"/><text x="320" y="77.5" text-anchor="middle" font-size="9" font-style="italic">check first</text></g>
+<g class="arrow-pill"><rect x="80.5" y="159" width="29" height="18" rx="9"/><text x="95" y="171.5" text-anchor="middle" font-size="9" font-style="italic">no</text></g>
+<g class="arrow-pill"><rect x="513" y="159" width="34" height="18" rx="9"/><text x="530" y="171.5" text-anchor="middle" font-size="9" font-style="italic">yes</text></g>
+<g class="arrow-pill"><rect x="278" y="294" width="34" height="18" rx="9"/><text x="295" y="306.5" text-anchor="middle" font-size="9" font-style="italic">CPU</text></g>
+<g class="arrow-pill"><rect x="418" y="294" width="34" height="18" rx="9"/><text x="435" y="306.5" text-anchor="middle" font-size="9" font-style="italic">log</text></g>
+<g class="arrow-pill"><rect x="542.5" y="294" width="55" height="18" rx="9"/><text x="570" y="306.5" text-anchor="middle" font-size="9" font-style="italic">workers</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> start with one cheap query against <code>sys.dm_db_resource_stats</code>. If <b>no resource is near its limit</b>, the problem is the query — use the ladder from page 11. If one is, name it: <b>CPU</b> (tune the heaviest queries first; scale only if they are already reasonable), <b>log write</b> (bulk loads and big modifications are throttled — smaller batches, then more tier), <b>workers</b> (too many concurrent requests — queue or pool them).</figcaption>
+</figure>
+    <div class="code-block"><pre><span class="cmt">-- the last hour, one row per 15 seconds</span>
+<span class="kw">SELECT</span> <span class="kw">AVG</span>(avg_cpu_percent)       <span class="kw">AS</span> avg_cpu,
+       <span class="kw">MAX</span>(avg_cpu_percent)       <span class="kw">AS</span> max_cpu,
+       <span class="kw">AVG</span>(avg_log_write_percent) <span class="kw">AS</span> avg_log_write,
+       <span class="kw">MAX</span>(max_worker_percent)    <span class="kw">AS</span> max_workers
+<span class="kw">FROM</span>   sys.dm_db_resource_stats;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The view keeps roughly one hour of history (one row every 15 seconds); sys.resource_stats holds longer history. Microsoft’s rule of thumb: keep averages below about 90% and treat occasional short spikes to 100% as fine; if samples sit at 100% often, the tier does not fit. Managed Instance uses sys.server_resource_stats instead.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 Which tier does what</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#22d3ee"><h4>🟦 General Purpose (vCore)</h4><span class="pk-tag">balanced; remote storage</span><span class="pk-label use">✅ Pick it when</span><ul><li>Most business workloads</li><li>Read latency about 5–10 ms, write about 5–7 ms (per the docs’ tables)</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>I/O-heavy workloads that need low latency → Business Critical or Hyperscale</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>⚡ Business Critical</h4><span class="pk-tag">local SSD, built-in replicas</span><span class="pk-label use">✅ Pick it when</span><ul><li>Low-latency I/O (about 1–2 ms on average)</li><li>Includes additional high-availability replicas that can serve reads</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Cost: roughly 2.7× General Purpose in the docs’ comparison — check current prices</li></ul></div>
+      <div class="pick-card" style="--pick:#34d399"><h4>🚀 Hyperscale</h4><span class="pk-tag">very large databases, scale-out reads</span><span class="pk-label use">✅ Pick it when</span><ul><li>Databases that outgrow other tiers</li><li>Up to 4 HA replicas and up to 30 named replicas for reads</li><li>Latency about 1–2 ms for the frequently accessed part of the data</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Named replicas that cannot keep up with the log make the primary slow its log generation</li></ul></div>
+      <div class="pick-card" style="--pick:#fbbf24"><h4>💤 Serverless (vCore, General Purpose)</h4><span class="pk-tag">auto-scales; can pause when idle</span><span class="pk-label use">✅ Pick it when</span><ul><li>Spiky or idle workloads</li><li>You pay for storage while it is paused</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>The first connection to a paused database fails (error 40613) while it resumes — your app needs retry logic</li><li>Open sessions and several features (geo-replication, failover groups, LTR…) block auto-pause</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🛒 DTU or vCore?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">DTU model</th><th scope="col">vCore model</th></tr></thead><tbody><tr><th scope="row">What you buy</th><td>A bundled measure of compute, storage and I/O</td><td>Compute and storage chosen separately</td></tr><tr><th scope="row">Serverless, Hyperscale, Azure Hybrid Benefit</th><td>Not available</td><td>Available</td></tr><tr><th scope="row">Rough sizing</th><td>—</td><td>About 1 vCore ≈ 100–125 DTU (approximate; compare actual limits in <code>sys.dm_user_db_resource_governance</code>)</td></tr><tr><th scope="row">Migration mapping</th><td>Basic and Standard → General Purpose; Premium → Business Critical</td><td>Hyperscale is often a possible target from any DTU tier</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪄 Built-in helpers you should know</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">AUTOMATIC TUNING</span><h4>🤖 Force last good plan</h4><p>On by default. Detects a regression and pins the last good plan. Needs Query Store. CREATE and DROP INDEX options exist but are off by default.</p></div>
+      <div class="how-step"><span class="hs-n">QUERY PERFORMANCE INSIGHT</span><h4>📊 Top queries in the portal</h4><p>Shows the top CPU, duration and execution-count queries; starts with the top five CPU consumers. Covers only the top 5–20 queries.</p></div>
+      <div class="how-step"><span class="hs-n">QUERY STORE</span><h4>🗄️ History and plan forcing</h4><p>Page 10. Check it is on — do not assume.</p></div>
+      <div class="how-step"><span class="hs-n">INTELLIGENT QP</span><h4>🧠 Smarter execution</h4><p>Adaptive joins, memory-grant feedback, deferred compilation for table variables… available according to the <b>database compatibility level</b>.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 Intelligent Query Processing — what you get at which compatibility level</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Feature</th><th scope="col">What it does</th><th scope="col">Needs</th></tr></thead><tbody><tr><th scope="row">Batch mode adaptive joins</th><td>Defers the hash vs nested-loops choice until the first input has been read (page 6)</td><td>Compatibility level 140+</td></tr><tr><th scope="row">Batch mode memory grant feedback</th><td>If a batch-mode query spilled, gives it more memory on the next runs (page 6)</td><td>140+</td></tr><tr><th scope="row">Row mode memory grant feedback</th><td>Same idea for row-mode queries</td><td>150+</td></tr><tr><th scope="row">Parameter sensitive plan optimization</th><td>Several active plans for one parameterized statement (page 9)</td><td>160</td></tr><tr><th scope="row">Batch mode on rowstore, deferred compilation for table variables</th><td>Controlled by database-scoped switches (default ON)</td><td>Version / level dependent</td></tr></tbody></table></div>
+    <p style="margin-top:12px">Practical consequence: <b>changing the compatibility level can change plans</b> — check Query Store for regressions after you do.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · “it’s not the query — it’s the tier”</div>
+    <p>The nightly import of 5 million order lines takes about 40 minutes. The plan is a plain bulk insert — nothing to tune. (Numbers illustrative.)</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rung</th><th scope="col">What you do</th><th scope="col">What you see</th><th scope="col">Decision</th></tr></thead><tbody><tr><th scope="row">1 · Measure</th><td>STATISTICS TIME + resource stats during the import</td><td>CPU 30% · elapsed ≫ CPU · avg_log_write_percent ≈ 100%</td><td>Waiting, and the log write rate is at the ceiling</td></tr><tr><th scope="row">2 · Read</th><td>Wait types for the session</td><td>Log-rate-governor waits (such as LOG_RATE_GOVERNOR)</td><td>Write throttling by resource governance</td></tr><tr><th scope="row">3 · Find</th><td>Compare with the tier’s log-rate limit</td><td>Import produces log faster than the tier allows</td><td>Not a plan problem</td></tr><tr><th scope="row">4 · Guess</th><td>Smaller, moderately sized batches; or more log throughput</td><td>—</td><td>Hypothesis: a higher tier (or better batching) removes the ceiling</td></tr><tr><th scope="row">5 · Change</th><td>Move one step up the tier for the import window</td><td>—</td><td>One change</td></tr><tr><th scope="row">6 · Prove</th><td>Same import, same data</td><td>≈ 12 minutes; avg_log_write_percent no longer pinned</td><td>Keep the tier, or scale up only for the nightly window</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · Azure SQL symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">CPU sustained near 100% across many queries</th><td>Tier too small for the workload (after tuning the heavy queries)</td><td>Find top CPU queries (QPI / Query Store), tune them; then scale</td></tr><tr><th scope="row">Bulk loads slow, CPU and IOPS normal</th><td>Log write rate governed</td><td>Moderately sized batches; a tier with higher log rate</td></tr><tr><th scope="row">Requests failing or queueing when many users connect</th><td>Worker limit reached</td><td>Pool/queue connections; reduce concurrency</td></tr><tr><th scope="row">First request after idle fails with error 40613 (serverless)</th><td>The database was paused and is resuming</td><td>Retry with backoff (the docs: resume usually takes under a minute)</td></tr><tr><th scope="row">Plans changed after changing compatibility level</th><td>Different optimizer/IQP behaviour</td><td>Compare in Query Store; force the last good plan if needed</td></tr><tr><th scope="row">Reporting queries slow the primary</th><td>Reads and writes share one compute</td><td>Send read-only work to a replica (ApplicationIntent=ReadOnly)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🌙</span><h5>Nightly import throttled</h5><p>CPU is fine; the log write gauge is pinned.</p><span class="sc-use">→ Batching or a higher tier for the window</span></div>
+      <div class="scenario"><span class="sc-icon">💤</span><h5>Dev database on serverless</h5><p>The first morning request times out, the rest are fast.</p><span class="sc-use">→ Retry logic; accept the resume</span></div>
+      <div class="scenario"><span class="sc-icon">📊</span><h5>Dashboards slow the order system</h5><p>Heavy reads on the primary.</p><span class="sc-use">→ Read replica / named replica</span></div>
+      <div class="scenario"><span class="sc-icon">🔼</span><h5>Upgraded compatibility level, one query regressed</h5><p>Optimizer behaviour changed.</p><span class="sc-use">→ Query Store → force last good plan</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Wait types for governance.</b> <code>LOG_RATE_GOVERNOR</code> (database), <code>POOL_LOG_RATE_GOVERNOR</code> (elastic pool), <code>INSTANCE_LOG_RATE_GOVERNOR</code> (instance), plus several <code>HADR_THROTTLE_*</code> waits for replication feedback. The delay is applied while log is generated, not when it is flushed.</p>
+      <p><b>Elastic pools.</b> Databases in a pool share its limits; the percentages in resource views are relative to the pool configuration.</p>
+      <p><b>Hyperscale replicas.</b> HA replicas (0 to 4) are failover targets and can serve reads with <code>ApplicationIntent=ReadOnly</code>; named replicas (up to 30) have their own compute size and cannot be failover targets; geo-replicas live in another region.</p>
+      <p><b>Serverless pause rules.</b> General Purpose serverless auto-pause delay: minimum 15 minutes, default 60; resume typically takes under a minute. Retry settings in drivers matter — a single immediate retry will not outlast a resume.</p>
+      <p><b>Managed Instance</b> supports automatic tuning’s force-last-good-plan option only.</p>
+      <p><b>Other engines:</b> every managed cloud database has the same idea — AWS RDS/Aurora and Azure Database for PostgreSQL also meter CPU, I/O and connections per instance size; check the provider’s metrics before tuning.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Azure SQL resources have tier-dependent ceilings (CPU, log rate, workers, data I/O). At 100% the service throttles.</li><li>First check: sys.dm_db_resource_stats (≈1 hour, 15-s rows). Averages under ~90% are healthy; short spikes to 100% are fine.</li><li>Tiers: General Purpose (remote storage), Business Critical (local SSD, ~1–2 ms), Hyperscale (very large, scale-out reads), Serverless (auto-pause, error 40613 on resume).</li><li>vCore model offers serverless, Hyperscale and Hybrid Benefit; DTU bundles resources.</li><li>Automatic tuning: force last good plan on by default; create/drop index off by default. Needs Query Store.</li><li>IQP features depend on compatibility level; changing it can change plans.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"In Azure SQL Database I add one question to my method: is a resource near its tier limit? I check sys.dm_db_resource_stats for CPU, log write, workers and data I/O. If nothing is near the ceiling it is a query problem and I follow the usual ladder; if log write or CPU is pinned I tune the heaviest queries first and scale the tier only when they are reasonable. I also rely on Query Store with automatic force-last-good-plan, and I remember that serverless needs retry logic on resume."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Scaling up to fix a bad plan.</b> You pay more to run the same plan and, if the cause is blocking or a spill, nothing improves.</p>
+      <p><b>Assuming a tier change is free of side effects.</b> A different tier changes limits and latency; a different compatibility level changes the optimizer. Re-measure after either.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🔍 Query problem</h5><p>No resource near its limit. The plan, estimates or indexes are the suspect — use the ladder.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📏 Tier problem</h5><p>A gauge is pinned near 100%. The service is throttling — tune the heaviest consumers or scale.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>You now have every tool: plans, indexes, statistics, joins, sargability, sniffing, measurement, method, locking, index cost, big-data layouts and the cloud ceilings. The last page lets you practise them all. Next: the slow-query clinic <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Limits, tiers and defaults change often. For current numbers check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/resource-limits-logical-server" target="_blank" rel="noopener">Resource management in Azure SQL Database</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-objects/sys-dm-db-resource-stats-azure-sql-database" target="_blank" rel="noopener">sys.dm_db_resource_stats</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/query-performance-insight-use" target="_blank" rel="noopener">Query Performance Insight</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/intelligent-query-processing" target="_blank" rel="noopener">Intelligent query processing</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/serverless-tier-overview" target="_blank" rel="noopener">Serverless compute tier</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tier-hyperscale-replicas" target="_blank" rel="noopener">Hyperscale secondary replicas</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/purchasing-models" target="_blank" rel="noopener">Purchasing models</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -2266,5 +2266,31 @@
     "summary": "The classic mistake with Big-data reads: partitioning & columnstore.",
     "keywords": "sql columnstore partitioning partition elimination batch mode rowgroup segment deltastore switch data warehouse analytics clustered columnstore trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "sql-azure-sql-specifics",
+    "title": "Azure SQL specifics",
+    "category": "SQL",
+    "page": "sql/concepts/azure-sql-specifics.html",
+    "summary": "Resource governance and tier limits, sys.dm_db_resource_stats, tiers and serverless cold starts, automatic tuning, Query Performance Insight, Intelligent Query Processing and read replicas.",
+    "keywords": "azure sql database tier limits resource governance dtu vcore serverless hyperscale business critical automatic tuning query performance insight intelligent query processing compatibility level log rate"
+  },
+  {
+    "id": "sql-azure-sql-specifics-recall",
+    "title": "Azure SQL specifics — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/azure-sql-specifics.html",
+    "summary": "Quick recall points: Azure SQL specifics.",
+    "keywords": "azure sql database tier limits resource governance dtu vcore serverless hyperscale business critical automatic tuning query performance insight intelligent query processing compatibility level log rate interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-azure-sql-specifics-trap",
+    "title": "Azure SQL specifics — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/azure-sql-specifics.html",
+    "summary": "The classic mistake with Azure SQL specifics.",
+    "keywords": "azure sql database tier limits resource governance dtu vcore serverless hyperscale business critical automatic tuning query performance insight intelligent query processing compatibility level log rate trap mistake",
+    "anchor": "trap"
   }
 ]

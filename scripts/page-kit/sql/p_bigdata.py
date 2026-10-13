@@ -132,7 +132,7 @@ f'''{kw('CREATE CLUSTERED COLUMNSTORE INDEX')} CCI_Orders {kw('ON')} dbo.OrdersH
         '<b>Partitioning to “speed things up”.</b> Without a filter on the partitioning column nothing is skipped; you only added complexity.',
         '<b>Columnstore on an OLTP table.</b> Single-row updates and lookups are not what it is for — use a nonclustered columnstore beside the B-tree, or keep the workloads apart.'])
     body += confuse('🌲 Rowstore', 'Rows together. Fast to find and change one row; reads whole rows even when you need one column.', '🧱 Columnstore', 'Columns apart and compressed. Fast to scan and aggregate; slow for single-row work.')
-    body += next_box('Everything on these pages ran on “a SQL Server”. In Azure SQL the service has limits and helpers of its own. Next: Azure SQL specifics <i>(coming soon)</i>.')
+    body += next_box('Everything on these pages ran on “a SQL Server”. In Azure SQL the service has limits and helpers of its own. Next: Azure SQL specifics.', 'azure-sql-specifics.html', 'Azure SQL specifics')
     body += fact_note('Columnstore and partitioning features vary by version and service tier. For exact details check the official docs.', [DOC_CS, DOC_CSQ, DOC_CSD, DOC_PART])
     return page('partitioning-columnstore', 'Big-data reads: partitioning & columnstore', 'Concept 14 of 16 · 🏗️ Beyond one query',
         'To aggregate hundreds of millions of rows, <span class="grad-text">read less</span> — by column and by range.',
