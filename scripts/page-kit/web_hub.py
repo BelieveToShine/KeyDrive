@@ -3,6 +3,10 @@
 import json, re, subprocess, sys
 from pathlib import Path
 R = Path(__file__).resolve().parents[2]
+import glob as _g
+def _dv(lab, written):
+    n = len(_g.glob(str(R / lab / 'concepts/*.html'))) - written
+    return f'<span class="ct-dives">{n} deep dive{"s" if n != 1 else ""}</span>' if n > 0 else ''
 j = json.loads((R / 'assets/journeys.json').read_text())
 def cnt(c):
     e = j.get(c); return (len(e['written']), len(e['order'])) if e else (0, 12)
@@ -18,7 +22,7 @@ def card(lab, nn, nt, icon, name, rgb, text, label, soon_text):
         <span class="ribbon live">{ribbon(nn, nt)}</span><span class="glow"></span>
         <span class="ct-icon">{icon}</span><h3>{name}</h3>
         <p>{text}</p>
-        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{nn} / {nt}' + '</span>' if nn == nt else f'<span class="ct-dives">{nn} / {nt} concepts</span>'}</div><div class="progress"><i style="width:{pct(nn, nt)}%"></i></div><span class="dc-go">{label} →</span></div>
+        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{nn} / {nt}' + '</span>' if nn == nt else f'<span class="ct-dives">{nn} / {nt} concepts</span>'}{_dv(lab, nn)}</div><div class="progress"><i style="width:{pct(nn, nt)}%"></i></div><span class="dc-go">{label} →</span></div>
       </a>'''
     return f'''      <div class="kd-card cat-tile cloud-card soon">
         <span class="ribbon">Planned</span>
@@ -86,3 +90,5 @@ elif not soon:
 (R / 'index.html').write_text(h)
 subprocess.run([sys.executable, str(Path(__file__).resolve().parent / 'data_hub.py')], check=True)
 print(f'web hub: react {nr}/{ntr}, angular {na}/{nta}')
+import subprocess as _sp, sys as _sys
+_sp.run([_sys.executable, str(Path(__file__).resolve().parent / 'home_sync.py')], check=True)

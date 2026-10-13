@@ -65,3 +65,10 @@ User feedback while the React lab was half-built: *"useState, useContext, etc �
 - Rule: before building a lab, write a **coverage audit** in `docs/specs/<lab>/overview.md`: list every topic an interviewer or a new teammate would expect, and mark each as a main page, a deep dive (sub page), or consciously out of scope with a reason. Re-run the audit when half the main pages exist.
 - Sub pages ("deep dives") hang off the concept that needs them (`SUB` in `hubdata.py`); several per parent are fine. They follow the same page rhythm (picture, lab, checklist, scenarios, recall, trap) — reference pages get a **"what to use when" decision table** as their core.
 - Only claim what the framework's own docs say; for third-party tools (React Router, TanStack Query, NgRx, axios) say so, cite their own docs, and keep claims minimal.
+
+## L13 — Every number on the home page and hubs is generated, never typed (2026-10-13)
+User screenshot: home stat row said "17 deep dives", the Cloud tile said 16, Data and Web tiles showed "28 / 28 concepts" in a different style from AI/Cloud's "✓ n / n + k deep dives". Counts had drifted because each category updated only its own tile.
+- **Rule:** after ANY page is added, removed or a lab/category changes, run `python3 scripts/page-kit/home_sync.py`. It recomputes the stat row (concepts, deep dives, diagrams) and all four tiles from the files on disk + `assets/journeys.json`, in one identical format (`✓ n / n` + `k deep dives` + progress bar). `data_hub.py` and `web_hub.py` (called by every `lab_wire.py` / `wire_page.py`) already run it.
+- Deep dives = concept files beyond the main journey pages (the shared "Same app, two frameworks" page counts once). Never write a count by hand in `index.html`, a hub, or CLAUDE.md without re-deriving it.
+- A new category's tile must be added to `home_sync.py` (`G` and `hrefs`), and its hub card must show the same `✓ n / n` + deep-dive format.
+- Before reporting done: grep the home page numbers and compare with `ls <cat>/concepts | wc -l`.

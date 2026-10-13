@@ -4,6 +4,10 @@ Called by scripts/page-kit/sql/wire_page.py and scripts/page-kit/cosmos/wire_pag
 import json, re
 from pathlib import Path
 R = Path(__file__).resolve().parents[2]
+import glob as _g
+def _dv(lab, written):
+    n = len(_g.glob(str(R / lab / 'concepts/*.html'))) - written
+    return f'<span class="ct-dives">{n} deep dive{"s" if n != 1 else ""}</span>' if n > 0 else ''
 j = json.loads((R / 'assets/journeys.json').read_text())
 def cnt(c):
     e = j.get(c); return (len(e['written']), len(e['order'])) if e else (0, 0)
@@ -20,14 +24,14 @@ sql_card = f'''      <a class="kd-card cat-tile cloud-card" href="../sql/index.h
         <span class="ribbon live">{ribbon(ns, nts)}</span><span class="glow"></span>
         <span class="ct-icon">🔬</span><h3>SQL Performance Lab</h3>
         <p>From a query’s first parse to a slow-query clinic: pages and B-trees, indexes, execution plans, statistics, joins, covering indexes, sargable queries, plan cache and sniffing, Query Store, a debugging playbook, locking, index costs, columnstore and Azure SQL limits — each with a before-and-after plan and a debug checklist.</p>
-        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{ns} / {nts}' + '</span>' if ns == nts else f'<span class="ct-dives">{ns} / {nts} concepts</span>'}</div><div class="progress"><i style="width:{pct(ns, nts)}%"></i></div><span class="dc-go">Open the SQL lab →</span></div>
+        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{ns} / {nts}' + '</span>' if ns == nts else f'<span class="ct-dives">{ns} / {nts} concepts</span>'}{_dv('sql', ns)}</div><div class="progress"><i style="width:{pct(ns, nts)}%"></i></div><span class="dc-go">Open the SQL lab →</span></div>
       </a>'''
 if nc:
     cos_card = f'''      <a class="kd-card cat-tile cloud-card" href="../cosmos/index.html" style="border-color:rgba(34,211,238,.35)">
         <span class="ribbon live">{ribbon(nc, ntc)}</span><span class="glow"></span>
         <span class="ct-icon">🌌</span><h3>Cosmos DB Performance Lab</h3>
         <p>The same habit for a distributed NoSQL database: partition keys, request units, data modelling, indexing policy, point reads versus fan-out queries, query metrics, hot partitions and 429s, consistency, change feed and global distribution (NoSQL API).</p>
-        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{nc} / {ntc}' + '</span>' if nc == ntc else f'<span class="ct-dives">{nc} / {ntc} concepts</span>'}</div><div class="progress"><i style="width:{pct(nc, ntc)}%"></i></div><span class="dc-go">Open the Cosmos DB lab →</span></div>
+        <div class="ct-foot"><div class="ct-stats">{'<span class="ct-done">✓ ' + f'{nc} / {ntc}' + '</span>' if nc == ntc else f'<span class="ct-dives">{nc} / {ntc} concepts</span>'}{_dv('cosmos', nc)}</div><div class="progress"><i style="width:{pct(nc, ntc)}%"></i></div><span class="dc-go">Open the Cosmos DB lab →</span></div>
       </a>'''
 else:
     cos_card = '''      <div class="kd-card cat-tile cloud-card soon">
@@ -85,3 +89,5 @@ h = re.sub(r'(Data Systems</h3>\s*<p>)[^<]*(</p>)', r'\1Read execution plans, ta
 h = re.sub(r'<span class="ribbon live">(SQL lab live|SQL lab complete|SQL \+ Cosmos DB)</span>', '<span class="ribbon live">' + ('SQL + Cosmos DB' if nc else 'SQL lab live') + '</span>', h)
 (R / 'index.html').write_text(h)
 print(f'data hub: sql {ns}/{nts}, cosmos {nc}/{ntc}, total {tot}/{totmax}')
+import subprocess as _sp, sys as _sys
+_sp.run([_sys.executable, str(Path(__file__).resolve().parent / 'home_sync.py')], check=True)

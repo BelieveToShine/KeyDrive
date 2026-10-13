@@ -18,8 +18,8 @@ file first in any new session; it routes to everything else rather than trying t
   **Load Balancing & Traffic Routing**, **Scaling & Resilience** (+ Disaster Recovery), **Caching & Edge Delivery**, **Messaging & Events** (+ Service Bus, Event Hubs),
   **Serverless & Orchestration**, **Infrastructure as Code** and **CI/CD & Deployment Strategies**. **Secrets & Configuration**, **Security & Governance**, **Monitoring & Observability**, **Cost Management** and **Well-Architected & Landing Zones**. The Azure journey is complete; remaining work is user-driven corrections and the 🟨 K ledger rows.
   Facts are logged in `docs/specs/azure/claims-ledger.md` (✅ verified via Microsoft Learn searches / 🟨 still to verify).
-- **AWS** is complete: hub + **19 / 19 concepts written + 9 deep dives** (IAM Roles, VPC Endpoints, S3 in Depth, DynamoDB vs RDS and Aurora,
-  Disaster Recovery, SQS/SNS/EventBridge, Kinesis), written in one unattended session following `docs/rules/page-production-workflow.md`
+- **AWS** is complete: hub + **19 / 19 concepts written + 7 deep dives** (IAM Roles, VPC Endpoints, S3 in Depth, DynamoDB vs RDS and Aurora,
+  SQS/SNS/EventBridge, Kinesis; Disaster Recovery is a dive of Scaling & Resilience), written in one unattended session following `docs/rules/page-production-workflow.md`
   and `docs/rules/cloud-category-playbook.md`. **The user has not reviewed it yet** — expect corrections. Facts are in
   `docs/specs/aws/claims-ledger.md` (✅ V from AWS-docs-restricted searches; 🟨 K rows listed at the bottom still need checking).
 - **Data Systems** (`data/index.html`, hub above the SQL and Cosmos labs; plan in `docs/specs/data/`): the **SQL Performance Lab** (`sql/`, spec in `docs/specs/sql/`) is **complete: hub + 16 / 16 pages written** (query journey, pages & heaps, indexes, reading execution plans, statistics, join algorithms, covering indexes, sargable queries, plan cache & sniffing, measuring & Query Store, debugging playbook, locking & isolation, index costs & maintenance, partitioning & columnstore, Azure SQL specifics, slow-query clinic). Canonical ShopDB numbers: `docs/specs/sql/overview.md`. The **Cosmos DB Performance Lab** (`cosmos/`, spec in `docs/specs/cosmos/`) is **complete: hub + 12 / 12 pages + the deep dive "Same question, two engines"** (mental model, partition keys, request units, data modeling, indexing policy, point reads & fan-out, query metrics, hot partitions & 429s, consistency, change feed, global distribution, cost clinic). **The user has not reviewed the Data Systems pages yet.** Hubs: `scripts/page-kit/{sql,cosmos}/build_hub.py` (edit `WRITTEN`, re-run), per-page wiring `{sql,cosmos}/wire_page.py`, ledger `ledger_add.py`, Data Systems hub + home counts `scripts/page-kit/data_hub.py`, push helper `scripts/push3.sh`.
@@ -55,6 +55,8 @@ each concept exists), `roadmap.md` (written/planned status, updated the moment a
 `docs/specs/azure/` (also holds `claims-ledger.md`), `docs/specs/aws/`, `docs/specs/data/` (Data Systems plan), `docs/specs/sql/` and `docs/specs/cosmos/` exist.
 
 ## Scripts (run before reporting any page done)
+
+**Counts:** every number on the home page (stat row + 4 tiles) and on hubs is generated — after ANY page change run `python3 scripts/page-kit/home_sync.py` (lessons L13); never hand-type a count.
 
 `node scripts/check-site.js [category]` (wiring + claims cross-check) ·
 `node scripts/diagram-lint.js <baseUrl> <page…>` (SVG geometry) ·
