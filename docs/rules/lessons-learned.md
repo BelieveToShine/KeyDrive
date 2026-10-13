@@ -39,4 +39,10 @@ The goal: the same mistake never reaches the user twice, in any category or any 
 - Nowrap links (`.next-link`) overflow on narrow screens; allow wrapping.
 - A 640px-wide SVG map shrunk or scrolled sideways is not "mobile-ready". `site.js` now builds a vertical stepper (`.jm-steps`) from the hub SVG itself (nodes, pills, group boxes) and CSS swaps it in at ≤720px. Any new hub map gets this free as long as it uses `.jm-node` / `a.jm-hit` / `.arrow-pill` / dashed group rects.
 - Search results: category tag must be `display:block` under the title, or it glues to the last word.
-- Bump `?v=` on every page whenever style.css/site.js change (now 20261016).
+- Bump `?v=` on every page whenever style.css/site.js change (now 20261017).
+
+## L9 — Tables on phones, and plan pictures (2026-10-13, Data Systems build)
+- `.cmp-table` first-column cells were `nowrap`, so a sentence in column 1 swallowed the phone screen and hid every other column. Rule: on ≤720px the first column wraps (`min 104px / max 170px`); still keep column-1 labels short and put code tokens in later columns. Check: print first-column width vs wrapper width at 390px for every table.
+- Execution-plan pictures use `p_common.plan_diagram`: data right → left, thickness = log(rows), siblings of one parent attach at different heights so arrowheads never overlap, pills sit on the vertical elbow. Thin arrow ≠ cheap (a scan can output few rows after reading everything) — say so in the caption.
+- New category checklist (done for `sql/`): folder + `config.py` in page-kit, hub generator (`build_hub.py` keeps hub, `journeys.json` and node counts in sync), parent hub (`data/index.html`), home tile, search entries (3 per page + hub), ledger, roadmap, overview, CLAUDE.md.
+- Group titles inside a hub map must stay short: the spine arrow runs through the zone at x=320 and would cross a long title.

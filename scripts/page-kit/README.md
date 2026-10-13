@@ -29,3 +29,5 @@ node scripts/check-site.js azure
 `rect.bx` = node, `rect.zone` = dashed container, `g.arrow-pill` = arrow label, `path[marker-end]` =
 arrow. Use plain numerals in pills ("1 · asks"), never circled digits (①) — they render in a tall
 fallback font and break label sizing.
+
+**`sql/` (Data Systems · SQL Performance Lab).** Pages `p_journey.py`, `p_pages.py`, `p_indexes.py`, `p_plans.py`, `p_stats.py`; shared `p_common.py` (crumbs, doc links, `ladder_strip`, `plan_diagram` for execution-plan pictures with thickness-scaled arrows — `Diagram.arrow(sw=…)`); `build_hub.py` regenerates `sql/index.html` + the `sql` entry of `journeys.json`. Build: `python3 scripts/page-kit/build.py sql plans:reading_execution_plans`.

@@ -94,19 +94,21 @@ class Diagram:
         self.add(f'<g class="arrow-pill"><rect x="{x:g}" y="{cy-9:g}" width="{w}" height="18" rx="9"/>'
                  f'<text x="{cx:g}" y="{cy+3.5:g}" text-anchor="middle" font-size="9" font-style="italic">{esc(text)}</text></g>')
 
-    def arrow(self, pts, color='n', label=None, at=None, flow=False, both=False, dash=False):
+    def arrow(self, pts, color='n', label=None, at=None, flow=False, both=False, dash=False, sw=1.6):
+        """sw > 2.5 = thick 'row-flow' arrow (execution plans): uses a fixed-size head so the head stays readable."""
         d = 'M' + ' L'.join(f'{x:g},{y:g}' for x, y in pts)
         cls = ' class="flow-arrow"' if flow else ''
-        self.add(f'<path{cls} d="{d}" fill="none" stroke="{ARROW[color]}" stroke-width="1.6"'
+        self.add(f'<path{cls} d="{d}" fill="none" stroke="{ARROW[color]}" stroke-width="{sw:g}"'
                  + (' stroke-dasharray="4 3"' if dash else '')
-                 + f' marker-end="url(#{self.mid}A)"' + (f' marker-start="url(#{self.mid}S)"' if both else '') + '/>')
+                 + f' marker-end="url(#{self.mid}{"T" if sw > 2.5 else "A"})"' + (f' marker-start="url(#{self.mid}S)"' if both else '') + '/>')
         if label:
             self.add_label_after = True
             self.pill(*(at or ((pts[0][0]+pts[-1][0])/2, (pts[0][1]+pts[-1][1])/2)), label)
 
     def render(self):
         defs = (f'<defs><marker id="{self.mid}A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker>'
-                f'<marker id="{self.mid}S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker></defs>')
+                f'<marker id="{self.mid}S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker>'
+                f'<marker id="{self.mid}T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>')
         # draw order: zones first, then everything else (pills last so they sit on top of lines)
         zones = [p for p in self.parts if 'class="zone' in p]
         pills = [p for p in self.parts if 'class="arrow-pill"' in p]
@@ -149,7 +151,7 @@ def page(slug, title, eyebrow, h1, sub, ivq, body, crumbs, next_html, search_tit
   <div class="wrap">KeyDrive · {CATEGORY["name"]} · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261016"></script>
+<script src="../../assets/site.js?v=20261017"></script>
 </body>
 </html>
 '''

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How data is stored: pages, heaps and B-trees — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">How data is stored</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 16 · 🔭 Plan literacy</div>
+    <h1>The engine never reads a row — it reads <span class="grad-text">8 KB pages.</span></h1>
+    <p class="sub">Every plan operator is really “read these pages”. Learn what a page is, what a heap is, and why a clustered table is stored in key order — and plans will start to make sense.</p>
+    <div class="interview-q">❓ "How does SQL Server physically store a table, and why does that matter for query speed?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 450" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Rows live inside 8 KB pages; eight pages make a 64 KB extent; tables and indexes are collections of extents">
+<defs><marker id="sp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="290" y="10" width="340" height="200" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="304" y="29" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">ZOOM · ONE 8 KB PAGE</text>
+<rect class="zone" x="290" y="236" width="340" height="120" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="304" y="255" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">ZOOM · ONE 64 KB EXTENT</text>
+<path d="M110,66 L110,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sp1A)"/>
+<path d="M110,190 L110,250" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sp1A)"/>
+<path d="M110,320 L110,372" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sp1A)"/>
+<path d="M200,155 L290,155" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sp1A)"/>
+<path d="M200,285 L290,285" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#sp1A)"/>
+<rect class="bx" x="20" y="10" width="180" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="110" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🧾 A row</text>
+<text x="110" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">one order, one customer</text>
+<rect class="bx" x="20" y="120" width="180" height="70" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="110" y="146.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">📄 A page</text>
+<text x="110" y="159" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">8 KB — the unit the engine</text>
+<text x="110" y="171.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reads and writes</text>
+<rect class="bx" x="20" y="250" width="180" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="110" y="276.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧱 An extent</text>
+<text x="110" y="289" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">8 contiguous pages</text>
+<text x="110" y="301.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">= 64 KB</text>
+<rect class="bx" x="20" y="372" width="180" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="110" y="400.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🗃️ A table or index</text>
+<text x="110" y="413.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">a collection of extents</text>
+<rect class="bx" x="306" y="36" width="308" height="32" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="460" y="56" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">page header · 96 bytes</text>
+<rect class="bx" x="306" y="80" width="100" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="356" y="99.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">row</text>
+<text x="356" y="112.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">#1</text>
+<rect class="bx" x="410" y="80" width="100" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="460" y="99.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">row</text>
+<text x="460" y="112.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">#2</text>
+<rect class="bx" x="514" y="80" width="100" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="564" y="99.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">row</text>
+<text x="564" y="112.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">#3</text>
+<rect class="bx" x="306" y="136" width="308" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="460" y="159.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">more rows … then free space</text>
+<text x="460" y="172.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">a full page forces a split (later)</text>
+<rect class="bx" x="306" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="323" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P1</text>
+<rect class="bx" x="344" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="361" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P2</text>
+<rect class="bx" x="382" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="399" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P3</text>
+<rect class="bx" x="420" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="437" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P4</text>
+<rect class="bx" x="458" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="475" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P5</text>
+<rect class="bx" x="496" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="513" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P6</text>
+<rect class="bx" x="534" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="551" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P7</text>
+<rect class="bx" x="572" y="270" width="34" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="589" y="294" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">P8</text>
+<text class="free" x="460" y="332" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">eight pages, side by side on disk</text>
+<text class="free" x="460" y="392" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The engine does not fetch “a row” — it fetches</text>
+<text class="free" x="460" y="408" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">the whole 8 KB page that holds it.</text>
+<g class="arrow-pill"><rect x="58.5" y="84" width="103" height="18" rx="9"/><text x="110" y="96.5" text-anchor="middle" font-size="9" font-style="italic">many rows fit in</text></g>
+<g class="arrow-pill"><rect x="69" y="211" width="82" height="18" rx="9"/><text x="110" y="223.5" text-anchor="middle" font-size="9" font-style="italic">8 pages make</text></g>
+<g class="arrow-pill"><rect x="77" y="337" width="66" height="18" rx="9"/><text x="110" y="349.5" text-anchor="middle" font-size="9" font-style="italic">many make</text></g>
+<g class="arrow-pill"><rect x="217.5" y="146" width="55" height="18" rx="9"/><text x="245" y="158.5" text-anchor="middle" font-size="9" font-style="italic">zoom in</text></g>
+<g class="arrow-pill"><rect x="217.5" y="276" width="55" height="18" rx="9"/><text x="245" y="288.5" text-anchor="middle" font-size="9" font-style="italic">zoom in</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> read the left column top to bottom: <b>rows</b> sit in <b>8 KB pages</b>, eight pages make a <b>64 KB extent</b>, and a table or index is a collection of extents. The two zoomed boxes on the right show what is inside a page (a 96-byte header, then rows, then free space) and an extent (eight pages next to each other). The takeaway is the last line: the engine always reads <b>whole pages</b>, never single rows.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The engine never reads “a row” — it reads a whole <b>8 KB page</b>. So the cost of a query is, to a first approximation, <i>how many pages it has to touch</i>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The last page ended on a promise: the optimizer picks a plan, and the plan is a tree of <b>operators that read data</b>. But read it from <i>where</i>? A table is not a spreadsheet in memory — it is a pile of fixed-size blocks on storage.</p>
+      <p>If you do not know that blocks exist, a plan makes no sense: “why does reading 10 rows cost 12,000 reads?” is a natural question, and its answer is “because those 10 rows were hiding in 12,000 pages and the engine had to look at every one”.</p>
+      <p>So before indexes (next page), you need exactly one mental picture: <b>pages</b>, and how a table’s pages are organised — as an unordered <b>heap</b> or as a sorted <b>clustered</b> structure.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧱 Heap vs clustered table</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A heap stores rows wherever there is room, so a lookup reads every page; a clustered table keeps rows sorted by its key so the engine can go to the right page">
+<defs><marker id="sp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">HEAP · no clustered index</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CLUSTERED TABLE · sorted by the key</text>
+<path d="M105,82 L64,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<path d="M162,82 L165,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<path d="M219,82 L266,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<path d="M420,82 L379,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<path d="M477,82 L480,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<path d="M534,82 L581,128" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#sp2A)"/>
+<rect class="bx" x="75" y="38" width="175" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">🗺️ IAM page</text>
+<text x="162.5" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">lists the pages the table owns</text>
+<rect class="bx" x="24" y="128" width="80" height="58" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="64" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Page 1</text>
+<text x="64" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Ids 9 · 2 · 7</text>
+<rect class="bx" x="125" y="128" width="80" height="58" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="165" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Page 2</text>
+<text x="165" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Ids 4 · 11 · 1</text>
+<rect class="bx" x="226" y="128" width="80" height="58" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="266" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Page 3</text>
+<text x="266" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Ids 6 · 8 · 3</text>
+<rect class="bx" x="50" y="214" width="225" height="58" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="240.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Find Id 7?</text>
+<text x="162.5" y="253.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">no order → read every page</text>
+<rect class="bx" x="390" y="38" width="175" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="57.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">🔑 Clustered key: Id</text>
+<text x="477.5" y="70.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">rows stored in key order</text>
+<rect class="bx" x="339" y="128" width="80" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="379" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Page 1</text>
+<text x="379" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Ids 1 · 2 · 3</text>
+<rect class="bx" x="440" y="128" width="80" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="480" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Page 2</text>
+<text x="480" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Ids 4 · 5 · 6</text>
+<rect class="bx" x="541" y="128" width="80" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="581" y="154.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Page 3</text>
+<text x="581" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Ids 7 · 8 · 9</text>
+<rect class="bx" x="365" y="214" width="225" height="58" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="240.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Find Id 7?</text>
+<text x="477.5" y="253.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">it sits in the last range → go there</text>
+<g class="arrow-pill"><rect x="65" y="96" width="39" height="18" rx="9"/><text x="84.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g>
+<g class="arrow-pill"><rect x="144" y="96" width="39" height="18" rx="9"/><text x="163.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g>
+<g class="arrow-pill"><rect x="223" y="96" width="39" height="18" rx="9"/><text x="242.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g>
+<g class="arrow-pill"><rect x="369.5" y="96" width="60" height="18" rx="9"/><text x="399.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">in order</text></g>
+<g class="arrow-pill"><rect x="448.5" y="96" width="60" height="18" rx="9"/><text x="478.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">in order</text></g>
+<g class="arrow-pill"><rect x="527.5" y="96" width="60" height="18" rx="9"/><text x="557.5" y="108.5" text-anchor="middle" font-size="9" font-style="italic">in order</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left — a heap:</b> a table with no clustered index. Rows go wherever there is room; a small map page (the IAM page) tells the engine which pages the table owns. Looking for Id 7 means reading every page. <b>Right — a clustered table:</b> the rows themselves are stored in key order, so the engine knows which page range holds Id 7. The next page turns this idea into a full B-tree.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📊 Heap or clustered? Side by side</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Heap (no clustered index)</th><th scope="col">Clustered table</th></tr></thead><tbody><tr><th scope="row">Row order</th><td>Not guaranteed — rows go where there is room</td><td>Sorted by the clustered key</td></tr><tr><th scope="row">Finding one row by the key</th><td>Read every page (unless another index helps)</td><td>Navigate straight to the right page</td></tr><tr><th scope="row">Docs’ advice</th><td>“With few exceptions, every table should have a clustered index”</td><td>The normal default</td></tr><tr><th scope="row">Primary key</th><td>—</td><td>Defaults to clustered, but does not have to be: you can make the PK nonclustered and cluster on something else</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔑 Choosing a clustered key — four properties</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">NARROW</span><h4>📏 Small</h4><p>The clustered key is copied into every other index. A wide key makes <i>all</i> indexes bigger.</p></div>
+      <div class="how-step"><span class="hs-n">UNIQUE</span><h4>☝️ One per row</h4><p>If it is not unique, a hidden extra value is added to make it so — in every index too.</p></div>
+      <div class="how-step"><span class="hs-n">EVER-INCREASING</span><h4>📈 Always growing</h4><p>New rows go at the end. Random keys cause rows to land mid-structure and split pages.</p></div>
+      <div class="how-step"><span class="hs-n">IMMUTABLE</span><h4>🔒 Never changes</h4><p>Changing the key forces updates in every nonclustered index.</p></div>
+    </div>
+    <p style="margin-top:12px">A single <code>int</code> or <code>bigint</code> filled by <code>IDENTITY</code> or a sequence meets all four. A <code>uniqueidentifier</code> is wider and, unless generated sequentially, not ever-increasing.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · count the pages yourself</div>
+    <p>Take the <code>Orders</code> table in our ShopDB. <b>Everything below is illustrative arithmetic</b> to build intuition — your real numbers come from <code>SET STATISTICS IO</code>.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Step</th><th scope="col">Number</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Rows in Orders</th><td>1,000,000</td><td>given</td></tr><tr><th scope="row">Rows that fit on one page</th><td>about 80</td><td>if a row takes ~100 bytes (real rows add overhead)</td></tr><tr><th scope="row">Pages needed</th><td>≈ 12,500</td><td>1,000,000 ÷ 80</td></tr><tr><th scope="row">Size</th><td>≈ 100 MB</td><td>12,500 pages × 8 KB</td></tr><tr><th scope="row">Read the whole table (a scan)</th><td>≈ 12,500 page reads</td><td>you touched every page</td></tr><tr><th scope="row">Read one row through a sorted structure</th><td>a handful of page reads</td><td>next page: the B-tree</td></tr></tbody></table></div>
+    <div class="code-block"><pre><span class="kw">SET STATISTICS IO ON</span>;
+<span class="kw">SELECT</span> OrderId, Total <span class="kw">FROM</span> dbo.Orders <span class="kw">WHERE</span> OrderId = <span class="num">123456</span>;
+
+<span class="cmt">-- Messages tab (illustrative numbers):</span>
+<span class="cmt">-- Table 'Orders'. Scan count 1, logical reads 12503, physical reads 0 ...</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">If a one-row answer costs thousands of logical reads, the engine is wading through pages. That number is your first clue, before you even open a plan.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · what the page counters tell you</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">It means</th><th scope="col">Next step</th></tr></thead><tbody><tr><th scope="row">Few rows returned, <b>huge</b> logical reads</th><td>The engine touched far more pages than it needed</td><td>Look for a scan in the plan; consider an index (page 3)</td></tr><tr><th scope="row">Physical reads high on the first run, then gone</th><td>Pages came from disk the first time and from memory after — warm-up, not necessarily a bad plan</td><td>Compare logical reads between runs instead</td></tr><tr><th scope="row">Read-ahead reads in a big scan</th><td>The engine pre-loaded pages in advance to speed a large sequential read</td><td>Normal for scans; question the scan, not the read-ahead</td></tr><tr><th scope="row">Table has no clustered index and is queried by key</th><td>It is a heap; every lookup is a full read</td><td>Add a clustered key that is narrow, unique, increasing</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Log table with no key</h5><p>Rows are only ever appended and read in bulk. A heap can be fine here — a rare exception.</p><span class="sc-use">→ Heap is acceptable</span></div>
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>Orders looked up by OrderId</h5><p>Millions of lookups per day by id.</p><span class="sc-use">→ Clustered on OrderId</span></div>
+      <div class="scenario"><span class="sc-icon">🎲</span><h5>Clustered on a random GUID</h5><p>Inserts land all over the structure and pages split constantly.</p><span class="sc-use">→ Use a sequential key</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Key keeps being edited</h5><p>An “email” used as the clustered key changes whenever the customer changes it.</p><span class="sc-use">→ Pick an immutable key</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Extents.</b> An extent is eight physically contiguous pages (64 KB). <i>Uniform</i> extents belong to one object; <i>mixed</i> extents can be shared by up to eight objects, which is how tiny new tables start. Since SQL Server 2016, user databases and tempdb use uniform extents except for the first eight pages of an object.</p>
+      <p><b>Bookkeeping pages.</b> Special pages track space: GAM and SGAM pages track extent allocation, IAM pages map the extents an object uses, and PFS pages track free space inside pages.</p>
+      <p><b>Logical vs physical reads.</b> A <i>logical read</i> is a page taken from the in-memory data cache; a <i>physical read</i> is a page fetched from disk. Logical reads are the stable measure of work; physical reads depend on what happened to be cached.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A page is 8 KB and is the unit the engine reads and writes; an extent is 8 pages = 64 KB.</li><li>A table without a clustered index is a heap: unordered; a clustered table stores its rows sorted by the key.</li><li>Docs’ advice: with few exceptions, give every table a clustered index.</li><li>Good clustered key: narrow, unique, ever-increasing, immutable (e.g. an IDENTITY bigint).</li><li>Logical reads = pages from memory; physical reads = pages from disk. Fewer logical reads = less work.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The engine stores data in 8 KB pages and reads whole pages, so query cost is mostly pages touched. A table is either a heap or, with a clustered index, stored in key order. I choose a narrow, unique, ever-increasing, immutable clustered key — typically an identity bigint — because that key is copied into every other index."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>The primary key is not automatically the best clustered key.</b> It defaults to clustered, but if it is wide or random you can create it as nonclustered and cluster on a better column.</p>
+      <p><b>“Fewer rows” does not mean “cheaper”.</b> What counts is how many <i>pages</i> had to be read to find those rows.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧱 Heap</h5><p>Unordered pile of pages. Fast to append, slow to find by key.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌲 Clustered table</h5><p>Rows stored in key order. Fast to find by the key and to read in key order.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>A sorted table helps for <i>one</i> column. What about finding a customer’s orders when the table is sorted by order id? Next: indexes, seeks and scans.</span>
+      <a class="next-link" href="indexes-seek-scan.html">Indexes: seek vs scan <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Storage internals evolve between versions. For exact page and extent behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/pages-and-extents-architecture-guide" target="_blank" rel="noopener">Pages and extents</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide" target="_blank" rel="noopener">Index design guide</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql" target="_blank" rel="noopener">SET STATISTICS IO</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261017"></script>
+</body>
+</html>

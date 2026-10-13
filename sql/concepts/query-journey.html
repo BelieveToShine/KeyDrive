@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The journey of a query — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">The journey of a query</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 1 of 16 · 🔭 Plan literacy</div>
+    <h1>A SQL query is <span class="grad-text">a request, not a recipe</span> — the engine decides how to run it.</h1>
+    <p class="sub">You write what you want. A planner called the optimizer decides how. Learn the five stages once, and “slow” becomes a question you can actually answer.</p>
+    <div class="interview-q">❓ "What happens inside the database between pressing Run and getting rows back?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A query travels five stages: your T-SQL text, parse and bind, the optimizer, the plan cache, and execution; if the plan is already cached the optimizer is skipped">
+<defs><marker id="qj1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="qj1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="qj1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M140,76 L255,76" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#qj1A)"/>
+<path d="M385,76 L500,76" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#qj1A)"/>
+<path d="M565,112 L565,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#qj1A)"/>
+<path d="M500,226 L385,226" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#qj1A)"/>
+<path d="M255,226 L140,226" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#qj1A)"/>
+<path d="M320,112 L320,190" fill="none" stroke="#a78bfa" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#qj1A)"/>
+<rect class="bx" x="10" y="40" width="130" height="72" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="75" y="67.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📝 Your T-SQL</text>
+<text x="75" y="80" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">says WHAT you want</text>
+<text x="75" y="92.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">not how to get it</text>
+<rect class="bx" x="255" y="40" width="130" height="72" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="67.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🔎 Parse + bind</text>
+<text x="320" y="80" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">names and types ok?</text>
+<text x="320" y="92.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">builds a query tree</text>
+<rect class="bx" x="500" y="40" width="130" height="72" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="565" y="61.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧠 Optimizer</text>
+<text x="565" y="73.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">reads query, schema</text>
+<text x="565" y="86.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">and statistics</text>
+<text x="565" y="98.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">picks cheapest plan</text>
+<rect class="bx" x="500" y="190" width="130" height="72" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="565" y="217.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">🗃️ Plan cache</text>
+<text x="565" y="230" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">saves the plan</text>
+<text x="565" y="242.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">same text → reuse</text>
+<rect class="bx" x="255" y="190" width="130" height="72" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="217.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">⚙️ Execute</text>
+<text x="320" y="230" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">runs the operators</text>
+<text x="320" y="242.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">reads pages</text>
+<rect class="bx" x="10" y="190" width="130" height="72" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="75" y="223.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">📦 Rows</text>
+<text x="75" y="236.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">back to your app</text>
+<text class="free" x="320" y="296" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Estimated plan = stops after the optimizer.  Actual plan = the same plan + what really happened while executing.</text>
+<g class="arrow-pill"><rect x="177.5" y="49" width="39" height="18" rx="9"/><text x="197" y="61.5" text-anchor="middle" font-size="9" font-style="italic">text</text></g>
+<g class="arrow-pill"><rect x="406.5" y="49" width="71" height="18" rx="9"/><text x="442" y="61.5" text-anchor="middle" font-size="9" font-style="italic">query tree</text></g>
+<g class="arrow-pill"><rect x="529.5" y="142" width="71" height="18" rx="9"/><text x="565" y="154.5" text-anchor="middle" font-size="9" font-style="italic">plan saved</text></g>
+<g class="arrow-pill"><rect x="404" y="199" width="76" height="18" rx="9"/><text x="442" y="211.5" text-anchor="middle" font-size="9" font-style="italic">plan to run</text></g>
+<g class="arrow-pill"><rect x="167" y="199" width="60" height="18" rx="9"/><text x="197" y="211.5" text-anchor="middle" font-size="9" font-style="italic">rows out</text></g>
+<g class="arrow-pill"><rect x="242" y="142" width="156" height="18" rx="9"/><text x="320" y="154.5" text-anchor="middle" font-size="9" font-style="italic">cached? skip the optimizer</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> follow the boxes clockwise. Your <b>T-SQL text</b> is parsed and bound into a <b>query tree</b>; the <b>optimizer</b> turns that tree into a plan (a recipe of operators) and the plan is <b>saved in the plan cache</b>; then the engine <b>executes</b> it and sends rows back. The dashed arrow is a shortcut: if the same text ran before, the cached plan is reused and the optimizer is skipped. Everything in this lab is about the amber box (is the plan any good?) and the green box (what did running it really cost?).</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">SQL says <i>what</i> you want; the optimizer decides <i>how</i> to get it — and a poor “how” is what most slow queries really are.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>You wrote <code>SELECT … WHERE CustomerId = 42</code>. Notice what you did <b>not</b> write: no loop, no “open this index first”, no join order. SQL is <b>declarative</b> — you describe the answer, not the steps.</p>
+      <p>Somebody has to choose the steps. That somebody is the <b>query optimizer</b>. It looks at your query, your tables and indexes, and its <b>statistics</b> about the data, and picks the plan it <i>estimates</i> will be cheapest.</p>
+      <p>So “my query is slow” has only two honest meanings: <b>you asked for a lot of work</b>, or <b>the engine chose a poor way to do it</b>. You cannot tell which one without seeing the plan — and that is the whole point of this lab. This page gives you the map; the next pages teach you to read it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The five stages, one by one</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · PARSE</span><h4>📝 Is it valid SQL?</h4><p>The text is checked for syntax and turned into a tree.</p></div>
+      <div class="how-step"><span class="hs-n">2 · BIND</span><h4>🔗 Do these names exist?</h4><p>Tables, columns and types are resolved. Docs call this step <i>algebrizing</i>.</p></div>
+      <div class="how-step"><span class="hs-n">3 · OPTIMIZE</span><h4>🧠 Choose the plan</h4><p>Inputs: the query tree, the schema and the statistics. Output: the cheapest <i>estimated</i> plan.</p></div>
+      <div class="how-step"><span class="hs-n">4 · CACHE</span><h4>🗃️ Remember it</h4><p>The plan is stored. An identical statement later can skip stages 1–3.</p></div>
+      <div class="how-step"><span class="hs-n">5 · EXECUTE</span><h4>⚙️ Do the work</h4><p>Operators run, pages are read, rows flow back to your app.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚖️ Why the optimizer needs to choose at all</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The optimizer compares candidate plans for one query and picks the one with the lowest estimated cost">
+<defs><marker id="qj2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="qj2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="qj2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,52 L320,80 L155,80 L155,124" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#qj2A)"/>
+<path d="M320,52 L320,80 L485,80 L485,124" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#qj2A)"/>
+<path d="M485,208 L485,236 L380,236 L380,262" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#qj2A)"/>
+<path d="M155,208 L155,236 L260,236 L260,262" fill="none" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#qj2A)"/>
+<rect class="bx" x="190" y="8" width="260" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="26.5" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">SELECT … FROM Orders</text>
+<text x="320" y="40.5" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">WHERE CustomerId = 42</text>
+<rect class="bx" x="20" y="124" width="270" height="84" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="155" y="151.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Plan A · read every order</text>
+<text x="155" y="163.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Clustered Index Scan</text>
+<text x="155" y="176.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">then keep CustomerId = 42</text>
+<text x="155" y="188.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">est. cost: 3,000 units</text>
+<rect class="bx" x="350" y="124" width="270" height="84" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="485" y="151.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Plan B · jump to customer 42</text>
+<text x="485" y="163.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Index Seek on CustomerId</text>
+<text x="485" y="176.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">plus a few lookups</text>
+<text x="485" y="188.75" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">est. cost: 8 units</text>
+<rect class="bx" x="190" y="262" width="260" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="285.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🧠 Optimizer picks the cheapest</text>
+<text x="320" y="298.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">(cost units are illustrative)</text>
+<g class="arrow-pill"><rect x="122" y="91" width="66" height="18" rx="9"/><text x="155" y="103.5" text-anchor="middle" font-size="9" font-style="italic">candidate</text></g>
+<g class="arrow-pill"><rect x="452" y="91" width="66" height="18" rx="9"/><text x="485" y="103.5" text-anchor="middle" font-size="9" font-style="italic">candidate</text></g>
+<g class="arrow-pill"><rect x="433.5" y="227" width="103" height="18" rx="9"/><text x="485" y="239.5" text-anchor="middle" font-size="9" font-style="italic">lowest cost wins</text></g>
+<g class="arrow-pill"><rect x="119.5" y="227" width="71" height="18" rx="9"/><text x="155" y="239.5" text-anchor="middle" font-size="9" font-style="italic">too costly</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> one query, two possible plans. <b>Plan A</b> reads every order and throws most away. <b>Plan B</b> jumps straight to customer 42. The optimizer gives each candidate an <b>estimated cost</b> and keeps the cheapest. The cost numbers here are illustrative — real plans show their own numbers. The crucial word is <i>estimated</i>: the choice is only as good as the optimizer’s guess about your data (that is why statistics get their own page).</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · the same query, two different views</div>
+    <p>Run this once and look at it two ways. Both views share the same plan <i>shape</i>; the second adds what really happened.</p>
+    <div class="code-block"><pre><span class="kw">SELECT</span> OrderId, OrderDate, Total
+<span class="kw">FROM</span>   dbo.Orders
+<span class="kw">WHERE</span>  CustomerId = <span class="num">42</span>;</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative query on the ShopDB sample used through this lab (Customers, Orders, OrderItems, Products). Table and column names are teaching names, not a real database.</p>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Estimated plan</th><th scope="col">Actual plan</th></tr></thead><tbody><tr><th scope="row">How to get it in SSMS</th><td>“Display Estimated Execution Plan” (Ctrl+L)</td><td>“Include Actual Execution Plan” (Ctrl+M), then run the query</td></tr><tr><th scope="row">Does the query run?</th><td>No — the engine only shows the plan it would most probably use</td><td>Yes — you get your rows <i>and</i> the plan</td></tr><tr><th scope="row">Row counts</th><td>Estimates only</td><td>Estimated <b>and</b> actual, side by side</td></tr><tr><th scope="row">Warnings and runtime info</th><td>None — nothing has run yet</td><td>Runtime warnings and, in newer versions, elapsed and CPU time per operator</td></tr><tr><th scope="row">Best for</th><td>A first look at a query you are afraid to run (a huge update, say)</td><td>Real diagnosis: “the engine thought 1 row, it was 800,000”</td></tr></tbody></table></div>
+    <p style="margin-top:14px">You need the <b>SHOWPLAN</b> permission on every database the query touches before the engine will show a plan.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · “my query is slow” — ask these first</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What you notice</th><th scope="col">First question</th><th scope="col">Where this lab goes</th></tr></thead><tbody><tr><th scope="row">Slow <b>every</b> time</th><td>What does the plan show? Is it reading far more than it returns?</td><td>Read the plan (page 4), then indexes (page 3)</td></tr><tr><th scope="row">Was fast, got slower</th><td>Did the data grow, or did the estimates go stale?</td><td>Statistics (page 5)</td></tr><tr><th scope="row">Fast for one user, slow for another</th><td>Is one cached plan being shared by very different inputs?</td><td>Plan cache &amp; sniffing (page 9 — coming)</td></tr><tr><th scope="row">Fast in SSMS, slow in the app</th><td>Same text? Same settings? Same plan?</td><td>Plan cache &amp; sniffing (page 9 — coming)</td></tr><tr><th scope="row">Slow only under load</th><td>Is something waiting or blocking, not computing?</td><td>Locking (page 12 — coming)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪜 Your thinking ladder (you will use it on every page)</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+    <p style="margin-top:12px">This page practises the first two rungs: <b>know that a plan exists</b>, and <b>know where to look at it</b>.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🐢</span><h5>“The report page takes 20 seconds”</h5><p>Nobody changed the code. Before touching anything, get the actual plan for that exact query.</p><span class="sc-use">→ Read the plan first</span></div>
+      <div class="scenario"><span class="sc-icon">🧑‍💻</span><h5>Developer adds an index “to be safe”</h5><p>No plan was looked at. The index may not even be chosen — and it makes every write slower.</p><span class="sc-use">→ Measure before changing</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Same SQL, different speed</h5><p>Run twice, second run faster. The plan is cached and the pages are now in memory.</p><span class="sc-use">→ Compare plans, not feelings</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>A risky UPDATE on a big table</h5><p>You want to know how bad it would be without running it.</p><span class="sc-use">→ Estimated plan first</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>The plan cache is strict.</b> To reuse a plan, the statement text must literally match a previously executed statement, character for character, and object names must be fully qualified. So <code>WHERE CustomerId = 42</code> and <code>WHERE CustomerId = 43</code> written as two different literals are two different statements — which is one reason applications send <i>parameters</i> instead (page 9).</p>
+      <p><b>Plans are shared; running is private.</b> A compiled plan is read-only and shared. Each run gets its own <i>execution context</i> holding that run’s parameter values.</p>
+      <p><b>Cost-based, not “always best”.</b> The optimizer balances how long it spends choosing against how good the plan is, so it uses heuristics and stops at a “good enough” plan instead of searching forever.</p>
+      <p><b>Other engines:</b> PostgreSQL and MySQL have the same idea with different commands — <code>EXPLAIN</code> shows the planned steps, and <code>EXPLAIN ANALYZE</code> runs the query and adds real timings and row counts. The concepts in this lab transfer; the names change.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>SQL is declarative: you say WHAT; the optimizer chooses HOW.</li><li>Stages: parse → bind (algebrize) → optimize → cache → execute.</li><li>The optimizer is cost-based and works from the query, the schema and <b>statistics</b>.</li><li>Plans are cached and reused when the statement text matches exactly.</li><li>Estimated plan = no run, no runtime info. Actual plan = runs the query, adds real row counts and warnings.</li><li>The gap between estimated and actual rows is the most common clue to a bad plan.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A SQL statement describes what I want, not how to get it. The engine parses and binds it, the cost-based optimizer uses the schema and statistics to pick the cheapest estimated plan, the plan is cached, and then it executes. When a query is slow I look at the actual execution plan, because it shows what the engine really did and where its estimates were wrong."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“Slow query” is not a diagnosis.</b> Rewriting SQL, adding an index or buying a bigger tier without reading the plan is guessing. Half the time the plan shows the query was fine and the problem was waiting, blocking, or the data volume.</p>
+      <p>Also: an <b>estimated plan can look perfect and still be wrong</b> — it is only the optimizer’s prediction. Only the actual plan tells you how far reality was from the prediction.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📐 Estimated plan</h5><p>A prediction. The query does not run. Great for a first look and for risky statements.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📏 Actual plan</h5><p>The same plan plus what really happened: real row counts, warnings, timings. This is the one you diagnose with.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You now know a plan exists and where it comes from. But a plan is built from <i>operators that read pages</i>. Next: how the data is actually laid out on disk.</span>
+      <a class="next-link" href="storage-pages.html">How data is stored: pages and B-trees <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 SQL Server and Azure SQL change often. This page teaches the ideas; for exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide" target="_blank" rel="noopener">Query processing architecture guide</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/execution-plans" target="_blank" rel="noopener">Execution plans</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261017"></script>
+</body>
+</html>

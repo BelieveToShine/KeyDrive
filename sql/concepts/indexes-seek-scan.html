@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indexes: seek vs scan — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Indexes: seek vs scan</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 3 of 16 · 🔭 Plan literacy</div>
+    <h1>An index is a <span class="grad-text">sorted shortcut</span> — a seek walks a short tree instead of a scan reading every page.</h1>
+    <p class="sub">Clustered or nonclustered, seek or scan, and the honest reasons the engine sometimes ignores your index. With a before-and-after plan you can compare.</p>
+    <div class="interview-q">❓ "What is the difference between a clustered and a nonclustered index, and between an index seek and a scan?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 350" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A nonclustered index is a B-tree: root page, intermediate page, then leaf pages holding the key and a pointer to the full row, which a key lookup follows into the clustered table">
+<defs><marker id="ix1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M160,35 L235,35" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ix1A)"/>
+<path d="M320,60 L320,115" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ix1A)"/>
+<path d="M320,165 L320,220" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ix1A)"/>
+<path d="M405,251 L505,251" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ix1A)"/>
+<rect class="bx" x="10" y="10" width="150" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="85" y="32" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🔎 Your query</text>
+<text x="85" y="46" text-anchor="middle" font-size="11" font-weight="600" fill="#67e8f9" font-family="'JetBrains Mono'">CustomerId = 42</text>
+<rect class="bx" x="235" y="10" width="170" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="32.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🌳 Root page</text>
+<text x="320" y="45.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">ranges: 1–500 · 501–…</text>
+<rect class="bx" x="235" y="115" width="170" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🌿 Intermediate page</text>
+<text x="320" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">ranges: 1–100 · 101–…</text>
+<rect class="bx" x="235" y="220" width="170" height="62" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="242.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🍃 Leaf page</text>
+<text x="320" y="255" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">CustomerId 42</text>
+<text x="320" y="267.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">→ points to OrderId 9001</text>
+<rect class="bx" x="505" y="220" width="125" height="62" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="567.5" y="242.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🗃️ Clustered table</text>
+<text x="567.5" y="255" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">full row for 9001</text>
+<text x="567.5" y="267.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">is on this page</text>
+<text class="free" x="320" y="312" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The index = a sorted copy of CustomerId plus a row locator. About three page reads reach the leaf (illustrative).</text>
+<text class="free" x="320" y="330" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The last hop — the key lookup — is one extra read per matching row.</text>
+<g class="arrow-pill"><rect x="175" y="26" width="44" height="18" rx="9"/><text x="197" y="38.5" text-anchor="middle" font-size="9" font-style="italic">start</text></g>
+<g class="arrow-pill"><rect x="271" y="79" width="98" height="18" rx="9"/><text x="320" y="91.5" text-anchor="middle" font-size="9" font-style="italic">42 is in 1–500</text></g>
+<g class="arrow-pill"><rect x="271" y="184" width="98" height="18" rx="9"/><text x="320" y="196.5" text-anchor="middle" font-size="9" font-style="italic">42 is in 1–100</text></g>
+<g class="arrow-pill"><rect x="430" y="242" width="50" height="18" rx="9"/><text x="455" y="254.5" text-anchor="middle" font-size="9" font-style="italic">lookup</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the index is a <b>sorted copy of one column</b> arranged as a tree. The engine starts at the <b>root page</b>, follows the range that contains 42 down through an <b>intermediate page</b>, and arrives at a <b>leaf page</b> that holds the key plus a <b>row locator</b>. If your query needs columns that are not in the index, it follows that locator into the clustered table — the <b>key lookup</b>. A handful of page reads instead of thousands.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">An index is a sorted shortcut: the engine walks a short tree to the right leaf instead of reading every page — a <b>seek</b> instead of a <b>scan</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The last page left you with a clustered table sorted by <code>OrderId</code>. Great for “find order 9001”. But your app mostly asks “show <i>customer 42’s</i> orders”, and the table is not sorted by customer — so the engine must read every page and discard almost all of it.</p>
+      <p>You cannot sort one table two ways. What you <i>can</i> do is keep a <b>second, smaller, sorted structure</b> — an index — that maps <code>CustomerId</code> to the row. That is a nonclustered index, and it is the single most common fix for a slow query.</p>
+      <p>This page covers what it is, how the engine uses it (seek vs scan), and why the engine sometimes <i>ignores</i> your index on purpose.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The two index kinds</div>
+    <div class="pick-grid">
+      <div class="pick-card" style="--pick:#34d399"><h4>🌲 Clustered index</h4><span class="pk-tag">the table itself, stored in key order</span><span class="pk-label use">✅ Pick it when</span><ul><li>One per table — it IS the data, sorted</li><li>Lookups and range reads by the clustered key</li><li>Its leaf pages are the data pages</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>You need a second sort order → add a nonclustered index</li><li>A wide or random key — it is copied into every other index</li></ul></div>
+      <div class="pick-card" style="--pick:#a78bfa"><h4>📇 Nonclustered index</h4><span class="pk-tag">a separate sorted structure that points to the rows</span><span class="pk-label use">✅ Pick it when</span><ul><li>Searching by a column the table is not sorted by</li><li>Many allowed per table</li><li>Leaf rows hold the key plus a row locator back to the data</li></ul><span class="pk-label skip">⛔ Look elsewhere when</span><ul><li>Every index costs space and slows writes — do not add “just in case”</li><li>It cannot answer for columns it does not hold without a lookup</li></ul></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔍 Seek vs scan</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Index Seek</th><th scope="col">Index Scan</th></tr></thead><tbody><tr><th scope="row">What it does</th><td>Uses the tree to jump to one or more ranges that match a seek predicate</td><td>Reads all rows of the index (or table) from start to end</td></tr><tr><th scope="row">What it costs</th><td>Tracks the rows and pages that qualify — not the size of the table</td><td>Tracks the size of the whole structure</td></tr><tr><th scope="row">Plan names</th><td>Index Seek · Clustered Index Seek</td><td>Index Scan · Clustered Index Scan · Table Scan (a heap)</td></tr><tr><th scope="row">Good when</th><td>Few rows match (selective predicate)</td><td>Most rows are needed anyway, or no usable index exists</td></tr><tr><th scope="row">Careful</th><td>A seek can still read a lot — a LIKE that starts with % can show a Seek yet touch nearly everything</td><td>A scan is not “always bad”; for a small table or a big report it can be the right call</td></tr></tbody></table></div>
+    <p style="margin-top:12px"><b>Always check logical reads</b> (<code>SET STATISTICS IO ON</code>) — the plan icon alone can mislead.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🚫 Why the engine ignores your index (on purpose)</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">TOO MANY ROWS</span><h4>🧮 Lookups add up</h4><p>If a big share of rows match, doing a key lookup for each one costs more than one scan. The optimizer weighs this.</p></div>
+      <div class="how-step"><span class="hs-n">WRONG COLUMN ORDER</span><h4>↔️ Leading column</h4><p>An index on (LastName, FirstName) helps find a last name, not a first name alone.</p></div>
+      <div class="how-step"><span class="hs-n">HIDDEN COLUMN</span><h4>🙈 Function on the column</h4><p>Wrapping the column in an expression usually prevents a seek (page 8 — coming).</p></div>
+      <div class="how-step"><span class="hs-n">BAD GUESS</span><h4>🎲 Stale estimate</h4><p>The optimizer thought many rows would match (page 5).</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · twelve rows out of a million</div>
+    <p><b>Before.</b> No index on <code>CustomerId</code>. The query asks for customer 42’s twelve orders.</p>    <div class="code-block"><pre><span class="kw">SET STATISTICS IO ON</span>;
+<span class="kw">SELECT</span> OrderId, OrderDate, Total
+<span class="kw">FROM</span>   dbo.Orders
+<span class="kw">WHERE</span>  CustomerId = <span class="num">42</span>;
+
+<span class="cmt">-- illustrative: Table 'Orders'. Scan count 1, logical reads 12503</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Numbers are illustrative and come from the page-count arithmetic on the previous page.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan before the index: SELECT fed by a Clustered Index Scan of Orders that reads every page to return only twelve rows">
+<defs><marker id="ix2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M250,62 L110,62" fill="none" stroke="#22d3ee" stroke-width="2.8" marker-end="url(#ix2T)"/>
+<rect class="bx" x="10" y="34" width="100" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="60" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="60" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="250" y="20" width="190" height="84" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="345" y="53.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Clustered Index Scan</text>
+<text x="345" y="65.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Orders (PK_Orders)</text>
+<text x="345" y="78.25" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fda4af">cost 100% of the plan</text>
+<text class="free" x="320" y="140" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">A thin arrow = few rows OUT. It does not tell you how many pages the scan had to READ.</text>
+<g class="arrow-pill"><rect x="152.5" y="37" width="55" height="18" rx="9"/><text x="180" y="49.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> read it <b>right to left</b>: the scan (red = the expensive part) produces rows, which flow left into SELECT. The arrow is thin because only <b>12 rows</b> come out — but the scan had to read every page to find them. Lesson: <b>arrow thickness shows rows out, not work done</b>. The giveaway is a scan carrying nearly all of the plan’s cost.</figcaption>
+</figure>
+    <p style="margin-top:18px"><b>The fix.</b> Add a nonclustered index on the column you filter by.</p>    <div class="code-block"><pre><span class="kw">CREATE NONCLUSTERED INDEX</span> IX_Orders_CustomerId
+<span class="kw">ON</span> dbo.Orders (CustomerId);
+
+<span class="cmt">-- illustrative after: Table 'Orders'. Scan count 1, logical reads ~40</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">~40 = about 3 page reads to reach the leaf, plus about 3 per key lookup × 12 rows. The page after next explains how to read such a plan operator by operator.</p>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Plan after creating the index: an Index Seek finds twelve rows, a Key Lookup fetches each full row, and Nested Loops joins them">
+<defs><marker id="ix3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ix3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M190,104 L100,104" fill="none" stroke="#22d3ee" stroke-width="2.8" marker-end="url(#ix3T)"/>
+<path d="M470,49 L390,49 L390,95 L310,95" fill="none" stroke="#22d3ee" stroke-width="2.8" marker-end="url(#ix3T)"/>
+<path d="M470,159 L390,159 L390,113 L310,113" fill="none" stroke="#22d3ee" stroke-width="2.8" marker-end="url(#ix3T)"/>
+<rect class="bx" x="10" y="76" width="90" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="55" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">SELECT</text>
+<text x="55" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">result rows</text>
+<rect class="bx" x="190" y="76" width="120" height="56" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="250" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Nested Loops</text>
+<text x="250" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">join the two</text>
+<rect class="bx" x="470" y="14" width="160" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="550" y="40.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Index Seek</text>
+<text x="550" y="52.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">IX_Orders_CustomerId</text>
+<text x="550" y="65.25" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6ee7b7">cost small</text>
+<rect class="bx" x="470" y="124" width="160" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="550" y="150.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Key Lookup</text>
+<text x="550" y="162.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Orders (PK_Orders)</text>
+<text x="550" y="175.25" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fcd34d">runs once per row</text>
+<text class="free" x="320" y="210" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">Same thin arrows — but now the engine reads a handful of pages instead of thousands.</text>
+<g class="arrow-pill"><rect x="117.5" y="79" width="55" height="18" rx="9"/><text x="145" y="91.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
+<g class="arrow-pill"><rect x="362.5" y="63" width="55" height="18" rx="9"/><text x="390" y="75.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
+<g class="arrow-pill"><rect x="362.5" y="127" width="55" height="18" rx="9"/><text x="390" y="139.5" text-anchor="middle" font-size="9" font-style="italic">12 rows</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a <b>seek</b> (green) finds the 12 matching index entries; for each one a <b>key lookup</b> (amber) fetches the full row from the clustered table; <b>Nested Loops</b> joins them. A Key Lookup always comes with a Nested Loops. Twelve lookups are cheap — but notice how this cost grows with the row count, which is what the next page (covering indexes, later) fixes.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · index-related symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see in the plan / numbers</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Scan, high cost %, few rows out</th><td>No usable index on the filtered column</td><td>Index the column in the WHERE/JOIN (check it will be selective)</td></tr><tr><th scope="row">Seek, but logical reads still huge</th><td>The seek range itself is huge (e.g. leading-wildcard LIKE, wide range)</td><td>Check the seek predicate; narrow the range</td></tr><tr><th scope="row">Key Lookup repeated thousands of times</th><td>Index lacks columns the query needs</td><td>Covering index with INCLUDE (page 7 — coming)</td></tr><tr><th scope="row">Index exists but plan scans</th><td>Too many rows match, a function hides the column, or stats mislead</td><td>Check selectivity, rewrite the predicate (page 8), check stats (page 5)</td></tr><tr><th scope="row">Writes got slower after adding indexes</th><td>Each index must be maintained on every write</td><td>Drop unused or duplicate indexes (page 13 — coming)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🛒</span><h5>“My orders” page</h5><p>Filters orders by the logged-in customer on a million-row table.</p><span class="sc-use">→ Nonclustered index on CustomerId</span></div>
+      <div class="scenario"><span class="sc-icon">📅</span><h5>Nightly sales report</h5><p>Needs 90% of last year’s rows. An index would add a lookup per row.</p><span class="sc-use">→ A scan is the right plan</span></div>
+      <div class="scenario"><span class="sc-icon">🔎</span><h5>Search by last name</h5><p>Users type a last name; sometimes only a first name.</p><span class="sc-use">→ Index (LastName, FirstName) helps the first, not the second</span></div>
+      <div class="scenario"><span class="sc-icon">📝</span><h5>Audit log, write-heavy</h5><p>Insert-only, rarely queried. Four extra indexes slow every insert.</p><span class="sc-use">→ Fewer indexes</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>B-tree / B+ tree.</b> Index keys are stored in a tree (the docs describe rowstore indexes as B+ trees): a root page, optional intermediate levels, and a leaf level. The engine navigates the tree to find rows quickly.</p>
+      <p><b>Row locator.</b> In a nonclustered index, each leaf row holds the index key plus a pointer to the data row. For a heap that pointer is a physical row address (RID); for a clustered table it is the clustered key — which is why a narrow clustered key keeps every index small.</p>
+      <p><b>Included columns</b> let a nonclustered index carry extra columns so the engine never needs the lookup — the subject of page 7.</p>
+      <p><b>Other engines:</b> PostgreSQL and MySQL also use B-tree indexes by default and show the choice as Index Scan / Seq Scan (PostgreSQL) or type=ref / ALL (MySQL EXPLAIN); the seek-vs-scan thinking is identical.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>An index is a sorted copy of some columns in a B-tree: root → intermediate → leaf.</li><li>Clustered = the table itself in key order (one per table). Nonclustered = a separate structure whose leaf rows hold the key + a row locator.</li><li>Seek = navigate the tree to matching ranges. Scan = read everything.</li><li>A Key Lookup fetches missing columns from the table, one per row, and always sits with a Nested Loops.</li><li>Arrow thickness in a plan = rows flowing, not work done. Check logical reads.</li><li>Every index speeds some reads and slows every write.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"A nonclustered index is a sorted B-tree on one or more columns. A query with a selective predicate can seek straight to the matching leaf entries instead of scanning the whole table, then do key lookups for any columns the index does not hold. I verify the benefit by comparing logical reads before and after — and I remember each index costs write time and space."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“Seek good, scan bad” is too simple.</b> A scan is perfect when most rows are needed, and a seek can still read huge ranges. Judge by logical reads and by how many rows you actually need.</p>
+      <p><b>Adding an index without checking the plan</b> is the classic way to slow down writes for no read benefit.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🌲 Clustered index</h5><p>The data itself in key order. One per table. Seeking it gets you the whole row.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📇 Nonclustered index</h5><p>A separate lookup structure. Many per table. Gets you the key — and a pointer to the rest.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>You can now make a query use an index. But how do you <i>see</i> what the engine did — operator by operator, row by row? Next: reading an execution plan.</span>
+      <a class="next-link" href="reading-execution-plans.html">Reading an execution plan <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Index behaviour depends on the SQL Server / Azure SQL version. For exact details check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide" target="_blank" rel="noopener">Index design guide</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/showplan-logical-and-physical-operators-reference" target="_blank" rel="noopener">Showplan operator reference</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql" target="_blank" rel="noopener">SET STATISTICS IO</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261017"></script>
+</body>
+</html>

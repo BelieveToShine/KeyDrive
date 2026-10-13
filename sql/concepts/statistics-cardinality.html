@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics &amp; cardinality estimation — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261017">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Statistics &amp; cardinality estimation</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 5 of 16 · 🔭 Plan literacy</div>
+    <h1>The optimizer never counts your rows — it trusts <span class="grad-text">statistics</span>, and a wrong summary means a wrong plan.</h1>
+    <p class="sub">Where the “estimated rows” in every plan come from, how statistics go stale, and the one-change experiment that tests it.</p>
+    <div class="interview-q">❓ "Why did the optimizer estimate 50 rows when 4,000 came back, and what would you check first?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Statistics summarise a column as a histogram of steps; the optimizer looks up the value in the query and reads the row estimate from the matching step">
+<defs><marker id="st1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="215" y="12" width="225" height="238" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="229" y="31" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">HISTOGRAM · built from the column</text>
+<path d="M130,120 L215,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M585,48 L585,120" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/>
+<path d="M440,155 L540,155" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/>
+<rect class="bx" x="10" y="85" width="120" height="70" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="70" y="111.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🏙️ City column</text>
+<text x="70" y="124" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Customers table</text>
+<text x="70" y="136.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">(illustrative)</text>
+<rect x="227" y="100" width="30" height="90" rx="4" fill="#fbbf24" fill-opacity=".35" stroke="#fbbf24" stroke-width="1.2"/>
+<text class="free" x="242" y="204" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Agra</text>
+<rect x="271" y="70" width="30" height="120" rx="4" fill="#fbbf24" fill-opacity=".35" stroke="#fbbf24" stroke-width="1.2"/>
+<text class="free" x="286" y="204" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Delhi</text>
+<rect x="315" y="160" width="30" height="30" rx="4" fill="#fbbf24" fill-opacity=".35" stroke="#fbbf24" stroke-width="1.2"/>
+<text class="free" x="330" y="204" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Goa</text>
+<rect x="359" y="50" width="30" height="140" rx="4" fill="#fbbf24" fill-opacity=".35" stroke="#fbbf24" stroke-width="1.2"/>
+<text class="free" x="374" y="204" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Mumbai</text>
+<rect x="403" y="176" width="30" height="14" rx="4" fill="#fb7185" fill-opacity=".35" stroke="#fb7185" stroke-width="1.2"/>
+<text class="free" x="418" y="204" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Pune</text>
+<text class="free" x="327" y="232" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">bar height = rows for that value</text>
+<rect class="bx" x="540" y="120" width="90" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="585" y="146.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Estimate</text>
+<text x="585" y="159" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Pune</text>
+<text x="585" y="171.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">≈ 50 rows</text>
+<rect class="bx" x="540" y="8" width="90" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="585" y="25.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">🔎 Query</text>
+<text x="585" y="38.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">City = Pune</text>
+<text class="free" x="320" y="278" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">The optimizer does not count rows at query time — it reads the answer from this small summary.</text>
+<g class="arrow-pill"><rect x="150" y="111" width="44" height="18" rx="9"/><text x="172" y="123.5" text-anchor="middle" font-size="9" font-style="italic">built</text></g>
+<g class="arrow-pill"><rect x="565.5" y="75" width="39" height="18" rx="9"/><text x="585" y="87.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g>
+<g class="arrow-pill"><rect x="462.5" y="146" width="55" height="18" rx="9"/><text x="490" y="158.5" text-anchor="middle" font-size="9" font-style="italic">look up</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the optimizer cannot afford to count your rows every time. Instead it keeps a small <b>summary of each column</b> — a <b>histogram</b> — and reads the estimate from it. Here the query asks for Pune; the histogram says “about 50 rows”, so the plan is built for 50. If that number is wrong, every decision after it (which join, how much memory, seek or scan) can be wrong too.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">The optimizer never counts your rows — it reads a small summary called <b>statistics</b>. Wrong summary, wrong estimate, wrong plan.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The last page ended on the best clue in any plan: <b>estimated rows vs actual rows</b>. A plan built for 50 rows and handed 4,000 is a plan built for a different world.</p>
+      <p>Where does the 50 come from? Counting would be as slow as the query itself. So the engine keeps <b>statistics</b>: a compact description of how values are spread in a column. The optimizer uses them to estimate how many rows each step will produce — the <b>cardinality estimate</b> — and then picks the cheapest plan for that estimate.</p>
+      <p>That makes statistics the quiet foundation of everything on the next pages: join choice, memory, even whether your new index gets used.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔬 What is inside a statistics object</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">HISTOGRAM</span><h4>📊 Up to 200 steps</h4><p>Built on the <b>first</b> key column: values are sorted, counted, and grouped into at most 200 steps.</p></div>
+      <div class="how-step"><span class="hs-n">DENSITY</span><h4>🧮 How repetitive?</h4><p>For several columns together, “density” says how many duplicates to expect. Helps multi-column filters.</p></div>
+      <div class="how-step"><span class="hs-n">ROW COUNT</span><h4>🔢 How big, how old</h4><p>Total rows and when the summary was last updated.</p></div>
+      <div class="how-step"><span class="hs-n">THE RULE</span><h4>⚖️ Even spread inside a step</h4><p>Within one step, values are assumed to be spread evenly with the same frequency.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧾 Reading a histogram (DBCC SHOW_STATISTICS)</div>
+    <p>Each row of the histogram is one step. These are the columns you will see — the numbers below are illustrative.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Column</th><th scope="col">Meaning</th><th scope="col">Example (illustrative)</th></tr></thead><tbody><tr><th scope="row">RANGE_HI_KEY</th><td>The top value of the step</td><td>Pune</td></tr><tr><th scope="row">EQ_ROWS</th><td>Estimated rows equal to that top value</td><td>50</td></tr><tr><th scope="row">RANGE_ROWS</th><td>Estimated rows inside the step, below the top value</td><td>1,200</td></tr><tr><th scope="row">DISTINCT_RANGE_ROWS</th><td>How many <i>distinct values</i> are inside the step (values, not rows)</td><td>30</td></tr><tr><th scope="row">AVG_RANGE_ROWS</th><td>RANGE_ROWS ÷ DISTINCT_RANGE_ROWS — used when your value falls <i>between</i> steps</td><td>40</td></tr></tbody></table></div>
+    <div class="code-block"><pre><span class="kw">DBCC SHOW_STATISTICS</span> (<span class="str">'dbo.Customers'</span>, <span class="str">'IX_Customers_City'</span>);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Shows the header (rows, last updated), the density, and the histogram. A great first stop when estimated and actual rows disagree.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⏳ How statistics go stale</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Statistics go stale as data changes: the summary still says 50 Pune customers after thousands signed up, until enough changes trigger an automatic update">
+<defs><marker id="st2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M160,60 L245,60" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M395,60 L480,60" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M320,100 L320,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M395,230 L480,230" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st2A)"/>
+<path d="M555,190 L555,100" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#st2A)"/>
+<rect class="bx" x="10" y="20" width="150" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="85" y="51.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📅 Monday</text>
+<text x="85" y="64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">statistics built</text>
+<text x="85" y="76.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Pune ≈ 50</text>
+<rect class="bx" x="245" y="20" width="150" height="80" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="51.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📈 Weeks pass</text>
+<text x="320" y="64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">3,950 new Pune</text>
+<text x="320" y="76.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">customers sign up</text>
+<rect class="bx" x="480" y="20" width="150" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="555" y="51.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">⚡ A query runs</text>
+<text x="555" y="64" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">plan assumes 50</text>
+<text x="555" y="76.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">reality: 4,000</text>
+<rect class="bx" x="245" y="190" width="150" height="80" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="221.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧮 Changes counted</text>
+<text x="320" y="234" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">enough changes?</text>
+<text x="320" y="246.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">a threshold decides</text>
+<rect class="bx" x="480" y="190" width="150" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="555" y="221.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🔄 Refresh</text>
+<text x="555" y="234" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new summary</text>
+<text x="555" y="246.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Pune ≈ 4,000</text>
+<g class="arrow-pill"><rect x="182.5" y="51" width="39" height="18" rx="9"/><text x="202" y="63.5" text-anchor="middle" font-size="9" font-style="italic">time</text></g>
+<g class="arrow-pill"><rect x="415" y="51" width="44" height="18" rx="9"/><text x="437" y="63.5" text-anchor="middle" font-size="9" font-style="italic">plans</text></g>
+<g class="arrow-pill"><rect x="260.5" y="136" width="119" height="18" rx="9"/><text x="320" y="148.5" text-anchor="middle" font-size="9" font-style="italic">each change counted</text></g>
+<g class="arrow-pill"><rect x="409.5" y="221" width="55" height="18" rx="9"/><text x="437" y="233.5" text-anchor="middle" font-size="9" font-style="italic">reached</text></g>
+<g class="arrow-pill"><rect x="498.5" y="136" width="113" height="18" rx="9"/><text x="555" y="148.5" text-anchor="middle" font-size="9" font-style="italic">next plan is right</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> follow the top row: statistics were built when Pune had about 50 customers; weeks of sign-ups follow; the query still plans for 50. The engine <b>counts changes</b> as they happen; once enough have accumulated, the statistics are refreshed (bottom row) and the next plan is right. The gap between the red box and the green box is exactly the window in which queries get the wrong plan.</figcaption>
+</figure>
+    <p style="margin-top:14px"><b>Automatic updates.</b> The database option <code>AUTO_UPDATE_STATISTICS</code> is ON by default and the docs recommend keeping it that way; with it off, even statistics marked out of date are not refreshed and plans can degrade. The engine counts row changes since the last update and compares them to a threshold; for tables above 500 rows the classic threshold is 500 + 20% of the rows, and at compatibility level 130 and higher a lower, size-dependent threshold applies to big tables so they refresh more often.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Plan lab · fix the tour plan’s bad guess</div>
+    <p>On the last page the Customers seek estimated 50 rows and got 4,000. Test the “stale statistics” hypothesis — and only that one.</p>    <div class="code-block"><pre><span class="cmt">-- 1. look: when were the statistics last updated, and what do they say?</span>
+<span class="kw">DBCC SHOW_STATISTICS</span> (<span class="str">'dbo.Customers'</span>, <span class="str">'IX_Customers_City'</span>);
+
+<span class="cmt">-- 2. change ONE thing</span>
+<span class="kw">UPDATE STATISTICS</span> dbo.Customers IX_Customers_City <span class="kw">WITH FULLSCAN</span>;
+
+<span class="cmt">-- 3. re-run the same query with the ACTUAL plan on, compare:</span>
+<span class="cmt">--    before: Index Seek estimated 50  / actual 4,000</span>
+<span class="cmt">--    after : Index Seek estimated 4,000 / actual 4,000   (illustrative)</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">FULLSCAN reads every row to build the histogram — accurate, but slower than the default sampling on very large tables. Numbers are illustrative.</p>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div><p style="margin-top:12px">With a correct estimate the optimizer may also choose a different join — the topic of the next page.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · why is the estimate wrong?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Cause</th><th scope="col">How it shows up</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">Statistics are stale</th><td>Estimate matches an older version of the data; “last updated” is old</td><td><code>UPDATE STATISTICS</code>; check the auto-update option is on</td></tr><tr><th scope="row">Ascending keys</th><td>Queries ask for the newest rows (IDs, dates) that are beyond the last histogram step, so there is no estimate for them</td><td>Update statistics more often on such columns</td></tr><tr><th scope="row">Skewed values inside one step</th><td>One value is hugely more common than its neighbours but the step assumes an even spread</td><td>Look at the histogram step; consider filtered statistics or a rewrite</td></tr><tr><th scope="row">Several columns filtered together</th><td>The optimizer combines single-column guesses; real data may be correlated</td><td>Multi-column statistics / index on the combination</td></tr><tr><th scope="row">Sampled statistics on a huge table</th><td>Estimates are approximate when only part of the rows were sampled</td><td>Update with a larger sample or FULLSCAN</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🆕</span><h5>Last night’s orders</h5><p>The report asks for rows added since midnight. The histogram’s last step ends yesterday, so there is no estimate for today.</p><span class="sc-use">→ Ascending-key problem</span></div>
+      <div class="scenario"><span class="sc-icon">📦</span><h5>Bulk import</h5><p>10 million rows loaded in minutes; queries right after are slow until the engine refreshes the statistics.</p><span class="sc-use">→ Update statistics after big loads</span></div>
+      <div class="scenario"><span class="sc-icon">🏙️</span><h5>One giant city</h5><p>90% of customers live in one city. “Even spread” is wrong for that step.</p><span class="sc-use">→ Check the histogram step</span></div>
+      <div class="scenario"><span class="sc-icon">☁️</span><h5>“Is auto-update on in Azure SQL?”</h5><p>Do not assume — check the database setting (<code>is_auto_update_stats_on</code> in <code>sys.databases</code>).</p><span class="sc-use">→ Verify, don’t guess</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Cardinality estimation (CE)</b> is the part of the optimizer that turns statistics and your predicates into row estimates. Newer database compatibility levels use a newer CE model; the same query can get a different estimate — and plan — after an upgrade.</p>
+      <p><b>Multi-column predicates.</b> The estimator uses density information to improve estimates for queries that filter several columns of the same table, but it cannot know every correlation in your data.</p>
+      <p><b>Other engines:</b> PostgreSQL keeps column statistics too (refreshed by <code>ANALYZE</code>) and its <code>EXPLAIN</code> shows estimated rows — same idea, different command.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Statistics are the optimizer’s summary of a column: a histogram of up to 200 steps plus density information.</li><li>The optimizer turns them into row estimates (cardinality estimation) and builds the plan around those estimates.</li><li>Histogram columns: RANGE_HI_KEY, EQ_ROWS, RANGE_ROWS, DISTINCT_RANGE_ROWS, AVG_RANGE_ROWS.</li><li>Statistics go stale as data changes; auto-update is ON by default and refreshes them after enough changes.</li><li>Ascending keys, skew within a step and correlated columns are classic estimate-killers.</li><li>Fix a bad estimate with UPDATE STATISTICS first — one change, then re-measure.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"The optimizer plans from statistics — a histogram of up to 200 steps per column plus density — not from counting rows. When estimated and actual rows diverge I check whether the statistics are stale, whether the column is ascending or skewed, and update statistics as a single controlled change before touching the query or the indexes."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Rebuilding indexes “to fix statistics”.</b> Statistics and index fragmentation are different things. A rebuild does refresh that index’s statistics as a side effect, but it is a heavy way to do a light job — update the statistics directly.</p>
+      <p><b>Turning auto-update off to “save time”.</b> The docs warn it can lead to suboptimal plans and degraded performance.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📊 Statistics</h5><p>A summary of how values are spread in a column. Used for row <i>estimates</i>.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>📇 Index</h5><p>A sorted structure used to <i>find rows</i>. An index automatically has statistics, but they are not the same thing.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>A good estimate lets the optimizer choose the right <i>join algorithm</i> — the choice behind most slow multi-table queries. Next: nested loops, hash and merge joins <i>(coming soon)</i>.</span>
+    </div>
+  </section>  <p class="fact-note">📌 Defaults and thresholds change between SQL Server and Azure SQL versions. For exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics" target="_blank" rel="noopener">Statistics</a> · <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/cardinality-estimation-sql-server" target="_blank" rel="noopener">Cardinality estimation</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261017"></script>
+</body>
+</html>

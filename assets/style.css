@@ -562,3 +562,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 .jm-steps .jm-row + .jm-row, .jm-steps .jm-row + .jm-group{ margin-top:8px; }
 .jm-steps .jm-row.in-group{ padding:8px; background:rgba(167,139,250,.06); border:1px dashed rgba(167,139,250,.25); border-radius:14px; }
+
+/* phones: first-column labels may wrap so the other columns stay within reach of one swipe (lessons L9) */
+@media (max-width:720px){ .cmp-table tbody th{ white-space:normal; min-width:104px; max-width:170px; } }

@@ -196,5 +196,53 @@
       "sqs-sns-eventbridge": "SQS, SNS and EventBridge",
       "kinesis": "Kinesis Data Streams"
     }
+  },
+  "sql": {
+    "title": "SQL Performance Lab",
+    "order": [
+      "query-journey",
+      "storage-pages",
+      "indexes-seek-scan",
+      "reading-execution-plans",
+      "statistics-cardinality",
+      "join-algorithms",
+      "covering-indexes",
+      "sargable-queries",
+      "plan-cache-sniffing",
+      "measuring-query-store",
+      "debugging-playbook",
+      "locking-isolation",
+      "index-maintenance-cost",
+      "partitioning-columnstore",
+      "azure-sql-specifics",
+      "slow-query-clinic"
+    ],
+    "titles": {
+      "query-journey": "The journey of a query",
+      "storage-pages": "How data is stored: pages and heaps",
+      "indexes-seek-scan": "Indexes: seek vs scan",
+      "reading-execution-plans": "Reading an execution plan",
+      "statistics-cardinality": "Statistics & cardinality estimation",
+      "join-algorithms": "Join algorithms",
+      "covering-indexes": "Covering indexes & key lookups",
+      "sargable-queries": "Writing queries the optimizer can use",
+      "plan-cache-sniffing": "Plan cache & parameter sniffing",
+      "measuring-query-store": "Measuring: STATISTICS IO/TIME, waits, Query Store",
+      "debugging-playbook": "The debugging playbook",
+      "locking-isolation": "Transactions, locking & isolation",
+      "index-maintenance-cost": "The cost of indexes & maintenance",
+      "partitioning-columnstore": "Big-data reads: partitioning & columnstore",
+      "azure-sql-specifics": "Azure SQL specifics",
+      "slow-query-clinic": "Capstone: the slow-query clinic"
+    },
+    "written": [
+      "query-journey",
+      "storage-pages",
+      "indexes-seek-scan",
+      "reading-execution-plans",
+      "statistics-cardinality"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }

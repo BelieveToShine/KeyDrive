@@ -1894,5 +1894,143 @@
     "page": "cloud/index.html",
     "summary": "One 19-step architect journey told in Azure and AWS, with a side-by-side service map.",
     "keywords": "cloud azure aws compare side by side map services equivalent"
+  },
+  {
+    "id": "sql-query-journey",
+    "title": "The journey of a query",
+    "category": "SQL",
+    "page": "sql/concepts/query-journey.html",
+    "summary": "How a SQL query travels: parse, bind, optimize, cache, execute — and why estimated and actual plans differ.",
+    "keywords": "sql query journey parse bind optimizer plan cache execute estimated actual execution plan declarative"
+  },
+  {
+    "id": "sql-query-journey-recall",
+    "title": "The journey of a query — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/query-journey.html",
+    "summary": "Quick recall points: The journey of a query.",
+    "keywords": "sql query journey parse bind optimizer plan cache execute estimated actual execution plan declarative interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-query-journey-trap",
+    "title": "The journey of a query — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/query-journey.html",
+    "summary": "The classic mistake with The journey of a query.",
+    "keywords": "sql query journey parse bind optimizer plan cache execute estimated actual execution plan declarative trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-storage-pages",
+    "title": "How data is stored: pages and heaps",
+    "category": "SQL",
+    "page": "sql/concepts/storage-pages.html",
+    "summary": "8 KB pages, extents, heaps versus clustered tables, and how to choose a clustered key.",
+    "keywords": "sql pages extents 8 kb heap clustered index key identity logical reads physical reads storage"
+  },
+  {
+    "id": "sql-storage-pages-recall",
+    "title": "How data is stored: pages and heaps — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/storage-pages.html",
+    "summary": "Quick recall points: How data is stored: pages and heaps.",
+    "keywords": "sql pages extents 8 kb heap clustered index key identity logical reads physical reads storage interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-storage-pages-trap",
+    "title": "How data is stored: pages and heaps — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/storage-pages.html",
+    "summary": "The classic mistake with How data is stored: pages and heaps.",
+    "keywords": "sql pages extents 8 kb heap clustered index key identity logical reads physical reads storage trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-indexes-seek-scan",
+    "title": "Indexes: seek vs scan",
+    "category": "SQL",
+    "page": "sql/concepts/indexes-seek-scan.html",
+    "summary": "B-tree indexes, clustered versus nonclustered, seek versus scan, key lookups, and why an index gets ignored.",
+    "keywords": "sql index b-tree clustered nonclustered seek scan key lookup selectivity create index"
+  },
+  {
+    "id": "sql-indexes-seek-scan-recall",
+    "title": "Indexes: seek vs scan — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/indexes-seek-scan.html",
+    "summary": "Quick recall points: Indexes: seek vs scan.",
+    "keywords": "sql index b-tree clustered nonclustered seek scan key lookup selectivity create index interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-indexes-seek-scan-trap",
+    "title": "Indexes: seek vs scan — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/indexes-seek-scan.html",
+    "summary": "The classic mistake with Indexes: seek vs scan.",
+    "keywords": "sql index b-tree clustered nonclustered seek scan key lookup selectivity create index trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-reading-execution-plans",
+    "title": "Reading an execution plan",
+    "category": "SQL",
+    "page": "sql/concepts/reading-execution-plans.html",
+    "summary": "A five-step routine for reading execution plans, an operator cheat sheet, and estimated versus actual rows.",
+    "keywords": "sql execution plan showplan operators nested loops hash match estimated actual rows arrow thickness cost warnings ssms"
+  },
+  {
+    "id": "sql-reading-execution-plans-recall",
+    "title": "Reading an execution plan — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/reading-execution-plans.html",
+    "summary": "Quick recall points: Reading an execution plan.",
+    "keywords": "sql execution plan showplan operators nested loops hash match estimated actual rows arrow thickness cost warnings ssms interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-reading-execution-plans-trap",
+    "title": "Reading an execution plan — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/reading-execution-plans.html",
+    "summary": "The classic mistake with Reading an execution plan.",
+    "keywords": "sql execution plan showplan operators nested loops hash match estimated actual rows arrow thickness cost warnings ssms trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-statistics-cardinality",
+    "title": "Statistics & cardinality estimation",
+    "category": "SQL",
+    "page": "sql/concepts/statistics-cardinality.html",
+    "summary": "Where row estimates come from: histograms, stale statistics, auto-update, ascending keys and how to test a bad estimate.",
+    "keywords": "sql statistics histogram cardinality estimation update statistics dbcc show_statistics stale auto update ascending key"
+  },
+  {
+    "id": "sql-statistics-cardinality-recall",
+    "title": "Statistics & cardinality estimation — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/statistics-cardinality.html",
+    "summary": "Quick recall points: Statistics & cardinality estimation.",
+    "keywords": "sql statistics histogram cardinality estimation update statistics dbcc show_statistics stale auto update ascending key interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-statistics-cardinality-trap",
+    "title": "Statistics & cardinality estimation — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/statistics-cardinality.html",
+    "summary": "The classic mistake with Statistics & cardinality estimation.",
+    "keywords": "sql statistics histogram cardinality estimation update statistics dbcc show_statistics stale auto update ascending key trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "sql-hub",
+    "title": "SQL Performance Lab",
+    "category": "SQL",
+    "page": "sql/index.html",
+    "summary": "Deep dive into SQL performance: execution plans, indexes, statistics, joins and a debugging method.",
+    "keywords": "sql performance tuning query optimization execution plan index statistics lab data systems"
   }
 ]
