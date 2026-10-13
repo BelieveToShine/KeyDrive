@@ -139,5 +139,28 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Extracting an interface later is cheap/safe with tests | 🟨 K | general refactoring experience, not a quoted claim |
 | Situation table (script, CRUD, tax rules, I/O seams) | 🟦 I | judgement guidance, illustrative |
 
+## Page 12 — SOLID Clinic (capstone)
+| Claim | Status | Note |
+|---|---|---|
+| Every technique in the cases (SRP/OCP/LSP/ISP/DIP, Move Method, DI lifetimes, captive dependency, contract tests, YAGNI) | ✅ V | sourced on the pages each case points to (2–11) |
+| Captive dependency / singleton holding scoped service; scope validation off outside Development by default | ✅ V | Microsoft Learn DI guidelines / ValidateScopes (ledgered page 7) |
+| All case symptoms, git-history figures, file counts, timings (8 s test, 14 of 20 changes, 40 interfaces, 9 file jumps) | 🟦 I | illustrative scenarios built on the ShopCore canonical numbers |
+| Rubric thresholds (7–9, 4–6, 0–3 diagnosed) | 🟦 I | a self-assessment label |
+
+## Deep dive — Patterns that Realise the Principles
+| Claim | Status | Note |
+|---|---|---|
+| Strategy: interchangeable algorithms in separate classes; context holds a reference to one strategy and can swap it | ✅ V | refactoring.guru Strategy (via search summary) |
+| Decorator: attach behaviour by placing objects inside wrapper objects implementing the same interface; adapter provides a different interface while decorator keeps/extends it | ✅ V | refactoring.guru Decorator |
+| Factory Method: interface for creating objects in a superclass, subclasses alter the type created | ✅ V | refactoring.guru Factory Method |
+| Adapter: lets objects with incompatible interfaces work together; Observer: subscription mechanism notifying several objects of events | 🟨 K | only one-line catalog blurbs were read |
+| Middleware: each component can do work before and after the next, or short-circuit | ✅ V | Microsoft Learn: ASP.NET Core middleware |
+| IHttpClientFactory: chain handlers (DelegatingHandler) to build an outgoing request pipeline; register with AddHttpMessageHandler as transient | ✅ V | Microsoft Learn: Use IHttpClientFactory |
+| IObservable/IObserver: Subscribe returns IDisposable to unsubscribe; thread-safety best practices | ✅ V | Microsoft Learn: Observer design pattern (and best practices) |
+| Built-in container has no first-class decorator API | 🟨 K | not found in the pages searched; absence not proven |
+| Pattern → principle mapping | 🟦 I | common teaching view, not an official mapping |
+| VendorClient / VendorChargeRequest code, cents conversion | 🟦 I | invented SDK for illustration |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
+| "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |

@@ -484,9 +484,14 @@
       "smells-refactoring",
       "solid-together",
       "testing-solid",
-      "when-not-solid"
+      "when-not-solid",
+      "solid-clinic"
     ],
-    "sub": {},
-    "subTitles": {}
+    "sub": {
+      "design-patterns-solid": "dependency-inversion"
+    },
+    "subTitles": {
+      "design-patterns-solid": "Patterns that realise the principles"
+    }
   }
 }

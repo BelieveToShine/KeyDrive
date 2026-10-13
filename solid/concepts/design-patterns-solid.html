@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patterns that Realise the Principles — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><a href="dependency-inversion.html">D — Dependency Inversion</a><span class="sep">›</span><span class="cur">Patterns that realise the principles</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · SOLID lab · 🎁 Patterns</div>
+    <h1>Patterns are the principles <span class="grad-text">in a concrete shape</span>.</h1>
+    <p class="sub">Strategy, Decorator, Factory, Adapter and Observer: which principle each serves, C# examples, and the .NET features that are the same ideas.</p>
+    <div class="interview-q">❓ "Which design patterns relate to SOLID, and how would you add logging or caching without modifying a class?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Five design patterns and the principles they serve: Strategy for open/closed, Decorator for single responsibility and open/closed, Factory for dependency inversion, Adapter for dependency inversion and interface segregation, Observer for open/closed and dependency inversion">
+<defs><marker id="dp_mA" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp_mS" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp_mT" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M260,34 L380,34" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dp_mA)"/>
+<path d="M260,96 L380,96" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dp_mA)"/>
+<path d="M260,158 L380,158" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dp_mA)"/>
+<path d="M260,220 L380,220" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dp_mA)"/>
+<path d="M260,282 L380,282" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#dp_mA)"/>
+<rect class="bx" x="10" y="8" width="250" height="52" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="135" y="31.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Strategy</text>
+<text x="135" y="44.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">swap an algorithm</text>
+<rect class="bx" x="380" y="8" width="250" height="52" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="505" y="38" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Open / Closed</text>
+<rect class="bx" x="10" y="70" width="250" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="135" y="93.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Decorator</text>
+<text x="135" y="106.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">wrap to add behaviour</text>
+<rect class="bx" x="380" y="70" width="250" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="505" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SRP · Open / Closed</text>
+<rect class="bx" x="10" y="132" width="250" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="135" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Factory</text>
+<text x="135" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">create without naming the class</text>
+<rect class="bx" x="380" y="132" width="250" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="505" y="162" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Dependency Inversion</text>
+<rect class="bx" x="10" y="194" width="250" height="52" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="135" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Adapter</text>
+<text x="135" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">fit a foreign interface</text>
+<rect class="bx" x="380" y="194" width="250" height="52" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="505" y="224" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">DIP · Interface Segregation</text>
+<rect class="bx" x="10" y="256" width="250" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="135" y="279.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Observer</text>
+<text x="135" y="292.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">notify who subscribed</text>
+<rect class="bx" x="380" y="256" width="250" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="505" y="286" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Open / Closed · DIP</text>
+<g class="arrow-pill"><rect x="295" y="25" width="50" height="18" rx="9"/><text x="320" y="37.5" text-anchor="middle" font-size="9" font-style="italic">serves</text></g>
+<g class="arrow-pill"><rect x="295" y="87" width="50" height="18" rx="9"/><text x="320" y="99.5" text-anchor="middle" font-size="9" font-style="italic">serves</text></g>
+<g class="arrow-pill"><rect x="295" y="149" width="50" height="18" rx="9"/><text x="320" y="161.5" text-anchor="middle" font-size="9" font-style="italic">serves</text></g>
+<g class="arrow-pill"><rect x="295" y="211" width="50" height="18" rx="9"/><text x="320" y="223.5" text-anchor="middle" font-size="9" font-style="italic">serves</text></g>
+<g class="arrow-pill"><rect x="295" y="273" width="50" height="18" rx="9"/><text x="320" y="285.5" text-anchor="middle" font-size="9" font-style="italic">serves</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> Design patterns are <b>named, reusable shapes</b> for code. Several of the best-known ones are the five principles in a concrete form: a <b>Strategy</b> is the Open/Closed Principle for algorithms, a <b>Decorator</b> adds behaviour without editing the class, a <b>Factory</b> hides which class is created, an <b>Adapter</b> lets you depend on your own interface instead of a vendor’s, and an <b>Observer</b> lets new listeners appear without changing the publisher.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Principles say what good design looks like; patterns are proven recipes for getting there.</b> Learn the problem each pattern solves, not its diagram.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>In the catalog of design patterns (the “Gang of Four” collection, as presented on refactoring.guru), <b>Strategy</b> puts interchangeable algorithms in separate classes behind one interface, so the context can switch them; <b>Decorator</b> attaches new behaviour by placing an object inside wrapper objects that implement the same interface; <b>Factory Method</b> provides an interface for creating objects while letting subclasses alter the type created.</p>
+      <p><b>Adapter</b> makes objects with incompatible interfaces work together, and <b>Observer</b> is a subscription mechanism that notifies several objects about events on the object they watch.</p>
+      <p>You have already built two of these without naming them: the <span class="kw">IDiscountRule</span> list on page 3 is a Strategy, and the interface seam on page 6 is where an Adapter or Decorator plugs in.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎁 Decorator in one picture</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 392" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A decorator chain: OrderService calls IOrderRepository; the logging decorator wraps the caching decorator, which wraps SqlOrderRepository; all three implement the same interface, so OrderService cannot tell how many layers there are">
+<defs><marker id="dp_cA" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp_cS" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dp_cT" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M320,62 L320,114" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dp_cA)"/>
+<path d="M320,168 L320,220" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dp_cA)"/>
+<path d="M320,274 L320,326" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dp_cA)"/>
+<rect class="bx" x="170" y="8" width="300" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="32.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderService</text>
+<text x="320" y="45.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">depends only on IOrderRepository</text>
+<rect class="bx" x="170" y="114" width="300" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="320" y="138.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">LoggingOrderRepository</text>
+<text x="320" y="151.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">logs, then calls inner</text>
+<rect class="bx" x="170" y="220" width="300" height="54" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="244.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">CachingOrderRepository</text>
+<text x="320" y="257.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">checks cache, then calls inner</text>
+<rect class="bx" x="170" y="326" width="300" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="350.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">SqlOrderRepository</text>
+<text x="320" y="363.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the real work</text>
+<g class="arrow-pill"><rect x="298" y="79" width="44" height="18" rx="9"/><text x="320" y="91.5" text-anchor="middle" font-size="9" font-style="italic">calls</text></g>
+<g class="arrow-pill"><rect x="298" y="185" width="44" height="18" rx="9"/><text x="320" y="197.5" text-anchor="middle" font-size="9" font-style="italic">wraps</text></g>
+<g class="arrow-pill"><rect x="298" y="291" width="44" height="18" rx="9"/><text x="320" y="303.5" text-anchor="middle" font-size="9" font-style="italic">wraps</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> All three classes implement <span class="kw">IOrderRepository</span>. OrderService calls the outermost; each layer does its extra job and passes the call inward. <b>Logging and caching are added without editing SqlOrderRepository</b> (SRP and OCP), and the order of wrapping is decided in one place — the composition root.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Pattern lab · decorator, adapter, observer</div>
+    <div class="code-block"><pre><span class="cmt">// DECORATOR — add logging without touching SqlOrderRepository</span>
+<span class="kw">public</span> <span class="kw">class</span> LoggingOrderRepository(IOrderRepository inner, ILogger&lt;LoggingOrderRepository&gt; log) : IOrderRepository
+{
+    <span class="kw">public</span> <span class="kw">void</span> Save(Order order)
+    {
+        log.LogInformation(<span class="str">"Saving order {Id}"</span>, order.Id);
+        inner.Save(order);
+    }
+}
+<span class="cmt">// Program.cs</span>
+builder.Services.AddScoped&lt;SqlOrderRepository&gt;();
+builder.Services.AddScoped&lt;IOrderRepository&gt;(sp =&gt; <span class="kw">new</span> LoggingOrderRepository(
+    sp.GetRequiredService&lt;SqlOrderRepository&gt;(), sp.GetRequiredService&lt;ILogger&lt;LoggingOrderRepository&gt;&gt;()));
+
+<span class="cmt">// ADAPTER — depend on your interface, wrap the vendor's SDK once</span>
+<span class="kw">public</span> <span class="kw">interface</span> IPaymentGateway { PaymentResult Charge(<span class="kw">decimal</span> amount, <span class="kw">string</span> token); }
+<span class="kw">public</span> <span class="kw">class</span> VendorPaymentAdapter(VendorClient vendor) : IPaymentGateway
+{
+    <span class="kw">public</span> PaymentResult Charge(<span class="kw">decimal</span> amount, <span class="kw">string</span> token)
+    {
+        <span class="kw">var</span> r = vendor.CreateCharge(<span class="kw">new</span> VendorChargeRequest { AmountCents = (long)(amount * 100), Source = token });
+        <span class="kw">return</span> <span class="kw">new</span> PaymentResult(r.Status == <span class="str">"ok"</span>);
+    }
+}
+
+<span class="cmt">// OBSERVER — the publisher does not know who listens</span>
+<span class="kw">public</span> <span class="kw">class</span> OrderService
+{
+    <span class="kw">public</span> event Action&lt;Order&gt;? OrderPlaced;
+    <span class="kw">public</span> <span class="kw">void</span> Place(Order o) { /* save */ OrderPlaced?.Invoke(o); }
+}
+<span class="cmt">// listeners subscribe elsewhere:  service.OrderPlaced += emailSender.Send;</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative (VendorClient is a made-up SDK). The same ideas appear in .NET itself: middleware wraps the next delegate, and HttpClient handlers chain the same way.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Pattern</th><th scope="col">Principle it serves</th><th scope="col">Use it when</th><th scope="col">Do not use it when</th></tr></thead><tbody><tr><th scope="row">Strategy</th><td>OCP (and DIP)</td><td>a behaviour has several interchangeable variants (pricing, shipping, tax)</td><td>there is one variant and no sign of another</td></tr><tr><th scope="row">Decorator</th><td>SRP, OCP</td><td>you want to add cross-cutting behaviour (logging, caching, retry) to an interface</td><td>the behaviour belongs in the class itself</td></tr><tr><th scope="row">Factory</th><td>DIP</td><td>the caller must not name the concrete class, or creation needs runtime choice</td><td>plain constructor injection is enough</td></tr><tr><th scope="row">Adapter</th><td>DIP, ISP</td><td>you depend on a vendor/legacy API you want to isolate or replace</td><td>you control both sides</td></tr><tr><th scope="row">Observer</th><td>OCP, DIP</td><td>many unrelated parts react to one event</td><td>a direct call is clearer and there is only one listener</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🏗️ The same ideas inside .NET</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">In .NET</th><th scope="col">Pattern it resembles</th><th scope="col">Evidence</th></tr></thead><tbody><tr><th scope="row">ASP.NET Core middleware</th><td>Decorator / chain</td><td>Each middleware can do work before and after calling the next one, or short-circuit the pipeline</td></tr><tr><th scope="row"><span class="kw">DelegatingHandler</span> with IHttpClientFactory</th><td>Decorator / chain</td><td>Handlers chained to build an outgoing request pipeline; registered as transient services</td></tr><tr><th scope="row"><span class="kw">IObservable&lt;T&gt;</span> / <span class="kw">IObserver&lt;T&gt;</span></th><td>Observer</td><td>Provider’s Subscribe returns an IDisposable so observers can unsubscribe</td></tr><tr><th scope="row"><span class="kw">IServiceCollection</span> registrations</th><td>Factory (of objects)</td><td>The container decides which class satisfies an interface</td></tr><tr><th scope="row"><span class="kw">ILogger&lt;T&gt;</span></th><td>Adapter-friendly abstraction</td><td>Your code depends on one interface; providers vary</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">📋 Pattern smells</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">A pattern name in every class (<span class="kw">OrderStrategyFactoryManager</span>)</th><td>Pattern-first design</td><td>Start from the pain; pick a pattern only when it removes it</td></tr><tr><th scope="row">Strategy with exactly one strategy</th><td>Speculative variation</td><td>Delete until a second variant exists</td></tr><tr><th scope="row">Observer whose handlers must run in a fixed order</th><td>Hidden coupling through events</td><td>Call them explicitly</td></tr><tr><th scope="row">Decorators that depend on each other’s state</th><td>Not independent layers</td><td>Make each layer self-contained</td></tr><tr><th scope="row">Unsubscribed observers keeping objects alive</th><td>Leak through the subscription</td><td>Dispose the subscription; Microsoft’s guidance has Subscribe return an IDisposable for this</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📉</span><h5>Add caching to the product repository</h5><p>Editing it mixes two jobs.</p><span class="sc-use">→ A caching decorator</span></div>
+      <div class="scenario"><span class="sc-icon">💳</span><h5>Swap the payment provider</h5><p>The vendor’s types are everywhere.</p><span class="sc-use">→ An adapter behind IPaymentGateway</span></div>
+      <div class="scenario"><span class="sc-icon">📣</span><h5>On “order placed”: email, loyalty points, analytics</h5><p>The service calls all three directly.</p><span class="sc-use">→ Observer / domain event</span></div>
+      <div class="scenario"><span class="sc-icon">🧮</span><h5>Seasonal tax calculators</h5><p>One class with a growing switch.</p><span class="sc-use">→ Strategy per rule set</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns are vocabulary.</b> Their main benefit is that a team can say “wrap it in a decorator” and mean the same thing. The code can be small; the naming is the value.</p>
+      <p><b>Registering decorators.</b> The built-in container has no first-class decorator API in the pages checked for this lesson; the lab uses an explicit factory registration, and libraries exist for convention-based decoration.</p>
+      <p><b>Domain events vs events.</b> A C# <span class="kw">event</span> works inside one process. Messaging between services is a different problem — see the Messaging pages in the Cloud labs.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Strategy: interchangeable algorithms behind one interface (OCP).</li><li>Decorator: wrappers with the same interface add behaviour without editing the class (SRP, OCP).</li><li>Factory: hide which concrete class is created (DIP).</li><li>Adapter: depend on your interface, wrap the foreign one (DIP, ISP).</li><li>Observer: publisher does not know its subscribers (OCP, DIP).</li><li>Start from pain, not from a pattern name.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"Principles tell me what good looks like; patterns are named recipes. I use Strategy when a behaviour has real variants, a Decorator to add logging or caching without editing the class, an Adapter to isolate a vendor API behind my own interface, and Observer when many parts react to one event. ASP.NET Core middleware and HttpClient handlers are decorator-style chains. But I choose a pattern because it removes a specific pain, not because it is on a list."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Pattern-first design.</b> Forcing a pattern onto code that has no variation adds layers for nothing.</p>
+      <p><b>Confusing Decorator and Adapter.</b> A decorator keeps the interface and adds behaviour; an adapter changes the interface.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🎁 Decorator</h5><p>Same interface in, same interface out, extra behaviour.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🔌 Adapter</h5><p>Different interface in, your interface out.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: the Dependency Inversion Principle that all of these patterns lean on.</span>
+      <a class="next-link" href="dependency-inversion.html">D — the Dependency Inversion Principle <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Pattern definitions follow refactoring.guru’s catalog (Strategy, Decorator and Factory Method intents were read directly; Adapter and Observer only as one-line catalog descriptions). Middleware, DelegatingHandler and IObservable facts follow Microsoft Learn. The mapping of patterns to principles is a common teaching view, not an official one. Official docs: <a href="https://refactoring.guru/design-patterns/catalog" target="_blank" rel="noopener">The catalog of design patterns (refactoring.guru)</a> · <a href="https://refactoring.guru/design-patterns/decorator" target="_blank" rel="noopener">Decorator (refactoring.guru)</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/" target="_blank" rel="noopener">ASP.NET Core middleware</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory" target="_blank" rel="noopener">Use the IHttpClientFactory (.NET)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern" target="_blank" rel="noopener">Observer design pattern (.NET)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

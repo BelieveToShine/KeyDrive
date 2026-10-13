@@ -4060,5 +4060,57 @@
     "summary": "The classic mistake with When Not to Apply SOLID.",
     "keywords": "when not to use SOLID YAGNI KISS DRY over-engineering premature abstraction rule of three judgement trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-solid-clinic",
+    "title": "Capstone: the SOLID Clinic",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-clinic.html",
+    "summary": "A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.",
+    "keywords": "solid clinic capstone practice diagnose refactoring cases interview"
+  },
+  {
+    "id": "solid-solid-clinic-recall",
+    "title": "Capstone: the SOLID Clinic — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-clinic.html",
+    "summary": "Quick recall points: Capstone: the SOLID Clinic.",
+    "keywords": "solid clinic capstone practice diagnose refactoring cases interview interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-solid-clinic-trap",
+    "title": "Capstone: the SOLID Clinic — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/solid-clinic.html",
+    "summary": "The classic mistake with Capstone: the SOLID Clinic.",
+    "keywords": "solid clinic capstone practice diagnose refactoring cases interview trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "solid-design-patterns-solid",
+    "title": "Patterns that Realise the Principles",
+    "category": "SOLID",
+    "page": "solid/concepts/design-patterns-solid.html",
+    "summary": "Strategy, Decorator, Factory, Adapter and Observer: which principle each serves, C# examples, and the .NET features that are the same ideas.",
+    "keywords": "design patterns strategy decorator factory adapter observer SOLID middleware DelegatingHandler IObservable"
+  },
+  {
+    "id": "solid-design-patterns-solid-recall",
+    "title": "Patterns that Realise the Principles — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/design-patterns-solid.html",
+    "summary": "Quick recall points: Patterns that Realise the Principles.",
+    "keywords": "design patterns strategy decorator factory adapter observer SOLID middleware DelegatingHandler IObservable interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-design-patterns-solid-trap",
+    "title": "Patterns that Realise the Principles — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/design-patterns-solid.html",
+    "summary": "The classic mistake with Patterns that Realise the Principles.",
+    "keywords": "design patterns strategy decorator factory adapter observer SOLID middleware DelegatingHandler IObservable trap mistake",
+    "anchor": "trap"
   }
 ]

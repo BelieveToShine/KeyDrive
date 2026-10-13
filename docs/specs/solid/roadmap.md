@@ -12,8 +12,8 @@
 | 9 | Refactoring OrderService step by step | solid-together | ✅ written |
 | 10 | Testability: the proof that it worked | testing-solid | ✅ written |
 | 11 | Judgement: YAGNI, KISS, DRY and over-engineering | when-not-solid | ✅ written |
-| 12 | Capstone: the SOLID clinic | solid-clinic | 🔒 planned |
-| ➕ | Deep dive: Patterns that realise the principles | design-patterns-solid | 🔒 planned (sub page of dependency-inversion) |
+| 12 | Capstone: the SOLID clinic | solid-clinic | ✅ written |
+| ➕ | Deep dive: Patterns that realise the principles | design-patterns-solid | ✅ written (sub page of dependency-inversion) |
 | ➕ | Deep dive: Composition over inheritance | composition-vs-inheritance | 🔒 planned (sub page of liskov-substitution) |
 | ➕ | Deep dive: SOLID in React and Angular | solid-in-frontend | 🔒 planned (sub page of solid-together) |
 

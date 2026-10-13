@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the SOLID Clinic — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><span class="cur">Capstone: the SOLID clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 12 · ⚖️ Judgement</div>
+    <h1>Eight patients and a bonus: <span class="grad-text">diagnose first</span>, then open the file.</h1>
+    <p class="sub">A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.</p>
+    <div class="interview-q">❓ "Here is a messy service class. How would you decide what to refactor and which principle applies?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The SOLID case board: nine cases in four families: responsibilities and change, contracts and interfaces, dependencies and testing, judgement">
+<defs><marker id="sc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="310" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">RESPONSIBILITIES &amp; CHANGE</text>
+<rect class="zone" x="326" y="8" width="306" height="144" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="340" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">CONTRACTS &amp; INTERFACES</text>
+<rect class="zone" x="8" y="164" width="216" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DEPENDENCIES &amp; TESTING</text>
+<rect class="zone" x="232" y="164" width="126" height="144" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="246" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">JUDGEMENT</text>
+<rect class="bx" x="18" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="63" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 1</text>
+<text x="63" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">God service</text>
+<rect class="bx" x="114" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="159" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 4</text>
+<text x="159" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Switch</text>
+<rect class="bx" x="210" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="255" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 7</text>
+<text x="255" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Envy</text>
+<rect class="bx" x="336" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="381" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 2</text>
+<text x="381" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Throwing</text>
+<rect class="bx" x="432" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="477" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 5</text>
+<text x="477" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Fat interface</text>
+<rect class="bx" x="528" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="573" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 9</text>
+<text x="573" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Bonus</text>
+<rect class="bx" x="18" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="63" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 3</text>
+<text x="63" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Hidden new</text>
+<rect class="bx" x="114" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="159" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 6</text>
+<text x="159" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Captive</text>
+<rect class="bx" x="242" y="202" width="90" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="287" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 8</text>
+<text x="287" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Fever</text>
+<text class="free" x="500" y="220" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">Decide your diagnosis first,</text>
+<text class="free" x="500" y="240" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">then reveal it.</text>
+<text class="free" x="500" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Each answer points to the page</text>
+<text class="free" x="500" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">that explains it.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> eight patients and a bonus, grouped by the family of problem: <b>responsibilities and change</b> (cases 1, 4, 7), <b>contracts and interfaces</b> (2, 5, 9), <b>dependencies and testing</b> (3, 6) and <b>judgement</b> (8). Each case gives a symptom and the evidence you would really find: the git history, a stack trace, a constructor, a registration. <b>Decide your diagnosis first</b>, then reveal it.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You know the five principles, DI, smells, refactoring, testing and when to stop. This is the practice ward: <b>symptom → evidence → diagnosis → one change → prove it</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Real tickets say “every promotion breaks something” or “tests take forever”, not “this violates OCP”. The cases start the way tickets do, and all of them use the same ShopCore app and the same illustrative numbers as the lab.</p>
+      <p>Every case is solved with the ladder: <b>smell → read (who changes it, and why?) → find the bent principle → guess one change → make it small and safe → prove it with a test</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The ladder, SOLID edition</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL ★</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+    <p style="margin-top:12px">Ask in this order: <b>what hurts (changing, testing, or understanding)?</b> → <b>who or what forces the change?</b> → <b>which principle does the evidence point to?</b> → <b>what is the smallest refactoring?</b> → <b>does it still pass the pinned test, and is the next change cheaper?</b> → <b>or is it better left alone?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Every promotion edits one huge method</h4><p><b>Symptom.</b> Marketing asks for “buy 2 get 1 free”. The change touches OrderService and breaks free shipping.</p><p><b>Evidence.</b></p><ul><li>OrderService is ≈ 300 lines; pricing alone is ≈ 120 lines of nested <code>if</code>/<code>else</code>.</li><li>Git history: 14 of the last 20 changes touched this file, for 4 different reasons.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> One class changes for many reasons (SRP) and the growing part is a conditional (OCP).</p><p><b>Fix.</b> Extract pricing into its own class, then turn promotions into <code>IDiscountRule</code> classes. A new promotion is one new class.</p><p>📖 <b>Where to review:</b> pages 2 and 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 2</div>
+    <div class="kd-card"><h4>Reports crash when they save</h4><p><b>Symptom.</b> A reporting job receives an <code>IOrderRepository</code> and crashes in production with <code>NotSupportedException</code>.</p><p><b>Evidence.</b></p><ul><li><code>ReadOnlyOrderRepository.Save</code> throws.</li><li>The code compiled; the unit tests used another implementation.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A subtype that cannot honour the base contract (LSP), caused by an interface wider than its implementer’s abilities (ISP).</p><p><b>Fix.</b> Split into <code>IOrderReader</code> and <code>IOrderWriter</code>; the read-only class implements only the reader.</p><p>📖 <b>Where to review:</b> pages 4 and 5.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 3</div>
+    <div class="kd-card"><h4>Tests need a database and an SMTP server</h4><p><b>Symptom.</b> A one-line unit test takes 8 seconds and sometimes sends real emails.</p><p><b>Evidence.</b></p><ul><li><code>OrderService.Place</code> contains <code>new SqlConnection(...)</code> and <code>new SmtpClient(...)</code>.</li><li>Constructor has 0 parameters.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The business class builds its own low-level collaborators (DIP).</p><p><b>Fix.</b> Introduce <code>IOrderRepository</code> and <code>INotifier</code>, receive them in the constructor, register them in Program.cs. Tests use fakes: milliseconds, no email.</p><p>📖 <b>Where to review:</b> pages 6, 7 and 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 4</div>
+    <div class="kd-card"><h4>Adding a payment method means five edits</h4><p><b>Symptom.</b> Adding PayPal needs changes in checkout, refunds, receipts, reports and the fraud check.</p><p><b>Evidence.</b></p><ul><li>The same <code>switch (payment.Kind)</code> appears in 5 files.</li><li>Each new method breaks one of the five places that were missed.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Repeated switch on a type (OCP) with the behaviour scattered across classes (shotgun surgery).</p><p><b>Fix.</b> One <code>IPaymentMethod</code> with Charge/Refund/Receipt; one class per method. New method = new class.</p><p>📖 <b>Where to review:</b> pages 3 and 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 5</div>
+    <div class="kd-card"><h4>A test double has 14 methods for 1 call</h4><p><b>Symptom.</b> Writing a fake <code>IUserService</code> for a login test needs 14 empty methods.</p><p><b>Evidence.</b></p><ul><li>The interface mixes login, profile, billing and admin operations.</li><li>LoginController uses exactly 1 member.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Fat interface: clients depend on methods they do not use (ISP).</p><p><b>Fix.</b> Role interfaces such as <code>IAuthenticator</code>; the class may still implement all of them.</p><p>📖 <b>Where to review:</b> page 5.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>Data from user A appears for user B</h4><p><b>Symptom.</b> Occasionally a customer sees another customer’s cart. Restarting the app “fixes” it.</p><p><b>Evidence.</b></p><ul><li><code>CartCache</code> is registered as a singleton and its constructor takes a scoped <code>ICartRepository</code>.</li><li>Scope validation is off in Production.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A captive dependency: a singleton holds a scoped service for the app’s lifetime (DI lifetimes).</p><p><b>Fix.</b> Make the cache scoped, or create a scope per use with <code>IServiceScopeFactory</code>; turn on scope validation.</p><p>📖 <b>Where to review:</b> page 7.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 7</div>
+    <div class="kd-card"><h4>Totals are calculated in three places</h4><p><b>Symptom.</b> Checkout, the invoice and the email each compute an order total and they disagree on rounding.</p><p><b>Evidence.</b></p><ul><li>Each place loops over <code>order.Lines</code> and reads <code>order.DiscountAmount</code>.</li><li>Order itself has no methods.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Behaviour sits far from the data it uses (Feature Envy), so it is duplicated.</p><p><b>Fix.</b> Move Method: <code>Order.Total()</code>. Pin current totals with a test first.</p><p>📖 <b>Where to review:</b> page 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 8</div>
+    <div class="kd-card"><h4>Nobody can find where anything happens</h4><p><b>Symptom.</b> A new hire needs 9 file jumps to follow a one-field change. There are 40 interfaces and 40 classes.</p><p><b>Evidence.</b></p><ul><li>Each interface has exactly one implementation, plus a factory returning it.</li><li>No test uses the interfaces.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Presumptive abstraction (YAGNI): interfaces created by habit, not at real seams.</p><p><b>Fix.</b> Collapse layers that only forward calls; keep interfaces at I/O, time and third-party boundaries; extract later when a second implementation appears.</p><p>📖 <b>Where to review:</b> page 11.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 9</div>
+    <div class="kd-card"><h4>The fake passes, production fails</h4><p><b>Symptom.</b> Bonus case. A <code>FakeOrderRepository</code> returns <code>null</code> for a missing order; the SQL one throws.</p><p><b>Evidence.</b></p><ul><li>Tests pass; production crashes on missing ids.</li><li>There is no shared test for the two implementations.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The fake does not honour the contract (LSP in tests).</p><p><b>Fix.</b> Decide the contract (null or exception), write one contract-test suite, run it against both.</p><p>📖 <b>Where to review:</b> pages 4 and 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key — case → family → page</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Root cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Every promotion edits one huge method</th><td>Responsibilities & change</td><td>One class changes for many reasons (SRP) and the growing part is a conditional (OCP).</td><td>pages 2 and 3</td></tr><tr><th scope="row">2. Reports crash when they save</th><td>Contracts & interfaces</td><td>A subtype that cannot honour the base contract (LSP), caused by an interface wider than its implementer’s abilities (ISP).</td><td>pages 4 and 5</td></tr><tr><th scope="row">3. Tests need a database and an SMTP server</th><td>Dependencies & testing</td><td>The business class builds its own low-level collaborators (DIP).</td><td>pages 6, 7 and 10</td></tr><tr><th scope="row">4. Adding a payment method means five edits</th><td>Responsibilities & change</td><td>Repeated switch on a type (OCP) with the behaviour scattered across classes (shotgun surgery).</td><td>pages 3 and 8</td></tr><tr><th scope="row">5. A test double has 14 methods for 1 call</th><td>Contracts & interfaces</td><td>Fat interface: clients depend on methods they do not use (ISP).</td><td>page 5</td></tr><tr><th scope="row">6. Data from user A appears for user B</th><td>Dependencies & testing</td><td>A captive dependency: a singleton holds a scoped service for the app’s lifetime (DI lifetimes).</td><td>page 7</td></tr><tr><th scope="row">7. Totals are calculated in three places</th><td>Responsibilities & change</td><td>Behaviour sits far from the data it uses (Feature Envy), so it is duplicated.</td><td>page 8</td></tr><tr><th scope="row">8. Nobody can find where anything happens</th><td>Judgement</td><td>Presumptive abstraction (YAGNI): interfaces created by habit, not at real seams.</td><td>page 11</td></tr><tr><th scope="row">9. The fake passes, production fails</th><td>Contracts & interfaces</td><td>The fake does not honour the contract (LSP in tests).</td><td>pages 4 and 10</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>7–9 diagnosed before the reveal</h5><p>You think in symptoms and principles. Apply it to the worst file in your own codebase.</p><span class="sc-use">→ Pick one smell</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>4–6</h5><p>You know the pieces; practise the order of questions.</p><span class="sc-use">→ Re-read the smells page (page 8)</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–3</h5><p>Normal at first. Revisit pages 2, 6 and 8: reasons to change, who creates whom, and the smell map carry most cases.</p><span class="sc-use">→ SRP → DIP → smells</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo in a week without the evidence list.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns.</b> Cases 1, 4 and 7 all feel like “this file is a mess” but each has a different lever: extract a class, polymorphism, move a method. The <i>evidence</i> — git history, repeated switches, duplicated loops — tells you which.</p>
+      <p><b>Case 8 is the opposite problem.</b> Too much design. Judgement means being able to remove structure as well as add it.</p>
+      <p><b>Make your own clinic.</b> Take five real tickets from your team, strip the diagnosis and keep the symptom and evidence, then run it together.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: what hurts → who forces the change → which principle → smallest refactoring → prove it → or leave it.</li><li>One change, pinned test, small commit.</li><li>Families: responsibilities & change (1, 4, 7), contracts & interfaces (2, 5, 9), dependencies & testing (3, 6), judgement (8).</li><li>Similar symptoms, different causes: read the evidence before choosing a principle.</li><li>Fakes need contract tests; singletons must not hold scoped services; interfaces belong at real seams.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat a design problem as an investigation: what hurts — changing, testing or understanding — who or what forces the change, and which principle the evidence points to. I pin behaviour with a test, make one small refactoring, and check the next change is cheaper. And sometimes the right answer is to simplify, not add structure."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Reaching for the same principle every time.</b> Four of nine cases were not SRP.</p>
+      <p><b>Skipping the evidence.</b> In every case one fact — a repeated switch, a captive registration, a constructor with 0 parameters — decided the diagnosis.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>📚 Knowing the principles</h5><p>You can recite S, O, L, I and D.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Doing the diagnosis</h5><p>You can read the evidence, choose the principle and make the smallest safe change.</p></div>
+  </div>
+  <section class="kd-section ">
+    <div class="sec-label next">🔎 Deep dives</div>
+    <div class="deep-grid">
+      <a class="kd-card deep-card" href="design-patterns-solid.html"><span class="dc-kicker">Deep dive · SOLID clinic</span><h4>Patterns that realise the principles</h4><p>Strategy, Decorator, Factory, Adapter and Observer — which principle each serves.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the SOLID lab’s main journey. Go deeper with the patterns deep dive, or head back to the hub.</span>
+      <a class="next-link" href="../index.html">SOLID Lab hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every technique in the cases is explained, with its sources, on the page it points to. The cases and numbers are illustrative; for exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection" target="_blank" rel="noopener">Dependency injection in .NET</a> · <a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">Common web application architectures (.NET)</a> · <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod" target="_blank" rel="noopener">Uncle Bob: Principles of OOD</a> · <a href="https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html" target="_blank" rel="noopener">Uncle Bob: Solid Relevance</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

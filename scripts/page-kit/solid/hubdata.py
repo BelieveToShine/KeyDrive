@@ -21,7 +21,7 @@ SUBT = {'design-patterns-solid': 'Patterns that realise the principles', 'compos
 SUBD = {'design-patterns-solid': 'Strategy, Decorator, Factory, Adapter and Observer — which principle each one serves.',
         'composition-vs-inheritance': 'Why inheritance breaks substitutability and what composition offers instead.',
         'solid-in-frontend': 'How the five principles show up in components, hooks, services and DI in React and Angular.'}
-WRITTEN = ['why-design-principles','single-responsibility','open-closed','liskov-substitution','interface-segregation','dependency-inversion','dependency-injection-dotnet','smells-refactoring','solid-together','testing-solid','when-not-solid']
+WRITTEN = ['why-design-principles','single-responsibility','open-closed','liskov-substitution','interface-segregation','dependency-inversion','dependency-injection-dotnet','smells-refactoring','solid-together','testing-solid','when-not-solid','solid-clinic']
 LADDER = [('1 · SMELL','👃 What hurts?','A change that touches many files, a test that needs a database, a class nobody dares edit.'),
           ('2 · READ','🔬 Who changes this, and why?','List the reasons the class changes and the things it depends on.'),
           ('3 · FIND','🎯 The principle that is bent','One responsibility too many? A subtype that breaks the contract? A concrete dependency?'),
