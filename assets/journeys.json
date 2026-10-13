@@ -250,7 +250,8 @@
       "locking-isolation",
       "index-maintenance-cost",
       "partitioning-columnstore",
-      "azure-sql-specifics"
+      "azure-sql-specifics",
+      "slow-query-clinic"
     ],
     "sub": {},
     "subTitles": {}

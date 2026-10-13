@@ -2,7 +2,7 @@
 Part of Data Systems (see `docs/specs/data/overview.md` for the approved plan and decisions). Engine: SQL Server / Azure SQL (T-SQL), with “other engines” notes as pointers only.
 Signature per page: See it first → Why → Think like the engine → **Plan lab** (before/after plan pictures with illustrative numbers) → **Debug checklist** (symptom → cause → fix) → scenarios → recall / interview / trap / confuse-pair → next.
 Plan pictures: `p_common.plan_diagram` — data flows right → left, arrow thickness grows with rows (log scale), thick arrows use a fixed-size head. All numbers are illustrative and labelled so.
-Status: pages 1–11 written (plan literacy, optimise, measure & debug). Pages 12–16 (locking, index costs, partitioning/columnstore, Azure SQL specifics, slow-query clinic) planned. User has not reviewed yet — expect corrections.
+Status: **complete — 16 / 16 pages written** (plan literacy, optimise, measure & debug, beyond one query; the capstone clinic has 11 cases). User has not reviewed yet — expect corrections.
 
 ## Canonical ShopDB numbers (keep every page consistent — grep before adding a new page)
 | Fact | Value |

@@ -2292,5 +2292,31 @@
     "summary": "The classic mistake with Azure SQL specifics.",
     "keywords": "azure sql database tier limits resource governance dtu vcore serverless hyperscale business critical automatic tuning query performance insight intelligent query processing compatibility level log rate trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "sql-slow-query-clinic",
+    "title": "Capstone: the slow-query clinic",
+    "category": "SQL",
+    "page": "sql/concepts/slow-query-clinic.html",
+    "summary": "Eleven practice cases built from the whole SQL lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.",
+    "keywords": "sql slow query clinic capstone practice cases diagnosis troubleshooting exercise interview"
+  },
+  {
+    "id": "sql-slow-query-clinic-recall",
+    "title": "Capstone: the slow-query clinic — interview recall",
+    "category": "SQL",
+    "page": "sql/concepts/slow-query-clinic.html",
+    "summary": "Quick recall points: Capstone: the slow-query clinic.",
+    "keywords": "sql slow query clinic capstone practice cases diagnosis troubleshooting exercise interview interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "sql-slow-query-clinic-trap",
+    "title": "Capstone: the slow-query clinic — common trap",
+    "category": "SQL",
+    "page": "sql/concepts/slow-query-clinic.html",
+    "summary": "The classic mistake with Capstone: the slow-query clinic.",
+    "keywords": "sql slow query clinic capstone practice cases diagnosis troubleshooting exercise interview trap mistake",
+    "anchor": "trap"
   }
 ]

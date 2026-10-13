@@ -249,6 +249,13 @@ Source pages (all https://learn.microsoft.com/en-us/…): `sql/relational-databa
 | AWS RDS/Aurora and Azure PostgreSQL meter resources per instance size | 🟨 K | other-engine pointer |
 | Gauge percentages (62%, 99%, 35%, 48%), nightly import “40 minutes” → “12 minutes”, CPU 30% | 🟦 I | teaching numbers |
 
+## Page 16 — the slow-query clinic
+| Claim | Status | Note |
+|---|---|---|
+| Every technique shown in the 11 cases is sourced on the page it points to (pages 3, 5–10, 12–15) | ✅ V / 🟨 K | see those sections; no new technical claim is introduced here |
+| All numbers in the cases (“9 seconds”, “2 seconds” CPU, “3 seconds”, “1.2 seconds”, 50 vs 4,000 rows, 80,000 orders, 240,000 reads, 40,000 rows read vs 12 returned, 30 s, 20 ms CPU, 3 s → 8 s imports, 40 minutes, 90 s, 500M rows, “twice a day”) | 🟦 I | teaching numbers, consistent with `docs/specs/sql/overview.md` |
+| Scoring bands (8–11 / 4–7 / 0–3) | 🟦 I | the course’s own self-assessment |
+
 ## Cross-page notes
 | Claim | Status | Note |
 |---|---|---|

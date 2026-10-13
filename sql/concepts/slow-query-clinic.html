@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the slow-query clinic — SQL — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../data/index.html">🗄️ Data Systems</a><span class="sep">›</span><a href="../index.html">🔬 SQL Performance Lab</a><span class="sep">›</span><span class="cur">Capstone: the slow-query clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 16 of 16 · 🏗️ Beyond one query</div>
+    <h1>Ten patients and a bonus: <span class="grad-text">diagnose first</span>, then open the file.</h1>
+    <p class="sub">A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key that points back to the page for each.</p>
+    <div class="interview-q">❓ "Here is a slow query and its plan. Walk me through your investigation."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The case board: ten cases and a bonus, grouped by the family of problem: estimates, indexes, query text, waiting, system and tier, and big data">
+<defs><marker id="cl1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cl1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="cl1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="200" height="132" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">ESTIMATES</text>
+<rect class="zone" x="220" y="8" width="200" height="132" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">INDEXES</text>
+<rect class="zone" x="432" y="8" width="200" height="132" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="446" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">QUERY TEXT</text>
+<rect class="zone" x="8" y="156" width="200" height="132" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="175" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">WAITING</text>
+<rect class="zone" x="220" y="156" width="200" height="132" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="175" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">SYSTEM &amp; TIER</text>
+<rect class="zone" x="432" y="156" width="200" height="132" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="446" y="175" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">BIG DATA</text>
+<rect class="bx" x="16" y="46" width="88" height="74" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="60" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 1</text>
+<text x="60" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Stale report</text>
+<rect class="bx" x="110" y="46" width="88" height="74" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="154" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 2</text>
+<text x="154" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Deploy</text>
+<rect class="bx" x="228" y="46" width="88" height="74" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="272" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 3</text>
+<text x="272" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Lookup storm</text>
+<rect class="bx" x="322" y="46" width="88" height="74" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="366" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 4</text>
+<text x="366" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Key order</text>
+<rect class="bx" x="440" y="46" width="88" height="74" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="484" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 5</text>
+<text x="484" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">YEAR() report</text>
+<rect class="bx" x="534" y="46" width="88" height="74" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="578" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 6</text>
+<text x="578" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Java param</text>
+<rect class="bx" x="16" y="194" width="88" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="60" y="228.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 7</text>
+<text x="60" y="241.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Frozen page</text>
+<rect class="bx" x="110" y="194" width="88" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="154" y="228.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 8</text>
+<text x="154" y="241.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Deadlock</text>
+<rect class="bx" x="228" y="194" width="88" height="74" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="272" y="228.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 9</text>
+<text x="272" y="241.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Slow inserts</text>
+<rect class="bx" x="322" y="194" width="88" height="74" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="366" y="228.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 10</text>
+<text x="366" y="241.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Throttled</text>
+<rect class="bx" x="440" y="194" width="88" height="74" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="484" y="228.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Case 11</text>
+<text x="484" y="241.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Dashboard</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> ten patients and a bonus, sorted into the six families you have met: wrong <b>estimates</b>, <b>index</b> design, <b>query text</b> that hides a column, <b>waiting</b> instead of computing, the <b>system and tier</b>, and <b>big data</b>. Each case below gives you a symptom and the evidence from the plan or the numbers. <b>Decide your diagnosis first</b>, then open the file — and check which page the answer lives on.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You now have the tools and the method. This is the practice ward: <b>symptom → evidence → diagnosis → one change</b>. Try each case before you reveal it.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Reading about tuning and doing it are different skills. In real life nobody tells you which page of a book you need; you get a complaint and some numbers. The cases below start the way real tickets do.</p>
+      <p>All ten use the same ShopDB numbers as the rest of the lab, so you will recognise the plans. Every case is solvable with the ladder from page 11 — and every diagnosis is a place you have already been.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 Before you start — the ladder in one line</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, really?</h4><p>Time, CPU, pages read — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🗺️ Read the plan</h4><p>What did the engine actually do?</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>Where do estimate and reality disagree most?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing index? Bad estimate? Hidden column?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same numbers, same query, better result.</p></div>
+    </div>
+    <p style="margin-top:12px">Ask in this order: <b>running or waiting?</b> → <b>estimates ≈ actual?</b> → <b>what is the heaviest operator?</b> → <b>is a column hidden?</b> → <b>is the tier the limit?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>The Pune report</h4><p><b>Symptom.</b> The Pune orders report takes 9 seconds. CPU time is only 2 seconds.</p><p><b>Evidence.</b></p><ul><li>Actual plan: a <b>Hash Match with a warning icon</b>.</li><li>Customers seek: <b>estimated 50 rows, actual 4,000</b>.</li><li>Orders scan: 1,000,000 rows (expected).</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Stale statistics: the optimizer expected 50 customers, sized the hash join’s memory for them, and spilled to tempdb when 4,000 arrived. The scan is not the problem — the <i>estimate</i> is.</p><p><b>Fix (one change).</b> <code>UPDATE STATISTICS dbo.Customers … WITH FULLSCAN</code>; re-run with the actual plan: estimate ≈ 4,000, no warning, elapsed drops.</p><p>📖 <b>Where to review:</b> pages 5 and 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 2</div>
+    <div class="kd-card"><h4>Fast for everyone but BigCorp</h4><p><b>Symptom.</b> GetOrdersByCustomer takes 40 ms for most customers and about 6 seconds for BigCorp (80,000 orders). It started after Tuesday’s deploy.</p><p><b>Evidence.</b></p><ul><li>The plan for every call: <b>Index Seek + Key Lookup + Nested Loops</b>.</li><li>Plan properties: compiled value <b>42</b>, runtime value <b>7</b>.</li><li>The seek estimated 12 rows; BigCorp returns 80,000.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Parameter sniffing: the first call after the deploy was for a small customer; its plan (built for 12 rows) was cached and reused for BigCorp — 80,000 key lookups.</p><p><b>Fix.</b> Confirm with <code>OPTION (RECOMPILE)</code> in a test; then use parameter sensitive plan optimization (compat level 160) or a targeted hint; force the last good plan in Query Store as a bandage.</p><p>📖 <b>Where to review:</b> pages 9 and 10.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 3</div>
+    <div class="kd-card"><h4>The slow “My orders” list</h4><p><b>Symptom.</b> The list for a large customer takes 3 seconds. The team says “but there is an index on CustomerId!”.</p><p><b>Evidence.</b></p><ul><li><code>SET STATISTICS IO</code>: <b>240,000 logical reads</b> for 80,000 rows returned.</li><li>Plan: Index Seek (3%) + <b>Key Lookup (97%)</b>.</li><li>The query returns CustomerId, OrderDate and Total.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The index finds the rows but lacks two columns, so the engine does a lookup per row — and the optimizer even considered a scan cheaper.</p><p><b>Fix.</b> A covering index: <code>(CustomerId, OrderDate) INCLUDE (Total)</code>. Reads drop to a few hundred.</p><p>📖 <b>Where to review:</b> page 7.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 4</div>
+    <div class="kd-card"><h4>An index that is used but does not help</h4><p><b>Symptom.</b> An index exists on (OrderDate, CustomerId). The query <code>WHERE CustomerId = 42 AND OrderDate >= '20260201'</code> is still slow.</p><p><b>Evidence.</b></p><ul><li>Plan: Index <b>Seek</b>, but <b>seek predicate = OrderDate only</b>; CustomerId is a <b>residual predicate</b>.</li><li>Rows read 40,000 — rows returned 12.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Key order. With OrderDate first, customer 42’s rows are scattered among everyone’s; the engine seeks the date range and filters the rest.</p><p><b>Fix.</b> Equality column first, range second: create <code>(CustomerId, OrderDate)</code> and drop the old one if nothing else uses it.</p><p>📖 <b>Where to review:</b> pages 7 and 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 5</div>
+    <div class="kd-card"><h4>The yearly report</h4><p><b>Symptom.</b> The yearly revenue report scans although OrderDate has an index.</p><p><b>Evidence.</b></p><ul><li>Plan: <b>Index Scan</b> with <b>Predicate</b>: <code>YEAR(OrderDate) = 2026</code> (not a Seek Predicate).</li><li>Logical reads ≈ the size of the whole index.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A function wraps the column, so the engine must compute it for every row; the sort order is useless.</p><p><b>Fix.</b> <code>OrderDate &gt;= '20260101' AND OrderDate &lt; '20270101'</code> — a half-open range on the bare column.</p><p>📖 <b>Where to review:</b> page 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>Fast in SSMS, slow in the app</h4><p><b>Symptom.</b> A lookup by order status takes 5 ms in SSMS and 1.2 seconds from the Java service.</p><p><b>Evidence.</b></p><ul><li>App plan: Index <b>Scan</b>; SELECT shows a warning: type conversion “may affect SeekPlan”.</li><li>The column is <b>VARCHAR</b>; the driver sends the parameter as <b>NVARCHAR</b>.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Implicit conversion: the lower-precedence type — the column — is converted for every row, so the seek is lost. SSMS used a VARCHAR variable, so it never showed.</p><p><b>Fix.</b> Declare the parameter with the column’s type (or change the driver’s Unicode-parameter setting).</p><p>📖 <b>Where to review:</b> page 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 7</div>
+    <div class="kd-card"><h4>The order page that hangs</h4><p><b>Symptom.</b> The order page hangs for 30 seconds at 14:05. Query CPU time is 20 ms.</p><p><b>Evidence.</b></p><ul><li>Elapsed ≫ CPU: it is <b>waiting</b>.</li><li>Sessions 77 and 80: <code>blocking_session_id = 51</code>.</li><li>Session 51: <b>sleeping</b>, open transaction, last statement an UPDATE on Orders.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A head blocker: the app opened a transaction, updated the order, then called a slow payment API before committing; the exclusive lock stays until COMMIT.</p><p><b>Fix.</b> Commit before the external call (never wait for an API inside a transaction); keep RCSI on so readers do not queue behind writers.</p><p>📖 <b>Where to review:</b> page 12.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 8</div>
+    <div class="kd-card"><h4>Twice a day an error</h4><p><b>Symptom.</b> Users see “Transaction was chosen as the deadlock victim” about twice a day.</p><p><b>Evidence.</b></p><ul><li>Deadlock graph: <b>UpdateOrderStatus</b> updates Orders then Customers; <b>ApplyLoyaltyPoints</b> updates Customers then Orders.</li><li>Both run in transactions of a few statements.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A lock cycle from opposite access order.</p><p><b>Fix.</b> Touch the tables in the same order in both procedures; keep transactions short; retry the victim.</p><p>📖 <b>Where to review:</b> page 12.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 9</div>
+    <div class="kd-card"><h4>The import that got slow</h4><p><b>Symptom.</b> Importing 10,000 orders took 3 seconds a year ago; now it takes 8.</p><p><b>Evidence.</b></p><ul><li>Orders has <b>five indexes</b>.</li><li>Usage stats: two indexes have <b>0 reads</b> and 1,100,000 updates.</li><li>Query reads are still fast.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Index overload: every insert maintains five structures, two of which nobody reads.</p><p><b>Fix.</b> Save their CREATE scripts, watch a full business cycle, then drop the unused ones; measure the import again.</p><p>📖 <b>Where to review:</b> page 13.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 10</div>
+    <div class="kd-card"><h4>The nightly import in Azure SQL</h4><p><b>Symptom.</b> The nightly import of 5 million order lines takes 40 minutes in Azure SQL Database. The plan is a plain bulk insert.</p><p><b>Evidence.</b></p><ul><li>CPU 30%, data I/O moderate.</li><li><code>avg_log_write_percent</code> ≈ <b>100%</b> during the import.</li><li>Waits include the log-rate governor.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Not the query — the tier’s log write rate is the ceiling and the service throttles on purpose.</p><p><b>Fix.</b> Moderately sized batches; scale to a tier with a higher log rate for the import window; re-measure.</p><p>📖 <b>Where to review:</b> page 15.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 11</div>
+    <div class="kd-card"><h4>Bonus: the 90-second dashboard</h4><p><b>Symptom.</b> The dashboard sums revenue per month over a 500-million-row history table. It takes 90 seconds.</p><p><b>Evidence.</b></p><ul><li>Plan: <b>Clustered Index Scan</b> of 500M rows, row-mode aggregate.</li><li>The query needs 2 of the table’s 5 columns.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A B-tree scan reads every column of every row for an aggregate.</p><p><b>Fix.</b> Columnstore (with a bare-column date range, and partitioning if you archive by year) — a fraction of the bytes, batch mode.</p><p>📖 <b>Where to review:</b> page 14.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key — case → family → page</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Root cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. The Pune report</th><td>Estimates</td><td>Stale statistics: the optimizer expected 50 customers, sized the hash join’s memory for them, and spilled to tempdb when 4,000 arrived.</td><td>pages 5 and 6</td></tr><tr><th scope="row">2. Fast for everyone but BigCorp</th><td>Estimates</td><td>Parameter sniffing: the first call after the deploy was for a small customer; its plan (built for 12 rows) was cached and reused for BigCorp — 80,000 key lookups.</td><td>pages 9 and 10</td></tr><tr><th scope="row">3. The slow “My orders” list</th><td>Indexes</td><td>The index finds the rows but lacks two columns, so the engine does a lookup per row — and the optimizer even considered a scan cheaper.</td><td>page 7</td></tr><tr><th scope="row">4. An index that is used but does not help</th><td>Indexes</td><td>Key order.</td><td>pages 7 and 3</td></tr><tr><th scope="row">5. The yearly report</th><td>Query text</td><td>A function wraps the column, so the engine must compute it for every row; the sort order is useless.</td><td>page 8</td></tr><tr><th scope="row">6. Fast in SSMS, slow in the app</th><td>Query text</td><td>Implicit conversion: the lower-precedence type — the column — is converted for every row, so the seek is lost.</td><td>page 8</td></tr><tr><th scope="row">7. The order page that hangs</th><td>Waiting</td><td>A head blocker: the app opened a transaction, updated the order, then called a slow payment API before committing; the exclusive lock stays until COMMIT.</td><td>page 12</td></tr><tr><th scope="row">8. Twice a day an error</th><td>Waiting</td><td>A lock cycle from opposite access order.</td><td>page 12</td></tr><tr><th scope="row">9. The import that got slow</th><td>System & tier</td><td>Index overload: every insert maintains five structures, two of which nobody reads.</td><td>page 13</td></tr><tr><th scope="row">10. The nightly import in Azure SQL</th><td>System & tier</td><td>Not the query — the tier’s log write rate is the ceiling and the service throttles on purpose.</td><td>page 15</td></tr><tr><th scope="row">11. Bonus: the 90-second dashboard</th><td>Big data</td><td>A B-tree scan reads every column of every row for an aggregate.</td><td>page 14</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>8–11 diagnosed before the reveal</h5><p>You think in the ladder. Practise on your own slow queries and keep an investigation log.</p><span class="sc-use">→ Teach someone else</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>4–7</h5><p>You know the pieces; the order of questions is the missing habit.</p><span class="sc-use">→ Re-read page 11</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–3</h5><p>Normal on a first pass. Go back through pages 1–5 — plans and estimates carry most of the cases.</p><span class="sc-use">→ Plans first</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo the cases in a week without looking at the evidence list first.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns across the cases.</b> Six of the ten are decided by a single number you already know how to get: estimated vs actual rows (cases 1, 2, 4), logical reads (3, 5), or waits and blocking (7, 8). The remaining ones need a second question: is a column hidden (6), is it writes (9), is it the tier (10).</p>
+      <p><b>False friends.</b> Cases 3 and 4 both look like “an index exists but is not helping”. The difference is that case 3 has the right key and misses columns; case 4 has the right columns and the wrong order.</p>
+      <p><b>Make your own clinic.</b> Take five real tickets, strip the diagnosis, keep only symptom and evidence, and run the same exercise with your team.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method beats memory: running or waiting → estimates vs actual → heaviest operator → hidden column → tier limit.</li><li>One change, same measurement, check the other inputs.</li><li>Families: estimates (5, 6, 9), indexes (3, 7), query text (8), waiting (12), system & tier (13, 15), big data (14).</li><li>Symptoms that look alike (an index that “exists but does not help”) can have different causes — check key columns, key order, included columns and hidden columns.</li><li>Write down before/after numbers for every fix.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat a slow query as an investigation, not a guess. I check whether it is running or waiting, then whether estimated and actual rows agree, then the heaviest operator and whether a column is hidden from its index, and finally whether the service tier is the limit. I change one thing, re-measure with the same input, check other parameter values, and keep a short log of before and after."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Pattern-matching too fast.</b> “Slow + index exists” does not mean “add an index”. Cases 3, 4, 5 and 6 all start with that sentence and end with four different fixes.</p>
+      <p><b>Skipping the evidence.</b> In every case the deciding fact was one number or one word in the plan. Look for it before you theorise.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧠 Knowing the pages</h5><p>You can explain what a Key Lookup is, what sniffing is, what RCSI is.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Doing the diagnosis</h5><p>You can look at a plan and a few numbers and choose the one change that proves a hypothesis.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the SQL Performance Lab. The same habit — measure, find the biggest wrong thing, change one thing, prove it — applies to Cosmos DB, where partition keys and request units replace plans and indexes. Back to the Data Systems hub.</span>
+      <a class="next-link" href="../../data/index.html">Data Systems hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every technique in the cases is explained, with its sources, on the page it points to. For exact behaviour check the official docs. Official docs: <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/execution-plans" target="_blank" rel="noopener">Execution plans</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql" target="_blank" rel="noopener">SET STATISTICS IO</a> · <a href="https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/performance/troubleshoot-slow-running-queries" target="_blank" rel="noopener">Troubleshoot slow-running queries</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SQL · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

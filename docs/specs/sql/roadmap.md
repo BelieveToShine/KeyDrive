@@ -14,11 +14,11 @@ Taxonomy: `docs/specs/data/concept-taxonomy.md` (Track A, S1–S16). Folder `sql
 | 9 | Plan cache & parameter sniffing | plan-cache-sniffing | ✅ written |
 | 10 | Measuring: STATISTICS IO/TIME, waits, Query Store | measuring-query-store | ✅ written |
 | 11 | The debugging playbook | debugging-playbook | ✅ written |
-| 12 | Transactions, locking & isolation | locking-isolation | planned |
-| 13 | The cost of indexes & maintenance | index-maintenance-cost | planned |
-| 14 | Partitioning & columnstore | partitioning-columnstore | planned |
-| 15 | Azure SQL specifics | azure-sql-specifics | planned |
-| 16 | Capstone: the slow-query clinic | slow-query-clinic | planned |
+| 12 | Transactions, locking & isolation | locking-isolation | ✅ written |
+| 13 | The cost of indexes & maintenance | index-maintenance-cost | ✅ written |
+| 14 | Partitioning & columnstore | partitioning-columnstore | ✅ written |
+| 15 | Azure SQL specifics | azure-sql-specifics | ✅ written |
+| 16 | Capstone: the slow-query clinic | slow-query-clinic | ✅ written |
 
 When a page ships: add its slug to `WRITTEN` in `build_hub.py` and re-run it (updates the hub, `journeys.json`), add 3 entries to `assets/concepts-index.json`, add ledger rows, update this table and the previous page's locked next-box.
 Kit additions for this category: `Diagram.arrow(sw=…)` thick arrows, `p_common.plan_diagram` (execution-plan pictures), `ladder_strip` (thinking ladder).

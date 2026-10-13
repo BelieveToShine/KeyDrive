@@ -134,7 +134,7 @@ f'''<span class="cmt">-- the last hour, one row per 15 seconds</span>
         '<b>Scaling up to fix a bad plan.</b> You pay more to run the same plan and, if the cause is blocking or a spill, nothing improves.',
         '<b>Assuming a tier change is free of side effects.</b> A different tier changes limits and latency; a different compatibility level changes the optimizer. Re-measure after either.'])
     body += confuse('🔍 Query problem', 'No resource near its limit. The plan, estimates or indexes are the suspect — use the ladder.', '📏 Tier problem', 'A gauge is pinned near 100%. The service is throttling — tune the heaviest consumers or scale.')
-    body += next_box('You now have every tool: plans, indexes, statistics, joins, sargability, sniffing, measurement, method, locking, index cost, big-data layouts and the cloud ceilings. The last page lets you practise them all. Next: the slow-query clinic <i>(coming soon)</i>.')
+    body += next_box('You now have every tool: plans, indexes, statistics, joins, sargability, sniffing, measurement, method, locking, index cost, big-data layouts and the cloud ceilings. The last page lets you practise them all. Next: the slow-query clinic.', 'slow-query-clinic.html', 'Capstone: the slow-query clinic')
     body += fact_note('Limits, tiers and defaults change often. For current numbers check the official docs.', [DOC_RES, DOC_RS, DOC_QPI, DOC_IQP, DOC_SRV, DOC_HS, DOC_PUR])
     return page('azure-sql-specifics', 'Azure SQL specifics', 'Concept 15 of 16 · 🏗️ Beyond one query',
         'On Azure SQL, check <span class="grad-text">the tier’s limits</span> before you blame the query.',
