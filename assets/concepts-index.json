@@ -3124,5 +3124,57 @@
     "summary": "The classic mistake with Routing & navigation.",
     "keywords": "react routing router react router tanstack router nested routes layout outlet params search params history api pushState navigation link trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "react-react-clinic",
+    "title": "Capstone: the React performance clinic",
+    "category": "React",
+    "page": "react/concepts/react-clinic.html",
+    "summary": "Nine cases to diagnose with the thinking ladder: symptom, evidence, diagnosis, one change, with an answer key.",
+    "keywords": "react clinic capstone performance diagnosis cases profiler practice"
+  },
+  {
+    "id": "react-react-clinic-recall",
+    "title": "Capstone: the React performance clinic — interview recall",
+    "category": "React",
+    "page": "react/concepts/react-clinic.html",
+    "summary": "Quick recall points: Capstone: the React performance clinic.",
+    "keywords": "react clinic capstone performance diagnosis cases profiler practice interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-react-clinic-trap",
+    "title": "Capstone: the React performance clinic — common trap",
+    "category": "React",
+    "page": "react/concepts/react-clinic.html",
+    "summary": "The classic mistake with Capstone: the React performance clinic.",
+    "keywords": "react clinic capstone performance diagnosis cases profiler practice trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "react-testing-react",
+    "title": "Testing React",
+    "category": "React",
+    "page": "react/concepts/testing-react.html",
+    "summary": "Why tests need act, how to wait for async updates with find queries, what to test in ShopUI and what not to.",
+    "keywords": "react testing act waitFor findBy React Testing Library user-event jest test async behaviour"
+  },
+  {
+    "id": "react-testing-react-recall",
+    "title": "Testing React — interview recall",
+    "category": "React",
+    "page": "react/concepts/testing-react.html",
+    "summary": "Quick recall points: Testing React.",
+    "keywords": "react testing act waitFor findBy React Testing Library user-event jest test async behaviour interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "react-testing-react-trap",
+    "title": "Testing React — common trap",
+    "category": "React",
+    "page": "react/concepts/testing-react.html",
+    "summary": "The classic mistake with Testing React.",
+    "keywords": "react testing act waitFor findBy React Testing Library user-event jest test async behaviour trap mistake",
+    "anchor": "trap"
   }
 ]

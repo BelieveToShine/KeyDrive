@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the React performance clinic — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><span class="cur">Capstone: the React clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 12 · 🚀 Shipping it</div>
+    <h1>Eight patients and a bonus: <span class="grad-text">diagnose first</span>, then open the file.</h1>
+    <p class="sub">A practice ward built from the whole lab: symptom, evidence, your diagnosis, one change — with an answer key pointing back to each page.</p>
+    <div class="interview-q">❓ "A React page is slow and sometimes wrong. Walk me through your investigation."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The React case board: nine cases in four families: renders and state placement, identity and effects, loading and shipping, resilience">
+<defs><marker id="rc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="400" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">RENDERS &amp; STATE PLACEMENT</text>
+<rect class="zone" x="416" y="8" width="216" height="144" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="430" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">IDENTITY &amp; EFFECTS</text>
+<rect class="zone" x="8" y="164" width="216" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">LOADING &amp; SHIPPING</text>
+<rect class="zone" x="232" y="164" width="126" height="144" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="246" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">RESILIENCE</text>
+<rect class="bx" x="18" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="63" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 1</text>
+<text x="63" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Cart open</text>
+<rect class="bx" x="114" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="159" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 3</text>
+<text x="159" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Memo</text>
+<rect class="bx" x="210" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="255" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 5</text>
+<text x="255" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Context</text>
+<rect class="bx" x="306" y="46" width="90" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="351" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 8</text>
+<text x="351" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Checkout</text>
+<rect class="bx" x="426" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="471" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 2</text>
+<text x="471" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Row delete</text>
+<rect class="bx" x="522" y="46" width="90" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="567" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 4</text>
+<text x="567" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Effect</text>
+<rect class="bx" x="18" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="63" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 6</text>
+<text x="63" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Spinner</text>
+<rect class="bx" x="114" y="202" width="90" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="159" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 7</text>
+<text x="159" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Bundle</text>
+<rect class="bx" x="242" y="202" width="90" height="86" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="287" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Case 9</text>
+<text x="287" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">Crash</text>
+<text class="free" x="500" y="220" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">Decide your diagnosis first,</text>
+<text class="free" x="500" y="240" text-anchor="middle" font-size="10.5" font-weight="400" fill="#93a0b8">then reveal it.</text>
+<text class="free" x="500" y="270" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">Each answer points to the page</text>
+<text class="free" x="500" y="286" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">that explains it.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> eight patients and a bonus, grouped by the family of problem you have met: <b>renders and state placement</b> (cases 1, 3, 5, 8), <b>identity and effects</b> (2, 4), <b>loading and shipping</b> (6, 7) and <b>resilience</b> (9). Each case gives a symptom and the evidence from the Profiler, the code or the bundle analyser. <b>Decide your diagnosis first</b>, then reveal it — and see which page to revisit.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You know the render model, state, keys, effects, the Profiler, memoization, context, loading and shipping. This is the practice ward: <b>symptom → evidence → diagnosis → one change → prove it</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Real tickets say “the checkout feels slow” or “the page went blank”, not “state too high”. The cases start the way tickets do, and all of them use the same ShopUI app and the same illustrative numbers as the lab.</p>
+      <p>Every case is solvable with the ladder: <b>measure, read the profile, find the biggest wrong thing, one hypothesis, one change, prove it</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧭 The ladder, React edition</div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE ★</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ ★</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+    <p style="margin-top:12px">Ask in this order: <b>wrong or slow?</b> → <b>how many components rendered, and why?</b> → <b>what changed in their props or state?</b> → <b>does the cost come from rendering, from loading, or from shipping code?</b> → <b>what is the smallest change that tests my guess?</b></p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Opening the cart is slow</h4><p><b>Symptom.</b> Clicking the Cart button takes ≈ 40 ms and the page stutters; nothing on screen changes except the drawer.</p><p><b>Evidence.</b></p><ul><li>Profiler: one commit renders <b>App, SearchBox, ProductList, 500 ProductCards, Cart = 504 components</b>.</li><li>The <code>cartOpen</code> flag is declared in <code>App</code>.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> State is higher than the component that uses it, so its change renders everything below App.</p><p><b>Fix.</b> Move <code>cartOpen</code> into Cart. Re-record: 1 component renders.</p><p>📖 <b>Where to review:</b> page 2.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 2</div>
+    <div class="kd-card"><h4>Delete a row, the wrong note stays</h4><p><b>Symptom.</b> Users type a note into a product row, delete the first row, and the second row now shows the first row’s note.</p><p><b>Evidence.</b></p><ul><li>Code: <code>products.map((p, i) =&gt; &lt;Row key={i} … /&gt;)</code>.</li><li>Notes are local state in each Row.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Index keys tie state to a position, not to a product.</p><p><b>Fix.</b> <code>key={p.id}</code>. Delete the first row again to prove it.</p><p>📖 <b>Where to review:</b> page 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 3</div>
+    <div class="kd-card"><h4>memo added, nothing improved</h4><p><b>Symptom.</b> The team wrapped ProductCard in <code>memo</code> yesterday. Typing is still ≈ 41 ms per keystroke.</p><p><b>Evidence.</b></p><ul><li>Profiler: all 500 cards still render; “props changed” is the only difference.</li><li>Code: <code>onAdd={() =&gt; addToCart(p.id)}</code> inside the map.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A new function every render defeats memo’s prop comparison; memo only added work.</p><p><b>Fix.</b> One stable <code>addToCart</code> (useCallback, id passed back by the card). Re-record: 4 components, ≈ 3 ms.</p><p>📖 <b>Where to review:</b> page 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 4</div>
+    <div class="kd-card"><h4>Results flash old data for a frame</h4><p><b>Symptom.</b> The product list briefly shows the previous results after each keystroke.</p><p><b>Evidence.</b></p><ul><li>Profiler: <b>two commits per keystroke</b>, 504 + 504 = 1,008 renders.</li><li>Code: a <code>filtered</code> state set inside <code>useEffect</code> from <code>query</code>.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> State copied from state in an effect: render, commit, effect, set state, render again.</p><p><b>Fix.</b> Calculate <code>filtered</code> during render. One commit per keystroke.</p><p>📖 <b>Where to review:</b> page 4.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 5</div>
+    <div class="kd-card"><h4>Add to cart renders the whole shop</h4><p><b>Symptom.</b> Adding one item to the cart takes ≈ 35 ms.</p><p><b>Evidence.</b></p><ul><li>Profiler: <b>502 components</b> render: Cart, CartBadge and all 500 cards.</li><li>Code: one <code>AppContext</code> holding <code>{ cart, theme, dispatch }</code>; the cards read the theme.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> One context value changes with the cart, so every reader renders — including cards that only need the theme.</p><p><b>Fix.</b> Split into CartStateContext, CartDispatchContext and ThemeContext. Re-record: 2 readers.</p><p>📖 <b>Where to review:</b> page 8.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 6</div>
+    <div class="kd-card"><h4>The spinner flashes on every keystroke</h4><p><b>Symptom.</b> Searching “shi” on a server-backed list flashes a spinner three times.</p><p><b>Evidence.</b></p><ul><li>Results sit in a <code>&lt;Suspense&gt;</code> boundary.</li><li>The query state updates urgently; the old results disappear while the new ones load.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> An urgent update that suspends replaces visible content with the fallback.</p><p><b>Fix.</b> Pass the results a <code>useDeferredValue</code> copy of the query and dim them while stale. Zero flashes after the first load.</p><p>📖 <b>Where to review:</b> page 9.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 7</div>
+    <div class="kd-card"><h4>Slow first load on phones</h4><p><b>Symptom.</b> Browsing products on a mid-range phone takes seconds before it responds; the Profiler shows fast renders.</p><p><b>Evidence.</b></p><ul><li>Bundle analyser: initial JavaScript <b>420 KB</b>; checkout 90 KB, charts 120 KB and the editor 30 KB are all in it.</li><li>Visitors who only browse never open those screens.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Download and parse cost, not render cost: the first bundle carries rarely-used features.</p><p><b>Fix.</b> Lazy-load the checkout, charts and editor behind Suspense. Initial JavaScript ≈ 180 KB.</p><p>📖 <b>Where to review:</b> page 11.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 8</div>
+    <div class="kd-card"><h4>Typing in checkout lags</h4><p><b>Symptom.</b> The 12-field checkout feels sluggish; the page is otherwise fast.</p><p><b>Evidence.</b></p><ul><li>Profiler: each keystroke renders <b>13 components</b> (Checkout + 12 fields).</li><li>All fields are controlled by one <code>form</code> state object in Checkout.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Every keystroke changes state at the top of the form, so all fields render.</p><p><b>Fix.</b> Uncontrolled fields with a form action (0 renders per key), or memoized field components with stable handlers (2).</p><p>📖 <b>Where to review:</b> forms deep dive, page 6.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 9</div>
+    <div class="kd-card"><h4>Bonus: one bad product blanks the page</h4><p><b>Symptom.</b> After an import, one product has no price, and customers see a blank page.</p><p><b>Evidence.</b></p><ul><li>Console: an error thrown while rendering <code>ProductCard</code>.</li><li>There is no error boundary in the app.</li></ul><p><b>Your move:</b> which family is it, and what is your <i>one</i> change?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the diagnosis</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A render-time error reaches the root; nothing contains it.</p><p><b>Fix.</b> An error boundary around ProductList with a Retry fallback, and fix the data. Cart, header and search stay alive.</p><p>📖 <b>Where to review:</b> error boundaries deep dive.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key — case → family → page</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Root cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Opening the cart is slow</th><td>Renders & state placement</td><td>State is higher than the component that uses it, so its change renders everything below App.</td><td>page 2</td></tr><tr><th scope="row">2. Delete a row, the wrong note stays</th><td>Identity & effects</td><td>Index keys tie state to a position, not to a product.</td><td>page 3</td></tr><tr><th scope="row">3. memo added, nothing improved</th><td>Renders & state placement</td><td>A new function every render defeats memo’s prop comparison; memo only added work.</td><td>page 6</td></tr><tr><th scope="row">4. Results flash old data for a frame</th><td>Identity & effects</td><td>State copied from state in an effect: render, commit, effect, set state, render again.</td><td>page 4</td></tr><tr><th scope="row">5. Add to cart renders the whole shop</th><td>Renders & state placement</td><td>One context value changes with the cart, so every reader renders — including cards that only need the theme.</td><td>page 8</td></tr><tr><th scope="row">6. The spinner flashes on every keystroke</th><td>Loading & shipping</td><td>An urgent update that suspends replaces visible content with the fallback.</td><td>page 9</td></tr><tr><th scope="row">7. Slow first load on phones</th><td>Loading & shipping</td><td>Download and parse cost, not render cost: the first bundle carries rarely-used features.</td><td>page 11</td></tr><tr><th scope="row">8. Typing in checkout lags</th><td>Renders & state placement</td><td>Every keystroke changes state at the top of the form, so all fields render.</td><td>forms deep dive, page 6</td></tr><tr><th scope="row">9. Bonus: one bad product blanks the page</th><td>Resilience</td><td>A render-time error reaches the root; nothing contains it.</td><td>error boundaries deep dive</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>7–9 diagnosed before the reveal</h5><p>You think in the ladder. Practise on your own app’s slowest interaction.</p><span class="sc-use">→ Profile it</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>4–6</h5><p>You know the pieces; practise the order of questions.</p><span class="sc-use">→ Re-read the playbook (page 7)</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–3</h5><p>Normal on a first pass. Revisit pages 2, 3 and 6 — where state lives, identity and stable props carry most cases.</p><span class="sc-use">→ State → keys → props</span></div>
+      <div class="scenario"><span class="sc-icon">🔁</span><h5>Any score</h5><p>Redo in a week without the evidence list.</p><span class="sc-use">→ Spaced practice</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Patterns.</b> Cases 1, 3, 5 and 8 all <i>look</i> like “React is slow” but each has a different lever: state placement, stable props, context split, controlled versus uncontrolled. The profile tells you which — never the symptom alone.</p>
+      <p><b>Case 7 is not a render problem.</b> The Profiler showed fast renders; only the bundle analyser exposed the cost. Match the tool to the layer (render, load, ship).</p>
+      <p><b>Make your own clinic.</b> Take five real tickets, strip the diagnosis, keep symptom and evidence, and run it with your team.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: wrong or slow? → how many components rendered and why? → what changed? → render, load or ship? → smallest test of the guess.</li><li>One change, same interaction, same build, compare the profile.</li><li>Families: renders & state placement (1, 3, 5, 8), identity & effects (2, 4), loading & shipping (6, 7), resilience (9).</li><li>Similar symptoms, different causes: read the profile before theorising.</li><li>Measure the layer you suspect: Profiler for render, bundle analyser for shipping.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I treat a React problem as an investigation: is it wrong or slow, how many components rendered and why, what changed in their props or state, and is the cost in rendering, loading or shipped code. I form one hypothesis, change one thing, and re-measure the same interaction in the same build."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Reaching for memo first.</b> In four of nine cases the fix was moving state, keys, or splitting a context — not memo.</p>
+      <p><b>Skipping the evidence.</b> In every case one number — renders, KB, or a key in the code — decided the diagnosis.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧠 Knowing the APIs</h5><p>You can explain state, effects, memo and Suspense.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🩺 Doing the diagnosis</h5><p>You can read a profile and choose the one change that proves a hypothesis.</p></div>
+  </div>
+  <section class="kd-section ">
+    <div class="sec-label next">🔎 Deep dives</div>
+    <div class="deep-grid">
+      <a class="kd-card deep-card" href="testing-react.html"><span class="dc-kicker">Deep dive · React clinic</span><h4>Testing React</h4><p>What to test in a component and how to wait for updates — so the fixes you just made stay fixed.</p><span class="dc-go">Open the deep dive <span class="arrow">→</span></span></a>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the React lab. Next you can open the testing deep dive, or go on to the Angular lab.</span>
+      <a class="next-link" href="../../angular/index.html">Angular Lab <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every technique in the cases is explained, with its sources, on the page it points to. For exact behaviour check the official docs. Official docs: <a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener">Profiler</a> · <a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener">memo</a> · <a href="https://react.dev/learn/preserving-and-resetting-state" target="_blank" rel="noopener">Preserving and Resetting State</a> · <a href="https://react.dev/learn/you-might-not-need-an-effect" target="_blank" rel="noopener">You Might Not Need an Effect</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

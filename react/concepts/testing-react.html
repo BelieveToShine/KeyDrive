@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing React — React — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">⚛️ React Lab</a><span class="sep">›</span><a href="react-clinic.html">React clinic</a><span class="sep">›</span><span class="cur">Testing React</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · React lab · 🧪 Testing</div>
+    <h1>Test like a user — and <span class="grad-text">wait for React</span>.</h1>
+    <p class="sub">Why tests need act, how to wait for async updates, what to test in ShopUI and what not to.</p>
+    <div class="interview-q">❓ "How do you test React components, and what do act and waitFor do?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Test what the user sees and does, such as text, roles and results after typing and clicking, rather than a component’s internal state, methods or render counts, so refactors do not break tests">
+<defs><marker id="ts2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">✅ TEST THE BEHAVIOUR</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">⛔ NOT THE INTERNALS</text>
+<rect class="bx" x="26" y="40" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Text and roles on screen</text>
+<text x="162.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">“Cart (1)”, a button named Pay</text>
+<rect class="bx" x="26" y="102" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="124.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">What happens after typing</text>
+<text x="162.5" y="137.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">the list shows matching products</text>
+<rect class="bx" x="26" y="164" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="186.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Loading and error states</text>
+<text x="162.5" y="199.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">fallback, then content; a retry</text>
+<rect class="bx" x="26" y="226" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Accessibility names</text>
+<text x="162.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">labels linked to inputs</text>
+<rect class="bx" x="341" y="40" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">A component’s internal state</text>
+<text x="477.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">useState values</text>
+<rect class="bx" x="341" y="102" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="124.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Internal methods</text>
+<text x="477.5" y="137.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">handlers called directly</text>
+<rect class="bx" x="341" y="164" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="186.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Lifecycle details</text>
+<text x="477.5" y="199.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">which effect ran</text>
+<rect class="bx" x="341" y="226" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Querying through the container</text>
+<text x="477.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">container.querySelector</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the guiding rule of React Testing Library: <b>the more your tests resemble the way your software is used, the more confidence they give</b>. Test what a user sees and does — text, roles, what appears after typing or clicking, loading and error states. Do not test a component’s internal state, internal methods or lifecycle details, and avoid reaching through <span class="kw">container</span>: those tests break when you refactor even though nothing changed for the user.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">A good React test <b>acts like a user</b>, waits for React to finish, and asserts on <b>what is on the screen</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The clinic fixes — moved state, stable props, split contexts — are exactly the kind of change that must not alter behaviour. Tests are how you know they did not. And tests that assert on <i>internals</i> (state values, render counts) fail on every refactor and teach the team to ignore failures.</p>
+      <p>There are two practical problems unique to React: updates are <b>applied asynchronously</b>, so a test can assert too early, and a test must <b>query the screen the way a user finds things</b>.</p>
+      <p>This page covers both: <span class="kw">act</span> and async queries, and what is worth testing in ShopUI.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⏱️ Why tests need act</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Without act or an async query a test asserts before React has applied the update and sees the old screen; with act or findBy the assertion waits until the update is applied and sees the new screen">
+<defs><marker id="ts1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ts1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">ASSERT TOO EARLY</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WAIT FOR THE UPDATE</text>
+<path d="M162,94 L162,132" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ts1A)"/>
+<path d="M162,186 L162,224" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ts1A)"/>
+<path d="M477,94 L477,132" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ts1A)"/>
+<path d="M477,186 L477,224" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ts1A)"/>
+<rect class="bx" x="30" y="40" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="64.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Click “Add to cart”</text>
+<text x="162.5" y="77.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">test fires the event</text>
+<rect class="bx" x="30" y="132" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Assert badge = 1</text>
+<text x="162.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">runs immediately</text>
+<rect class="bx" x="30" y="224" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Screen still shows 0</text>
+<text x="162.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">React had not finished</text>
+<rect class="bx" x="345" y="40" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="64.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Click “Add to cart”</text>
+<text x="477.5" y="77.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">inside act (Testing Library does it)</text>
+<rect class="bx" x="345" y="132" width="265" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="477.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">React applies the update</text>
+<text x="477.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">state set, render, commit</text>
+<rect class="bx" x="345" y="224" width="265" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Assert badge = 1</text>
+<text x="477.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">sees the new screen</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: the test clicks and asserts at once, before React has applied the state update, so it sees the old screen and fails (or, worse, passes for the wrong reason). <b>Right</b>: the event runs inside <span class="kw">act</span>, which applies pending React updates before you assert. React Testing Library wraps <span class="kw">render</span> and <span class="kw">fireEvent</span> in act for you; for work that finishes later, wait with <span class="kw">waitFor</span> or a <span class="kw">find*</span> query.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📋 The testing toolbox</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Need</th><th scope="col">Use</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">Render a component and query the screen</th><td>React Testing Library (<span class="kw">render</span>, <span class="kw">screen</span>)</td><td>The React docs suggest it to avoid act boilerplate</td></tr><tr><th scope="row">Simulate real typing and clicking</th><td><span class="kw">user-event</span></td><td>Recommended over raw events: fires events in the order a real user would</td></tr><tr><th scope="row">Wait for async updates</th><td><span class="kw">findBy…</span> queries or <span class="kw">waitFor</span></td><td>Avoids “not wrapped in act” warnings and flakiness</td></tr><tr><th scope="row">Apply updates yourself (no helper library)</th><td><span class="kw">await act(async () =&gt; { … })</span> from <span class="kw">react</span></td><td>The <span class="kw">react-dom/test-utils</span> version is deprecated in React 19</td></tr><tr><th scope="row">Find things the way users do</th><td>Queries by role, label and text</td><td>Avoid <span class="kw">container</span> queries</td></tr><tr><th scope="row">A test runner</th><td>Your project’s runner (Jest, Vitest…)</td><td>Outside React’s docs; follow its own docs</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Testing lab · three ShopUI tests</div>
+    <div class="code-block"><pre>test(<span class="str">'typing filters the list'</span>, <span class="kw">async</span> () =&gt; {
+  render(&lt;ShopUI /&gt;);
+  <span class="kw">await</span> user.type(screen.getByRole(<span class="str">'searchbox'</span>), <span class="str">'shi'</span>);
+  expect(<span class="kw">await</span> screen.findByText(<span class="str">'Shirt'</span>)).toBeVisible();
+  expect(screen.queryByText(<span class="str">'Shoes'</span>)).not.toBeInTheDocument();
+});
+
+test(<span class="str">'adding an item updates the cart badge'</span>, <span class="kw">async</span> () =&gt; {
+  render(&lt;ShopUI /&gt;);
+  <span class="kw">await</span> user.click(screen.getAllByRole(<span class="str">'button'</span>, { name: <span class="str">/add to cart/i</span> })[0]);
+  expect(<span class="kw">await</span> screen.findByText(<span class="str">'Cart (1)'</span>)).toBeVisible();
+});</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch; <span class="kw">user</span> comes from user-event’s setup. Nothing here depends on how the state is stored — moving it down (page 2) leaves the tests green.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Test</th><th scope="col">Protects</th><th scope="col">Survives the page-2 and page-6 fixes?</th></tr></thead><tbody><tr><th scope="row">Typing filters the list</th><td>Search behaviour</td><td>Yes — it only looks at the screen</td></tr><tr><th scope="row">Add to cart updates the badge</th><td>Cart behaviour, memo with stable props</td><td>Yes — if the badge is wrong, the memo fix broke something</td></tr><tr><th scope="row">Asserting that ProductCard rendered 500 times</th><td>Nothing a user cares about</td><td>No — fails on every optimisation</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Commits and render milliseconds in the Profiler — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What rendered, and why?</h4><p>Read the flamegraph: which components, and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The biggest wrong thing</h4><p>One slow component, a render cascade, an effect loop, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>State too high? Unstable props? Needless effect? Too much code shipped?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer renders, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · testing symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">“not wrapped in act(…)” warning</th><td>An update happened outside act, usually async</td><td><span class="kw">await</span> a <span class="kw">findBy…</span> query or <span class="kw">waitFor</span>; use user-event</td></tr><tr><th scope="row">The test passes but the app is broken</th><td>It asserted on internals, or too early</td><td>Assert on visible output; wait for it</td></tr><tr><th scope="row">The test fails after a harmless refactor</th><td>It depends on implementation details</td><td>Query by role, label or text; drop internal-state checks</td></tr><tr><th scope="row">Flaky: passes locally, fails in CI</th><td>Fixed delays instead of waiting for a condition</td><td>Wait for the condition with find/waitFor</td></tr><tr><th scope="row">“Unable to find an element”</th><td>Wrong query, or the element appears later</td><td>Use <span class="kw">findBy…</span> for async; inspect the accessible name</td></tr><tr><th scope="row">A lazy component test fails</th><td>Suspense fallback shown first</td><td><span class="kw">await</span> the final content with a find query</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔧</span><h5>You moved state down (page 2)</h5><p>Behaviour must not change.</p><span class="sc-use">→ Behaviour tests stay green</span></div>
+      <div class="scenario"><span class="sc-icon">⏳</span><h5>A search test fails once in ten runs</h5><p>It uses a fixed sleep.</p><span class="sc-use">→ findBy / waitFor</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Checkout validation message</h5><p>User-visible rule.</p><span class="sc-use">→ Type bad input, assert the message</span></div>
+      <div class="scenario"><span class="sc-icon">🛟</span><h5>An error boundary fallback</h5><p>What users see after a crash.</p><span class="sc-use">→ Render a throwing child, assert the Retry fallback</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Act and the environment flag.</b> Outside Testing Library, you must tell React it is in a test environment (<span class="kw">IS_REACT_ACT_ENVIRONMENT</span>); Testing Library already sets it.</p>
+      <p><b>Separate act calls</b> for rendering and for dispatching events make sure every update is applied before you assert.</p>
+      <p><b>Performance tests.</b> Render counts and milliseconds belong in profiling (page 5), not in unit tests; tests should check behaviour and let the Profiler check speed.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Test like a user: what is on the screen, after typing and clicking.</li><li>React applies updates asynchronously; <span class="kw">act</span> flushes them, and Testing Library wraps render and events in it.</li><li>For later updates use <span class="kw">findBy…</span> or <span class="kw">waitFor</span>, not sleeps.</li><li>Prefer user-event to raw events; avoid querying through <span class="kw">container</span>.</li><li>Do not test internal state, methods or lifecycle details.</li><li>The <span class="kw">react-dom/test-utils</span> act is deprecated in React 19; import <span class="kw">act</span> from <span class="kw">react</span>.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I test React components the way users use them: render, interact with user-event, wait for updates with find queries or waitFor, and assert on what is visible — roles, labels and text — never on internal state. That keeps tests green through refactors and optimisations, and I leave render counts and timings to profiling."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Testing implementation details.</b> Every refactor breaks tests that nobody can explain.</p>
+      <p><b>Fixed sleeps.</b> Slow on a good day, flaky on a bad day.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧪 act</h5><p>Applies pending React updates so assertions see the result.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>⏳ waitFor / findBy</h5><p>Polls until something appears or a condition holds.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the capstone clinic, or on to the Angular lab.</span>
+      <a class="next-link" href="react-clinic.html">Capstone: the React performance clinic <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 React’s and Testing Library’s documentation change between versions; check yours. Official docs: <a href="https://react.dev/reference/react/act" target="_blank" rel="noopener">act</a> · <a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank" rel="noopener">React Testing Library: introduction</a> · <a href="https://testing-library.com/docs/react-testing-library/faq/" target="_blank" rel="noopener">Testing Library: guiding principles & FAQ</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · React · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

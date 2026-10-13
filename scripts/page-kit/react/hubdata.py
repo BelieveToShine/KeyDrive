@@ -23,7 +23,7 @@ SUB = {'react-hooks-guide': 'effects', 'refs-and-dom': 'effects', 'custom-hooks'
 SUBT = {'react-hooks-guide': 'Hooks: what each does and when to use which', 'refs-and-dom': 'Refs and the DOM', 'custom-hooks': 'Custom hooks & the Rules of Hooks',
         'forms-actions': 'Forms & actions', 'error-boundaries': 'Error boundaries & error handling', 'api-layer-caching': 'The API layer: fetch wrappers & caching',
         'routing-navigation': 'Routing & navigation', 'testing-react': 'Testing React', 'react-vs-angular': 'Same app, two frameworks'}
-WRITTEN = ['react-mental-model','state-rerenders','keys-reconciliation','effects','profiler','memoization','react-debugging-playbook','context-state-architecture','data-fetching-suspense','server-rendering-hydration','code-splitting-bundles']
+WRITTEN = ['react-mental-model','state-rerenders','keys-reconciliation','effects','profiler','memoization','react-debugging-playbook','context-state-architecture','data-fetching-suspense','server-rendering-hydration','code-splitting-bundles','react-clinic']
 LADDER = [('1 · MEASURE','📏 How slow, exactly?','Commits and render milliseconds in the Profiler — a number, not a feeling.'),
           ('2 · READ','🔬 What rendered, and why?','Read the flamegraph: which components, and what triggered them.'),
           ('3 · FIND','🎯 The biggest wrong thing','One slow component, a render cascade, an effect loop, a heavy bundle?'),

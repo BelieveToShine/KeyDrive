@@ -248,5 +248,26 @@ Source root: https://react.dev/
 | Hosting must serve the app for deep links; access control in the browser is not security; push vs replace conventions | 🟨 K | general web practice |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Page 12 — React clinic
+| Claim | Status | Note |
+|---|---|---|
+| Every technique in the cases is verified on the page it points to (pages 2, 3, 4, 6, 8, 9, 11; forms and error-boundary deep dives) | ✅ V | see those sections of this ledger |
+| Case numbers: ≈ 40 ms, 504 components, 41 ms, 4 components ≈ 3 ms, 1,008 renders, 502 readers, ≈ 35 ms, 420 KB → ≈ 180 KB, 13 components → 0/2 | 🟦 I | teaching numbers consistent with overview.md and earlier pages |
+| Console error wording in case 9 | 🟦 I | described generally, no quoted message |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Deep dive — testing React
+| Claim | Status | Note |
+|---|---|---|
+| act applies pending React updates before assertions; wrap rendering and event dispatch in act; import from react; react-dom/test-utils act is deprecated in React 19 | ✅ V | reference/react/act; warnings/react-dom-test-utils; React 19 upgrade guide |
+| Testing Library already sets IS_REACT_ACT_ENVIRONMENT; outside it you set the flag | ✅ V | reference/react/act |
+| React docs suggest React Testing Library, whose helpers are wrapped with act | ✅ V | reference/react/act |
+| Guiding principle: the more tests resemble how software is used, the more confidence they give; avoid testing internal state, internal methods, lifecycle methods; avoid querying via container | ✅ V | testing-library.com react-testing-library intro / FAQ |
+| render and fireEvent are wrapped in act; for async use waitFor or find* queries; user-event is recommended | ✅ V | testing-library.com react-testing-library API / FAQ |
+| getByRole, searchbox role, toBeVisible/toBeInTheDocument (jest-dom) in the examples | 🟨 K | Testing Library API names used in examples; not individually re-checked |
+| Jest, Vitest named as runners | 🟨 K | outside React's docs |
+| Test numbers (Cart (1), 500 renders) | 🟦 I | illustrative |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

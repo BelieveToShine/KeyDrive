@@ -348,7 +348,8 @@
       "context-state-architecture",
       "data-fetching-suspense",
       "server-rendering-hydration",
-      "code-splitting-bundles"
+      "code-splitting-bundles",
+      "react-clinic"
     ],
     "sub": {
       "react-hooks-guide": "effects",
@@ -357,7 +358,8 @@
       "forms-actions": "data-fetching-suspense",
       "error-boundaries": "data-fetching-suspense",
       "api-layer-caching": "data-fetching-suspense",
-      "routing-navigation": "code-splitting-bundles"
+      "routing-navigation": "code-splitting-bundles",
+      "testing-react": "react-clinic"
     },
     "subTitles": {
       "react-hooks-guide": "Hooks: what each does and when to use which",
@@ -366,7 +368,8 @@
       "forms-actions": "Forms & actions",
       "error-boundaries": "Error boundaries & error handling",
       "api-layer-caching": "The API layer: fetch wrappers & caching",
-      "routing-navigation": "Routing & navigation"
+      "routing-navigation": "Routing & navigation",
+      "testing-react": "Testing React"
     }
   },
   "angular": {

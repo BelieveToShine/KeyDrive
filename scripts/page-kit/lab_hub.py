@@ -53,6 +53,7 @@ deep = f'''  <section class="kd-section">
   </section>
 ''' if dd else ''
 first = C[0][0]
+cta = f'<a class="kd-cta" href="concepts/{first}.html">Start at the beginning <span class="arrow">→</span></a>' if first in WRITTEN else '<p class="hub-note">🔒 The first page is being written — check back soon.</p>'
 page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])} — KeyDrive</title>') + f'''<nav class="kd-crumbs wrap">
   <a href="../index.html">KeyDrive</a><span class="sep">›</span><a href="../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><span class="cur">{T["icon"]} {e(T["title"])}</span>
 </nav>
@@ -63,7 +64,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])
     <h1>{T["h1"]}</h1>
     <p class="sub">{T["sub"]}</p>
     <p class="hub-note">🗺️ <b>{nw} of {nt}</b> concepts are written — {note}</p>
-    <a class="kd-cta" href="concepts/{first}.html">Start at the beginning <span class="arrow">→</span></a>
+    {cta}
   </section>
 
   <section class="kd-section">
