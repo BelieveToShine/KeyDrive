@@ -16,6 +16,8 @@ Source root: https://angular.dev/
 | Zoneless is stable (v20.2) and default in v21+; OnPush becoming the default strategy and Default renamed Eager (roadmap); one best-practices page ties OnPush-default to v22 | ✅ V | guide/zoneless; roadmap — version labels differ between pages, readers told to check release notes |
 | Error messages (“is not a known element”, “Can't bind to …”) | 🟨 K | Angular's usual compiler messages, wording not re-checked |
 | React ↔ Angular vocabulary table | 🟦 I | teaching analogy, not an official mapping |
+| “ten copies” of CartPage after ten visits (clinic) | 🟦 I | invented illustration |
+| “deprecated” (HttpClientModule advice in an old tutorial) | 🟨 K | refers to the older module-based setup; the setup guide lists provideHttpClient(withInterceptorsFromDi(), withXhr()) as its equivalent |
 | ShopUI: 504 components, ≈ 40 ms with the old default strategy; "2019" as the year of an old tutorial | 🟦 I | teaching numbers / example |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
@@ -197,6 +199,18 @@ Source root: https://angular.dev/
 | Retry only idempotent requests; refresh token once on 401 and exclude the refresh call | 🟨 K | general HTTP/engineering practice |
 | HTTP status meanings (401, 404, 503) | 🟨 K | standard HTTP semantics |
 | 7 services, 3 error shapes | 🟦 I | teaching numbers |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
+## Deep dive — testing Angular
+| Claim | Status | Note |
+|---|---|---|
+| TestBed uses zoneless change detection by default even when zone.js is loaded via polyfills; opt in to zone behaviour by adding the zone change-detection provider; docs suggest avoiding fixture.detectChanges() | ✅ V | angular.dev/guide/zoneless |
+| await fixture.whenStable() waits for the initial render; ComponentFixtureAutoDetect enables automatic change detection, on by default with zoneless and turning it off is not recommended; fixture.autoDetectChanges() alternative | ✅ V | guide/testing/components-basics, components-scenarios |
+| TestBed enforces OnPush compatibility and throws ExpressionChangedAfterItHasBeenCheckedError when template values change without a notification; for test-only wrappers fixture.changeDetectorRef.markForCheck() is acceptable | ✅ V | guide/zoneless |
+| CDK harnesses: TestbedHarnessEnvironment.loader(fixture), getHarness / harnessForFixture | ✅ V | guide/testing/using-component-harnesses |
+| provideExperimentalZonelessChangeDetection in v19; provideZonelessChangeDetection in current docs | ✅ V | v19 vs current zoneless pages |
+| TestBed.configureTestingModule({ imports: [Cmp] }), providers useClass for fakes | 🟨 K | standard TestBed API; snippet illustrative |
+| Fake services, unit vs end-to-end test definitions | 🟨 K | general testing practice |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
 ## Cross-page notes

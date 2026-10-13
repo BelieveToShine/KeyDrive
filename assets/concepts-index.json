@@ -3540,5 +3540,31 @@
     "summary": "The classic mistake with HttpClient & interceptors.",
     "keywords": "angular http interceptor HttpClient withInterceptors auth token 401 retry HttpErrorResponse catchError backoff HttpContext trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-testing-angular",
+    "title": "Testing Angular",
+    "category": "Angular",
+    "page": "angular/concepts/testing-angular.html",
+    "summary": "TestBed, fake services, waiting for stability in zoneless tests, component harnesses and what not to test.",
+    "keywords": "angular testing TestBed fixture whenStable zoneless harness fake service ComponentFixtureAutoDetect unit test"
+  },
+  {
+    "id": "angular-testing-angular-recall",
+    "title": "Testing Angular — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/testing-angular.html",
+    "summary": "Quick recall points: Testing Angular.",
+    "keywords": "angular testing TestBed fixture whenStable zoneless harness fake service ComponentFixtureAutoDetect unit test interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-testing-angular-trap",
+    "title": "Testing Angular — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/testing-angular.html",
+    "summary": "The classic mistake with Testing Angular.",
+    "keywords": "angular testing TestBed fixture whenStable zoneless harness fake service ComponentFixtureAutoDetect unit test trap mistake",
+    "anchor": "trap"
   }
 ]

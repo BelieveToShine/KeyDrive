@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing Angular — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><a href="angular-clinic.html">Angular clinic</a><span class="sep">›</span><span class="cur">Testing Angular</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Angular lab · 🧪 Testing</div>
+    <h1>Test the <span class="grad-text">behaviour</span> — and wait for Angular to settle.</h1>
+    <p class="sub">TestBed setup, fake services, why tests must wait for stability in a zoneless world, component harnesses, and what not to test.</p>
+    <div class="interview-q">❓ "How do you unit test an Angular component, and what changed with zoneless testing?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Test what the user sees and the public behaviour of a component, such as rendered text, inputs, outputs and service calls, rather than private fields or how many times change detection ran">
+<defs><marker id="tg2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tg2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tg2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">✅ TEST THE BEHAVIOUR</text>
+<rect class="zone" x="325" y="8" width="305" height="284" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">⛔ NOT THE INTERNALS</text>
+<rect class="bx" x="26" y="40" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Rendered text and state</text>
+<text x="162.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">“Cart (1)”, disabled button</text>
+<rect class="bx" x="26" y="102" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="124.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Inputs → output</text>
+<text x="162.5" y="137.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">set an input, expect the emitted value</text>
+<rect class="bx" x="26" y="164" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="186.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Service interactions</text>
+<text x="162.5" y="199.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">a fake service is called</text>
+<rect class="bx" x="26" y="226" width="273" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="162.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Loading and error views</text>
+<text x="162.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">fallback, then content</text>
+<rect class="bx" x="341" y="40" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="62.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Private fields</text>
+<text x="477.5" y="75.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">implementation detail</text>
+<rect class="bx" x="341" y="102" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="124.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Change-detection counts</text>
+<text x="477.5" y="137.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">profile instead</text>
+<rect class="bx" x="341" y="164" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="186.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Exact DOM structure</text>
+<text x="477.5" y="199.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">breaks on refactors</text>
+<rect class="bx" x="341" y="226" width="273" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="477.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Real HTTP in unit tests</text>
+<text x="477.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">slow and flaky</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> the rule that keeps tests useful through refactors: <b>test what a user sees and the component’s public behaviour</b> — rendered text, what happens when an input is set, what an output emits, what a (faked) service was asked to do. Do not test private fields, how often change detection ran (that is profiling) or exact DOM structure, and do not call a real server in a unit test.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Test the <b>behaviour</b>, give the component a <b>fake</b> for each service, and <b>wait for stability</b> before asserting.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The clinic fixes — OnPush, signals, a different <span class="kw">track</span> — must not change what the screen does. Tests are how you know. They also teach you whether your design is injectable: a component that cannot be given a fake cart is hard to test <i>and</i> hard to reuse (page 7).</p>
+      <p>Modern Angular adds one twist: <b>TestBed uses zoneless change detection by default</b>, even if zone.js is loaded. Updates are no longer “magically” flushed after every task, so tests must wait for the app to settle.</p>
+      <p>This page covers the TestBed setup, waiting for stability, component harnesses and what to leave out of unit tests.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⏱️ Waiting for stability</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="In a zoneless TestBed a test must wait for the app to be stable before asserting: without waiting it sees the old template, with await fixture.whenStable it sees the updated one">
+<defs><marker id="tg1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tg1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="tg1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="305" height="314" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">ASSERT TOO EARLY</text>
+<rect class="zone" x="325" y="8" width="305" height="314" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="339" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">WAIT FOR STABILITY</text>
+<path d="M162,94 L162,132" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#tg1A)"/>
+<path d="M162,186 L162,224" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#tg1A)"/>
+<path d="M477,94 L477,132" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#tg1A)"/>
+<path d="M477,186 L477,224" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#tg1A)"/>
+<rect class="bx" x="30" y="40" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="162.5" y="64.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Click “Add to cart”</text>
+<text x="162.5" y="77.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">test triggers the event</text>
+<rect class="bx" x="30" y="132" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Assert badge = 1</text>
+<text x="162.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">runs immediately</text>
+<rect class="bx" x="30" y="224" width="265" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="162.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Template still shows 0</text>
+<text x="162.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">not stable yet</text>
+<rect class="bx" x="345" y="40" width="265" height="54" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="477.5" y="64.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Click “Add to cart”</text>
+<text x="477.5" y="77.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">test triggers the event</text>
+<rect class="bx" x="345" y="132" width="265" height="54" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="477.5" y="156.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">await fixture.whenStable()</text>
+<text x="477.5" y="169.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">pending work finishes</text>
+<rect class="bx" x="345" y="224" width="265" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="477.5" y="248.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Assert badge = 1</text>
+<text x="477.5" y="261.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">sees the updated template</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> <b>Left</b>: the test triggers an event and asserts at once, before pending work has finished — it sees the old template. <b>Right</b>: <span class="kw">await fixture.whenStable()</span> lets the initial render and pending updates finish, then the assertion sees the new template. The docs suggest avoiding <span class="kw">fixture.detectChanges()</span> where possible so tests match production, since automatic change detection is on by default in zoneless tests.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧰 The toolbox</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Need</th><th scope="col">Use</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">Create a component under test</th><td><span class="kw">TestBed.configureTestingModule({ imports: [Cmp] })</span>, <span class="kw">TestBed.createComponent</span></td><td>Standalone components go in <span class="kw">imports</span></td></tr><tr><th scope="row">Replace a service</th><td><span class="kw">providers: [{ provide: CartService, useClass: FakeCart }]</span></td><td>Dependency injection makes this possible (page 7)</td></tr><tr><th scope="row">Wait for async work</th><td><span class="kw">await fixture.whenStable()</span></td><td>Needed to wait for the initial render</td></tr><tr><th scope="row">Automatic change detection</th><td>On by default with zoneless; <span class="kw">ComponentFixtureAutoDetect</span> otherwise</td><td>Turning it off is not recommended</td></tr><tr><th scope="row">Opt in to zone-based behaviour in a test</th><td>Add the zone change-detection provider to TestBed providers</td><td>Only if the code under test needs it</td></tr><tr><th scope="row">Interact the way users do</th><td>Component harnesses (CDK): <span class="kw">TestbedHarnessEnvironment.loader(fixture)</span>, <span class="kw">getHarness</span></td><td>Stable across template refactors</td></tr><tr><th scope="row">Error: ExpressionChanged…</th><td>TestBed enforces OnPush-compatibility: values changed without a notification throw NG0100</td><td>For test-only wrappers <span class="kw">fixture.changeDetectorRef.markForCheck()</span> is acceptable</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Testing lab · ShopUI cart badge</div>
+    <div class="code-block"><pre>it(<span class="str">'shows the count after adding an item'</span>, <span class="kw">async</span> () =&gt; {
+  TestBed.configureTestingModule({
+    imports: [CartButton],
+    providers: [{ provide: CartService, useClass: FakeCartService }],
+  });
+  <span class="kw">const</span> fixture = TestBed.createComponent(CartButton);
+  <span class="kw">await</span> fixture.whenStable();                              <span class="cmt">// initial render</span>
+  fixture.nativeElement.querySelector(<span class="str">'button'</span>).click();
+  <span class="kw">await</span> fixture.whenStable();
+  expect(fixture.nativeElement.textContent).toContain(<span class="str">'Cart (1)'</span>);
+});</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. The fake service has a signal-based count; the test never reads a private field.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Test</th><th scope="col">Protects</th><th scope="col">Survives OnPush + signals refactor?</th></tr></thead><tbody><tr><th scope="row">Badge text after click</th><td>Cart behaviour</td><td>Yes</td></tr><tr><th scope="row">Output emits the product id</th><td>Parent–child contract (page 1)</td><td>Yes</td></tr><tr><th scope="row">Asserting a private <span class="kw">items</span> array</th><td>Nothing a user sees</td><td>No — breaks on every refactor</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE ★</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · testing symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">A test passes with zone.js but fails after upgrading</th><td>Zoneless TestBed default: updates are not flushed automatically</td><td><span class="kw">await fixture.whenStable()</span>; make the component OnPush-compatible</td></tr><tr><th scope="row">NG0100 only in a test</th><td>A value changed without a change notification</td><td>Use signals, or markForCheck for test wrappers</td></tr><tr><th scope="row">“No provider for X” in a test</th><td>The fake or real service was not provided</td><td>Add it to TestBed providers</td></tr><tr><th scope="row">Flaky assertions</th><td>Fixed delays instead of waiting</td><td>Wait for stability or use a harness</td></tr><tr><th scope="row">Tests break on harmless template changes</th><td>They query exact DOM structure</td><td>Use harnesses or stable test ids</td></tr><tr><th scope="row">Unit tests are slow</th><td>Real HTTP or routing in each test</td><td>Fake the service; test routing separately</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🔧</span><h5>You added OnPush to ProductCard</h5><p>Behaviour must not change.</p><span class="sc-use">→ Behaviour tests stay green</span></div>
+      <div class="scenario"><span class="sc-icon">🌐</span><h5>A component calls the API</h5><p>Real HTTP is slow.</p><span class="sc-use">→ Provide a fake service</span></div>
+      <div class="scenario"><span class="sc-icon">🧭</span><h5>A guard must redirect signed-out users</h5><p>Pure function of state.</p><span class="sc-use">→ Test the guard with injected fakes</span></div>
+      <div class="scenario"><span class="sc-icon">🆙</span><h5>Upgrading to zoneless</h5><p>Tests rely on zone.js timing.</p><span class="sc-use">→ whenStable, signals</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Zoneless TestBed.</b> TestBed uses zoneless change detection by default, even when zone.js is loaded through polyfills; the docs say to avoid <span class="kw">detectChanges()</span> where possible.</p>
+      <p><b>Harnesses.</b> The CDK’s component harnesses give tests a stable API over a component’s DOM, so template refactors do not break them.</p>
+      <p><b>Provider name.</b> The zoneless provider was experimental in v19 (<span class="kw">provideExperimentalZonelessChangeDetection</span>); current docs use <span class="kw">provideZonelessChangeDetection</span>.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Test behaviour: rendered text, inputs, outputs, service interactions; not private fields or CD counts.</li><li>Replace services with fakes through TestBed providers.</li><li>TestBed is zoneless by default; wait with <span class="kw">await fixture.whenStable()</span>.</li><li>Avoid <span class="kw">fixture.detectChanges()</span> where possible; automatic change detection is on by default in zoneless tests.</li><li>TestBed enforces OnPush-compatibility (NG0100 if values change without notification).</li><li>Harnesses give stable DOM access.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I test components through their public behaviour, with fake services supplied through TestBed providers, and since TestBed is zoneless by default I await fixture.whenStable rather than relying on zone.js. I use harnesses for DOM access and leave change-detection counts to the profiler."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Testing private fields.</b> Every refactor breaks tests that nobody can explain.</p>
+      <p><b>Relying on zone.js timing in tests.</b> It disappears with zoneless.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧪 Unit test</h5><p>One component or service with fakes.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧭 End-to-end test</h5><p>The real app in a browser; slower, broader.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the capstone clinic, or on to the Web Platforms hub.</span>
+      <a class="next-link" href="angular-clinic.html">Capstone: the Angular performance clinic <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/testing/components-basics" target="_blank" rel="noopener">Basics of testing components</a> · <a href="https://angular.dev/guide/testing/components-scenarios" target="_blank" rel="noopener">Component testing scenarios</a> · <a href="https://angular.dev/guide/testing/using-component-harnesses" target="_blank" rel="noopener">Using component harnesses in tests</a> · <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">Zoneless</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
