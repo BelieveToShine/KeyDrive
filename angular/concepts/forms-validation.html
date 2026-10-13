@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms in depth: validation &amp; FormArray — Angular — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../web/index.html">🌐 Web Platforms</a><span class="sep">›</span><a href="../index.html">🅰️ Angular Lab</a><span class="sep">›</span><a href="forms.html">Forms</a><span class="sep">›</span><span class="cur">Validation &amp; FormArray</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · Angular lab · ✅ Validation</div>
+    <h1>Cheap rules first, <span class="grad-text">expensive rules only when needed</span>.</h1>
+    <p class="sub">Custom sync and async validators, the validation order, updateOn timing, cross-field rules on the group, and FormArray for repeating rows.</p>
+    <div class="interview-q">❓ "How do async validators work in reactive forms, and when do they run?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Validation order in reactive forms: synchronous validators run first, and asynchronous validators run only if all synchronous validators pass; updateOn blur delays the whole process until the user leaves the field">
+<defs><marker id="fv1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fv1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fv1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M170,56 L170,84" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fv1A)"/>
+<path d="M170,134 L170,162" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fv1A)"/>
+<path d="M170,212 L170,240" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#fv1A)"/>
+<rect class="bx" x="20" y="6" width="300" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="170" y="28.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">1 · The user edits</text>
+<text x="170" y="41.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">updateOn: change (default) or blur / submit</text>
+<rect class="bx" x="20" y="84" width="300" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="170" y="106.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">2 · Sync validators</text>
+<text x="170" y="119.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">required, email, pattern, custom ValidatorFn</text>
+<rect class="bx" x="20" y="162" width="300" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="170" y="184.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">3 · Async validators</text>
+<text x="170" y="197.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">only if every sync validator passed</text>
+<rect class="bx" x="20" y="240" width="300" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="170" y="262.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">4 · Status</text>
+<text x="170" y="275.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">VALID, INVALID or PENDING; errors object</text>
+<text class="free" x="345" y="108" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">A failed sync validator skips</text>
+<text class="free" x="345" y="124" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">the (expensive) async check.</text>
+<text class="free" x="345" y="262" text-anchor="start" font-size="9.5" font-weight="400" fill="#93a0b8">PENDING while the async check runs.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> what happens when the user edits a field in a reactive form. By default the value updates on every change (<span class="kw">updateOn: 'change'</span>); <span class="kw">'blur'</span> or <span class="kw">'submit'</span> delay it. <b>Synchronous validators</b> run first; <b>asynchronous validators</b> (a server check) run <b>only if every sync validator passed</b>, saving the request. The control is <b>PENDING</b> while the async check runs, then VALID or INVALID with an <span class="kw">errors</span> object.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">Validation is <b>functions that return errors</b>: cheap ones run first, expensive ones only when needed, and cross-field rules live on the group.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>The forms page gave you the three systems and the value/validity/touched state. This dive covers the part that takes real forms from demo to production: custom validators, async checks (is this email already taken?), rules across fields, and repeating rows.</p>
+      <p>The ShopUI checkout has about 12 fields — email, address, phones that repeat, a confirmation field — which hits every one of these.</p>
+      <p>The patterns are for reactive forms; signal forms express the same rules as a schema (see the forms page).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 The validation toolbox (reactive forms)</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Need</th><th scope="col">Tool</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">Built-in rules</th><td><span class="kw">Validators.required</span>, <span class="kw">email</span>, <span class="kw">minLength</span>, <span class="kw">pattern</span>…</td><td>Passed as the second argument to <span class="kw">FormControl</span></td></tr><tr><th scope="row">A custom rule on one field</th><td>A <span class="kw">ValidatorFn</span>: <span class="kw">(control) =&gt; errors | null</span></td><td>Return <span class="kw">null</span> when valid</td></tr><tr><th scope="row">A server check (email taken)</th><td>An <span class="kw">AsyncValidatorFn</span> returning a Promise or Observable</td><td>Passed as the third argument; runs only if sync validators pass</td></tr><tr><th scope="row">A rule across fields (password = confirm)</th><td>A validator on the <span class="kw">FormGroup</span></td><td>Reads child controls; error appears on the group</td></tr><tr><th scope="row">When to update</th><td><span class="kw">updateOn: 'blur' | 'submit'</span></td><td>Fewer validations and async requests while typing</td></tr><tr><th scope="row">Rules that change at runtime</th><td>Add/remove validators, then <span class="kw">updateValueAndValidity()</span></td><td>The docs require this call after changing validators</td></tr><tr><th scope="row">Repeating rows</th><td><span class="kw">FormArray</span></td><td>Push and remove controls</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 Repeating rows with FormArray</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="A FormArray holds a list of controls for repeating rows such as phone numbers: adding a row pushes a new control, removing a row removes one, and the array value is the list of the row values">
+<defs><marker id="fv2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fv2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="fv2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M220,50 L260,50" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#fv2A)"/>
+<path d="M316,80 L316,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fv2A)"/>
+<path d="M438,80 L438,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fv2A)"/>
+<path d="M560,80 L560,120" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#fv2A)"/>
+<rect class="bx" x="20" y="20" width="200" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="120" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">FormGroup checkout</text>
+<text x="120" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">email, address, phones</text>
+<rect class="bx" x="260" y="20" width="360" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="440" y="47.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">phones: FormArray</text>
+<text x="440" y="60.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">a list of controls, any length</text>
+<rect class="bx" x="260" y="120" width="112" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="316" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">row 0</text>
+<text x="316" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">0123 456</text>
+<rect class="bx" x="382" y="120" width="112" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="438" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">row 1</text>
+<text x="438" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">0987 654</text>
+<rect class="bx" x="504" y="120" width="112" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="560" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">row 2</text>
+<text x="560" y="155.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">(new row)</text>
+<text class="free" x="320" y="206" text-anchor="middle" font-size="10" font-weight="400" fill="#c4b5fd">push(new FormControl("")) adds a row · removeAt(i) removes one</text>
+<text class="free" x="320" y="232" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">value = ["0123 456", "0987 654", ""]</text>
+<text class="free" x="320" y="262" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">In the template, loop with @for and track the control, not the index.</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> a <span class="kw">FormArray</span> is a list of controls whose length can change — here the checkout’s phone numbers. Adding a row <b>pushes</b> a new control, removing one <b>removes</b> it, and the array’s value is the list of the row values. Loop over the controls in the template with <span class="kw">@for</span>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Validation lab · the checkout email and password</div>
+    <div class="code-block"><pre><span class="cmt">// custom sync validator: no spaces</span>
+<span class="kw">const</span> noSpaces: ValidatorFn = c =&gt; /\s/.test(c.value ?? <span class="str">''</span>) ? { spaces: true } : null;
+
+<span class="cmt">// async validator: ask the server, only after sync rules pass</span>
+<span class="kw">const</span> emailFree = (api: UserApi): AsyncValidatorFn =&gt; c =&gt; api.exists(c.value).pipe(map(taken =&gt; taken ? { taken: true } : null));
+
+email = <span class="kw">new</span> FormControl(<span class="str">''</span>, { validators: [Validators.required, Validators.email, noSpaces], asyncValidators: [emailFree(api)], updateOn: <span class="str">'blur'</span> });
+
+<span class="cmt">// cross-field: on the group</span>
+<span class="kw">const</span> same: ValidatorFn = g =&gt; g.get(<span class="str">'pw'</span>)?.value === g.get(<span class="str">'confirm'</span>)?.value ? null : { mismatch: true };</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative sketch. With <span class="kw">updateOn: 'blur'</span> the server is asked once when the user leaves the field instead of on every keystroke.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Setup</th><th scope="col">Server calls while typing a 20-character email</th><th scope="col">Why</th></tr></thead><tbody><tr><th scope="row">Async validator, default update</th><td>up to 20 (only while sync rules pass)</td><td>Runs after every change</td></tr><tr><th scope="row">Async validator, <span class="kw">updateOn: 'blur'</span></th><td>1</td><td>Runs when the user leaves the field</td></tr><tr><th scope="row">Async validator + debounce in the validator</th><td>1 per pause</td><td>A debounce inside the validator (page 6 operators)</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · MEASURE</span><h4>📏 How slow, exactly?</h4><p>Change-detection cycles and milliseconds in Angular DevTools — a number, not a feeling.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 What was checked, and why?</h4><p>Read the profiler: which components ran and what triggered them.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The biggest wrong thing</h4><p>A default-strategy tree, a function call in a template, a leaked subscription, a heavy bundle?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One hypothesis</h4><p>Missing OnPush? No track? Hot observable? Eager route?</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 Change one thing</h4><p>Never two at once.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Same interaction, fewer checks, fewer milliseconds.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🩺 Debug checklist · validation symptoms</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">Likely cause</th><th scope="col">What to try</th></tr></thead><tbody><tr><th scope="row">The async validator never runs</th><td>A sync validator is failing</td><td>Fix the sync rule; async runs only after sync passes</td></tr><tr><th scope="row">The server is called on every keystroke</th><td>Async validator with default update timing</td><td><span class="kw">updateOn: 'blur'</span> or debounce</td></tr><tr><th scope="row">A control stays PENDING</th><td>The async observable never completes</td><td>Complete it (<span class="kw">first()</span>/<span class="kw">take(1)</span>)</td></tr><tr><th scope="row">Adding a validator at runtime has no effect</th><td>Validity was not recalculated</td><td><span class="kw">control.updateValueAndValidity()</span></td></tr><tr><th scope="row">The cross-field error is not shown</th><td>It is on the group, not on a control</td><td>Read <span class="kw">form.errors</span> or the group’s state in the template</td></tr><tr><th scope="row">Rows jump when one is removed</th><td>Looping with the index as identity</td><td><span class="kw">@for</span> with a stable track (page 4)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">📧</span><h5>“Email already registered” check</h5><p>Server rule.</p><span class="sc-use">→ Async validator + updateOn blur</span></div>
+      <div class="scenario"><span class="sc-icon">🔒</span><h5>Password and confirm must match</h5><p>Rule across fields.</p><span class="sc-use">→ Group validator</span></div>
+      <div class="scenario"><span class="sc-icon">📞</span><h5>Customers add several phone numbers</h5><p>Repeating rows.</p><span class="sc-use">→ FormArray</span></div>
+      <div class="scenario"><span class="sc-icon">🧮</span><h5>A discount code only required for some carts</h5><p>Dynamic rule.</p><span class="sc-use">→ Add/remove validator + updateValueAndValidity</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>Timing.</b> <span class="kw">updateOn</span> can be set on a control or in <span class="kw">FormBuilder</span> options; options are <span class="kw">'change'</span> (default), <span class="kw">'blur'</span> and <span class="kw">'submit'</span>.</p>
+      <p><b>Signal forms.</b> The newer system attaches rules to field paths in a schema (required, email, min/max, custom, conditional) and exposes <span class="kw">valid()</span>, <span class="kw">touched()</span> and <span class="kw">errors()</span> as signals; async validation has its own API.</p>
+      <p><b>Server rules are not optional.</b> Client validation is a convenience; the server must validate again.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A validator is a function returning an errors object or null.</li><li>Sync validators run first; async validators run only if all sync validators pass; the control is PENDING meanwhile.</li><li><span class="kw">updateOn: 'blur'</span> reduces validation and server calls while typing.</li><li>Cross-field rules live on the FormGroup; repeating rows use FormArray.</li><li>After adding or removing validators at runtime call <span class="kw">updateValueAndValidity()</span>.</li><li>Always validate again on the server.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I write validators as functions: built-ins and custom sync rules on controls, async validators for server checks that only run after sync rules pass, and group validators for cross-field rules. I set updateOn blur to avoid a request per keystroke, use FormArray for repeating rows, and the server validates again."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>An async validator on every keystroke.</b> One request per character.</p>
+      <p><b>An observable that never completes.</b> The control is PENDING forever.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧮 Sync validator</h5><p>Cheap, immediate, runs first.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🌐 Async validator</h5><p>Server or timer based; runs only after sync rules pass.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: forms, the three systems.</span>
+      <a class="next-link" href="forms.html">Forms: template-driven, reactive & signal forms <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Angular changes between versions; check the docs for the version you use. Official docs: <a href="https://angular.dev/guide/forms/form-validation" target="_blank" rel="noopener">Validate form input</a> · <a href="https://angular.dev/guide/forms/reactive-forms" target="_blank" rel="noopener">Reactive forms</a> · <a href="https://angular.dev/api/forms/FormControl" target="_blank" rel="noopener">FormControl</a> · <a href="https://angular.dev/api/forms/FormBuilder" target="_blank" rel="noopener">FormBuilder</a> · <a href="https://angular.dev/guide/forms/signals/async-operations" target="_blank" rel="noopener">Signal forms: async operations</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Angular · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

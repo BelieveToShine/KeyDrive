@@ -264,5 +264,18 @@ Source root: https://angular.dev/
 | ActivatedRoute.paramMap / paramsInheritanceStrategy 'always' | 🟨 K | paramMap not re-checked; 'always' per v19 docs |
 | “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
 
+## Deep dive — forms validation & FormArray
+| Claim | Status | Note |
+|---|---|---|
+| Async validators return a Promise or Observable, passed as the third FormControl argument, and run only if all sync validators pass | ✅ V | angular.dev/guide/forms/form-validation |
+| updateOn 'change' (default) / 'blur' / 'submit' on FormControl or FormBuilder options delays value and validity updates | ✅ V | api/forms/FormControl, FormBuilder |
+| After adding or removing a validator at runtime call updateValueAndValidity() | ✅ V | api/forms/FormControl |
+| FormArray tracks values and status of an array of controls; FormGroup of a collection | ✅ V | guide/forms/reactive-forms |
+| Signal forms attach rules to field paths via a schema; async validation has a separate API | ✅ V | guide/forms/signals/validation, async-operations |
+| PENDING status while async validation runs; control stays PENDING if the observable never completes | 🟨 K | standard Angular forms behaviour; not re-quoted here |
+| Cross-field validator on FormGroup; removeAt / push on FormArray | 🟨 K | standard reactive-forms API; snippets illustrative |
+| 20 characters → up to 20 requests vs 1 | 🟦 I | teaching arithmetic |
+| “Go one level deeper (60 seconds)” | 🟦 I | a reading-time label |
+
 ## Cross-page notes
 - ShopUI numbers (500 products, ~12 checkout fields, illustrative render counts/ms) are 🟦 I teaching data; see overview.md.

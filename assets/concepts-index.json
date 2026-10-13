@@ -3670,5 +3670,31 @@
     "summary": "The classic mistake with Route guards, resolvers & params.",
     "keywords": "angular route guards resolvers canActivate canDeactivate canMatch UrlTree redirect resolve ResolveFn route params withComponentInputBinding trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "angular-forms-validation",
+    "title": "Forms in depth: validation & FormArray",
+    "category": "Angular",
+    "page": "angular/concepts/forms-validation.html",
+    "summary": "Custom sync and async validators, validation order, updateOn, cross-field rules and FormArray for repeating rows.",
+    "keywords": "angular forms validation async validator ValidatorFn FormArray updateOn blur cross-field updateValueAndValidity PENDING"
+  },
+  {
+    "id": "angular-forms-validation-recall",
+    "title": "Forms in depth: validation & FormArray — interview recall",
+    "category": "Angular",
+    "page": "angular/concepts/forms-validation.html",
+    "summary": "Quick recall points: Forms in depth: validation & FormArray.",
+    "keywords": "angular forms validation async validator ValidatorFn FormArray updateOn blur cross-field updateValueAndValidity PENDING interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "angular-forms-validation-trap",
+    "title": "Forms in depth: validation & FormArray — common trap",
+    "category": "Angular",
+    "page": "angular/concepts/forms-validation.html",
+    "summary": "The classic mistake with Forms in depth: validation & FormArray.",
+    "keywords": "angular forms validation async validator ValidatorFn FormArray updateOn blur cross-field updateValueAndValidity PENDING trap mistake",
+    "anchor": "trap"
   }
 ]
