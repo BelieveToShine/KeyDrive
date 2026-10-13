@@ -480,7 +480,8 @@
       "liskov-substitution",
       "interface-segregation",
       "dependency-inversion",
-      "dependency-injection-dotnet"
+      "dependency-injection-dotnet",
+      "smells-refactoring"
     ],
     "sub": {},
     "subTitles": {}

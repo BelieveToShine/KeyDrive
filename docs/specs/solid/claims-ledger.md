@@ -91,5 +91,18 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Primary-constructor syntax (class NightlyJob(IServiceScopeFactory scopes)) requires C# 12 / .NET 8 | 🟨 K | language feature recalled, not verified this session |
 | Data of user A shown to user B as a symptom of singleton-with-per-user-state | 🟦 I | illustrative scenario |
 
+## Page 8 — Smells & Safe Refactoring
+| Claim | Status | Note |
+|---|---|---|
+| Smell families: Large Class = bloater; Switch Statements = object-orientation abuser; Divergent Change and Shotgun Surgery = change preventers; Feature Envy = coupler | ✅ V | refactoring.guru catalog / smell pages (via search summary) |
+| Divergent Change: many changes to one class; Shotgun Surgery: one change across many classes | ✅ V | refactoring.guru Change Preventers |
+| Feature Envy usually fixed by moving the method to the class whose data it uses | ✅ V | refactoring.guru Feature Envy |
+| Extract Class and Replace Conditional with Polymorphism kept in Fowler's Refactoring 2nd edition | ✅ V | martinfowler.com/articles/refactoring-2nd-changes.html |
+| Extract Method, Move Method, Extract Interface as refactoring names | 🟨 K | standard names; not each individually opened this session |
+| Refactoring = changing structure without changing behaviour | 🟨 K | Fowler's definition recalled, not quoted |
+| Symptom → principle table | 🟦 I | rule of thumb, not an official mapping |
+| Characterisation tests, IDE-assisted refactorings | 🟨 K | general practice |
+| Order/OrderService code, 1,200 lines, 8 files, 40-line setup | 🟦 I | illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.

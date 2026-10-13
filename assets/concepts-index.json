@@ -3956,5 +3956,31 @@
     "summary": "The classic mistake with Dependency Injection in .NET.",
     "keywords": "dependency injection .NET lifetimes singleton scoped transient captive dependency composition root service locator IServiceCollection ValidateScopes trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-smells-refactoring",
+    "title": "Smells & Safe Refactoring",
+    "category": "SOLID",
+    "page": "solid/concepts/smells-refactoring.html",
+    "summary": "Code smells mapped to SOLID, the refactorings that fix them, and the loop that keeps every step safe.",
+    "keywords": "code smells refactoring Fowler divergent change shotgun surgery feature envy extract class move method SOLID"
+  },
+  {
+    "id": "solid-smells-refactoring-recall",
+    "title": "Smells & Safe Refactoring — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/smells-refactoring.html",
+    "summary": "Quick recall points: Smells & Safe Refactoring.",
+    "keywords": "code smells refactoring Fowler divergent change shotgun surgery feature envy extract class move method SOLID interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-smells-refactoring-trap",
+    "title": "Smells & Safe Refactoring — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/smells-refactoring.html",
+    "summary": "The classic mistake with Smells & Safe Refactoring.",
+    "keywords": "code smells refactoring Fowler divergent change shotgun surgery feature envy extract class move method SOLID trap mistake",
+    "anchor": "trap"
   }
 ]

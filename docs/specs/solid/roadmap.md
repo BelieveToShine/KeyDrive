@@ -8,7 +8,7 @@
 | 5 | I — the Interface Segregation Principle | interface-segregation | ✅ written |
 | 6 | D — the Dependency Inversion Principle | dependency-inversion | ✅ written |
 | 7 | Dependency injection in .NET: making D real | dependency-injection-dotnet | ✅ written |
-| 8 | Smells and the refactoring playbook | smells-refactoring | 🔒 planned |
+| 8 | Smells and the refactoring playbook | smells-refactoring | ✅ written |
 | 9 | Refactoring OrderService step by step | solid-together | 🔒 planned |
 | 10 | Testability: the proof that it worked | testing-solid | 🔒 planned |
 | 11 | Judgement: YAGNI, KISS, DRY and over-engineering | when-not-solid | 🔒 planned |
