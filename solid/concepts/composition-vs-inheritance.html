@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composition over Inheritance — SOLID — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🔤 SOLID Lab</a><span class="sep">›</span><a href="liskov-substitution.html">L — Liskov Substitution</a><span class="sep">›</span><span class="cur">Composition over inheritance</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Deep dive · SOLID lab · 🧩 Composition</div>
+    <h1>Build from <span class="grad-text">parts</span>, not from a family tree.</h1>
+    <p class="sub">Why inheritance couples code and breaks substitutability, how composition fixes it in C#, and when a base class is still the right tool.</p>
+    <div class="interview-q">❓ "Why is composition often preferred over inheritance, and when is inheritance appropriate?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="An inheritance hierarchy where each feature needs a subclass: one base OrderProcessor and subclasses for discount, for logging, for discount plus logging, and for discount plus logging plus tax, with more combinations still to come">
+<defs><marker id="ci1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M105,130 L105,98 L260,98 L260,66" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ci1A)"/>
+<path d="M320,130 L320,66" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ci1A)"/>
+<path d="M535,130 L535,98 L380,98 L380,66" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ci1A)"/>
+<path d="M320,250 L320,186" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ci1A)"/>
+<rect class="bx" x="190" y="10" width="260" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="320" y="35.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">OrderProcessor</text>
+<text x="320" y="48.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">the base class</text>
+<rect class="bx" x="10" y="130" width="190" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="105" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DiscountedProcessor</text>
+<text x="105" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">adds discount</text>
+<rect class="bx" x="225" y="130" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">LoggedProcessor</text>
+<text x="320" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">adds logging</text>
+<rect class="bx" x="440" y="130" width="190" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="535" y="155.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">LoggedDiscounted…</text>
+<text x="535" y="168.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">both</text>
+<rect class="bx" x="150" y="250" width="340" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="320" y="277.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">LoggedDiscountedTaxed…  and 3 more</text>
+<text x="320" y="290.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">3 features → 7 possible combinations</text>
+<g class="arrow-pill"><rect x="75" y="89" width="60" height="18" rx="9"/><text x="105" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
+<g class="arrow-pill"><rect x="290" y="89" width="60" height="18" rx="9"/><text x="320" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
+<g class="arrow-pill"><rect x="505" y="89" width="60" height="18" rx="9"/><text x="535" y="101.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
+<g class="arrow-pill"><rect x="290" y="209" width="60" height="18" rx="9"/><text x="320" y="221.5" text-anchor="middle" font-size="9" font-style="italic">inherits</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> The tempting design: every new feature gets a subclass. Discount, logging, then discount-and-logging, then tax… With <b>three</b> optional features there are already <b>seven</b> combinations, and each one is a class that is permanently tied to its parent’s internals. Change the base class and every branch of the tree may break.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Inherit to say “is a kind of, and behaves like it”. Compose to say “uses, has, or is built from”.</b> When in doubt, compose.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">📖 Why did this need to exist?</div>
+    <div class="kd-card why-box">
+      <p>Page 4 showed that the compiler allowing a subclass does not make it substitutable. Inheritance is the strongest coupling in C#: a subclass depends on the base class’s fields, its call order and its virtual methods, so changes to the base can break it (the “fragile base class” problem is discussed in community sources; there is no single official Microsoft page using that name).</p>
+      <p>Microsoft’s Framework Design Guidelines are cautious about base classes: they add API surface and deepen hierarchies, so use them only where they give significant value, and consider delegating to an internal implementation instead of inheriting when they would only help the implementer. The F# coding conventions on Microsoft Learn state the same idea directly: prefer composition over inheritance.</p>
+      <p>The usual advice (it appears in the design-patterns literature, not in an official C# standard) is “favour composition over inheritance”. Composition also fits DIP: you hand in an interface instead of binding to a class.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧩 The compositional answer</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="Composition: one OrderProcessor class has a list of discount rules, an optional logger and a tax policy, each behind an interface, so any combination is a matter of what you pass in">
+<defs><marker id="ci2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ci2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<path d="M105,80 L105,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ci2A)"/>
+<path d="M320,80 L320,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ci2A)"/>
+<path d="M535,80 L535,190" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ci2A)"/>
+<rect class="bx" x="10" y="10" width="620" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="320" y="42.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">OrderProcessor · one class</text>
+<text x="320" y="55.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">combines whatever you hand it</text>
+<rect class="bx" x="10" y="190" width="190" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="105" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">IDiscountRule[ ]</text>
+<text x="105" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">zero or more rules</text>
+<rect class="bx" x="225" y="190" width="190" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="320" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">ILogger</text>
+<text x="320" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">optional</text>
+<rect class="bx" x="440" y="190" width="190" height="60" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="535" y="217.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">ITaxPolicy</text>
+<text x="535" y="230.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">swap per country</text>
+<g class="arrow-pill"><rect x="83" y="126" width="44" height="18" rx="9"/><text x="105" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
+<g class="arrow-pill"><rect x="298" y="126" width="44" height="18" rx="9"/><text x="320" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
+<g class="arrow-pill"><rect x="513" y="126" width="44" height="18" rx="9"/><text x="535" y="138.5" text-anchor="middle" font-size="9" font-style="italic">has a</text></g>
+</svg>
+<figcaption><strong>What you're seeing:</strong> One <b>OrderProcessor</b>, with parts behind interfaces. “Discount + logging + tax” is not a class; it is what you <b>pass in</b>. Adding a fourth feature means adding one part, not doubling the number of subclasses — and each part can be tested alone.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Lab · replace the hierarchy with parts</div>
+    <div class="code-block"><pre><span class="cmt">// BEFORE — one subclass per combination, tied to the base class's internals</span>
+<span class="kw">public</span> <span class="kw">class</span> OrderProcessor
+{
+    <span class="kw">public</span> <span class="kw">virtual</span> <span class="kw">decimal</span> Total(Order o) =&gt; o.Subtotal;
+}
+<span class="kw">public</span> <span class="kw">class</span> DiscountedProcessor : OrderProcessor
+{
+    <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Total(Order o) =&gt; base.Total(o) * 0.9m;
+}
+<span class="kw">public</span> <span class="kw">class</span> LoggedDiscountedProcessor : DiscountedProcessor
+{
+    <span class="kw">public</span> <span class="kw">override</span> <span class="kw">decimal</span> Total(Order o) { Console.WriteLine(<span class="str">"total"</span>); <span class="kw">return</span> base.Total(o); }
+}
+
+<span class="cmt">// AFTER — one sealed class; features are collaborators</span>
+<span class="kw">public</span> <span class="kw">sealed</span> <span class="kw">class</span> OrderProcessor(IEnumerable&lt;IDiscountRule&gt; rules, ITaxPolicy tax)
+{
+    <span class="kw">public</span> <span class="kw">decimal</span> Total(Order o)
+    {
+        <span class="kw">var</span> discounted = o.Subtotal - rules.Sum(r =&gt; r.Discount(o));
+        <span class="kw">return</span> discounted + tax.Tax(discounted);
+    }
+}
+<span class="cmt">// logging is a decorator around the interface the caller uses (previous deep dive) — not a subclass</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Illustrative. <span class="kw">sealed</span> states that the class is not designed for inheritance; Microsoft’s C# reference describes it as preventing other classes from inheriting from it.</p>    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Question</th><th scope="col">Inheritance</th><th scope="col">Composition</th></tr></thead><tbody><tr><th scope="row">Relationship it expresses</th><td>is a kind of (and behaves like)</td><td>has / uses</td></tr><tr><th scope="row">Coupling</th><td>To base class internals</td><td>To an interface</td></tr><tr><th scope="row">Combine two features</th><td>New subclass per combination</td><td>Pass both in</td></tr><tr><th scope="row">Change behaviour at runtime</th><td>No — fixed at compile time</td><td>Yes — swap the part</td></tr><tr><th scope="row">Test one feature alone</th><td>Needs the whole hierarchy</td><td>Test the part by itself</td></tr></tbody></table></div>
+    <div class="how-strip">
+      <div class="how-step"><span class="hs-n">1 · SMELL</span><h4>👃 What hurts?</h4><p>A change that touches many files, a test that needs a database, a class nobody dares edit.</p></div>
+      <div class="how-step"><span class="hs-n">2 · READ</span><h4>🔬 Who changes this, and why?</h4><p>List the reasons the class changes and the things it depends on.</p></div>
+      <div class="how-step"><span class="hs-n">3 · FIND ★</span><h4>🎯 The principle that is bent</h4><p>One responsibility too many? A broken contract? A concrete dependency?</p></div>
+      <div class="how-step"><span class="hs-n">4 · GUESS ★</span><h4>💡 One refactoring</h4><p>Extract a class, introduce an interface, invert a dependency.</p></div>
+      <div class="how-step"><span class="hs-n">5 · CHANGE ★</span><h4>🔧 One small, safe step</h4><p>Keep tests green after every step.</p></div>
+      <div class="how-step"><span class="hs-n">6 · PROVE</span><h4>✅ Re-measure</h4><p>Fewer files touched per change; tests that need no database.</p></div>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">✅ When inheritance is still right</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Situation</th><th scope="col">Why it is fine</th></tr></thead><tbody><tr><th scope="row">A true subtype that honours the whole base contract (passes the contract tests)</th><td>Substitutable — LSP holds</td></tr><tr><th scope="row">A framework extension point designed for it (a documented base class or abstract class)</th><td>The framework author planned for it</td></tr><tr><th scope="row">A small abstract base that supplies a fixed algorithm skeleton (template method) in one place</th><td>Shared code with one clear variation point; keep it shallow</td></tr><tr><th scope="row">Exception types and other marker hierarchies</th><td>Hierarchy is the point, with little behaviour to break</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">📋 Smells of misused inheritance</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You see</th><th scope="col">What it means</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Subclass overrides most methods and ignores the base</th><td>It is not really a kind of base</td><td>Compose, or extract an interface</td></tr><tr><th scope="row">A subclass throws NotSupported</th><td>LSP violation (page 4)</td><td>Split the abstraction</td></tr><tr><th scope="row">Depth of hierarchy of four or more</th><td>Fragile and hard to read</td><td>Flatten with parts</td></tr><tr><th scope="row">Names like <span class="kw">LoggedDiscountedTaxedProcessor</span></th><td>Combinatorial subclasses</td><td>One class plus injected parts</td></tr><tr><th scope="row"><span class="kw">protected</span> fields shared with subclasses</th><td>Subclasses depend on internals</td><td>Make state private; expose behaviour</td></tr><tr><th scope="row">“Utility” base class inherited only to reuse code</th><td>Inheritance used for reuse</td><td>Move the code into a collaborator</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎬 Real-world scenarios</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🐧</span><h5>Penguin extends Bird, and Bird.Fly() exists</h5><p>Penguins cannot fly.</p><span class="sc-use">→ Separate capabilities (IFlyer) instead of one base</span></div>
+      <div class="scenario"><span class="sc-icon">🧾</span><h5>Invoice, CreditNote, ProformaInvoice share 80% of code</h5><p>A deep hierarchy appears.</p><span class="sc-use">→ One document type + a rules collaborator</span></div>
+      <div class="scenario"><span class="sc-icon">🔧</span><h5>A base class gets a new virtual method</h5><p>Three subclasses silently change behaviour.</p><span class="sc-use">→ Seal; expose a stable interface</span></div>
+      <div class="scenario"><span class="sc-icon">🧪</span><h5>A test must build a 5-level hierarchy</h5><p>Setup mirrors the tree.</p><span class="sc-use">→ Test the parts alone</span></div>
+    </div>
+  </section>
+  <details class="zoom">
+    <summary><span class="chev">▾</span> Go one level deeper (60 seconds)</summary>
+    <div class="zoom-inner">
+      <p><b>sealed and design for inheritance.</b> Microsoft’s guidance on sealing weighs the benefit of letting derived classes customise against the risk that they break the class. Marking a class <span class="kw">sealed</span> by default (and unsealing deliberately) documents that it was not designed to be inherited.</p>
+      <p><b>Abstract class or interface?</b> Older Microsoft guidance favoured base classes for versioning (adding to an interface breaks implementers), while C# 8 default interface members changed that trade-off. Treat the old guidance as historical.</p>
+      <p><b>Mixins and traits.</b> Some languages share code between unrelated classes without inheritance. C# does not have them; delegation to a collaborator is the usual replacement.</p>
+    </div>
+  </details>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Inheritance = strong coupling to the base class; subclasses must honour its whole contract (LSP).</li><li>Composition = parts behind interfaces; combinations are what you pass in.</li><li>Microsoft’s guidelines are cautious about base classes; F# conventions say prefer composition.</li><li>Seal classes not designed for inheritance.</li><li>Inherit for true, substitutable subtypes and documented extension points.</li><li>Combinatorial subclass names are a smell.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">"I use inheritance only for true subtypes that honour the whole base contract, or documented extension points. Otherwise I compose: one class with collaborators behind interfaces, so combinations are just what I inject, behaviour can change at runtime, and each part is testable alone. Subclass-per-feature hierarchies explode combinatorially and couple everything to the base class internals, and sealing classes not designed for inheritance makes that intent explicit."</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>“Inheritance is bad.”</b> It is a tool with a high coupling cost; use it where substitutability genuinely holds.</p>
+      <p><b>Inheriting just to reuse code.</b> Reuse by delegation instead.</p>
+    </div>
+  </section>
+  <div class="confuse-pair">
+    <div class="cp-side"><h5>🧬 Inherits</h5><p>“Is a kind of”: shares the contract and the implementation.</p></div>
+    <div class="cp-vs">vs.</div>
+    <div class="cp-side"><h5>🧩 Composes</h5><p>“Has / uses”: collaborates through an interface.</p></div>
+  </div>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Back to the main journey: Liskov’s rules are what make inheritance safe, and interfaces (next page) are what make composition cheap.</span>
+      <a class="next-link" href="liskov-substitution.html">L — the Liskov Substitution Principle <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 The Framework Design Guidelines (base classes), the F# “prefer composition over inheritance” convention and the C# reference on sealed/abstract are from Microsoft Learn. The slogan “favour composition over inheritance” is common design-patterns advice, not an official C# rule; the fragile-base-class remark comes from community sources. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/base-classes-for-implementing-abstractions" target="_blank" rel="noopener">Base classes for implementing abstractions (Framework Design Guidelines)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/fsharp/style-guide/conventions" target="_blank" rel="noopener">F# coding conventions</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/sealed" target="_blank" rel="noopener">sealed modifier (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract" target="_blank" rel="noopener">abstract keyword (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · SOLID · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

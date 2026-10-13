@@ -161,6 +161,21 @@ Sources: Microsoft Learn (.NET architecture guides, dependency injection docs) f
 | Pattern → principle mapping | 🟦 I | common teaching view, not an official mapping |
 | VendorClient / VendorChargeRequest code, cents conversion | 🟦 I | invented SDK for illustration |
 
+## Deep dive — Composition over Inheritance
+| Claim | Status | Note |
+|---|---|---|
+| Base classes add surface area and deepen hierarchies; use only when they give significant value; consider delegation to an internal implementation if they only help implementers | ✅ V | Microsoft Learn: Base Classes for Implementing Abstractions (Framework Design Guidelines), via search summary |
+| F# coding conventions list "Prefer composition over inheritance" | ✅ V | Microsoft Learn F# conventions page (F# context, cited as the same idea) |
+| sealed prevents inheritance; sealed on a member must be paired with override; abstract and sealed are mutually exclusive | ✅ V | C# reference: sealed, abstract |
+| Microsoft sealing guidance weighs customisation benefit vs risk of derived classes breaking the class | ✅ V | Base Class Usage Guidelines (older .NET Framework doc; historical wording) |
+| Older guidance favoured base classes for versioning; C# 8 default interface members changed the trade-off | ✅ V | same older guidance; C# 8 note from Microsoft docs summary |
+| "Favour composition over inheritance" as a slogan | 🟨 K | design-patterns literature (GoF); no official C# page uses this phrase |
+| Fragile base class problem | 🟨 K | community sources only; no single official Microsoft page by that name |
+| C# has no mixins/traits | 🟨 K | recalled language fact |
+| 3 features → 7 combinations (2³ − 1) | ✅ V | arithmetic |
+| Class names and code (OrderProcessor, LoggedDiscounted…) | 🟦 I | illustrative |
+
 ## Cross-page notes
 - ShopCore OrderService numbers (≈ 300 lines, 6 reasons to change, ≈ 120-line pricing) are 🟦 I teaching data; see overview.md.
 | "8 seconds" — one-line unit test duration in case 3 | 🟦 I | illustrative scenario figure |
+| "80%" shared code between Invoice/CreditNote/ProformaInvoice (composition page scenario) | 🟦 I | illustrative scenario figure |

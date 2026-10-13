@@ -4112,5 +4112,31 @@
     "summary": "The classic mistake with Patterns that Realise the Principles.",
     "keywords": "design patterns strategy decorator factory adapter observer SOLID middleware DelegatingHandler IObservable trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "solid-composition-vs-inheritance",
+    "title": "Composition over Inheritance",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "Why inheritance couples code and breaks substitutability, how composition fixes it in C#, and when a base class is still the right tool.",
+    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP"
+  },
+  {
+    "id": "solid-composition-vs-inheritance-recall",
+    "title": "Composition over Inheritance — interview recall",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "Quick recall points: Composition over Inheritance.",
+    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "solid-composition-vs-inheritance-trap",
+    "title": "Composition over Inheritance — common trap",
+    "category": "SOLID",
+    "page": "solid/concepts/composition-vs-inheritance.html",
+    "summary": "The classic mistake with Composition over Inheritance.",
+    "keywords": "composition over inheritance sealed fragile base class abstract class interface decorator LSP trap mistake",
+    "anchor": "trap"
   }
 ]

@@ -14,7 +14,7 @@
 | 11 | Judgement: YAGNI, KISS, DRY and over-engineering | when-not-solid | ✅ written |
 | 12 | Capstone: the SOLID clinic | solid-clinic | ✅ written |
 | ➕ | Deep dive: Patterns that realise the principles | design-patterns-solid | ✅ written (sub page of dependency-inversion) |
-| ➕ | Deep dive: Composition over inheritance | composition-vs-inheritance | 🔒 planned (sub page of liskov-substitution) |
+| ➕ | Deep dive: Composition over inheritance | composition-vs-inheritance | ✅ written (sub page of liskov-substitution) |
 | ➕ | Deep dive: SOLID in React and Angular | solid-in-frontend | 🔒 planned (sub page of solid-together) |
 
 When a page ships: `scripts/page-kit/lab_ship.sh solid …`, update this table, `scripts/push3.sh`.

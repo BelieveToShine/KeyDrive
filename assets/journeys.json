@@ -488,10 +488,12 @@
       "solid-clinic"
     ],
     "sub": {
-      "design-patterns-solid": "dependency-inversion"
+      "design-patterns-solid": "dependency-inversion",
+      "composition-vs-inheritance": "liskov-substitution"
     },
     "subTitles": {
-      "design-patterns-solid": "Patterns that realise the principles"
+      "design-patterns-solid": "Patterns that realise the principles",
+      "composition-vs-inheritance": "Composition over inheritance"
     }
   }
 }
