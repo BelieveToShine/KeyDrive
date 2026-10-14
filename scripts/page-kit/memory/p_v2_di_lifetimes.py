@@ -77,25 +77,29 @@ def d_di2():
     d.arrow([(292, 291), (312, 291)], 'emerald', st='3-7')
     d.arrow([(384, 162), (384, 230)], 'emerald', st='4-7')
     d.arrow([(540, 138), (540, 271), (456, 271)], 'emerald', 'same object', at=(540, 204), st='5-7')
-    add_code(d, ['using var scope = provider.CreateScope();   // request starts', '// builds OrdersController, OrderService, OrderRepository', 'OrderService(AppDbContext db, ...)   // 1st ask: scope allocates ONE', '_db = db;   // service keeps a copy of the reference', 'OrderRepository(AppDbContext db)   // 2nd ask: the SAME object', '}   // request ends: scope.Dispose() runs', '// frame pops, scope dropped', '// later: a GC run reclaims the 5 objects'], [0, 1, 2, 3, 4, 5, 6, 7])
+    add_code(d, ['// ── your request code ──', 'using var scope = provider.CreateScope();   // request starts', 'var ctrl = scope.ServiceProvider.GetRequiredService<OrdersController>();   // builds the 3 objects', '}   // request ends: scope.Dispose() runs, the frame pops', '// ── what the container runs: constructors ──', 'OrderService(AppDbContext db, ...)   // 1st ask: scope allocates ONE', '_db = db;   // service keeps a copy of the reference', 'OrderRepository(AppDbContext db)   // 2nd ask: the SAME object', '// later: a GC run reclaims the 5 objects'], [1, 2, 5, 6, 7, 3, 3, 8])
     return d
 
 def d_di3():
-    d = Diagram('di3', 640, 380, 'A transient service: each time the container is asked it allocates a brand-new EmailBuilder, so the controller, the service and the repository each hold a reference to a different object; if the type is IDisposable the scope keeps a reference to each until the request ends')
+    d = Diagram('di3', 640, 450, 'A transient service: the request frame on the stack holds the controller, service and repository; each time the container is asked it allocates a brand-new EmailBuilder, so each of the three holds a reference to a different object; if the type is IDisposable the scope keeps a reference to each until the request ends')
     d.note(10, 6, 620, 24, 'Teaching picture: simplified layout; the scope’s disposal list is drawn as a plain list of references', 'n', size=9)
-    d.zone(10, 38, 620, 330, 'emerald', '🏠 HEAP')
-    names = [('OrdersController', 64), ('OrderService', 164), ('OrderRepository', 264)]
+    d.zone(10, 38, 620, 90, 'cyan', '📚 STACK (request)')
+    fr = obj(d, 44, 62, 170, [('f', [('owners = 3 refs', 1, 5), ('(frame popped)', 6, None)])], [('Request frame', 'cyan', 1, 5), ('Request frame · popped', 'n', 6, 6)])
+    d.zone(10, 134, 620, 330, 'emerald', '🏠 HEAP')
+    oy = 96
+    names = [('OrdersController', 64 + oy), ('OrderService', 164 + oy), ('OrderRepository', 264 + oy)]
     for i, (nm, y) in enumerate(names):
         n = i + 2
-        obj(d, 24, y, 150, [('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
-        obj(d, 236, y, 170, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
-        d.arrow([(166, y + 38), (236, y + 38)], 'cyan', 'new', at=(201, y + 38), st=_S(n, 5))
-    obj(d, 470, 64, 150, [('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
+        obj(d, 44, y, 150, [('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
+        obj(d, 256, y, 170, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
+        d.arrow([(186, y + 38), (256, y + 38)], 'cyan', 'new', at=(221, y + 38), st=_S(n, 5))
+        d.arrow([(44, 99), (28, 99), (28, y + 38), (44, y + 38)], 'cyan', 'holds' if i == 0 else None, at=(28, 125) if i == 0 else None, st='1-5')
+    obj(d, 480, 64 + oy, 140, [('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
         [('Scope (if IDisposable)', 'amber', 5, 5, 5), ('Scope · request ended', 'n', 6, 6)])
-    d.arrow([(478, 88), (406, 88)], 'amber', 'keeps', at=(442, 88), st='5-5')
-    d.arrow([(478, 112), (430, 112), (430, 188), (406, 188)], 'amber', st='5-5')
-    d.arrow([(478, 136), (445, 136), (445, 288), (406, 288)], 'amber', st='5-5')
-    add_code(d, ['// 3 classes declare an IEmailBuilder parameter', 'OrdersController(IEmailBuilder mail)   // ask 1: new #1', 'OrderService(IEmailBuilder mail)       // ask 2: new #2', 'OrderRepository(IEmailBuilder mail)    // ask 3: new #3', '// IDisposable? the scope keeps a ref to each', '}   // request ends: scope disposes all three'], [0, 1, 2, 3, 4, 5])
+    d.arrow([(488, 88 + oy), (426, 88 + oy)], 'amber', 'keeps', at=(457, 88 + oy), st='5-5')
+    d.arrow([(488, 112 + oy), (450, 112 + oy), (450, 188 + oy), (426, 188 + oy)], 'amber', st='5-5')
+    d.arrow([(488, 136 + oy), (465, 136 + oy), (465, 288 + oy), (426, 288 + oy)], 'amber', st='5-5')
+    add_code(d, ['// ── your request code ──', 'var ctrl = sp.GetRequiredService<OrdersController>();   // builds the 3 owners', '}   // request ends: scope disposes all three, the frame pops', '// ── what the container runs: constructors ──', 'OrdersController(IEmailBuilder mail)   // ask 1: new #1', 'OrderService(IEmailBuilder mail)       // ask 2: new #2', 'OrderRepository(IEmailBuilder mail)    // ask 3: new #3', 'if (obj is IDisposable x) disposables.Add(x);   // illustrative: the scope keeps a ref to each'], [1, 4, 5, 6, 7, 2])
     return d
 
 def d_di4():
@@ -103,25 +107,25 @@ def d_di4():
     d.note(10, 6, 620, 24, 'Teaching picture: simplified layout and names; objects are not drawn to scale', 'n', size=9)
     d.zone(10, 38, 130, 282, 'amber', '🏗️ APP ROOT')
     d.zone(150, 38, 480, 282, 'emerald', '🏠 HEAP')
-    obj(d, 16, 66, 118, [('f', [('Cache = ref', 1, None)])], [('DI container', 'amber', 1, None)])
-    obj(d, 160, 66, 140, [HDR(), ('f', [('_db = null', 1, 2), ('_db = ref', 3, 6), ('_scopeFactory = ref', 7, None)])],
-        [('CacheService (singleton)', 'amber', 1, 6, 3), ('CacheService (fixed)', 'emerald', 7, None, 7)])
-    obj(d, 316, 66, 140, [HDR(lo=2), ('f', [('connection = open', 2, 3), ('connection = closed', 4, None)])],
-        [('DbContext #1', 'emerald', 2, 3, 2), ('DbContext #1 · disposed', 'amber', 4, 4, 4), ('DbContext #1 · STALE', 'rose', 5, 6, 5), ('#1 · unreachable', 'n', 7, None, 7)])
-    obj(d, 472, 66, 140, [HDR(lo=2), ('f', [('DbContext = ref', 2, None)])], [('Scope 1', 'cyan', 2, 3), ('Scope 1 · Dispose()', 'amber', 4, 4, 4)])
+    obj(d, 16, 66, 118, [('f', [('Cache = null', 1, 2), ('Cache = ref', 3, None)])], [('DI container', 'amber', 1, None)])
+    obj(d, 160, 66, 140, [HDR(lo=3), ('f', [('_db = ref', 3, 6), ('_scopeFactory = ref', 7, None)])],
+        [('CacheService (singleton)', 'amber', 3, 6, 3), ('CacheService (fixed)', 'emerald', 7, None, 7)])
+    obj(d, 316, 66, 140, [HDR(lo=3), ('f', [('connection = open', 3, 3), ('connection = closed', 4, None)])],
+        [('DbContext #1', 'emerald', 3, 3, 3), ('DbContext #1 · disposed', 'amber', 4, 4, 4), ('DbContext #1 · STALE', 'rose', 5, 6, 5), ('#1 · unreachable', 'n', 7, None, 7)])
+    obj(d, 472, 66, 140, [HDR(lo=2), ('f', [('DbContext = null', 2, 2), ('DbContext = ref', 3, None)])], [('Scope 1', 'cyan', 2, 3), ('Scope 1 · Dispose()', 'amber', 4, 4, 4)])
     obj(d, 316, 190, 140, [HDR(lo=6), ('f', [('connection = open', 6, None)])], [('DbContext #2', 'emerald', 6, None, 6)])
     obj(d, 472, 190, 140, [HDR(lo=6), ('f', [('DbContext = ref', 6, None)])], [('Scope 2', 'cyan', 6, None)])
-    obj(d, 160, 190, 140, [HDR(lo=7), ('f', [('creates scopes', 7, None)])], [('IServiceScopeFactory', 'emerald', 7, None, 7)])
-    d.arrow([(126, 103), (160, 103)], 'amber', st='1-4')
+    obj(d, 160, 190, 140, [HDR(lo=1), ('f', [('creates scopes', 1, None)])], [('IServiceScopeFactory', 'emerald', 1, 6), ('IServiceScopeFactory', 'emerald', 7, None, 7)])
+    d.arrow([(126, 103), (160, 103)], 'amber', st='3-4')
     d.arrow([(126, 103), (160, 103)], 'rose', st='5-6')
     d.arrow([(126, 103), (160, 103)], 'emerald', st='7-')
-    d.arrow([(480, 127), (456, 127)], 'cyan', st='2-3')
+    d.arrow([(480, 127), (456, 127)], 'cyan', st='3-3')
     d.arrow([(480, 127), (456, 127)], 'amber', st='4-4')
     d.arrow([(292, 127), (316, 127)], 'amber', st='3-4')
     d.arrow([(292, 127), (316, 127)], 'rose', st='5-6')
     d.arrow([(480, 251), (456, 251)], 'cyan', st='6-')
     d.arrow([(230, 138), (230, 190)], 'emerald', 'asks', at=(230, 164), st='7-7')
-    add_code(d, ['AddSingleton<CacheService>();   // one for the whole app', '// request 1: scope allocates DbContext #1', 'CacheService(AppDbContext db) { _db = db; }   // stores the ref', '}   // request 1 ends: Dispose() on #1', '// scope 1 dropped, but _db still points to #1', '// request 2: new scope, new DbContext #2', 'CacheService(IServiceScopeFactory f)   // the fix'], [0, 1, 2, 3, 4, 5, 6])
+    add_code(d, ['// ── your code ──', 'services.AddSingleton<CacheService>();   // registered: nothing built yet', 'using var scope = sp.CreateScope();   // request 1 starts', '}   // request 1 ends: scope.Dispose() runs on #1', 'using var scope2 = sp.CreateScope();   // request 2 starts', '// ── what the container runs: constructors ──', 'CacheService(AppDbContext db) { _db = db; }   // 1st ask: built, stores #1', 'CacheService(IServiceScopeFactory f) { _f = f; }   // the fix'], [1, 2, 6, 3, 3, 4, 7])
     return d
 
 def build_di_lifetimes():
@@ -155,21 +159,21 @@ def build_di_lifetimes():
                 'A later GC run finds them unreachable and reclaims the memory. The next request builds its own new scope and DbContext.'],
                 'scoped objects are created once per request, shared by reference, disposed when the request ends and reclaimed later by the GC.')),
             ('story', '🥤 Transient: a new object every time', (d_di3(), [
-                'Three objects need an <code>EmailBuilder</code>. Each has an empty <code>_mail</code> field.',
+                'The request’s stack frame holds references to three objects (controller, service, repository) that each need an <code>EmailBuilder</code>. Each has an empty <code>_mail</code> field.',
                 'The controller asks the container: it <b>allocates a new</b> <code>EmailBuilder #1</code> and the field points to it.',
                 'The service asks: a <b>different</b> object, #2.',
                 'The repository asks: a third object, #3. Three asks, three heap objects (each its own object with its own data).',
                 'If <code>EmailBuilder</code> implements <code>IDisposable</code>, the container’s <b>scope also keeps a reference</b> to each one, so it can dispose them later.',
-                'The request ends: the scope disposes all three (amber) and its list is cleared; the owners are dropped (grey), so the builders become garbage. Without <code>IDisposable</code> there would be no scope arrows and each builder could be collected as soon as its owner was dropped; with it, none could be collected before this moment.'],
+                'The request ends: the scope disposes all three (amber) and its list is cleared; the request frame pops and the owners are dropped (grey), so the builders become garbage. Without <code>IDisposable</code> there would be no scope arrows and each builder could be collected as soon as its owner was dropped; with it, none could be collected before this moment.'],
                 'transient = no sharing: one new heap object per ask; a disposable one is also held by the scope until the request ends.')),
             ('story', '⛓️ The classic bug: a captive dependency', (d_di4(), [
-                '<code>CacheService</code> is a <b>singleton</b>: the container (reachable from the app root) holds it for the whole app. Its <code>_db</code> field is empty.',
-                'Request 1 creates a scope; the scope allocates <code>DbContext #1</code>.',
-                'The singleton stores a <b>reference</b> to it in <code>_db</code>. Now a long-lived object points to a short-lived one.',
+                '<code>AddSingleton</code> only registers <code>CacheService</code>: <b>no object exists yet</b> (the container’s slot is empty). The container’s own built-in <code>IServiceScopeFactory</code> already exists from startup.',
+                'Request 1 starts: <code>CreateScope()</code> builds <b>Scope 1</b>. It has no <code>DbContext</code> yet.',
+                'First ask for <code>CacheService</code>: the container <b>allocates it now</b> (one for the whole app). Its constructor needs a <code>DbContext</code>, so Scope 1 allocates <code>DbContext #1</code> and the singleton stores a <b>reference</b> to it in <code>_db</code>. A long-lived object now points to a short-lived one.',
                 'Request 1 ends: its scope calls <code>Dispose()</code> on <code>DbContext #1</code> — closed, but still on the heap.',
                 'Scope 1 is dropped. But the path <b>root → CacheService → DbContext #1</b> still exists, so the GC <b>cannot reclaim</b> it: a stale, disposed object that is still in use.',
                 'Request 2 gets its own <code>DbContext #2</code>. The singleton’s <code>_db</code> still points at #1 and never sees #2. Bugs, and a leak.',
-                'The fix: the singleton holds an <code>IServiceScopeFactory</code> instead and creates a scope for each unit of work. Nothing long-lived points at #1 now, so it becomes garbage. The default container’s scope validation reports the mistake in development.'],
+                'The fix: the rebuilt singleton’s constructor takes the existing <code>IServiceScopeFactory</code> instead of a <code>DbContext</code>, and creates a scope for each unit of work. Nothing long-lived points at #1 now, so it becomes garbage. The default container’s scope validation reports the mistake in development.'],
                 'a longer-lived object must never hold a shorter-lived one: the reference keeps it alive past its scope.')),
             ('table', '🧾 The three lifetimes side by side', ['', 'Singleton', 'Scoped', 'Transient'], [
                 ['Instances', 'one for the whole app', 'one per scope (per HTTP request in ASP.NET Core)', 'a new one every time it is requested'],

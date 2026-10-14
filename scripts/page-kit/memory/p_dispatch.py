@@ -117,7 +117,7 @@ def d_ov1():
     d.zone(226, 266, 404, 90, 'cyan', '📚 STACK: the called method gets its own frame', st='5-6')
     d.box(246, 296, 190, 40, [('n : int = 5', 'm'), ('a COPY of the value', 's')], 'cyan', st='5-5', hl='5')
     d.box(246, 296, 190, 40, [('s : string = 0x…S1', 'm'), ('a COPY of the reference', 's')], 'violet', st='6-6', hl='6')
-    d.arrow([(246, 316), (206, 316), (206, sc['R'][1]), (sc['R'][0], sc['R'][1])], 'violet', 'same object', at=(206, 340), st='6-6')
+    d.arrow([(246, 316), (206, 316), (206, sc['R'][1]), (sc['R'][0], sc['R'][1])], 'violet', st='6-6')
     for i, (t, c) in enumerate([('int n = 5; writes the value 5 right into n’s cell in the Main frame.|Print(int) and Print(string) are two separate pieces of code.', 'amber'),
                                 ('string s = "hi"; allocates the string object on the heap|and writes its address into s', 'emerald'),
                                 ('Build time: the argument n is declared int →|the compiler writes the address of Print(int) into the first call', 'cyan'),
@@ -172,7 +172,7 @@ def d_ov3():
     dog = card(d, 130, 46, 'Dog object @ 0x…A1', [('header (sync block)', 'hdr'), ('type ptr → Dog MT', 'tp'), ('Age = 3', 'f')], 'emerald', w=172, st=1, hl=1)
     d.zone(322, 24, 170, 288, 'violet', '🧬 TYPE DATA (Dog uses new)')
     am = card(d, 330, 46, 'Animal MethodTable', [('slot 0: Speak', 'f')], 'violet', w=154, st=1)
-    dm = card(d, 330, 216, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-3'), ('slot 1: Speak (new)', 'f', '99-99')], 'violet', w=154, st=1)
+    dm = card(d, 330, 216, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-3'), ('slot 1: (free)', 'f', '1-5')], 'violet', w=154, st=1)
     cell(d, dm, 0, 'slot 0: Speak', 'amber', st='4-5', hl=4)
     cell(d, dm, 0, 'slot 0: Speak', 'violet', st='6-')
     cell(d, dm, 1, 'slot 1: Speak (new)', 'rose', st='6-', hl=6)
