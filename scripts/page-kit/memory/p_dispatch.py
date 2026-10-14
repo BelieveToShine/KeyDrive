@@ -115,9 +115,9 @@ def d_ov1():
     d.token('o1t', '📞', 15, 'cyan', st='4-4')
     d.token('o2t', '📞', 15, 'violet', st='4-4')
     for i, (t, c) in enumerate([('Main has n (an int, the value 5 right in the frame) and s (a reference to a string object on the heap).|Print(int) and Print(string) are two separate pieces of code.', 'amber'),
-                                ('Build time: the argument n is declared int → the compiler writes the address of Print(int) into the first call', 'cyan'),
-                                ('Build time: the argument s is declared string → the address of Print(string) goes into the second call', 'violet'),
-                                ('Run time: each call just jumps to its fixed address (📞) with a copy of the argument — nothing is looked up, nothing is allocated', 'emerald')]):
+                                ('Build time: the argument n is declared int →|the compiler writes the address of Print(int) into the first call', 'cyan'),
+                                ('Build time: the argument s is declared string →|the address of Print(string) goes into the second call', 'violet'),
+                                ('Run time: each call just jumps to its fixed address (📞) with a copy of the argument|nothing is looked up, nothing is allocated', 'emerald')]):
         d.note(10, 332, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=10)
     return d
 

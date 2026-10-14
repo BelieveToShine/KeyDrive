@@ -158,7 +158,7 @@
   <section class="kd-section ">
     <div class="sec-label see">🎒 A lambda that captures a variable: the closure</div>
 <figure class="diagram-card kd-story" data-steps="8">
-<div class="st-stage"><svg viewBox="0 0 640 456" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2">
+<div class="st-stage"><svg viewBox="0 0 640 476" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2">
 <defs><marker id="dl2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="24" width="140" height="320" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -214,8 +214,8 @@
 <text x="24" y="393" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">inc(); inc();</text>
 <text x="24" y="408" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">// MakeCounter() {</text>
 <text x="24" y="423" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">//   int count = 0; return () =&gt; count++; }</text>
-<text class="free" x="160" y="436" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses, closure/lambda</text>
-<text class="free" x="160" y="448" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">internals simplified.   📞 = a call being made</text>
+<text class="free" x="160" y="452" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses, closure/lambda</text>
+<text class="free" x="160" y="464" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">internals simplified.   📞 = a call being made</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="356" width="310" height="84" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="394" text-anchor="middle" font-size="9" fill="#67e8f9">MakeCounter() runs: its frame holds a plain local</text></g>
 <g class="st" data-s="1-1"><text x="475" y="407" text-anchor="middle" font-size="9" fill="#67e8f9">count = 0. Main’s inc is declared, not assigned yet.</text></g>

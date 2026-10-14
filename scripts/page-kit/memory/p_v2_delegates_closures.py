@@ -53,7 +53,7 @@ def d_dl1():
     return d
 
 def d_dl2():
-    d = Diagram('dl2', 640, 456, 'A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2')
+    d = Diagram('dl2', 640, 476, 'A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2')
     d.zone(10, 24, 140, 320, 'cyan', '📚 STACK')
     d.zone(160, 24, 270, 320, 'emerald', '🏠 HEAP')
     d.zone(440, 24, 190, 320, 'amber', '📜 CODE')
@@ -77,7 +77,7 @@ def d_dl2():
     d.token('a1', '📞', 15, 'cyan', st='5-5')
     d.token('a1', '📞', 15, 'cyan', st='7-7')
     d.code_box(10, 356, 300, 76, [(0, 'var inc = MakeCounter();', ''), (0, 'inc(); inc();', ''), (0, '// MakeCounter() {', ''), (0, '//   int count = 0; return () => count++; }', '')], 'n', size=8.8, lh=15)
-    _teach(d, 160, 436, ('teaching picture: addresses, closure/lambda', 'internals simplified.   📞 = a call being made'))
+    _teach(d, 160, 452, ('teaching picture: addresses, closure/lambda', 'internals simplified.   📞 = a call being made'))
     for i, (t, c) in enumerate([
             ('MakeCounter() runs: its frame holds a plain local|count = 0. Main’s inc is declared, not assigned yet.', 'cyan'),
             ('The lambda uses count, so the compiler keeps it in a|heap Closure object. The frame keeps only a hidden|reference to it. (compiler rewrite)', 'amber'),

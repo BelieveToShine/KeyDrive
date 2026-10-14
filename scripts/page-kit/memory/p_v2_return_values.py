@@ -61,7 +61,7 @@ def d_rv2():
     lx = per['x']
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (200, main['rows'][0]['y']), (200, y_who), (lx, y_who)], 'cyan', 'who', at=(245, y_who - 8), st='5-6', id='wa')
     d.arrow([(mk['rows'][0]['r'][0], mk['rows'][0]['y']), (232, mk['rows'][0]['y']), (232, y_p), (lx, y_p)], 'violet', 'p', at=(262, y_p + 10), st='4-5', id='pa')
-    d.arrow([(85, mk['rows'][0]['top']), (85, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of address', at=(85, 186), st='5-5')
+    d.arrow([(118, mk['rows'][0]['top']), (118, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of address', at=(118, 186), st='5-5')
     d.text(85, 262, 'frame popped', 'n', size=10, st='6-')
     d.text(400, 352, 'green = still reachable · red dashed = unreachable (nothing points to it)', 'n', size=9, st='7-7')
     d.text(400, 352, 'space reclaimed by a later GC', 'n', size=10, st='8-8')
@@ -92,15 +92,15 @@ def d_rv3():
     d.box(182, 138, 136, 44, [('r.Sum : decimal', 't'), ('59.5', 'm')], 'amber', st='3-3', hl=3)
     d.box(32, 138, 136, 44, [('r.Count : int', 't'), ('3', 'm')], 'emerald', st='4-')
     d.box(182, 138, 136, 44, [('r.Sum : decimal', 't'), ('59.5', 'm')], 'emerald', st='4-')
-    d.zone(22, 226, 306, 84, 'violet', 'Stats frame: builds the tuple (Count, Sum)', st='2-3')
+    d.zone(22, 226, 306, 84, 'violet', 'Stats frame', st='2-3')
     d.box(32, 254, 136, 44, [('Count : int', 't'), ('3', 'm')], 'violet', st='2-3', hl=2)
     d.box(182, 254, 136, 44, [('Sum : decimal', 't'), ('59.5', 'm')], 'violet', st='2-3', hl=2)
-    d.arrow([(100, 254), (100, 182)], 'amber', 'copy', at=(100, 218), st='3-3')
-    d.arrow([(250, 254), (250, 182)], 'amber', 'copy', at=(250, 218), st='3-3')
+    d.arrow([(120, 254), (120, 182)], 'amber', 'copy', at=(120, 218), st='3-3')
+    d.arrow([(260, 254), (260, 182)], 'amber', 'copy', at=(260, 218), st='3-3')
     d.text(175, 268, 'frame popped', 'n', size=10, st='4-4')
-    d.box(32, 254, 286, 44, [('r2 : Tuple<int,decimal>', 't'), ('0x…T1 (a reference)', 'm')], 'rose', st='5-', hl=5)
+    d.box(32, 254, 250, 44, [('r2 : Tuple<int,decimal>', 't'), ('0x…T1 (a reference)', 'm')], 'rose', st='5-', hl=5)
     tup = card(d, 372, 235, 'Tuple object @ 0x…T1', [('Item1 : int = 3', 'f'), ('Item2 : decimal = 59.5', 'f')], 'rose', w=246, st='5-', hl=5)
-    d.arrow([(318, 276), (tup['L'][0], tup['L'][1])], 'rose', 'ref', at=(345, 266), st='5-')
+    d.arrow([(282, 276), (tup['L'][0], tup['L'][1])], 'rose', 'ref', st='5-')
     _notes(d, 380, 34, [
         ('r is ONE value made of two slots, side by side, inside Main’s frame', 'cyan'), ('Stats builds Count and Sum in its own frame', 'violet'),
         ('return copies BOTH values into r. Each slot gets its own copy', 'amber'), ('Stats’ frame is popped. r keeps 3 and 59.5. Nothing on the heap', 'emerald'),

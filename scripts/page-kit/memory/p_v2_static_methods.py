@@ -13,13 +13,13 @@ def d_sm1():
     mf = card(d, 18, 108, 'Main frame', [('total = (not set yet)', 'f', '1-4')], 'cyan', w=160, st=1)
     cell(d, mf, 0, 'total = 118', 'amber', st='5-', hl=4)
     tx = card(d, 218, 108, 'Tax (static area)', [('Rate = 0.18', 'f')], 'amber', w=154, st=1, hl='3')
-    d.box(228, 219, 134, 44, [('Tax.Add', 'm'), ('one copy of the code', 's')], 'violet', st=1, hl='2')
+    d.box(240, 219, 130, 44, [('Tax.Add', 'm'), ('one copy of the code', 's')], 'violet', st=1, hl='2')
     af = card(d, 18, 200, 'Add frame', [('x = 100  (copy)', 'f'), ('result = (not set yet)', 'f', '2-2')], 'violet', w=160, st='2-4', hl=2)
     cell(d, af, 1, 'result = 118', 'amber', st='3-4', hl=3)
     d.text(510, 214, '(empty: no objects)', 'n', 10, st=1)
     # arrows
     yR = af['R'][1]
-    d.arrow([(af['R'][0], yR), (228, yR)], 'violet', 'runs', at=(203, yR - 9), st='2-2', id='run')
+    d.arrow([(af['R'][0], yR), (240, yR)], 'violet', 'runs', at=(205, yR), st='2-2', id='run')
     d.arrow([(af['R'][0], yR), (196, yR), (196, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(196, 175), st='3-3', id='rd')
     d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (190, af['rows'][1]['y']), (190, mf['rows'][0]['y']), (mf['rows'][0]['r'][0], mf['rows'][0]['y'])], 'emerald', 'copy', at=(190, 190), st='4-4', id='ret')
     d.text(98, 262, 'frame popped', 'n', 10, st='5-')
@@ -47,8 +47,8 @@ def d_sm2():
     sf = card(d, 18, 172, 'Add frame', [('x = 100  (copy)', 'f')], 'violet', w=194, st='5-6', hl=5)
     tx = card(d, 458, 92, 'Tax', [('Rate = 0.18', 'f')], 'amber', w=164, st=1, hl=6)
     y_o = ob['y'] + ob['h'] * 0.3; y_t = ob['y'] + ob['h'] * 0.72
-    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (222, mf['rows'][0]['y']), (222, y_o), (ob['L'][0], y_o)], 'cyan', 'order', at=(232, y_o - 9), st='1-', id='o')
-    d.arrow([(inst['rows'][0]['r'][0], inst['rows'][0]['y']), (226, inst['rows'][0]['y']), (226, y_t), (ob['L'][0], y_t)], 'violet', 'this', at=(233, y_t + 9), st='2-3', id='t')
+    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (222, mf['rows'][0]['y']), (222, y_o), (ob['L'][0], y_o)], 'cyan', st='1-', id='o')
+    d.arrow([(inst['rows'][0]['r'][0], inst['rows'][0]['y']), (226, inst['rows'][0]['y']), (226, y_t), (ob['L'][0], y_t)], 'violet', st='2-3', id='t')
     ys = sf['rows'][0]['y']
     d.arrow([(sf['rows'][0]['r'][0], ys), (436, ys), (436, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(330, ys - 9), st='6-6', id='r')
     d.note(18, 248, 194, 40, 'no this slot: Tax.Add names|the TYPE, not an object', 'violet', st='5-6', size=9)
@@ -68,26 +68,26 @@ def d_sm3():
     d = Diagram('sm3', 640, 450, 'A static field is one shared slot: Settings.Language holds a reference to a string on the heap; thread A writes a reference to a new string fr, so the slot now points to fr; thread B reads the same slot and gets fr; the old string en is then unreachable and a later garbage collection frees it')
     d.code_box(10, 8, 620, 46, [(0, 'Thread A:  Settings.Language = "fr";', ''), (0, 'Thread B:  var s = Settings.Language;', '')], 'n', size=9, lh=15)
     d.zone(350, 62, 280, 320, 'emerald', '🏠 HEAP (shared by all threads)')
-    a = card(d, 10, 70, '📚 Stack of thread A', [('Handle() frame', 'f')], 'cyan', w=150, st=1, hl=2)
-    b = card(d, 10, 244, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = (not set yet)', 'f', '1-3')], 'violet', w=150, st=1)
+    a = card(d, 10, 70, '📚 Stack of thread A', [('Handle() frame', 'f')], 'cyan', w=140, st=1, hl=2)
+    b = card(d, 10, 262, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = (not set yet)', 'f', '1-3')], 'violet', w=140, st=1)
     cell(d, b, 1, 's = ref (copy)', 'amber', st='4-', hl=4)
-    st_ = card(d, 190, 150, 'Settings (static area)', [('Language = ref', 'f')], 'amber', w=140, st=1, hl='3')
+    st_ = card(d, 200, 150, 'Settings (static area)', [('Language = ref', 'f')], 'amber', w=130, st=1, hl='3')
     en_rows = [('header', 'hdr'), ('type ptr', 'tp'), ('length = 2', 'f'), ('chars: e n', 'f')]
     en = card(d, 360, 96, 'string "en"', en_rows, 'emerald', w=190, st='1-4')
     card(d, 360, 96, 'string "en" — unreachable', en_rows, 'rose', w=190, st='5-5', dash=True)
     fr = card(d, 360, 244, 'string "fr"', [('header', 'hdr'), ('type ptr', 'tp'), ('length = 2', 'f'), ('chars: f r', 'f')], 'emerald', w=190, st='2-', hl=2)
     d.text(455, 165, 'space reclaimed by a later GC', 'n', 9, st='6-')
-    d.text(455, 390, 'green = reachable · red dashed = unreachable', 'n', 8, st='5-5')
+    d.text(455, 238, 'green = reachable · red dashed = unreachable', 'n', 8, st='5-5')
     ys = st_['rows'][0]['y']
     # thread A writes into the slot: ends on the Settings card border
-    d.arrow([(a['rows'][0]['r'][0], a['rows'][0]['y']), (176, a['rows'][0]['y']), (176, st_['L'][1] - 8), (st_['L'][0], st_['L'][1] - 8)], 'cyan', 'A writes', at=(176, 118), st='2-3', id='w')
+    d.arrow([(a['rows'][0]['r'][0], a['rows'][0]['y']), (175, a['rows'][0]['y']), (175, st_['L'][1] - 8), (st_['L'][0], st_['L'][1] - 8)], 'cyan', 'A writes', at=(175, 140), st='2-3', id='w')
     # thread B reads the slot
-    d.arrow([(b['rows'][0]['r'][0], b['rows'][0]['y']), (260, b['rows'][0]['y']), (260, st_['B'][1])], 'violet', 'B reads', at=(260, 225), st='4-4', id='rd')
+    d.arrow([(b['rows'][0]['r'][0], b['rows'][0]['y']), (265, b['rows'][0]['y']), (265, st_['B'][1])], 'violet', 'B reads', at=(265, 250), st='4-4', id='rd')
     # slot's reference -> string (ends on the string card border)
     d.arrow([(st_['rows'][0]['r'][0], ys), (340, ys), (340, en['L'][1]), (en['L'][0], en['L'][1])], 'amber', st='1-2', id='p1')
-    d.arrow([(st_['rows'][0]['r'][0], ys), (340, ys), (340, fr['L'][1]), (fr['L'][0], fr['L'][1])], 'amber', st='3-', id='p2')
+    d.arrow([(st_['rows'][0]['r'][0], ys), (340, ys), (340, fr['L'][1] - 14), (fr['L'][0], fr['L'][1] - 14)], 'amber', st='3-', id='p2')
     # B's own copy of the reference -> string
-    d.arrow([(b['rows'][1]['r'][0], b['rows'][1]['y']), (352, b['rows'][1]['y']), (352, fr['L'][1] + 14), (fr['L'][0], fr['L'][1] + 14)], 'violet', 's → "fr"', at=(256, b['rows'][1]['y'] - 9), st='4-', id='sb')
+    d.arrow([(b['rows'][1]['r'][0], b['rows'][1]['y']), (fr['L'][0], b['rows'][1]['y'])], 'violet', 's → "fr"', at=(305, b['rows'][1]['y']), st='4-', id='sb')
     for i, (t, c) in enumerate([
         ('Settings.Language is ONE static slot. It holds a reference|to a string object "en" on the heap, not the characters.', 'amber'),
         ('Thread A runs Language = "fr": a string object "fr"|exists on the heap and A’s code writes to the shared slot.', 'cyan'),
