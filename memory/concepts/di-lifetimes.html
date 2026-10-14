@@ -44,44 +44,73 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A singleton service: the first time any request asks for it the container creates one object, and every later request, in every layer, gets that same object; the container keeps it for the whole life of the app">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A singleton: the container, held by the app, allocates ONE EmailSettings object on the heap the first time it is asked and keeps a reference to it; the stack frames of two requests on two threads each hold a reference to that same object; when the frames pop the container still reaches it">
 <defs><marker id="di1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="1-"><rect class="zone" x="300" y="8" width="330" height="252" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="314" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🏗️ CONTAINER (app lifetime)</text></g>
-<g class="st" data-s="2-"><path d="M170,62 L230,62 L230,110 L360,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
-<g class="st" data-s="3-"><path d="M170,142 L360,142" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
-<g class="st" data-s="4-"><path d="M170,222 L250,222 L250,160 L360,160" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
-<g class="st" data-s="2-" data-hl="2,,,5"><rect class="bx" x="360" y="100" width="210" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2,,,5"><text x="465" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">EmailSettings</text></g>
-<g class="st" data-s="2-" data-hl="2,,,5"><text x="465" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">ONE instance</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="40" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 1</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="20" y="120" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 2</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="200" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 3</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#fcd34d">App starts: the container will hold a singleton for the whole app</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 1 asks: the container creates the single instance now</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 2 asks: it gets the SAME object</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 3, in any layer: the SAME object again</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#fcd34d">It stays alive (the container references it) until the app shuts down</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="194.5" y="77" width="71" height="18" rx="9"/><text x="230" y="89.5" text-anchor="middle" font-size="9" font-style="italic">creates it</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="235" y="133" width="60" height="18" rx="9"/><text x="265" y="145.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
-<g class="st" data-s="4-"><g class="arrow-pill"><rect x="220" y="182" width="60" height="18" rx="9"/><text x="250" y="194.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
+<rect class="zone" x="10" y="38" width="140" height="292" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACKS (one per thread)</text>
+<rect class="zone" x="160" y="38" width="300" height="292" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="174" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP (shared by all threads)</text>
+<rect class="zone" x="470" y="38" width="160" height="292" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="484" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="1-6"><rect class="zone" x="172" y="66" width="276" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-6"><text class="zone-title" x="186" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DI container · reachable from the app</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="172" y="66" width="276" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="186" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">DI container · disposed at shutdown</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="172" y="196" width="276" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="186" y="215" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">EmailSettings object (the ONE)</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="172" y="196" width="276" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="186" y="215" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">EmailSettings · nothing reaches it</text></g>
+<g class="st" data-s="2-5"><rect class="zone" x="18" y="168" width="124" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-5"><text class="zone-title" x="32" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Request 1 · thread A</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="18" y="246" width="124" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="32" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Request 2 · thread B</text></g>
+<g class="st" data-s="2-2"><path d="M134,205 L156,205 L156,107 L172,107" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="3-6"><path d="M310,138 L310,196" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="4-5"><path d="M134,205 L172,205" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="5-5"><path d="M134,283 L172,283" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="3-6"><path id="di1-tp1" d="M440,257 L478,257" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<rect class="bx note" x="10" y="6" width="620" height="24" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="320" y="20.5" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: the container’s layout, addresses and field order are illustrative</text>
+<g class="st" data-s="1-"><rect class="bx" x="478" y="216" width="144" height="82" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="247.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">EmailSettings</text></g>
+<g class="st" data-s="1-"><text x="550" y="262.25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">MethodTable</text></g>
+<g class="st" data-s="1-"><text x="550" y="274.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">one per type</text></g>
+<g class="st" data-s="1-6"><rect class="bx" x="180" y="92" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-6"><text x="310" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr · …</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="180" y="116" width="260" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="310" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">IEmailSettings = null</text></g>
+<g class="st" data-s="3-6"><rect class="bx" x="180" y="116" width="260" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6"><text x="310" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">IEmailSettings = ref</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="180" y="92" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="310" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr · …</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="180" y="116" width="260" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="310" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">(container disposed)</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="180" y="222" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="310" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="180" y="246" width="260" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="310" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="180" y="270" width="260" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="310" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Port = 25</text></g>
+<g class="st" data-s="7-"><rect class="bx" x="180" y="222" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-"><text x="310" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="7-"><rect class="bx" x="180" y="246" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-"><text x="310" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">type ptr</text></g>
+<g class="st" data-s="7-"><rect class="bx" x="180" y="270" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-"><text x="310" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">Port = 25</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="26" y="194" width="108" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="80" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">settings = null</text></g>
+<g class="st" data-s="4-5"><rect class="bx" x="26" y="194" width="108" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5"><text x="80" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">settings = ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="272" width="108" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="80" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">settings = ref</text></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="139" y="147" width="34" height="18" rx="9"/><text x="156" y="159.5" text-anchor="middle" font-size="9" font-style="italic">ask</text></g></g>
+<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="288" y="158" width="44" height="18" rx="9"/><text x="310" y="170.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A <b>singleton</b> is held by the container for the whole life of the app.</li><li><b>Request 1</b> asks for it: the container creates the one and only instance now.</li><li><b>Request 2</b> asks: it receives the <b>same</b> object.</li><li>Request 3, in any layer: the <b>same</b> object again.</li><li>It stays alive — the container references it — until the app shuts down. It is a long-lived object (a gen 2 resident).</li></ol>
-<figcaption><strong>What you're seeing:</strong> singleton = one instance, shared by everyone, alive until shutdown.</figcaption>
+<ol class="st-caps"><li>The app starts. The <b>DI container</b> is itself an object on the heap, kept alive from the app root. Its slot for <code>IEmailSettings</code> is empty: no <code>EmailSettings</code> object exists yet.</li><li><b>Request 1</b> (thread A) needs the service. Its stack frame has an empty variable <code>settings</code> and <b>asks</b> the container.</li><li>First ask: the <b>container</b> (not the request) allocates <b>one</b> <code>EmailSettings</code> object on the heap — header, type pointer to its MethodTable, fields — and keeps a reference to it in its slot.</li><li>The container hands back a <b>copy of the reference</b>. Request 1’s <code>settings</code> now points at the one object.</li><li><b>Request 2</b>, on another thread with its own stack, asks: it gets the <b>same</b> reference. Two stacks, one heap object — that is why a singleton must be thread-safe.</li><li>Both requests end: their stack frames <b>pop</b>. The object stays, because the container still reaches it. After surviving some GCs it is promoted to older generations (page page 20).</li><li>App shutdown: the container is disposed, nothing reaches the object any more, and it becomes ordinary garbage.</li></ol>
+<figcaption><strong>What you're seeing:</strong> singleton = one object, many references to it, kept alive by the container until shutdown.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b>Singleton = one instance for the whole app. Scoped = one instance per request (shared by every layer). Transient = a new instance every time it is asked for.</b></span></div>
@@ -95,156 +124,355 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🗝️ Scoped: one object, reused across the layers of a request</div>
-<figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 410" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A scoped service: within one request the controller, the service and the repository all receive the very same DbContext object; when the request ends its scope is disposed and the DbContext becomes garbage; the next request gets its own new DbContext">
+<figure class="diagram-card kd-story" data-steps="8">
+<div class="st-stage"><svg viewBox="0 0 640 392" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="A scoped service: one request builds a scope object and a controller, service and repository on the heap; the scope allocates ONE DbContext and the scope, the service and the repository each hold a reference to that same object; at the end of the request Dispose runs, nothing points to the objects any more and a later GC reclaims them">
 <defs><marker id="di2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="1-"><rect class="zone" x="10" y="8" width="380" height="338" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🌐 REQUEST A  (one scope)</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="410" y="8" width="220" height="338" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="424" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🌐 REQUEST B</text></g>
-<g class="st" data-s="2-4"><path d="M144,70 L190,70 L190,150 L250,150" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
-<g class="st" data-s="3-4"><path d="M144,160 L250,160" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
-<g class="st" data-s="4-4"><path d="M144,250 L190,250 L190,190 L250,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
-<g class="st" data-s="6-"><path d="M520,100 L520,200" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#di2A)"/></g>
-<g class="st" data-s="1-"><rect class="bx" x="24" y="50" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="84" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Controller</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="24" y="140" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="84" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Service</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="24" y="230" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="84" y="254" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Repository</text></g>
-<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><rect class="bx" x="250" y="130" width="120" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><text x="310" y="167.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext</text></g>
-<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><text x="310" y="180.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">one per request</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="250" y="130" width="120" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="310" y="167.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">DbContext</text></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="310" y="180.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">disposed → garbage</text></g>
-<g class="st" data-s="6-"><rect class="bx" x="424" y="50" width="192" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="6-"><text x="520" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Controller → Service →</text></g>
-<g class="st" data-s="6-"><text x="520" y="84" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Repository</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="424" y="200" width="192" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="520" y="232.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext (new)</text></g>
-<g class="st" data-s="6-" data-hl="6"><text x="520" y="245.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">its own instance</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">A request arrives: the container creates a scope for it</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The controller asks for a DbContext: a new one is created for this scope</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">The service asks: the SAME DbContext</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">The repository asks: the SAME DbContext — all three layers share one unit of work</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request ends: the scope is disposed; the DbContext is disposed and becomes garbage</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The next request gets its own, separate DbContext</text></g>
-<g class="st" data-s="2-4"><g class="arrow-pill"><rect x="162.5" y="101" width="55" height="18" rx="9"/><text x="190" y="113.5" text-anchor="middle" font-size="9" font-style="italic">creates</text></g></g>
-<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="167" y="151" width="60" height="18" rx="9"/><text x="197" y="163.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
-<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="160" y="211" width="60" height="18" rx="9"/><text x="190" y="223.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
-<g class="st" data-s="6-"><g class="arrow-pill"><rect x="479" y="141" width="82" height="18" rx="9"/><text x="520" y="153.5" text-anchor="middle" font-size="9" font-style="italic">gets its own</text></g></g>
+<rect class="zone" x="10" y="38" width="126" height="340" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (request)</text>
+<rect class="zone" x="146" y="38" width="484" height="340" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="160" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-6"><rect class="zone" x="16" y="66" width="114" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-6"><text class="zone-title" x="30" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Request A frame</text></g>
+<g class="st" data-s="1-5"><rect class="zone" x="156" y="230" width="144" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-5"><text class="zone-title" x="170" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Scope A (one per request)</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="156" y="230" width="144" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="170" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Scope A · Dispose() runs</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="156" y="230" width="144" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="170" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Scope A · dropped</text></g>
+<g class="st" data-s="2-6"><rect class="zone" x="156" y="66" width="144" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-6"><text class="zone-title" x="170" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">OrdersController</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="156" y="66" width="144" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="170" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrdersController</text></g>
+<g class="st" data-s="2-6"><rect class="zone" x="312" y="66" width="144" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-6"><text class="zone-title" x="326" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">OrderService</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="312" y="66" width="144" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="326" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrderService</text></g>
+<g class="st" data-s="2-6"><rect class="zone" x="468" y="66" width="144" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-6"><text class="zone-title" x="482" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">OrderRepository</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="468" y="66" width="144" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="482" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrderRepository</text></g>
+<g class="st" data-s="3-5"><rect class="zone" x="312" y="230" width="144" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-5"><text class="zone-title" x="326" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">DbContext (the ONE)</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="312" y="230" width="144" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="326" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DbContext · disposed</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="312" y="230" width="144" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="326" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">DbContext · unreachable</text></g>
+<g class="st" data-s="8-"><rect class="zone" x="156" y="58" width="456" height="240" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="8-"><text class="zone-title" x="170" y="77" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space: a later GC run reclaimed all five objects</text></g>
+<g class="st" data-s="1-6"><path d="M122,127 L141,127 L141,291 L156,291" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="2-6"><path d="M122,103 L156,103" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="2-7"><path d="M292,127 L312,127" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="2-7"><path d="M448,127 L468,127" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="3-7"><path d="M292,291 L312,291" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="4-7"><path d="M384,162 L384,230" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="5-7"><path d="M540,138 L540,271 L456,271" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<rect class="bx note" x="10" y="6" width="620" height="24" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="320" y="20.5" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: simplified (the framework builds these objects); “header · type ptr” is one row here; addresses are not shown</text>
+<g class="st" data-s="1-1"><rect class="bx" x="24" y="92" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="73" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">ctrl = null</text></g>
+<g class="st" data-s="1-6"><rect class="bx" x="24" y="116" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-6"><text x="73" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">scope = ref</text></g>
+<g class="st" data-s="2-6"><rect class="bx" x="24" y="92" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6"><text x="73" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">ctrl = ref</text></g>
+<g class="st" data-s="1-5"><rect class="bx" x="164" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5"><text x="228" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="164" y="280" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="228" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">DbContext = null</text></g>
+<g class="st" data-s="3-5"><rect class="bx" x="164" y="280" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5"><text x="228" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="164" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="228" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="164" y="280" width="128" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="228" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="164" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="228" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="164" y="280" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="228" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="2-6"><rect class="bx" x="164" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6"><text x="228" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="2-6"><rect class="bx" x="164" y="116" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6"><text x="228" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_service = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="164" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="228" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="164" y="116" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="228" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_service = ref</text></g>
+<g class="st" data-s="2-6" data-hl="4"><rect class="bx" x="320" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="4"><text x="384" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="2-6" data-hl="4"><rect class="bx" x="320" y="116" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="4"><text x="384" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_repo = ref</text></g>
+<g class="st" data-s="2-3" data-hl="4"><rect class="bx" x="320" y="140" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="4"><text x="384" y="153.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_db = null</text></g>
+<g class="st" data-s="4-6"><rect class="bx" x="320" y="140" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-6"><text x="384" y="153.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_db = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="320" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="384" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="320" y="116" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="384" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_repo = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="320" y="140" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="384" y="153.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_db = ref</text></g>
+<g class="st" data-s="2-6" data-hl="5"><rect class="bx" x="476" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="5"><text x="540" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="2-4" data-hl="5"><rect class="bx" x="476" y="116" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="5"><text x="540" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_db = null</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="476" y="116" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="540" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_db = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="476" y="92" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="540" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="476" y="116" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="540" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_db = ref</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="320" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="384" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="320" y="280" width="128" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="384" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">connection = open</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="320" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="384" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="320" y="280" width="128" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="384" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">connection = closed</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="320" y="256" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="384" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="320" y="280" width="128" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="384" y="293.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">connection = closed</text></g>
+<g class="st" data-s="5-7"><g class="arrow-pill"><rect x="502" y="195" width="76" height="18" rx="9"/><text x="540" y="207.5" text-anchor="middle" font-size="9" font-style="italic">same object</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A request arrives. The container creates a <b>scope</b> for it.</li><li>The <b>controller</b> asks for a <code>DbContext</code>: a new one is created for this scope.</li><li>The <b>service</b> asks: it gets the <b>same</b> DbContext.</li><li>The <b>repository</b> asks: the <b>same</b> DbContext again. All three layers work on one shared unit of work.</li><li>The request ends. The scope is disposed: the DbContext is disposed and becomes garbage — a short-lived object.</li><li>The next request gets its own, separate DbContext.</li></ol>
-<figcaption><strong>What you're seeing:</strong> scoped objects are created once per request and thrown away with it — short-lived, so cheap for the GC.</figcaption>
+<ol class="st-caps"><li>A request arrives. The container creates a <b>scope</b> object on the heap; the request’s stack frame holds a reference to it.</li><li>The controller, the service and the repository are created (each is a heap object). Their <code>DbContext</code> fields are still empty.</li><li>The first one that needs a <code>DbContext</code> asks the scope. The scope allocates <b>one</b> and remembers it.</li><li>The service’s <code>_db</code> field gets a <b>reference to that same object</b> — a copy of the reference, not a copy of the object.</li><li>The repository asks: the scope returns the <b>same</b> object. Two fields (and the scope) hold arrows to one <code>DbContext</code>.</li><li>The request ends. The scope calls <code>Dispose()</code> on the DbContext: it releases its resources (here: the connection), but the object is <b>still on the heap</b>.</li><li>The frame pops and the scope is dropped. Nothing outside these objects points to them: they are <b>unreachable</b>, but not freed yet.</li><li>A later GC run finds them unreachable and reclaims the memory. The next request builds its own new scope and DbContext.</li></ol>
+<figcaption><strong>What you're seeing:</strong> scoped objects are created once per request, shared by reference, disposed when the request ends and reclaimed later by the GC.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🥤 Transient: a new object every time</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A transient service: every time a class asks for it the container creates a brand-new object, so the controller, service and repository each get a different EmailBuilder instance">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A transient service: each time the container is asked it allocates a brand-new EmailBuilder, so the controller, the service and the repository each hold a reference to a different object; if the type is IDisposable the scope keeps a reference to each until the request ends">
 <defs><marker id="di3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="2-"><path d="M170,62 L380,62" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
-<g class="st" data-s="3-"><path d="M170,142 L380,142" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
-<g class="st" data-s="4-"><path d="M170,222 L380,222" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="40" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Controller</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="40" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="490" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #1</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="490" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="20" y="120" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Service</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="380" y="120" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="490" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #2</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="490" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="200" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Repository</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="380" y="200" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="490" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #3</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="490" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#fcd34d">Transient = a new object for every request to the container</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The controller asks: instance #1</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The service asks: a different instance #2</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The repository asks: a third instance #3</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#fcd34d">Cheap and independent — but 3 objects instead of 1. If they are IDisposable the container keeps each until its scope ends</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="239.5" y="53" width="71" height="18" rx="9"/><text x="275" y="65.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="239.5" y="133" width="71" height="18" rx="9"/><text x="275" y="145.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
-<g class="st" data-s="4-"><g class="arrow-pill"><rect x="239.5" y="213" width="71" height="18" rx="9"/><text x="275" y="225.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
+<rect class="zone" x="10" y="38" width="620" height="330" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-5"><rect class="zone" x="24" y="64" width="150" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-5"><text class="zone-title" x="38" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">OrdersController</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="24" y="64" width="150" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="38" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrdersController</text></g>
+<g class="st" data-s="2-5"><rect class="zone" x="236" y="64" width="170" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-5"><text class="zone-title" x="250" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">EmailBuilder #1</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="236" y="64" width="170" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="250" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">EmailBuilder #1 · disposed</text></g>
+<g class="st" data-s="1-5"><rect class="zone" x="24" y="164" width="150" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-5"><text class="zone-title" x="38" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">OrderService</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="24" y="164" width="150" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="38" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrderService</text></g>
+<g class="st" data-s="3-5"><rect class="zone" x="236" y="164" width="170" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-5"><text class="zone-title" x="250" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">EmailBuilder #2</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="236" y="164" width="170" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="250" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">EmailBuilder #2 · disposed</text></g>
+<g class="st" data-s="1-5"><rect class="zone" x="24" y="264" width="150" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-5"><text class="zone-title" x="38" y="283" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">OrderRepository</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="24" y="264" width="150" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="38" y="283" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">OrderRepository</text></g>
+<g class="st" data-s="4-5"><rect class="zone" x="236" y="264" width="170" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-5"><text class="zone-title" x="250" y="283" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">EmailBuilder #3</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="236" y="264" width="170" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="250" y="283" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">EmailBuilder #3 · disposed</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="470" y="64" width="150" height="130" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="484" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Scope (if IDisposable)</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="470" y="64" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="484" y="83" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Scope · request ended</text></g>
+<g class="st" data-s="2-5"><path d="M166,125 L236,125" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="3-5"><path d="M166,225 L236,225" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="4-5"><path d="M166,325 L236,325" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="5-5"><path d="M478,125 L406,125" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="5-5"><path d="M478,149 L420,149 L420,225 L406,225" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="5-5"><path d="M478,173 L440,173 L440,325 L406,325" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<rect class="bx note" x="10" y="6" width="620" height="24" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="320" y="20.5" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: simplified layout; the scope’s disposal list is drawn as a plain list of references</text>
+<g class="st" data-s="1-5" data-hl="2"><rect class="bx" x="32" y="90" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5" data-hl="2"><text x="99" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="1-1" data-hl="2"><rect class="bx" x="32" y="114" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="2"><text x="99" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = null</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="32" y="114" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="99" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="90" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="114" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="2-5" data-hl="2"><rect class="bx" x="244" y="90" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5" data-hl="2"><text x="321" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="2-5" data-hl="2"><rect class="bx" x="244" y="114" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5" data-hl="2"><text x="321" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="90" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="114" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="1-5" data-hl="3"><rect class="bx" x="32" y="190" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5" data-hl="3"><text x="99" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="1-2" data-hl="3"><rect class="bx" x="32" y="214" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="3"><text x="99" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = null</text></g>
+<g class="st" data-s="3-5"><rect class="bx" x="32" y="214" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5"><text x="99" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="190" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="214" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="244" y="190" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="321" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="244" y="214" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="321" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="190" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="214" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="1-5" data-hl="4"><rect class="bx" x="32" y="290" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5" data-hl="4"><text x="99" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="1-3" data-hl="4"><rect class="bx" x="32" y="314" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="4"><text x="99" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = null</text></g>
+<g class="st" data-s="4-5"><rect class="bx" x="32" y="314" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5"><text x="99" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="290" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="32" y="314" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="99" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">_mail = ref</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="244" y="290" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="321" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="244" y="314" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="321" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="290" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="244" y="314" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="321" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">type ptr → EmailBuilder MT</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="478" y="90" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="545" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="478" y="114" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="545" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">to dispose[0] = ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="478" y="138" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="545" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">to dispose[1] = ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="478" y="162" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="545" y="175.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">to dispose[2] = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="478" y="90" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="545" y="103.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="478" y="114" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="545" y="127.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">to dispose[0] = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="478" y="138" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="545" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">to dispose[1] = ref</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="478" y="162" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="545" y="175.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">to dispose[2] = ref</text></g>
+<g class="st" data-s="2-5"><g class="arrow-pill"><rect x="184" y="116" width="34" height="18" rx="9"/><text x="201" y="128.5" text-anchor="middle" font-size="9" font-style="italic">new</text></g></g>
+<g class="st" data-s="3-5"><g class="arrow-pill"><rect x="184" y="216" width="34" height="18" rx="9"/><text x="201" y="228.5" text-anchor="middle" font-size="9" font-style="italic">new</text></g></g>
+<g class="st" data-s="4-5"><g class="arrow-pill"><rect x="184" y="316" width="34" height="18" rx="9"/><text x="201" y="328.5" text-anchor="middle" font-size="9" font-style="italic">new</text></g></g>
+<g class="st" data-s="5-5"><g class="arrow-pill"><rect x="420" y="116" width="44" height="18" rx="9"/><text x="442" y="128.5" text-anchor="middle" font-size="9" font-style="italic">keeps</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Transient means: <b>every time the container is asked, it makes a new object</b>.</li><li>The controller asks: instance #1.</li><li>The service asks: a <b>different</b> instance #2.</li><li>The repository asks: a third instance #3.</li><li>Cheap and independent, but three objects instead of one. If a transient implements <code>IDisposable</code>, the container keeps a reference to it until its scope ends, so it can dispose it — it cannot be collected earlier.</li></ol>
-<figcaption><strong>What you're seeing:</strong> transient = no sharing. More allocations, no shared state.</figcaption>
+<ol class="st-caps"><li>Three objects need an <code>EmailBuilder</code>. Each has an empty <code>_mail</code> field.</li><li>The controller asks the container: it <b>allocates a new</b> <code>EmailBuilder #1</code> and the field points to it.</li><li>The service asks: a <b>different</b> object, #2.</li><li>The repository asks: a third object, #3. Three asks, three heap objects (each with its own header and type pointer).</li><li>If <code>EmailBuilder</code> implements <code>IDisposable</code>, the container’s <b>scope also keeps a reference</b> to each one, so it can dispose them later.</li><li>The request ends: the scope disposes all three and everything is dropped. Without <code>IDisposable</code> there would be no scope arrows and each builder could be collected as soon as its owner was dropped; with it, none could be collected before this moment.</li></ol>
+<figcaption><strong>What you're seeing:</strong> transient = no sharing: one new heap object per ask; a disposable one is also held by the scope until the request ends.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">⛓️ The classic bug: a captive dependency</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A captive dependency: a singleton that receives a scoped DbContext keeps the first request’s instance forever, even after that request’s scope disposes it, and later requests’ new DbContexts are never used by the singleton">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A captive dependency: the singleton CacheService, reachable from the app root, stores a reference to request 1’s DbContext; after request 1 ends and the DbContext is disposed the singleton still references it, so it stays on the heap; request 2’s new DbContext is never seen by the singleton; the fix is to hold a scope factory instead">
 <defs><marker id="di4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="1-"><rect class="zone" x="10" y="8" width="250" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🏗️ SINGLETON (lives forever)</text></g>
-<g class="st" data-s="2-"><rect class="zone" x="290" y="8" width="340" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="2-"><text class="zone-title" x="304" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🌐 REQUEST 1  (scoped)</text></g>
-<g class="st" data-s="4-"><rect class="zone" x="290" y="190" width="340" height="130" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="4-"><text class="zone-title" x="304" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🌐 REQUEST 2  (scoped)</text></g>
-<g class="st" data-s="2-"><path d="M224,80 L310,80" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di4A)"/></g>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="50" width="200" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="124" y="78" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">CacheService</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="124" y="90" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">holds a DbContext</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="310" y="50" width="300" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="460" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext #1</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="460" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">created for request 1</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="310" y="50" width="300" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="460" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">DbContext #1</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="460" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">disposed — but still referenced!</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="310" y="230" width="300" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="460" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext #2</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="460" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">never seen by CacheService</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">A singleton lives for the whole app</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">It receives a scoped DbContext from request 1 and keeps it in a field</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request 1 ends: its scope disposes DbContext #1 — but the singleton still points to it (stale!)</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request 2 gets a fresh DbContext #2; the singleton keeps using the old, disposed one → bugs</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="358" text-anchor="middle" font-size="9.5" fill="#6ee7b7">In development, scope validation throws, so you find this early.</text></g>
-<g class="st" data-s="5-5"><text x="320" y="371.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Fix: inject IServiceScopeFactory and create a scope when needed.</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="245" y="71" width="44" height="18" rx="9"/><text x="267" y="83.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g></g>
+<rect class="zone" x="10" y="38" width="130" height="282" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🏗️ APP ROOT</text>
+<rect class="zone" x="150" y="38" width="480" height="282" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="164" y="57" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="16" y="66" width="118" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="30" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DI container</text></g>
+<g class="st" data-s="1-6"><rect class="zone" x="160" y="66" width="140" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-6"><text class="zone-title" x="174" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">CacheService (singleton)</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="160" y="66" width="140" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="174" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CacheService (fixed)</text></g>
+<g class="st" data-s="2-3"><rect class="zone" x="316" y="66" width="140" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="330" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">DbContext #1</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="316" y="66" width="140" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="330" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">DbContext #1 · disposed</text></g>
+<g class="st" data-s="5-6"><rect class="zone" x="316" y="66" width="140" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-6"><text class="zone-title" x="330" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">DbContext #1 · STALE</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="316" y="66" width="140" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="330" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">DbContext #1 · unreachable</text></g>
+<g class="st" data-s="2-3"><rect class="zone" x="472" y="66" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="486" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Scope 1</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="472" y="66" width="140" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="486" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Scope 1 · Dispose()</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="316" y="190" width="140" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="330" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">DbContext #2</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="472" y="190" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="486" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Scope 2</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="160" y="190" width="140" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="174" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">IServiceScopeFactory</text></g>
+<g class="st" data-s="1-4"><path d="M126,103 L160,103" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="5-6"><path d="M126,103 L160,103" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="7-"><path d="M126,103 L160,103" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="2-3"><path d="M480,127 L456,127" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="4-4"><path d="M480,127 L456,127" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="3-4"><path d="M292,127 L316,127" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="5-6"><path d="M292,127 L316,127" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="6-"><path d="M480,251 L456,251" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="7-7"><path d="M230,138 L230,190" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<rect class="bx note" x="10" y="6" width="620" height="24" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="320" y="20.5" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: simplified layout and names; objects are not drawn to scale</text>
+<g class="st" data-s="1-"><rect class="bx" x="24" y="92" width="102" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="75" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = ref</text></g>
+<g class="st" data-s="1-6" data-hl="3"><rect class="bx" x="168" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-6" data-hl="3"><text x="230" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="1-2" data-hl="3"><rect class="bx" x="168" y="116" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="3"><text x="230" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">_db = null</text></g>
+<g class="st" data-s="3-6"><rect class="bx" x="168" y="116" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6"><text x="230" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">_db = ref</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="168" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="230" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="168" y="116" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="230" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">_scopeFactory = ref</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="324" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="386" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="324" y="116" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="386" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">connection = open</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="324" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="386" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="324" y="116" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="386" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">connection = closed</text></g>
+<g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="324" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6" data-hl="5"><text x="386" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="324" y="116" width="124" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6" data-hl="5"><text x="386" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">connection = closed</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="324" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="386" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="324" y="116" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="386" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">connection = closed</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="480" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="542" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="480" y="116" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="542" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="480" y="92" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="542" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="480" y="116" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="542" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="324" y="216" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="386" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="324" y="240" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="386" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">connection = open</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="480" y="216" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="542" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="480" y="240" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="542" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">DbContext = ref</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="168" y="216" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="230" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header · type ptr</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="168" y="240" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="230" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">creates scopes</text></g>
+<g class="st" data-s="7-7"><g class="arrow-pill"><rect x="210.5" y="155" width="39" height="18" rx="9"/><text x="230" y="167.5" text-anchor="middle" font-size="9" font-style="italic">asks</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A singleton lives for the whole app.</li><li>It receives a <b>scoped</b> DbContext from request 1 and stores it in a field.</li><li>Request 1 ends and its scope disposes DbContext #1 — but the singleton still points to it: a <b>stale, disposed</b> object.</li><li>Request 2 has a new DbContext #2; the singleton keeps using the old one. Bugs, and the old object cannot be freed.</li><li>The default container’s scope validation catches this in development. Fix: don’t inject scoped services into singletons; inject <code>IServiceScopeFactory</code> and create a scope when needed.</li></ol>
-<figcaption><strong>What you're seeing:</strong> a longer-lived object must never depend on a shorter-lived one.</figcaption>
+<ol class="st-caps"><li><code>CacheService</code> is a <b>singleton</b>: the container (reachable from the app root) holds it for the whole app. Its <code>_db</code> field is empty.</li><li>Request 1 creates a scope; the scope allocates <code>DbContext #1</code>.</li><li>The singleton stores a <b>reference</b> to it in <code>_db</code>. Now a long-lived object points to a short-lived one.</li><li>Request 1 ends: its scope calls <code>Dispose()</code> on <code>DbContext #1</code> — closed, but still on the heap.</li><li>Scope 1 is dropped. But the path <b>root → CacheService → DbContext #1</b> still exists, so the GC <b>cannot reclaim</b> it: a stale, disposed object that is still in use.</li><li>Request 2 gets its own <code>DbContext #2</code>. The singleton’s <code>_db</code> still points at #1 and never sees #2. Bugs, and a leak.</li><li>The fix: the singleton holds an <code>IServiceScopeFactory</code> instead and creates a scope for each unit of work. Nothing long-lived points at #1 now, so it becomes garbage. The default container’s scope validation reports the mistake in development.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a longer-lived object must never hold a shorter-lived one: the reference keeps it alive past its scope.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🧾 The three lifetimes side by side</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Singleton</th><th scope="col">Scoped</th><th scope="col">Transient</th></tr></thead><tbody><tr><th scope="row">Instances</th><td>one for the whole app</td><td>one per scope (per HTTP request in ASP.NET Core)</td><td>a new one every time it is requested</td></tr><tr><th scope="row">Created</th><td>first time it is requested (or when you register an instance)</td><td>first time requested in a scope</td><td>each request to the container</td></tr><tr><th scope="row">Held by</th><td>the container (stays reachable)</td><td>the scope, until the request ends</td><td>the caller — and the container if it is <code>IDisposable</code></td></tr><tr><th scope="row">Cleaned</th><td>at app shutdown (disposed then)</td><td>with the scope: disposed, then garbage</td><td>by the GC (disposed with its scope if <code>IDisposable</code>)</td></tr><tr><th scope="row">Memory profile</th><td>few, long-lived (gen 2)</td><td>few per request, short-lived (die young)</td><td>many, short-lived (cheap if they die fast)</td></tr><tr><th scope="row">Thread safety</th><td>must be thread-safe (shared by all requests)</td><td>one request at a time (normally)</td><td>not shared (each caller has its own)</td></tr><tr><th scope="row">Typical use</th><td>config, caches, HttpClient factory</td><td>DbContext, unit of work</td><td>lightweight, stateless helpers, builders</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Singleton</th><th scope="col">Scoped</th><th scope="col">Transient</th></tr></thead><tbody><tr><th scope="row">Instances</th><td>one for the whole app</td><td>one per scope (per HTTP request in ASP.NET Core)</td><td>a new one every time it is requested</td></tr><tr><th scope="row">Created</th><td>first time it is requested (or when you register an instance)</td><td>first time requested in a scope</td><td>each request to the container</td></tr><tr><th scope="row">Held by</th><td>the container (stays reachable)</td><td>the scope, until the request ends</td><td>the caller — and the container if it is <code>IDisposable</code></td></tr><tr><th scope="row">Cleaned</th><td>at app shutdown (disposed then)</td><td>with the scope: disposed, then garbage</td><td>by the GC (disposed with its scope if <code>IDisposable</code>)</td></tr><tr><th scope="row">Memory profile</th><td>few, long-lived (they survive GCs, so they move to older generations)</td><td>few per request, short-lived (die young)</td><td>many, short-lived (cheap if they die fast)</td></tr><tr><th scope="row">Thread safety</th><td>must be thread-safe (shared by all requests)</td><td>one request at a time (normally)</td><td>not shared (each caller has its own)</td></tr><tr><th scope="row">Typical use</th><td>config, caches, HttpClient factory</td><td>DbContext, unit of work</td><td>lightweight, stateless helpers, builders</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">⚡ Performance lens — think like this</div>
     <div class="kd-card why-box">
-      <p>Put <b>state</b> in scoped or transient objects and keep singletons <b>stateless</b> or thread-safe — they live forever and are shared by every thread (pages page 6, page 24).</p>
-      <p>A <b>singleton cache that only grows</b> is a leak (page page 23); give it a size limit.</p>
+      <p>Put <b>state</b> in scoped or transient objects and keep singletons <b>stateless</b> or thread-safe — they live forever and are shared by every thread (page 6, page 24).</p>
+      <p>A <b>singleton cache that only grows</b> is a leak (page 23); give it a size limit.</p>
       <p><b>Transients in a hot path</b> multiply allocations; if an object is expensive to build and has no per-use state, make it singleton (and thread-safe) or scoped.</p>
       <p>Disposable transients are held by the container until the scope ends — in a <b>long-lived scope</b> (a background worker that never ends its scope) they pile up. Create a new scope per unit of work.</p>
     </div>
@@ -252,7 +480,7 @@
   <section class="kd-section ">
     <div class="sec-label why">🔬 Honest notes</div>
     <div class="kd-card why-box">
-      <p>Lifetimes, scope validation (“scoped services can’t be injected into singletons”) and disposal behaviour are from Microsoft’s ASP.NET Core and .NET DI documentation. Exactly when a singleton is created (on first request vs at startup) depends on how it is registered; the picture shows the common case. Gen 0/1/2 placement is the general GC behaviour from pages page 20, not something DI documents.</p>
+      <p>Lifetimes, scope validation (“scoped services can’t be injected into singletons”) and disposal behaviour are from Microsoft’s ASP.NET Core and .NET DI documentation. Exactly when a singleton is created (on first request vs at startup) depends on how it is registered; the picture shows the common case. Gen 0/1/2 promotion is the general GC behaviour from page 20, not something DI documents. The container, scope and disposal list are drawn as plain heap objects with a reference list: a <b>teaching picture</b> of the idea, not the container’s real internal data structures. “Header · type ptr” is the classic object layout (page page 12); byte sizes and addresses are not shown. <code>Dispose()</code> releases resources; the memory itself is reclaimed only later by the GC (page page 22).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -272,7 +500,7 @@ builder.Services.AddTransient&lt;IEmailBuilder, EmailBuilder&gt;();     <span cl
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p><b>Singleton</b>: disposed/cleared at app shutdown. <b>Scoped</b>: disposed when the request’s scope ends, then collected as ordinary garbage. <b>Transient</b>: collected by the GC after nobody references it (earlier disposal only if its scope ends and it is <code>IDisposable</code>).</p>
+      <p><b>Singleton</b>: disposed/cleared at app shutdown. <b>Scoped</b>: disposed when the request’s scope ends (<code>Dispose()</code> releases resources, the object is still on the heap), then reclaimed by a later GC once nothing points to it. <b>Transient</b>: collected by the GC after nobody references it (earlier disposal only if its scope ends and it is <code>IDisposable</code>).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -314,6 +542,6 @@ builder.Services.AddTransient&lt;IEmailBuilder, EmailBuilder&gt;();     <span cl
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>
