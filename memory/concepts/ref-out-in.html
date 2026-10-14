@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ref, out and in: Aliasing the Caller’s Variable — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">ref, out, in</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 11 of 29 · ⚙️ Static & methods</div>
+    <h1><span class="grad-text">A shared whiteboard</span> instead of a photocopy.</h1>
+    <p class="sub">What the <code>ref</code>, <code>out</code> and <code>in</code> modifiers change in memory: the parameter stops being a copy and becomes an alias of the caller’s own variable — and what that means for objects, structs and arrays.</p>
+    <div class="interview-q">❓ "What do ref, out and in do, and how do they differ from passing by value?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Passing with ref: the parameter n is not a copy but an alias pointing at the caller’s own variable x, so n++ inside the method changes x itself">
+<defs><marker id="rf1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="340" y="6" width="290" height="276" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="354" y="25" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<g class="st" data-s="2-3"><path d="M485,170 L485,90" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf1A)"/></g>
+<rect class="bx" x="10" y="8" width="310" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int x = 5;</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">AddOne(ref x);</text>
+<text x="24" y="60" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">void AddOne(ref int n) { n++; }</text>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="360" y="40" width="250" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="485" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Main frame: x</text></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="485" y="75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">5</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="360" y="40" width="250" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="485" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Main frame: x</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="485" y="75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">6</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="360" y="170" width="250" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="485" y="193" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">AddOne frame: n</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="485" y="205" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">an alias of x</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="100" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="165" y="138" text-anchor="middle" font-size="10" fill="#67e8f9">x holds 5</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="100" width="310" height="70" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="165" y="138" text-anchor="middle" font-size="10" fill="#c4b5fd">Call with ref: n is NOT a copy — it points at x itself</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="100" width="310" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="165" y="138" text-anchor="middle" font-size="10" fill="#fcd34d">n++ writes straight into x</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="100" width="310" height="70" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="165" y="138" text-anchor="middle" font-size="10" fill="#6ee7b7">Return: the alias is gone; x is now 6</text></g>
+<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="463" y="121" width="44" height="18" rx="9"/><text x="485" y="133.5" text-anchor="middle" font-size="9" font-style="italic">alias</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>x</code> holds 5 in the caller’s frame.</li><li>The call <code>AddOne(ref x)</code>: the parameter <code>n</code> is <b>not a copy</b>. It is an <b>alias</b> that points at the variable <code>x</code> itself.</li><li><code>n++</code> writes straight into <code>x</code>.</li><li>Return: the alias is gone. <code>x</code> is now <b>6</b>. The method changed the caller’s own variable.</li></ol>
+<figcaption><strong>What you're seeing:</strong> ref = “work on the caller’s variable, not on a copy”.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b><code>ref</code>/<code>out</code>/<code>in</code> make the parameter an alias of the caller’s variable instead of a copy.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📝 Normally you hand someone a <b>photocopy</b> of your page. With <code>ref</code> you hand over <b>your own page on a shared whiteboard</b>: whatever they write is on your page the moment they write it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 ref with an object variable: moving the caller’s own arrow</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Passing a reference variable with ref: the parameter q is an alias of the caller’s variable p, so assigning a new Person to q moves the caller’s own arrow, and p now points at Zed while the original Asha object has no references left">
+<defs><marker id="rf2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="200" height="284" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="290" y="86" width="340" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="304" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-3"><path d="M110,250 L110,160" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="1-2"><path d="M196,138 L370,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="3-"><path d="M196,150 L250,150 L250,275 L370,275" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Replace(ref p);</text>
+<text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Replace(ref Person q) { q = new Person("Zed"); }</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="116" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="110" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p  (caller)</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="24" y="250" width="172" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="110" y="270" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">q</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="110" y="282" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">alias of p</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="370" y="110" width="230" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="485" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person "Asha"</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="370" y="110" width="230" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="485" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Person "Asha"</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="485" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">no references: garbage</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="370" y="250" width="230" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="485" y="279" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Person "Zed"</text></g>
+<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="88" y="196" width="44" height="18" rx="9"/><text x="110" y="208.5" text-anchor="middle" font-size="9" font-style="italic">alias</text></g></g>
+<g class="st" data-s="1-2"><g class="arrow-pill"><rect x="271.5" y="129" width="23" height="18" rx="9"/><text x="283" y="141.5" text-anchor="middle" font-size="9" font-style="italic">p</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="228" y="201" width="44" height="18" rx="9"/><text x="250" y="213.5" text-anchor="middle" font-size="9" font-style="italic">p now</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>p</code> points to the Asha object.</li><li>With <code>ref</code>, the parameter <code>q</code> is an <b>alias of the variable p</b> — not a copy of its address (compare the previous page).</li><li><code>q = new Person("Zed")</code> builds a new object and moves the arrow of <b>the caller’s own p</b>.</li><li>Return: <code>p</code> now points to Zed; the Asha object has no references left and is garbage.</li></ol>
+<figcaption><strong>What you're seeing:</strong> without ref, the same assignment would have changed only the parameter. With ref, the caller sees the new object.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📍 ref return and ref local: an alias to an array element</div>
+<figure class="diagram-card kd-story" data-steps="3">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="A ref return and ref local: Slot returns an alias to element 1 of the array, and the caller’s ref local s writes straight into that element, so the array shows 10, 99, 30">
+<defs><marker id="rf3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="200" height="234" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="270" y="86" width="360" height="234" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="284" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-"><path d="M196,158 L350,158" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf3A)"/></g>
+<rect class="bx" x="10" y="8" width="470" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">ref int Slot(int[] a, int i) =&gt; ref a[i];</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">ref int s = ref Slot(arr, 1);</text>
+<text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">s = 99;      // writes into arr[1]</text>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="130" width="172" height="56" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">s  (ref local)</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="168" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">alias → arr[1]</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="350" y="120" width="230" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="465" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">int[3] array object</text></g>
+<g class="st" data-s="1-2"><text x="465" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">10 | 20 | 30</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="350" y="120" width="230" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">int[3] array object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">10 | 99 | 30</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="235" y="149" width="76" height="18" rx="9"/><text x="273" y="161.5" text-anchor="middle" font-size="9" font-style="italic">alias to 20</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>arr</code> is an array object with three ints on the heap.</li><li><code>Slot</code> returns <b>a reference to element 1</b>, not a copy of its value. The caller’s <b>ref local</b> <code>s</code> is an alias to that element.</li><li><code>s = 99</code> writes <b>directly into the array</b>: it now holds 10, 99, 30.</li></ol>
+<figcaption><strong>What you're seeing:</strong> ref locals/returns avoid copying (useful for large structs) — but the alias must not outlive the memory it points to.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 The modifiers</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Modifier</th><th scope="col">Meaning</th><th scope="col">Caller must…</th><th scope="col">Method must…</th></tr></thead><tbody><tr><th scope="row">(none)</th><td>a copy</td><td>—</td><td>—</td></tr><tr><th scope="row"><code>ref</code></th><td>alias; read and write</td><td>initialise the variable first</td><td>nothing special</td></tr><tr><th scope="row"><code>out</code></th><td>alias; the method provides the value</td><td>nothing (may be uninitialised; <code>out var x</code> declares it inline)</td><td><b>assign it before returning</b></td></tr><tr><th scope="row"><code>in</code></th><td>alias; <b>read-only</b></td><td>nothing (<code>in</code> is optional at the call)</td><td>not assign it</td></tr><tr><th scope="row"><code>ref readonly</code></th><td>alias; read-only (preferred when it is returned or stored)</td><td>pass it as <code>ref</code> or <code>in</code></td><td>not assign it</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚡ Performance lens — think like this</div>
+    <div class="kd-card why-box">
+      <p><b><code>in</code></b> avoids copying a <b>large struct</b> on every call; it is mostly useful for large <code>readonly struct</code> values. For small values (an <code>int</code>), just pass by value — an alias is not faster.</p>
+      <p><b><code>out</code></b> is the standard way to return a result plus a success flag without allocating: <code>int.TryParse(text, out var n)</code>. It avoids a tuple or a result object.</p>
+      <p><b><code>ref</code> locals and returns</b> are an advanced tool for hot paths (no copy). A ref local cannot be kept across an <code>await</code>, and async methods cannot take <code>ref</code>/<code>in</code>/<code>out</code> parameters, because an alias into a stack frame cannot live in a heap state machine (page page 25).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚠️ Rule of thumb</div>
+    <div class="kd-card why-box">
+      <p>If the method only needs to <b>change the object’s contents</b>, no modifier is needed (previous page). Use <code>ref</code> only when the method must <b>replace the caller’s variable itself</b> (point it at a different object or set a new value).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">void</span> AddOne(ref <span class="kw">int</span> n)            { n++; }                     <span class="cmt">// changes the caller's int</span>
+<span class="kw">void</span> Replace(ref Person q)        { q = <span class="kw">new</span> Person(<span class="str">"Zed"</span>); }   <span class="cmt">// moves the caller's p</span>
+<span class="kw">bool</span> TryParse(<span class="kw">string</span> s, out <span class="kw">int</span> value)                         <span class="cmt">// must assign value</span>
+{
+    <span class="kw">if</span> (<span class="kw">int</span>.TryParse(s, out value)) <span class="kw">return</span> true;
+    value = 0; <span class="kw">return</span> false;
+}
+<span class="kw">decimal</span> Sum(<span class="kw">in</span> BigStruct data)    =&gt; data.A + data.B;          <span class="cmt">// read-only alias: no copy</span>
+
+<span class="kw">int</span> x = 5;  AddOne(ref x);                 <span class="cmt">// x is 6</span>
+<span class="kw">if</span> (TryParse(<span class="str">"42"</span>, out <span class="kw">var</span> n)) { /* n is 42 */ }
+ref <span class="kw">int</span> s = ref Slot(arr, 1);  s = 99;     <span class="cmt">// writes into arr[1]</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The modifier is required at the call (except <code>in</code>), so the call site shows that the variable may change.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>Aliases live in frames and vanish at return. The objects involved are cleaned by the GC when unreachable — for example the Asha object once <code>p</code> was redirected. Nothing here frees memory by itself; <code>ref</code> only changes <b>who points where</b>.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> With <code>ref</code>, the parameter is a copy of the caller’s variable.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It is an alias of the caller’s variable.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> An <code>out</code> parameter must be assigned before the method returns.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — the compiler enforces it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>in</code> lets a method modify a large struct without copying it.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> <code>in</code> is read-only; it avoids the copy but forbids changes.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li><code>ref</code>/<code>out</code>/<code>in</code> = alias to the caller’s variable, not a copy.</li><li><code>ref</code> must be initialised; <code>out</code> must be assigned by the method; <code>in</code> is read-only.</li><li>Use <code>ref</code> only to replace the caller’s variable; mutate objects without it.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“By default arguments are copied. ref, out and in pass an alias to the caller’s variable instead: ref for read-write, out when the method supplies the value, in for read-only access that avoids copying large structs. For reference types, ref lets the method repoint the caller’s variable.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Using <code>ref</code> on an object parameter just to “change it”. You can already change its contents without ref — ref is for replacing the variable.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes methods and parameters. Next: what <b>creating</b> an object really does inside — the order of events.</span>
+      <a class="next-link" href="object-creation.html">Creating an Object <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 ref/out/in semantics (alias, must-initialise, must-assign, read-only), ref locals and ref returns, in/ref readonly for avoiding copies: Microsoft Learn “Method parameters and modifiers”, “Avoid memory allocations and data copies”. Async methods cannot have ref/in/out parameters and a ref local cannot live across an await: C# compiler errors reference (stated from memory — 🟨 K; newer C# versions relax ref locals in async methods when they do not cross an await). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters" target="_blank" rel="noopener">Method parameters and modifiers (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/performance/" target="_blank" rel="noopener">Avoid memory allocations and data copies (C#)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -88,7 +88,7 @@ static class Cache { public static List<int> Items = new(); }   // lives as long
         recall=['Static = belongs to the type, one copy per app.', 'Not cleared during the run; static references are GC roots.', 'Static constructor: automatic, at most once, before first use.'],
         say='“Static fields are per type, not per instance; there is one copy for the app and it lives as long as the app. Because static references are GC roots, objects they reference never get collected — so unbounded static caches leak memory.”',
         trap=['Putting everything in static collections “for convenience”. Anything added and never removed stays in memory until the app ends.'],
-        next=('Next: what exactly happens inside <code>new</code> when the class has initializers and a constructor.', 'object-creation.html', 'Creating an Object'),
+        next=('Next: what happens in memory when a method runs on an object — the frame, <code>this</code> and the code.', 'method-execution.html', 'How a Method Runs'),
         facts=('Static constructor timing, at-most-once and exception behaviour: Microsoft Learn “Static Constructors” and CA1810. Static references as GC roots: GC fundamentals. The exact internal storage area for statics is a runtime detail and is deliberately not claimed.', [('Static constructors (C# guide)', 'https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors'), DOC_GC])))
 
 # ================================================================= 7. OBJECT CREATION

@@ -24,8 +24,8 @@ J = {
         ['SOLID: five habits that keep code easy to change.','Patterns: named recipes for recurring problems.','Patterns for whole systems.','Judgement: use only what removes real pain. ✅']),
  'solid': ('The SOLID journey', [('😵','The problem','code gets tangled'),('🔤','S, O, L, I, D','one habit each'),('🛠️','Making it real','DI, smells, refactoring'),('⚖️','Judgement','testing, when not to')],
         ['Start with why change gets expensive.','Learn S, O, L, I, D, one everyday picture each.','Make it real: dependency injection, smells and refactoring.','Finish with testing and when not to apply them. ✅']),
- 'memory': ('The memory journey', [('🗺️','The map','stack, heap, statics'),('🧱','Objects','new, inheritance, interfaces'),('♻️','The GC','G0, G1, G2'),('🧵','Threads','threads and async')],
-        ['Start with the map: stack, heap and static memory.','See what new builds, with parents and interfaces.','Watch the garbage collector and its generations clean up.','Then threads, async/await, tuning and the clinic. ✅']),
+ 'memory': ('The memory journey', [('🗺️','The map','stack, heap, statics'),('⚙️','Methods','frames, params, ref'),('🧱','Objects','new, inheritance, delegates'),('♻️','The GC','G0, G1, G2'),('🏗️','Apps','threads, async, DI')],
+        ['Start with the map: stack, heap and static memory.','Follow a method call: frames, parameters, returns, ref and out.','See what new builds: parents, interfaces, delegates.','Watch the garbage collector and its generations clean up.','Then threads, async/await and DI lifetimes, tuning and the clinic. ✅']),
  'patterns': ('The patterns journey', [('🧩','The idea','what a pattern is'),('🏭','Creational','making objects'),('🔧','Structural','fitting pieces'),('💬','Behavioral','objects talking'),('☁️','Systems','whole-system patterns')],
         ['What a design pattern is.','Creational: how objects are made.','Structural: how pieces fit.','Behavioral: how objects talk.','Patterns for whole systems, then choosing and the clinic. ✅']),
 }

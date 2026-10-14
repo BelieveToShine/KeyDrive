@@ -56,11 +56,11 @@ if m: page = re.sub(r'\?v=\d+', '?v=' + m.group(1), page)
 (R / 'design').mkdir(exist_ok=True); (R / 'design/index.html').write_text(page)
 h = (R / 'index.html').read_text()
 tile = f'''      <a class="kd-card cat-tile" href="design/index.html" style="border-color:rgba(52,211,153,.35)">
-        <span class="ribbon live">SOLID · Patterns</span>
+        <span class="ribbon live">SOLID · Patterns · Memory</span>
         <span class="glow"></span>
         <span class="ct-icon">🧱</span>
         <h3>Software Design</h3>
-        <p>The five SOLID principles and every major design pattern — CQRS included — explained with everyday pictures, animated stories and a few lines of C#.</p>
+        <p>The five SOLID principles, every major design pattern — CQRS included — and a .NET memory lab (stack, heap, GC, async, DI lifetimes), explained with everyday pictures, animated stories and a few lines of C#.</p>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-dives">0 / 12 concepts</span></div><div class="progress"><i style="width:0%"></i></div></div>
       </a>
 '''

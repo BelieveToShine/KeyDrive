@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Singleton, scoped, transient</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 26 of 29 · 🧵 Threads, async & apps</div>
+    <h1><span class="grad-text">One reception desk, a hotel key card, a paper cup</span> — three lifetimes.</h1>
+    <p class="sub">What the three DI lifetimes mean for objects in memory: how many instances exist, who holds them, when they are cleaned — and why a scoped object gets reused across your controller, service and repository.</p>
+    <div class="interview-q">❓ "What is the difference between singleton, scoped and transient in .NET dependency injection, and how do they affect memory?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A singleton service: the first time any request asks for it the container creates one object, and every later request, in every layer, gets that same object; the container keeps it for the whole life of the app">
+<defs><marker id="di1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="zone" x="300" y="8" width="330" height="252" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="314" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🏗️ CONTAINER (app lifetime)</text></g>
+<g class="st" data-s="2-"><path d="M170,62 L230,62 L230,110 L360,110" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="3-"><path d="M170,142 L360,142" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="4-"><path d="M170,222 L250,222 L250,160 L360,160" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di1A)"/></g>
+<g class="st" data-s="2-" data-hl="2,,,5"><rect class="bx" x="360" y="100" width="210" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2,,,5"><text x="465" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">EmailSettings</text></g>
+<g class="st" data-s="2-" data-hl="2,,,5"><text x="465" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">ONE instance</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="40" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="95" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 1</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="95" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="20" y="120" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="95" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 2</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="95" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="200" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request 3</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#fcd34d">App starts: the container will hold a singleton for the whole app</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 1 asks: the container creates the single instance now</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 2 asks: it gets the SAME object</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#67e8f9">Request 3, in any layer: the SAME object again</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="276" width="620" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="305" text-anchor="middle" font-size="10" fill="#fcd34d">It stays alive (the container references it) until the app shuts down</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="194.5" y="77" width="71" height="18" rx="9"/><text x="230" y="89.5" text-anchor="middle" font-size="9" font-style="italic">creates it</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="235" y="133" width="60" height="18" rx="9"/><text x="265" y="145.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="220" y="182" width="60" height="18" rx="9"/><text x="250" y="194.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>singleton</b> is held by the container for the whole life of the app.</li><li><b>Request 1</b> asks for it: the container creates the one and only instance now.</li><li><b>Request 2</b> asks: it receives the <b>same</b> object.</li><li>Request 3, in any layer: the <b>same</b> object again.</li><li>It stays alive — the container references it — until the app shuts down. It is a long-lived object (a gen 2 resident).</li></ol>
+<figcaption><strong>What you're seeing:</strong> singleton = one instance, shared by everyone, alive until shutdown.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Singleton = one instance for the whole app. Scoped = one instance per request (shared by every layer). Transient = a new instance every time it is asked for.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🏨 <b>Singleton</b> — the hotel’s <b>one reception desk</b>: everyone uses it, it is open as long as the hotel is.</p>
+      <p>🗝️ <b>Scoped</b> — your <b>key card for one stay</b>: the room door, the gym and the restaurant all accept the <b>same card</b>; you hand it back at checkout, and the next guest gets a new one.</p>
+      <p>🥤 <b>Transient</b> — a <b>paper cup</b>: every time you ask, you get a fresh one.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗝️ Scoped: one object, reused across the layers of a request</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 410" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A scoped service: within one request the controller, the service and the repository all receive the very same DbContext object; when the request ends its scope is disposed and the DbContext becomes garbage; the next request gets its own new DbContext">
+<defs><marker id="di2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="zone" x="10" y="8" width="380" height="338" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🌐 REQUEST A  (one scope)</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="410" y="8" width="220" height="338" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="424" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🌐 REQUEST B</text></g>
+<g class="st" data-s="2-4"><path d="M144,70 L190,70 L190,150 L250,150" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="3-4"><path d="M144,160 L250,160" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="4-4"><path d="M144,250 L190,250 L190,190 L250,190" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="6-"><path d="M520,100 L520,200" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#di2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="24" y="50" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="84" y="74" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Controller</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="24" y="140" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="84" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Service</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="24" y="230" width="120" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="84" y="254" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Repository</text></g>
+<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><rect class="bx" x="250" y="130" width="120" height="80" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><text x="310" y="167.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext</text></g>
+<g class="st" data-s="2-4" data-hl="2,,,3,,,4"><text x="310" y="180.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">one per request</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="250" y="130" width="120" height="80" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="310" y="167.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">DbContext</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="310" y="180.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">disposed → garbage</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="424" y="50" width="192" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="520" y="71.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Controller → Service →</text></g>
+<g class="st" data-s="6-"><text x="520" y="84" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Repository</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="424" y="200" width="192" height="70" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="520" y="232.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext (new)</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="520" y="245.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">its own instance</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">A request arrives: the container creates a scope for it</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The controller asks for a DbContext: a new one is created for this scope</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">The service asks: the SAME DbContext</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">The repository asks: the SAME DbContext — all three layers share one unit of work</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request ends: the scope is disposed; the DbContext is disposed and becomes garbage</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="358" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="382.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The next request gets its own, separate DbContext</text></g>
+<g class="st" data-s="2-4"><g class="arrow-pill"><rect x="162.5" y="101" width="55" height="18" rx="9"/><text x="190" y="113.5" text-anchor="middle" font-size="9" font-style="italic">creates</text></g></g>
+<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="167" y="151" width="60" height="18" rx="9"/><text x="197" y="163.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
+<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="160" y="211" width="60" height="18" rx="9"/><text x="190" y="223.5" text-anchor="middle" font-size="9" font-style="italic">same one</text></g></g>
+<g class="st" data-s="6-"><g class="arrow-pill"><rect x="479" y="141" width="82" height="18" rx="9"/><text x="520" y="153.5" text-anchor="middle" font-size="9" font-style="italic">gets its own</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A request arrives. The container creates a <b>scope</b> for it.</li><li>The <b>controller</b> asks for a <code>DbContext</code>: a new one is created for this scope.</li><li>The <b>service</b> asks: it gets the <b>same</b> DbContext.</li><li>The <b>repository</b> asks: the <b>same</b> DbContext again. All three layers work on one shared unit of work.</li><li>The request ends. The scope is disposed: the DbContext is disposed and becomes garbage — a short-lived object.</li><li>The next request gets its own, separate DbContext.</li></ol>
+<figcaption><strong>What you're seeing:</strong> scoped objects are created once per request and thrown away with it — short-lived, so cheap for the GC.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🥤 Transient: a new object every time</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A transient service: every time a class asks for it the container creates a brand-new object, so the controller, service and repository each get a different EmailBuilder instance">
+<defs><marker id="di3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M170,62 L380,62" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="3-"><path d="M170,142 L380,142" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="4-"><path d="M170,222 L380,222" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#di3A)"/></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="40" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="95" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Controller</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="95" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="40" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="490" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #1</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="490" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="20" y="120" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="95" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Service</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="95" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="380" y="120" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="490" y="139.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #2</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="490" y="152.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="200" width="150" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Repository</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">asks for it</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="380" y="200" width="220" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="490" y="219.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">EmailBuilder #3</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="490" y="232.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">new instance</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#fcd34d">Transient = a new object for every request to the container</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The controller asks: instance #1</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The service asks: a different instance #2</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#67e8f9">The repository asks: a third instance #3</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="268" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="301" text-anchor="middle" font-size="10" fill="#fcd34d">Cheap and independent — but 3 objects instead of 1. If they are IDisposable the container keeps each until its scope ends</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="239.5" y="53" width="71" height="18" rx="9"/><text x="275" y="65.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="239.5" y="133" width="71" height="18" rx="9"/><text x="275" y="145.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="239.5" y="213" width="71" height="18" rx="9"/><text x="275" y="225.5" text-anchor="middle" font-size="9" font-style="italic">new object</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Transient means: <b>every time the container is asked, it makes a new object</b>.</li><li>The controller asks: instance #1.</li><li>The service asks: a <b>different</b> instance #2.</li><li>The repository asks: a third instance #3.</li><li>Cheap and independent, but three objects instead of one. If a transient implements <code>IDisposable</code>, the container keeps a reference to it until its scope ends, so it can dispose it — it cannot be collected earlier.</li></ol>
+<figcaption><strong>What you're seeing:</strong> transient = no sharing. More allocations, no shared state.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⛓️ The classic bug: a captive dependency</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A captive dependency: a singleton that receives a scoped DbContext keeps the first request’s instance forever, even after that request’s scope disposes it, and later requests’ new DbContexts are never used by the singleton">
+<defs><marker id="di4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="di4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="zone" x="10" y="8" width="250" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🏗️ SINGLETON (lives forever)</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="290" y="8" width="340" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="304" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🌐 REQUEST 1  (scoped)</text></g>
+<g class="st" data-s="4-"><rect class="zone" x="290" y="190" width="340" height="130" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="4-"><text class="zone-title" x="304" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🌐 REQUEST 2  (scoped)</text></g>
+<g class="st" data-s="2-"><path d="M224,80 L310,80" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#di4A)"/></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="50" width="200" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="124" y="78" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">CacheService</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="124" y="90" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">holds a DbContext</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="310" y="50" width="300" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="460" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext #1</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="460" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">created for request 1</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="310" y="50" width="300" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="460" y="77.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">DbContext #1</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="460" y="90.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">disposed — but still referenced!</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="310" y="230" width="300" height="60" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="460" y="257.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">DbContext #2</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="460" y="270.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">never seen by CacheService</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">A singleton lives for the whole app</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">It receives a scoped DbContext from request 1 and keeps it in a field</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request 1 ends: its scope disposes DbContext #1 — but the singleton still points to it (stale!)</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="364.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Request 2 gets a fresh DbContext #2; the singleton keeps using the old, disposed one → bugs</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="332" width="620" height="60" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="358" text-anchor="middle" font-size="9.5" fill="#6ee7b7">In development, scope validation throws, so you find this early.</text></g>
+<g class="st" data-s="5-5"><text x="320" y="371.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Fix: inject IServiceScopeFactory and create a scope when needed.</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="245" y="71" width="44" height="18" rx="9"/><text x="267" y="83.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A singleton lives for the whole app.</li><li>It receives a <b>scoped</b> DbContext from request 1 and stores it in a field.</li><li>Request 1 ends and its scope disposes DbContext #1 — but the singleton still points to it: a <b>stale, disposed</b> object.</li><li>Request 2 has a new DbContext #2; the singleton keeps using the old one. Bugs, and the old object cannot be freed.</li><li>The default container’s scope validation catches this in development. Fix: don’t inject scoped services into singletons; inject <code>IServiceScopeFactory</code> and create a scope when needed.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a longer-lived object must never depend on a shorter-lived one.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 The three lifetimes side by side</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Singleton</th><th scope="col">Scoped</th><th scope="col">Transient</th></tr></thead><tbody><tr><th scope="row">Instances</th><td>one for the whole app</td><td>one per scope (per HTTP request in ASP.NET Core)</td><td>a new one every time it is requested</td></tr><tr><th scope="row">Created</th><td>first time it is requested (or when you register an instance)</td><td>first time requested in a scope</td><td>each request to the container</td></tr><tr><th scope="row">Held by</th><td>the container (stays reachable)</td><td>the scope, until the request ends</td><td>the caller — and the container if it is <code>IDisposable</code></td></tr><tr><th scope="row">Cleaned</th><td>at app shutdown (disposed then)</td><td>with the scope: disposed, then garbage</td><td>by the GC (disposed with its scope if <code>IDisposable</code>)</td></tr><tr><th scope="row">Memory profile</th><td>few, long-lived (gen 2)</td><td>few per request, short-lived (die young)</td><td>many, short-lived (cheap if they die fast)</td></tr><tr><th scope="row">Thread safety</th><td>must be thread-safe (shared by all requests)</td><td>one request at a time (normally)</td><td>not shared (each caller has its own)</td></tr><tr><th scope="row">Typical use</th><td>config, caches, HttpClient factory</td><td>DbContext, unit of work</td><td>lightweight, stateless helpers, builders</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚡ Performance lens — think like this</div>
+    <div class="kd-card why-box">
+      <p>Put <b>state</b> in scoped or transient objects and keep singletons <b>stateless</b> or thread-safe — they live forever and are shared by every thread (pages page 6, page 24).</p>
+      <p>A <b>singleton cache that only grows</b> is a leak (page page 23); give it a size limit.</p>
+      <p><b>Transients in a hot path</b> multiply allocations; if an object is expensive to build and has no per-use state, make it singleton (and thread-safe) or scoped.</p>
+      <p>Disposable transients are held by the container until the scope ends — in a <b>long-lived scope</b> (a background worker that never ends its scope) they pile up. Create a new scope per unit of work.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Honest notes</div>
+    <div class="kd-card why-box">
+      <p>Lifetimes, scope validation (“scoped services can’t be injected into singletons”) and disposal behaviour are from Microsoft’s ASP.NET Core and .NET DI documentation. Exactly when a singleton is created (on first request vs at startup) depends on how it is registered; the picture shows the common case. Gen 0/1/2 placement is the general GC behaviour from pages page 20, not something DI documents.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre>builder.Services.AddSingleton&lt;IEmailSettings, EmailSettings&gt;();   <span class="cmt">// one for the whole app</span>
+builder.Services.AddScoped&lt;AppDbContext&gt;();                       <span class="cmt">// one per request (EF Core default)</span>
+builder.Services.AddTransient&lt;IEmailBuilder, EmailBuilder&gt;();     <span class="cmt">// new every time</span>
+
+<span class="kw">public</span> <span class="kw">class</span> OrdersController(OrderService service) { }           <span class="cmt">// gets the scoped instances</span>
+<span class="kw">public</span> <span class="kw">class</span> OrderService(AppDbContext db, IOrderRepository repo) { }    <span class="cmt">// db: the SAME as the controller's</span>
+<span class="kw">public</span> <span class="kw">class</span> OrderRepository(AppDbContext db) : IOrderRepository { }     <span class="cmt">// …and the same here</span>
+
+<span class="cmt">// ❌ captive dependency: a singleton must not take a scoped service</span>
+<span class="cmt">// public class CacheService(AppDbContext db) { }   // registered as singleton → scope validation error</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Constructor injection hands each class the instance the lifetime rules say it should get. Scoped = shared inside the request.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p><b>Singleton</b>: disposed/cleared at app shutdown. <b>Scoped</b>: disposed when the request’s scope ends, then collected as ordinary garbage. <b>Transient</b>: collected by the GC after nobody references it (earlier disposal only if its scope ends and it is <code>IDisposable</code>).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A scoped service gets a new instance in every class that asks for it within one request.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> Within one scope, the same instance is reused.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A singleton can safely hold a scoped DbContext in a field.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> That is a captive dependency: the DbContext outlives its scope.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A transient service gives a different instance to each consumer.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — a new one every time.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Singleton: one for the app. Scoped: one per request, shared across layers. Transient: new every time.</li><li>Longer-lived must not depend on shorter-lived (captive dependency).</li><li>Singletons must be thread-safe; scoped objects die with the request.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“Singleton gives one instance for the app’s lifetime, held by the container; scoped gives one instance per request so the controller, service and repository share the same DbContext; transient creates a new instance on every request to the container. A longer-lived service must not depend on a shorter-lived one, or the shorter-lived object becomes effectively a singleton.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Registering a stateful object as a singleton “to save memory”. It is now shared by every request and thread — and never freed.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: the garbage collector itself has modes — workstation, server and concurrent.</span>
+      <a class="next-link" href="gc-modes.html">GC Modes <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Transient (new each time), scoped (per request in ASP.NET Core), singleton (disposed at app shutdown), scope validation preventing scoped-into-singleton, EF Core DbContext default scoped, container disposing services it created and keeping disposable transients until their scope ends: Microsoft Learn “Dependency injection in ASP.NET Core”, “Dependency injection in .NET” and the Blazor DI page. IServiceScopeFactory as the fix is the documented pattern (🟨 K for exact wording). Official docs: <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="noopener">Dependency injection in ASP.NET Core (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection" target="_blank" rel="noopener">Dependency injection in .NET (Microsoft Learn)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

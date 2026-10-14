@@ -108,8 +108,97 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | Memory profiler needed to prove a leak | ✅ V | Microsoft forum/guidance (search summary) |
 | All sizes, object names (A–F, a–h), 100,000-byte examples | 🟦 I | illustrative |
 
+## Pages 18–22 — Threads, async/await, GC modes, Span/stackalloc/pooling, clinic
+| Claim | Status | Note |
+|---|---|---|
+| Each thread has its own stack; heap and static fields are shared by all threads | ✅ V | MS Learn managed threading docs |
+| Default thread stack size varies by OS/runtime ("typically about 1–8 MB"; 1.5 MB Windows/macOS and 8 MB Linux in one MS page; 1 MB older default) | ✅ V | MS Learn pages seen in research; stated loosely |
+| [ThreadStatic] / ThreadLocal<T> give a per-thread copy | ✅ V | MS Learn thread-local storage |
+| Value++ on shared data is read-modify-write and can lose updates; lock / Interlocked fix it | ✅ V | MS Learn threading docs |
+| Async methods compile to state machines; locals living across await are kept in it | ✅ V | MS async docs / blogs |
+| State machine is a class in Debug and a struct in Release; stays on the stack if it completes synchronously; boxed on first real suspension | ✅ V | MS blog / docs (research pass) |
+| ValueTask reduces allocation when result often ready; ref structs / Span cannot cross await | ✅ V | MS docs |
+| Code after await may run on a different thread (depending on context) | ✅ V | MS async docs (SynchronizationContext) |
+| .Result/.Wait() block a thread and can deadlock | ✅ V | MS async guidance |
+| Workstation vs server GC; concurrent (background) GC applies to gen 2; ASP.NET Core uses server GC; System.GC.Server / System.GC.Concurrent settings; GCSettings.IsServerGC | ✅ V | Workstation and server GC docs; GC config docs |
+| Server GC uses multiple heaps and dedicated GC threads | 🟨 K | recalled from the same docs; wording kept general |
+| Gen 0/1 collections are blocking foreground GCs | ✅ V | background GC docs (research pass) |
+| stackalloc: small (docs example ~1024 bytes), not in loops (CA2014), memory not zeroed unless initialised, negative length crashes | ✅ V | stackalloc docs, CA2014 |
+| Span<T> is a ref struct: cannot be boxed, field of a class, or cross await | ✅ V | Span<T> docs |
+| ArrayPool<T> Rent/Return in finally; returned array may be larger than requested | ✅ V | ArrayPool docs ("may be larger" 🟨 K) |
+| stackalloc-or-ArrayPool pattern | ✅ V | MS stackalloc docs |
+| Substring creates a new string; AsSpan does not | ✅ V | C#/.NET docs |
+| Clinic cases and numbers (1,000,000 ints; ~1,700 result; 100 KB buffers; 200 windows) | 🟦 I | illustrative |
+
+## Pages 18–22 — Threads, async/await, GC modes, Span/stackalloc/pooling, clinic
+| Claim | Status | Note |
+|---|---|---|
+| Each thread has its own stack; heap and static fields are shared by all threads | ✅ V | MS Learn managed threading docs |
+| Default thread stack size varies by OS/runtime ("typically about 1–8 MB"; 1.5 MB Windows/macOS and 8 MB Linux in one MS page; 1 MB older default) | ✅ V | MS Learn pages seen in research; stated loosely |
+| [ThreadStatic] / ThreadLocal<T> give a per-thread copy | ✅ V | MS Learn thread-local storage |
+| Value++ on shared data is read-modify-write and can lose updates; lock / Interlocked fix it | ✅ V | MS Learn threading docs |
+| Async methods compile to state machines; locals living across await are kept in it | ✅ V | MS async docs / blogs |
+| State machine is a class in Debug and a struct in Release; stays on the stack if it completes synchronously; boxed on first real suspension | ✅ V | MS blog / docs (research pass) |
+| ValueTask reduces allocation when result often ready; ref structs / Span cannot cross await | ✅ V | MS docs |
+| Code after await may run on a different thread (depending on context) | ✅ V | MS async docs (SynchronizationContext) |
+| .Result/.Wait() block a thread and can deadlock | ✅ V | MS async guidance |
+| Workstation vs server GC; concurrent (background) GC applies to gen 2; ASP.NET Core uses server GC; System.GC.Server / System.GC.Concurrent settings; GCSettings.IsServerGC | ✅ V | Workstation and server GC docs; GC config docs |
+| Server GC uses multiple heaps and dedicated GC threads | 🟨 K | recalled from the same docs; wording kept general |
+| Gen 0/1 collections are blocking foreground GCs | ✅ V | background GC docs (research pass) |
+| stackalloc: small (docs example ~1024 bytes), not in loops (CA2014), memory not zeroed unless initialised, negative length crashes | ✅ V | stackalloc docs, CA2014 |
+| Span<T> is a ref struct: cannot be boxed, field of a class, or cross await | ✅ V | Span<T> docs |
+| ArrayPool<T> Rent/Return in finally; returned array may be larger than requested | ✅ V | ArrayPool docs ("may be larger" 🟨 K) |
+| stackalloc-or-ArrayPool pattern | ✅ V | MS stackalloc docs |
+| Substring creates a new string; AsSpan does not | ✅ V | C#/.NET docs |
+| Clinic cases and numbers (1,000,000 ints; ~1,700 result; 100 KB buffers; 200 windows) | 🟦 I | illustrative |
+
+## Pages 7–11 — methods, static methods, parameters, returns/tuples, ref/out/in
+| Claim | Status | Note |
+|---|---|---|
+| A method call pushes a frame holding parameters and locals; the frame is popped on return | ✅ V | MS Learn call stack / C# docs |
+| In an instance method, `this` refers to the current instance (the object the method was called on) | ✅ V | MS Learn "this keyword" |
+| Teaching picture: `this` as a hidden extra argument carrying the object's address; code stored once per type, data per object | 🟨 K | standard .NET model, not quoted from one page |
+| A static class cannot be instantiated, contains only static members, is implicitly sealed, may have a static constructor | ✅ V | MS Learn Static Classes and Static Class Members |
+| A static method has no `this` and needs no object | ✅ V | C# docs (static members) |
+| Static fields are shared by all callers and all threads | ✅ V | C# docs / threading docs |
+| Default argument passing: a copy of the value for value types; a copy of the reference for reference types; changes to the pointed-to object are visible to the caller | ✅ V | MS Learn Method parameters and modifiers; C# FAQ |
+| Reassigning a reference parameter does not change the caller's variable | ✅ V | same sources |
+| Arrays are reference types; strings are immutable reference types | ✅ V | C# docs |
+| `ref`: alias, must be initialised; `out`: method must assign before returning; `in`: read-only alias (optional at call site); `ref readonly` | ✅ V | MS Learn Method parameters and modifiers |
+| `ref` locals / `ref` returns alias a storage location instead of copying; ref return only if the ref-safe context extends to the caller | ✅ V | MS Learn performance guidance / ref-modifier errors |
+| `in` avoids copying large structs | ✅ V | MS Learn "Avoid memory allocations and data copies" |
+| async methods cannot have ref/in/out parameters; a ref local cannot live across an await (newer C# relaxes ref locals not crossing an await) | 🟨 K | compiler error CS1988, recalled |
+| C# tuples (ValueTuple) are value types, copied on assignment | ✅ V | MS Learn Tuples and deconstruction |
+| System.Tuple<…> classes are reference types | 🟨 K | general .NET knowledge |
+| Returned object survives because it is on the heap and the caller holds its address | ✅ V | follows from reference-type semantics (GC fundamentals) |
+| Examples (Order, Tax 0.18m → 118, Person Asha/Ravi/Zed, 3 / 59.5m, addresses) | 🟦 I | illustrative |
+
+## Page 18 — Delegates and closures
+| Claim | Status | Note |
+|---|---|---|
+| A delegate is a reference-type object referring to a method (and, for instance methods, a target object) | ✅ V | MS Learn delegates docs |
+| Captured variables live at least as long as the delegate that uses them; the compiler stores them in a heap-allocated closure object | ✅ V | MS Learn lambda errors reference + MS blogs |
+| `static` anonymous functions/lambdas cannot capture locals or instance state | ✅ V | MS Learn lambda expressions (static anonymous functions) |
+| Event += stores a delegate referencing the subscriber (strong reference until -=) | ✅ V | WPF weak event patterns |
+| Compiler-generated closure class names / layout | 🟨 K | not claimed |
+| Multicast invocation lists | 🟨 K | not described |
+
+## Page 26 — DI lifetimes
+| Claim | Status | Note |
+|---|---|---|
+| Transient: a new instance each time it is retrieved | ✅ V | MS Learn DI in ASP.NET Core |
+| Scoped: one instance per scope; in ASP.NET Core the scope is the HTTP request | ✅ V | MS Learn |
+| Singleton: one instance; not disposed until the app shuts down; cannot depend on shorter-lived services | ✅ V | MS Learn |
+| Default provider scope validation: scoped services not injected into singletons and not resolved from the root provider (development) | ✅ V | MS Learn |
+| Container disposes services it created; disposable transients are held for the scope/circuit lifetime | ✅ V | MS Learn + Blazor DI docs |
+| EF Core DbContext is scoped by default | ✅ V | MS Learn |
+| IServiceScopeFactory as the way to use scoped services from a singleton | 🟨 K | documented pattern, wording recalled |
+| Exact singleton creation moment depends on registration | 🟨 K | stated generally |
+| Singleton lives in gen 2; scoped/transient die young | 🟦 I | general GC behaviour (pages 20, 14), not documented by DI |
+
 ## Cross-page notes
 - Illustrative literals: Amount = 100, qty = 1, Total = 2, "Rex"/"Pug", card ending 1234.
 - Illustrative sizes: new byte[1000], new byte[100_000] ("100 KB" buffer per request), 60,000 bytes; threshold 85,000 bytes is documented.
 - Analogies: nursery / school / retirement home for generations 0 / 1 / 2 (🟦 teaching picture).
+- Illustrative: a "50 MB report" kept alive by a closure; 1,000,000 ints; 200 windows.
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.

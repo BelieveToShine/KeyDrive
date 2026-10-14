@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Methods and Static Classes in Memory — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Static methods & classes</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 29 · ⚙️ Static & methods</div>
+    <h1><span class="grad-text">The public calculator on the wall</span> — nobody owns it, everyone uses it.</h1>
+    <p class="sub">What a static method call needs (a frame — no object, no <code>this</code>), what a static class is (a container for static members that is never created), and when shared static state bites.</p>
+    <div class="interview-q">❓ "How does a static method or static class differ from an instance one in memory?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A static class cannot be created with new; calling the static method Tax.Add pushes a frame that contains only the parameter x, with no this; the method reads the static field Rate from static memory, returns the result, and no object is ever created on the heap">
+<defs><marker id="sm1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sm1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sm1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="84" width="190" height="236" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="250" y="84" width="190" height="236" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="264" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC MEMORY</text>
+<rect class="zone" x="450" y="84" width="180" height="236" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="464" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="3-3"><path d="M186,156 L264,156" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sm1A)"/></g>
+<rect class="bx" x="10" y="8" width="400" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">static class Tax { public static decimal Rate = 0.18m;</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public static decimal Add(decimal x) =&gt; x + x * Rate; }</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var total = Tax.Add(100m);     // no new needed</text>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="440" y="8" width="190" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="535" y="30" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">new Tax()</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="535" y="45" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">❌ compile error</text></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="264" y="126" width="162" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text x="345" y="149" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Tax.Rate</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="345" y="161" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0.18</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="24" y="126" width="162" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="105" y="154" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Add frame</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="105" y="166" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">x = 100</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="24" y="220" width="162" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="105" y="243" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">total</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="105" y="255" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">118</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="460" y="126" width="160" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="540" y="147" text-anchor="middle" font-size="10" fill="#6ee7b7">no Tax object</text></g>
+<g class="st" data-s="2-"><text x="540" y="161" text-anchor="middle" font-size="10" fill="#6ee7b7">none is needed</text></g>
+<g class="st" data-s="2-3"><rect class="bx note" x="264" y="196" width="162" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-3"><text x="345" y="220.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">no this in the frame</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="330" width="620" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="352.75" text-anchor="middle" font-size="9.5" fill="#fda4af">A static class cannot be created: there is no Tax object to make</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="330" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="352.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Call: a frame is pushed with only the parameter x. There is no this.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="330" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="352.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The method reads the static field Rate — it lives in static memory</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="330" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="352.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: 118 is copied to total; the frame pops. Nothing was allocated on the heap.</text></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="203" y="147" width="44" height="18" rx="9"/><text x="225" y="159.5" text-anchor="middle" font-size="9" font-style="italic">reads</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>new Tax()</code> is <b>not allowed</b>: a static class cannot be instantiated. There is nothing to create on the heap.</li><li><code>Tax.Add(100m)</code>: a frame is pushed with only the parameter <code>x</code>. <b>No <code>this</code></b> — the method belongs to the type, not to an object.</li><li>The method reads the <b>static field</b> <code>Rate</code> from static memory (one copy for the whole app).</li><li>Return: the result 118 is copied into <code>total</code> and the frame pops. <b>Nothing was allocated on the heap.</b></li></ol>
+<figcaption><strong>What you're seeing:</strong> a static call is the lightest kind: a frame, the parameters, and (optionally) shared static data.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A static method needs no object: just a frame for its parameters and locals; any state it uses lives in static memory.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🧮 A <b>calculator bolted to the wall</b> in a shop. Nobody owns it, you never need to “create” one — you walk up and use it. It is great for <b>pure sums</b> (give numbers, get an answer). But if customers also use it to <b>write notes</b> on its scratch pad, everyone sees each other’s notes.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚠️ Shared static state</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A static field is shared by every caller: when request A changes Settings.Language to fr, request B reads fr as well, because there is only one copy in static memory">
+<defs><marker id="sm2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sm2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sm2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="zone" x="200" y="120" width="240" height="86" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="214" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC MEMORY</text></g>
+<g class="st" data-s="2-"><path d="M105,68 L105,172 L230,172" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sm2A)"/></g>
+<g class="st" data-s="3-"><path d="M535,68 L535,172 L410,172" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sm2A)"/></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="16" width="170" height="52" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Request A</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="52" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Language = "fr"</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="450" y="16" width="170" height="52" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Request B</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="52" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">reads Language</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="230" y="150" width="180" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="320" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Settings.Language</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="320" y="182" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"en"</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="230" y="150" width="180" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Settings.Language</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="182" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"fr"</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="220" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="248" text-anchor="middle" font-size="10" fill="#fcd34d">One static field, one copy: Language = "en"</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="220" width="620" height="50" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="248" text-anchor="middle" font-size="10" fill="#67e8f9">Request A sets it to "fr"</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="220" width="620" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="248" text-anchor="middle" font-size="10" fill="#fda4af">Request B — a different user! — now reads "fr" too: a surprise</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="220" width="620" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="248" text-anchor="middle" font-size="10" fill="#fda4af">Shared mutable static state is shared by every caller (and every thread)</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="80" y="111" width="50" height="18" rx="9"/><text x="105" y="123.5" text-anchor="middle" font-size="9" font-style="italic">writes</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="513" y="111" width="44" height="18" rx="9"/><text x="535" y="123.5" text-anchor="middle" font-size="9" font-style="italic">reads</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>Settings.Language</code> is a static field. There is exactly <b>one</b> copy, with the value "en".</li><li>Request A (one user) sets it to "fr".</li><li>Request B (another user) now reads "fr" as well — a surprise bug. Everyone shares the one copy.</li><li>Static <b>methods</b> that only use their parameters are safe. Static <b>mutable fields</b> are shared by every caller and every thread (page page 24).</li></ol>
+<figcaption><strong>What you're seeing:</strong> static = shared. That is the whole benefit and the whole danger.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 Instance vs static method</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Instance method</th><th scope="col">Static method</th></tr></thead><tbody><tr><th scope="row">Called on</th><td>an object: <code>order.AddItem()</code></td><td>the type: <code>Tax.Add()</code></td></tr><tr><th scope="row"><code>this</code> in the frame?</th><td>yes — the object’s address</td><td>no</td></tr><tr><th scope="row">Needs an object on the heap?</th><td>yes</td><td>no</td></tr><tr><th scope="row">Can reach instance fields?</th><td>yes (through this)</td><td>no — only static fields and its own parameters/locals</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🏛️ What a static class is</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Fact (from Microsoft’s docs)</th><th scope="col">Consequence in memory</th></tr></thead><tbody><tr><th scope="row">It cannot be instantiated</th><td>no objects of it ever exist on the heap</td></tr><tr><th scope="row">It can only contain static members</th><td>fields in static memory; methods are called with just a frame</td></tr><tr><th scope="row">It is implicitly sealed — it cannot be inherited</th><td>no derived layers (compare page page 13)</td></tr><tr><th scope="row">It may have a static constructor</th><td>runs once, before first use (page page 6)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚡ Performance lens — think like this</div>
+    <div class="kd-card why-box">
+      <p>Static helpers that only use their parameters allocate nothing and are easy for the GC — a good home for pure maths, formatting and conversion.</p>
+      <p>Avoid <b>static mutable state</b>: it is shared (bugs), it is a GC root that keeps whatever it references alive (leaks, page page 23), and it makes code hard to test.</p>
+      <p>A static method that is handed an object (a parameter) can still change that object — see the next page.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">static</span> <span class="kw">class</span> Tax
+{
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">decimal</span> Rate = 0.18m;                 <span class="cmt">// static memory: one copy</span>
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">decimal</span> Add(<span class="kw">decimal</span> x) =&gt; x + x * Rate;   <span class="cmt">// frame: x only — no this</span>
+}
+
+<span class="kw">var</span> total = Tax.Add(100m);        <span class="cmt">// 118 — no Tax object exists, none can be created</span>
+<span class="cmt">// var t = new Tax();             // ❌ cannot create an instance of a static class</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Static classes are for stateless helpers. If it needs per-user data, use an instance (and let dependency injection manage it — page page 26).</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The <b>frame</b> pops at return. The <b>static field</b> lives until the app ends (page page 6). There is no object to garbage-collect — but anything a static field <b>references</b> stays alive too.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A static method receives <code>this</code>.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It belongs to the type and has no object, so no this.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> You can create an instance of a static class with <code>new</code>.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> A static class cannot be instantiated.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A static method that only uses its parameters allocates no objects.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Right: just a frame.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Static method = frame without <code>this</code>; no object needed.</li><li>Static class: cannot be created, only static members, implicitly sealed.</li><li>Static mutable fields are shared by everyone and everything.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“A static method is called on the type, so its frame has no this and no object is needed on the heap. A static class can’t be instantiated and holds only static members. Static fields live for the app’s lifetime and are shared, so I keep static code stateless.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Putting per-user or per-request data in a static field “to reach it easily”. It is shared by all users and all threads.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what is actually copied when you <b>pass arguments</b> to a method.</span>
+      <a class="next-link" href="parameters.html">Parameters <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Static class rules (cannot be instantiated, only static members, implicitly sealed, static constructor allowed): Microsoft Learn “Static Classes and Static Class Members”. Static field sharing: C# docs. Frame contents without this: consistent with the call model on page “How a method runs”. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members" target="_blank" rel="noopener">Static classes and static class members (C#)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/static" target="_blank" rel="noopener">static modifier (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

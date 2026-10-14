@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 13 of 22 · ♻️ Garbage collector</div>
+    <div class="eyebrow">Concept 19 of 29 · ♻️ Garbage collector</div>
     <h1>The cleaner who keeps only what is <span class="grad-text">on the guest list</span>.</h1>
     <p class="sub">How the GC decides what is garbage: start at the roots, follow every reference, and reclaim whatever you never reached — then slide the survivors together.</p>
     <div class="interview-q">❓ "How does the .NET garbage collector decide which objects to free?"</div>
@@ -174,7 +174,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🚦 When does the GC run?</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Trigger</th><th scope="col">Meaning</th></tr></thead><tbody><tr><th scope="row">The allocation area for new objects is full</th><td>the most common reason (generation 0, next page)</td></tr><tr><th scope="row">The system is low on memory</th><td>the OS tells the runtime memory is tight</td></tr><tr><th scope="row">Code calls <code>GC.Collect()</code></th><td>avoid in production code (page 16)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Trigger</th><th scope="col">Meaning</th></tr></thead><tbody><tr><th scope="row">The allocation area for new objects is full</th><td>the most common reason (generation 0, next page)</td></tr><tr><th scope="row">The system is low on memory</th><td>the OS tells the runtime memory is tight</td></tr><tr><th scope="row">Code calls <code>GC.Collect()</code></th><td>avoid in production code (page 22)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">⚠️ Honest note</div>

@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 6 of 22 · 📌 Static memory</div>
+    <div class="eyebrow">Concept 6 of 29 · 📌 Static memory</div>
     <h1><span class="grad-text">The notice board in the lobby</span> — one copy, everyone reads it.</h1>
     <p class="sub">Where static fields live, how many copies exist, when static constructors run, and why a static reference can keep objects alive for the life of the app.</p>
     <div class="interview-q">❓ "Where are static variables stored in .NET and when are they cleaned?"</div>
@@ -128,7 +128,7 @@
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A static field <code>Cache</code> points to a List on the heap. The static field itself lives for the whole app.</li><li><code>Load()</code> runs and makes a temporary <code>Order</code> on the heap, with <code>tmp</code> on the stack pointing to it.</li><li><code>Load()</code> returns. <code>tmp</code> is gone, so nothing points to the Order — the GC may free it.</li><li>But <code>Cache</code> still points to the List, so the List <b>stays alive</b>. Static references are <b>GC roots</b> (page 13).</li></ol>
+<ol class="st-caps"><li>A static field <code>Cache</code> points to a List on the heap. The static field itself lives for the whole app.</li><li><code>Load()</code> runs and makes a temporary <code>Order</code> on the heap, with <code>tmp</code> on the stack pointing to it.</li><li><code>Load()</code> returns. <code>tmp</code> is gone, so nothing points to the Order — the GC may free it.</li><li>But <code>Cache</code> still points to the List, so the List <b>stays alive</b>. Static references are <b>GC roots</b> (page 19).</li></ol>
 <figcaption><strong>What you're seeing:</strong> a static reference is a permanent “ticket”: whatever it points to is never freed while it points there.</figcaption>
 </figure>
   </section>
@@ -169,7 +169,7 @@
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p><b>Nobody during the run.</b> Static fields live until the app ends. Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 17).</p>
+      <p><b>Nobody during the run.</b> Static fields live until the app ends. Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 23).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -199,8 +199,8 @@
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
     <div class="kd-card next-box">
-      <span>Next: what exactly happens inside <code>new</code> when the class has initializers and a constructor.</span>
-      <a class="next-link" href="object-creation.html">Creating an Object <span class="arrow">→</span></a>
+      <span>Next: what happens in memory when a method runs on an object — the frame, <code>this</code> and the code.</span>
+      <a class="next-link" href="method-execution.html">How a Method Runs <span class="arrow">→</span></a>
     </div>
   </section>  <p class="fact-note">📌 Static constructor timing, at-most-once and exception behaviour: Microsoft Learn “Static Constructors” and CA1810. Static references as GC roots: GC fundamentals. The exact internal storage area for statics is a runtime detail and is deliberately not claimed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors" target="_blank" rel="noopener">Static constructors (C# guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a></p>
 

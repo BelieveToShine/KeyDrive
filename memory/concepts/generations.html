@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 14 of 22 · ♻️ Garbage collector</div>
+    <div class="eyebrow">Concept 20 of 29 · ♻️ Garbage collector</div>
     <h1><span class="grad-text">The nursery, the school and the retirement home</span>.</h1>
     <p class="sub">Why the .NET heap has three generations, how objects move from G0 to G1 to G2, and why most collections are quick.</p>
     <div class="interview-q">❓ "Explain generations 0, 1 and 2 in the .NET garbage collector."</div>
@@ -127,7 +127,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🧾 Rules to remember</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rule</th><th scope="col">Meaning</th></tr></thead><tbody><tr><th scope="row">Collecting generation N also collects all younger generations</th><td>a gen 1 GC includes gen 0; a gen 2 GC is a full GC</td></tr><tr><th scope="row">Survivors are promoted one step</th><td>gen 0 → gen 1 → gen 2; gen 2 survivors stay in gen 2</td></tr><tr><th scope="row">A promoted object is not copied away from the program</th><td>references are updated when objects move (page 13)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rule</th><th scope="col">Meaning</th></tr></thead><tbody><tr><th scope="row">Collecting generation N also collects all younger generations</th><td>a gen 1 GC includes gen 0; a gen 2 GC is a full GC</td></tr><tr><th scope="row">Survivors are promoted one step</th><td>gen 0 → gen 1 → gen 2; gen 2 survivors stay in gen 2</td></tr><tr><th scope="row">A promoted object is not copied away from the program</th><td>references are updated when objects move (page 19)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🔎 Peek at a generation (diagnostics only)</div>

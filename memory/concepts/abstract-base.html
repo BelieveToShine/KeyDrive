@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 9 of 22 · 🧬 Objects & types</div>
+    <div class="eyebrow">Concept 14 of 29 · 🧬 Objects & types</div>
     <h1>A <span class="grad-text">blueprint nobody can live in</span> — only the houses built from it.</h1>
     <p class="sub">Why you can never create an abstract class by itself, what memory a child object really gets, and how a real-world payment example uses one base type for many kinds of objects.</p>
     <div class="interview-q">❓ "How is memory allocated for an abstract class and its derived classes?"</div>
@@ -136,7 +136,7 @@
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Two variables, both typed <code>Payment</code> (the abstract base).</li><li>They point to <b>different</b> objects: a CardPayment and a UpiPayment. Each object has a Payment layer and its own extra fields.</li><li><code>p1.Pay()</code> runs the <b>CardPayment</b>’s own <code>Pay</code> — the call follows the real object (page 11 shows how).</li><li><code>p2.Pay()</code> runs the <b>UpiPayment</b>’s <code>Pay</code>.</li></ol>
+<ol class="st-caps"><li>Two variables, both typed <code>Payment</code> (the abstract base).</li><li>They point to <b>different</b> objects: a CardPayment and a UpiPayment. Each object has a Payment layer and its own extra fields.</li><li><code>p1.Pay()</code> runs the <b>CardPayment</b>’s own <code>Pay</code> — the call follows the real object (page 16 shows how).</li><li><code>p2.Pay()</code> runs the <b>UpiPayment</b>’s <code>Pay</code>.</li></ol>
 <figcaption><strong>What you're seeing:</strong> one variable type, many object types. The checkout code only knows “Payment”; each object brings its own behaviour.</figcaption>
 </figure>
   </section>

@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 15 of 22 · ♻️ Garbage collector</div>
+    <div class="eyebrow">Concept 21 of 29 · ♻️ Garbage collector</div>
     <h1>The <span class="grad-text">oversize parcel shelf</span> — big things get their own place.</h1>
     <p class="sub">Why objects of 85,000 bytes or more are stored separately, what “not compacted” means, and what pinned objects do to memory.</p>
     <div class="interview-q">❓ "What is the Large Object Heap and why does it matter?"</div>
@@ -145,7 +145,7 @@
   <section class="kd-section ">
     <div class="sec-label why">🛠️ How to be kind to the LOH</div>
     <div class="kd-card why-box">
-      <p>Avoid creating many large temporary arrays (for example a new 100 KB buffer per request). Reuse them — <code>ArrayPool&lt;T&gt;</code> (page 21) was made for this.</p>
+      <p>Avoid creating many large temporary arrays (for example a new 100 KB buffer per request). Reuse them — <code>ArrayPool&lt;T&gt;</code> (page 28) was made for this.</p>
       <p>The POH exists so pinned buffers do not sit in the middle of the normal heap and block its compaction. You rarely use it directly; it matters mostly to libraries that talk to native code.</p>
     </div>
   </section>

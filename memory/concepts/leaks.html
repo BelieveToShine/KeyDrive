@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 17 of 22 · ♻️ Garbage collector</div>
+    <div class="eyebrow">Concept 23 of 29 · ♻️ Garbage collector</div>
     <h1><span class="grad-text">A tap you forgot to close</span> — the GC cannot close it for you.</h1>
     <p class="sub">A .NET “leak” is not lost memory: it is memory that is still referenced but no longer needed. The three classic causes — static collections, event handlers and undisposed resources — with their fixes.</p>
     <div class="interview-q">❓ "Can .NET applications leak memory even with a garbage collector? How?"</div>
@@ -144,7 +144,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🔍 The usual suspects</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Cause</th><th scope="col">Why it holds on</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Static collections (lists, dictionaries)</th><td>static fields are GC roots (page 6)</td><td>size limit / expiry; avoid unbounded statics</td></tr><tr><th scope="row">Event subscriptions (<code>+=</code>)</th><td>the publisher’s handler list references the subscriber</td><td><code>-=</code> when done; short-lived publishers; weak-event pattern</td></tr><tr><th scope="row">Undisposed resources</th><td>handles, connections, streams not released</td><td><code>using</code> / <code>Dispose</code> (page 16)</td></tr><tr><th scope="row">Long-lived objects holding short-lived ones</th><td>a reference from an old object to temporary data</td><td>clear fields; shorten lifetimes</td></tr><tr><th scope="row">Large objects on the LOH</th><td>reclaimed only at gen 2</td><td>reuse buffers (page 15, 21)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Cause</th><th scope="col">Why it holds on</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Static collections (lists, dictionaries)</th><td>static fields are GC roots (page 6)</td><td>size limit / expiry; avoid unbounded statics</td></tr><tr><th scope="row">Event subscriptions (<code>+=</code>)</th><td>the publisher’s handler list references the subscriber</td><td><code>-=</code> when done; short-lived publishers; weak-event pattern</td></tr><tr><th scope="row">Undisposed resources</th><td>handles, connections, streams not released</td><td><code>using</code> / <code>Dispose</code> (page 22)</td></tr><tr><th scope="row">Long-lived objects holding short-lived ones</th><td>a reference from an old object to temporary data</td><td>clear fields; shorten lifetimes</td></tr><tr><th scope="row">Large objects on the LOH</th><td>reclaimed only at gen 2</td><td>reuse buffers (page 21, 28)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🪶 A weak reference holds without keeping alive</div>
@@ -208,8 +208,9 @@
   </section>
   <section class="kd-section next" id="next">
     <div class="sec-label next">➡️ Where this leads</div>
-    <div class="kd-card next-box locked">
-      <span>Next: what changes when more than one thread runs? Each thread gets its own stack. <i>(coming soon: Threads)</i></span>
+    <div class="kd-card next-box">
+      <span>Next: what changes when more than one thread runs? Each thread gets its own stack.</span>
+      <a class="next-link" href="threads.html">Threads <span class="arrow">→</span></a>
     </div>
   </section>  <p class="fact-note">📌 ASP.NET Core memory guidance (objects that are referenced but no longer needed leak; avoid persistent static references; caches), Weak References docs, WPF weak event patterns (+= creates a strong reference from source to listener; unsubscribe). Event handler leak mechanics are as described in the WPF docs; the same reference rule applies to any .NET event. Official docs: <a href="https://learn.microsoft.com/en-us/aspnet/core/performance/memory" target="_blank" rel="noopener">Memory management and patterns in ASP.NET Core</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/weak-references" target="_blank" rel="noopener">Weak references (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns" target="_blank" rel="noopener">Weak event patterns</a></p>
 

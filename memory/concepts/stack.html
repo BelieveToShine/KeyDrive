@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="kd-hero left">
-    <div class="eyebrow">Concept 2 of 22 · 📚 Stack & heap</div>
+    <div class="eyebrow">Concept 2 of 29 · 📚 Stack & heap</div>
     <h1>A <span class="grad-text">stack of plates</span> — one plate for every method call.</h1>
     <p class="sub">How the call stack grows and shrinks: parameters and locals live in a frame that is pushed when a method starts and popped when it returns.</p>
     <div class="interview-q">❓ "What is the call stack and what is stored on it?"</div>
@@ -138,7 +138,7 @@
   <section class="kd-section ">
     <div class="sec-label why">⚠️ Honest notes</div>
     <div class="kd-card why-box">
-      <p>Every thread has its <b>own</b> stack (page 18). Its size is fixed when the thread starts and is small compared with the heap — typically a few MB, and the default depends on the operating system and runtime version.</p>
+      <p>Every thread has its <b>own</b> stack (page 24). Its size is fixed when the thread starts and is small compared with the heap — typically a few MB, and the default depends on the operating system and runtime version.</p>
       <p>A stack overflow normally ends the process; you cannot rely on <code>try/catch</code> to recover from it. The cure is to stop the endless recursion (or make it loop), not to catch it.</p>
     </div>
   </section>
@@ -157,7 +157,7 @@
     <div class="sec-label why">♻️ Who clears the stack?</div>
     <div class="kd-card why-box">
       <p><b>Nobody has to.</b> When a method returns, its frame is popped and the space is reused by the next call. This is why the stack is so fast: it only moves a “top” marker.</p>
-      <p>The GC does <b>not</b> clean the stack. But the GC <b>reads</b> the stack: references in frames tell it which heap objects are still in use (page 13).</p>
+      <p>The GC does <b>not</b> clean the stack. But the GC <b>reads</b> the stack: references in frames tell it which heap objects are still in use (page 19).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -190,7 +190,7 @@
       <span>Next: what exactly sits in a stack slot for an <code>int</code> versus a class?</span>
       <a class="next-link" href="value-vs-reference.html">Value vs Reference <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 Stack frames, parameters/locals and the one-stack-per-thread model: Microsoft Learn (call stack / threads). Stack sizes differ by OS and version (page 18). That StackOverflowException normally ends the process is documented on its API page (stated from memory — 🟨 K in the ledger). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types" target="_blank" rel="noopener">Value types (C# reference)</a></p>
+  </section>  <p class="fact-note">📌 Stack frames, parameters/locals and the one-stack-per-thread model: Microsoft Learn (call stack / threads). Stack sizes differ by OS and version (page 24). That StackOverflowException normally ends the process is documented on its API page (stated from memory — 🟨 K in the ledger). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types" target="_blank" rel="noopener">Value types (C# reference)</a></p>
 
 
 </main>

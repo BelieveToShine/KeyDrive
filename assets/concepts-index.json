@@ -5050,32 +5050,6 @@
     "anchor": "trap"
   },
   {
-    "id": "memory-memory-map",
-    "title": "The .NET Memory Map: Stack, Heap and Statics",
-    "category": "Memory",
-    "page": "memory/concepts/memory-map.html",
-    "summary": "Stack, heap and static memory in .NET: where data lives and who cleans it",
-    "keywords": "memory stack heap static garbage collector .net c# where data lives"
-  },
-  {
-    "id": "memory-memory-map-recall",
-    "title": "The .NET Memory Map: Stack, Heap and Statics — interview recall",
-    "category": "Memory",
-    "page": "memory/concepts/memory-map.html",
-    "summary": "Quick recall points: The .NET Memory Map: Stack, Heap and Statics.",
-    "keywords": "memory stack heap static garbage collector .net c# where data lives interview recall",
-    "anchor": "recall"
-  },
-  {
-    "id": "memory-memory-map-trap",
-    "title": "The .NET Memory Map: Stack, Heap and Statics — common trap",
-    "category": "Memory",
-    "page": "memory/concepts/memory-map.html",
-    "summary": "The classic mistake with The .NET Memory Map: Stack, Heap and Statics.",
-    "keywords": "memory stack heap static garbage collector .net c# where data lives trap mistake",
-    "anchor": "trap"
-  },
-  {
     "id": "memory-stack",
     "title": "The Stack: One Frame per Method Call",
     "category": "Memory",
@@ -5489,6 +5463,344 @@
     "page": "memory/concepts/leaks.html",
     "summary": "The classic mistake with Memory Leaks in a Garbage-Collected World.",
     "keywords": "memory leak event handler static cache weakreference unsubscribe profiler trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-threads",
+    "title": "Threads: One Stack Each, One Shared Heap",
+    "category": "Memory",
+    "page": "memory/concepts/threads.html",
+    "summary": "Per-thread stacks, shared heap and statics, races and how to make shared data safe",
+    "keywords": "memory thread stack shared heap race condition lock interlocked threadstatic"
+  },
+  {
+    "id": "memory-threads-recall",
+    "title": "Threads: One Stack Each, One Shared Heap — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/threads.html",
+    "summary": "Quick recall points: Threads: One Stack Each, One Shared Heap.",
+    "keywords": "memory thread stack shared heap race condition lock interlocked threadstatic interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-threads-trap",
+    "title": "Threads: One Stack Each, One Shared Heap — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/threads.html",
+    "summary": "The classic mistake with Threads: One Stack Each, One Shared Heap.",
+    "keywords": "memory thread stack shared heap race condition lock interlocked threadstatic trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-async-await",
+    "title": "async and await: the State Machine in Memory",
+    "category": "Memory",
+    "page": "memory/concepts/async-await.html",
+    "summary": "How async methods move locals from the stack to a heap state machine at an await",
+    "keywords": "memory async await state machine task valuetask thread blocked suspension"
+  },
+  {
+    "id": "memory-async-await-recall",
+    "title": "async and await: the State Machine in Memory — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/async-await.html",
+    "summary": "Quick recall points: async and await: the State Machine in Memory.",
+    "keywords": "memory async await state machine task valuetask thread blocked suspension interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-async-await-trap",
+    "title": "async and await: the State Machine in Memory — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/async-await.html",
+    "summary": "The classic mistake with async and await: the State Machine in Memory.",
+    "keywords": "memory async await state machine task valuetask thread blocked suspension trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-gc-modes",
+    "title": "Workstation, Server and Concurrent GC",
+    "category": "Memory",
+    "page": "memory/concepts/gc-modes.html",
+    "summary": "GC modes: workstation, server, concurrent/background; what each trades",
+    "keywords": "memory gc workstation server concurrent background gen2 pause throughput"
+  },
+  {
+    "id": "memory-gc-modes-recall",
+    "title": "Workstation, Server and Concurrent GC — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/gc-modes.html",
+    "summary": "Quick recall points: Workstation, Server and Concurrent GC.",
+    "keywords": "memory gc workstation server concurrent background gen2 pause throughput interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-gc-modes-trap",
+    "title": "Workstation, Server and Concurrent GC — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/gc-modes.html",
+    "summary": "The classic mistake with Workstation, Server and Concurrent GC.",
+    "keywords": "memory gc workstation server concurrent background gen2 pause throughput trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-span-stackalloc",
+    "title": "Span, stackalloc and Pooling: Allocating Less",
+    "category": "Memory",
+    "page": "memory/concepts/span-stackalloc.html",
+    "summary": "Reducing allocations with Span, stackalloc and ArrayPool",
+    "keywords": "memory span stackalloc arraypool allocation gc pressure ref struct"
+  },
+  {
+    "id": "memory-span-stackalloc-recall",
+    "title": "Span, stackalloc and Pooling: Allocating Less — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/span-stackalloc.html",
+    "summary": "Quick recall points: Span, stackalloc and Pooling: Allocating Less.",
+    "keywords": "memory span stackalloc arraypool allocation gc pressure ref struct interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-span-stackalloc-trap",
+    "title": "Span, stackalloc and Pooling: Allocating Less — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/span-stackalloc.html",
+    "summary": "The classic mistake with Span, stackalloc and Pooling: Allocating Less.",
+    "keywords": "memory span stackalloc arraypool allocation gc pressure ref struct trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-memory-clinic",
+    "title": "Capstone: the .NET Memory Clinic",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clinic.html",
+    "summary": "Thirteen small memory cases to diagnose: where it lives, who holds it, who clears it",
+    "keywords": "memory clinic practice leaks boxing race gc"
+  },
+  {
+    "id": "memory-memory-clinic-recall",
+    "title": "Capstone: the .NET Memory Clinic — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clinic.html",
+    "summary": "Quick recall points: Capstone: the .NET Memory Clinic.",
+    "keywords": "memory clinic practice leaks boxing race gc interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-memory-clinic-trap",
+    "title": "Capstone: the .NET Memory Clinic — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clinic.html",
+    "summary": "The classic mistake with Capstone: the .NET Memory Clinic.",
+    "keywords": "memory clinic practice leaks boxing race gc trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-method-execution",
+    "title": "How a Method Runs: the Frame, this and the Code",
+    "category": "Memory",
+    "page": "memory/concepts/method-execution.html",
+    "summary": "What happens in memory when a method runs on an object: frame, this, shared code",
+    "keywords": "memory method call this frame instance method stack heap code"
+  },
+  {
+    "id": "memory-method-execution-recall",
+    "title": "How a Method Runs: the Frame, this and the Code — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/method-execution.html",
+    "summary": "Quick recall points: How a Method Runs: the Frame, this and the Code.",
+    "keywords": "memory method call this frame instance method stack heap code interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-method-execution-trap",
+    "title": "How a Method Runs: the Frame, this and the Code — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/method-execution.html",
+    "summary": "The classic mistake with How a Method Runs: the Frame, this and the Code.",
+    "keywords": "memory method call this frame instance method stack heap code trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-static-methods",
+    "title": "Static Methods and Static Classes in Memory",
+    "category": "Memory",
+    "page": "memory/concepts/static-methods.html",
+    "summary": "Static methods and classes: no object, no this, shared static state",
+    "keywords": "memory static method static class no this shared state"
+  },
+  {
+    "id": "memory-static-methods-recall",
+    "title": "Static Methods and Static Classes in Memory — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/static-methods.html",
+    "summary": "Quick recall points: Static Methods and Static Classes in Memory.",
+    "keywords": "memory static method static class no this shared state interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-static-methods-trap",
+    "title": "Static Methods and Static Classes in Memory — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/static-methods.html",
+    "summary": "The classic mistake with Static Methods and Static Classes in Memory.",
+    "keywords": "memory static method static class no this shared state trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-parameters",
+    "title": "Parameters: What Is Copied When You Pass Arguments",
+    "category": "Memory",
+    "page": "memory/concepts/parameters.html",
+    "summary": "Passing values and objects as parameters: what is copied and what the caller sees",
+    "keywords": "memory parameters pass by value reference type object param reassign string array"
+  },
+  {
+    "id": "memory-parameters-recall",
+    "title": "Parameters: What Is Copied When You Pass Arguments — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/parameters.html",
+    "summary": "Quick recall points: Parameters: What Is Copied When You Pass Arguments.",
+    "keywords": "memory parameters pass by value reference type object param reassign string array interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-parameters-trap",
+    "title": "Parameters: What Is Copied When You Pass Arguments — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/parameters.html",
+    "summary": "The classic mistake with Parameters: What Is Copied When You Pass Arguments.",
+    "keywords": "memory parameters pass by value reference type object param reassign string array trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-return-values",
+    "title": "Return Values and Tuples in Memory",
+    "category": "Memory",
+    "page": "memory/concepts/return-values.html",
+    "summary": "Returning values, objects and tuples: what is copied and what survives",
+    "keywords": "memory return value tuple valuetuple object survives heap"
+  },
+  {
+    "id": "memory-return-values-recall",
+    "title": "Return Values and Tuples in Memory — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/return-values.html",
+    "summary": "Quick recall points: Return Values and Tuples in Memory.",
+    "keywords": "memory return value tuple valuetuple object survives heap interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-return-values-trap",
+    "title": "Return Values and Tuples in Memory — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/return-values.html",
+    "summary": "The classic mistake with Return Values and Tuples in Memory.",
+    "keywords": "memory return value tuple valuetuple object survives heap trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-ref-out-in",
+    "title": "ref, out and in: Aliasing the Caller's Variable",
+    "category": "Memory",
+    "page": "memory/concepts/ref-out-in.html",
+    "summary": "ref, out, in and ref returns: aliases instead of copies",
+    "keywords": "memory ref out in parameter alias ref return ref local struct"
+  },
+  {
+    "id": "memory-ref-out-in-recall",
+    "title": "ref, out and in: Aliasing the Caller's Variable — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/ref-out-in.html",
+    "summary": "Quick recall points: ref, out and in: Aliasing the Caller's Variable.",
+    "keywords": "memory ref out in parameter alias ref return ref local struct interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-ref-out-in-trap",
+    "title": "ref, out and in: Aliasing the Caller's Variable — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/ref-out-in.html",
+    "summary": "The classic mistake with ref, out and in: Aliasing the Caller's Variable.",
+    "keywords": "memory ref out in parameter alias ref return ref local struct trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-delegates-closures",
+    "title": "Delegates and Closures: a Method as an Object",
+    "category": "Memory",
+    "page": "memory/concepts/delegates-closures.html",
+    "summary": "Delegates and capturing lambdas in memory: target, closure object, leaks",
+    "keywords": "memory delegate lambda closure capture action func event leak"
+  },
+  {
+    "id": "memory-delegates-closures-recall",
+    "title": "Delegates and Closures: a Method as an Object — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/delegates-closures.html",
+    "summary": "Quick recall points: Delegates and Closures: a Method as an Object.",
+    "keywords": "memory delegate lambda closure capture action func event leak interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-delegates-closures-trap",
+    "title": "Delegates and Closures: a Method as an Object — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/delegates-closures.html",
+    "summary": "The classic mistake with Delegates and Closures: a Method as an Object.",
+    "keywords": "memory delegate lambda closure capture action func event leak trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-di-lifetimes",
+    "title": "Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient",
+    "category": "Memory",
+    "page": "memory/concepts/di-lifetimes.html",
+    "summary": "Singleton, scoped and transient in memory, reuse across layers, captive dependency",
+    "keywords": "memory dependency injection singleton scoped transient dbcontext lifetime captive"
+  },
+  {
+    "id": "memory-di-lifetimes-recall",
+    "title": "Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/di-lifetimes.html",
+    "summary": "Quick recall points: Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient.",
+    "keywords": "memory dependency injection singleton scoped transient dbcontext lifetime captive interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-di-lifetimes-trap",
+    "title": "Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/di-lifetimes.html",
+    "summary": "The classic mistake with Dependency Injection Lifetimes in Memory: Singleton, Scoped, Transient.",
+    "keywords": "memory dependency injection singleton scoped transient dbcontext lifetime captive trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-memory-map",
+    "title": "The .NET Memory Map: Stack, Heap and Statics",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "Stack, heap and static memory in .NET: where data lives and who cleans it",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives"
+  },
+  {
+    "id": "memory-memory-map-recall",
+    "title": "The .NET Memory Map: Stack, Heap and Statics — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "Quick recall points: The .NET Memory Map: Stack, Heap and Statics.",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-memory-map-trap",
+    "title": "The .NET Memory Map: Stack, Heap and Statics — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "The classic mistake with The .NET Memory Map: Stack, Heap and Statics.",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives trap mistake",
     "anchor": "trap"
   }
 ]

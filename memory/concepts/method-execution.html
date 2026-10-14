@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How a Method Runs: the Frame, this and the Code — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">How a method runs</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 7 of 29 · ⚙️ Static & methods</div>
+    <h1><span class="grad-text">One clerk</span> serving many customer files.</h1>
+    <p class="sub">What really happens when you call a method on an object: a stack frame is pushed, the object’s address travels in as <code>this</code>, and the one shared copy of the code works on that object’s data.</p>
+    <div class="interview-q">❓ "What happens in memory when you call an instance method?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Calling order.AddItem("pen"): the runtime pushes a frame holding this, which is a copy of the object’s address, and the parameter name; the method follows this to the Order object on the heap and changes Count; when the frame pops, the change stays in the object">
+<defs><marker id="me1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="70" width="200" height="232" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="270" y="70" width="360" height="232" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="284" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M196,122 L350,122" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<g class="st" data-s="2-3"><path d="M196,196 L250,196 L250,145 L350,145" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<g class="st" data-s="2-3"><path d="M196,228 L350,228" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<rect class="bx" x="10" y="8" width="380" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var order = new Order();</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">order.AddItem("pen");     // inside: Count++</text>
+<g class="st" data-s="1-"><rect class="bx" x="24" y="100" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="110" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Main frame</text></g>
+<g class="st" data-s="1-"><text x="110" y="132" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">order = 0x…A1</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="24" y="176" width="172" height="66" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="110" y="201" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">AddItem frame</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="110" y="213" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">this = 0x…A1</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="110" y="225" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">name = 0x…S2</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="350" y="100" width="230" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="465" y="126" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="1-2"><text x="465" y="138" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="350" y="100" width="230" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="126" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="138" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="350" y="190" width="230" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="465" y="216" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">string "pen"</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="312" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="334.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">The variable order holds the address of the Order object</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="312" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="334.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: a new frame is pushed — this = the object’s address, name = the argument</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="312" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="334.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The method follows this to the object on the heap and changes Count</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="312" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="334.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: the frame is popped. this and name are gone — Count = 1 stays in the object</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="251" y="113" width="44" height="18" rx="9"/><text x="273" y="125.5" text-anchor="middle" font-size="9" font-style="italic">order</text></g></g>
+<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="230.5" y="161" width="39" height="18" rx="9"/><text x="250" y="173.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
+<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="253.5" y="219" width="39" height="18" rx="9"/><text x="273" y="231.5" text-anchor="middle" font-size="9" font-style="italic">name</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>order</code> is a stack variable holding the address of an <b>Order</b> object on the heap.</li><li><code>order.AddItem("pen")</code>: a <b>new frame</b> is pushed. It holds the parameter <code>name</code> and also <code>this</code> — the <b>address of the object</b> the method was called on (think of it as a hidden extra argument).</li><li>The method uses <code>this</code> to <b>follow the address</b> to the object on the heap and changes its field: <code>Count++</code>.</li><li>Return: the frame is popped. <code>this</code> and <code>name</code> disappear — but <code>Count = 1</code> <b>stays in the object</b>, because the object lives on the heap.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a method call = one frame on the stack, plus an address (this) that leads to the data on the heap.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A method call pushes a frame; <code>this</code> carries the object’s address; the method changes the object on the heap, not the frame.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🗂️ A <b>clerk</b> (the method) and many <b>customer files</b> (objects). There is only <b>one clerk’s procedure book</b> for the whole office. When a customer comes, the clerk is handed <b>that customer’s file</b> (this) and works on <b>it</b>. When the clerk is done, the clerk puts the file back with the changes written in — the clerk’s own scratch notes (the frame) are thrown away.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📜 One code, many objects</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 296" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Two Order objects share one copy of the AddItem code: calling o1.AddItem runs the code with this pointing at Order A, and calling o2.AddItem runs the very same code with this pointing at Order B">
+<defs><marker id="me2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="160" height="196" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="190" y="8" width="230" height="196" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="204" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP (data only)</text>
+<rect class="zone" x="440" y="8" width="190" height="196" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="454" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">📜 CODE (once per type)</text>
+<g class="st" data-s="1-"><path d="M148,64 L210,64" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="1-"><path d="M148,134 L210,134" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="2-2"><path d="M400,75 L500,75" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="3-3"><path d="M400,135 L500,135" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="22" y="44" width="126" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="85" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">o1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="22" y="114" width="126" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="85" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">o2</text></g>
+<g class="st" data-s="1-1"><rect class="bx" x="210" y="40" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="305" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order A</text></g>
+<g class="st" data-s="1-1"><text x="305" y="75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="210" y="40" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="305" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order A</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="305" y="75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="210" y="110" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="305" y="133" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order B</text></g>
+<g class="st" data-s="1-2"><text x="305" y="145" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="210" y="110" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="305" y="133" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order B</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="305" y="145" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="500" y="60" width="120" height="100" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="560" y="101.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">AddItem()</text></g>
+<g class="st" data-s="1-"><text x="560" y="114.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">one copy</text></g>
+<g class="st" data-s="1-"><text x="560" y="126.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Count++</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="218" width="620" height="66" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="254" text-anchor="middle" font-size="10" fill="#67e8f9">Two objects, each with its own data. The code exists once.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="218" width="620" height="66" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="254" text-anchor="middle" font-size="10" fill="#fcd34d">o1.AddItem(): the one copy of the code runs with this = Order A</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="218" width="620" height="66" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="254" text-anchor="middle" font-size="10" fill="#fcd34d">o2.AddItem(): the SAME code runs with this = Order B</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="218" width="620" height="66" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="254" text-anchor="middle" font-size="10" fill="#6ee7b7">Objects hold data; the type holds the code. Methods are not copied per object.</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="164.5" y="55" width="29" height="18" rx="9"/><text x="179" y="67.5" text-anchor="middle" font-size="9" font-style="italic">o1</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="164.5" y="125" width="29" height="18" rx="9"/><text x="179" y="137.5" text-anchor="middle" font-size="9" font-style="italic">o2</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="420" y="66" width="60" height="18" rx="9"/><text x="450" y="78.5" text-anchor="middle" font-size="9" font-style="italic">this = A</text></g></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="420" y="126" width="60" height="18" rx="9"/><text x="450" y="138.5" text-anchor="middle" font-size="9" font-style="italic">this = B</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Two <code>Order</code> objects on the heap. Each holds <b>only its own data</b>. The code of <code>AddItem</code> sits in one place, with the type.</li><li><code>o1.AddItem()</code>: the one copy of the code runs with <code>this</code> = Order A. A’s Count becomes 1.</li><li><code>o2.AddItem()</code>: the same code runs again, now with <code>this</code> = Order B. B’s Count becomes 1.</li><li>So creating a million objects does <b>not</b> copy the methods a million times — only the data is per object.</li></ol>
+<figcaption><strong>What you're seeing:</strong> objects carry data; the type carries the code. The only link at call time is <code>this</code>.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎒 What is in the frame of an instance method</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">In the frame</th><th scope="col">Example</th><th scope="col">Where the real data is</th></tr></thead><tbody><tr><th scope="row"><code>this</code> (the object’s address)</th><td>a copy of the address</td><td>the object on the <b>heap</b></td></tr><tr><th scope="row">Parameters</th><td><code>string name</code></td><td>a copy of the value, or a copy of the address</td></tr><tr><th scope="row">Local variables</th><td><code>int total = 0;</code></td><td>right in the frame (values) or on the heap (objects they point to)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚡ Performance lens — think like this</div>
+    <div class="kd-card why-box">
+      <p>A call itself is cheap: it only pushes and pops a frame. The cost you <b>notice</b> comes from what the method <b>allocates</b> (new objects, boxing, strings) — those create work for the GC (pages page 4, page 5).</p>
+      <p>Because the frame is thrown away at return, <b>locals never need garbage collection</b>. Only objects do. Keep temporary values as locals and you give the GC nothing to do.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Honest note</div>
+    <div class="kd-card why-box">
+      <p>Calling <code>this</code> a “hidden argument” is a teaching picture; Microsoft’s docs describe <code>this</code> as “the current instance”. How the JIT passes it (for example in a CPU register) is an implementation detail.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Order
+{
+    <span class="kw">public</span> <span class="kw">int</span> Count;                         <span class="cmt">// data: lives inside each Order object (heap)</span>
+
+    <span class="kw">public</span> <span class="kw">void</span> AddItem(<span class="kw">string</span> name)          <span class="cmt">// code: one copy for the whole type</span>
+    {
+        <span class="kw">this</span>.Count++;                         <span class="cmt">// this = the address of the object it was called on</span>
+    }                                         <span class="cmt">// frame (this, name) popped here</span>
+}
+
+<span class="kw">var</span> order = <span class="kw">new</span> Order();
+order.AddItem(<span class="str">"pen"</span>);                         <span class="cmt">// order.Count is now 1</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;"><code>this.</code> is optional in C# — <code>Count++</code> means the same. The address is still what makes it work.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The <b>frame</b>: popped at return — instantly. The <b>object</b>: the GC, after nobody references it. Notice that a method <b>cannot free</b> the object it works on: only the GC can, and only when it is unreachable.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Each Order object contains its own copy of the AddItem code.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The code exists once per type; objects hold only data.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>this</code> lets a method find the data of the object it was called on.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — it is the address of that object.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Changes made through <code>this</code> disappear when the method returns.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The frame disappears, but the object is on the heap and keeps the change.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Call = push a frame (this + parameters + locals); return = pop it.</li><li><code>this</code> = address of the object; data on the heap, code once per type.</li><li>Changes to fields persist; changes to frame locals vanish.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“An instance method call pushes a stack frame containing this — the reference to the object — plus parameters and locals. The method reads and writes the object’s fields on the heap; when it returns the frame is popped, but field changes persist. The method code itself is shared by all instances of the type.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Believing a method “has its own copy” of the object. It only holds an address; changing a field changes the one real object.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what changes when the method is <b>static</b> — no object, no <code>this</code>.</span>
+      <a class="next-link" href="static-methods.html">Static Methods & Classes <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 this = the current instance; stack frames hold parameters and locals; objects hold instance fields: Microsoft Learn (this keyword, classes). Code stored once per type rather than per object is the standard .NET model (🟨 K: not quoted from one page). “Hidden argument” is a teaching picture. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/this" target="_blank" rel="noopener">this keyword (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

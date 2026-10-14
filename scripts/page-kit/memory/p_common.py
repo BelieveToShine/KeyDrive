@@ -65,6 +65,7 @@ def mem_page(P):
     """Memory-lab page. P: slug,title,num,total,group,crumb,h1,sub,ivq, prob=(Diagram,caps,caption) first story, one, real=[html], parts=[...], code=(code,note),
     quiz=[(q,breaks,why)], quiz_labels, clean=(title,html) 'when is this memory cleared', recall, say, trap, next=(text,href,title), facts=(text,links).
     parts items (placed after the 'real' block, in order): ('story', title, (Diagram,caps,caption)) | ('text', title, [html paras]) | ('table', title, head, rows) | ('code', title, (code,note))."""
+    P['num'] = pnum(P['slug']); P['total'] = ptotal()
     b = see(story(*P['prob']))
     b += one(P['one'])
     b += block('🌍 In real life', '    <div class="kd-card why-box">\n' + ''.join(f'      <p>{p}</p>\n' for p in P['real']) + '    </div>', label_cls='why', id_='why')
@@ -85,3 +86,24 @@ def mem_page(P):
     b += fact_note(*P['facts'])
     return page(P['slug'], P['title'], P.get('eyebrow') or f"Concept {P['num']} of {P['total']} · {P['group']}", P['h1'], P['sub'], P['ivq'], b,
                 CR + [f'<span class="cur">{P["crumb"]}</span>'], '')
+
+
+# ---- numbering: page numbers and "page N" references follow the hub order (hubdata.C) ----
+import re as _r2
+import hubdata as _hd
+_SLUGS = [c[0] for c in _hd.C]
+_OLD = ['memory-map', 'stack', 'value-vs-reference', 'heap-and-new', 'boxing', 'statics', 'object-creation', 'inheritance-memory', 'abstract-base', 'interfaces-memory',
+        'virtual-override-overload', 'dynamic-reflection', 'gc-basics', 'generations', 'loh-poh', 'memory-clearing', 'leaks', 'threads', 'async-await', 'gc-modes', 'span-stackalloc', 'memory-clinic']
+def pnum(slug): return _SLUGS.index(slug) + 1
+def ptotal(): return len(_SLUGS)
+def pref(slug): return f'[[p:{slug}]]'
+def _fix(html):
+    def legacy(m):
+        return m.group(1) + ' ' + _r2.sub(r'\d+', lambda mm: str(pnum(_OLD[int(mm.group(0)) - 1])) if 1 <= int(mm.group(0)) <= len(_OLD) else mm.group(0), m.group(2))
+    html = _r2.sub(r'\b(pages?) (\d+(?:(?:, | and |–)\d+)*)', legacy, html)
+    return _r2.sub(r'\[\[p:([a-z0-9-]+)\]\]', lambda m: f'page {pnum(m.group(1))}', html)
+_kit_page = page
+def page(*a, **k): return _fix(_kit_page(*a, **k))
+
+def perf(items):
+    return ('text', '⚡ Performance lens — think like this', items)

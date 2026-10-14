@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: the .NET Memory Clinic — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Memory clinic</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 29 of 29 · ⚙️ Tuning & judgement</div>
+    <h1>Thirteen small cases: <span class="grad-text">find where it lives, who holds it, who clears it</span>.</h1>
+    <p class="sub">A practice ward for the whole lab: symptom, evidence, your diagnosis, then reveal — with an answer key back to each page.</p>
+    <div class="interview-q">❓ "Here is a memory symptom. Where does the data live, what still references it, and who clears it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card">
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" role="img" aria-label="The memory clinic case board: thirteen cases in four families: where data lives, objects and types, garbage collection and clearing, and threads, async and apps">
+<defs><marker id="mclA" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mclS" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mclT" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="8" y="8" width="380" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">WHERE IT LIVES</text>
+<rect class="zone" x="396" y="8" width="236" height="144" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="410" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">OBJECTS &amp; TYPES</text>
+<rect class="zone" x="8" y="164" width="380" height="144" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="22" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">GC &amp; CLEARING</text>
+<rect class="zone" x="396" y="164" width="236" height="144" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="410" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">THREADS, ASYNC &amp; APPS</text>
+<rect class="bx" x="16" y="46" width="86" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="59" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 1</text>
+<text x="59" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Copy</text>
+<rect class="bx" x="106" y="46" width="86" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="149" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 2</text>
+<text x="149" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Boxing</text>
+<rect class="bx" x="196" y="46" width="86" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="239" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 3</text>
+<text x="239" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Overflow</text>
+<rect class="bx" x="286" y="46" width="86" height="86" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="329" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Case 4</text>
+<text x="329" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">Param</text>
+<rect class="bx" x="404" y="46" width="104" height="86" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="456" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 5</text>
+<text x="456" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Ctor</text>
+<rect class="bx" x="512" y="46" width="104" height="86" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="564" y="86.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Case 6</text>
+<text x="564" y="99.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">Closure</text>
+<rect class="bx" x="16" y="202" width="86" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="59" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 7</text>
+<text x="59" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Static</text>
+<rect class="bx" x="106" y="202" width="86" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="149" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 8</text>
+<text x="149" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Event</text>
+<rect class="bx" x="196" y="202" width="86" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="239" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 9</text>
+<text x="239" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Locked</text>
+<rect class="bx" x="286" y="202" width="86" height="86" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="329" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Case 10</text>
+<text x="329" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">Buffers</text>
+<rect class="bx" x="404" y="202" width="68" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="438" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 11</text>
+<text x="438" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Race</text>
+<rect class="bx" x="476" y="202" width="68" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="510" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 12</text>
+<text x="510" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Await</text>
+<rect class="bx" x="548" y="202" width="68" height="86" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/>
+<text x="582" y="242.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Case 13</text>
+<text x="582" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">Scoped</text>
+</svg>
+<figcaption><strong>What you're seeing:</strong> thirteen small cases in four families: <b>where it lives</b> (1–4), <b>objects &amp; types</b> (5–6), <b>GC &amp; clearing</b> (7–10) and <b>threads, async &amp; apps</b> (11–13). Each shows a symptom and the evidence you would really see. <b>Decide first</b>, then reveal the answer.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text">You have followed memory from the stack to the garbage collector and async. This is the practice ward: <b>symptom → evidence → which memory place → fix → where to review</b>.</span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🧭 How to decide</div>
+    <p>Ask in this order: <b>where does this data live</b> (stack, heap, static)? → <b>who holds a reference to it</b> (a root: stack, static, event)? → <b>who is supposed to clear it</b> (method return, GC, Dispose)? → <b>is more than one thread involved</b>?</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 1</div>
+    <div class="kd-card"><h4>Changing a copy changed the original</h4><p><b>Symptom.</b> After <code>var b = a; b.Name = "Ravi";</code> the name in <code>a</code> changed too.</p><p><b>Evidence.</b></p><ul><li><code>a</code> is a <b>class</b> instance.</li><li>Both variables print the same address in the debugger.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Copying a reference copies the address, not the object.</p><p><b>Fix.</b> Make a real copy (a <code>record</code> with <code>with</code>, or a struct / clone) when you want independence.</p><p>📖 <b>Where to review:</b> page 3.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 2</div>
+    <div class="kd-card"><h4>A list of numbers is slow and creates lots of garbage</h4><p><b>Symptom.</b> A loop adds 1,000,000 ints to an <code>ArrayList</code>; the GC runs constantly.</p><p><b>Evidence.</b></p><ul><li><code>ArrayList</code> stores <code>object</code>.</li><li>A profiler shows a million small objects.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Boxing: every int becomes a heap object.</p><p><b>Fix.</b> Use a generic <code>List&lt;int&gt;</code> — no boxes.</p><p>📖 <b>Where to review:</b> page 5.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 3</div>
+    <div class="kd-card"><h4>The app crashes on a big input and cannot be caught</h4><p><b>Symptom.</b> A recursive method works for 100 items and crashes for 100,000.</p><p><b>Evidence.</b></p><ul><li>Crash says stack overflow.</li><li>The method calls itself once per item.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Each call needs a stack frame; the stack is small and fixed.</p><p><b>Fix.</b> Loop, or use an explicit collection, instead of deep recursion.</p><p>📖 <b>Where to review:</b> page 2.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 4</div>
+    <div class="kd-card"><h4>The Reset method does nothing</h4><p><b>Symptom.</b> <code>void Reset(Person p) { p = new Person("Zed"); }</code> is called, but the caller’s person is unchanged.</p><p><b>Evidence.</b></p><ul><li>The method assigns to the <b>parameter</b>.</li><li>The caller still prints the old name.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The parameter is a copy of the address; assigning to it moves only the parameter’s own arrow.</p><p><b>Fix.</b> Change the object’s fields, return the new object, or pass <code>ref</code> if the caller’s variable must change.</p><p>📖 <b>Where to review:</b> page 9, page 11.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 5</div>
+    <div class="kd-card"><h4>A base constructor sees a null field of the child</h4><p><b>Symptom.</b> The base constructor calls a virtual method; the override prints the child’s field as null.</p><p><b>Evidence.</b></p><ul><li>The child’s field initialiser has not run the constructor body yet.</li><li>Order: base constructor body → child constructor body.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Calling a virtual method in a constructor runs the override before the child is fully built.</p><p><b>Fix.</b> Do not call virtual members from constructors; use an init method after construction.</p><p>📖 <b>Where to review:</b> page 13.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 6</div>
+    <div class="kd-card"><h4>A 50 MB report never leaves memory</h4><p><b>Symptom.</b> A handler <code>() =&gt; Log(report.Title)</code> is registered on a long-lived event. The report screen is closed but its data stays.</p><p><b>Evidence.</b></p><ul><li>The lambda uses only <code>report.Title</code> but captures <code>report</code>.</li><li>The closure object is referenced by the event’s delegate.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A capturing lambda keeps the whole captured object alive as long as the delegate is reachable.</p><p><b>Fix.</b> Copy what you need into a local first (<code>var title = report.Title;</code>), use a static lambda, and unsubscribe.</p><p>📖 <b>Where to review:</b> page 18.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 7</div>
+    <div class="kd-card"><h4>Memory grows all day and never drops</h4><p><b>Symptom.</b> A <code>static Dictionary</code> caches every customer ever looked up.</p><p><b>Evidence.</b></p><ul><li>Gen 2 keeps growing.</li><li>A heap snapshot shows the dictionary as the root.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A static field is a GC root; nothing in the cache is ever removed.</p><p><b>Fix.</b> Add a size limit or expiry, or use a proper memory cache.</p><p>📖 <b>Where to review:</b> pages 6, 23.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 8</div>
+    <div class="kd-card"><h4>Closed screens stay in memory</h4><p><b>Symptom.</b> After opening and closing 200 windows, memory still holds 200 window objects.</p><p><b>Evidence.</b></p><ul><li>Each window subscribes to a long-lived service event with <code>+=</code>.</li><li>No <code>-=</code> anywhere.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The publisher’s handler list keeps every subscriber reachable.</p><p><b>Fix.</b> Unsubscribe in Close/Dispose, or use a weak-event pattern.</p><p>📖 <b>Where to review:</b> page 23.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 9</div>
+    <div class="kd-card"><h4>The file is still locked after reading it</h4><p><b>Symptom.</b> A report reads a file, then another process cannot delete it for minutes.</p><p><b>Evidence.</b></p><ul><li><code>new StreamReader(path)</code> with no <code>using</code>.</li><li>The lock vanishes only after some time.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> The GC frees memory but does not close files; a finalizer is late.</p><p><b>Fix.</b> Wrap in <code>using</code> so <code>Dispose</code> runs at the end of the block.</p><p>📖 <b>Where to review:</b> page 22.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🩺 Case 10</div>
+    <div class="kd-card"><h4>Memory spikes and gen 2 collections are frequent</h4><p><b>Symptom.</b> An API allocates a fresh 100 KB byte array for every request.</p><p><b>Evidence.</b></p><ul><li>Allocations over 85,000 bytes.</li><li>Many gen 2 collections in the counters.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Big arrays go to the LOH, which is collected with gen 2.</p><p><b>Fix.</b> Rent the buffer from <code>ArrayPool</code> and return it.</p><p>📖 <b>Where to review:</b> pages 21, 28.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 11</div>
+    <div class="kd-card"><h4>The counter is lower than expected with two threads</h4><p><b>Symptom.</b> 1,000 increments on each of two threads gives about 1,700, not 2,000.</p><p><b>Evidence.</b></p><ul><li>The counter is a shared field changed with <code>Value++</code>.</li><li>Result differs on each run.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Read-modify-write on shared heap memory is not atomic.</p><p><b>Fix.</b> <code>Interlocked.Increment</code> or a <code>lock</code>.</p><p>📖 <b>Where to review:</b> page 24.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 12</div>
+    <div class="kd-card"><h4>It will not compile: a Span cannot be used across await</h4><p><b>Symptom.</b> Error: a <code>Span&lt;byte&gt;</code> local is used before and after an <code>await</code>.</p><p><b>Evidence.</b></p><ul><li>The method is <code>async</code>.</li><li><code>Span</code> is a <code>ref struct</code>.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> Locals across an await live in a heap state machine; a ref struct cannot.</p><p><b>Fix.</b> Use <code>Memory&lt;T&gt;</code> or <code>byte[]</code> across the await; use the Span inside non-async helper code.</p><p>📖 <b>Where to review:</b> pages 25, 28.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🩺 Case 13</div>
+    <div class="kd-card"><h4>Works for the first request, then “disposed context” errors</h4><p><b>Symptom.</b> A cache service registered as a singleton takes <code>AppDbContext</code> in its constructor.</p><p><b>Evidence.</b></p><ul><li>The service is <code>AddSingleton</code>; the context is <code>AddScoped</code>.</li><li>Errors start after the first request ends.</li></ul><p><b>Your move:</b> what is really happening in memory?</p><details class="zoom"><summary><span class="chev">▾</span> Reveal the answer</summary><div class="zoom-inner"><p><b>Diagnosis.</b> A captive dependency: the singleton holds a scoped object beyond its scope, so it is disposed and stale.</p><p><b>Fix.</b> Make the service scoped, or inject <code>IServiceScopeFactory</code> and create a scope per use.</p><p>📖 <b>Where to review:</b> page 26.</p></div></details></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🗺️ Answer key</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Case</th><th scope="col">Family</th><th scope="col">Cause</th><th scope="col">Review</th></tr></thead><tbody><tr><th scope="row">1. Changing a copy changed the original</th><td>Where it lives</td><td>Copying a reference copies the address, not the object.</td><td>page 3</td></tr><tr><th scope="row">2. A list of numbers is slow and creates lots of garbage</th><td>Where it lives</td><td>Boxing: every int becomes a heap object.</td><td>page 5</td></tr><tr><th scope="row">3. The app crashes on a big input and cannot be caught</th><td>Where it lives</td><td>Each call needs a stack frame; the stack is small and fixed.</td><td>page 2</td></tr><tr><th scope="row">4. The Reset method does nothing</th><td>Where it lives</td><td>The parameter is a copy of the address; assigning to it moves only the parameter’s own arrow.</td><td>page 9, page 11</td></tr><tr><th scope="row">5. A base constructor sees a null field of the child</th><td>Objects & types</td><td>Calling a virtual method in a constructor runs the override before the child is fully built.</td><td>page 13</td></tr><tr><th scope="row">6. A 50 MB report never leaves memory</th><td>Objects & types</td><td>A capturing lambda keeps the whole captured object alive as long as the delegate is reachable.</td><td>page 18</td></tr><tr><th scope="row">7. Memory grows all day and never drops</th><td>GC & clearing</td><td>A static field is a GC root; nothing in the cache is ever removed.</td><td>pages 6, 23</td></tr><tr><th scope="row">8. Closed screens stay in memory</th><td>GC & clearing</td><td>The publisher’s handler list keeps every subscriber reachable.</td><td>page 23</td></tr><tr><th scope="row">9. The file is still locked after reading it</th><td>GC & clearing</td><td>The GC frees memory but does not close files; a finalizer is late.</td><td>page 22</td></tr><tr><th scope="row">10. Memory spikes and gen 2 collections are frequent</th><td>GC & clearing</td><td>Big arrays go to the LOH, which is collected with gen 2.</td><td>pages 21, 28</td></tr><tr><th scope="row">11. The counter is lower than expected with two threads</th><td>Threads, async & apps</td><td>Read-modify-write on shared heap memory is not atomic.</td><td>page 24</td></tr><tr><th scope="row">12. It will not compile: a Span cannot be used across await</th><td>Threads, async & apps</td><td>Locals across an await live in a heap state machine; a ref struct cannot.</td><td>pages 25, 28</td></tr><tr><th scope="row">13. Works for the first request, then “disposed context” errors</th><td>Threads, async & apps</td><td>A captive dependency: the singleton holds a scoped object beyond its scope, so it is disposed and stale.</td><td>page 26</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎬 How you did</div>
+    <div class="scenario-grid">
+      <div class="scenario"><span class="sc-icon">🟢</span><h5>10–13 before the reveal</h5><p>You think in memory places and references. Keep checking the roots.</p><span class="sc-use">→ Apply it</span></div>
+      <div class="scenario"><span class="sc-icon">🟡</span><h5>6–9</h5><p>You know the pieces; practise asking “who holds a reference?”.</p><span class="sc-use">→ Re-read GC basics</span></div>
+      <div class="scenario"><span class="sc-icon">🔴</span><h5>0–5</h5><p>Normal at first. Re-read the memory map and the stack-vs-heap pages.</p><span class="sc-use">→ Start at page 1</span></div>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Method: where does it live → who references it → who clears it → how many threads?</li><li>Leaks are references: statics, events, caches, undisposed resources.</li><li>Allocate less: generics, pools, Span.</li><li>Shared heap data + threads = races.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“I read a memory problem by asking where the data lives, what still references it, who is supposed to clear it and whether threads share it — then I fix the reference, the lifetime or the allocation, and measure again.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p><b>Calling GC.Collect() to “fix” memory.</b> Find the reference that keeps it alive.</p>
+      <p><b>Tuning GC modes before measuring.</b> Most problems are references and allocations in your code.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes the .NET Memory Lab. Go back to the hub to revisit any page, or explore the SOLID and Design Patterns labs.</span>
+      <a class="next-link" href="../index.html">.NET Memory Lab hub <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Every case is explained, with its sources, on the page it points to. The cases and numbers are illustrative. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose" target="_blank" rel="noopener">Implement a Dispose method (Microsoft Learn)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Span, stackalloc and Pooling: Allocating Less — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Span & stackalloc</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 28 of 29 · ⚙️ Tuning & judgement</div>
+    <h1><span class="grad-text">A window onto the shelf</span> instead of copying the shelf.</h1>
+    <p class="sub">The best way to make the GC’s life easy is to allocate less: stack space for tiny buffers, <code>Span&lt;T&gt;</code> to look without copying, and pools to reuse arrays.</p>
+    <div class="interview-q">❓ "How can you reduce allocations and GC pressure in C#?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Three ways to get a temporary buffer: new byte[] allocates a heap array that the garbage collector must clean, stackalloc uses stack space that is released when the method returns, and ArrayPool rents an array and returns it for reuse">
+<defs><marker id="sp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="10" y="10" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="105" y="39" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🏠 new byte[n]</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="10" y="76" width="190" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="100.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">a new heap array each call</text></g>
+<g class="st" data-s="1-"><text x="105" y="113" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">GC cleans up every one</text></g>
+<g class="st" data-s="1-"><rect class="bx note" x="10" y="148" width="190" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-"><text x="105" y="173.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Fine for rare or large use</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="225" y="10" width="190" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="320" y="39" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">📚 stackalloc</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="225" y="76" width="190" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="320" y="100.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">space in the stack frame</text></g>
+<g class="st" data-s="2-"><text x="320" y="113" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">freed when method returns</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="225" y="148" width="190" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="320" y="173.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">No GC work at all</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="10" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="39" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">♻️ ArrayPool</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="440" y="76" width="190" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="535" y="100.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">rent an array, give it back</text></g>
+<g class="st" data-s="3-"><text x="535" y="113" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">reused again and again</text></g>
+<g class="st" data-s="3-"><rect class="bx note" x="440" y="148" width="190" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-"><text x="535" y="173.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">Few allocations over time</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="214" width="620" height="100" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="253" text-anchor="middle" font-size="10" fill="#c4b5fd">Rules of thumb</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="267" text-anchor="middle" font-size="10" fill="#c4b5fd">stackalloc: small only (docs example: under about 1 KB), never in a loop, not zeroed</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="281" text-anchor="middle" font-size="10" fill="#c4b5fd">ArrayPool: always Return the array (use try/finally)</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>new byte[n]</code>: a fresh heap array every call. The GC has to clean up each one.</li><li><code>stackalloc</code>: the buffer lives in the <b>stack frame</b> and vanishes when the method returns — zero GC work.</li><li><code>ArrayPool</code>: <b>rent</b> an array, use it, <b>return</b> it. The same arrays are reused, so there are few new allocations over time.</li><li>Pick by size and lifetime: tiny and local → stackalloc; bigger or shared → pool. And never loop-allocate stack space.</li></ol>
+<figcaption><strong>What you're seeing:</strong> three ways to get a temporary buffer, from the most GC work to the least.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Allocate less: stack space for tiny buffers, Span to look without copying, pools to reuse big arrays.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📚 A library has a shelf of books. To <b>copy</b> a chapter you photocopy it (a new heap object). With a <b>Span</b> you just hold a <b>transparent window</b> over the page — no copy. A <b>pool</b> is the library lending you a book and taking it back, instead of printing a new one each time.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪟 Span: look, don’t copy</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Substring copies characters into a new heap object, while a Span is just a window onto the same memory with no copy">
+<defs><marker id="sp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="1-"><rect class="bx" x="20" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="60" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">H</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="120" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="160" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">e</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="220" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="260" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">l</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="320" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="360" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">l</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="420" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="460" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">o</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="520" y="20" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="560" y="44" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">!</text></g>
+<text class="free" x="320" y="90" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7">the original string / array</text>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="120" y="120" width="280" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="260" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Substring(1, 3) → NEW object "ell"</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="120" y="196" width="280" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="260" y="222" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">AsSpan(1, 3) → a window, no copy</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="420" y="120" width="210" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="525" y="138" text-anchor="middle" font-size="9.5" fill="#fda4af">new heap allocation</text></g>
+<g class="st" data-s="2-"><text x="525" y="151.5" text-anchor="middle" font-size="9.5" fill="#fda4af">for the GC</text></g>
+<g class="st" data-s="3-"><rect class="bx note" x="420" y="196" width="210" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-"><text x="525" y="214" text-anchor="middle" font-size="9.5" fill="#c4b5fd">same memory,</text></g>
+<g class="st" data-s="3-"><text x="525" y="227.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">no allocation</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="256" width="620" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">Span is a ref struct: it lives on the stack and cannot be stored on the heap</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A string or array already sits in memory.</li><li><code>Substring</code> <b>copies</b> the characters into a brand-new heap object.</li><li><code>AsSpan</code> gives a <b>window</b> over the same memory — no copy, no allocation.</li><li>A <code>Span&lt;T&gt;</code> is a <b>ref struct</b>: it lives only on the stack, so it cannot be a field of a class, be boxed, or be used across an <code>await</code>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> Span is a view, not a copy — which is exactly why it must not outlive the memory it looks at.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧰 The toolbox</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Tool</th><th scope="col">Where the memory is</th><th scope="col">Cleaned by</th><th scope="col">Watch out</th></tr></thead><tbody><tr><th scope="row"><code>new T[n]</code></th><td>heap (LOH if ≥ 85,000 bytes)</td><td>GC</td><td>garbage in hot paths</td></tr><tr><th scope="row"><code>stackalloc</code></th><td>stack frame</td><td>method return</td><td>keep small; not in loops; check the length first; contents are not zeroed</td></tr><tr><th scope="row"><code>Span&lt;T&gt;</code> / <code>ReadOnlySpan&lt;T&gt;</code></th><td>a view of existing memory</td><td>owner of that memory</td><td>ref struct: no heap storage, no <code>await</code></td></tr><tr><th scope="row"><code>ArrayPool&lt;T&gt;.Shared</code></th><td>pooled heap arrays</td><td>reused; the GC keeps them</td><td><code>Return</code> in <code>finally</code>; the array may be larger than requested</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="cmt">// small buffer on the stack, big one from the pool — standard pattern</span>
+const <span class="kw">int</span> Threshold = 1024;
+byte[]? rented = <span class="kw">null</span>;
+Span&lt;byte&gt; buffer = length &lt;= Threshold
+    ? stackalloc byte[length]
+    : (rented = ArrayPool&lt;byte&gt;.Shared.Rent(length));
+try
+{
+    Process(buffer[..length]);          <span class="cmt">// a slice: no copy</span>
+}
+finally
+{
+    <span class="kw">if</span> (rented != <span class="kw">null</span>) ArrayPool&lt;byte&gt;.Shared.Return(rented);
+}
+
+ReadOnlySpan&lt;char&gt; part = <span class="str">"Hello!"</span>.AsSpan(1, 3);   <span class="cmt">// "ell" — no new string</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">This follows Microsoft’s documented pattern: stack-allocate below a threshold, otherwise rent from the pool, and always return it.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p><b>stackalloc</b>: the method return. <b>Span</b>: nothing — it owns nothing. <b>Pooled arrays</b>: not freed at all; they are reused until the pool is dropped. <b>new arrays</b>: the GC.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>stackalloc</code> inside a loop is fine because the stack space is freed each iteration.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> Stack space is only released when the method returns, so a loop can overflow the stack.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>Span&lt;T&gt;</code> can be a field of a normal class.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It is a ref struct; it cannot live on the heap.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>ArrayPool</code> arrays must be returned after use.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — otherwise the pool must allocate new ones.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li><code>stackalloc</code>: small, not in loops, not zeroed.</li><li>Span = window, no copy; ref struct, no await/heap.</li><li>ArrayPool: Rent … Return (finally).</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“To reduce GC pressure I avoid temporary heap allocations: Span<T> to slice without copying, stackalloc for small bounded buffers (outside loops), and ArrayPool for larger reusable buffers, always returning them in a finally block.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Returning a Span (or storing it) that points at stackalloc memory: the frame is gone after return, so the memory is invalid. The compiler blocks the obvious cases.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Last: thirteen small memory problems to diagnose — the memory clinic.</span>
+      <a class="next-link" href="memory-clinic.html">Memory Clinic <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 stackalloc limits, CA2014 (no stackalloc in loops), not zeroed, Span<T> as a ref struct (no boxing, no class fields, no await), ArrayPool rent/return and the stackalloc-or-pool pattern: Microsoft Learn stackalloc reference, Span<T> docs, CA2014 and memory-and-spans docs. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/memory-and-spans/" target="_blank" rel="noopener">Memory- and span-related types (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc" target="_blank" rel="noopener">stackalloc expression</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

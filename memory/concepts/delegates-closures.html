@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delegates and Closures: a Method as an Object — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Delegates & closures</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 18 of 29 · 🧬 Objects & types</div>
+    <h1><span class="grad-text">A contact card</span> — and a note that carries a backpack.</h1>
+    <p class="sub">What a delegate is in memory (a small heap object: “call this method on that object”), what a lambda does when it uses local variables (the compiler moves them into a heap <b>closure</b>), and why that can keep memory alive.</p>
+    <div class="interview-q">❓ "What happens in memory when you create a delegate or a lambda that captures a variable?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Creating a delegate from person.SayHi makes a small Delegate object on the heap that holds a reference to the Person object as its target and the method to call; calling greet follows the target and runs SayHi on that Person, and because the delegate holds the target it keeps the Person alive">
+<defs><marker id="dl1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="150" height="250" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="180" y="86" width="450" height="250" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="194" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M150,228 L200,228 L200,271 L250,271" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dl1A)"/></g>
+<g class="st" data-s="2-"><path d="M150,144 L250,144" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dl1A)"/></g>
+<g class="st" data-s="2-"><path d="M345,182 L345,246" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dl1A)"/></g>
+<rect class="bx" x="10" y="8" width="430" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var person = new Person("Asha");</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Action greet = person.SayHi;       // a delegate</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">greet();                           // runs person.SayHi()</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="20" y="206" width="130" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="85" y="226" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">person</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="85" y="238" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…D1</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="250" y="246" width="190" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="345" y="275" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person "Asha"</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="122" width="130" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">greet</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="154" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…D7</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="250" y="112" width="190" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Delegate object</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="151" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">target → the Person</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="163" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">method = SayHi</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="456" y="112" width="164" height="70" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="538" y="136.5" text-anchor="middle" font-size="9" fill="#c4b5fd">greet() → follow target</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="538" y="149.5" text-anchor="middle" font-size="9" fill="#c4b5fd">→ SayHi runs with</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="538" y="162.5" text-anchor="middle" font-size="9" fill="#c4b5fd">this = the Person</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="456" y="112" width="164" height="70" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="538" y="136.5" text-anchor="middle" font-size="9" fill="#fda4af">The delegate keeps</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="538" y="149.5" text-anchor="middle" font-size="9" fill="#fda4af">the Person ALIVE</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="538" y="162.5" text-anchor="middle" font-size="9" fill="#fda4af">(it is a reference)</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="348" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="372.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">An ordinary object: person holds its address</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="348" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="372.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">Creating the delegate allocates a small heap object: “call SayHi on THIS Person”</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="348" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="372.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Calling the delegate: follow the target, run the method with this = the Person</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="348" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="372.75" text-anchor="middle" font-size="9.5" fill="#fda4af">As long as the delegate is reachable, so is the Person</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="175" y="241" width="50" height="18" rx="9"/><text x="200" y="253.5" text-anchor="middle" font-size="9" font-style="italic">person</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="178" y="135" width="44" height="18" rx="9"/><text x="200" y="147.5" text-anchor="middle" font-size="9" font-style="italic">greet</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="320" y="205" width="50" height="18" rx="9"/><text x="345" y="217.5" text-anchor="middle" font-size="9" font-style="italic">target</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>person</code> is an ordinary object: a stack variable holding the address of a Person on the heap.</li><li><code>Action greet = person.SayHi;</code> allocates a small <b>Delegate object</b> on the heap. It remembers two things: the <b>target</b> (the Person) and the <b>method</b> (SayHi).</li><li><code>greet()</code> follows the target and runs <code>SayHi</code> with <code>this</code> = that Person. The delegate is just a stored “call this method on that object”.</li><li>Because the delegate <b>references</b> the Person, the Person stays alive as long as the delegate is reachable.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a delegate is an object that holds “who” (target) and “what” (method). It is a normal heap object, cleaned by the GC like any other.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A delegate is a heap object holding a method plus the object to call it on; a capturing lambda adds a closure object that holds the variables it uses.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📇 A <b>contact card</b> with a <b>name</b> and a <b>phone line</b>: “call Asha’s SayHi line”. Anyone holding the card can make that call later. The card keeps Asha’s details from being thrown away while it exists.</p>
+      <p>🎒 A <b>capturing lambda</b> is a note that says “do this” <b>and comes with a backpack</b> of the things it needs (the captured variables). The backpack must stay around as long as the note does.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🎒 A lambda that captures a variable: the closure</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 440" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A lambda that uses a local variable captures it: the compiler moves count into a closure object on the heap and the delegate points to that closure, so count survives after the method returns; if the delegate is stored in a static field the closure and anything it captured stay alive">
+<defs><marker id="dl2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dl2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="150" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="180" y="86" width="450" height="290" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="194" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-"><path d="M150,142 L250,142" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dl2A)"/></g>
+<g class="st" data-s="2-"><path d="M350,168 L350,232" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dl2A)"/></g>
+<g class="st" data-s="5-"><path d="M525,140 L450,140" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#dl2A)"/></g>
+<rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">int count = 0;</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Action inc = () =&gt; count++;      // uses count: captured</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">inc(); inc();                    // count becomes 2</text>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="20" y="120" width="130" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="85" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">count</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="85" y="152" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="20" y="120" width="130" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">inc</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="85" y="152" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…E4</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="250" y="112" width="200" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="350" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Delegate object</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="350" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">method = the lambda</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="250" y="232" width="200" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="350" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Closure object</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="350" y="270" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">count = 0</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="250" y="232" width="200" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="350" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Closure object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="350" y="270" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">count = 2</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="525" y="112" width="95" height="56" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="572.5" y="137.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">static field</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="572.5" y="150.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">holds it</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="388" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="412.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">count looks like a normal local variable on the stack</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="388" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="412.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The lambda uses count, so the compiler moves it into a Closure object on the heap; the delegate’s target is that closure</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="388" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="412.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">inc() twice: the closure’s count goes to 2 — the lambda and the method share the same variable</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="388" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="412.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The method returned: its frame is gone, but count lives on inside the closure because inc still points to it</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="388" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="412.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Stored in a static field or long-lived event? Then the closure — and everything it captured — stays alive. Leak risk!</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="183" y="133" width="34" height="18" rx="9"/><text x="200" y="145.5" text-anchor="middle" font-size="9" font-style="italic">inc</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="325" y="191" width="50" height="18" rx="9"/><text x="350" y="203.5" text-anchor="middle" font-size="9" font-style="italic">target</text></g></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="465" y="131" width="44" height="18" rx="9"/><text x="487" y="143.5" text-anchor="middle" font-size="9" font-style="italic">holds</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>count</code> looks like a normal local on the stack.</li><li>The lambda <b>uses</b> <code>count</code>, so the compiler moves it off the stack into a <b>Closure object</b> on the heap. The delegate’s target is that closure.</li><li>Calling <code>inc()</code> twice raises the closure’s <code>count</code> to 2. The method and the lambda share the <b>same</b> variable.</li><li>The method that declared <code>count</code> returns and its frame is popped — yet <code>count</code> is still alive, because the delegate keeps its closure alive.</li><li><b>Danger:</b> if the delegate is stored somewhere long-lived (a static field, a long-lived event), the closure and everything it captured stay in memory.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a captured variable no longer lives and dies with the method call; it lives as long as the delegate that uses it.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 Kinds of delegates and what they allocate</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">You write</th><th scope="col">What exists on the heap</th><th scope="col">Note</th></tr></thead><tbody><tr><th scope="row"><code>Action a = person.SayHi;</code></th><td>a Delegate object; target = person</td><td>keeps <code>person</code> alive</td></tr><tr><th scope="row"><code>Func&lt;int,int&gt; f = x =&gt; x * 2;</code> (no outside variables)</th><td>a Delegate object; <b>no closure object</b> needed</td><td>nothing captured</td></tr><tr><th scope="row"><code>Action a = () =&gt; count++;</code> (uses a local)</th><td>a <b>closure object</b> + a Delegate object</td><td>every creation can allocate both</td></tr><tr><th scope="row"><code>static x =&gt; x * 2</code> (static lambda)</th><td>cannot capture — the compiler forbids it</td><td>a safe way to guarantee no closure</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚡ Performance lens — think like this</div>
+    <div class="kd-card why-box">
+      <p>A capturing lambda created <b>inside a hot loop or on every request</b> allocates a closure and a delegate each time. Move it out of the loop, or pass the data as parameters instead of capturing.</p>
+      <p>Use a <code>static</code> lambda (C# 9+) where you do not need captures: the compiler stops you from capturing by accident.</p>
+      <p><b>Event subscriptions are delegates</b> (page page 23): <code>+=</code> stores a delegate whose target is the subscriber — that is how a long-lived publisher keeps a short-lived subscriber alive. Unsubscribe with <code>-=</code>.</p>
+      <p>A delegate holds a <b>strong</b> reference to its target. If a lambda captures a big object “just to read one field”, it keeps the whole object alive.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Honest notes</div>
+    <div class="kd-card why-box">
+      <p>Microsoft documents that captured variables live at least as long as the delegate that uses them, that the compiler stores them in a heap-allocated closure object, and that a <code>static</code> lambda cannot capture. The exact class names and layout the compiler generates (“display class”) are implementation details and can change; the lab draws the idea.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">var</span> person = <span class="kw">new</span> Person(<span class="str">"Asha"</span>);
+Action greet = person.SayHi;            <span class="cmt">// Delegate object: target = person, method = SayHi</span>
+greet();                                <span class="cmt">// runs person.SayHi()</span>
+
+<span class="kw">int</span> count = 0;
+Action inc = () =&gt; count++;             <span class="cmt">// captures count → closure object on the heap</span>
+inc(); inc();                           <span class="cmt">// count == 2, even after this method has returned</span>
+
+Func&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt; twice = <span class="kw">static</span> x =&gt; x * 2;   <span class="cmt">// static lambda: cannot capture, no closure</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The delegate (and any closure) is an ordinary heap object. Keep it reachable and its target and captured variables stay alive.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The <b>GC</b>, once nothing references the <b>delegate</b>. Then the delegate, its closure and (if nothing else references them) its target become garbage together. So the way to release a captured object is to <b>drop the delegate</b> (unsubscribe, clear the field, let it go out of scope).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A delegate stores only the method, not the object it will be called on.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It stores both: the target object (for instance methods) and the method.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A lambda that uses a local variable makes that variable live on the heap inside a closure.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — it is captured into a closure object.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A <code>static</code> lambda can capture local variables.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It cannot — that is the point of <code>static</code>.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Delegate = heap object holding target + method.</li><li>Capturing lambda = delegate + closure object holding the captured variables.</li><li>Captured variables live as long as the delegate; long-lived delegates keep them alive.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“A delegate is a heap object holding a target and a method. A lambda that captures locals gets a compiler-generated closure object on the heap, so those variables live as long as the delegate does — which is why long-lived delegates, like event handlers, can keep objects alive.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Storing a lambda in a static field or long-lived event that captures a large object (a page, a request, a service) — the closure keeps it alive forever.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>That completes <b>who owns what</b>. Next: <b>who cleans up</b> — the garbage collector.</span>
+      <a class="next-link" href="gc-basics.html">How the GC Thinks <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Captured variables lifetime (at least as long as the delegate), compiler-generated heap closure object, static anonymous functions forbidding capture: Microsoft Learn lambda expressions/delegates docs and older MS developer-blog articles. Delegates being reference-type objects holding target + method: delegates docs. Class names of compiler-generated closures are implementation details. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/delegates-lambdas" target="_blank" rel="noopener">Lambda expressions, delegates and events (C#)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions" target="_blank" rel="noopener">Lambda expressions (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
