@@ -76,7 +76,7 @@ def d_oc3():
     s0 = arr['rows'][3]['y']
     d.arrow([(arr['rows'][3]['l'][0], s0), (184, s0), (184, 300), (p['x'], 300)], 'amber', 'a[0]', at=(184, 200), st='5-', id='r2')
     s1 = arr['rows'][4]['y']
-    d.arrow([(arr['rows'][4]['r'][0], s1), (382, s1), (382, 240), (370, 240)], 'rose', 'null', at=(382, 205), st='6-6')
+    d.arrow([(arr['rows'][4]['r'][0], s1), (382, s1), (382, 240), (370, 240)], 'rose', 'null', at=(386, 226), st='6-6')
     d.code_box(10, 392, 620, 66, [(0, 'var a = new Person[3];', ''), (0, 'a[0] = new Person();', ''), (0, 'a[1].Name = "x";      // slot 1 is null → NullReferenceException', 'k')], 'n', size=9, lh=16)
     d.text(320, 478, FOOT3, 'n', 9)
     return d
