@@ -33,7 +33,6 @@ def d_in1():
     sbox(3, '"Lab"', 'emerald', '3-4')
     sbox(3, '"Lab" no ref', 'n', '5-')
     sbox(2, '"?"', 'amber', '3-3', 3)
-    sbox(2, '"?"', 'emerald', '3-3')
     sbox(2, '"?" no ref', 'n', '4-')
     sbox(1, '"Rex"', 'amber', '4-4', 4)
     sbox(1, '"Rex"', 'emerald', '5-')

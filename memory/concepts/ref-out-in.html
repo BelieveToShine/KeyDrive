@@ -47,10 +47,10 @@
 <figure class="diagram-card kd-story" data-steps="4">
 <div class="st-stage"><svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="The same call two ways: by value the call copies 5 into a new slot n so n++ changes only the copy and x stays 5; with ref the slot n holds an alias to x, so n++ writes into x itself and x becomes 6">
 <defs><marker id="rf1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rf1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="66" width="300" height="214" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK — by value</text>
-<rect class="zone" x="330" y="66" width="300" height="214" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="344" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK — ref</text>
+<rect class="zone" x="10" y="70" width="300" height="210" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK — by value</text>
+<rect class="zone" x="330" y="70" width="300" height="210" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="344" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK — ref</text>
 <g class="st" data-s="1-"><rect class="zone" x="22" y="96" width="276" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="36" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
 <g class="st" data-s="2-3"><rect class="zone" x="22" y="206" width="276" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
@@ -59,13 +59,13 @@
 <g class="st" data-s="1-"><text class="zone-title" x="356" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
 <g class="st" data-s="2-3"><rect class="zone" x="342" y="206" width="276" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-3"><text class="zone-title" x="356" y="225" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">AddOne frame</text></g>
-<g class="st" data-s="2-"><path id="rf1-lc" d="M160,232 L160,144" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf1A)"/></g>
+<g class="st" data-s="2-2"><path id="rf1-lc" d="M160,232 L160,144" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf1A)"/></g>
 <g class="st" data-s="2-3"><path id="rf1-ra" d="M480,232 L480,144" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf1A)"/></g>
-<rect class="bx" x="10" y="6" width="300" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="bx" x="10" y="6" width="300" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int x = 5;</text>
 <text x="24" y="43" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">AddOne(x);</text>
 <text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void AddOne(int n) { n++; }</text>
-<rect class="bx" x="330" y="6" width="300" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="bx" x="330" y="6" width="300" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="344" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int x = 5;</text>
 <text x="344" y="43" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">AddOne(ref x);</text>
 <text x="344" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void AddOne(ref int n) { n++; }</text>
@@ -93,7 +93,7 @@
 <g class="st" data-s="4-4"><rect class="bx note" x="10" y="306" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="4-4"><text x="320" y="325" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: both frames are popped.</text></g>
 <g class="st" data-s="4-4"><text x="320" y="338.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">LEFT: x is still 5.  RIGHT: x is 6. The method changed the caller’s own variable.</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="135" y="175" width="50" height="18" rx="9"/><text x="160" y="187.5" text-anchor="middle" font-size="9" font-style="italic">copy 5</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="135" y="179" width="50" height="18" rx="9"/><text x="160" y="191.5" text-anchor="middle" font-size="9" font-style="italic">copy 5</text></g></g>
 <g class="st" data-s="2-3"><g class="arrow-pill"><rect x="431" y="175" width="98" height="18" rx="9"/><text x="480" y="187.5" text-anchor="middle" font-size="9" font-style="italic">alias (no copy)</text></g></g>
 <g class="st" data-s="3-3"><g class="tok" data-path="rf1-ra"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">✏️</text></g></g>
 </svg></div>
@@ -119,64 +119,64 @@
 <text class="zone-title" x="24" y="97" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
 <rect class="zone" x="226" y="78" width="404" height="270" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="240" y="97" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><rect class="zone" x="20" y="128" width="180" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="128" width="150" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="34" y="147" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
-<g class="st" data-s="2-4"><rect class="zone" x="20" y="236" width="180" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><rect class="zone" x="20" y="236" width="150" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-4"><text class="zone-title" x="34" y="255" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Replace frame</text></g>
 <g class="st" data-s="1-5"><rect class="zone" x="240" y="104" width="190" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-5"><text class="zone-title" x="254" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person object</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="240" y="104" width="190" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="254" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person (unreachable)</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="240" y="104" width="190" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="254" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person (unreachable)</text></g>
 <g class="st" data-s="1-5"><rect class="zone" x="448" y="104" width="170" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-5"><text class="zone-title" x="462" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string "Asha"</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="448" y="104" width="170" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="462" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string (unreachable)</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="448" y="104" width="170" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="462" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string (unreachable)</text></g>
 <g class="st" data-s="3-"><rect class="zone" x="240" y="232" width="190" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
 <g class="st" data-s="3-"><text class="zone-title" x="254" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Person object (new)</text></g>
 <g class="st" data-s="3-"><rect class="zone" x="448" y="232" width="170" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
 <g class="st" data-s="3-"><text class="zone-title" x="462" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">string "Zed"</text></g>
 <g class="st" data-s="7-" data-hl="7"><rect class="zone" x="240" y="104" width="190" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
 <g class="st" data-s="7-" data-hl="7"><rect class="zone" x="448" y="104" width="170" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="1-3"><path id="rf2-ap1" d="M192,165 L248,165" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
-<g class="st" data-s="4-"><path id="rf2-ap2" d="M192,165 L216,165 L216,293 L248,293" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
-<g class="st" data-s="2-4"><path id="rf2-aq" d="M110,262 L110,176" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="1-3"><path id="rf2-ap1" d="M162,165 L248,165" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="4-"><path id="rf2-ap2" d="M162,165 L216,165 L216,293 L248,293" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="2-4"><path id="rf2-aq" d="M140,262 L140,176" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
 <g class="st" data-s="1-5"><path id="rf2-n1" d="M422,189 L440,189 L440,165 L456,165" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
-<g class="st" data-s="6-"><path id="rf2-n1r" d="M422,189 L440,189 L440,165 L456,165" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
+<g class="st" data-s="6-6"><path id="rf2-n1r" d="M422,189 L440,189 L440,165 L456,165" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
 <g class="st" data-s="3-"><path id="rf2-n2" d="M422,317 L440,317 L440,293 L456,293" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf2A)"/></g>
 <rect class="bx" x="10" y="6" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
 <text x="24" y="43" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Replace(ref p);</text>
 <text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Replace(ref Person q) { q = new Person("Zed"); }</text>
-<g class="st" data-s="1-3"><rect class="bx" x="28" y="154" width="164" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="110" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">p = reference</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="28" y="154" width="164" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="110" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">p = reference</text></g>
-<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="28" y="262" width="164" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-4" data-hl="2"><text x="110" y="275.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">q = address of p</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="28" y="154" width="134" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="95" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">p = reference</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="28" y="154" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">p = reference</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="28" y="262" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="95" y="275.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">q = address of p</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="248" y="130" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="335" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="248" y="154" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="335" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="248" y="178" width="174" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="335" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name → string ref</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="248" y="130" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="335" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="248" y="154" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="335" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="248" y="178" width="174" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="335" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name → string ref</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="248" y="130" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="335" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="248" y="154" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="335" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="248" y="178" width="174" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="335" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name → string ref</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="456" y="130" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="533" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="456" y="154" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="533" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
 <g class="st" data-s="1-5"><rect class="bx" x="456" y="178" width="154" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="533" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Asha"</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="456" y="130" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="533" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="456" y="154" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="533" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="456" y="178" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="533" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"Asha"</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="456" y="130" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="533" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="456" y="154" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="533" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="456" y="178" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="533" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"Asha"</text></g>
 <g class="st" data-s="3-" data-hl="3"><rect class="bx" x="248" y="258" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
 <g class="st" data-s="3-" data-hl="3"><text x="335" y="271.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
 <g class="st" data-s="3-" data-hl="3"><rect class="bx" x="248" y="282" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
@@ -205,9 +205,9 @@
 <g class="st" data-s="6-6"><text x="320" y="393.75" text-anchor="middle" font-size="9.5" fill="#fda4af">No stack variable or static leads to Asha or its string any more: they are unreachable (but not yet freed).</text></g>
 <g class="st" data-s="7-7"><rect class="bx note" x="10" y="360" width="620" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="7-7"><text x="320" y="393.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Later, a GC finds they are not marked and reclaims them. It runs when the runtime decides, not at return.</text></g>
-<g class="st" data-s="1-3"><g class="arrow-pill"><rect x="203" y="156" width="34" height="18" rx="9"/><text x="220" y="168.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
+<g class="st" data-s="1-3"><g class="arrow-pill"><rect x="188" y="156" width="34" height="18" rx="9"/><text x="205" y="168.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
 <g class="st" data-s="4-"><g class="arrow-pill"><rect x="199" y="220" width="34" height="18" rx="9"/><text x="216" y="232.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
-<g class="st" data-s="2-4"><g class="arrow-pill"><rect x="88" y="204" width="44" height="18" rx="9"/><text x="110" y="216.5" text-anchor="middle" font-size="9" font-style="italic">alias</text></g></g>
+<g class="st" data-s="2-4"><g class="arrow-pill"><rect x="118" y="204" width="44" height="18" rx="9"/><text x="140" y="216.5" text-anchor="middle" font-size="9" font-style="italic">alias</text></g></g>
 <g class="st" data-s="4-4"><g class="tok" data-path="rf2-aq"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">✏️</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
@@ -275,12 +275,12 @@
 <g class="st" data-s="1-"><rect class="zone" x="22" y="96" width="276" height="106" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="36" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame: big (struct, data in place)</text></g>
 <g class="st" data-s="2-3"><rect class="zone" x="22" y="244" width="276" height="106" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-3"><text class="zone-title" x="36" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Sum frame: data (own copy)</text></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="36" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Sum frame: data</text></g>
 <g class="st" data-s="1-"><rect class="zone" x="342" y="96" width="276" height="106" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="356" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame: big (struct, data in place)</text></g>
 <g class="st" data-s="2-3"><rect class="zone" x="342" y="244" width="276" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-3"><text class="zone-title" x="356" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Sum frame</text></g>
-<g class="st" data-s="2-"><path id="rf4-lc" d="M160,270 L160,192" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf4A)"/></g>
+<g class="st" data-s="2-2"><path id="rf4-lc" d="M160,270 L160,192" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf4A)"/></g>
 <g class="st" data-s="2-3"><path id="rf4-ra" d="M480,270 L480,192" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf4A)"/></g>
 <rect class="bx" x="10" y="6" width="300" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Sum(big);</text>
@@ -295,11 +295,11 @@
 <g class="st" data-s="1-"><rect class="bx" x="30" y="170" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="160" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">C = …</text></g>
 <g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="30" y="270" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="160" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">A = …</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="160" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">A = …  (copy)</text></g>
 <g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="30" y="294" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="160" y="307.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">B = …</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="160" y="307.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">B = …  (copy)</text></g>
 <g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="30" y="318" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="160" y="331.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">C = …</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="160" y="331.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">C = …  (copy)</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="350" y="122" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="480" y="135.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">A = …</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="350" y="146" width="260" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
@@ -308,8 +308,8 @@
 <g class="st" data-s="1-"><text x="480" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">C = …</text></g>
 <g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="350" y="270" width="260" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="2-3" data-hl="2"><text x="480" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">data = address of big</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="350" y="312" width="260" height="36" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="480" y="332.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">data.A = 9;   ✗ compile error</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="350" y="312" width="260" height="36" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="480" y="332.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">data.A = 9;   ✗ compile error</text></g>
 <text class="free" x="320" y="374" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">teaching picture: "…" stand for the field values; a real big struct has more fields</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="390" width="620" height="50" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="417.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">big is a struct: its fields sit in place inside Main’s frame (no header, no heap object).</text></g>
@@ -322,9 +322,9 @@
 <g class="st" data-s="4-4"><rect class="bx note" x="10" y="390" width="620" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="4-4"><text x="320" y="411" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: both frames are popped. big is unchanged in both columns.</text></g>
 <g class="st" data-s="4-4"><text x="320" y="424.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The in call just avoided copying every field.</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="111" y="209" width="98" height="18" rx="9"/><text x="160" y="221.5" text-anchor="middle" font-size="9" font-style="italic">copy all fields</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="111" y="223" width="98" height="18" rx="9"/><text x="160" y="235.5" text-anchor="middle" font-size="9" font-style="italic">copy all fields</text></g></g>
 <g class="st" data-s="2-3"><g class="arrow-pill"><rect x="428.5" y="209" width="103" height="18" rx="9"/><text x="480" y="221.5" text-anchor="middle" font-size="9" font-style="italic">alias, read-only</text></g></g>
-<g class="st" data-s="3-"><g class="tok" data-path="rf4-ra"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">👁</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="rf4-ra"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">👁</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -349,7 +349,7 @@
 <g class="st" data-s="1-"><text class="zone-title" x="274" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">int[3] array object</text></g>
 <g class="st" data-s="1-"><path id="rf5-ra" d="M182,167 L268,167" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rf5A)"/></g>
 <g class="st" data-s="2-3"><path id="rf5-rb" d="M182,273 L226,273 L226,172 L268,172" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf5A)"/></g>
-<g class="st" data-s="3-"><path id="rf5-rc" d="M182,321 L242,321 L242,239 L268,239" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf5A)"/></g>
+<g class="st" data-s="3-3"><path id="rf5-rc" d="M182,321 L242,321 L242,239 L268,239" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rf5A)"/></g>
 <g class="st" data-s="4-"><path id="rf5-rd" d="M182,191 L242,191 L242,239 L268,239" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rf5A)"/></g>
 <rect class="bx" x="10" y="6" width="380" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">ref int Slot(int[] a, int i) =&gt; ref a[i];</text>
@@ -362,8 +362,8 @@
 <g class="st" data-s="2-3"><text x="105" y="275.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">a = copy of arr</text></g>
 <g class="st" data-s="2-3"><rect class="bx" x="28" y="286" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="2-3"><text x="105" y="299.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">i = 1</text></g>
-<g class="st" data-s="3-"><rect class="bx" x="28" y="310" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-"><text x="105" y="323.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">returns address of a[1]</text></g>
+<g class="st" data-s="3-3"><rect class="bx" x="28" y="310" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3"><text x="105" y="323.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">returns address of a[1]</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="268" y="132" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="355" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="268" y="156" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
@@ -397,9 +397,9 @@
 <g class="st" data-s="5-5"><text x="320" y="405.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">s = 99 writes through the alias into arr[1]. The array now holds 10, 99, 30.</text></g>
 <g class="st" data-s="1-"><g class="arrow-pill"><rect x="198" y="158" width="34" height="18" rx="9"/><text x="215" y="170.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
 <g class="st" data-s="2-3"><g class="arrow-pill"><rect x="206.5" y="213" width="39" height="18" rx="9"/><text x="226" y="225.5" text-anchor="middle" font-size="9" font-style="italic">copy</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="225" y="276" width="34" height="18" rx="9"/><text x="242" y="288.5" text-anchor="middle" font-size="9" font-style="italic">ret</text></g></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="225" y="276" width="34" height="18" rx="9"/><text x="242" y="288.5" text-anchor="middle" font-size="9" font-style="italic">ret</text></g></g>
 <g class="st" data-s="4-"><g class="arrow-pill"><rect x="220" y="206" width="44" height="18" rx="9"/><text x="242" y="218.5" text-anchor="middle" font-size="9" font-style="italic">alias</text></g></g>
-<g class="st" data-s="5-"><g class="tok" data-path="rf5-rd"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">✏️</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="rf5-rd"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">✏️</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>

@@ -71,14 +71,14 @@ def d_vr3():
 
 # ---------------------------------------------------------------- D4: struct holding a reference
 def d_vr4():
-    d = Diagram('vr4', 640, 342, 'A struct that holds a reference: copying s1 into s2 copies the int N and the reference P, so both structs point at the same Person object; changing s2.N leaves s1.N alone, but changing s2.P.Age changes the one shared Person')
+    d = Diagram('vr4', 640, 370, 'A struct that holds a reference: copying s1 into s2 copies the int N and the reference P, so both structs point at the same Person object; changing s2.N leaves s1.N alone, but changing s2.P.Age changes the one shared Person')
     d.code_box(10, 8, 340, 78, [(0, 'struct Pair { public int N; public Person P; }', ''), (0, 'var s1 = new Pair { N = 1, P = new Person() };', ''), (0, 'var s2 = s1;', ''), (0, 's2.N = 9;   s2.P.Age = 31;', '')], 'n', size=9, lh=15)
-    d.zone(10, 98, 210, 190, 'cyan', '📚 STACK: frame of Main()')
-    d.zone(230, 98, 400, 190, 'emerald', '🏠 HEAP')
+    d.zone(10, 98, 210, 216, 'cyan', '📚 STACK: frame of Main()')
+    d.zone(230, 98, 400, 216, 'emerald', '🏠 HEAP')
     s1 = card(d, 20, 128, 's1 (struct Pair, inline)', [('N = 1', 'f'), ('P = 0x…C2', 'f')], 'cyan', w=190, st=1)
-    s2 = card(d, 20, 205, 's2 (a copy)', [('N = 1', 'f', '2-2'), ('P = 0x…C2', 'f', '2-')], 'violet', w=190, st=2)
+    s2 = card(d, 20, 220, 's2 (a copy)', [('N = 1', 'f', '2-2'), ('P = 0x…C2', 'f', '2-')], 'violet', w=190, st=2)
     cell(d, s2, 0, 'N = 9', 'amber', st='3-', hl=3)
-    pr = card(d, 380, 148, 'Person object @ 0x…C2', [('header (sync block)', 'hdr'), ('type ptr → Person MT', 'tp'), ('Age = 30', 'f', '1-3')], 'emerald', w=200, st=1)
+    pr = card(d, 380, 158, 'Person object @ 0x…C2', [('header (sync block)', 'hdr'), ('type ptr → Person MT', 'tp'), ('Age = 30', 'f', '1-3')], 'emerald', w=200, st=1)
     cell(d, pr, 2, 'Age = 31', 'amber', st='4-', hl=4)
     tp = pr['rows'][1]
     d.arrow([(s1['rows'][1]['r'][0], s1['rows'][1]['y']), (300, s1['rows'][1]['y']), (300, tp['y']), (tp['l'][0], tp['y'])], 'cyan', st=1, id='s1')
@@ -88,7 +88,7 @@ def d_vr4():
                                 ('s2 = s1 copies every field: N and the address in P. No new Person', 'violet'),
                                 ('s2.N = 9 changes only s2’s own copy; s1.N is still 1', 'amber'),
                                 ('s2.P.Age = 31 follows the shared address: s1.P sees Age 31 too', 'rose')]):
-        d.note(10, 296, 620, 38, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 324, 620, 38, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     d.text(430, 128, 'addresses: teaching picture', 'n', 8.5, anchor='middle')
     return d
 

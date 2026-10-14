@@ -74,19 +74,19 @@ def d_sm3():
     d.code_box(10, 8, 620, 46, [(0, 'Thread A:  Settings.Language = "fr";', ''), (0, 'Thread B:  var s = Settings.Language;', '')], 'n', size=9, lh=15)
     d.zone(350, 62, 280, 320, 'emerald', '🏠 HEAP (shared by all threads)')
     a = card(d, 10, 62, '📚 Stack of thread A', [('Handle() frame', 'f')], 'cyan', w=150, st=1, hl=2)
-    b = card(d, 10, 232, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = ?', 'f', '1-3')], 'violet', w=150, st=1)
+    b = card(d, 10, 244, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = ?', 'f', '1-3')], 'violet', w=150, st=1)
     cell(d, b, 1, 's = ref (copy)', 'amber', st='4-', hl=4)
-    st_ = card(d, 190, 104, 'Settings (static area)', [('Language = ref', 'f')], 'amber', w=140, st=1, hl='3')
+    st_ = card(d, 190, 120, 'Settings (static area)', [('Language = ref', 'f')], 'amber', w=140, st=1, hl='3')
     en_rows = [('header', 'hdr'), ('type ptr → String MT', 'tp'), ('length = 2', 'f'), ('chars: e n', 'f')]
-    card(d, 360, 80, 'string "en"', en_rows, 'emerald', w=190, st='1-4')
-    card(d, 360, 80, 'string "en" — unreachable', en_rows, 'rose', w=190, st='5-5', dash=True)
-    fr = card(d, 360, 232, 'string "fr"', [('header', 'hdr'), ('type ptr → String MT', 'tp'), ('length = 2', 'f'), ('chars: f r', 'f')], 'emerald', w=190, st='2-', hl=2)
-    d.text(455, 150, 'space reclaimed by a later GC', 'n', 9, st='6-')
+    card(d, 360, 96, 'string "en"', en_rows, 'emerald', w=190, st='1-4')
+    card(d, 360, 96, 'string "en" — unreachable', en_rows, 'rose', w=190, st='5-5', dash=True)
+    fr = card(d, 360, 244, 'string "fr"', [('header', 'hdr'), ('type ptr → String MT', 'tp'), ('length = 2', 'f'), ('chars: f r', 'f')], 'emerald', w=190, st='2-', hl=2)
+    d.text(455, 165, 'space reclaimed by a later GC', 'n', 9, st='6-')
     ya = a['rows'][0]['y']; ys = st_['rows'][0]['y']
     d.arrow([(a['rows'][0]['r'][0], ya), (176, ya), (176, ys), (st_['rows'][0]['l'][0], ys)], 'cyan', st='2-3', id='w')
     d.arrow([(b['rows'][0]['r'][0], b['rows'][0]['y']), (260, b['rows'][0]['y']), (260, st_['rows'][0]['top'] + st_['rows'][0]['h'])], 'violet', st='4-4', id='rd')
-    en_t = 80 + 26 + 24 + 11
-    fr_t = 232 + 26 + 24 + 11
+    en_t = 96 + 26 + 24 + 11
+    fr_t = 244 + 26 + 24 + 11
     d.arrow([(st_['rows'][0]['r'][0], ys), (368, en_t)], 'amber', st='1-2', id='p1')
     d.arrow([(st_['rows'][0]['r'][0], ys), (340, ys), (340, fr_t), (368, fr_t)], 'amber', st='3-', id='p2')
     d.arrow([(b['rows'][1]['r'][0], b['rows'][1]['y']), (368, fr_t)], 'violet', st='4-', id='sb')
