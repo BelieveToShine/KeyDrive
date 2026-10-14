@@ -7,9 +7,9 @@ def _legend(d, y, text):
     d.text(10, y, text, 'n', 9, anchor='start')
 
 def d_mc1():
-    d = Diagram('mc1', 640, 318, 'Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object')
-    d.zone(10, 24, 156, 196, 'cyan', '📚 STACK (roots)')
-    d.zone(176, 24, 454, 196, 'emerald', '🏠 HEAP')
+    d = Diagram('mc1', 640, 326, 'Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object')
+    d.zone(10, 24, 156, 204, 'cyan', '📚 STACK (roots)')
+    d.zone(176, 24, 454, 204, 'emerald', '🏠 HEAP')
     main = card(d, 18, 44, 'Main() frame', [('cart = ref', 'f'), ('inv = null', 'f', '1-5')], 'cyan', w=140)
     cell(d, main, 1, 'inv = ref', 'cyan', st='6-', hl=6)
     card(d, 18, 140, 'Process() frame', [('order = ref', 'f')], 'cyan', w=140, st='1-1', hl=1)
@@ -22,9 +22,9 @@ def d_mc1():
     d.zone(185, 148, CW, 58, 'n', 'free space', st='5-5', dash=True)
     inv = card(d, 185, 148, 'Invoice (new)', [('Id = 9', 'f')], 'emerald', w=CW, st='6-', hl=6)
     d.box(505, 52, 115, 44, [('🧹 GC runs', 't'), ('marks from roots', 'm')], 'violet', st='4-5', hl='4,5')
-    d.text(185 + CW - 8, 70, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
-    d.text(350 + CW - 8, 70, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
-    d.text(185 + CW - 8, 166, '✘ no path', 'rose', 9, anchor='end', st='4-4')
+    d.text(185 + CW / 2, 122, '✔ marked', 'emerald', 9, anchor='middle', st='4-4')
+    d.text(350 + CW / 2, 122, '✔ marked', 'emerald', 9, anchor='middle', st='4-4')
+    d.text(185 + CW / 2, 218, '✘ no path from any root', 'rose', 9, anchor='middle', st='4-4')
     d.arrow([main['rows'][0]['r'], cart['L']], 'cyan', st='1-', id='a1')
     d.arrow([(158, 177), ordu['L']], 'cyan', st='1-1', id='a2')
     d.arrow([cart['rows'][0]['r'], (cart['x'] + cart['w'] + 8, cart['rows'][0]['y']), (cart['x'] + cart['w'] + 8, cus['L'][1]), cus['L']], 'emerald', st='3-', id='a3')
@@ -36,9 +36,9 @@ def d_mc1():
             ('5 · The GC reclaims the unmarked Order: its space is free again.|It happened at the GC’s own moment, not when the method returned.', 'emerald'),
             ('6 · A new allocation can use the free space: a new Invoice, referenced by inv.|(The GC may also compact survivors; see [[p:gc-basics]].)', 'emerald')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 230, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
-    _legend(d, 288, 'colours: emerald = reachable / in use · amber = unreachable but not yet freed · dashed = free or popped')
-    d.text(630, 306, 'teaching picture: positions and values are illustrative; the GC runs when it decides', 'n', 8.5, anchor='end')
+        d.note(10, 238, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    _legend(d, 296, 'colours: emerald = reachable / in use · amber = unreachable but not yet freed · dashed = free or popped')
+    d.text(630, 314, 'teaching picture: positions and values are illustrative; the GC runs when it decides', 'n', 8.5, anchor='end')
     return d
 
 def _fs(d, x, y, st, color, title, handle, hl=None):
@@ -61,10 +61,10 @@ def d_mc2():
     _fs(d, 172, 68, '3-3', 'emerald', 'FileStream', 'handle = closed', hl=3)
     _fs(d, 172, 68, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed')
     d.zone(172, 68, 200, 58, 'n', 'free space', st='5-5', dash=True)
-    d.box(438, 69, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-2', hl=1)
-    d.box(438, 69, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='3-', hl=3)
+    d.box(438, 77, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-2', hl=1)
+    d.box(438, 77, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='3-', hl=3)
     d.arrow([(132, 97), fs['L']], 'cyan', st='1-3', id='b1')
-    d.arrow([fs['rows'][0]['r'], (438, 97)], 'amber', 'owns', at=(405, 97), st='1-2', id='b2')
+    d.arrow([fs['rows'][0]['r'], (438, 105)], 'amber', 'owns', at=(402, 105), st='1-2', id='b2')
     d.token('b1', '📞', 15, 'cyan', st='2-2')
     caps = [('1 · using var file = File.OpenRead(...): a FileStream object on the heap owns an OS file handle;|the OS marks data.txt as open and locked.', 'emerald'),
             ('2 · The block ends: the compiler-generated finally calls file.Dispose().|The call follows the reference from the stack slot to the object.', 'cyan'),
@@ -86,11 +86,11 @@ def d_mc3():
     _fs(d, 172, 68, '2-3', 'amber', 'FileStream: unreachable', 'handle = #7C', hl=2)
     _fs(d, 172, 68, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed', hl=4)
     d.zone(172, 68, 200, 58, 'n', 'free space', st='5-5', dash=True)
-    d.box(438, 69, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-1')
-    d.box(438, 69, 182, 56, [('STILL open', 't'), ('data.txt · locked', 'm')], 'rose', st='2-3', hl=2)
-    d.box(438, 69, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='4-', hl=4)
+    d.box(438, 77, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-1')
+    d.box(438, 77, 182, 56, [('STILL open', 't'), ('data.txt · locked', 'm')], 'rose', st='2-3', hl=2)
+    d.box(438, 77, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='4-', hl=4)
     d.arrow([(132, 97), fs['L']], 'cyan', st='1-1', id='c1')
-    d.arrow([fs['rows'][0]['r'], (438, 97)], 'amber', 'owns', at=(405, 97), st='1-3', id='c2')
+    d.arrow([fs['rows'][0]['r'], (438, 105)], 'amber', 'owns', at=(402, 105), st='1-3', id='c2')
     d.text(386, 40, 'GC #1', 'violet', 10, anchor='end', st='3-4')
     d.text(386, 40, 'GC #2 (later)', 'violet', 10, anchor='end', st='5-5')
     d.zone(150, 166, 244, 64, 'violet', '📋 finalizer queue', dash=True, st='3-5')

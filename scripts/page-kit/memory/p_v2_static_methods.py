@@ -20,7 +20,7 @@ def d_sm1():
     # arrows
     yR = af['R'][1]
     d.arrow([(af['R'][0], yR), (240, yR)], 'violet', 'runs', at=(205, yR), st='2-2', id='run')
-    d.arrow([(af['R'][0], yR), (196, yR), (196, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(196, 175), st='3-3', id='rd')
+    d.arrow([(af['R'][0], yR), (196, yR), (196, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(196, 205), st='3-3', id='rd')
     d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (190, af['rows'][1]['y']), (190, mf['rows'][0]['y']), (mf['rows'][0]['r'][0], mf['rows'][0]['y'])], 'emerald', 'copy', at=(190, 190), st='4-4', id='ret')
     d.text(98, 262, 'frame popped', 'n', 10, st='5-')
     for i, (t, c) in enumerate([
@@ -69,15 +69,15 @@ def d_sm3():
     d.code_box(10, 8, 620, 46, [(0, 'Thread A:  Settings.Language = "fr";', ''), (0, 'Thread B:  var s = Settings.Language;', '')], 'n', size=9, lh=15)
     d.zone(350, 62, 280, 320, 'emerald', '🏠 HEAP (shared by all threads)')
     a = card(d, 10, 70, '📚 Stack of thread A', [('Handle() frame', 'f')], 'cyan', w=140, st=1, hl=2)
-    b = card(d, 10, 262, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = (not set yet)', 'f', '1-3')], 'violet', w=140, st=1)
+    b = card(d, 10, 238, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = (not set yet)', 'f', '1-3')], 'violet', w=140, st=1)
     cell(d, b, 1, 's = ref (copy)', 'amber', st='4-', hl=4)
     st_ = card(d, 200, 150, 'Settings (static area)', [('Language = ref', 'f')], 'amber', w=130, st=1, hl='3')
-    en_rows = [('header', 'hdr'), ('type ptr', 'tp'), ('length = 2', 'f'), ('chars: e n', 'f')]
+    en_rows = [('length = 2', 'f'), ('chars: e n', 'f')]
     en = card(d, 360, 96, 'string "en"', en_rows, 'emerald', w=190, st='1-4')
     card(d, 360, 96, 'string "en" — unreachable', en_rows, 'rose', w=190, st='5-5', dash=True)
-    fr = card(d, 360, 244, 'string "fr"', [('header', 'hdr'), ('type ptr', 'tp'), ('length = 2', 'f'), ('chars: f r', 'f')], 'emerald', w=190, st='2-', hl=2)
+    fr = card(d, 360, 244, 'string "fr"', [('length = 2', 'f'), ('chars: f r', 'f')], 'emerald', w=190, st='2-', hl=2)
     d.text(455, 165, 'space reclaimed by a later GC', 'n', 9, st='6-')
-    d.text(455, 238, 'green = reachable · red dashed = unreachable', 'n', 8, st='5-5')
+    d.text(455, 226, 'green = reachable · red dashed = unreachable', 'n', 8, st='5-5')
     ys = st_['rows'][0]['y']
     # thread A writes into the slot: ends on the Settings card border
     d.arrow([(a['rows'][0]['r'][0], a['rows'][0]['y']), (175, a['rows'][0]['y']), (175, st_['L'][1] - 8), (st_['L'][0], st_['L'][1] - 8)], 'cyan', 'A writes', at=(175, 140), st='2-3', id='w')
