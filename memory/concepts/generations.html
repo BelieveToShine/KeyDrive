@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generations 0, 1 and 2: Young Objects Die Young — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">G0, G1, G2</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 14 of 22 · ♻️ Garbage collector</div>
+    <h1><span class="grad-text">The nursery, the school and the retirement home</span>.</h1>
+    <p class="sub">Why the .NET heap has three generations, how objects move from G0 to G1 to G2, and why most collections are quick.</p>
+    <div class="interview-q">❓ "Explain generations 0, 1 and 2 in the .NET garbage collector."</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 316" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="New objects start in generation 0; a gen 0 collection frees the dead ones and promotes survivors to generation 1; a later gen 1 collection promotes survivors again to generation 2, which is collected rarely">
+<defs><marker id="ge1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ge1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ge1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="200" height="236" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🌱 GEN 0  (nursery)</text>
+<rect class="zone" x="225" y="8" width="190" height="236" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="239" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🎓 GEN 1</text>
+<rect class="zone" x="430" y="8" width="200" height="236" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="444" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🏛️ GEN 2  (old)</text>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="24" y="50" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="59" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">a</text></g>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="110" y="50" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="145" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">b</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="24" y="98" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="59" y="119" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">c</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="24" y="98" width="70" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="59" y="112.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">c</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="59" y="125.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">dead</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="110" y="98" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="145" y="119" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">d</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="110" y="98" width="70" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="145" y="112.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">d</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="145" y="125.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">dead</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="24" y="146" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="59" y="167" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">e</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="24" y="146" width="70" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="59" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">e</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="59" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">dead</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="110" y="146" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="145" y="167" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">f</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="110" y="146" width="70" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="145" y="160.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">f</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="145" y="173.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">dead</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="236" y="50" width="70" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="271" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="446" y="50" width="70" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="481" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">a</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="324" y="50" width="70" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="359" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">b</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="534" y="50" width="70" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="569" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">b</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="24" y="50" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="59" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">g</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="110" y="50" width="70" height="34" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="145" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">h</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="24" y="50" width="70" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="59" y="64.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">g</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="59" y="77.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">dead</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="236" y="50" width="70" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="271" y="71" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">h</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#6ee7b7">New objects always start in generation 0</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fda4af">GC of gen 0: c, d, e, f are unreachable → freed</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#67e8f9">Survivors a and b are promoted to gen 1; gen 0 is empty again</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#6ee7b7">New objects g and h arrive in gen 0</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#c4b5fd">A gen 1 GC (also collects gen 0): g freed, h → gen 1, a and b → gen 2</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="258" width="620" height="46" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#c4b5fd">Gen 2 is collected rarely — and a gen 2 GC looks at ALL generations</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Every new object starts in <b>generation 0</b> — the nursery.</li><li>Gen 0 fills up and the GC runs <b>only on gen 0</b>. Most objects are already dead (c, d, e, f) and are freed.</li><li>The survivors (a, b) are <b>promoted</b> to <b>generation 1</b>. Gen 0 is empty again, ready for more.</li><li>More new objects arrive in gen 0.</li><li>Later the GC collects <b>gen 1</b> (which includes gen 0). Survivors move up one step: h goes to gen 1; a and b are promoted to <b>gen 2</b>.</li><li>Gen 2 holds long-lived objects and is collected <b>rarely</b>. A gen 2 collection (a “full GC”) examines all generations.</li></ol>
+<figcaption><strong>What you're seeing:</strong> objects only ever move up one step at a time, and only if they survive a collection.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Most objects die young, so the GC checks the young generation often and cheaply, and the old generation rarely.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🏫 <b>Nursery → school → retirement home.</b> Newborns (new objects) are checked every day: most are only visitors who leave quickly. Those who stay a while move to school; those who stay for years move to the retirement home, which the inspector visits only occasionally.</p>
+      <p>It would be wasteful to search the whole city (the whole heap) every day when the visitors are all in the nursery.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">📋 The three generations</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Generation</th><th scope="col">Holds</th><th scope="col">Collected</th><th scope="col">Cost of a collection</th></tr></thead><tbody><tr><th scope="row">🌱 <b>Gen 0</b></th><td>new, short-lived objects (temporary values, request data)</td><td>most often</td><td>small area → very quick</td></tr><tr><th scope="row">🎓 <b>Gen 1</b></th><td>survivors of one gen 0 collection</td><td>sometimes — a buffer between short and long-lived</td><td>small</td></tr><tr><th scope="row">🏛️ <b>Gen 2</b></th><td>long-lived objects (caches, app-wide data) and the large object heap</td><td>rarely</td><td>whole heap → slowest</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 Rules to remember</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Rule</th><th scope="col">Meaning</th></tr></thead><tbody><tr><th scope="row">Collecting generation N also collects all younger generations</th><td>a gen 1 GC includes gen 0; a gen 2 GC is a full GC</td></tr><tr><th scope="row">Survivors are promoted one step</th><td>gen 0 → gen 1 → gen 2; gen 2 survivors stay in gen 2</td></tr><tr><th scope="row">A promoted object is not copied away from the program</th><td>references are updated when objects move (page 13)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔎 Peek at a generation (diagnostics only)</div>
+    <div class="kd-card why-box">
+      <p><code>GC.GetGeneration(obj)</code> tells you which generation an object is in right now. It is a handy way to <b>see</b> promotion while learning, but do not build program logic on it — the GC may collect or promote at any time.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">var</span> o = <span class="kw">new</span> object();
+Console.WriteLine(GC.GetGeneration(o));   <span class="cmt">// 0 — new objects start in generation 0</span>
+GC.Collect();                             <span class="cmt">// for the demo only! avoid in real code</span>
+Console.WriteLine(GC.GetGeneration(o));   <span class="cmt">// typically 1 — it survived, so it was promoted</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">The printed numbers are typical, not guaranteed. Never call <code>GC.Collect()</code> in production code just to “help”.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The GC, <b>one generation at a time</b>. Short-lived objects are freed in cheap gen 0 collections; long-lived ones only in the occasional gen 2 collection. That is why creating a lot of <i>short-lived</i> objects is cheap, and creating objects that <i>survive a while</i> and then die is the costly pattern (they get promoted, then must wait for a bigger collection).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A gen 2 collection only looks at gen 2 objects.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It collects all generations (0, 1 and 2).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> New objects start in generation 0.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes (large objects are the exception — next page).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> An object that survives a gen 0 collection goes straight to gen 2.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> One step at a time: gen 0 → gen 1 → gen 2.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Gen 0 = new, gen 1 = buffer, gen 2 = long-lived.</li><li>Survive a collection → promoted one generation.</li><li>Collecting generation N also collects younger generations; gen 2 collection = full GC.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“The managed heap is generational: new objects go in gen 0, survivors are promoted to gen 1 then gen 2. Because most objects die young, gen 0 collections are frequent and cheap, while gen 2 collections are rare and expensive and examine every generation.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Objects that live “just long enough” to be promoted — then die in gen 2 — force expensive collections. Avoid holding temporary data in long-lived places.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: some objects are too big for the normal heap — the Large Object Heap and pinned objects.</span>
+      <a class="next-link" href="loh-poh.html">Large & Pinned Objects <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Three generations, promotion rule, “collecting generation N also collects younger generations”, gen 2 = full collection: Microsoft Learn “Fundamentals of garbage collection” and .NET runtime metrics docs. The step-by-step promotion in the diagram is a simplified illustration; GC.GetGeneration output shown is typical, not guaranteed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/api/system.gc" target="_blank" rel="noopener">GC class (System)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

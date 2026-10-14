@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Leaks in a Garbage-Collected World — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Memory leaks</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 17 of 22 · ♻️ Garbage collector</div>
+    <h1><span class="grad-text">A tap you forgot to close</span> — the GC cannot close it for you.</h1>
+    <p class="sub">A .NET “leak” is not lost memory: it is memory that is still referenced but no longer needed. The three classic causes — static collections, event handlers and undisposed resources — with their fixes.</p>
+    <div class="interview-q">❓ "Can .NET applications leak memory even with a garbage collector? How?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A static event publisher keeps the list of subscriber handlers; a window that subscribed with += stays reachable through that list even after you close it and drop your variable, so it leaks until the handler is removed with -=">
+<defs><marker id="lk1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="190" height="232" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC (lives forever)</text>
+<rect class="zone" x="230" y="8" width="400" height="232" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="244" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-4"><path d="M188,78 L310,78" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#lk1A)"/></g>
+<g class="st" data-s="2-2"><path d="M410,140 L410,106" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lk1A)"/></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="22" y="50" width="166" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="105" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Publisher</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="105" y="88" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">event Click</text></g>
+<g class="st" data-s="2-4" data-hl="2,,,3"><rect class="bx" x="310" y="50" width="200" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2,,,3"><text x="410" y="75.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Window A object</text></g>
+<g class="st" data-s="2-4" data-hl="2,,,3"><text x="410" y="88.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">big UI data</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="310" y="50" width="200" height="56" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="410" y="75.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Window A object</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="410" y="88.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">can be freed now</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="310" y="140" width="200" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="410" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">windowA (variable)</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="256" width="620" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#fcd34d">Publisher is static: it lives for the whole app</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="256" width="620" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#fcd34d">Window A subscribes with +=: the publisher now keeps a reference to it</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="256" width="620" height="56" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#fda4af">The window is closed and the variable is gone…</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="256" width="620" height="56" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#fda4af">…but the publisher still points to it → reachable → NEVER freed (a leak)</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="256" width="620" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="287" text-anchor="middle" font-size="10" fill="#6ee7b7">Unsubscribe with -= : no path from a root → the GC can free it</text></g>
+<g class="st" data-s="2-4"><g class="arrow-pill"><rect x="208" y="69" width="82" height="18" rx="9"/><text x="249" y="81.5" text-anchor="middle" font-size="9" font-style="italic">handler list</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <b>static</b> publisher object lives for the whole app.</li><li>A window subscribes with <code>+=</code>. The publisher’s handler list now holds a reference to the window.</li><li>You close the window and your variable disappears…</li><li>…but the publisher still points to it. The window is <b>reachable</b>, so the GC may not free it — a <b>leak</b>.</li><li>Unsubscribe with <code>-=</code>. Now no root reaches the window and the GC can free it.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the GC frees only unreachable objects. A reference you forgot about keeps an object alive.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A managed “leak” is an object that is still reachable but no longer needed.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🚰 The GC is a cleaner who only throws away <b>what nobody is holding</b>. If you keep a <b>hand on the tap</b> — a static list, an event handler, an open file — the cleaner leaves it alone, even though you stopped using it long ago.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📚 The second classic: a static cache that only grows</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A static list used as a cache keeps every item reachable so the garbage collector can never free them and the heap grows; evicting old items removes the references so they can be freed">
+<defs><marker id="lk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="190" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC</text>
+<rect class="zone" x="230" y="8" width="400" height="242" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="244" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M188,78 L250,78" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="1-3"><path d="M282,84 L282,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="1-3"><path d="M352,84 L352,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="2-"><path d="M422,84 L422,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="2-"><path d="M492,84 L492,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="2-"><path d="M562,84 L562,140" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#lk2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="22" y="50" width="166" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="76" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Cache</text></g>
+<g class="st" data-s="1-"><text x="105" y="88" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">static List</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="250" y="40" width="360" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="430" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">List object</text></g>
+<g class="st" data-s="1-"><text x="430" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">holds references to its items</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="250" y="140" width="64" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="282" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">item 1</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="320" y="140" width="64" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="352" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">item 2</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="390" y="140" width="64" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="422" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">item 3</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="460" y="140" width="64" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="492" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">item 4</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="530" y="140" width="64" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="562" y="164" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">item 5</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="250" y="140" width="64" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="282" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">item 1</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="282" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">free me</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="320" y="140" width="64" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="352" y="157.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">item 2</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="352" y="170.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">free me</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="264" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="286.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The static cache holds a list; items are added…</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="264" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="286.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">…and more items. Nothing is ever removed.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="264" width="620" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="286.75" text-anchor="middle" font-size="9.5" fill="#fda4af">The GC runs but every item is reachable from the static root → nothing can be freed; the heap keeps growing</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="264" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="286.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Evict old items (a size limit or expiry): no reference → the GC can reclaim them</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="202" y="69" width="34" height="18" rx="9"/><text x="219" y="81.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A static <code>List</code> acts as a cache and holds references to items.</li><li>More and more items are added; none is removed.</li><li>The GC runs, but every item is reachable from the static root, so <b>nothing can be freed</b>. Memory use rises and never comes back down.</li><li>Fix: a size limit or expiry that <b>removes</b> old items. With no reference left, the GC can free them.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a cache without an eviction rule is a leak with a nicer name.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔍 The usual suspects</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Cause</th><th scope="col">Why it holds on</th><th scope="col">Fix</th></tr></thead><tbody><tr><th scope="row">Static collections (lists, dictionaries)</th><td>static fields are GC roots (page 6)</td><td>size limit / expiry; avoid unbounded statics</td></tr><tr><th scope="row">Event subscriptions (<code>+=</code>)</th><td>the publisher’s handler list references the subscriber</td><td><code>-=</code> when done; short-lived publishers; weak-event pattern</td></tr><tr><th scope="row">Undisposed resources</th><td>handles, connections, streams not released</td><td><code>using</code> / <code>Dispose</code> (page 16)</td></tr><tr><th scope="row">Long-lived objects holding short-lived ones</th><td>a reference from an old object to temporary data</td><td>clear fields; shorten lifetimes</td></tr><tr><th scope="row">Large objects on the LOH</th><td>reclaimed only at gen 2</td><td>reuse buffers (page 15, 21)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🪶 A weak reference holds without keeping alive</div>
+    <div class="kd-card why-box">
+      <p>A <code>WeakReference</code> lets you keep a “soft link” to an object: the GC may still free the object, and the link’s <code>Target</code> becomes <code>null</code> when it does. Microsoft’s docs describe it for caches that should shrink under memory pressure — but warn that you still need a proper caching policy.</p>
+      <p>If a normal reference is a hand holding the tap, a weak reference is just <i>looking</i> at it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🕵️ How do you find a leak?</div>
+    <div class="kd-card why-box">
+      <p>A forced <code>GC.Collect()</code> followed by “memory is still high” is only a hint, not proof. The reliable way is a <b>memory profiler</b> (or heap snapshots) that shows <i>who still references</i> the growing objects. The answer is almost always a static, an event or a cache.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">static</span> <span class="kw">class</span> Bus { <span class="kw">public</span> <span class="kw">static</span> event Action Tick; }       <span class="cmt">// static publisher</span>
+
+<span class="kw">class</span> Window
+{
+    <span class="kw">public</span> Window()  { Bus.Tick += OnTick; }     <span class="cmt">// Bus now references this Window</span>
+    <span class="kw">public</span> <span class="kw">void</span> Close() { Bus.Tick -= OnTick; }  <span class="cmt">// ✅ remove the reference when done</span>
+    <span class="kw">void</span> OnTick() { }
+}
+
+<span class="kw">static</span> <span class="kw">readonly</span> List&lt;byte[]&gt; Cache = <span class="kw">new</span>();      <span class="cmt">// ⚠️ grows forever unless you evict</span>
+
+<span class="kw">var</span> weak = <span class="kw">new</span> WeakReference&lt;byte[]&gt;(<span class="kw">new</span> byte[1000]);
+<span class="kw">if</span> (weak.TryGetTarget(out <span class="kw">var</span> data)) { /* still there */ }   <span class="cmt">// may be null after a GC</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">WeakReference is a tool for caches, not a cure for leaks. Fix the reference first.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The GC — but only objects with <b>no reachable reference</b>. Your job is to <b>cut the references</b> you no longer need: unsubscribe, evict, dispose, and avoid unbounded statics.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The GC cannot leak memory, so C# programs never run out of it.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> Objects that are still referenced are never freed — that is a managed leak.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Forgetting <code>-=</code> on a long-lived publisher can keep a subscriber alive.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — the publisher’s handler list references it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A static dictionary used as a cache with no eviction is a classic leak.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — static fields are roots.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A leak = still reachable but not needed.</li><li>Top causes: statics, events, undisposed resources, unbounded caches.</li><li>Fix: cut the reference (<code>-=</code>, evict, dispose); weak references for soft caches.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“In .NET a leak is an object that is still referenced but no longer needed — typically a static collection, an event subscription that was never removed, or an undisposed resource. I find the root with a memory profiler and cut the reference.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Believing “the GC will clean it up”. It only cleans what is unreachable; <b>you</b> decide what is reachable.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Next: what changes when more than one thread runs? Each thread gets its own stack. <i>(coming soon: Threads)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 ASP.NET Core memory guidance (objects that are referenced but no longer needed leak; avoid persistent static references; caches), Weak References docs, WPF weak event patterns (+= creates a strong reference from source to listener; unsubscribe). Event handler leak mechanics are as described in the WPF docs; the same reference rule applies to any .NET event. Official docs: <a href="https://learn.microsoft.com/en-us/aspnet/core/performance/memory" target="_blank" rel="noopener">Memory management and patterns in ASP.NET Core</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/weak-references" target="_blank" rel="noopener">Weak references (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns" target="_blank" rel="noopener">Weak event patterns</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

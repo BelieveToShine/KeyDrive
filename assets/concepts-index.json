@@ -5360,5 +5360,135 @@
     "summary": "The classic mistake with dynamic and Reflection: Decided at Run Time.",
     "keywords": "memory dynamic reflection DLR call site binder methodinfo invoke boxing trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "memory-gc-basics",
+    "title": "How the Garbage Collector Thinks: Roots and Reachability",
+    "category": "Memory",
+    "page": "memory/concepts/gc-basics.html",
+    "summary": "GC roots, marking reachable objects and compaction",
+    "keywords": "memory garbage collector gc roots reachability mark compact cycle static stack"
+  },
+  {
+    "id": "memory-gc-basics-recall",
+    "title": "How the Garbage Collector Thinks: Roots and Reachability — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/gc-basics.html",
+    "summary": "Quick recall points: How the Garbage Collector Thinks: Roots and Reachability.",
+    "keywords": "memory garbage collector gc roots reachability mark compact cycle static stack interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-gc-basics-trap",
+    "title": "How the Garbage Collector Thinks: Roots and Reachability — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/gc-basics.html",
+    "summary": "The classic mistake with How the Garbage Collector Thinks: Roots and Reachability.",
+    "keywords": "memory garbage collector gc roots reachability mark compact cycle static stack trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-generations",
+    "title": "Generations 0, 1 and 2: Young Objects Die Young",
+    "category": "Memory",
+    "page": "memory/concepts/generations.html",
+    "summary": "How objects move from gen 0 to gen 1 to gen 2 and why most collections are cheap",
+    "keywords": "memory gc generations gen0 gen1 gen2 promotion full gc GetGeneration"
+  },
+  {
+    "id": "memory-generations-recall",
+    "title": "Generations 0, 1 and 2: Young Objects Die Young — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/generations.html",
+    "summary": "Quick recall points: Generations 0, 1 and 2: Young Objects Die Young.",
+    "keywords": "memory gc generations gen0 gen1 gen2 promotion full gc GetGeneration interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-generations-trap",
+    "title": "Generations 0, 1 and 2: Young Objects Die Young — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/generations.html",
+    "summary": "The classic mistake with Generations 0, 1 and 2: Young Objects Die Young.",
+    "keywords": "memory gc generations gen0 gen1 gen2 promotion full gc GetGeneration trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-loh-poh",
+    "title": "The Large Object Heap and Pinned Object Heap",
+    "category": "Memory",
+    "page": "memory/concepts/loh-poh.html",
+    "summary": "Objects of 85,000 bytes or more, LOH fragmentation, pinned objects and the POH",
+    "keywords": "memory large object heap LOH POH pinned 85000 fragmentation compaction"
+  },
+  {
+    "id": "memory-loh-poh-recall",
+    "title": "The Large Object Heap and Pinned Object Heap — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/loh-poh.html",
+    "summary": "Quick recall points: The Large Object Heap and Pinned Object Heap.",
+    "keywords": "memory large object heap LOH POH pinned 85000 fragmentation compaction interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-loh-poh-trap",
+    "title": "The Large Object Heap and Pinned Object Heap — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/loh-poh.html",
+    "summary": "The classic mistake with The Large Object Heap and Pinned Object Heap.",
+    "keywords": "memory large object heap LOH POH pinned 85000 fragmentation compaction trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-memory-clearing",
+    "title": "How and When Memory Is Cleared: Scope, GC, Dispose and Finalizers",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clearing.html",
+    "summary": "When stack, heap and unmanaged memory are cleared; using, Dispose, finalizers, GC.Collect",
+    "keywords": "memory dispose using finalizer safehandle gc collect idisposable cleanup"
+  },
+  {
+    "id": "memory-memory-clearing-recall",
+    "title": "How and When Memory Is Cleared: Scope, GC, Dispose and Finalizers — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clearing.html",
+    "summary": "Quick recall points: How and When Memory Is Cleared: Scope, GC, Dispose and Finalizers.",
+    "keywords": "memory dispose using finalizer safehandle gc collect idisposable cleanup interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-memory-clearing-trap",
+    "title": "How and When Memory Is Cleared: Scope, GC, Dispose and Finalizers — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/memory-clearing.html",
+    "summary": "The classic mistake with How and When Memory Is Cleared: Scope, GC, Dispose and Finalizers.",
+    "keywords": "memory dispose using finalizer safehandle gc collect idisposable cleanup trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-leaks",
+    "title": "Memory Leaks in a Garbage-Collected World",
+    "category": "Memory",
+    "page": "memory/concepts/leaks.html",
+    "summary": "Why .NET apps leak: statics, events, caches, undisposed resources; weak references",
+    "keywords": "memory leak event handler static cache weakreference unsubscribe profiler"
+  },
+  {
+    "id": "memory-leaks-recall",
+    "title": "Memory Leaks in a Garbage-Collected World — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/leaks.html",
+    "summary": "Quick recall points: Memory Leaks in a Garbage-Collected World.",
+    "keywords": "memory leak event handler static cache weakreference unsubscribe profiler interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-leaks-trap",
+    "title": "Memory Leaks in a Garbage-Collected World — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/leaks.html",
+    "summary": "The classic mistake with Memory Leaks in a Garbage-Collected World.",
+    "keywords": "memory leak event handler static cache weakreference unsubscribe profiler trap mistake",
+    "anchor": "trap"
   }
 ]

@@ -85,6 +85,31 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | MethodInfo describes the method and is a heap object | 🟨 K | class instance; stated as such |
 | Animal/Dog/Payment/Coupon/Duck/Order examples | 🟦 I | illustrative |
 
+## Pages 13–17 — GC basics, generations, LOH/POH, clearing, leaks
+| Claim | Status | Note |
+|---|---|---|
+| GC finds live objects from roots (stack locals, statics, registers, handles); unreachable objects are garbage | ✅ V | Fundamentals of GC |
+| Marking, relocating, compacting phases; compaction only if enough garbage found | ✅ V | Fundamentals of GC (via search summary) |
+| Reference cycles with no root are collectable | ✅ V | follows from reachability tracing in the GC fundamentals |
+| GC triggers: low system memory, allocation threshold exceeded, GC.Collect | ✅ V | Fundamentals of GC |
+| Three generations; survivors promoted gen0→gen1→gen2; collecting generation N collects younger ones; gen 2 collection = full GC | ✅ V | Fundamentals of GC; runtime metrics docs |
+| Step-by-step promotion shown (e.g. a gen 1 GC promoting gen 0 survivors to gen 1 and gen 1 survivors to gen 2) | ✅ V / 🟦 I | rule documented; the specific objects are illustrative |
+| GC.GetGeneration reports an object's generation; printed values 0 then 1 are "typical" | 🟨 K | GC class docs sample; output not guaranteed |
+| LOH holds objects ≥ 85,000 bytes; collected with gen 2; not compacted by default | ✅ V | Large object heap docs |
+| Pinned objects cannot be moved and cause fragmentation | ✅ V | MS GC performance docs / archived articles |
+| GC.AllocateArray(pinned: true) allocates on the pinned object heap | ✅ V | GC.AllocateArray API (element-type restriction on .NET ≤ 7 noted) |
+| Unreachable ≠ freed immediately; reclaimed at a later GC | ✅ V | GC fundamentals / induced collections |
+| using/Dispose releases unmanaged resources deterministically; SafeHandle recommended for native handles; finalizer is a backup | ✅ V | Implement a Dispose method |
+| Finalizable objects need an extra collection before memory is freed; finalizer runs later on another thread | 🟨 K | older blog articles only; not claimed in detail |
+| Production code should generally not call GC.Collect | ✅ V | Induced collections; ASP.NET Core memory guidance |
+| Leak = referenced but no longer needed; static references, caches | ✅ V | ASP.NET Core memory guidance |
+| Event += creates a strong reference from publisher to subscriber; -= removes | ✅ V | WPF weak event patterns |
+| WeakReference: GC may reclaim target; Target null after; caching use | ✅ V | Weak References docs |
+| Memory profiler needed to prove a leak | ✅ V | Microsoft forum/guidance (search summary) |
+| All sizes, object names (A–F, a–h), 100,000-byte examples | 🟦 I | illustrative |
+
 ## Cross-page notes
 - Illustrative literals: Amount = 100, qty = 1, Total = 2, "Rex"/"Pug", card ending 1234.
+- Illustrative sizes: new byte[1000], new byte[100_000] ("100 KB" buffer per request), 60,000 bytes; threshold 85,000 bytes is documented.
+- Analogies: nursery / school / retirement home for generations 0 / 1 / 2 (🟦 teaching picture).
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.
