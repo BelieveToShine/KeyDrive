@@ -69,7 +69,8 @@ def d_hp2():
     d.arrow([(385, 138), (385, 178)], 'violet', st='3-', id='c1')
     d.arrow([(271, 138), (271, 178)], 'cyan', st='7-', id='b1')
     d.arrow([(pa['rows'][1]['r'][0], pa['rows'][1]['y']), po['L']], 'amber', st='6-', id='r1')
-    d.note(480, 288, 140, 34, 'Teaching picture: layout|illustrative; each heap object|also has a hidden header|+ type pointer (left out)', 'amber', size=7.5)
+    for k, ln in enumerate(['Teaching picture: layout is', 'illustrative; hidden header', '+ type pointer left out']):
+        d.text(550, 298 + k * 11, ln, 'n', size=8)
     for i, (t, c) in enumerate([
         ('Two stack slots exist, but neither array does yet.', 'cyan'),
         ('new int[3]: ONE heap object. The three numbers|sit inside its own cells, all 0.', 'emerald'),

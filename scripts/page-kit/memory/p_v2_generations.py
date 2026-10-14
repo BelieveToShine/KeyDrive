@@ -39,7 +39,7 @@ def d_ge2():
     d.arrow([(110, 245), (517, 245)], 'amber', 'ref updated', at=(300, 245), st='8-8')
     # ghosts: where things were before the promotion step
     for (x, y, t) in ((362, R[0], 'was here'), (362, R[1], 'was here'), (147, R[3], 'was here')):
-        d.zone(x, y, 80, 38, 'n', t, st='6-6')
+        d.zone(x, y, 80, 38, 'n', None, st='6-6')
     # step 7-8: a large object nobody references (LOH is collected with gen 2)
     d.box(497, R[4] + 4, 120, 44, [('large object', 't'), ('≥ 85,000 bytes', 'm')], 'rose', st='7-7', hl=7)
     d.zone(497, R[4] + 4, 120, 44, 'n', 'freed (LOH)', st='8-8', hl=8)
@@ -61,15 +61,15 @@ def d_ge2():
     d.zone(335, 24, 140, 316, 'amber', '🎓 GEN 1', st='7-8')
     d.zone(485, 24, 145, 316, 'amber', '🏛️ GEN 2 + LOH', st='7-8')
     d.text(12, 358, 'legend:', 'n', 9, anchor='start')
-    for i, (c, t, w) in enumerate((('emerald', 'object, not yet marked', 150), ('amber', 'reached from a root / generation being collected', 280), ('rose', 'unreachable, will be freed', 170))):
-        d.box(60 + [0, 160, 450][i], 348, w, 18, [(t, 'm')], c, rx=4)
+    for i, (c, t, w) in enumerate((('emerald', 'object, not yet marked', 148), ('amber', 'reached / being collected', 150), ('rose', 'unreachable, will be freed', 170))):
+        d.box(60 + [0, 158, 316][i], 348, w, 18, [(t, 'm')], c, rx=4)
     d.text(320, 382, 'teaching picture: addresses invented, generations are regions of one heap · box = a whole object (header + type pointer + fields) · arrow = reference', 'n', size=8.5)
     caps = [('Allocation: all objects start in gen 0. cart → Order → List; the four temp strings have no reference at all', 'emerald'),
             ('Gen 0 GC, mark: start at the roots (cart, static fields), follow references. Order and List are reached;|the 4 strings are not (rose)', 'amber'),
             ('Sweep + compact: unreached strings are freed; survivors MOVE to gen 1 (new addresses),|so cart is updated to the new address. Gen 0 is empty', 'cyan'),
             ('New objects again in gen 0: a temp string G (no reference) and an Order H that the static field cache holds', 'emerald'),
             ('Gen 1 GC also collects gen 0: roots cart → Order → List and cache → H are followed. G is not reached', 'amber'),
-            ('G freed. H moves gen 0 → gen 1; Order and List (already in gen 1) move to gen 2. One step each,|references updated', 'violet'),
+            ('G freed. H moves gen 0 → gen 1; Order and List (already in gen 1) move to gen 2 (dashed = where they were).|One step each, references updated', 'violet'),
             ('Gen 2 GC (full), mark: roots are followed through every generation. A large object that no root|references sits in the LOH; it is not reached', 'amber'),
             ('Sweep: the unreachable large object is freed. Survivors move up one step: H goes gen 1 → gen 2,|cache is updated. Gen 0 and gen 1 are empty', 'violet')]
     for i, (t, c) in enumerate(caps):
