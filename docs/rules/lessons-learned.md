@@ -86,3 +86,10 @@ User: explain memory at every level in sequence, with animated pictures, so a le
 
 ## L16 — Hub journey map: Back + label overflow (2026-10-14)
 User: long node labels (emoji + title) overflowed the node box, and Back was missing on the detail page after clicking a journey-map node. Cause: (1) fixed 14px font in a 200px node; (2) the Back click handler only matched `a[href]` and SVG anchors use `xlink:href`. Fix: `site.js` fits node text at runtime and handles `xlink:href`. Check after any hub change: no `.jm-node` text wider than its rect, and Back from a map node returns to the same scroll position.
+
+## L17 — Memory diagrams must be memory-level, and show the running line (2026-10-14)
+User: *"no diagrams for name's sake"* — diagrams must show real memory cells (object header, type pointer → MethodTable, vtable slots, stack slots/frames, static area, GC actions), and *"show in the code on the left which line is executing now and where the memory changes"*.
+- **Process that worked:** two fresh agents per page propose designs (learner + runtime expert); pick the best; rebuild; then a second fresh learner who sees only the screenshots answers a memory quiz — NEEDS WORK verdicts are fixed and re-tested. Do not skip the fresh-learner round.
+- **Rules distilled (round 2):** a pointer to an object ends on the object's card border (`card()` anchors `L/R/T/B`), never on the type-ptr row; a drawn "type ptr → X MT" needs a drawn X MT, otherwise drop header/type-ptr rows; every step must visibly change; colours/icons that carry meaning need an in-diagram legend; popped frames and dead objects are shown faded/dashed, not just removed; no empty box in step 1.
+- **Running line:** every Story with code shows an amber band + ▶ on the executing line (`run_line(d, x, y, w, seq)` in `memory/p_common.py`, kit method `code_cursor`). One statement per line; GC-only steps highlight a `// GC runs later` comment line or nothing. The memory cell that line changes lights up in the same step.
+- Fixed top/bottom bars hiding captions in screenshots is a capture artefact (see `docs/rules/verification.md`) — do not "fix" it.

@@ -205,3 +205,7 @@ All diagrams were rebuilt with object header / type pointer / MethodTable / stac
 - Analogies: nursery / school / retirement home for generations 0 / 1 / 2 (🟦 teaching picture).
 - Illustrative: a "50 MB report" kept alive by a closure; 1,000,000 ints; 200 windows.
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.
+
+
+## Round 2 / running-line pass (2026-10-14)
+No new factual claims beyond the classic runtime model already logged above. Added only teaching-picture elements: finalizer-queue zone (memory-clearing), GC-mark legends, per-step code cursors, illustrative framework snippets in di-lifetimes (scoped) and gc-modes (background GC) marked as illustrative. Still unverified (🟨 K): static string interning, `in` optional at call site, async methods cannot take ref/in/out, ArrayPool.Return clearArray, `where T : IPayable` avoiding boxing. Source of per-page claims: `docs/specs/memory/claims-ledger-rebuild.md` + each page's DECISION round-2 section.
