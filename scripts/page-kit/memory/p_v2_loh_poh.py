@@ -87,13 +87,13 @@ def d_lo2():
     # free tail
     d.box(554, ys, 66, H, [('free', 't'), ('0x600', 'm')], 'n', st='1-4')
     d.box(448, ys, 172, H, [('one free block', 't'), ('from 0x500', 'm')], 'n', st='5-5')
-    d.box(448, ys, 150, H, [('N: bigger than the hole', 't'), ('0x500', 'm')], 'emerald', st='6-', hl=6)
+    d.box(448, ys, 150, H, [('N: bigger, no fit', 't'), ('0x500', 'm')], 'emerald', st='6-', hl=6)
     d.text(178, 182, 'hole too small for N', 'rose', size=9, anchor='middle', st='6-')
     _slot(d, 552, 36, 'n', 'reference', 'cyan', w=68, st='6-', hl=6)
     d.arrow([(586, 70), (586, ys)], 'cyan', st='6-')
     # native code
     d.zone(10, 232, 620, 44, 'amber', '⚙️ NATIVE CODE', st='2-')
-    d.box(189, 240, 190, 30, [('raw copy of 0x300 (not a GC reference)', 'm')], 'amber', st='2-', hl=2)
+    d.box(174, 240, 220, 30, [('raw copy of 0x300 (not a GC reference)', 'm')], 'amber', st='2-', hl=2)
     d.arrow([(284, 240), (284, ys + H)], 'amber', st='2-')
     for i, (t, c) in enumerate([
             ('Heap in address order. a, buf and b are stack references to A, P, B;|nothing points at the objects at 0x200 and 0x400', 'cyan'),

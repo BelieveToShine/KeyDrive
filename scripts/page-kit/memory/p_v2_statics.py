@@ -25,7 +25,7 @@ def d_st1():
     d.arrow([fr['rows'][0]['r'], (122, fr['rows'][0]['y']), (122, o1['L'][1]), o1['L']], 'cyan', st='5-', id='ra')
     d.arrow([fr['rows'][1]['r'], (122, fr['rows'][1]['y']), (122, o2['L'][1]), o2['L']], 'cyan', st='9-', id='rb')
     ty = sa['L'][1]
-    d.arrow([o1['R'], (316, o1['R'][1]), (316, ty), sa['L']], 'amber', 'Total++', at=(316, 168), st='3-3', id='inc1')
+    d.arrow([o1['R'], (316, o1['R'][1]), (316, ty), sa['L']], 'amber', 'Total++', at=(316, 155), st='3-3', id='inc1')
     d.arrow([sa['rows'][0]['l'], (308, ty), (308, o1['R'][1]), (o1['R'][0] - 8, o1['R'][1])], 'amber', 'copy', at=(308, 170), st='4-4', id='cp1')
     d.arrow([o2['R'], (316, o2['R'][1]), (316, ty), sa['L']], 'amber', 'Total++', at=(316, 214), st='7-7', id='inc2')
     d.arrow([sa['rows'][0]['l'], (308, ty), (308, o2['R'][1]), (o2['R'][0] - 8, o2['R'][1])], 'amber', 'copy', at=(308, 214), st='8-8', id='cp2')

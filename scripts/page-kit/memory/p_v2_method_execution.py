@@ -17,9 +17,9 @@ def d_me1():
     oc = card(d, 275, 100, 'Order object @ 0x…A1', [('Count = 0', 'f', '1-3')], 'emerald', w=340, st=1)
     cell(d, oc, 0, 'Count = 1', 'amber', st='4-', hl=4)
     sc = card(d, 275, 214, 'string object "pen" (a literal, created earlier)', [('length = 3, chars: p e n', 'f')], 'emerald', w=340, st=1)
-    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (oc['x'], mf['rows'][0]['y'])], 'cyan', 'order', at=(248, mf['rows'][0]['y'] - 12), st='1-', id='ao')
+    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (oc['x'], mf['rows'][0]['y'])], 'cyan', 'order', at=(236, mf['rows'][0]['y']), st='1-', id='ao')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (250, af['rows'][0]['y']), (250, 146), (oc['x'], 146)], 'violet', 'this', at=(250, 196), st='3-4', id='at')
-    d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (sc['x'], af['rows'][1]['y'])], 'violet', 'name', at=(248, af['rows'][1]['y'] - 12), st='3-4')
+    d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (sc['x'], af['rows'][1]['y'])], 'violet', 'name', at=(236, af['rows'][1]['y']), st='3-4')
     d.note(275, 296, 340, 44, 'header and type pointer are left out here (this picture is about the frame);|the next picture shows them', 'n', size=8.8)
     _notes(d, 380, 50, [('The variable order (in Main’s frame) holds the address of the Order object.|The string "pen" is its own object.', 'cyan'),
                         ('Call: a new frame is pushed on top of the stack. |Its slots this and name exist but are not filled yet.', 'violet'),
@@ -32,7 +32,7 @@ def d_me2():
     d = Diagram('me2', 640, 452, 'Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, whose slot holds the address of the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B')
     d.zone(10, 24, 140, 290, 'cyan', '📚 STACK')
     d.zone(180, 24, 170, 290, 'emerald', '🏠 HEAP')
-    d.zone(410, 24, 220, 290, 'n', '🧬 TYPE DATA (appears next)', st=1)
+    d.zone(410, 24, 220, 290, 'n', '🧬 TYPE DATA (appears next)', st='1-1')
     d.zone(410, 24, 220, 290, 'violet', '🧬 TYPE DATA (one per type)', st='2-')
     mf = card(d, 18, 50, 'Main frame', [('o1 = 0x…A1', 'f'), ('o2 = 0x…B1', 'f')], 'cyan', w=124, st=1)
     af = card(d, 18, 214, 'AddItem frame', [('this = 0x…A1', 'f', '4-4')], 'violet', w=124, st='4-5')
@@ -46,13 +46,13 @@ def d_me2():
     d.box(440, 190, 160, 50, [('AddItem native code', 't'), ('compiled once', 's')], 'amber', st='3-', hl=3)
     # pointers TO an object end on its card border
     yA, yB = 75, 200
-    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (A['x'], mf['rows'][0]['y'])], 'cyan', 'o1', at=(166, mf['rows'][0]['y'] - 12), st=1)
-    d.arrow([(mf['rows'][1]['r'][0], mf['rows'][1]['y']), (172, mf['rows'][1]['y']), (172, 188), (B['x'], 188)], 'cyan', 'o2', at=(172, 140), st=1)
+    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (A['x'], mf['rows'][0]['y'])], 'cyan', 'o1', at=(158, mf['rows'][0]['y']), st=1)
+    d.arrow([(mf['rows'][1]['r'][0], mf['rows'][1]['y']), (172, mf['rows'][1]['y']), (172, 188), (B['x'], 188)], 'cyan', 'o2', at=(172, 118), st=1)
     d.arrow([(A['rows'][1]['r'][0], A['rows'][1]['y']), (380, A['rows'][1]['y']), (380, mt['L'][1]), (mt['x'], mt['L'][1])], 'violet', 'type ptr', at=(380, 112), st='2-', id='ta')
-    d.arrow([(B['rows'][1]['r'][0], B['rows'][1]['y']), (380, B['rows'][1]['y']), (380, mt['L'][1])], 'violet', st='2-')
+    d.arrow([(B['rows'][1]['r'][0], B['rows'][1]['y']), (380, B['rows'][1]['y']), (380, mt['L'][1]), (mt['x'], mt['L'][1])], 'violet', st='2-')
     d.arrow([(520, mt['rows'][0]['top'] + mt['rows'][0]['h']), (520, 190)], 'amber', 'address of', at=(520, 150), st='3-', id='tc')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, 150), (A['x'], 150)], 'violet', 'this', at=(158, 232), st='4-4')
-    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (B['x'], 250)], 'violet', 'this', at=(166, af['rows'][0]['y'] + 14), st='5-5')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (B['x'], 250)], 'violet', 'this', at=(166, af['rows'][0]['y'] + 8), st='5-5')
     d.code_box(10, 326, 270, 50, [(0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=15)
     d.note(10, 392, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
     _notes(d, 326, 52, [('Two objects, each with its own header,|type pointer and Count. o1 and o2 hold|their addresses. (Type data comes next.)', 'cyan'),

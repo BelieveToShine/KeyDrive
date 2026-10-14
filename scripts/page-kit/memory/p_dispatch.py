@@ -78,73 +78,133 @@ IPayable s = new Coupon { Value = 5 };  // struct → boxed on the heap''',
         facts=('Interfaces cannot be instantiated, interface variables refer to implementing objects, and struct-to-interface assignment boxes: Microsoft Learn (interfaces, boxing and unboxing).', [('Interfaces (C# guide)', 'https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces'), DOC_BOX])))
 
 # ================================================================= 11. VIRTUAL / OVERRIDE / OVERLOAD
+def _tokpath(d, pid, pts, cut=18):
+    """invisible path for a token: the arrow's route, stopped `cut` px short of the tip so the icon never sits on the arrowhead"""
+    (x0, y0), (x1, y1) = pts[-2], pts[-1]
+    L = ((x1 - x0) ** 2 + (y1 - y0) ** 2) ** .5 or 1
+    k = max(0, (L - cut) / L)
+    p = list(pts[:-1]) + [(x0 + (x1 - x0) * k, y0 + (y1 - y0) * k)]
+    d.add(f'<path id="{d.mid}-{pid}" d="M' + ' L'.join(f'{x:g},{y:g}' for x, y in p) + '" fill="none" stroke="none"/>')
+
 def d_ov1():
-    d = Diagram('ov1', 640, 330, 'Overloading at the memory level: the two Print methods are two separate pieces of code; at build time the compiler writes the address of the right one into each call, so at run time the call simply jumps there with no lookup')
-    d.code_box(10, 8, 300, 48, [(0, 'Print(5);        // argument: int', ''), (0, 'Print("hi");     // argument: string', '')], 'n', size=9, lh=15)
-    d.zone(10, 70, 260, 170, 'cyan', '🔧 COMPILED CALLS (in your method)', st='2-')
-    d.box(24, 108, 232, 40, [('call 0x…10', 'm'), ('for Print(5)', 's')], 'cyan', st='2-', hl=2)
-    d.box(24, 170, 232, 40, [('call 0x…40', 'm'), ('for Print("hi")', 's')], 'violet', st='3-', hl=3)
-    d.zone(340, 70, 290, 170, 'amber', '📜 CODE (two separate methods)', st=1)
-    d.box(354, 108, 262, 40, [('Print(int n)   @ 0x…10', 'm'), ('its own code', 's')], 'cyan', st=1, hl=1)
-    d.box(354, 170, 262, 40, [('Print(string s)   @ 0x…40', 'm'), ('its own code', 's')], 'violet', st=1)
-    d.arrow([(256, 128), (354, 128)], 'cyan', 'fixed', at=(305, 128), st='2-', id='o1')
-    d.arrow([(256, 190), (354, 190)], 'violet', 'fixed', at=(305, 190), st='3-', id='o2')
-    d.token('o1', '📞', 15, 'cyan', st='4-4')
-    d.token('o2', '📞', 15, 'violet', st='4-4')
-    for i, (t, c) in enumerate([('Two overloads = two different pieces of code in the type', 'amber'), ('Build time: the compiler sees an int argument and writes the address of Print(int) into the call', 'cyan'), ('Build time: a string argument → the address of Print(string)', 'violet'), ('Run time: each call just jumps to its fixed address — nothing is looked up, nothing is allocated', 'emerald')]):
-        d.note(10, 256, 620, 62, t, c, st=f'{i + 1}-{i + 1}', size=10)
+    d = Diagram('ov1', 640, 400, 'Overloading at the memory level: Main has an int variable n and a string variable s whose object is on the heap; at build time the compiler looks at the declared type of each argument and writes the address of Print(int) into the first call and Print(string) into the second; at run time each call just jumps to its fixed address')
+    d.code_box(10, 8, 330, 48, [(0, 'int n = 5;   string s = "hi";', ''), (0, 'Print(n);       Print(s);', '')], 'n', size=9, lh=15)
+    d.zone(10, 70, 172, 150, 'cyan', '📚 STACK')
+    d.zone(18, 92, 156, 118, 'cyan', 'Main() frame')
+    d.box(26, 118, 140, 34, [('n : int', 'm'), ('value 5, in place', 's')], 'cyan', hl='2')
+    d.box(26, 164, 140, 34, [('s : string', 'm'), ('reference → heap', 's')], 'violet', hl='3')
+    d.zone(10, 230, 172, 90, 'emerald', '🏠 HEAP')
+    sc = card(d, 40, 252, 'string object', [('"hi"', 'f')], 'emerald', w=130)
+    d.arrow([(26, 181), (14, 181), (14, sc['L'][1]), (sc['L'][0], sc['L'][1])], 'emerald')
+    d.zone(222, 70, 178, 150, 'cyan', '🔧 COMPILED CALLS (in Main)')
+    d.note(236, 118, 130, 34, 'call ?|filled in at build time', 'n', size=9, st='1-1')
+    d.note(236, 164, 130, 34, 'call ?|filled in at build time', 'n', size=9, st='1-2')
+    d.box(236, 118, 130, 34, [('call 0x…10', 'm'), ('for Print(n)', 's')], 'cyan', st='2-', hl='2')
+    d.box(236, 164, 130, 34, [('call 0x…40', 'm'), ('for Print(s)', 's')], 'violet', st='3-', hl='3')
+    d.zone(418, 70, 212, 150, 'amber', '📜 CODE (two separate methods)')
+    d.box(436, 118, 180, 34, [('Print(int n)   @ 0x…10', 'm'), ('its own code', 's')], 'cyan', st='1-3', hl='1')
+    d.box(436, 164, 180, 34, [('Print(string s)   @ 0x…40', 'm'), ('its own code', 's')], 'violet', st='1-3')
+    d.box(436, 118, 180, 34, [('Print(int n)   @ 0x…10', 'm'), ('got n = 5 (a copy)', 's')], 'cyan', st='4-', hl='4')
+    d.box(436, 164, 180, 34, [('Print(string s)   @ 0x…40', 'm'), ('got s = the reference', 's')], 'violet', st='4-')
+    d.arrow([(166, 135), (236, 135)], 'cyan', 'int', at=(201, 135), st='2-')
+    d.arrow([(166, 181), (236, 181)], 'violet', 'string', at=(201, 181), st='3-')
+    d.arrow([(366, 135), (436, 135)], 'cyan', 'fixed', at=(401, 135), st='2-', id='o1')
+    d.arrow([(366, 181), (436, 181)], 'violet', 'fixed', at=(401, 181), st='3-', id='o2')
+    _tokpath(d, 'o1t', [(366, 135), (436, 135)], 22)
+    _tokpath(d, 'o2t', [(366, 181), (436, 181)], 22)
+    d.token('o1t', '📞', 15, 'cyan', st='4-4')
+    d.token('o2t', '📞', 15, 'violet', st='4-4')
+    for i, (t, c) in enumerate([('Main has n (an int, the value 5 right in the frame) and s (a reference to a string object on the heap).|Print(int) and Print(string) are two separate pieces of code.', 'amber'),
+                                ('Build time: the argument n is declared int → the compiler writes the address of Print(int) into the first call', 'cyan'),
+                                ('Build time: the argument s is declared string → the address of Print(string) goes into the second call', 'violet'),
+                                ('Run time: each call just jumps to its fixed address (📞) with a copy of the argument — nothing is looked up, nothing is allocated', 'emerald')]):
+        d.note(10, 332, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=10)
     return d
 
 def d_ov2():
-    d = Diagram('ov2', 640, 430, 'A virtual call a.Speak(): the compiler only fixes the slot number, then at run time the runtime follows a to the Dog object, reads the type pointer stored in its header area to reach Dog’s method table, takes that table’s slot for Speak and jumps to Dog.Speak')
-    d.zone(10, 24, 100, 140, 'cyan', '📚 STACK')
-    d.box(20, 94, 80, 46, [('a : Animal', 't'), ('0x…A1', 'm')], 'cyan', st=1, hl='3')
+    d = Diagram('ov2', 640, 380, 'A virtual call a.Speak(): the compiler only fixes the slot number, then at run time the runtime follows a to the Dog object, reads the type pointer stored in its header area to reach Dog’s method table, takes that table’s slot for Speak and jumps to Dog.Speak')
+    d.zone(10, 24, 100, 150, 'cyan', '📚 STACK')
+    d.box(20, 74, 80, 46, [('a : Animal', 't'), ('0x…A1', 'm')], 'cyan', st=1, hl='3')
     d.zone(120, 24, 192, 150, 'emerald', '🏠 HEAP')
     dog = card(d, 130, 46, 'Dog object @ 0x…A1', [('header (sync block)', 'hdr'), ('type ptr → Dog MT', 'tp'), ('Age = 3', 'f')], 'emerald', w=172, st=1)
-    d.zone(322, 24, 170, 310, 'violet', '🧬 TYPE DATA (one per type)')
-    am = card(d, 330, 46, 'Animal MethodTable', [('slot 0: Speak', 'f'), ('slot 1: Eat', 'f')], 'violet', w=154, st=1)
-    dm = card(d, 330, 190, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-4'), ('slot 1: Eat', 'f')], 'violet', w=154, st=1)
+    d.zone(322, 24, 170, 250, 'violet', '🧬 TYPE DATA (one per type)')
+    am = card(d, 330, 46, 'Animal MethodTable', [('slot 0: Speak', 'f')], 'violet', w=154, st=1)
+    dm = card(d, 330, 190, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-4')], 'violet', w=154, st=1)
+    cell(d, am, 0, 'slot 0: Speak', 'amber', st='2-2', hl=2)
     cell(d, dm, 0, 'slot 0: Speak', 'amber', st='5-', hl=5)
-    d.zone(502, 24, 128, 310, 'amber', '📜 CODE')
-    d.box(512, 76, 108, 40, [('Animal.Speak', 'm'), ('"..."', 's')], 'amber', st=1)
-    d.box(512, 218, 108, 40, [('Dog.Speak', 'm'), ('"Woof"', 's')], 'amber', st=1, hl='6')
+    d.zone(502, 24, 128, 250, 'amber', '📜 CODE')
+    d.box(512, 63, 108, 40, [('Animal.Speak', 'm'), ('"..."', 's')], 'amber', st=1)
+    d.box(512, dm['rows'][0]['y'] - 20, 108, 40, [('Dog.Speak', 'm'), ('"Woof"', 's')], 'amber', st=1, hl='6')
     ty = dog['rows'][1]['y']
-    d.arrow([(100, 117), (dog['rows'][1]['l'][0], ty)], 'cyan', st='1-', id='w1')
-    # type pointer arrow: object type-ptr cell -> Dog MethodTable first slot cell (the table starts there)
-    d.arrow([(dog['rows'][1]['r'][0], ty), (314, ty), (314, dm['rows'][0]['y']), (dm['rows'][0]['l'][0], dm['rows'][0]['y'])], 'violet', 'type ptr', at=(314, 160), st='1-', id='w2')
-    d.arrow([(am['rows'][0]['r'][0], am['rows'][0]['y']), (512, 96)], 'amber', st='1-', id='w4')
-    d.arrow([(dm['rows'][0]['r'][0], dm['rows'][0]['y']), (512, 238)], 'amber', st='1-', id='w3')
-    d.token('w1', '📞', 15, 'cyan', st='3-3')
-    d.token('w2', '📞', 15, 'violet', st='4-4')
-    d.token('w3', '📞', 15, 'amber', st='5-5')
-    d.code_box(10, 346, 300, 36, [(0, 'Animal a = new Dog();    a.Speak();', '')], 'n', size=9, lh=15)
-    for i, (t, c) in enumerate([('Setup: a holds the address of a Dog object;|its type pointer leads to Dog’s MethodTable', 'cyan'), ('Build time: the compiler only knows that|Speak is a virtual method in slot 0 — not which code', 'amber'),
-                                ('Run time 1 ·: follow a to the object|on the heap', 'cyan'), ('Run time 2 ·: read its type pointer →|Dog’s MethodTable (the object’s REAL type)', 'violet'), ('Run time 3 ·: take slot 0 of THAT table —|Dog replaced it with Dog.Speak', 'amber'), ('Jump: Dog.Speak runs with this = the object.|Animal’s own table is never touched.', 'emerald')]):
-        d.note(320, 346, 310, 70, t, c, st=f'{i + 1}-{i + 1}', size=9)
+    p1 = [(100, 97), (dog['L'][0], 97)]
+    d.arrow(p1, 'cyan', st='1-', id='w1')
+    p2 = [(dog['rows'][1]['r'][0], ty), (314, ty), (314, dm['L'][1]), (dm['L'][0], dm['L'][1])]
+    d.arrow(p2, 'violet', st='1-', id='w2')
+    d.arrow([(am['rows'][0]['r'][0], am['rows'][0]['y']), (512, am['rows'][0]['y'])], 'amber', st='1-', id='w4')
+    p3 = [(dm['rows'][0]['r'][0], dm['rows'][0]['y']), (512, dm['rows'][0]['y'])]
+    d.arrow(p3, 'amber', st='1-', id='w3')
+    _tokpath(d, 'w1t', p1, 14); _tokpath(d, 'w2t', p2, 20); _tokpath(d, 'w3t', p3, 18)
+    d.token('w1t', '📞', 15, 'cyan', st='3-3')
+    d.token('w2t', '📞', 15, 'violet', st='4-4')
+    d.token('w3t', '📞', 15, 'amber', st='5-5')
+    d.code_box(10, 290, 300, 36, [(0, 'Animal a = new Dog();    a.Speak();', '')], 'n', size=9, lh=15)
+    for i, (t, c) in enumerate([('Setup: a holds the address of a Dog object;|its type pointer leads to Dog’s MethodTable', 'cyan'), ('Build time: the compiler only knows that Speak is a|virtual method, slot 0 (Animal’s table) — not which code', 'amber'),
+                                ('Run time 1: follow a to the object|on the heap', 'cyan'), ('Run time 2: read its type pointer →|Dog’s MethodTable (the object’s REAL type)', 'violet'), ('Run time 3: take slot 0 of THAT table —|Dog replaced it with Dog.Speak', 'amber'), ('Jump: Dog.Speak runs with this = the object.|Animal’s own table is never touched.', 'emerald')]):
+        d.note(320, 290, 310, 70, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
 def d_ov3():
-    d = Diagram('ov3', 640, 420, 'Hiding with new: Dog declares a separate Speak method, so slot 0 in Dog’s method table still points to Animal.Speak and Dog.Speak sits in its own slot; a call through an Animal variable uses slot 0 and runs Animal.Speak, while a call through a Dog variable is bound by the compiler to Dog’s own method')
-    d.zone(10, 24, 210, 240, 'violet', '🧬 TYPE DATA (Dog uses new)')
-    am = card(d, 20, 50, 'Animal MethodTable', [('slot 0: Speak', 'f')], 'violet', w=190, st=1)
-    dm = card(d, 20, 130, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-2'), ('slot 1: Speak (new)', 'f', '1-5')], 'violet', w=190, st=1)
+    d = Diagram('ov3', 640, 420, 'Hiding with new: variables a (typed Animal) and d (typed Dog) both refer to the same Dog object, whose type pointer leads to Dog’s method table; slot 0 of that table still points to Animal.Speak and Dog’s new Speak sits in its own slot 1; the compiler turns a.Speak() into a virtual call through slot 0, so Animal.Speak runs, and binds d.Speak() to Dog’s own method in slot 1, so Dog.Speak runs')
+    d.zone(10, 24, 100, 150, 'cyan', '📚 STACK')
+    d.box(20, 52, 80, 38, [('a : Animal', 't'), ('0x…A1', 'm')], 'cyan', st=1, hl='2,3')
+    d.box(20, 104, 80, 38, [('d : Dog', 't'), ('0x…A1', 'm')], 'rose', st=1, hl='5,6')
+    d.zone(120, 24, 192, 150, 'emerald', '🏠 HEAP')
+    dog = card(d, 130, 46, 'Dog object @ 0x…A1', [('header (sync block)', 'hdr'), ('type ptr → Dog MT', 'tp'), ('Age = 3', 'f')], 'emerald', w=172, st=1)
+    d.zone(322, 24, 170, 288, 'violet', '🧬 TYPE DATA (Dog uses new)')
+    am = card(d, 330, 46, 'Animal MethodTable', [('slot 0: Speak', 'f')], 'violet', w=154, st=1)
+    dm = card(d, 330, 216, 'Dog MethodTable', [('slot 0: Speak', 'f', '1-2'), ('slot 1: Speak (new)', 'f', '1-4')], 'violet', w=154, st=1)
     cell(d, dm, 0, 'slot 0: Speak', 'amber', st='3-4', hl=3)
     cell(d, dm, 0, 'slot 0: Speak', 'violet', st='5-')
-    cell(d, dm, 1, 'slot 1: Speak (new)', 'rose', st='6-', hl=6)
-    d.zone(240, 24, 150, 240, 'amber', '📜 CODE')
-    d.box(250, 104, 130, 40, [('Animal.Speak', 'm'), ('prints "..."', 's')], 'amber', st=1, hl='3,4')
-    d.box(250, 174, 130, 40, [('Dog.Speak', 'm'), ('prints "Woof"', 's')], 'rose', st=1, hl='6')
-    d.arrow([(am['rows'][0]['r'][0], am['rows'][0]['y']), (225, am['rows'][0]['y']), (225, 124), (250, 124)], 'amber', st=1, id='h1')
-    d.arrow([(dm['rows'][0]['r'][0], dm['rows'][0]['y']), (232, dm['rows'][0]['y']), (232, 124), (250, 124)], 'amber', st=1, id='h2')
-    d.arrow([(dm['rows'][1]['r'][0], dm['rows'][1]['y']), (250, 194)], 'rose', st=1, id='h3')
-    d.token('h2', '📞', 15, 'amber', st='3-3')
-    d.token('h3', '📞', 15, 'rose', st='6-6')
-    d.box(410, 50, 220, 76, [('a : Animal  → Dog object', 't'), ('a.Speak()', 'm'), ('compiler picked: slot 0', 's')], 'cyan', st='2-4', hl='2,3')
-    d.box(410, 150, 220, 76, [('d : Dog  → same Dog object', 't'), ('d.Speak()', 'm'), ('compiler picked: Dog’s own', 's')], 'emerald', st='5-', hl='5,6')
-    for i, (t, c) in enumerate([('With new, Dog keeps slot 0 → Animal.Speak and adds a SEPARATE method in its own slot', 'violet'), ('One Dog object, reached through a variable typed Animal: the compiler binds a.Speak() to Animal’s slot 0', 'cyan'),
-                                ('Run time: slot 0 of the Dog table still points to Animal.Speak → it runs', 'amber'), ('Result "...": the object’s real type did not matter, because Dog never replaced slot 0', 'rose'),
-                                ('The same object reached through a variable typed Dog: the compiler binds d.Speak() to Dog’s own method', 'emerald'), ('Result "Woof". Same object, different answer — override replaces slot 0, new does not', 'emerald')]):
-        d.note(10, 336, 620, 70, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    cell(d, dm, 1, 'slot 1: Speak (new)', 'rose', st='5-', hl=5)
+    d.zone(502, 24, 128, 288, 'amber', '📜 CODE')
+    r0, r1 = dm['rows'][0]['y'], dm['rows'][1]['y']
+    d.box(512, am['rows'][0]['y'] - 20, 108, 40, [('Animal.Speak', 'm'), ('prints "..."', 's')], 'amber', st=1, hl='3,4')
+    d.box(512, r1 - 20, 108, 40, [('Dog.Speak', 'm'), ('prints "Woof"', 's')], 'rose', st=1, hl='6')
+    d.note(512, 108, 108, 24, 'prints "..."', 'amber', st='4-4', size=9)
+    d.note(512, 226, 108, 24, 'prints "Woof"', 'rose', st='6-6', size=9)
+    ty = dog['rows'][1]['y']
+    d.arrow([(100, 71), (dog['L'][0], 71)], 'cyan', st=1, id='ha')
+    d.arrow([(100, 123), (dog['L'][0], 123)], 'rose', st=1, id='hd')
+    d.arrow([(dog['rows'][1]['r'][0], ty), (314, ty), (314, 188), (407, 188), (407, dm['T'][1])], 'violet', 'type ptr', at=(362, 188), st=1)
+    d.arrow([(am['rows'][0]['r'][0], am['rows'][0]['y']), (512, am['rows'][0]['y'])], 'amber', st=1)
+    d.arrow([(dm['rows'][0]['r'][0], r0), (497, r0), (497, 97), (512, 97)], 'amber', st=1, id='s0')
+    d.arrow([(dm['rows'][1]['r'][0], r1), (512, r1)], 'rose', st=1, id='s1')
+    # compiled call sites
+    d.zone(10, 190, 302, 144, 'cyan', '🔧 CALL SITES (compiled, in Main)')
+    d.box(24, 216, 150, 34, [('a.Speak()', 'm'), ('a is declared Animal', 's')], 'cyan', st='1-1')
+    d.box(24, 216, 150, 34, [('a.Speak()', 'm'), ('→ virtual call, slot 0', 's')], 'cyan', st='2-', hl='2,3')
+    d.box(24, 280, 150, 34, [('d.Speak()', 'm'), ('d is declared Dog', 's')], 'rose', st='1-4')
+    d.box(24, 280, 150, 34, [('d.Speak()', 'm'), ('→ Dog’s own, slot 1', 's')], 'rose', st='5-', hl='5,6')
+    pa = [(174, 233), (296, 233), (296, r0), (dm['rows'][0]['l'][0], r0)]
+    pd = [(174, 297), (304, 297), (304, r1), (dm['rows'][1]['l'][0], r1)]
+    d.arrow(pa, 'cyan', 'slot 0', at=(235, 233), st='3-4', id='ca')
+    d.arrow(pd, 'rose', 'slot 1', at=(239, 297), st='5-', id='cd')
+    _tokpath(d, 'cat', pa, 20); _tokpath(d, 'cdt', pd, 20)
+    p0 = [(dm['rows'][0]['r'][0], r0), (497, r0), (497, 97), (512, 97)]
+    _tokpath(d, 's0t', p0, 20)
+    p1 = [(dm['rows'][1]['r'][0], r1), (512, r1)]
+    _tokpath(d, 's1t', p1, 16)
+    d.token('cat', '📞', 15, 'cyan', st='3-3')
+    d.token('s0t', '📞', 15, 'amber', st='4-4')
+    d.token('cdt', '📞', 15, 'rose', st='5-5')
+    d.token('s1t', '📞', 15, 'rose', st='6-6')
+    for i, (t, c) in enumerate([('Setup: a and d are two variables holding the SAME Dog object;|Dog’s table keeps slot 0 → Animal.Speak and adds its own method in slot 1', 'violet'),
+                                ('Build time, a.Speak(): a is declared Animal,|so the compiler writes “virtual call, slot 0”', 'cyan'),
+                                ('Run time: follow a to the object, its type ptr to Dog’s table,|take slot 0 — which Dog never replaced', 'amber'),
+                                ('Slot 0 still points to Animal.Speak → it runs and prints "..."|(the object’s real type did not matter)', 'amber'),
+                                ('Build time, d.Speak(): d is declared Dog, so the compiler binds|the call to Dog’s own method (slot 1 in this picture)', 'rose'),
+                                ('Run time: Dog.Speak runs and prints "Woof". Same object, different answer —|override replaces slot 0, new does not', 'rose')]):
+        d.note(10, 346, 620, 62, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def build_virtual_override_overload():
@@ -154,10 +214,10 @@ def build_virtual_override_overload():
         sub='Overload is chosen by the compiler from the arguments. Override is chosen at run time from the real object. New (hiding) is chosen from the variable’s type. See exactly where each decision is made.',
         ivq='What is the difference between overloading and overriding, and how does the runtime pick the method?',
         prob=(d_ov1(), [
-            'Two overloads are <b>two separate pieces of code</b> in the type. Here <code>Print(int)</code> and <code>Print(string)</code> sit at different (illustrative) addresses.',
-            '<b>Build time:</b> the argument of <code>Print(5)</code> is an <code>int</code>, so the compiler writes the address of <code>Print(int)</code> straight into that call.',
-            '<b>Build time:</b> <code>Print("hi")</code> is a string, so its call gets the address of <code>Print(string)</code>.',
-            '<b>Run time:</b> each call just jumps to its fixed address (📞). Nothing is looked up and nothing is allocated — overloading is decided entirely before the program runs.'],
+            '<b>Setup.</b> <code>Main</code> has <code>n</code> (an <code>int</code>: the value 5 sits right in the stack frame) and <code>s</code> (a reference to a string object on the heap). <code>Print(int)</code> and <code>Print(string)</code> are <b>two separate pieces of code</b> at different (illustrative) addresses.',
+            '<b>Build time:</b> the argument <code>n</code> is declared <code>int</code>, so the compiler writes the address of <code>Print(int)</code> straight into that call.',
+            '<b>Build time:</b> the argument <code>s</code> is declared <code>string</code>, so its call gets the address of <code>Print(string)</code>.',
+            '<b>Run time:</b> each call just jumps to its fixed address (📞) with a copy of the argument (the value 5, or the reference). Nothing is looked up and nothing is allocated — overloading is decided entirely before the program runs.'],
             'overloading: the choice is baked into the compiled call. (Addresses are illustrative; the JIT compiles a method the first time it is needed.)'),
         one='<b>Overload = the compiler picks by arguments. Override = the runtime picks by the real object. New (hiding) = the compiler picks by the variable’s type.</b>',
         real=['🍽️ <b>The menu</b> (overload): you order “pizza” or “pasta” — the kitchen knows what to make from <b>what you asked for</b>, before cooking starts.',
@@ -166,18 +226,18 @@ def build_virtual_override_overload():
             ('story', '📞 Override: a virtual call walks from the variable to the object to its type', (d_ov2(), [
                 '<b>Setup.</b> <code>a</code> (on the stack) holds the address of a <b>Dog object</b> on the heap. Every object starts with a small header and a <b>type pointer</b> that leads to its type’s <b>MethodTable</b> (one table per type, shared by all objects of that type).',
                 '<b>Build time.</b> <code>a</code> is declared <code>Animal</code>, so the compiler can only note: “<code>Speak</code> is a virtual method, <b>slot 0</b>”. It does not know which code will run.',
-                '<b>Run time 1 ·.</b> Follow the address in <code>a</code> to the object on the heap.',
-                '<b>Run time 2 ·.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.',
-                '<b>Run time 3 ·.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).',
+                '<b>Run time 1.</b> Follow the address in <code>a</code> to the object on the heap.',
+                '<b>Run time 2.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.',
+                '<b>Run time 3.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).',
                 '<b>Jump.</b> <code>Dog.Speak</code> runs with <code>this</code> = the object. The slot number came from the compiler; the target came from the object at run time.'],
                 'override = the slot is replaced in the derived type’s table. Slot numbers and the exact table layout are a teaching picture of the classic runtime model.')),
             ('story', '🪞 New (hiding): a separate method, the slot is NOT replaced', (d_ov3(), [
-                '<b>Tables.</b> With <code>new</code>, Dog does <b>not</b> replace slot 0: it still points to <code>Animal.Speak</code>. Dog’s <code>Speak</code> is a <b>separate</b> method in its own slot.',
-                '<b>Through an Animal variable.</b> The compiler binds <code>a.Speak()</code> to Animal’s slot 0 (it only sees the type Animal).',
-                '<b>Run time.</b> Slot 0 of the Dog table still points to <code>Animal.Speak</code> → that runs.',
-                'The answer is <code>"..."</code>. The object really is a Dog, but that did not matter.',
-                '<b>Through a Dog variable.</b> The compiler sees type Dog, so it binds <code>d.Speak()</code> to Dog’s own method.',
-                'The answer is <code>"Woof"</code>. Same object, different answer — <code>override</code> replaces the slot, <code>new</code> does not.'],
+                '<b>Setup.</b> <code>a</code> (typed Animal) and <code>d</code> (typed Dog) hold the <b>same</b> Dog object, whose type pointer leads to Dog’s MethodTable. With <code>new</code>, Dog does <b>not</b> replace slot 0: it still points to <code>Animal.Speak</code>. Dog’s <code>Speak</code> is a <b>separate</b> method in its own slot.',
+                '<b>Build time, through an Animal variable.</b> The compiler only sees the type Animal, so it compiles <code>a.Speak()</code> as a virtual call through slot 0.',
+                '<b>Run time.</b> Follow <code>a</code> to the object, its type pointer to Dog’s table, and take slot 0 — which Dog never replaced.',
+                'Slot 0 still points to <code>Animal.Speak</code>, so that runs and prints <code>"..."</code>. The object really is a Dog, but that did not matter.',
+                '<b>Build time, through a Dog variable.</b> The compiler sees type Dog, so it binds <code>d.Speak()</code> to Dog’s own method (slot 1 in this teaching picture).',
+                '<b>Run time.</b> <code>Dog.Speak</code> runs and prints <code>"Woof"</code>. Same object, different answer — <code>override</code> replaces the slot, <code>new</code> does not.'],
                 'the only difference is whether Dog’s table slot 0 was replaced. That is why polymorphism needs virtual + override.')),
             ('table', '📋 The three decisions', ['', 'Overload', 'Override (virtual)', 'New (hiding)'], [
                 ['Who decides?', 'compiler', 'runtime', 'compiler'],

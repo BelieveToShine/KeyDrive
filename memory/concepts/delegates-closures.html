@@ -111,7 +111,7 @@
 <text x="24" y="378" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var person = new Person("Asha");</text>
 <text x="24" y="393" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Action greet = person.SayHi;</text>
 <text x="24" y="408" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">greet();    person = null;</text>
-<text class="free" x="160" y="436" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses and field names are illustrative.   📞 = a call being made</text>
+<text class="free" x="320" y="436" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses and field names are illustrative.   📞 = a call being made</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="356" width="310" height="84" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="387.5" text-anchor="middle" font-size="9" fill="#6ee7b7">new Person("Asha"): the Person AND its name</text></g>
 <g class="st" data-s="1-1"><text x="475" y="400.5" text-anchor="middle" font-size="9" fill="#6ee7b7">string are two heap objects; Name is a reference.</text></g>
@@ -213,7 +213,7 @@
 <text x="24" y="393" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">inc(); inc();</text>
 <text x="24" y="408" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">// MakeCounter() {</text>
 <text x="24" y="423" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">//   int count = 0; return () =&gt; count++; }</text>
-<text class="free" x="160" y="446" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses, closure/lambda internals simplified.   📞 = a call being made</text>
+<text class="free" x="320" y="446" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: addresses, closure/lambda internals simplified.   📞 = a call being made</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="356" width="310" height="84" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="394" text-anchor="middle" font-size="9" fill="#67e8f9">MakeCounter() runs: its frame holds a plain local</text></g>
 <g class="st" data-s="1-1"><text x="475" y="407" text-anchor="middle" font-size="9" fill="#67e8f9">count = 0. Main’s inc is declared, not assigned yet.</text></g>
@@ -260,8 +260,8 @@
 <text class="zone-title" x="154" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
 <rect class="zone" x="440" y="24" width="190" height="120" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="454" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">📦 STATIC AREA</text>
-<g class="st" data-s="1-2"><rect class="zone" x="14" y="70" width="112" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-2"><text class="zone-title" x="28" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Run()</text></g>
+<g class="st" data-s="1-2"><rect class="zone" x="14" y="50" width="112" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-2"><text class="zone-title" x="28" y="69" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Run()</text></g>
 <g class="st" data-s="1-5"><rect class="zone" x="150" y="46" width="150" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-5"><text class="zone-title" x="164" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Delegate @ 0x…D7</text></g>
 <g class="st" data-s="1-5"><rect class="zone" x="150" y="190" width="150" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
@@ -275,8 +275,8 @@
 <g class="st" data-s="1-5"><path id="dl3-k2" d="M292,107 L310,107 L310,160 L225,160 L225,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dl3A)"/></g>
 <g class="st" data-s="1-5"><path id="dl3-k3" d="M292,251 L315,251 L315,219 L330,219" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dl3A)"/></g>
 <g class="st" data-s="2-4"><path id="dl3-k1" d="M450,87 L300,87" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#dl3A)"/></g>
-<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="22" y="96" width="96" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="70" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inc = 0x…D7</text></g>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="22" y="76" width="96" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="70" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inc = 0x…D7</text></g>
 <g class="st" data-s="1-5" data-hl="4"><rect class="bx" x="158" y="72" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5" data-hl="4"><text x="225" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">method = lambda code</text></g>
 <g class="st" data-s="1-5" data-hl="4"><rect class="bx" x="158" y="96" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>

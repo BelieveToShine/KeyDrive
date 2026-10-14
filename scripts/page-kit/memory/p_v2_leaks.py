@@ -60,7 +60,7 @@ def d_lk2():
     card(d, 170, 48, 'List object', lrows(2), 'emerald', w=150, st='1-1')
     card(d, 170, 48, 'List object', lrows(6), 'emerald', w=150, st='2-3', hl=3)
     card(d, 170, 48, 'List object', lrows(0), 'emerald', w=150, st='4-')
-    d.arrow([(122, 105), (178, 105)], 'amber', 'ref', at=(147, 105), id='c1', st=1)
+    d.arrow([(122, 105), (170, 105)], 'amber', id='c1', st=1)
     # array strip
     d.zone(160, 190, 460, 54, 'emerald', None)
     d.text(612, 200, 'array of references to items', 'emerald', 8.5, anchor='end')

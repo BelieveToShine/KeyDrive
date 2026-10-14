@@ -1,44 +1,56 @@
 from p_common import *
 
 def d_as1():
-    d = Diagram('as1', 640, 486, 'Memory during an async call: the state machine starts in the LoadAsync frame, is copied (boxed) to a heap object at the first real wait, the frame is popped, the delay task later wakes the heap copy, the result goes into the Task of int, and only then do the state machine and the delay task become garbage')
+    d = Diagram('as1', 640, 486, 'Memory during an async call: the state machine starts in the LoadAsync frame, is copied (boxed) to a heap object at the first real wait, the Task of int is created, the frame is popped, the delay task later resumes the heap copy in a new frame, the result goes into the Task of int, and only then do the state machine and the delay task become garbage and get freed')
     d.code_box(10, 8, 410, 48, [(0, 'async Task<int> LoadAsync() { int a = 1;', ''), (0, '   await Task.Delay(100);  return a + 1; }', '')], 'n', size=8.8, lh=15)
     d.note(430, 8, 200, 48, 'teaching picture: simplified|Release build, names illustrative', 'amber', size=8.5)
     d.zone(10, 70, 170, 340, 'cyan', '📚 STACK (one thread)')
     d.zone(190, 70, 440, 340, 'emerald', '🏠 HEAP')
-    # stack
-    caller = card(d, 20, 100, 'Caller frame', [('other locals…', 'f'), ('t = ?', 'f', '1-2')], 'cyan', w=128, st=1)
-    cell(d, caller, 1, 't → Task<int>', 'cyan', st='3-', hl=3)
-    card(d, 20, 196, 'LoadAsync frame', [('sm.a = 1', 'f'), ('sm.state = -1', 'f')], 'cyan', w=128, st='1-3', hl='1,3')
-    d.box(20, 196, 128, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='4-4')
-    d.box(20, 196, 128, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='7-')
-    mv = card(d, 20, 196, 'MoveNext frame', [('this → heap sm', 'f'), ('a = 1 from field', 'f', '5-5')], 'cyan', w=128, st='5-6', hl=5)
-    cell(d, mv, 1, 'returns 2', 'cyan', st='6-6', hl=6)
-    # heap
-    tk = card(d, 200, 100, 'Task<int> (caller holds)', [('header (sync block)', 'hdr'), ('type ptr → Task<int> MT', 'tp'), ('result = not ready', 'f', '3-5')], 'emerald', w=180, st='3-')
-    cell(d, tk, 2, 'result = 2  ✓ done', 'emerald', st='6-', hl=6)
-    sm = card(d, 450, 100, 'State machine (heap copy)', [('header (sync block)', 'hdr'), ('type ptr → its MethodTable', 'tp'), ('builder → Task<int>', 'f'), ('state = 0  (after await)', 'f'), ('a = 1', 'f')], 'amber', w=170, st='3-6', hl='3,5')
-    card(d, 450, 100, 'State machine (heap copy)', [('header (sync block)', 'hdr'), ('type ptr → its MethodTable', 'tp'), ('builder → Task<int>', 'f'), ('state = 0  (after await)', 'f'), ('a = 1', 'f')], 'rose', w=170, st='7-7', hl=7)
-    dl = card(d, 450, 300, 'Delay Task', [('header (sync block)', 'hdr'), ('type ptr → Task MT', 'tp'), ('status: not done', 'f', '2-4')], 'amber', w=170, st='2-6', hl=2)
-    cell(d, dl, 2, 'status: done  ✓', 'emerald', st='5-6', hl=5)
-    card(d, 450, 300, 'Delay Task', [('header (sync block)', 'hdr'), ('type ptr → Task MT', 'tp'), ('status: done', 'f')], 'rose', w=170, st='7-7', hl=7)
-    d.note(200, 262, 240, 62, 'Garbage = nothing can reach it.|It is freed later, when a GC runs.', 'rose', st='7-', size=9)
-    # arrows
-    d.arrow([(caller['rows'][1]['r'][0], caller['rows'][1]['y']), (tk['rows'][1]['l'][0], tk['rows'][1]['y'])], 'cyan', 'ref', at=(176, tk['rows'][1]['y']), st='3-', id='a_t')
-    d.arrow([(148, 233), (sm['rows'][4]['l'][0], sm['rows'][4]['y'])], 'amber', 'boxed copy', at=(305, 233), st='3-3', id='a_copy')
-    d.arrow([(sm['rows'][2]['l'][0], sm['rows'][2]['y']), (tk['rows'][2]['r'][0], tk['rows'][2]['y'])], 'emerald', 'result', at=(423, sm['rows'][2]['y']), st='3-6', id='a_res')
-    d.arrow([(535, 300), (535, 254)], 'violet', 'wakes', at=(535, 277), st='3-6', id='a_wake')
+    # ---- stack
+    caller = card(d, 20, 100, 'Caller frame', [('other locals…', 'f'), ('t = ? (no Task yet)', 'f', '1-4')], 'cyan', w=150, st=1)
+    cell(d, caller, 1, 't → Task<int>', 'cyan', st='5-', hl=5)
+    card(d, 20, 196, 'LoadAsync frame', [('state machine (struct)', 'hdr'), ('state: not started', 'f'), ('a = 1', 'f')], 'cyan', w=150, st='1-2')
+    card(d, 20, 196, 'LoadAsync (stale)', [('old copy, unused', 'hdr'), ('state: not started', 'f'), ('a = 1', 'f')], 'n', w=150, st='3-4', dash=True)
+    d.box(20, 196, 150, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='5-5')
+    d.box(20, 196, 150, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='8-')
+    mv = card(d, 20, 196, 'MoveNext frame', [('this → state machine', 'f'), ('a = 1 (from heap)', 'f'), ('running…', 'f', '6-6')], 'cyan', w=150, st='6-7', hl=6)
+    cell(d, mv, 2, 'returns 2', 'cyan', st='7-7', hl=7)
+    # ---- heap (nothing of ours yet at step 1: say so)
+    d.note(200, 190, 420, 46, 'nothing of ours on the heap yet|the state machine still lives in the stack frame', 'n', st='1-1', size=9)
+    tk = card(d, 200, 100, 'Task<int> (for the caller)', [('result = not ready', 'f', '4-6')], 'emerald', w=180, st='4-', hl=4)
+    cell(d, tk, 0, 'result = 2  ✓ done', 'emerald', st='7-', hl=7)
+    smrows = lambda b, s, a: [(b, 'f'), (s, 'f'), (a, 'f')]
+    sm = card(d, 450, 92, 'State machine (heap copy)', [('builder → (not set)', 'f', '3-3'), ('state: waiting at await', 'f', '3-5'), ('a = 1', 'f')], 'amber', w=170, st='3-7', hl=3)
+    cell(d, sm, 0, 'builder → Task<int>', 'amber', st='4-7', hl=4)
+    cell(d, sm, 1, 'state: running again', 'amber', st='6-6', hl=6)
+    cell(d, sm, 1, 'state: finished', 'amber', st='7-7', hl=7)
+    card(d, 450, 92, 'State machine · garbage', [('builder → Task<int>', 'f'), ('state: finished', 'f'), ('a = 1', 'f')], 'rose', w=170, st='8-8', hl=8)
+    dl = card(d, 200, 290, 'Delay Task', [('status: not done', 'f', '2-5'), ('on done → nobody yet', 'f', '2-3')], 'amber', w=180, st='2-7', hl=2)
+    cell(d, dl, 1, 'on done → state machine', 'amber', st='4-7', hl=4)
+    cell(d, dl, 0, 'status: done  ✓', 'emerald', st='6-7', hl=6)
+    card(d, 200, 290, 'Delay Task · garbage', [('status: done  ✓', 'f'), ('on done → state machine', 'f')], 'rose', w=180, st='8-8', hl=8)
+    # ---- arrows
+    r1 = caller['rows'][1]['y']
+    d.arrow([(caller['rows'][1]['r'][0], r1), (170, r1), (tk['L'][0] - 30, tk['L'][1]), tk['L']], 'cyan', st='5-', id='a_t')
+    d.arrow([(170, 249), (432, 249), (432, 145), sm['L']], 'amber', 'boxed copy', at=(290, 249), st='3-3', id='a_copy')
+    d.arrow([(sm['rows'][0]['l'][0], sm['rows'][0]['y']), tk['R']], 'emerald', st='4-7', id='a_res')
+    d.arrow([(dl['rows'][1]['r'][0], dl['rows'][1]['y']), (570, dl['rows'][1]['y']), (570, sm['y'] + sm['h'])], 'violet', 'on done: resume', at=(470, dl['rows'][1]['y']), st='4-7', id='a_wake')
+    d.arrow([(dl['rows'][1]['r'][0], dl['rows'][1]['y']), (570, dl['rows'][1]['y']), (570, sm['y'] + sm['h'])], 'rose', st='8-8', dash=True)
+    d.arrow([(sm['rows'][0]['l'][0], sm['rows'][0]['y']), tk['R']], 'rose', st='8-8', dash=True)
+    d.arrow([(mv['rows'][0]['r'][0], mv['rows'][0]['y']), (500, mv['rows'][0]['y']), (500, sm['y'] + sm['h'])], 'cyan', 'this', at=(330, mv['rows'][0]['y']), st='6-7', id='a_this')
     d.token('a_copy', '📋', 15, 'amber', st='3-3')
-    d.token('a_wake', '⏰', 15, 'violet', st='5-5')
-    d.token('a_res', '✉️', 15, 'emerald', st='6-6')
-    caps = [('1 · LoadAsync is called: its frame holds the state machine (a = 1, state = -1)|The caller will get a Task<int>; t is not set yet', 'cyan'),
-            ('2 · Task.Delay(100) creates a Delay Task on the heap, not finished yet|The method cannot continue: it must wait', 'amber'),
-            ('3 · First real wait: the state machine is COPIED (boxed) to a new heap object|state = 0 = "resume after the await"; the Task<int> exists; the delay task will wake it', 'amber'),
-            ('4 · LoadAsync returns to its caller: the frame is POPPED|The thread is free; the caller only holds the Task<int>', 'cyan'),
-            ('5 · The delay finishes and wakes the heap copy: MoveNext runs in a NEW frame|a is read from the heap copy, no copy back (may be another thread)', 'violet'),
-            ('6 · return a + 1: the result 2 is written into the Task<int>|The caller’s await now gets 2; the MoveNext frame ends', 'emerald'),
-            ('7 · Nothing points to the state machine or the delay task any more|They are garbage; the Task<int> lives on because t still points to it', 'rose'),
-            ('8 · A GC runs later: the garbage is freed|Only the Task<int> (still reachable from t) remains', 'emerald')]
+    d.token('a_wake', '⏰', 15, 'violet', st='6-6')
+    d.token('a_res', '✉️', 15, 'emerald', st='7-7')
+    d.text(620, 400, 'glow = what changed in this step · rose = garbage (no live pointer to it)', 'n', 8.5, anchor='end')
+    caps = [('1 · LoadAsync starts: its frame holds the state machine (a = 1, state: not started)|The caller has no Task yet (t = ?) and the heap has nothing of ours', 'cyan'),
+            ('2 · Task.Delay(100) creates a Delay Task on the heap: not done yet|The await sees it is not finished, so the method must wait', 'amber'),
+            ('3 · First real wait: the state machine is COPIED (boxed) to a heap object|The frame keeps an old copy (grey) that nobody uses again', 'amber'),
+            ('4 · The Task<int> for the caller is created and the Delay Task records "resume this state machine"|A pointer on the heap does the waiting, not a thread', 'amber'),
+            ('5 · LoadAsync returns: its frame is POPPED and t now points to the Task<int>|The thread is free for other work', 'cyan'),
+            ('6 · The delay finishes and resumes the state machine in a NEW frame (maybe another thread)|It reads a from the heap copy: nothing is copied back to a frame', 'violet'),
+            ('7 · return a + 1: the result 2 goes into the Task<int>; the state machine is finished|The caller’s await now gets 2; the MoveNext frame returns', 'emerald'),
+            ('8 · The MoveNext frame is popped: nothing live points to the state machine or Delay Task|They are garbage (rose); dead objects may still point at each other (dashed)', 'rose'),
+            ('9 · A later GC frees the two garbage objects|The Task<int> stays: t still points to it', 'emerald')]
     for i, (t, c) in enumerate(caps):
         d.note(10, 420, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
@@ -50,14 +62,15 @@ def build_async_await():
         sub='What the compiler builds for <code>async</code> methods, why locals move from the stack to a heap object at an <code>await</code>, and when that costs an allocation.',
         ivq='What happens to memory when you use async and await?',
         prob=(d_as1(), [
-            '<code>LoadAsync()</code> is called. In this simplified picture its stack frame holds the compiler’s <b>state machine</b>: <code>a = 1</code> and <code>state = -1</code> (“not started”). The caller will receive a <code>Task&lt;int&gt;</code>.',
+            '<code>LoadAsync()</code> is called. In this simplified picture its stack frame holds the compiler’s <b>state machine</b>: <code>a = 1</code> and “not started”. The caller has no <code>Task&lt;int&gt;</code> yet and the heap holds nothing of ours.',
             '<code>Task.Delay(100)</code> creates a <b>Delay Task</b> object on the heap. It is not finished, so the method must wait.',
-            '<b>First real wait:</b> the state machine is <b>copied (boxed)</b> into a new heap object, with <code>state = 0</code> meaning “resume after the await”. The <code>Task&lt;int&gt;</code> now exists and the caller’s <code>t</code> points to it. The Delay Task will wake the heap copy.',
-            'The method returns to its caller and its <b>frame is popped</b>. The thread is free for other work. The caller holds only the <code>Task&lt;int&gt;</code> reference.',
-            'The delay finishes and <b>wakes the heap copy</b>: <code>MoveNext</code> runs in a <b>new frame</b> and reads <code>a</code> from the heap object’s field. Nothing is copied back to a frame. It may run on another thread.',
-            '<code>return a + 1</code>: the result <code>2</code> is written into the <code>Task&lt;int&gt;</code>. The caller’s <code>await</code> receives it and the MoveNext frame ends.',
-            'Nothing points to the state machine or the Delay Task any more: they are <b>garbage</b>. The <code>Task&lt;int&gt;</code> stays reachable from <code>t</code>.',
-            'Garbage is not freed at once. A later <b>GC</b> frees the two objects; the <code>Task&lt;int&gt;</code> remains while it is referenced.'],
+            '<b>First real wait:</b> the state machine is <b>copied (boxed)</b> into a new heap object, marked “waiting at await”. The frame keeps an old copy that nobody uses again.',
+            'The <code>Task&lt;int&gt;</code> for the caller is created, and the Delay Task records “resume this state machine when done”. A pointer on the heap does the waiting, not a thread.',
+            'The method returns to its caller: its <b>frame is popped</b> and the caller’s <code>t</code> now points to the <code>Task&lt;int&gt;</code>. The thread is free for other work.',
+            'The delay finishes and <b>resumes the heap copy</b>: <code>MoveNext</code> runs in a <b>new frame</b> and reads <code>a</code> from the heap object’s field. Nothing is copied back. It may run on another thread.',
+            '<code>return a + 1</code>: the result <code>2</code> is written into the <code>Task&lt;int&gt;</code> and the state machine is finished. The caller’s <code>await</code> receives the 2.',
+            'The MoveNext frame is popped. Nothing live points to the state machine or the Delay Task: they are <b>garbage</b>. Only dead objects still point at each other, and that keeps nothing alive.',
+            'Garbage is not freed at once. A later <b>GC</b> frees the two objects; the <code>Task&lt;int&gt;</code> remains because <code>t</code> still points to it.'],
             'await does not block a thread. The state machine is a bookmark on the heap, kept alive by the awaited task until it wakes it. (Teaching picture: simplified Release build; the wake-up mechanism and type names are illustrative.)'),
         one='<b><code>await</code> copies the method’s state (the state machine) to a heap object while it waits, so the thread can do other work.</b>',
         real=['📖 You are reading a novel when the phone rings. You put in a <b>bookmark</b> (the state machine) and walk away — the <b>book stays on the shelf</b> (heap) while you do other things. When you come back you open it at the bookmark and carry on. Meanwhile someone else could use the chair (the thread).'],

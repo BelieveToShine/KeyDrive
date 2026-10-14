@@ -58,22 +58,22 @@ def d_ab2():
     d.zone(130, Y, 200, 330, 'emerald', '🏠 HEAP')
     d.zone(340, Y, 150, 330, 'violet', '🧬 TYPE DATA', st='2-')
     d.zone(500, Y, 130, 330, 'amber', '📜 CODE', st='2-')
-    a = card(d, 138, Y + 26, 'CardPayment object', [('object header', 'hdr'), ('type ptr → CardPayment', 'tp'), ('Amount = 100', 'f'), ('CardEnd = string ref', 'f')], 'emerald', w=184, st=1)
-    b = card(d, 138, Y + 26 + 148, 'UpiPayment object', [('object header', 'hdr'), ('type ptr → UpiPayment', 'tp'), ('Amount = 100', 'f'), ('UpiId = string ref', 'f')], 'emerald', w=184, st=1)
+    a = card(d, 138, Y + 26, 'CardPayment object', [('object header', 'hdr'), ('type ptr → CardPayment', 'tp', '1-4'), ('Amount = 100', 'f'), ('CardEnd = string ref', 'f')], 'emerald', w=184, st=1)
+    b = card(d, 138, Y + 26 + 148, 'UpiPayment object', [('object header', 'hdr'), ('type ptr → UpiPayment', 'tp', '1-6'), ('Amount = 100', 'f'), ('UpiId = string ref', 'f')], 'emerald', w=184, st=1)
     ya, yb = a['L'][1], b['L'][1]
     d.box(20, ya - 23, 90, 46, [('p1', 't'), ('type Payment', 'm')], 'cyan', st=1, hl='4')
     d.box(20, yb - 23, 90, 46, [('p2', 't'), ('type Payment', 'm')], 'cyan', st=1, hl='7')
     # MethodTable cards: mid-height equals the object's mid-height, so every arrow is straight
     cm = card(d, 348, ya - 29, 'CardPayment MT', [('slot 0: Pay', 'f', '2-2')], 'violet', w=134, st='2-')
     um = card(d, 348, yb - 29, 'UpiPayment MT', [('slot 0: Pay', 'f', '2-2')], 'violet', w=134, st='2-')
-    pm = card(d, 348, 214, 'Payment MT (abstract)', [('slot 0: no code', 'f', '3-3')], 'violet', w=134, st='3-3')
-    cell(d, pm, 0, 'slot 0: no code', 'amber', st='3-3', hl=3)
+    pm = card(d, 348, 214, 'Payment MT (abstract)', [('slot 0: no code', 'f')], 'amber', w=134, st='3-3', hl=3)
     cell(d, cm, 0, 'slot 0: Pay', 'amber', st='3-', hl='3,5')
     cell(d, um, 0, 'slot 0: Pay', 'amber', st='3-', hl='3,7')
     cy1, cy2 = cm['rows'][0]['y'], um['rows'][0]['y']
     cc = d.box(508, cy1 - 17, 114, 34, [('CardPayment.Pay', 'm')], 'amber', st='2-', hl='6')
     uc = d.box(508, cy2 - 17, 114, 34, [('UpiPayment.Pay', 'm')], 'amber', st='2-', hl='7')
-    cell(d, a, 1, 'type ptr → CardPayment', 'violet', st='5-5', hl=5)
+    cell(d, a, 1, 'type ptr → CardPayment', 'amber', st='5-5', hl=5)
+    cell(d, a, 1, 'type ptr → CardPayment', 'violet', st='6-')
     cell(d, b, 1, 'type ptr → UpiPayment', 'violet', st='7-7', hl=7)
     d.arrow([(110, ya), a['L']], 'cyan', st=1)
     d.arrow([(110, yb), b['L']], 'cyan', st=1)
@@ -81,7 +81,7 @@ def d_ab2():
     d.arrow([(b['rows'][1]['r'][0], b['rows'][1]['y']), (336, b['rows'][1]['y']), (336, um['L'][1]), um['L']], 'violet', st='2-')
     d.arrow([(cm['rows'][0]['r'][0], cy1), (508, cy1)], 'amber', st='2-')
     d.arrow([(um['rows'][0]['r'][0], cy2), (508, cy2)], 'amber', st='2-')
-    d.text(560, 438, 'highlight = the step that is happening', 'n', size=8, st='4-7')
+    d.text(14, 434, 'amber highlight = where the call is now', 'n', size=8, anchor='start', st='4-7')
     notes = [('Two stack variables, both typed Payment, hold references|to two DIFFERENT heap objects. Each has a header and a type pointer.', 'cyan'),
              ('Each type pointer leads to its own type’s MethodTable (one per type).|The child filled Pay’s slot with its own code.', 'violet'),
              ('Build time: the abstract Payment.Pay has slot 0 but no code. The compiler|records only the slot number; the same number sits in every child table.', 'amber'),

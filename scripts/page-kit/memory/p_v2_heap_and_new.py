@@ -10,32 +10,34 @@ def d_hp1():
     d.code_box(10, 6, 380, 64, [(0, 'class Person { string Name; int Age;', ''), (0, '   public Person(string n) { Name = n; } }', ''), (0, 'var p = new Person("Asha");   ...   p = null;', '')], 'n', size=9, lh=15)
     d.zone(10, 82, 110, 290, 'cyan', '📚 STACK (Main)')
     d.zone(130, 82, 330, 290, 'emerald', '🏠 HEAP')
-    d.zone(470, 82, 160, 150, 'violet', '🧬 TYPE DATA')
-    # stack slot p
-    _slot(d, 20, 140, 90, 46, 'p : Person', [('not set', 'n', '1-4', None), ('0x…A0', 'cyan', '5-5', 5), ('null', 'rose', '6-', 6)])
-    # free space (before and after)
+    d.zone(470, 82, 160, 290, 'violet', '🧬 TYPE DATA')
+    _slot(d, 20, 146, 90, 46, 'p : Person', [('not set', 'n', '1-4', None), ('0x…A0', 'cyan', '5-5', 5), ('null', 'rose', '6-', 6)])
+    d.text(65, 326, 'amber = new / changed', 'amber', size=8)
+    d.text(65, 340, 'grey = unreachable', 'n', size=8)
+    d.text(65, 354, 'or cleared', 'n', size=8)
     d.zone(140, 104, 150, 130, 'n', 'free space', st='1-1')
-    d.zone(140, 104, 150, 130, 'n', 'free space', st='7-')
+    d.zone(140, 104, 150, 130, 'n', 'free space (cleared)', st='7-')
     d.zone(300, 232, 150, 130, 'n', 'free space', st='1-3')
-    d.zone(300, 232, 150, 130, 'n', 'free space', st='7-')
-    # type data
-    mt = card(d, 480, 104, 'Person MethodTable', [('one per type', 'f'), ('shared by all', 'f')], 'violet', w=140, st='1-')
-    # Person object
+    d.zone(300, 232, 150, 130, 'n', 'free space (cleared)', st='7-')
+    mt = card(d, 480, 124, 'Person MethodTable', [('vtable slots', 'f'), ('interface map, size', 'f')], 'violet', w=140, st='1-')
+    smt = card(d, 480, 252, 'string MethodTable', [('vtable slots', 'f'), ('interface map, size', 'f')], 'violet', w=140, st='4-')
     PT = 'Person @ 0x…A0'
     pr = [('header (sync info)', 'hdr'), ('type pointer', 'tp'), ('Name = null', 'f', '3-3'), ('Age = 0', 'f')]
-    res = card(d, 140, 104, 'room reserved', [('…', 'f'), ('…', 'f'), ('…', 'f'), ('…', 'f')], 'n', w=150, st='2-2', dash=True)
+    res = card(d, 140, 104, 'room reserved', [('header', 'f'), ('type pointer', 'f'), ('field: Name', 'f'), ('field: Age', 'f')], 'n', w=150, st='2-2', dash=True)
     per = card(d, 140, 104, PT, pr, 'emerald', w=150, st='3-5', hl=3)
-    cell(d, per, 2, 'Name ──▶', 'amber', st='4-5', hl=4)
-    gone = card(d, 140, 104, 'Person (unreachable)', [('header', 'hdr'), ('type pointer', 'tp'), ('Name ──▶', 'f'), ('Age = 0', 'f')], 'n', w=150, st='6-6')
-    # string object
+    cell(d, per, 2, 'Name = 0x…B4', 'amber', st='4-5', hl=4)
+    gone = card(d, 140, 104, 'Person (unreachable)', [('header', 'hdr'), ('type pointer', 'tp'), ('Name = 0x…B4', 'f'), ('Age = 0', 'f')], 'n', w=150, st='6-6')
     strc = card(d, 300, 232, 'string @ 0x…B4', [('header', 'hdr'), ('type pointer', 'tp'), ('length = 4', 'f'), ('A  s  h  a', 'f')], 'rose', w=150, st='4-5', hl=4)
     sgone = card(d, 300, 232, 'string (unreachable)', [('header', 'hdr'), ('type pointer', 'tp'), ('length = 4', 'f'), ('A  s  h  a', 'f')], 'n', w=150, st='6-6')
-    # arrows
-    d.arrow([(per['rows'][1]['r'][0], per['rows'][1]['y']), (mt['rows'][0]['l'][0], per['rows'][1]['y'])], 'violet', 'type', at=(385, per['rows'][1]['y']), st='3-6', id='tp')
-    d.arrow([(per['rows'][2]['r'][0], per['rows'][2]['y']), (375, per['rows'][2]['y']), (375, 232)], 'amber', 'reference', at=(375, 196), st='4-6', id='nm')
-    d.arrow([(110, 163), (per['rows'][1]['l'][0], per['rows'][1]['y'])], 'cyan', st='5-5', id='pa')
-    d.token('pa', '📍', 15, 'cyan', st='5-5')
-    d.note(470, 244, 160, 78, 'Teaching picture:|header, type pointer, field|order and addresses are|illustrative', 'amber', size=8.5)
+    ty = per['rows'][1]['y']; sy = strc['rows'][1]['y']; ny = per['rows'][2]['y']
+    d.arrow([(per['rows'][1]['r'][0], ty), mt['L']], 'violet', 'type', at=(385, ty), st='3-5', id='tp')
+    d.arrow([(per['rows'][1]['r'][0], ty), mt['L']], 'n', st='6-6')
+    d.arrow([(strc['rows'][1]['r'][0], sy), smt['L']], 'violet', st='4-5')
+    d.arrow([(strc['rows'][1]['r'][0], sy), smt['L']], 'n', st='6-6')
+    d.arrow([(per['rows'][2]['r'][0], ny), (375, ny), strc['T']], 'amber', 'reference', at=(375, 196), st='4-5', id='nm')
+    d.arrow([(per['rows'][2]['r'][0], ny), (375, ny), strc['T']], 'n', st='6-6')
+    d.arrow([(110, per['L'][1]), per['L']], 'cyan', st='5-5', id='pa')
+    d.note(480, 340, 140, 30, 'Teaching picture: layout|and addresses illustrative', 'amber', size=8)
     for i, (t, c) in enumerate([
         ('Before new: p exists on the stack but holds|nothing yet. The heap has free space.', 'cyan'),
         ('new asks the runtime for room for a Person:|header, type pointer and its fields.', 'amber'),
@@ -48,33 +50,35 @@ def d_hp1():
     return d
 
 def d_hp2():
-    d = Diagram('hp2', 640, 450, 'Arrays on the heap: an int array holds the number values inside its own cells, while a Person array holds references; a new Person array has null cells and the Person objects are separate heap objects; copying an array variable copies only the address')
+    d = Diagram('hp2', 640, 420, 'Arrays on the heap: an int array holds the number values inside its own cells, while a Person array holds references; a new Person array has null cells; a new Person is a separate heap object whose address is then copied into a cell; copying an array variable copies only the address')
     d.code_box(10, 6, 380, 66, [(0, 'int[] nums = new int[3];   Person[] crew = new Person[2];', ''), (0, 'nums[1] = 7;            crew[0] = new Person();', ''), (0, 'int[] b = nums;', '')], 'n', size=9, lh=15)
     d.zone(10, 82, 620, 62, 'cyan', '📚 STACK (Main)')
-    d.zone(10, 154, 620, 218, 'emerald', '🏠 HEAP')
+    d.zone(10, 154, 620, 176, 'emerald', '🏠 HEAP')
+    d.text(320, 250, '(no arrays yet)', 'n', size=10, st='1-1')
     d.box(145, 100, 78, 38, [('nums', 't'), ('not set', 'm')], 'n', st='1-1', hl=1)
     d.box(145, 100, 78, 38, [('nums', 't'), ('0x…10', 'm')], 'cyan', st='2-', hl=2)
     d.box(330, 100, 110, 38, [('crew', 't'), ('not set', 'm')], 'n', st='1-2', hl=1)
     d.box(330, 100, 110, 38, [('crew', 't'), ('0x…40', 'm')], 'violet', st='3-', hl=3)
-    d.box(232, 100, 78, 38, [('b', 't'), ('0x…10', 'm')], 'cyan', st='6-', hl=6)
-    ia = card(d, 140, 178, 'int[3] @ 0x…10', [('header', 'hdr'), ('type pointer', 'tp'), ('length = 3', 'f'), ('[0] = 0', 'f'), ('[1] = 0', 'f', '2-3'), ('[2] = 0', 'f')], 'emerald', w=140, st='2-')
-    cell(d, ia, 4, '[1] = 7', 'amber', st='4-', hl=4)
-    pa = card(d, 300, 178, 'Person[2] @ 0x…40', [('header', 'hdr'), ('type pointer', 'tp'), ('length = 2', 'f'), ('[0] = null', 'f', '3-4'), ('[1] = null', 'f')], 'emerald', w=150, st='3-')
-    cell(d, pa, 3, '[0] = 0x…70', 'amber', st='5-', hl=5)
-    po = card(d, 480, 226, 'Person @ 0x…70', [('header', 'hdr'), ('type pointer', 'tp'), ('Name, Age …', 'f')], 'rose', w=140, st='5-', hl=5)
+    d.box(232, 100, 78, 38, [('b', 't'), ('0x…10', 'm')], 'cyan', st='7-', hl=7)
+    ia = card(d, 140, 178, 'int[3] @ 0x…10', [('length = 3', 'f'), ('[0] = 0', 'f'), ('[1] = 0', 'f', '2-3'), ('[2] = 0', 'f')], 'emerald', w=140, st='2-')
+    cell(d, ia, 2, '[1] = 7', 'amber', st='4-', hl=4)
+    pa = card(d, 300, 178, 'Person[2] @ 0x…40', [('length = 2', 'f'), ('[0] = null', 'f', '3-5'), ('[1] = null', 'f')], 'emerald', w=150, st='3-')
+    cell(d, pa, 1, '[0] = 0x…70 (copy)', 'amber', st='6-', hl=6)
+    po = card(d, 480, 198, 'Person @ 0x…70', [('Name = null', 'f'), ('Age = 0', 'f')], 'rose', w=140, st='5-', hl=5)
     d.arrow([(184, 138), (184, 178)], 'cyan', st='2-', id='n1')
     d.arrow([(385, 138), (385, 178)], 'violet', st='3-', id='c1')
-    d.arrow([(271, 138), (271, 178)], 'cyan', st='6-', id='b1')
-    d.arrow([(pa['rows'][3]['r'][0], pa['rows'][3]['y']), (po['rows'][1]['l'][0], pa['rows'][3]['y'])], 'amber', st='5-', id='r1')
-    d.note(480, 336, 140, 34, 'Teaching picture:|illustrative layout', 'amber', size=8.5)
+    d.arrow([(271, 138), (271, 178)], 'cyan', st='7-', id='b1')
+    d.arrow([(pa['rows'][1]['r'][0], pa['rows'][1]['y']), po['L']], 'amber', st='6-', id='r1')
+    d.note(480, 288, 140, 34, 'Teaching picture: layout|illustrative; each heap object|also has a hidden header|+ type pointer (left out)', 'amber', size=7.5)
     for i, (t, c) in enumerate([
         ('Two stack slots exist, but neither array does yet.', 'cyan'),
         ('new int[3]: ONE heap object. The three numbers|sit inside its own cells, all 0.', 'emerald'),
         ('new Person[2]: one object whose cells are references.|They start null: no Person exists yet.', 'violet'),
         ('nums[1] = 7: follow the address and change the|number in place. Nothing is copied out.', 'amber'),
-        ('new Person() is a SEPARATE heap object.|The cell holds its address; an arrow now points to it.', 'rose'),
+        ('new Person() makes a SEPARATE heap object (zeroed).|Nothing refers to it yet: the cell is still null.', 'rose'),
+        ('crew[0] = ...: a COPY of the address goes into the cell.|Now an arrow points to the Person.', 'amber'),
         ('b = nums copies the ADDRESS: two variables,|ONE array. Change via b and nums sees it.', 'cyan')]):
-        d.note(10, 382, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 340, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def build_heap_and_new():
@@ -98,10 +102,11 @@ def build_heap_and_new():
         parts=[
             ('story', '🔤 Arrays: numbers inside, or addresses inside', (d_hp2(), [
                 '<b>Setup.</b> Two stack slots, <code>nums</code> and <code>crew</code>. The arrays do not exist yet.',
-                '<b><code>new int[3]</code></b> makes <b>one</b> heap object: header, type pointer, a <b>length</b>, then the three numbers <b>inside</b> it.',
+                '<b><code>new int[3]</code></b> makes <b>one</b> heap object: a <b>length</b>, then the three numbers <b>inside</b> it (its hidden header and type pointer are left out of this picture).',
                 '<b><code>new Person[2]</code></b> makes one object whose cells are <b>references</b>. They start as <code>null</code>: no Person exists yet.',
                 '<b><code>nums[1] = 7</code></b> follows the address and changes that cell in place.',
-                '<b><code>crew[0] = new Person()</code></b> creates a separate Person object; the cell now holds its address.',
+                '<b><code>new Person()</code></b> creates a separate Person object, zero-filled. Nothing refers to it yet; the cell is still <code>null</code>.',
+                '<b><code>crew[0] = …</code></b> stores a <b>copy of that address</b> in the cell; now an arrow points to the Person.',
                 '<b><code>int[] b = nums;</code></b> copies only the address. One array, two variables — a change through one is seen through the other.'],
                 'int[] holds the values themselves; Person[] holds addresses of separate objects. Layout and addresses are a teaching picture.')),
             ('text', '🔬 Hidden bookkeeping', [
