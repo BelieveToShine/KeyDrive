@@ -110,11 +110,11 @@ def build_di_lifetimes():
                 ['Memory profile', 'few, long-lived (gen 2)', 'few per request, short-lived (die young)', 'many, short-lived (cheap if they die fast)'],
                 ['Thread safety', 'must be thread-safe (shared by all requests)', 'one request at a time (normally)', 'not shared (each caller has its own)'],
                 ['Typical use', 'config, caches, HttpClient factory', 'DbContext, unit of work', 'lightweight, stateless helpers, builders']]),
-            perf(['Put <b>state</b> in scoped or transient objects and keep singletons <b>stateless</b> or thread-safe — they live forever and are shared by every thread (pages [[p:statics]], [[p:threads]]).',
-                  'A <b>singleton cache that only grows</b> is a leak (page [[p:leaks]]); give it a size limit.',
+            perf(['Put <b>state</b> in scoped or transient objects and keep singletons <b>stateless</b> or thread-safe — they live forever and are shared by every thread ([[p:statics]], [[p:threads]]).',
+                  'A <b>singleton cache that only grows</b> is a leak ([[p:leaks]]); give it a size limit.',
                   '<b>Transients in a hot path</b> multiply allocations; if an object is expensive to build and has no per-use state, make it singleton (and thread-safe) or scoped.',
                   'Disposable transients are held by the container until the scope ends — in a <b>long-lived scope</b> (a background worker that never ends its scope) they pile up. Create a new scope per unit of work.']),
-            ('text', '🔬 Honest notes', ['Lifetimes, scope validation (“scoped services can’t be injected into singletons”) and disposal behaviour are from Microsoft’s ASP.NET Core and .NET DI documentation. Exactly when a singleton is created (on first request vs at startup) depends on how it is registered; the picture shows the common case. Gen 0/1/2 placement is the general GC behaviour from pages [[p:generations]], not something DI documents.']),
+            ('text', '🔬 Honest notes', ['Lifetimes, scope validation (“scoped services can’t be injected into singletons”) and disposal behaviour are from Microsoft’s ASP.NET Core and .NET DI documentation. Exactly when a singleton is created (on first request vs at startup) depends on how it is registered; the picture shows the common case. Gen 0/1/2 placement is the general GC behaviour from [[p:generations]], not something DI documents.']),
         ],
         code=('''
 builder.Services.AddSingleton<IEmailSettings, EmailSettings>();   // one for the whole app

@@ -71,7 +71,7 @@ def build_method_execution():
                 ['Parameters', '<code>string name</code>', 'a copy of the value, or a copy of the address'],
                 ['Local variables', '<code>int total = 0;</code>', 'right in the frame (values) or on the heap (objects they point to)']]),
             perf([
-                'A call itself is cheap: it only pushes and pops a frame. The cost you <b>notice</b> comes from what the method <b>allocates</b> (new objects, boxing, strings) — those create work for the GC (pages [[p:heap-and-new]], [[p:boxing]]).',
+                'A call itself is cheap: it only pushes and pops a frame. The cost you <b>notice</b> comes from what the method <b>allocates</b> (new objects, boxing, strings) — those create work for the GC ([[p:heap-and-new]], [[p:boxing]]).',
                 'Because the frame is thrown away at return, <b>locals never need garbage collection</b>. Only objects do. Keep temporary values as locals and you give the GC nothing to do.']),
             ('text', '🔬 Honest note', ['Calling <code>this</code> a “hidden argument” is a teaching picture; Microsoft’s docs describe <code>this</code> as “the current instance”. How the JIT passes it (for example in a CPU register) is an implementation detail.']),
         ],
@@ -149,7 +149,7 @@ def build_static_methods():
                 '<code>Settings.Language</code> is a static field. There is exactly <b>one</b> copy, with the value "en".',
                 'Request A (one user) sets it to "fr".',
                 'Request B (another user) now reads "fr" as well — a surprise bug. Everyone shares the one copy.',
-                'Static <b>methods</b> that only use their parameters are safe. Static <b>mutable fields</b> are shared by every caller and every thread (page [[p:threads]]).'],
+                'Static <b>methods</b> that only use their parameters are safe. Static <b>mutable fields</b> are shared by every caller and every thread ([[p:threads]]).'],
                 'static = shared. That is the whole benefit and the whole danger.')),
             ('table', '🧾 Instance vs static method', ['', 'Instance method', 'Static method'], [
                 ['Called on', 'an object: <code>order.AddItem()</code>', 'the type: <code>Tax.Add()</code>'],
@@ -159,10 +159,10 @@ def build_static_methods():
             ('table', '🏛️ What a static class is', ['Fact (from Microsoft’s docs)', 'Consequence in memory'], [
                 ['It cannot be instantiated', 'no objects of it ever exist on the heap'],
                 ['It can only contain static members', 'fields in static memory; methods are called with just a frame'],
-                ['It is implicitly sealed — it cannot be inherited', 'no derived layers (compare page [[p:inheritance-memory]])'],
-                ['It may have a static constructor', 'runs once, before first use (page [[p:statics]])']]),
+                ['It is implicitly sealed — it cannot be inherited', 'no derived layers (compare [[p:inheritance-memory]])'],
+                ['It may have a static constructor', 'runs once, before first use ([[p:statics]])']]),
             perf(['Static helpers that only use their parameters allocate nothing and are easy for the GC — a good home for pure maths, formatting and conversion.',
-                  'Avoid <b>static mutable state</b>: it is shared (bugs), it is a GC root that keeps whatever it references alive (leaks, page [[p:leaks]]), and it makes code hard to test.',
+                  'Avoid <b>static mutable state</b>: it is shared (bugs), it is a GC root that keeps whatever it references alive (leaks, [[p:leaks]]), and it makes code hard to test.',
                   'A static method that is handed an object (a parameter) can still change that object — see the next page.']),
         ],
         code=('''
@@ -174,8 +174,8 @@ static class Tax
 
 var total = Tax.Add(100m);        // 118 — no Tax object exists, none can be created
 // var t = new Tax();             // ❌ cannot create an instance of a static class''',
-              'Static classes are for stateless helpers. If it needs per-user data, use an instance (and let dependency injection manage it — page [[p:di-lifetimes]]).'),
-        clean=('Who clears this memory?', ['The <b>frame</b> pops at return. The <b>static field</b> lives until the app ends (page [[p:statics]]). There is no object to garbage-collect — but anything a static field <b>references</b> stays alive too.']),
+              'Static classes are for stateless helpers. If it needs per-user data, use an instance (and let dependency injection manage it — [[p:di-lifetimes]]).'),
+        clean=('Who clears this memory?', ['The <b>frame</b> pops at return. The <b>static field</b> lives until the app ends ([[p:statics]]). There is no object to garbage-collect — but anything a static field <b>references</b> stays alive too.']),
         quiz=[('A static method receives <code>this</code>.', True, 'It belongs to the type and has no object, so no this.'),
               ('You can create an instance of a static class with <code>new</code>.', True, 'A static class cannot be instantiated.'),
               ('A static method that only uses its parameters allocates no objects.', False, 'Right: just a frame.')],
@@ -243,7 +243,7 @@ def build_parameters():
             '<code>x</code> holds 5 in the caller’s frame.',
             'The call <b>copies</b> the 5 into a brand-new parameter <code>n</code> in the method’s own frame.',
             '<code>n = n * 2</code> changes only the copy.',
-            'Return: <code>n</code> is gone. <code>x</code> is <b>still 5</b>. For value types, the method can never change the caller’s variable (unless you use <code>ref</code> — page [[p:ref-out-in]]).'],
+            'Return: <code>n</code> is gone. <code>x</code> is <b>still 5</b>. For value types, the method can never change the caller’s variable (unless you use <code>ref</code> — [[p:ref-out-in]]).'],
             'by default, every argument is copied into the parameter. For a number, the copy is the number.'),
         one='<b>Arguments are always copied. For an object, the copy is the address — so the method can change the object but cannot change which object the caller points to.</b>',
         real=['📷 <b>Value type</b>: you hand a friend a <b>photocopy of a photo</b>. They can scribble all over it; your original photo is fine.',
@@ -267,7 +267,7 @@ def build_parameters():
                 ['an <code>array</code>', 'a copy of the address', '✅ yes — it can change elements (arrays are objects)'],
                 ['a <code>string</code>', 'a copy of the address', '❌ strings are immutable: “changing” makes a new string for the method only'],
                 ['a big <code>struct</code>', 'a full copy of every field', '❌ no — and the copy costs time (use <code>in</code>)']]),
-            perf(['Passing a <b>class</b> costs only an address. Passing a <b>large struct</b> copies all of it on every call — use <code>in</code> (page [[p:ref-out-in]]) or make it a class.',
+            perf(['Passing a <b>class</b> costs only an address. Passing a <b>large struct</b> copies all of it on every call — use <code>in</code> ([[p:ref-out-in]]) or make it a class.',
                   'Because an object parameter can be changed, a method may “return” a result by <b>filling an object</b> the caller made — no new allocation. But hidden changes surprise readers: document them.',
                   'Passing a collection and then modifying it inside the method changes the <b>caller’s</b> collection too. Pass a copy (<code>ToList()</code>) only when you need isolation — it allocates.']),
         ],
@@ -369,10 +369,10 @@ def build_return_values():
                 ['a class object', 'the address', 'the object was allocated somewhere (inside or outside)', 'the object outlives the frame'],
                 ['<code>(int, decimal)</code> tuple', 'all the values', '❌ none', 'tuples are value types'],
                 ['<code>void</code>', 'nothing', '❌ none', 'results via changed objects or <code>out</code>'],
-                ['<code>Task&lt;T&gt;</code> (async)', 'the address of a Task', 'a Task (+ a state machine if it really waits)', 'page [[p:async-await]]'],
-                ['<code>ref</code> return', 'an alias, not a copy', '❌ none', 'page [[p:ref-out-in]]']]),
+                ['<code>Task&lt;T&gt;</code> (async)', 'the address of a Task', 'a Task (+ a state machine if it really waits)', '[[p:async-await]]'],
+                ['<code>ref</code> return', 'an alias, not a copy', '❌ none', '[[p:ref-out-in]]']]),
             perf(['Returning <b>two values</b>? Prefer a value tuple (or <code>out</code>) over a small class: no allocation, no GC work.',
-                  'Returning a <b>new object</b> from a hot method means one allocation per call. If callers can supply a reusable object or buffer (page [[p:span-stackalloc]]), you can avoid it.',
+                  'Returning a <b>new object</b> from a hot method means one allocation per call. If callers can supply a reusable object or buffer ([[p:span-stackalloc]]), you can avoid it.',
                   'Returning a collection hands out the <b>same</b> object you hold. If you return your internal list, callers can change it — return a copy or a read-only view when that matters.']),
         ],
         code=('''
@@ -468,7 +468,7 @@ def build_ref_out_in():
                 ['<code>ref readonly</code>', 'alias; read-only (preferred when it is returned or stored)', 'pass it as <code>ref</code> or <code>in</code>', 'not assign it']]),
             perf(['<b><code>in</code></b> avoids copying a <b>large struct</b> on every call; it is mostly useful for large <code>readonly struct</code> values. For small values (an <code>int</code>), just pass by value — an alias is not faster.',
                   '<b><code>out</code></b> is the standard way to return a result plus a success flag without allocating: <code>int.TryParse(text, out var n)</code>. It avoids a tuple or a result object.',
-                  '<b><code>ref</code> locals and returns</b> are an advanced tool for hot paths (no copy). A ref local cannot be kept across an <code>await</code>, and async methods cannot take <code>ref</code>/<code>in</code>/<code>out</code> parameters, because an alias into a stack frame cannot live in a heap state machine (page [[p:async-await]]).']),
+                  '<b><code>ref</code> locals and returns</b> are an advanced tool for hot paths (no copy). A ref local cannot be kept across an <code>await</code>, and async methods cannot take <code>ref</code>/<code>in</code>/<code>out</code> parameters, because an alias into a stack frame cannot live in a heap state machine ([[p:async-await]]).']),
             ('text', '⚠️ Rule of thumb', ['If the method only needs to <b>change the object’s contents</b>, no modifier is needed (previous page). Use <code>ref</code> only when the method must <b>replace the caller’s variable itself</b> (point it at a different object or set a new value).']),
         ],
         code=('''

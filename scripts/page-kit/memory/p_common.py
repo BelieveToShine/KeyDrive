@@ -107,3 +107,29 @@ def page(*a, **k): return _fix(_kit_page(*a, **k))
 
 def perf(items):
     return ('text', '⚡ Performance lens — think like this', items)
+
+
+# ---- memory "cards": real-looking memory cells (header / type pointer / fields / vtable slots) --------------------------
+RH = 24   # row height of a card cell
+_CARD_COL = {'hdr': 'n', 'tp': 'violet', 'code': 'amber'}
+
+def card(d, x, y, title, rows, color='emerald', w=176, st=None, hl=None, dash=False):
+    """A titled zone holding one thin box per memory cell (one object, one MethodTable, one frame ...).
+    rows: [(text, kind)] with kind: 'hdr' (object header), 'tp' (type pointer), 'f' (field / slot, uses `color`), 'code'.
+    Returns geometry so arrows can attach: g['rows'][i] = dict(l=(x,y), r=(x,y), y=ymid, top=y, h=h); g['x'], g['y'], g['w'], g['h']."""
+    h = 26 + len(rows) * RH + 8
+    d.zone(x, y, w, h, color, title, dash=dash, st=st)
+    out = []
+    for i, row in enumerate(rows):
+        t, k = row[0], row[1]
+        rst = row[2] if len(row) > 2 else st      # optional per-row step range (so a changed cell can replace it)
+        ry = y + 26 + i * RH
+        d.box(x + 8, ry, w - 16, RH - 2, [(t, 'm')], _CARD_COL.get(k, color), rx=4, st=rst, hl=hl)
+        ym = ry + (RH - 2) / 2
+        out.append(dict(l=(x + 8, ym), r=(x + w - 8, ym), y=ym, top=ry, h=RH - 2))
+    return dict(x=x, y=y, w=w, h=h, rows=out)
+
+def cell(d, g, i, text, color='amber', st=None, hl=None, kind=None):
+    """Re-draw row i of card g with new text/colour for some steps (a value that changes, a highlighted slot)."""
+    r = g['rows'][i]
+    d.box(g['x'] + 8, r['top'], g['w'] - 16, r['h'], [(text, 'm')], color, rx=4, st=st, hl=hl)

@@ -71,7 +71,7 @@ def build_delegates_closures():
                 ['<code>static x =&gt; x * 2</code> (static lambda)', 'cannot capture — the compiler forbids it', 'a safe way to guarantee no closure']]),
             perf(['A capturing lambda created <b>inside a hot loop or on every request</b> allocates a closure and a delegate each time. Move it out of the loop, or pass the data as parameters instead of capturing.',
                   'Use a <code>static</code> lambda (C# 9+) where you do not need captures: the compiler stops you from capturing by accident.',
-                  '<b>Event subscriptions are delegates</b> (page [[p:leaks]]): <code>+=</code> stores a delegate whose target is the subscriber — that is how a long-lived publisher keeps a short-lived subscriber alive. Unsubscribe with <code>-=</code>.',
+                  '<b>Event subscriptions are delegates</b> ([[p:leaks]]): <code>+=</code> stores a delegate whose target is the subscriber — that is how a long-lived publisher keeps a short-lived subscriber alive. Unsubscribe with <code>-=</code>.',
                   'A delegate holds a <b>strong</b> reference to its target. If a lambda captures a big object “just to read one field”, it keeps the whole object alive.']),
             ('text', '🔬 Honest notes', ['Microsoft documents that captured variables live at least as long as the delegate that uses them, that the compiler stores them in a heap-allocated closure object, and that a <code>static</code> lambda cannot capture. The exact class names and layout the compiler generates (“display class”) are implementation details and can change; the lab draws the idea.']),
         ],
