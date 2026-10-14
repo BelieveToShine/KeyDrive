@@ -20,7 +20,7 @@ def d_sm1():
     # arrows
     yR = af['R'][1]
     d.arrow([(af['R'][0], yR), (240, yR)], 'violet', 'runs', at=(205, yR), st='2-2', id='run')
-    d.arrow([(af['R'][0], yR), (196, yR), (196, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(196, 205), st='3-3', id='rd')
+    d.arrow([(af['R'][0], yR), (196, yR), (196, tx['L'][1]), (tx['L'][0], tx['L'][1])], 'amber', 'reads Rate', at=(196, 188), st='3-3', id='rd')
     d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (190, af['rows'][1]['y']), (190, mf['rows'][0]['y']), (mf['rows'][0]['r'][0], mf['rows'][0]['y'])], 'emerald', 'copy', at=(190, 190), st='4-4', id='ret')
     d.text(98, 262, 'frame popped', 'n', 10, st='5-')
     for i, (t, c) in enumerate([

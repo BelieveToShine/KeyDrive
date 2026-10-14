@@ -35,7 +35,7 @@ def d_oc2():
     cell(d, main, 0, 'o = ref', 'amber', st='5-5', hl=5)
     cell(d, main, 0, 'o = null', 'rose', st='6-', hl=6)
     ctor = card(d, 18, 100, 'Order() frame', [('this = ref', 'f')], 'cyan', w=134, st='2-4', hl=2)
-    d.box(18, 100, 134, 62, [('nothing on the stack', 'm'), ('points to the Order,', 'm'), ('so the Customer is lost too', 'm')], 'rose', st='6-6', hl=6)
+    d.box(18, 100, 134, 62, [('nothing on the stack', 'm'), ('points to the Order,', 'm'), ('so Customer is lost too', 'm')], 'rose', st='6-6', hl=6)
     d.zone(170, 8, 230, 290, 'emerald', '🏠 HEAP')
     d.zone(410, 8, 220, 290, 'violet', '🧬 TYPE DATA (one MethodTable per type)')
     for st, col, dash, hl in [('2-5', 'emerald', False, None), ('6-6', 'rose', True, 6)]:
