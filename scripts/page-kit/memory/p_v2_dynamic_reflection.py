@@ -27,7 +27,6 @@ def d_dy1():
     d.arrow([(330, ty), (416, ty)], 'violet', st='1-3')
     d.arrow([(330, ty), (416, ty)], 'violet', st='5-8')
     d.arrow([(330, ty), (416, ty)], 'amber', st='4-4', label='lookup', at=(373, ty), id='lk')
-    d.arrow([(330, ty), (416, ty)], 'amber', st='6-6', label='type?', at=(373, ty))
     d.zone(392, 282, 238, 96, 'amber', '⚙ STATIC AREA (a root)', st='2-')
     st = card(d, 400, 312, 'compiler-made class', [('callSite1 = null', 'f', '2-2')], 'amber', w=222, st='2-', hl=2)
     cell(d, st, 0, 'callSite1 → CallSite', 'emerald', st='3-', hl=3)

@@ -66,7 +66,7 @@ def d_oc3():
     cell(d, arr, 3, '[0] = ref', 'amber', st='5-', hl=5)
     cell(d, arr, 4, '[1] = null  ✖ no object', 'rose', st='6-', hl=6)
     p = card(d, 200, 262, 'Person object', [('header (sync block)', 'hdr'), ('type ptr → Person MT', 'tp'), ('Name = null (default)', 'f')], 'emerald', w=170, st='4-', hl=4)
-    d.box(200, 222, 170, 36, [('a[1].Name: slot 1 is null', 'm'), ('→ NullReferenceException', 'm')], 'rose', st='6-6', hl=6)
+    d.box(200, 222, 170, 36, [('slot 1 is null: no arrow', 'm'), ('→ NullReferenceException', 'm')], 'rose', st='6-6', hl=6)
     am = card(d, 420, 32, 'Person[] MethodTable', [('shared by every Person[]', 'f')], 'violet', w=200, st='2-')
     pm = card(d, 420, 262, 'Person MethodTable', [('shared by every Person', 'f')], 'violet', w=200, st='4-')
     ty1, ty2 = arr['rows'][1]['y'], p['rows'][1]['y']
@@ -75,8 +75,6 @@ def d_oc3():
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (arr['x'], main['rows'][0]['y'])], 'cyan', st='3-', id='r1')
     s0 = arr['rows'][3]['y']
     d.arrow([(arr['rows'][3]['l'][0], s0), (184, s0), (184, 300), (p['x'], 300)], 'amber', 'a[0]', at=(184, 200), st='5-', id='r2')
-    s1 = arr['rows'][4]['y']
-    d.arrow([(arr['rows'][4]['r'][0], s1), (382, s1), (382, 240), (370, 240)], 'rose', 'null', at=(386, 226), st='6-6')
     d.code_box(10, 392, 620, 66, [(0, 'var a = new Person[3];', ''), (0, 'a[0] = new Person();', ''), (0, 'a[1].Name = "x";      // slot 1 is null → NullReferenceException', 'k')], 'n', size=9, lh=16)
     d.text(320, 478, FOOT3, 'n', 9)
     return d
@@ -114,7 +112,7 @@ def build_object_creation():
                 'The reference to the array is stored in <code>a</code>.',
                 '<code>new Person()</code> creates a separate Person object with its own header and type pointer.',
                 'Its reference is written into <b>slot 0</b>; the arrow leaves that slot cell.',
-                '<code>a[1].Name</code>: slot 1 is still <code>null</code>, so there is no object to follow (the arrow ends in nothing). The result is a <code>NullReferenceException</code>.'],
+                '<code>a[1].Name</code>: slot 1 is still <code>null</code>, so there is no object to follow (null has no arrow). The result is a <code>NullReferenceException</code>.'],
                 'a common surprise: creating the array does not create the people. An array of a class holds references; slots start as null.')),
         ],
         code=('''
