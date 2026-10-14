@@ -45,7 +45,7 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 392" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay">
+<div class="st-stage"><svg viewBox="0 0 640 416" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay">
 <defs><marker id="if1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="24" width="120" height="280" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -115,11 +115,20 @@
 <g class="st" data-s="2-" data-hl="6"><rect class="bx" x="518" y="208" width="104" height="36" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="2-" data-hl="6"><text x="570" y="222.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Subscription.Pay</text></g>
 <g class="st" data-s="2-" data-hl="6"><text x="570" y="234.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">code</text></g>
-<text class="free" x="320" y="384" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">📞 = the call’s current hop   ·   CODE = compiled method bodies   ·   one MethodTable per class, shared by all its objects</text>
-<rect class="bx" x="10" y="310" width="300" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="320" y="408" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">📞 = the call’s current hop   ·   CODE = compiled method bodies   ·   one MethodTable per class, shared by all its objects</text>
+<rect class="bx" x="10" y="310" width="300" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="332" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable p = new Invoice();</text>
 <text x="24" y="347" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable q = new Subscription();</text>
-<text x="24" y="362" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">p.Pay();     q.Pay();</text>
+<text x="24" y="362" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">p.Pay();</text>
+<text x="24" y="377" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">q.Pay();</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="322" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="331.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="337" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="346.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-5"><rect class="cur" x="14" y="352" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-5"><text class="cur" x="16" y="361.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="367" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="376.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#6ee7b7">new Invoice(): a heap object with header, type ptr</text></g>
 <g class="st" data-s="1-1"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#6ee7b7">and its field Amount. p holds its address (illustrative)</text></g>
@@ -161,7 +170,7 @@
   <section class="kd-section ">
     <div class="sec-label see">📦 A struct behind an interface gets boxed — and unboxed</div>
 <figure class="diagram-card kd-story" data-steps="7">
-<div class="st-stage"><svg viewBox="0 0 640 388" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot">
+<div class="st-stage"><svg viewBox="0 0 640 424" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot">
 <defs><marker id="if2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="24" width="200" height="280" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -222,11 +231,23 @@
 <g class="st" data-s="7-"><text x="315" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
 <g class="st" data-s="7-"><rect class="bx" x="238" y="140" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
 <g class="st" data-s="7-"><text x="315" y="153.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">Value = 5</text></g>
-<text class="free" x="320" y="382" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">📞 = the call’s current hop</text>
-<rect class="bx" x="10" y="306" width="300" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text class="free" x="320" y="418" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">📞 = the call’s current hop</text>
+<rect class="bx" x="10" y="306" width="300" height="97" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="328" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">Coupon c = new Coupon { Value = 5 };</text>
-<text x="24" y="343" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable s = c;      c.Value = 9;</text>
-<text x="24" y="358" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">s.Pay();   Coupon c2 = (Coupon)s;</text>
+<text x="24" y="343" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable s = c;</text>
+<text x="24" y="358" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">c.Value = 9;</text>
+<text x="24" y="373" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">s.Pay();</text>
+<text x="24" y="388" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">Coupon c2 = (Coupon)s;</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="318.4" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="327.5" text-anchor="start" font-size="5.6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-3"><rect class="cur" x="14" y="333.4" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-3"><text class="cur" x="16" y="342.5" text-anchor="start" font-size="5.6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="348.4" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="357.5" text-anchor="start" font-size="5.6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="363.4" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="372.5" text-anchor="start" font-size="5.6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="378.4" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="387.5" text-anchor="start" font-size="5.6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#67e8f9">A struct sits right in its stack slot:</text></g>
 <g class="st" data-s="1-1"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#67e8f9">no header, no type pointer</text></g>

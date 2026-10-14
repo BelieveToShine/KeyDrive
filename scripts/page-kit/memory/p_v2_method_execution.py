@@ -5,23 +5,24 @@ def _notes(d, y, h, caps, size=9.5, x=10, w=620):
         d.note(x, y, w, h, t, c, st=f'{i + 1}-{i + 1}', size=size)
 
 def d_me1():
-    d = Diagram('me1', 640, 436, 'Calling order.AddItem("pen"): the runtime pushes a frame whose slots this and name are copies of two addresses; this leads to the same Order object that order points to; Count++ changes the field in the heap object; when the frame is popped the object keeps Count = 1')
-    d.code_box(10, 8, 380, 48, [(0, 'var order = new Order();', ''), (0, 'order.AddItem("pen");     // inside: Count++', '')], 'n', size=9, lh=15)
-    d.note(400, 8, 230, 48, 'teaching picture: addresses are made up;|amber = value just changed', 'n', size=8.8)
-    d.zone(10, 70, 220, 300, 'cyan', '📚 STACK (one frame per call)')
-    d.zone(260, 70, 370, 300, 'emerald', '🏠 HEAP')
-    mf = card(d, 20, 100, 'Main frame', [('order = 0x…A1', 'f')], 'cyan', w=170, st=1)
-    af = card(d, 20, 200, 'AddItem frame (pushed)', [('this = ?', 'f', '2-2'), ('name = ?', 'f', '2-2')], 'violet', w=170, st='2-4')
+    d = Diagram('me1', 640, 478, 'Calling order.AddItem("pen"): the runtime pushes a frame whose slots this and name are copies of two addresses; this leads to the same Order object that order points to; Count++ changes the field in the heap object; when the frame is popped the object keeps Count = 1')
+    d.code_box(10, 8, 380, 98, [(0, 'var order = new Order();', ''), (0, 'order.AddItem("pen");', ''), (0, 'void AddItem(string name) {', ''), (0, '    Count++;', ''), (0, '}', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 380, [0, 1, 1, 3, 4], size=9, lh=15)
+    d.note(400, 8, 230, 98, 'teaching picture: addresses are made up;|amber = value just changed', 'n', size=8.8)
+    d.zone(10, 112, 220, 300, 'cyan', '📚 STACK (one frame per call)')
+    d.zone(260, 112, 370, 300, 'emerald', '🏠 HEAP')
+    mf = card(d, 20, 142, 'Main frame', [('order = 0x…A1', 'f')], 'cyan', w=170, st=1)
+    af = card(d, 20, 242, 'AddItem frame (pushed)', [('this = ?', 'f', '2-2'), ('name = ?', 'f', '2-2')], 'violet', w=170, st='2-4')
     cell(d, af, 0, 'this = 0x…A1  (copy)', 'violet', st='3-4', hl=3)
     cell(d, af, 1, 'name = 0x…S1  (copy)', 'violet', st='3-4', hl=3)
-    oc = card(d, 275, 100, 'Order object @ 0x…A1', [('Count = 0', 'f', '1-3')], 'emerald', w=340, st=1)
+    oc = card(d, 275, 142, 'Order object @ 0x…A1', [('Count = 0', 'f', '1-3')], 'emerald', w=340, st=1)
     cell(d, oc, 0, 'Count = 1', 'amber', st='4-', hl=4)
-    sc = card(d, 275, 214, 'string object "pen" (a literal, created earlier)', [('length = 3, chars: p e n', 'f')], 'emerald', w=340, st=1)
+    sc = card(d, 275, 256, 'string object "pen" (a literal, created earlier)', [('length = 3, chars: p e n', 'f')], 'emerald', w=340, st=1)
     d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (oc['x'], mf['rows'][0]['y'])], 'cyan', 'order', at=(232, mf['rows'][0]['y']), st='1-', id='ao')
-    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (250, af['rows'][0]['y']), (250, 146), (oc['x'], 146)], 'violet', 'this', at=(250, 196), st='3-4', id='at')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (250, af['rows'][0]['y']), (250, 188), (oc['x'], 188)], 'violet', 'this', at=(250, 238), st='3-4', id='at')
     d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (sc['x'], af['rows'][1]['y'])], 'violet', 'name', at=(232, af['rows'][1]['y']), st='3-4')
-    d.note(275, 296, 340, 44, 'header and type pointer are left out here (this picture is about the frame);|the next picture shows them', 'n', size=8.8)
-    _notes(d, 380, 50, [('The variable order (in Main’s frame) holds the address of the Order object.|The string "pen" is its own object.', 'cyan'),
+    d.note(275, 338, 340, 44, 'header and type pointer are left out here (this picture is about the frame);|the next picture shows them', 'n', size=8.8)
+    _notes(d, 422, 50, [('The variable order (in Main’s frame) holds the address of the Order object.|The string "pen" is its own object.', 'cyan'),
                         ('Call: a new frame is pushed on top of the stack. |Its slots this and name exist but are not filled yet.', 'violet'),
                         ('The caller’s values are COPIED into the slots:|this = a copy of order’s address, name = a copy of the string’s address. |Two references, one object.', 'violet'),
                         ('Count++: follow this to the heap object and change its field, 0 → 1. Only the object changes.', 'amber'),
@@ -29,7 +30,7 @@ def d_me1():
     return d
 
 def d_me2():
-    d = Diagram('me2', 640, 452, 'Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, whose slot holds the address of the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B')
+    d = Diagram('me2', 640, 474, 'Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, whose slot holds the address of the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B')
     d.zone(10, 24, 140, 290, 'cyan', '📚 STACK')
     d.zone(180, 24, 170, 290, 'emerald', '🏠 HEAP')
     d.zone(410, 24, 220, 290, 'n', '🧬 TYPE DATA (appears next)', st='1-1')
@@ -53,8 +54,9 @@ def d_me2():
     d.arrow([(520, mt['rows'][0]['top'] + mt['rows'][0]['h']), (520, 190)], 'amber', 'address of', at=(520, 150), st='3-', id='tc')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, 150), (A['x'], 150)], 'violet', 'this', at=(158, 232), st='4-4')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, 222), (B['x'], 222)], 'violet', 'this', at=(158, 238), st='5-5')
-    d.code_box(10, 326, 270, 50, [(0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=15)
-    d.note(10, 392, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
+    d.code_box(10, 326, 270, 78, [(0, 'var o1 = new Order();', ''), (0, 'var o2 = new Order();', ''), (0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 326, 270, [1, None, None, 2, 3, None], size=9, lh=14)
+    d.note(10, 414, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
     _notes(d, 326, 52, [('Two objects, each with its own header,|type pointer and Count. o1 and o2 hold|their addresses. (Type data comes next.)', 'cyan'),
                         ('Both type pointers lead to the SAME Order|MethodTable: one per type, shared by|every Order.', 'violet'),
                         ('The MethodTable’s slot holds the address of|AddItem’s compiled code. That code|exists once.', 'amber'),

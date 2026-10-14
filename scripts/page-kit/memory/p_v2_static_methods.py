@@ -11,7 +11,7 @@ def d_sm1():
     d.zone(210, 82, 170, 100, 'amber', '📌 STATIC AREA')
     d.zone(210, 192, 170, 146, 'violet', '📜 CODE')
     d.zone(390, 82, 240, 256, 'emerald', '🏠 HEAP')
-    mf = card(d, 18, 108, 'Main frame', [('total = (not set yet)', 'f', '1-4')], 'cyan', w=160, st=1)
+    mf = card(d, 18, 108, 'Main frame', [('total = (not set yet)', 'f', '1-3')], 'cyan', w=160, st=1)
     cell(d, mf, 0, 'total = 118', 'amber', st='4-', hl=4)
     tx = card(d, 218, 108, 'Tax (static area)', [('Rate = 0.18', 'f')], 'amber', w=154, st=1, hl='3')
     d.box(240, 219, 130, 44, [('Tax.Add', 'm'), ('one copy of the code', 's')], 'violet', st=1, hl='2')

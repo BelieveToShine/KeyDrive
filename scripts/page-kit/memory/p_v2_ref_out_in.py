@@ -88,54 +88,59 @@ def d_rf3():
 
 # ------------------------------------------------------------ 4. in: read-only alias avoids copying a big struct
 def d_rf4():
-    d = Diagram('rf4', 640, 474, 'Passing a large struct: by value the call copies every field of big into the callee’s frame; with in the callee’s frame holds only a read-only alias to big, so nothing is copied and an attempt to assign through it is a compile error')
-    d.code_box(10, 6, 300, 52, [(0, 'Sum(big);', ''), (0, 'decimal Sum(BigStruct data) => ...;', '')], 'n', size=9, lh=15)
-    d.code_box(330, 6, 300, 52, [(0, 'Sum(big);', ''), (0, 'decimal Sum(in BigStruct data) => ...;', '')], 'n', size=9, lh=15)
-    d.zone(10, 66, 300, 296, 'cyan', '📚 STACK — by value')
-    d.zone(330, 66, 300, 296, 'cyan', '📚 STACK — in')
+    o = 38
+    d = Diagram('rf4', 640, 474 + o, 'Passing a large struct: by value the call copies every field of big into the callee’s frame; with in the callee’s frame holds only a read-only alias to big, so nothing is copied and an attempt to assign through it is a compile error')
+    d.code_box(10, 6, 300, 92, [(0, 'var big = new BigStruct();', ''), (0, 'Sum(big);', ''), (0, 'decimal Sum(BigStruct data) {', ''), (0, '  return data.A + data.B;', ''), (0, '}', '')], 'n', size=9, lh=14)
+    d.code_box(330, 6, 300, 92, [(0, 'var big = new BigStruct();', ''), (0, 'Sum(big);', ''), (0, 'decimal Sum(in BigStruct data) {', ''), (0, '  return data.A + data.B;', ''), (0, '}', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 6, 300, [0, 1, 3, 4], size=9, lh=14)
+    run_line(d, 330, 6, 300, [0, 1, 3, 4], size=9, lh=14)
+    d.zone(10, 66 + o, 300, 296, 'cyan', '📚 STACK — by value')
+    d.zone(330, 66 + o, 300, 296, 'cyan', '📚 STACK — in')
     big = [('A = 1', 'f'), ('B = 2', 'f'), ('C = 3', 'f')]
-    lm = card(d, 22, 92, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
-    card(d, 22, 246, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
-    lf = card(d, 22, 246, 'Sum frame: data', [('A = 1  (copy)', 'f'), ('B = 2  (copy)', 'f'), ('C = 3  (copy)', 'f')], 'cyan', w=276, st='2-3', hl=2)
-    card(d, 22, 246, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
-    d.arrow([lm['B'], lf['T']], 'amber', 'copy all fields', at=(160, 222), st='2-2', id='lc')
-    rm = card(d, 342, 92, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
-    card(d, 342, 246, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
-    rf = card(d, 342, 246, 'Sum frame', [('data = address of big', 'f')], 'violet', w=276, st='2-3', hl=2)
-    card(d, 342, 246, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
-    d.arrow([(480, 272), rm['B']], 'violet', 'alias, read-only', at=(480, 224), st='2-3', id='ra')
-    d.note(22, 368, 276, 30, 'a write here would change only the copy', 'amber', st='3-3', size=9)
-    d.note(342, 368, 276, 30, 'data.A = 9;   ✗ compile error', 'rose', st='3-3', size=9.5)
-    d.text(160, 414, 'teaching picture: a real big struct has more fields', 'n', 8)
-    for i, (t, c) in enumerate([('big is a struct: its fields sit in place inside Main’s frame (no header, no heap object).', 'cyan'),
-                                ('Call. LEFT: a new frame, and EVERY field of big is copied into it.|RIGHT: a new frame with one slot that holds the ADDRESS of big. Nothing is copied.', 'violet'),
-                                ('Inside Sum. LEFT: reads its own copy (a write would change only the copy).|RIGHT: reads big through the alias; assigning through it is rejected by the compiler.', 'rose'),
-                                ('Return: both frames are popped. big is unchanged in both columns.|The in call just avoided copying every field.', 'emerald')]):
-        d.note(10, 424, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    lm = card(d, 22, 92 + o, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
+    card(d, 22, 246 + o, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
+    lf = card(d, 22, 246 + o, 'Sum frame: data', [('A = 1  (copy)', 'f'), ('B = 2  (copy)', 'f'), ('C = 3  (copy)', 'f')], 'cyan', w=276, st='2-3', hl=2)
+    card(d, 22, 246 + o, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
+    d.arrow([lm['B'], lf['T']], 'amber', 'copy all fields', at=(160, 222 + o), st='2-2', id='lc')
+    rm = card(d, 342, 92 + o, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
+    card(d, 342, 246 + o, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
+    rf = card(d, 342, 246 + o, 'Sum frame', [('data = address of big', 'f')], 'violet', w=276, st='2-3', hl=2)
+    card(d, 342, 246 + o, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
+    d.arrow([(480, 272 + o), rm['B']], 'violet', 'alias, read-only', at=(480, 224 + o), st='2-3', id='ra')
+    d.note(22, 368 + o, 276, 30, 'a write here would change only the copy', 'amber', st='3-3', size=9)
+    d.note(342, 368 + o, 276, 30, 'data.A = 9;   ✗ compile error', 'rose', st='3-3', size=9.5)
+    d.text(160, 414 + o, 'teaching picture: a real big struct has more fields', 'n', 8)
+    for i, (t, c) in enumerate([('var big = ...: big is a struct: its fields sit in place inside Main’s frame (no header, no heap object).', 'cyan'),
+                                ('Sum(big) call. LEFT: a new frame, and EVERY field of big is copied into it.|RIGHT: a new frame with one slot that holds the ADDRESS of big. Nothing is copied.', 'violet'),
+                                ('return data.A + data.B runs inside Sum. LEFT: reads its own copy (a write would change only the copy).|RIGHT: reads big through the alias; assigning through it is rejected by the compiler.', 'rose'),
+                                ('} Return: both frames are popped. big is unchanged in both columns.|The in call just avoided copying every field.', 'emerald')]):
+        d.note(10, 424 + o, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 # ------------------------------------------------------------ 5. ref return + ref local: alias to ONE array element
 def d_rf5():
-    d = Diagram('rf5', 640, 450, 'A ref return and a ref local: Slot returns the address of element 1 of the int array, the frame is popped, and the caller’s ref local s keeps that address so that s = 99 writes straight into the array element, which then holds 10, 99, 30')
-    d.code_box(10, 6, 380, 52, [(0, 'ref int Slot(int[] a, int i) => ref a[i];', ''), (0, 'ref int s = ref Slot(arr, 1);   s = 99;', '')], 'n', size=9, lh=15)
-    d.zone(10, 68, 210, 320, 'cyan', '📚 STACK')
-    d.zone(244, 68, 386, 320, 'emerald', '🏠 HEAP')
-    mf = card(d, 20, 96, 'Main frame', [('arr = reference', 'f'), ('s = address of arr[1]', 'f', '4-')], 'cyan', w=190, st=1)
-    sf = card(d, 20, 262, 'Slot frame', [('returns address of a[1]', 'code', '3-3'), ('a = copy of arr', 'f'), ('i = 1', 'f')], 'violet', w=190, st='2-3')
-    ar = card(d, 260, 100, 'int[3] array object', [('length = 3', 'f'), ('arr[0] = 10', 'f'), ('arr[1] = 20', 'f', '1-4'), ('arr[2] = 30', 'f')], 'emerald', w=190, st=1)
+    o = 34
+    d = Diagram('rf5', 640, 450 + o, 'A ref return and a ref local: Slot returns the address of element 1 of the int array, the frame is popped, and the caller’s ref local s keeps that address so that s = 99 writes straight into the array element, which then holds 10, 99, 30')
+    d.code_box(10, 6, 380, 92, [(0, 'var arr = new int[] { 10, 20, 30 };', ''), (0, 'ref int s = ref Slot(arr, 1);', ''), (0, 's = 99;', ''), (0, 'ref int Slot(int[] a, int i)', ''), (0, '  => ref a[i];', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 6, 380, [0, 1, 4, 1, 2], size=9, lh=14)
+    d.zone(10, 68 + o, 210, 320, 'cyan', '📚 STACK')
+    d.zone(244, 68 + o, 386, 320, 'emerald', '🏠 HEAP')
+    mf = card(d, 20, 96 + o, 'Main frame', [('arr = reference', 'f'), ('s = address of arr[1]', 'f', '4-')], 'cyan', w=190, st=1)
+    sf = card(d, 20, 262 + o, 'Slot frame', [('returns address of a[1]', 'code', '3-3'), ('a = copy of arr', 'f'), ('i = 1', 'f')], 'violet', w=190, st='2-3')
+    ar = card(d, 260, 100 + o, 'int[3] array object', [('length = 3', 'f'), ('arr[0] = 10', 'f'), ('arr[1] = 20', 'f', '1-4'), ('arr[2] = 30', 'f')], 'emerald', w=190, st=1)
     cell(d, ar, 2, 'arr[1] = 99', 'amber', st='5-', hl=5)
     e1 = _ry(ar, 2)
     d.arrow([(202, _ry(mf, 0)), (240, _ry(mf, 0)), (240, ar['L'][1]), ar['L']], 'cyan', st='1-', id='ra')
     d.arrow([(202, _ry(sf, 1)), (355, _ry(sf, 1)), ar['B']], 'violet', 'copy', at=(300, _ry(sf, 1)), st='2-3', id='rb')
-    d.arrow([(202, _ry(sf, 0)), (238, _ry(sf, 0)), (238, e1), (260, e1)], 'amber', 'ret', at=(238, 250), st='3-3', id='rc')
+    d.arrow([(202, _ry(sf, 0)), (238, _ry(sf, 0)), (238, e1), (260, e1)], 'amber', 'ret', at=(238, 250 + o), st='3-3', id='rc')
     d.arrow([(202, _ry(mf, 1)), (224, _ry(mf, 1)), (224, e1), (260, e1)], 'violet', st='4-', id='rd')
-    d.text(430, 368, 'amber = just written · teaching picture: addresses & layout illustrative', 'n', 8.5)
-    for i, (t, c) in enumerate([('arr (on the stack) leads to the int[3] object on the heap: its length, then the three ints one after another.', 'cyan'),
-                                ('Slot(arr, 1): a new frame. a is a COPY of the reference (default passing), i is 1.', 'violet'),
-                                ('ref a[i] works out the ADDRESS of element 1 and returns that. The value 20 is not copied.', 'amber'),
-                                ('Return: the Slot frame is popped. The returned address lives on in the ref local s:|it points at ONE element, not the whole array.', 'violet'),
+    d.text(430, 368 + o, 'amber = just written · teaching picture: addresses & layout illustrative', 'n', 8.5)
+    for i, (t, c) in enumerate([('var arr: arr (on the stack) leads to the int[3] object on the heap: its length, then the three ints one after another.', 'cyan'),
+                                ('Slot(arr, 1) call: a new frame. a is a COPY of the reference (default passing), i is 1.', 'violet'),
+                                ('=> ref a[i] works out the ADDRESS of element 1 and returns that. The value 20 is not copied.', 'amber'),
+                                ('Return: the Slot frame is popped and the call line finishes: the returned address lives on in the ref local s:|it points at ONE element, not the whole array.', 'violet'),
                                 ('s = 99 writes through the alias into arr[1]. The array now holds 10, 99, 30.', 'emerald')]):
-        d.note(10, 398, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 398 + o, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def build_ref_out_in():

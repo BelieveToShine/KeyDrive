@@ -45,78 +45,90 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Overloading at the memory level: Main has an int variable n and a string variable s whose object is on the heap; at build time the compiler looks at the declared type of each argument and writes the address of Print(int) into the first call and Print(string) into the second; at run time each call just jumps to its fixed address">
+<div class="st-stage"><svg viewBox="0 0 640 436" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Overloading at the memory level: Main has an int variable n and a string variable s whose object is on the heap; at build time the compiler looks at the declared type of each argument and writes the address of Print(int) into the first call and Print(string) into the second; at run time each call just jumps to its fixed address">
 <defs><marker id="ov1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="70" width="172" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="18" y="92" width="156" height="118" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="32" y="111" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main() frame</text>
-<rect class="zone" x="10" y="230" width="172" height="90" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<rect class="zone" x="40" y="252" width="130" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
-<text class="zone-title" x="54" y="271" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object</text>
-<rect class="zone" x="226" y="70" width="160" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="240" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🔧 COMPILED CALLS</text>
-<rect class="zone" x="400" y="70" width="230" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="414" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE (two separate methods)</text>
-<path d="M26,181 L14,181 L14,281 L40,281" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ov1A)"/>
-<g class="st" data-s="2-"><path d="M166,135 L246,135" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="3-"><path d="M166,181 L246,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="2-"><path id="ov1-o1" d="M376,135 L456,135" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="3-"><path id="ov1-o2" d="M376,181 L456,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<path id="ov1-o1t" d="M376,135 L444,135" fill="none" stroke="none"/>
-<path id="ov1-o2t" d="M376,181 L444,181" fill="none" stroke="none"/>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int n = 5;   string s = "hi";</text>
-<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Print(n);       Print(s);</text>
-<g class="st" data-hl="2"><rect class="bx" x="26" y="118" width="140" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-hl="2"><text x="96" y="131.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">n : int</text></g>
-<g class="st" data-hl="2"><text x="96" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">value 5, in place</text></g>
-<g class="st" data-hl="3"><rect class="bx" x="26" y="164" width="140" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-hl="3"><text x="96" y="177.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s : string</text></g>
-<g class="st" data-hl="3"><text x="96" y="189.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reference → heap</text></g>
-<rect class="bx" x="48" y="278" width="114" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="105" y="291.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"hi"</text>
-<g class="st" data-s="1-1"><rect class="bx note" x="246" y="118" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="311" y="131" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
-<g class="st" data-s="1-1"><text x="311" y="144" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
-<g class="st" data-s="1-2"><rect class="bx note" x="246" y="164" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-2"><text x="311" y="177" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
-<g class="st" data-s="1-2"><text x="311" y="190" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="246" y="118" width="130" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="311" y="131.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">call 0x…10</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="311" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">for Print(n)</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="246" y="164" width="130" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="311" y="177.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">call 0x…40</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="311" y="189.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">for Print(s)</text></g>
-<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="456" y="118" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="536" y="131.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="536" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">its own code</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="456" y="164" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="536" y="177.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
-<g class="st" data-s="1-3"><text x="536" y="189.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">its own code</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="456" y="118" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="536" y="131.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="536" y="143.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">got n = 5 (a copy)</text></g>
-<g class="st" data-s="4-"><rect class="bx" x="456" y="164" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="4-"><text x="536" y="177.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
-<g class="st" data-s="4-"><text x="536" y="189.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">got s = the reference</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="332" width="620" height="58" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="357" text-anchor="middle" font-size="10" fill="#fcd34d">Main has n (an int, the value 5 right in the frame) and s (a reference to a string object on the heap).</text></g>
-<g class="st" data-s="1-1"><text x="320" y="371" text-anchor="middle" font-size="10" fill="#fcd34d">Print(int) and Print(string) are two separate pieces of code.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="332" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="357" text-anchor="middle" font-size="10" fill="#67e8f9">Build time: the argument n is declared int →</text></g>
-<g class="st" data-s="2-2"><text x="320" y="371" text-anchor="middle" font-size="10" fill="#67e8f9">the compiler writes the address of Print(int) into the first call</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="332" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="357" text-anchor="middle" font-size="10" fill="#c4b5fd">Build time: the argument s is declared string →</text></g>
-<g class="st" data-s="3-3"><text x="320" y="371" text-anchor="middle" font-size="10" fill="#c4b5fd">the address of Print(string) goes into the second call</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="332" width="620" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="357" text-anchor="middle" font-size="10" fill="#6ee7b7">Run time: each call just jumps to its fixed address (📞) with a copy of the argument</text></g>
-<g class="st" data-s="4-4"><text x="320" y="371" text-anchor="middle" font-size="10" fill="#6ee7b7">nothing is looked up, nothing is allocated</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="189" y="126" width="34" height="18" rx="9"/><text x="206" y="138.5" text-anchor="middle" font-size="9" font-style="italic">int</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="181" y="172" width="50" height="18" rx="9"/><text x="206" y="184.5" text-anchor="middle" font-size="9" font-style="italic">string</text></g></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="386" y="126" width="44" height="18" rx="9"/><text x="408" y="138.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="386" y="172" width="44" height="18" rx="9"/><text x="408" y="184.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
+<rect class="zone" x="10" y="106" width="172" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="18" y="128" width="156" height="118" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="32" y="147" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main() frame</text>
+<rect class="zone" x="10" y="266" width="172" height="90" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="285" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="40" y="288" width="130" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
+<text class="zone-title" x="54" y="307" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object</text>
+<rect class="zone" x="226" y="106" width="160" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="240" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🔧 COMPILED CALLS</text>
+<rect class="zone" x="400" y="106" width="230" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="414" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE (two separate methods)</text>
+<path d="M26,217 L14,217 L14,317 L40,317" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ov1A)"/>
+<g class="st" data-s="2-"><path d="M166,171 L246,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="3-"><path d="M166,217 L246,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="2-"><path id="ov1-o1" d="M376,171 L456,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="3-"><path id="ov1-o2" d="M376,217 L456,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<path id="ov1-o1t" d="M376,171 L444,171" fill="none" stroke="none"/>
+<path id="ov1-o2t" d="M376,217 L444,217" fill="none" stroke="none"/>
+<rect class="bx" x="10" y="8" width="330" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int n = 5;</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">string s = "hi";</text>
+<text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Print(n);</text>
+<text x="24" y="75" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Print(s);</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="35" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-hl="2"><rect class="bx" x="26" y="154" width="140" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-hl="2"><text x="96" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">n : int</text></g>
+<g class="st" data-hl="2"><text x="96" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">value 5, in place</text></g>
+<g class="st" data-hl="3"><rect class="bx" x="26" y="200" width="140" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-hl="3"><text x="96" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s : string</text></g>
+<g class="st" data-hl="3"><text x="96" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reference → heap</text></g>
+<rect class="bx" x="48" y="314" width="114" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="105" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"hi"</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="246" y="154" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="311" y="167" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
+<g class="st" data-s="1-1"><text x="311" y="180" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
+<g class="st" data-s="1-2"><rect class="bx note" x="246" y="200" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-2"><text x="311" y="213" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
+<g class="st" data-s="1-2"><text x="311" y="226" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="246" y="154" width="130" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="311" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">call 0x…10</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="311" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">for Print(n)</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="246" y="200" width="130" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="311" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">call 0x…40</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="311" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">for Print(s)</text></g>
+<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="456" y="154" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="1"><text x="536" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
+<g class="st" data-s="1-3" data-hl="1"><text x="536" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">its own code</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="456" y="200" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="536" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
+<g class="st" data-s="1-3"><text x="536" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">its own code</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="456" y="154" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="536" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="536" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">got n = 5 (a copy)</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="456" y="200" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="536" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
+<g class="st" data-s="4-"><text x="536" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">got s = the reference</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#fcd34d">Main has n (an int, the value 5 right in the frame) and s (a reference to a string object on the heap).</text></g>
+<g class="st" data-s="1-1"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#fcd34d">Print(int) and Print(string) are two separate pieces of code.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#67e8f9">Build time: the argument n is declared int →</text></g>
+<g class="st" data-s="2-2"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#67e8f9">the compiler writes the address of Print(int) into the first call</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#c4b5fd">Build time: the argument s is declared string →</text></g>
+<g class="st" data-s="3-3"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#c4b5fd">the address of Print(string) goes into the second call</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#6ee7b7">Run time: each call just jumps to its fixed address (📞) with a copy of the argument</text></g>
+<g class="st" data-s="4-4"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#6ee7b7">nothing is looked up, nothing is allocated</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="189" y="162" width="34" height="18" rx="9"/><text x="206" y="174.5" text-anchor="middle" font-size="9" font-style="italic">int</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="181" y="208" width="50" height="18" rx="9"/><text x="206" y="220.5" text-anchor="middle" font-size="9" font-style="italic">string</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="386" y="162" width="44" height="18" rx="9"/><text x="408" y="174.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="386" y="208" width="44" height="18" rx="9"/><text x="408" y="220.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
 <g class="st" data-s="4-4"><g class="tok" data-path="ov1-o1t"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 <g class="st" data-s="4-4"><g class="tok" data-path="ov1-o2t"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
@@ -185,8 +197,13 @@
 <g class="st" data-s="1-" data-hl="6"><rect class="bx" x="512" y="207.0" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="1-" data-hl="6"><text x="566" y="223.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Dog.Speak</text></g>
 <g class="st" data-s="1-" data-hl="6"><text x="566" y="235.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">"Woof"</text></g>
-<rect class="bx" x="10" y="290" width="300" height="36" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="312" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Animal a = new Dog();    a.Speak();</text>
+<rect class="bx" x="10" y="290" width="300" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="312" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Animal a = new Dog();</text>
+<text x="24" y="327" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">a.Speak();</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="302" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="311.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-6"><rect class="cur" x="14" y="317" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-6"><text class="cur" x="16" y="326.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#67e8f9">Setup: a holds the address of a Dog object;</text></g>
 <g class="st" data-s="1-1"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#67e8f9">its type pointer leads to Dog’s MethodTable</text></g>
