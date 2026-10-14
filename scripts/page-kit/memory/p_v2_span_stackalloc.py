@@ -61,15 +61,15 @@ def d_sp2():
                                      ('3-3', 'amber', 'byte[128]: RENTED, in use', 'data: 7 7 7 7 …', 3),
                                      ('4-4', 'emerald', 'byte[128]: back on shelf, alive', 'data: 7 7 7 7 … (kept)', 4),
                                      ('5-5', 'amber', 'byte[128]: RENTED again', 'data: 7 7 7 7 … (stale!)', 5)]:
-        a = card(d, CXp, 130, title, arr_rows(data), col, w=CWp, st=st, hl=hl)
+        a = card(d, CXp, 121, title, arr_rows(data), col, w=CWp, st=st, hl=hl)
     pr = pool['rows'][0]
     for st in ('1-1', '4-4'):
-        d.arrow([pr['r'], (pr['r'][0] + 8, pr['y']), (pr['r'][0] + 8, a['R'][1]), a['R']], 'amber', 'ref', at=(pr['r'][0] + 8, 126), st=st)
+        d.arrow([pr['r'], (pr['r'][0] + 8, pr['y']), (pr['r'][0] + 8, a['R'][1]), a['R']], 'amber', 'ref', at=(pr['r'][0] + 8, 120), st=st)
     d.text(516, 120, 'no call running yet', 'n', size=9, st='1-1')
     d.text(516, 120, '(frame popped: nothing in use)', 'n', size=9, st='4-4')
     d.text(516, 120, 'call 1 is over: its rented is gone', 'n', size=9, st='5-5')
-    d.box(158, 102, 226, 22, [('🆕 rent #1: the array is lent out', 's')], 'cyan', rx=4, st='2-3', hl=2)
-    d.box(158, 102, 226, 22, [('🔁 rent #2: the SAME array again', 's')], 'amber', rx=4, st='5-5', hl=5)
+    d.box(158, 98, 226, 19, [('🆕 rent #1: the array is lent out', 's')], 'cyan', rx=4, st='2-3', hl=2)
+    d.box(158, 98, 226, 19, [('🔁 rent #2: the SAME array again', 's')], 'amber', rx=4, st='5-5', hl=5)
     for st, title in [('2-3', 'frame of Process (call 1)'), ('5-5', 'frame of Process (call 2)')]:
         f = card(d, 410, 136, title, [('rented = reference' if st == '2-3' else 'again = reference (2nd Rent)', 'f')], 'cyan', w=212, st=st, hl=2 if st == '2-3' else 5)
         fy = f['rows'][0]['y']

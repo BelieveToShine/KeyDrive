@@ -81,22 +81,22 @@ def d_di2():
     return d
 
 def d_di3():
-    d = Diagram('di3', 640, 450, 'A transient service: the request frame on the stack holds the controller, service and repository; each time the container is asked it allocates a brand-new EmailBuilder, so each of the three holds a reference to a different object; if the type is IDisposable the scope keeps a reference to each until the request ends')
+    d = Diagram('di3', 640, 470, 'A transient service: the request frame on the stack holds the controller, service and repository; each time the container is asked it allocates a brand-new EmailBuilder, so each of the three holds a reference to a different object; if the type is IDisposable the scope keeps a reference to each until the request ends')
     d.note(10, 6, 620, 24, 'Teaching picture: simplified layout; the scope’s disposal list is drawn as a plain list of references', 'n', size=9)
     d.zone(10, 38, 620, 90, 'cyan', '📚 STACK (request)')
-    fr = obj(d, 44, 62, 170, [('f', [('owners = 3 refs', 1, 5), ('(frame popped)', 6, None)])], [('Request frame', 'cyan', 1, 5), ('Request frame · popped', 'n', 6, 6)])
-    d.zone(10, 134, 620, 330, 'emerald', '🏠 HEAP')
+    fr = obj(d, 64, 62, 170, [('f', [('owners = 3 refs', 1, 5), ('(frame popped)', 6, None)])], [('Request frame', 'cyan', 1, 5), ('Request frame · popped', 'n', 6, 6)])
+    d.zone(10, 134, 620, 322, 'emerald', '🏠 HEAP')
     oy = 96
     names = [('OrdersController', 64 + oy), ('OrderService', 164 + oy), ('OrderRepository', 264 + oy)]
     for i, (nm, y) in enumerate(names):
         n = i + 2
-        obj(d, 44, y, 150, [('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
-        obj(d, 256, y, 170, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
-        d.arrow([(186, y + 38), (256, y + 38)], 'cyan', 'new', at=(221, y + 38), st=_S(n, 5))
-        d.arrow([(44, 99), (28, 99), (28, y + 38), (44, y + 38)], 'cyan', 'holds' if i == 0 else None, at=(28, 125) if i == 0 else None, st='1-5')
+        obj(d, 64, y, 150, [('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
+        obj(d, 276, y, 150, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
+        d.arrow([(214, y + 38), (276, y + 38)], 'cyan', 'new', at=(245, y + 38), st=_S(n, 5))
+        d.arrow([(64, 99), (18, 99), (18, y + 38), (64, y + 38)], 'cyan', 'holds' if i == 0 else None, at=(41, 99) if i == 0 else None, st='1-5')
     obj(d, 480, 64 + oy, 140, [('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
         [('Scope (if IDisposable)', 'amber', 5, 5, 5), ('Scope · request ended', 'n', 6, 6)])
-    d.arrow([(488, 88 + oy), (426, 88 + oy)], 'amber', 'keeps', at=(457, 88 + oy), st='5-5')
+    d.arrow([(488, 88 + oy), (426, 88 + oy)], 'amber', 'keeps', at=(463, 88 + oy), st='5-5')
     d.arrow([(488, 112 + oy), (450, 112 + oy), (450, 188 + oy), (426, 188 + oy)], 'amber', st='5-5')
     d.arrow([(488, 136 + oy), (465, 136 + oy), (465, 288 + oy), (426, 288 + oy)], 'amber', st='5-5')
     add_code(d, ['// ── your request code ──', 'var ctrl = sp.GetRequiredService<OrdersController>();   // builds the 3 owners', '}   // request ends: scope disposes all three, the frame pops', '// ── what the container runs: constructors ──', 'OrdersController(IEmailBuilder mail)   // ask 1: new #1', 'OrderService(IEmailBuilder mail)       // ask 2: new #2', 'OrderRepository(IEmailBuilder mail)    // ask 3: new #3', 'if (obj is IDisposable x) disposables.Add(x);   // illustrative: the scope keeps a ref to each'], [1, 4, 5, 6, 7, 2])
