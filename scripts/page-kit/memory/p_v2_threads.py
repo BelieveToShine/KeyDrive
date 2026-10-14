@@ -58,12 +58,12 @@ def d_th2():
     cell(d, ct, 2, 'Value = 6  (want 7)', 'rose', st='7-', hl=7)
     tp, vy = ct['rows'][1]['y'], ct['rows'][2]['y']
     cy1, ty1 = f1['rows'][0]['y'], f1['rows'][1]['y']
-    d.arrow([(128, cy1), (244, tp)], 'cyan', 'ref', at=(186, tp), st='1-', id='k1')
-    d.arrow([(512, cy1), (396, tp)], 'violet', 'ref', at=(454, tp), st='1-', id='k2')
-    d.arrow([(244, vy), (128, vy)], 'cyan', 'copy 5', at=(186, vy), st=2, id='r1')
-    d.arrow([(396, vy), (512, vy)], 'violet', 'copy 5', at=(454, vy), st=3, id='r2')
-    d.arrow([(128, vy), (244, vy)], 'cyan', 'write 6', at=(186, vy), st=6, id='w1')
-    d.arrow([(512, vy), (396, vy)], 'violet', 'write 6', at=(454, vy), st=7, id='w2')
+    d.arrow([(128, cy1), (244, tp)], 'cyan', 'ref', at=(160, tp), st='1-', id='k1')
+    d.arrow([(512, cy1), (396, tp)], 'violet', 'ref', at=(480, tp), st='1-', id='k2')
+    d.arrow([(244, vy), (128, vy)], 'cyan', 'copy 5', at=(200, vy), st=2, id='r1')
+    d.arrow([(396, vy), (512, vy)], 'violet', 'copy 5', at=(440, vy), st=3, id='r2')
+    d.arrow([(128, vy), (244, vy)], 'cyan', 'write 6', at=(200, vy), st=6, id='w1')
+    d.arrow([(512, vy), (396, vy)], 'violet', 'write 6', at=(440, vy), st=7, id='w2')
     d.token('r1', '📋', 14, 'cyan', st=2)
     d.token('r2', '📋', 14, 'violet', st=3)
     d.token('w1', '✏️', 14, 'cyan', st=6)

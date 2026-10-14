@@ -16,7 +16,8 @@ def d_mc1():
     cell(d, cart, 2, 'Customer = ref', 'emerald', st='3-', hl=3)
     cus = card(d, 350, 44, 'Customer', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 42', 'f')], 'emerald', w=CW, st='3-', hl=3)
     ord_ = card(d, 185, 172, 'Order (in use)', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'emerald', w=CW, st='1-1', hl=1)
-    card(d, 185, 172, 'Order: unreachable', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'amber', w=CW, st='2-4', hl='2,4')
+    card(d, 185, 172, 'Order: unreachable', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'amber', w=CW, st='2-3', hl=2)
+    card(d, 185, 172, 'Order', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'amber', w=CW, st='4-4', hl=4)
     d.zone(185, 172, CW, 106, 'n', 'free space', st='5-5', dash=True)
     inv = card(d, 185, 172, 'Invoice (new)', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 9', 'f')], 'emerald', w=CW, st='6-', hl=6)
     # badges from the mark phase

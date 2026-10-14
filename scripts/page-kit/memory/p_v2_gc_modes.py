@@ -7,7 +7,7 @@ GY = 72                       # card y in the gen 2 row
 
 def heap_cards(d, d2):
     """Gen 2 row: Order A -> Order B, Order C unreachable. d2 = also draw gen 0 row (for object D)."""
-    d.zone(160, 24, 470, 164 if not d2 else 322, 'emerald', '🏠 HEAP')
+    d.zone(160, 24, 470, 164 if not d2 else 310, 'emerald', '🏠 HEAP')
     d.zone(168, 48, 454, 132, 'n', 'gen 2 (part of it)')
     return None
 
@@ -80,33 +80,32 @@ def d_gm2():
             ('The app sets B.next to D: a reference changed during the collection.|The GC must see it: D counts as live. A short pause ends the marking; C has no path.', 'amber'),
             ('C’s space is reclaimed, and the app thread runs on.|The app never stopped for the long part: reading all of gen 2.', 'emerald')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 342, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=10)
-    d.text(630, 428, 'teaching picture: how the runtime tracks the change is not drawn; pause details are simplified', 'n', 8.5, anchor='end')
+        d.note(10, 346, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=10)
+    d.text(630, 426, 'teaching picture: how the runtime tracks the change is not drawn; pause details are simplified', 'n', 8.5, anchor='end')
     return d
 
 def d_gm3():
     d = Diagram('gm3', 640, 300, 'Workstation versus server GC as a teaching picture: in workstation GC all app threads allocate into one heap and the thread that triggers the collection runs it; in server GC there is one heap per processor, each with its own dedicated GC thread cleaning in parallel, at the price of more heaps and more memory')
     # ---- workstation (steps 1-2)
     d.zone(10, 24, 620, 170, 'cyan', '🛋️ WORKSTATION GC (teaching picture)', st='1-2')
-    d.box(24, 66, 120, 38, [('T1 · app thread', 'm')], 'emerald', rx=6, st=1)
-    d.box(24, 66, 120, 38, [('T1 · paused', 'm')], 'rose', rx=6, st=2)
-    d.box(24, 126, 120, 38, [('T2 · app thread', 'm')], 'emerald', rx=6, st=1)
-    d.box(24, 126, 120, 38, [('T2 · runs the GC', 'm')], 'amber', rx=6, st=2, hl=2)
-    d.box(380, 80, 220, 70, [('one heap', 't'), ('gen 0 · gen 1 · gen 2 · LOH', 's')], 'emerald', st='1-2')
-    d.arrow([(144, 85), (262, 85), (262, 100), (380, 100)], 'emerald', 'allocate', at=(262, 92), st=1)
-    d.arrow([(144, 145), (262, 145), (262, 130), (380, 130)], 'emerald', 'allocate', at=(262, 138), st=1)
-    d.arrow([(144, 145), (262, 145), (262, 130), (380, 130)], 'amber', 'mark · compact', at=(262, 138), st=2, flow=True)
+    d.box(24, 66, 124, 38, [('T1 · running', 'm')], 'emerald', rx=6, st='1-1')
+    d.box(24, 66, 124, 38, [('T1 · paused', 'm')], 'rose', rx=6, st='2-2')
+    d.box(24, 126, 124, 38, [('T2 · running', 'm')], 'emerald', rx=6, st='1-1')
+    d.box(24, 126, 124, 38, [('T2 runs the GC', 'm')], 'amber', rx=6, st='2-2', hl=2)
+    d.box(380, 66, 230, 98, [('one heap', 't'), ('gen 0 · gen 1 · gen 2 · LOH', 's')], 'emerald', st='1-2')
+    d.arrow([(148, 85), (380, 85)], 'emerald', 'allocate', at=(264, 85), st='1-1')
+    d.arrow([(148, 145), (380, 145)], 'emerald', 'allocate', at=(264, 145), st='1-1')
+    d.arrow([(148, 145), (380, 145)], 'amber', 'mark · compact', at=(264, 145), st='2-2', flow=True)
     # ---- server (steps 3-5)
     d.zone(10, 24, 620, 190, 'violet', '🏭 SERVER GC (teaching picture: 4 processors)', st='3-5')
     for i in range(4):
         y = 52 + i * 38
-        d.box(24, y, 110, 30, [(f'T{i + 1} · app thread', 'm')], 'emerald', rx=6, st=3)
-        d.box(24, y, 110, 30, [(f'T{i + 1} · paused', 'm')], 'rose', rx=6, st='4-4')
-        d.box(24, y, 110, 30, [(f'T{i + 1} · app thread', 'm')], 'emerald', rx=6, st=5)
+        d.box(24, y, 124, 30, [(f'T{i + 1} · running', 'm')], 'emerald', rx=6, st='3-3')
+        d.box(24, y, 124, 30, [(f'T{i + 1} · paused', 'm')], 'rose', rx=6, st='4-4')
+        d.box(24, y, 124, 30, [(f'T{i + 1} · running', 'm')], 'emerald', rx=6, st='5-5')
         d.box(246, y, 140, 30, [(f'heap {i + 1}', 'm')], 'violet', rx=6, st='3-4')
-        d.box(246, y, 140, 30, [(f'heap {i + 1}', 'm'), ('more memory', 's')], 'amber', rx=6, st=5, hl=5) if False else None
-        d.box(246, y, 140, 30, [(f'heap {i + 1} · memory held', 'm')], 'amber', rx=6, st=5, hl=5)
-        d.arrow([(134, y + 15), (246, y + 15)], 'emerald', st=3)
+        d.box(246, y, 140, 30, [(f'heap {i + 1} · more memory', 'm')], 'amber', rx=6, st='5-5', hl=5)
+        d.arrow([(148, y + 15), (246, y + 15)], 'emerald', st='3-3')
         d.box(486, y, 134, 30, [(f'GC thread {i + 1}', 'm')], 'amber', rx=6, st='4-5', hl=4)
         d.arrow([(486, y + 15), (386, y + 15)], 'amber', st='4-5', flow=True)
     caps = [('Workstation GC: one heap, shared by all app threads.|Both threads allocate into it.', 'emerald'),

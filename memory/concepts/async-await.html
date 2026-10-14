@@ -44,50 +44,145 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="An async method runs on the stack until its first await that has to wait; then its locals are saved into a state machine object on the heap and the stack frame is popped so the thread is free; when the awaited work finishes, a new frame is created and the locals are restored from the state machine">
+<figure class="diagram-card kd-story" data-steps="8">
+<div class="st-stage"><svg viewBox="0 0 640 486" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="Memory during an async call: the state machine starts in the LoadAsync frame, is copied (boxed) to a heap object at the first real wait, the frame is popped, the delay task later wakes the heap copy, the result goes into the Task of int, and only then do the state machine and the delay task become garbage">
 <defs><marker id="as1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="as1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="as1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="72" width="200" height="160" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (a thread)</text>
-<rect class="zone" x="240" y="72" width="390" height="160" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="254" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="2-2"><path d="M196,138 L300,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#as1A)"/></g>
-<g class="st" data-s="4-4"><path d="M300,150 L196,150" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#as1A)"/></g>
-<rect class="bx" x="10" y="8" width="420" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="zone" x="10" y="70" width="170" height="340" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (one thread)</text>
+<rect class="zone" x="190" y="70" width="440" height="340" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="204" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="100" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="34" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Caller frame</text></g>
+<g class="st" data-s="1-3"><rect class="zone" x="20" y="196" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-3"><text class="zone-title" x="34" y="215" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">LoadAsync frame</text></g>
+<g class="st" data-s="5-6"><rect class="zone" x="20" y="196" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-6"><text class="zone-title" x="34" y="215" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">MoveNext frame</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="200" y="100" width="180" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="214" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Task&lt;int&gt; (caller holds)</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="450" y="100" width="170" height="154" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="464" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">State machine (heap copy)</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="450" y="100" width="170" height="154" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="464" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">State machine (heap copy)</text></g>
+<g class="st" data-s="2-6"><rect class="zone" x="450" y="300" width="170" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-6"><text class="zone-title" x="464" y="319" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Delay Task</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="450" y="300" width="170" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="464" y="319" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Delay Task</text></g>
+<g class="st" data-s="3-"><path id="as1-a_t" d="M152,161 L208,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#as1A)"/></g>
+<g class="st" data-s="3-3"><path id="as1-a_copy" d="M160,233 L458,233" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#as1A)"/></g>
+<g class="st" data-s="3-6"><path id="as1-a_res" d="M458,185 L372,185" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#as1A)"/></g>
+<g class="st" data-s="3-6"><path id="as1-a_wake" d="M535,300 L535,254" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#as1A)"/></g>
+<rect class="bx" x="10" y="8" width="410" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">async Task&lt;int&gt; LoadAsync() { int a = 1;</text>
 <text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   await Task.Delay(100);  return a + 1; }</text>
-<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="24" y="108" width="172" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="110" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">LoadAsync frame</text></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="110" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a = 1</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="24" y="108" width="172" height="60" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="110" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">LoadAsync frame</text></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="110" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a = 1  (restored)</text></g>
-<g class="st" data-s="2-4" data-hl="2,,,3"><rect class="bx" x="300" y="108" width="300" height="60" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-4" data-hl="2,,,3"><text x="450" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">State machine object</text></g>
-<g class="st" data-s="2-4" data-hl="2,,,3"><text x="450" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">position = after await · a = 1</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="300" y="108" width="300" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="450" y="135.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">State machine object</text></g>
-<g class="st" data-s="5-" data-hl="5"><text x="450" y="148.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">finished → garbage</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="246" width="620" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#67e8f9">1 · called: runs on the stack like any method, until it must wait</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="246" width="620" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fcd34d">2 · await needs to wait: locals are saved in a heap object; the frame is POPPED — the thread is FREE</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="246" width="620" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fcd34d">3 · while we wait, no thread is blocked for this method</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="246" width="620" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#67e8f9">4 · the delay ends: a new frame runs the rest and gets a back from the saved object</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="246" width="620" height="70" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="284" text-anchor="middle" font-size="10" fill="#fda4af">5 · done: the result is delivered; the state machine becomes garbage</text></g>
-<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="212.5" y="129" width="71" height="18" rx="9"/><text x="248" y="141.5" text-anchor="middle" font-size="9" font-style="italic">saved here</text></g></g>
-<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="218" y="141" width="60" height="18" rx="9"/><text x="248" y="153.5" text-anchor="middle" font-size="9" font-style="italic">restored</text></g></g>
+<rect class="bx note" x="430" y="8" width="200" height="48" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="530" y="28" text-anchor="middle" font-size="8.5" fill="#fcd34d">teaching picture: simplified</text>
+<text x="530" y="40.5" text-anchor="middle" font-size="8.5" fill="#fcd34d">Release build, names illustrative</text>
+<g class="st" data-s="1-"><rect class="bx" x="28" y="126" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="90" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 0  (other local)</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="28" y="150" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="90" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">t = ?</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="28" y="150" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="90" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">t → Task&lt;int&gt;</text></g>
+<g class="st" data-s="1-3" data-hl="1,,,3"><rect class="bx" x="28" y="222" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="1,,,3"><text x="90" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">sm.a = 1</text></g>
+<g class="st" data-s="1-3" data-hl="1,,,3"><rect class="bx" x="28" y="246" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="1,,,3"><text x="90" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">sm.state = -1</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="20" y="196" width="140" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="90" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Other work</text></g>
+<g class="st" data-s="4-4"><text x="90" y="231" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">thread is free</text></g>
+<g class="st" data-s="7-"><rect class="bx" x="20" y="196" width="140" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-"><text x="90" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Other work</text></g>
+<g class="st" data-s="7-"><text x="90" y="231" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">thread is free</text></g>
+<g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="28" y="222" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6" data-hl="5"><text x="90" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">this → state machine</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="28" y="246" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="90" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reads a = 1 (field)</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="28" y="246" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="90" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a + 1 = 2 → result</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="208" y="126" width="164" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="290" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="208" y="150" width="164" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="290" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Task&lt;int&gt; MT</text></g>
+<g class="st" data-s="3-5"><rect class="bx" x="208" y="174" width="164" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5"><text x="290" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">result = not ready</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="208" y="174" width="164" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="290" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">result = 2  ✓ done</text></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><rect class="bx" x="458" y="126" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><text x="535" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><rect class="bx" x="458" y="150" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><text x="535" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → its MethodTable</text></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><rect class="bx" x="458" y="174" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><text x="535" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">builder → Task&lt;int&gt;</text></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><rect class="bx" x="458" y="198" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><text x="535" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">state = 0  (after await)</text></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><rect class="bx" x="458" y="222" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3,,,5"><text x="535" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">a = 1</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="126" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="150" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → its MethodTable</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="174" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">builder → Task&lt;int&gt;</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="198" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">state = 0  (after await)</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="222" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">a = 1</text></g>
+<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="458" y="326" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="2"><text x="535" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="458" y="350" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="2"><text x="535" y="363.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Task MT</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="458" y="374" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="535" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">status: not done</text></g>
+<g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="458" y="374" width="154" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6" data-hl="5"><text x="535" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">status: done  ✓</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="326" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="350" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="363.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Task MT</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="458" y="374" width="154" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="535" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">status: done</text></g>
+<g class="st" data-s="7-"><rect class="bx note" x="200" y="262" width="240" height="62" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-"><text x="320" y="289" text-anchor="middle" font-size="9" fill="#fda4af">Garbage = nothing can reach it.</text></g>
+<g class="st" data-s="7-"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#fda4af">It is freed later, when a GC runs.</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#67e8f9">1 · LoadAsync is called: its frame holds the state machine (a = 1, state = -1)</text></g>
+<g class="st" data-s="1-1"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The caller will get a Task&lt;int&gt;; t is not set yet</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#fcd34d">2 · Task.Delay(100) creates a Delay Task on the heap, not finished yet</text></g>
+<g class="st" data-s="2-2"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">The method cannot continue: it must wait</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#fcd34d">3 · First real wait: the state machine is COPIED (boxed) to a new heap object</text></g>
+<g class="st" data-s="3-3"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">state = 0 = "resume after the await"; the Task&lt;int&gt; exists; the delay task will wake it</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#67e8f9">4 · LoadAsync returns to its caller: the frame is POPPED</text></g>
+<g class="st" data-s="4-4"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The thread is free; the caller only holds the Task&lt;int&gt;</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#c4b5fd">5 · The delay finishes and wakes the heap copy: MoveNext runs in a NEW frame</text></g>
+<g class="st" data-s="5-5"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">a is read from the heap copy, no copy back (may be another thread)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#6ee7b7">6 · return a + 1: the result 2 is written into the Task&lt;int&gt;</text></g>
+<g class="st" data-s="6-6"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The caller’s await now gets 2; the MoveNext frame ends</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#fda4af">7 · Nothing points to the state machine or the delay task any more</text></g>
+<g class="st" data-s="7-7"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#fda4af">They are garbage; the Task&lt;int&gt; lives on because t still points to it</text></g>
+<g class="st" data-s="8-8"><rect class="bx note" x="10" y="420" width="620" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="8-8"><text x="320" y="444" text-anchor="middle" font-size="9.5" fill="#6ee7b7">8 · A GC runs later: the garbage is freed</text></g>
+<g class="st" data-s="8-8"><text x="320" y="457.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Only the Task&lt;int&gt; (still reachable from t) remains</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="163" y="152" width="34" height="18" rx="9"/><text x="180" y="164.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="269.5" y="224" width="71" height="18" rx="9"/><text x="305" y="236.5" text-anchor="middle" font-size="9" font-style="italic">boxed copy</text></g></g>
+<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="398" y="176" width="50" height="18" rx="9"/><text x="423" y="188.5" text-anchor="middle" font-size="9" font-style="italic">result</text></g></g>
+<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="513" y="268" width="44" height="18" rx="9"/><text x="535" y="280.5" text-anchor="middle" font-size="9" font-style="italic">wakes</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="as1-a_copy"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📋</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="as1-a_wake"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">⏰</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="as1-a_res"><circle r="9.3" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✉️</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>LoadAsync()</code> is called. Until it has to wait, it runs on the stack like any method, with <code>a = 1</code> in its frame.</li><li><code>await Task.Delay(100)</code> cannot finish yet. The compiler-generated code <b>saves the locals and the “where was I” position</b> in a <b>state machine object on the heap</b>. The stack frame is <b>popped</b>: the thread is free to do other work.</li><li>While waiting, <b>no thread is blocked</b> by this method. Only the small heap object remembers where we were.</li><li>The delay ends. A new frame runs the rest of the method; <code>a</code> is read back from the saved object.</li><li>The method finishes and delivers its result. The state machine is now garbage for the GC.</li></ol>
-<figcaption><strong>What you're seeing:</strong> await does not block a thread. It turns the method into a bookmark (the state machine) and gives the thread back.</figcaption>
+<ol class="st-caps"><li><code>LoadAsync()</code> is called. In this simplified picture its stack frame holds the compiler’s <b>state machine</b>: <code>a = 1</code> and <code>state = -1</code> (“not started”). The caller will receive a <code>Task&lt;int&gt;</code>.</li><li><code>Task.Delay(100)</code> creates a <b>Delay Task</b> object on the heap. It is not finished, so the method must wait.</li><li><b>First real wait:</b> the state machine is <b>copied (boxed)</b> into a new heap object, with <code>state = 0</code> meaning “resume after the await”. The <code>Task&lt;int&gt;</code> now exists and the caller’s <code>t</code> points to it. The Delay Task will wake the heap copy.</li><li>The method returns to its caller and its <b>frame is popped</b>. The thread is free for other work. The caller holds only the <code>Task&lt;int&gt;</code> reference.</li><li>The delay finishes and <b>wakes the heap copy</b>: <code>MoveNext</code> runs in a <b>new frame</b> and reads <code>a</code> from the heap object’s field. Nothing is copied back to a frame. It may run on another thread.</li><li><code>return a + 1</code>: the result <code>2</code> is written into the <code>Task&lt;int&gt;</code>. The caller’s <code>await</code> receives it and the MoveNext frame ends.</li><li>Nothing points to the state machine or the Delay Task any more: they are <b>garbage</b>. The <code>Task&lt;int&gt;</code> stays reachable from <code>t</code>.</li><li>Garbage is not freed at once. A later <b>GC</b> frees the two objects; the <code>Task&lt;int&gt;</code> remains while it is referenced.</li></ol>
+<figcaption><strong>What you're seeing:</strong> await does not block a thread. The state machine is a bookmark on the heap, kept alive by the awaited task until it wakes it. (Teaching picture: simplified Release build; the wake-up mechanism and type names are illustrative.)</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b><code>await</code> moves the method’s state from the stack to a heap object while it waits, so the thread can do other work.</b></span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b><code>await</code> copies the method’s state (the state machine) to a heap object while it waits, so the thread can do other work.</b></span></div>
   <section class="kd-section " id="why">
     <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
@@ -96,7 +191,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🧾 What lives where during an async method</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Moment</th><th scope="col">Locals live in…</th><th scope="col">Allocation?</th></tr></thead><tbody><tr><th scope="row">Before the first await that really waits</th><td>the stack frame</td><td>none (may complete without any)</td></tr><tr><th scope="row">The awaited work has already finished (completes synchronously)</th><td>still the stack</td><td>none — no suspension happened</td></tr><tr><th scope="row">Suspended at an await</th><td>the <b>state machine</b> (a heap object after the first real suspension)</td><td>one heap object (and a <code>Task</code>)</td></tr><tr><th scope="row">After resuming</th><td>a new frame, locals restored from the state machine</td><td>none extra</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Moment</th><th scope="col">Locals live in…</th><th scope="col">Allocation?</th></tr></thead><tbody><tr><th scope="row">Before the first await that really waits</th><td>the stack frame</td><td>none (may complete without any)</td></tr><tr><th scope="row">The awaited work has already finished (completes synchronously)</th><td>still the stack</td><td>no state-machine boxing — no suspension happened</td></tr><tr><th scope="row">Suspended at an await</th><td>the <b>state machine</b> (a heap object after the first real suspension)</td><td>one heap object (and a <code>Task&lt;int&gt;</code> for the caller; exact allocations vary by version)</td></tr><tr><th scope="row">After resuming</th><td>a new frame; locals are read from the state machine’s fields</td><td>none extra</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">⚡ Making it cheaper</div>
@@ -114,8 +209,8 @@
     <div class="code-block"><pre><span class="kw">async</span> Task&lt;<span class="kw">int</span>&gt; LoadAsync()
 {
     <span class="kw">int</span> a = 1;                       <span class="cmt">// starts in this method's stack frame</span>
-    <span class="kw">await</span> Task.Delay(100);           <span class="cmt">// not finished → state saved on the heap, thread freed</span>
-    <span class="kw">return</span> a + 1;                    <span class="cmt">// resumes: a is read back from the saved state</span>
+    <span class="kw">await</span> Task.Delay(100);           <span class="cmt">// not finished → state machine boxed to the heap, thread freed</span>
+    <span class="kw">return</span> a + 1;                    <span class="cmt">// resumes: a is read from the state machine</span>
 }
 
 <span class="cmt">// DON'T: .Result / .Wait() block a thread and lose the benefit</span>
@@ -126,7 +221,7 @@
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p>The <b>stack frames</b> pop whenever the method suspends or finishes. The <b>state machine object</b> and the <b>Task</b> are ordinary heap objects: the GC frees them once the method has finished and nothing references them. A never-completing await keeps the state machine (and everything its locals reference) alive — a classic hidden leak.</p>
+      <p>The <b>stack frames</b> pop whenever the method suspends or finishes. The <b>state machine object</b> and the <b>Task</b> are ordinary heap objects: the GC frees them once the method has finished and nothing references them. The awaited task keeps the state machine reachable until it completes, so a never-completing await keeps the state machine (and everything its locals reference) alive — a classic hidden leak.</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -145,7 +240,7 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">“The compiler turns an async method into a state machine that holds its locals and position. If an await doesn’t complete synchronously, the state machine is boxed to the heap, the stack frame is popped and the thread is released; when the awaited work completes the method resumes and the state machine is later garbage collected.”</div>
+    <div class="kd-card saythis-box">“The compiler turns an async method into a state machine that holds its locals and position. If an await doesn’t complete synchronously, the state machine is boxed to the heap, the stack frame is popped and the thread is released; when the awaited work completes it resumes the state machine, the result goes into the Task, and the state machine is later garbage collected.”</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
@@ -168,6 +263,6 @@
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

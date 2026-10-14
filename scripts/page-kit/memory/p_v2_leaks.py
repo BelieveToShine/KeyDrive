@@ -69,7 +69,7 @@ def d_lk2():
     d.zone(160, 190, 460, 54, 'emerald', None)
     d.text(612, 203, 'byte[][] array object', 'emerald', 8.5, anchor='end')
     cx = 168
-    for t, x, w in [('hdr', 168, 46), ('type', 216, 46), ('len 6', 264, 36)]:
+    for t, x, w in [('hdr', 168, 46), ('type', 216, 46), ('len', 264, 36)]:
         d.box(x, 208, w, 24, [(t, 'm')], 'n' if t != 'type' else 'violet', rx=4)
     d.arrow([(239, 160), (239, 208)], 'emerald', 'ref', at=(239, 180), id='c2', st=1)
     SX = [304 + 50 * k for k in range(6)]
@@ -81,10 +81,10 @@ def d_lk2():
         d.box(x, 208, 48, 24, [('slot %d' % k, 'm')], 'emerald', rx=4, st=f'{first}-3', hl=3)
         # items
         iy = 266
-        lbl = lambda t2: [('item %d' % (k + 1), 't'), (t2, 's')]
+        lbl = lambda t2: [('item %d' % (k + 1), 'm'), (t2, 'm')]
         d.box(x, iy, 48, 38, lbl('byte[]'), 'emerald', rx=6, st=f'{first}-2')
-        d.box(x, iy, 48, 38, lbl('✔ marked'), 'emerald', rx=6, st='3', hl=3)
-        d.box(x, iy, 48, 38, lbl('✘ no ref'), 'rose', rx=6, st='4', hl=4)
+        d.box(x, iy, 48, 38, lbl('✔ live'), 'emerald', rx=6, st='3', hl=3)
+        d.box(x, iy, 48, 38, lbl('no ref'), 'rose', rx=6, st='4', hl=4)
         d.arrow([(x + 24, 232), (x + 24, iy)], 'emerald', st=f'{first}-3', id=f's{k}')
         d.token(f's{k}', '🔍', 12, 'emerald', st='3-3')
     d.token('c1', '🔍', 12, 'amber', st='3-3')
