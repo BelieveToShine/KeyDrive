@@ -119,7 +119,7 @@ def d_ov2():
     d.token('w3', '📞', 15, 'amber', st='5-5')
     d.code_box(10, 346, 300, 36, [(0, 'Animal a = new Dog();    a.Speak();', '')], 'n', size=9, lh=15)
     for i, (t, c) in enumerate([('Setup: a holds the address of a Dog object;|its type pointer leads to Dog’s MethodTable', 'cyan'), ('Build time: the compiler only knows that|Speak is a virtual method in slot 0 — not which code', 'amber'),
-                                ('Run time ①: follow a to the object|on the heap', 'cyan'), ('Run time ②: read its type pointer →|Dog’s MethodTable (the object’s REAL type)', 'violet'), ('Run time ③: take slot 0 of THAT table —|Dog replaced it with Dog.Speak', 'amber'), ('Jump: Dog.Speak runs with this = the object.|Animal’s own table is never touched.', 'emerald')]):
+                                ('Run time 1 ·: follow a to the object|on the heap', 'cyan'), ('Run time 2 ·: read its type pointer →|Dog’s MethodTable (the object’s REAL type)', 'violet'), ('Run time 3 ·: take slot 0 of THAT table —|Dog replaced it with Dog.Speak', 'amber'), ('Jump: Dog.Speak runs with this = the object.|Animal’s own table is never touched.', 'emerald')]):
         d.note(320, 346, 310, 70, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
@@ -166,9 +166,9 @@ def build_virtual_override_overload():
             ('story', '📞 Override: a virtual call walks from the variable to the object to its type', (d_ov2(), [
                 '<b>Setup.</b> <code>a</code> (on the stack) holds the address of a <b>Dog object</b> on the heap. Every object starts with a small header and a <b>type pointer</b> that leads to its type’s <b>MethodTable</b> (one table per type, shared by all objects of that type).',
                 '<b>Build time.</b> <code>a</code> is declared <code>Animal</code>, so the compiler can only note: “<code>Speak</code> is a virtual method, <b>slot 0</b>”. It does not know which code will run.',
-                '<b>Run time ①.</b> Follow the address in <code>a</code> to the object on the heap.',
-                '<b>Run time ②.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.',
-                '<b>Run time ③.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).',
+                '<b>Run time 1 ·.</b> Follow the address in <code>a</code> to the object on the heap.',
+                '<b>Run time 2 ·.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.',
+                '<b>Run time 3 ·.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).',
                 '<b>Jump.</b> <code>Dog.Speak</code> runs with <code>this</code> = the object. The slot number came from the compiler; the target came from the object at run time.'],
                 'override = the slot is replaced in the derived type’s table. Slot numbers and the exact table layout are a teaching picture of the classic runtime model.')),
             ('story', '🪞 New (hiding): a separate method, the slot is NOT replaced', (d_ov3(), [
