@@ -7,8 +7,9 @@ def gcard(d, x, y, title, texts, w, st):
 # ---------------------------------------------------------------- D1: copy an int
 def d_vr1():
     d = Diagram('vr1', 640, 192, 'Copying an int: a is a stack slot holding 5; int b = a makes a second, separate slot and copies the number into it; changing b to 10 leaves a at 5; when the method returns the whole frame is popped and both slots are gone')
-    d.code_box(10, 8, 300, 62, [(0, 'void Main() {', ''), (0, '  int a = 5;   int b = a;', ''), (0, '  b = 10; }', '')], 'n', size=9, lh=15)
-    d.note(10, 84, 300, 44, 'A value-type slot holds the number itself:|no header, no type pointer', 'cyan', size=9.5)
+    d.code_box(10, 8, 300, 96, [(0, 'void Main() {', ''), (0, '  int a = 5;', ''), (0, '  int b = a;', ''), (0, '  b = 10;', ''), (0, '}', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 300, [1, 2, 3, 4], size=9, lh=15)
+    d.note(10, 116, 300, 44, 'A value-type slot holds the number itself:|no header, no type pointer', 'cyan', size=9.5)
     d.zone(330, 6, 300, 180, 'cyan', '📚 STACK (this thread)')
     g = card(d, 350, 34, 'frame: Main()', [('a = 5', 'f', '1-3'), ('b = 5', 'f', '2-2')], 'cyan', w=180, st='1-3')
     gcard(d, 350, 34, 'frame: Main() · popped', ['a = 5', 'b = 10'], 180, '4-4')

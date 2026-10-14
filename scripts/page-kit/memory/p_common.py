@@ -133,3 +133,15 @@ def cell(d, g, i, text, color='amber', st=None, hl=None, kind=None):
     """Re-draw row i of card g with new text/colour for some steps (a value that changes, a highlighted slot)."""
     r = g['rows'][i]
     d.box(g['x'] + 8, r['top'], g['w'] - 16, r['h'], [(text, 'm')], color, rx=4, st=st, hl=hl)
+
+
+def run_line(d, x, y, w, seq, size=9, lh=13):
+    """Show which line of the code_box at (x,y,w) is executing at each step.
+    seq[k] = 0-based line index running at step k+1 (None = no line highlighted). Consecutive equal entries merge."""
+    i = 0
+    while i < len(seq):
+        j = i
+        while j + 1 < len(seq) and seq[j + 1] == seq[i]: j += 1
+        if seq[i] is not None:
+            d.code_cursor(x, y, w, seq[i], size=size, lh=lh, st=(i + 1, j + 1))
+        i = j + 1

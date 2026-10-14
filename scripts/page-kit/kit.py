@@ -102,6 +102,12 @@ class Diagram:
             self.add(f'<text x="{x+14+ind}" y="{cy}" text-anchor="start" font-size="{size}" font-family="\'JetBrains Mono\'" fill="{fill}">{esc(text)}</text>')
             cy += lh
 
+    def code_cursor(self, x, y, w, line, size=9, lh=13):
+        """'you are here' bar over line `line` (0-based) of a code_box drawn at (x, y, w): amber band + ▶ marker. Give it st='a-b'."""
+        base = y + 22 + line * lh
+        self.add(f'<rect class="cur" x="{x+4}" y="{base-size-1:g}" width="{w-8}" height="{lh}" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/>')
+        self.add(f'<text class="cur" x="{x+6}" y="{base-0.5:g}" text-anchor="start" font-size="{size-3}" fill="#fcd34d">▶</text>')
+
     def text(self, x, y, s, color='n', size=9.5, anchor='middle', mono=False, weight=400, cls='free'):
         fill = COL[color][2] if color != 'n' else '#93a0b8'
         self.add(f'<text class="{cls}" x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}" font-weight="{weight}" fill="{fill}"'
@@ -183,7 +189,7 @@ def _animated(fn):
             if began: self._end()
     w.__name__ = fn.__name__
     return w
-for _n in ('zone', 'box', 'code_box', 'text', 'pill', 'arrow', 'emoji', 'token', 'note'):
+for _n in ('zone', 'box', 'code_box', 'code_cursor', 'text', 'pill', 'arrow', 'emoji', 'token', 'note'):
     setattr(Diagram, _n, _animated(getattr(Diagram, _n)))
 
 def figure(d, caption):
