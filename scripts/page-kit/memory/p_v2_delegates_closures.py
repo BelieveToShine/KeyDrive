@@ -113,7 +113,7 @@ def d_dl3():
     d.code_box(440, 160, 190, 112, [(0, 'static Action keep;', ''), (0, 'void Run(Page page) {', ''), (0, '  var inc = MakeCounter(page);', ''), (0, '  keep = inc;', ''), (0, '}   // Run returns', ''), (0, 'keep = null;   // later', '')], 'n', size=8.5, lh=15)
     run_line(d, 440, 160, 190, [2, 3, 4, None, 5, None], size=8.5, lh=15)
     d.note(440, 278, 190, 50, '✔ = marked live by the GC|rose dashed = unreachable,|not freed yet', 'rose', size=8.5)
-    _teach(d, 535, 342, ('teaching picture: addresses,', 'field names illustrative'))
+    _teach(d, 535, 338, ('teaching picture: addresses,', 'field names illustrative'))
     for i, (t, c) in enumerate([
             ('Run() holds inc → Delegate → Closure → Page (built by|MakeCounter(page); count already reached 2). The static|keep is still null.', 'cyan'),
             ('keep = inc;  the static now holds a SECOND copy of|the Delegate’s address. A static is a GC root.', 'rose'),

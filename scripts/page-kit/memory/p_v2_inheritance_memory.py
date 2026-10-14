@@ -2,7 +2,7 @@ from p_common import *
 
 # ---- D1: one block, built in order (7 -> 6 steps) -------------------------------------------
 def d_in1():
-    d = Diagram('in1', 640, 330, 'new Dog() allocates ONE heap object with an object header, a type pointer to the Dog MethodTable and the fields Name and Breed, which are references to separate string objects; the Dog constructor runs Dog field initializers, calls the Animal constructor (which shares the same this), then finishes its own body, and only at the end the reference is stored in the variable d')
+    d = Diagram('in1', 640, 354, 'new Dog() allocates ONE heap object with an object header, a type pointer to the Dog MethodTable and the fields Name and Breed, which are references to separate string objects; the Dog constructor runs Dog field initializers, calls the Animal constructor (which shares the same this), then finishes its own body, and only at the end the reference is stored in the variable d')
     d.zone(10, 24, 130, 200, 'cyan', '📚 STACK')
     d.zone(144, 24, 298, 200, 'emerald', '🏠 HEAP')
     d.zone(450, 24, 180, 200, 'violet', '🧬 TYPE DATA')
@@ -52,7 +52,8 @@ def d_in1():
     d.arrow([(122, ly), c['L']], 'amber', st='1-5')
     d.arrow([(122, ly + 50), (134, ly + 50), (134, ly), c['L']], 'amber', st='3-4')
     d.arrow([(122, 62), (134, 62), (134, ly), c['L']], 'cyan', st='6-')
-    d.code_box(10, 232, 360, 78, [(0, 'class Animal { string Name = "?";', ''), (0, '   public Animal() { Name = "Rex"; } }', ''), (0, 'class Dog : Animal { string Breed = "Lab";', ''), (0, '   public Dog() { Breed = "Pug"; } }', '')], 'n', size=8.8, lh=15)
+    d.code_box(10, 232, 360, 97, [(0, 'class Animal { string Name = "?";', ''), (0, '   public Animal() { Name = "Rex"; } }', ''), (0, 'class Dog : Animal { string Breed = "Lab";', ''), (0, '   public Dog() { Breed = "Pug"; } }', ''), (0, 'var d = new Dog();', 'k')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 232, 360, [4, 2, 0, 1, 3, 4], size=8.8, lh=15)
     for i, (t, col) in enumerate([
             ('new: one zeroed block. Its type ptr|already says Dog. Dog() is called|with this = the block.', 'emerald'),
             ('Dog() starts with ITS field|initializer: Breed = "Lab".', 'amber'),
@@ -60,13 +61,13 @@ def d_in1():
             ('Animal() body: Name = "Rex".|"?" has no reference now.', 'amber'),
             ('Animal() returns (frame popped). Back in|Dog(): Breed = "Pug". "Lab" is unreferenced.', 'amber'),
             ('new returns; Dog() popped. The|address is copied into d.', 'cyan')]):
-        d.note(380, 232, 250, 78, t, col, st=f'{i + 1}-{i + 1}', size=9)
-    d.text(320, 324, 'teaching picture: row order and frame details simplified, sizes not shown', 'n', 8.5, st=1)
+        d.note(380, 232, 250, 97, t, col, st=f'{i + 1}-{i + 1}', size=9)
+    d.text(320, 346, 'teaching picture: row order and frame details simplified, sizes not shown', 'n', 8.5, st=1)
     return d
 
 # ---- D2: the variable type is a view; the type pointer is the truth ---------------------------
 def d_in2():
-    d = Diagram('in2', 640, 356, 'Animal a = new Dog(): variable a points at one Dog object whose type pointer leads to the Dog MethodTable; the compiler only lets a use Animal members, the cast (Dog)a compares the object type pointer with Dog and copies the same reference into dog, and a cast to Cat fails at run time because the type pointer says Dog')
+    d = Diagram('in2', 640, 380, 'Animal a = new Dog(): variable a points at one Dog object whose type pointer leads to the Dog MethodTable; the compiler only lets a use Animal members, the cast (Dog)a compares the object type pointer with Dog and copies the same reference into dog, and a cast to Cat fails at run time because the type pointer says Dog')
     d.zone(10, 24, 130, 172, 'cyan', '📚 STACK')
     d.zone(150, 24, 206, 172, 'emerald', '🏠 HEAP')
     d.zone(366, 24, 264, 238, 'violet', '🧬 TYPE DATA (one per type)')
@@ -89,15 +90,16 @@ def d_in2():
     d.box(18, 228, 160, 26, [('dog.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='4-4')
     d.box(184, 228, 164, 26, [('dog.Breed ✅ allowed', 'm')], 'emerald', rx=4, st='4-4', hl=4)
     d.box(18, 228, 330, 26, [('(Cat)a  compiles ✅ — fails at run time ❌', 'm')], 'rose', rx=4, st='5-', hl=5)
-    d.code_box(10, 276, 346, 62, [(0, 'Animal a = new Dog();', ''), (0, 'a.Breed;             // ❌ build error', ''), (0, 'var dog = (Dog)a;    // ✅ same object', '')], 'n', size=8.8, lh=15)
+    d.code_box(10, 276, 346, 82, [(0, 'Animal a = new Dog();', ''), (0, 'a.Breed;             // ❌ build error', ''), (0, 'var dog = (Dog)a;    // ✅ same object', ''), (0, 'var cat = (Cat)a;    // ❌ run-time error', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 276, 346, [0, 1, 2, 2, 3], size=8.8, lh=15)
     for i, (t, col) in enumerate([
             ('One Dog object. a (typed Animal)|holds its address; the object\'s type|ptr says Dog.', 'cyan'),
             ('Build time: through a only Animal|members are allowed (Name). Nothing|in memory changes.', 'amber'),
             ('Run time: (Dog)a reads the object\'s|type ptr and compares it with Dog.|Match.', 'emerald'),
             ('The SAME address is copied into dog.|No new object; Breed is now allowed.', 'cyan'),
             ('(Cat)a: type ptr says Dog, not Cat →|InvalidCastException. The object|is untouched.', 'rose')]):
-        d.note(366, 276, 264, 62, t, col, st=f'{i + 1}-{i + 1}', size=9)
-    d.text(320, 351, 'teaching picture: slot contents simplified, no addresses or sizes claimed', 'n', 8.5, st=1)
+        d.note(366, 276, 264, 82, t, col, st=f'{i + 1}-{i + 1}', size=9)
+    d.text(320, 372, 'teaching picture: slot contents simplified, no addresses or sizes claimed', 'n', 8.5, st=1)
     return d
 
 def build_inheritance_memory():
