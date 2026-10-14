@@ -83,3 +83,6 @@ User feedback on the first SOLID Lab: *"I am not satisfied with the SOLID page d
 
 ## L15 — Memory/performance teaching (2026-10-14)
 User: explain memory at every level in sequence, with animated pictures, so a learner can reason about performance while coding. Cover methods (instance/static), parameters (what is copied), return types and tuples, ref/out/in, passing objects (changes visible without a return), delegates/closures, and DI lifetimes (singleton/scoped/transient — scoped instance reused across layers). Rules: no hallucination (every claim in `docs/specs/memory/claims-ledger.md`; internals not in Microsoft docs are marked 🟨 K / "teaching picture"), end each page with who clears the memory, and add a ⚡ performance lens. Use `[[p:slug]]` for cross-page references so renumbering is automatic.
+
+## L16 — Hub journey map: Back + label overflow (2026-10-14)
+User: long node labels (emoji + title) overflowed the node box, and Back was missing on the detail page after clicking a journey-map node. Cause: (1) fixed 14px font in a 200px node; (2) the Back click handler only matched `a[href]` and SVG anchors use `xlink:href`. Fix: `site.js` fits node text at runtime and handles `xlink:href`. Check after any hub change: no `.jm-node` text wider than its rect, and Back from a map node returns to the same scroll position.

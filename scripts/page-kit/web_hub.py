@@ -67,7 +67,7 @@ page = HEAD + f'''<nav class="kd-crumbs wrap">
   <div class="wrap">KeyDrive · Web Platforms · React lab ({nr} / {ntr}) · Angular lab ({na} / {nta})</div>
 </footer>
 
-<script src="../assets/site.js?v=20261018"></script>
+<script src="../assets/site.js?v=20261019"></script>
 </body>
 </html>
 '''

@@ -90,3 +90,7 @@ too), optional `written` (slugs that exist; omit = all), optional `sub` + `subTi
   Next = the next deep dive, else the parent's next concept in `order` (locked if unwritten). The middle
   cell is still "↑ <Category> hub".
 - The in-page `#next` box on a sub page links back to the parent (the bar handles forward movement).
+
+## SVG journey-map links (fixed 2026-10-14)
+Hub journey-map nodes are SVG anchors (`<a class="jm-hit" xlink:href=…>`), not `a[href]`. The Back handler in `assets/site.js` reads `href` **or** `xlink:href`, so a click on a map node now also tags the destination with `bfrom/bt/bs` and the Back pill returns to the exact scroll position. Always test Back from a journey-map node, not only from the concept list.
+Node labels are auto-fitted by `site.js` (font shrinks until the text fits the box), so long titles/emoji never spill over the node border. Keep labels short anyway.

@@ -47,7 +47,7 @@ page = HEAD + f'''<nav class="kd-crumbs wrap">
   <div class="wrap">KeyDrive · Software Design · SOLID {n}/{t} · Patterns {pn}/{pt} · Memory {mn}/{mt}</div>
 </footer>
 
-<script src="../assets/site.js?v=20261018"></script>
+<script src="../assets/site.js?v=20261019"></script>
 </body>
 </html>
 '''

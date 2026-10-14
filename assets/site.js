@@ -171,9 +171,13 @@
 
   document.addEventListener("click", function (e) {
     if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest("a[href]");
+    var a = e.target.closest && e.target.closest("a");
     if (!a || a.classList.contains("crumb-back") || a.closest(".kdsearch-results")) return;
-    var href = a.getAttribute("href");
+    // SVG anchors (journey-map nodes) use xlink:href; HTML anchors use href
+    var XL = "http://www.w3.org/1999/xlink";
+    var attr = a.hasAttribute("href") ? "href" : (a.hasAttributeNS(XL, "href") ? "xlink:href" : null);
+    if (!attr) return;
+    var href = a.getAttribute(attr);
     if (!href || href.charAt(0) === "#" || /^[a-z][a-z0-9+.-]*:/i.test(href) || a.target === "_blank") return;
 
     var from = cleanUrl(location.pathname + location.search + location.hash);
@@ -181,8 +185,8 @@
     if (y > 0) from = addParam(from, "bs", y);
     var label = (document.title || "").split(" — ")[0].trim();
     var tagged = addParam(addParam(href, "bfrom", from), "bt", label);
-    a.setAttribute("href", tagged);
-    setTimeout(function () { a.setAttribute("href", href); }, 0);
+    a.setAttribute(attr, tagged);
+    setTimeout(function () { a.setAttribute(attr, href); }, 0);
   }, true);
 })();
 
@@ -427,4 +431,21 @@
   }
   function boot() { initStories(); initPulses(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+
+
+/* Journey-map node labels: shrink the font until the label fits inside its box, so long titles never spill over the
+   border or collide with the emoji / neighbouring pills. Runs on every hub page that has an SVG journey map. */
+(function () {
+  function fit() {
+    document.querySelectorAll(".jm-node").forEach(function (g) {
+      var r = g.querySelector("rect"), t = g.querySelector("text");
+      if (!r || !t || !t.getComputedTextLength) return;
+      var max = parseFloat(r.getAttribute("width")) - 22, fs = parseFloat(t.getAttribute("font-size")) || 14;
+      while (t.getComputedTextLength() > max && fs > 8.5) { fs -= 0.5; t.setAttribute("font-size", fs); }
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener("load", fit);
+  fit();
 })();

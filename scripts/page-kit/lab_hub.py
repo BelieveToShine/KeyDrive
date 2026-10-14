@@ -107,7 +107,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', f'<title>{e(T["title"])
   <div class="wrap">KeyDrive · {T.get('parent_name','Web Platforms')} · {e(T["title"])} · {nw} / {nt} concepts written</div>
 </footer>
 
-<script src="../assets/site.js?v=20261018"></script>
+<script src="../assets/site.js?v=20261019"></script>
 </body>
 </html>
 '''
