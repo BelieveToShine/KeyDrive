@@ -54,7 +54,7 @@ def d_lo2():
     d = Diagram('lo2', 640, 330, 'A pinned object cannot move: with native code holding the raw address of P, a collection frees the dead objects but only B can slide next to P, so a hole remains between A and P and a new larger object cannot use it')
     d.zone(10, 8, 620, 70, 'cyan', '📚 STACK')
     d.zone(10, 90, 620, 130, 'emerald')
-    d.text(24, 212, '🏠 SMALL OBJECT HEAP · addresses are a teaching picture', 'emerald', size=9.5, anchor='start')
+    d.text(620, 212, '🏠 SMALL OBJECT HEAP · addresses: teaching picture', 'emerald', size=9.5, anchor='end')
     X = [24, 130, 236, 342, 448]
     ys = 116; H = 48
     _slot(d, 24, 36, 'a', 'reference', 'cyan', w=96)

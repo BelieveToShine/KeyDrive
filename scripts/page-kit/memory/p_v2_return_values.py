@@ -41,7 +41,7 @@ def d_rv2():
     _tag(d)
     d.zone(10, 66, 130, 326, 'cyan', '📚 STACK')
     d.zone(150, 66, 262, 326, 'emerald', '🏠 HEAP')
-    d.zone(424, 160, 206, 110, 'violet', '🧬 TYPE DATA')
+    d.zone(424, 84, 206, 110, 'violet', '🧬 TYPE DATA')
     main = card(d, 16, 90, 'Main frame', [('who = null', 'f', '1-4')], 'cyan', w=118, st='1-')
     cell(d, main, 0, 'who = 0x…F1', 'amber', st='5-5', hl=5)
     cell(d, main, 0, 'who = 0x…F1', 'emerald', st='6-6')
@@ -53,9 +53,9 @@ def d_rv2():
     s_rows = [('header (sync block)', 'hdr'), ('type ptr → String', 'tp'), ('length = 4', 'f'), ('chars "Asha" (UTF-16)', 'f')]
     st_ = card(d, 188, 252, 'string object', s_rows, 'emerald', w=216, st='3-6')
     stg = card(d, 188, 252, 'string — unreachable', [(t, 'f') for t, _ in s_rows], 'rose', w=216, st='7-7', dash=True)
-    mt = card(d, 432, 186, 'Person MethodTable', [('one per type, shared', 'f')], 'violet', w=190, st='3-')
+    mt = card(d, 432, 114, 'Person MethodTable', [('one per type, shared', 'f')], 'violet', w=190, st='3-')
     tp_y = per['rows'][1]['y']; mt_y = mt['rows'][0]['y']
-    d.arrow([(per['rows'][1]['r'][0], tp_y), (418, tp_y), (418, mt_y), (mt['rows'][0]['l'][0], mt_y)], 'violet', 'type ptr', at=(418, 212), st='3-7')
+    d.arrow([(per['rows'][1]['r'][0], tp_y), (mt['rows'][0]['l'][0], mt_y)], 'violet', st='3-7')
     nm = per['rows'][2]
     d.arrow([(300, nm['top'] + nm['h']), (300, st_['rows'][0]['top'])], 'emerald', 'Name', at=(300, 222), st='3-7')
     tpl = per['rows'][1]['l'][0]

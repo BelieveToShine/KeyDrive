@@ -20,7 +20,7 @@ def d_sm1():
     d.text(510, 214, '(still empty)', 'n', 10, st='3-')
     d.box(410, 140, 200, 46, [('new Tax() ❌', 'm'), ('compile error: no object', 's')], 'rose', st='2-2', hl=2)
     # arrows
-    d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (228, af['rows'][1]['y'])], 'violet', st='3-5', id='run')
+    d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (228, af['rows'][1]['y'])], 'violet', st='3-4', id='run')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (205, af['rows'][0]['y']), (205, tx['rows'][0]['y']), (tx['rows'][0]['l'][0], tx['rows'][0]['y'])], 'amber', st='4-4', id='rd')
     d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y'] + 0), (190, af['rows'][1]['y']), (190, mf['rows'][0]['y']), (mf['rows'][0]['r'][0], mf['rows'][0]['y'])], 'emerald', 'copy', at=(190, 190), st='5-5', id='ret')
     d.token('run', '📞', 15, 'violet', st='3-3')

@@ -53,8 +53,8 @@ def d_bx2():
              ('a = null; b = null: nothing points to the arrays|or boxes. The GC must later free ALL of the left ones', 'rose')]
     for i, (t, c) in enumerate(notes):
         d.note(284, 8, 346, 86, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.zone(5, 106, 335, 312, 'rose', '🐌 ArrayList: stores object')
-    d.zone(350, 106, 285, 312, 'emerald', '⚡ List<int>: stores int')
+    d.zone(5, 106, 335, 312, 'rose', 'ArrayList: stores object')
+    d.zone(350, 106, 285, 312, 'emerald', 'List<int>: stores int')
     # --- left
     d.box(15, 146, 72, 40, [('a', 't'), ('ref', 's')], 'cyan', st='1-5', hl=1)
     d.box(15, 146, 72, 40, [('a', 't'), ('null', 'm')], 'n', st='6-', hl=6)

@@ -7,7 +7,7 @@ def d_in1():
     d.zone(140, 24, 302, 196, 'emerald', '🏠 HEAP')
     d.zone(450, 24, 180, 196, 'violet', '🧬 TYPE DATA')
     card_x = 282
-    c = card(d, card_x, 46, 'ONE Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp', '1-2'), ('Name = null', 'f', '1-2'), ('Breed = null', 'f', '1')], 'emerald', w=150, st=1)
+    c = card(d, card_x, 46, 'ONE Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp', '1-2'), ('Name = null', 'f', '1-2'), ('Breed = null', 'f', '1-1')], 'emerald', w=150, st=1)
     cell(d, c, 1, 'type ptr → Dog MT', 'amber', st='3-4', hl='3,4')
     cell(d, c, 1, 'type ptr → Dog MT', 'violet', st='5-')
     # Name: null (1-2), '?' (3), 'Rex' (4-)
@@ -19,7 +19,7 @@ def d_in1():
     cell(d, c, 3, 'Breed → string', 'amber', st='5-5', hl=5)
     cell(d, c, 3, 'Breed → string', 'emerald', st='6-')
     yh, yt, yn, yb = [c['rows'][i]['y'] for i in range(4)]
-    lx, rx = c['rows'][0]['l'][0], 238
+    lx, rx = c['rows'][0]['l'][0], 240
     dy = lambda i: c['rows'][0]['y'] + i * RH       # string level i (row 1..4)
     # type data
     m = card(d, 458, 70, 'Dog MethodTable', [('parent → Animal MT', 'f'), ('vtable slots, size …', 'f')], 'violet', w=164, st=1)
@@ -28,7 +28,7 @@ def d_in1():
     d.arrow([(c['rows'][1]['r'][0], yt), (m['rows'][0]['l'][0], yt)], 'violet', st=1, id='tp')
     # strings (each is its own heap object; header/type/length/chars not drawn)
     def sbox(i, txt, col, st, hl=None):
-        d.box(138, dy(i) - 11, 100, 22, [(txt, 'm')], col, rx=4, st=st, hl=hl)
+        d.box(148, dy(i) - 11, 92, 22, [(txt, 'm')], col, rx=4, st=st, hl=hl)
     sbox(3, '"Lab"', 'amber', '2-2', 2)
     sbox(3, '"Lab"', 'emerald', '3-4')
     sbox(3, '"Lab" no ref', 'n', '5-')
@@ -78,7 +78,7 @@ def d_in2():
     cell(d, dm, 0, 'type = Dog  ==  Dog ✓ match', 'emerald', st='3-4', hl=3)
     cell(d, dm, 0, 'type = Dog  !=  Cat ✗ no match', 'rose', st='5-', hl=5)
     card(d, 374, 170, 'Animal MethodTable', [('type = Animal', 'f'), ('vtable slots, size …', 'f')], 'violet', w=248, st=1)
-    d.arrow([(c['rows'][1]['r'][0], yt), (dm['rows'][0]['l'][0], yt)], 'violet', 'type ptr', at=(366, yt - 10), st=1, id='tp')
+    d.arrow([(c['rows'][1]['r'][0], yt), (dm['rows'][0]['l'][0], yt)], 'violet', st=1, id='tp')
     d.token('tp', '📞', 15, 'violet', st='3-3')
     d.token('tp', '📞', 15, 'rose', st='5-5')
     d.box(20, yh - 17, 110, 34, [('a', 't'), ('declared Animal', 's')], 'cyan', st=1, hl=1)
