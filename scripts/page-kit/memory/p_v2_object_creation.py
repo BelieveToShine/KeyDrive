@@ -34,8 +34,8 @@ def d_oc2():
     main = card(d, 18, 32, 'Main() frame', [('o = (not set yet)', 'f', '1-4')], 'cyan', w=134, st='1-', hl=1)
     cell(d, main, 0, 'o = ref', 'amber', st='5-5', hl=5)
     cell(d, main, 0, 'o = null', 'rose', st='6-', hl=6)
-    ctor = card(d, 18, 100, 'Order() frame', [('this = ref', 'f')], 'cyan', w=134, st='2-4', hl=2)
-    d.box(18, 100, 134, 62, [('nothing on the stack', 'm'), ('points to the Order,', 'm'), ('so Customer is lost', 'm')], 'rose', st='6-6', hl=6)
+    ctor = card(d, 18, 88, 'Order() frame', [('this = ref', 'f')], 'cyan', w=134, st='2-4', hl=2)
+    d.box(18, 98, 134, 62, [('nothing on the stack', 'm'), ('points to the Order,', 'm'), ('so Customer is lost', 'm')], 'rose', st='6-6', hl=6)
     d.zone(170, 8, 230, 290, 'emerald', '🏠 HEAP')
     d.zone(410, 8, 220, 290, 'violet', '🧬 TYPE DATA (one MethodTable per type)')
     for st, col, dash, hl in [('2-5', 'emerald', False, None), ('6-6', 'rose', True, 6)]:
@@ -50,7 +50,7 @@ def d_oc2():
     d.arrow([(c['rows'][1]['r'][0], ty2), (390, ty2), (390, cm['L'][1]), (cm['x'], cm['L'][1])], 'violet', st='3-6', id='t2')
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (o['x'], main['rows'][0]['y'])], 'cyan', st='5-5', id='r1')
     d.arrow([(ctor['rows'][0]['r'][0], ctor['rows'][0]['y']), (o['x'], ctor['rows'][0]['y'])], 'cyan', st='2-4', id='r0')
-    d.arrow([(o['rows'][2]['r'][0], o['rows'][2]['y']), (380, o['rows'][2]['y']), (380, 185), (c['x'] + c['w'], 185)], 'amber', 'cust', at=(380, 150), st='4-6', id='r2')
+    d.arrow([(o['rows'][2]['r'][0], o['rows'][2]['y']), (380, o['rows'][2]['y']), (380, 200), (c['x'] + c['w'], 200)], 'amber', 'cust', at=(380, 150), st='4-6', id='r2')
     d.code_box(10, 310, 620, 52, [(0, 'class Customer { int id; }   class Order { Customer cust = new Customer(); }', ''), (0, 'var o = new Order();   ...   o = null;', 'k')], 'n', size=9, lh=16)
     d.text(320, 382, FOOT2, 'n', 9)
     return d
