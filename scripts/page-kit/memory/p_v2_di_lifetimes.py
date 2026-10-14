@@ -37,7 +37,7 @@ TP = lambda t='type ptr', lo=1, hi=None: ('tp', [(t, lo, hi)])
 def d_di1():
     d = Diagram('di1', 640, 340, 'A singleton: the container, held by the app, allocates ONE EmailSettings object on the heap the first time it is asked and keeps a reference to it; the stack frames of two requests on two threads each hold a reference to that same object; when the frames pop the container still reaches it')
     d.note(10, 6, 620, 24, 'Teaching picture: the container’s layout, addresses and field order are illustrative', 'n', size=9)
-    d.zone(10, 38, 140, 292, 'cyan', '📚 STACKS (one per thread)')
+    d.zone(10, 38, 140, 292, 'cyan', '📚 STACKS')
     d.zone(160, 38, 300, 292, 'emerald', '🏠 HEAP (shared by all threads)')
     d.zone(470, 38, 160, 292, 'violet', '🧬 TYPE DATA')
     d.box(478, 216, 144, 82, [('EmailSettings', 't'), ('MethodTable', 't'), ('one per type', 's')], 'violet', st=1)
@@ -85,13 +85,13 @@ def d_di3():
     for i, (nm, y) in enumerate(names):
         n = i + 2
         obj(d, 24, y, 150, [HDR(), ('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
-        obj(d, 236, y, 170, [HDR('header (sync block)', n), TP('type ptr → EmailBuilder MT', n)], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'n', 6, 6)])
-        d.arrow([(166, y + 61), (236, y + 61)], 'cyan', 'new', at=(201, y + 61), st=_S(n, 5))
+        obj(d, 236, y, 170, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
+        d.arrow([(166, y + 40), (236, y + 40)], 'cyan', 'new', at=(201, y + 40), st=_S(n, 5))
     obj(d, 470, 64, 150, [HDR(lo=5), ('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
         [('Scope (if IDisposable)', 'amber', 5, 5, 5), ('Scope · request ended', 'n', 6, 6)])
-    d.arrow([(478, 125), (406, 125)], 'amber', 'keeps', at=(442, 125), st='5-5')
-    d.arrow([(478, 149), (420, 149), (420, 225), (406, 225)], 'amber', st='5-5')
-    d.arrow([(478, 173), (440, 173), (440, 325), (406, 325)], 'amber', st='5-5')
+    d.arrow([(478, 125), (406, 88)], 'amber', 'keeps', at=(442, 125), st='5-5')
+    d.arrow([(478, 149), (430, 149), (430, 188), (406, 188)], 'amber', st='5-5')
+    d.arrow([(478, 173), (445, 173), (445, 288), (406, 288)], 'amber', st='5-5')
     return d
 
 def d_di4():
@@ -153,9 +153,9 @@ def build_di_lifetimes():
                 'Three objects need an <code>EmailBuilder</code>. Each has an empty <code>_mail</code> field.',
                 'The controller asks the container: it <b>allocates a new</b> <code>EmailBuilder #1</code> and the field points to it.',
                 'The service asks: a <b>different</b> object, #2.',
-                'The repository asks: a third object, #3. Three asks, three heap objects (each with its own header and type pointer).',
+                'The repository asks: a third object, #3. Three asks, three heap objects (each its own object with its own data).',
                 'If <code>EmailBuilder</code> implements <code>IDisposable</code>, the container’s <b>scope also keeps a reference</b> to each one, so it can dispose them later.',
-                'The request ends: the scope disposes all three and everything is dropped. Without <code>IDisposable</code> there would be no scope arrows and each builder could be collected as soon as its owner was dropped; with it, none could be collected before this moment.'],
+                'The request ends: the scope disposes all three (amber) and its list is cleared; the owners are dropped (grey), so the builders become garbage. Without <code>IDisposable</code> there would be no scope arrows and each builder could be collected as soon as its owner was dropped; with it, none could be collected before this moment.'],
                 'transient = no sharing: one new heap object per ask; a disposable one is also held by the scope until the request ends.')),
             ('story', '⛓️ The classic bug: a captive dependency', (d_di4(), [
                 '<code>CacheService</code> is a <b>singleton</b>: the container (reachable from the app root) holds it for the whole app. Its <code>_db</code> field is empty.',

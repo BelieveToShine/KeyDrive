@@ -116,7 +116,7 @@ _CARD_COL = {'hdr': 'n', 'tp': 'violet', 'code': 'amber'}
 def card(d, x, y, title, rows, color='emerald', w=176, st=None, hl=None, dash=False):
     """A titled zone holding one thin box per memory cell (one object, one MethodTable, one frame ...).
     rows: [(text, kind)] with kind: 'hdr' (object header), 'tp' (type pointer), 'f' (field / slot, uses `color`), 'code'.
-    Returns geometry so arrows can attach: g['rows'][i] = dict(l=(x,y), r=(x,y), y=ymid, top=y, h=h); g['x'], g['y'], g['w'], g['h']."""
+    Returns geometry so arrows can attach (a pointer TO an object should end on the card border: g['L'] / g['R'] / g['T'] / g['B'], never on one of its rows; a pointer FROM a field starts at rows[i]['r']/['l']): g['rows'][i] = dict(l=(x,y), r=(x,y), y=ymid, top=y, h=h); g['x'], g['y'], g['w'], g['h']."""
     h = 26 + len(rows) * RH + 8
     d.zone(x, y, w, h, color, title, dash=dash, st=st)
     out = []
@@ -127,7 +127,7 @@ def card(d, x, y, title, rows, color='emerald', w=176, st=None, hl=None, dash=Fa
         d.box(x + 8, ry, w - 16, RH - 2, [(t, 'm')], _CARD_COL.get(k, color), rx=4, st=rst, hl=hl)
         ym = ry + (RH - 2) / 2
         out.append(dict(l=(x + 8, ym), r=(x + w - 8, ym), y=ym, top=ry, h=RH - 2))
-    return dict(x=x, y=y, w=w, h=h, rows=out)
+    return dict(x=x, y=y, w=w, h=h, rows=out, L=(x, y + h / 2), R=(x + w, y + h / 2), T=(x + w / 2, y), B=(x + w / 2, y + h))
 
 def cell(d, g, i, text, color='amber', st=None, hl=None, kind=None):
     """Re-draw row i of card g with new text/colour for some steps (a value that changes, a highlighted slot)."""
