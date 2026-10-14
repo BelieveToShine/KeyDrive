@@ -44,8 +44,8 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 436" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Overloading at the memory level: Main has an int variable n and a string variable s whose object is on the heap; at build time the compiler looks at the declared type of each argument and writes the address of Print(int) into the first call and Print(string) into the second; at run time each call just jumps to its fixed address">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 436" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Overloading at the memory level: Main has an int variable n and a string variable s whose object is on the heap; at build time the compiler looks at the declared type of each argument and writes the address of Print(int) into the first call and Print(string) into the second; at run time each call just jumps to its fixed address, and the called method gets its own stack frame holding a copy of the argument (the value 5, or a copy of the reference)">
 <defs><marker id="ov1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="106" width="172" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -53,88 +53,100 @@
 <text class="zone-title" x="32" y="147" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main() frame</text>
 <rect class="zone" x="10" y="266" width="172" height="90" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="285" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<rect class="zone" x="40" y="288" width="130" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
-<text class="zone-title" x="54" y="307" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object</text>
+<g class="st" data-s="2-"><rect class="zone" x="40" y="288" width="130" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="54" y="307" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object</text></g>
 <rect class="zone" x="226" y="106" width="160" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="240" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🔧 COMPILED CALLS</text>
 <rect class="zone" x="400" y="106" width="230" height="150" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="414" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE (two separate methods)</text>
-<path d="M26,217 L14,217 L14,317 L40,317" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ov1A)"/>
-<g class="st" data-s="2-"><path d="M166,171 L246,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="3-"><path d="M166,217 L246,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="2-"><path id="ov1-o1" d="M376,171 L456,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
-<g class="st" data-s="3-"><path id="ov1-o2" d="M376,217 L456,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="5-6"><rect class="zone" x="226" y="266" width="404" height="90" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-6"><text class="zone-title" x="240" y="285" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK: the called method gets its own frame</text></g>
+<g class="st" data-s="2-"><path d="M26,217 L14,217 L14,317 L40,317" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="3-"><path d="M166,171 L246,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="4-"><path d="M166,217 L246,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="3-"><path id="ov1-o1" d="M376,171 L456,171" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
+<g class="st" data-s="4-"><path id="ov1-o2" d="M376,217 L456,217" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
 <path id="ov1-o1t" d="M376,171 L444,171" fill="none" stroke="none"/>
 <path id="ov1-o2t" d="M376,217 L444,217" fill="none" stroke="none"/>
+<g class="st" data-s="6-6"><path d="M246,316 L206,316 L206,317 L170,317" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov1A)"/></g>
 <rect class="bx" x="10" y="8" width="330" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">int n = 5;</text>
 <text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">string s = "hi";</text>
 <text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Print(n);</text>
 <text x="24" y="75" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Print(s);</text>
-<g class="st" data-s="1-1"><rect class="cur" x="14" y="35" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="1-1"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="2-2"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="2-2"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="3-3"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="3-3"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="4-4"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="4-4"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="20" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="29.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="35" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="4-4"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="4-4"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-hl="2"><rect class="bx" x="26" y="154" width="140" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-hl="2"><text x="96" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">n : int</text></g>
-<g class="st" data-hl="2"><text x="96" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">value 5, in place</text></g>
-<g class="st" data-hl="3"><rect class="bx" x="26" y="200" width="140" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-hl="3"><text x="96" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s : string</text></g>
-<g class="st" data-hl="3"><text x="96" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reference → heap</text></g>
-<rect class="bx" x="48" y="314" width="114" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
-<text x="105" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"hi"</text>
-<g class="st" data-s="1-1"><rect class="bx note" x="246" y="154" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="311" y="167" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
-<g class="st" data-s="1-1"><text x="311" y="180" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
-<g class="st" data-s="1-2"><rect class="bx note" x="246" y="200" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-2"><text x="311" y="213" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
-<g class="st" data-s="1-2"><text x="311" y="226" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="246" y="154" width="130" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="311" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">call 0x…10</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="311" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">for Print(n)</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="246" y="200" width="130" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="311" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">call 0x…40</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="311" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">for Print(s)</text></g>
-<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="456" y="154" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="536" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="536" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">its own code</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="456" y="200" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="536" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
-<g class="st" data-s="1-3"><text x="536" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">its own code</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="456" y="154" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="536" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="536" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">got n = 5 (a copy)</text></g>
-<g class="st" data-s="4-"><rect class="bx" x="456" y="200" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="4-"><text x="536" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
-<g class="st" data-s="4-"><text x="536" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">got s = the reference</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-" data-hl="1,,,3"><rect class="bx" x="26" y="154" width="140" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,3"><text x="96" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">n : int</text></g>
+<g class="st" data-s="1-" data-hl="1,,,3"><text x="96" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">value 5, in place</text></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><rect class="bx" x="26" y="200" width="140" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><text x="96" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s : string</text></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><text x="96" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">reference → heap</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="48" y="314" width="114" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"hi"</text></g>
+<g class="st" data-s="1-2"><rect class="bx note" x="246" y="154" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-2"><text x="311" y="167" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
+<g class="st" data-s="1-2"><text x="311" y="180" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
+<g class="st" data-s="1-3"><rect class="bx note" x="246" y="200" width="130" height="34" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-3"><text x="311" y="213" text-anchor="middle" font-size="9" fill="#e7ebf3">call ?</text></g>
+<g class="st" data-s="1-3"><text x="311" y="226" text-anchor="middle" font-size="9" fill="#e7ebf3">filled in at build time</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="246" y="154" width="130" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="311" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">call 0x…10</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="311" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">for Print(n)</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="246" y="200" width="130" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="311" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">call 0x…40</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="311" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">for Print(s)</text></g>
+<g class="st" data-s="1-" data-hl="5"><rect class="bx" x="456" y="154" width="160" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="5"><text x="536" y="167.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Print(int n)   @ 0x…10</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="536" y="179.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">its own code</text></g>
+<g class="st" data-s="1-" data-hl="6"><rect class="bx" x="456" y="200" width="160" height="34" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="6"><text x="536" y="213.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Print(string s)   @ 0x…40</text></g>
+<g class="st" data-s="1-" data-hl="6"><text x="536" y="225.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">its own code</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="246" y="296" width="190" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="341" y="312.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">n : int = 5</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="341" y="324.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">a COPY of the value</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="246" y="296" width="190" height="40" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="341" y="312.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s : string = 0x…S1</text></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="341" y="324.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">a COPY of the reference</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#fcd34d">Main has n (an int, the value 5 right in the frame) and s (a reference to a string object on the heap).</text></g>
+<g class="st" data-s="1-1"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#fcd34d">int n = 5; writes the value 5 right into n’s cell in the Main frame.</text></g>
 <g class="st" data-s="1-1"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#fcd34d">Print(int) and Print(string) are two separate pieces of code.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#67e8f9">Build time: the argument n is declared int →</text></g>
-<g class="st" data-s="2-2"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#67e8f9">the compiler writes the address of Print(int) into the first call</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#c4b5fd">Build time: the argument s is declared string →</text></g>
-<g class="st" data-s="3-3"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#c4b5fd">the address of Print(string) goes into the second call</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#6ee7b7">Run time: each call just jumps to its fixed address (📞) with a copy of the argument</text></g>
-<g class="st" data-s="4-4"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#6ee7b7">nothing is looked up, nothing is allocated</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="189" y="162" width="34" height="18" rx="9"/><text x="206" y="174.5" text-anchor="middle" font-size="9" font-style="italic">int</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="181" y="208" width="50" height="18" rx="9"/><text x="206" y="220.5" text-anchor="middle" font-size="9" font-style="italic">string</text></g></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="386" y="162" width="44" height="18" rx="9"/><text x="408" y="174.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="386" y="208" width="44" height="18" rx="9"/><text x="408" y="220.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="ov1-o1t"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="ov1-o2t"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#6ee7b7">string s = "hi"; allocates the string object on the heap</text></g>
+<g class="st" data-s="2-2"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#6ee7b7">and writes its address into s</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#67e8f9">Build time: the argument n is declared int →</text></g>
+<g class="st" data-s="3-3"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#67e8f9">the compiler writes the address of Print(int) into the first call</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#c4b5fd">Build time: the argument s is declared string →</text></g>
+<g class="st" data-s="4-4"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#c4b5fd">the address of Print(string) goes into the second call</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#67e8f9">Print(n); jumps to its fixed address (📞) and the new frame</text></g>
+<g class="st" data-s="5-5"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#67e8f9">gets a COPY of the value 5 — nothing is looked up</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="368" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="393" text-anchor="middle" font-size="10" fill="#c4b5fd">Print(s); jumps to its fixed address (📞); the new frame gets a copy</text></g>
+<g class="st" data-s="6-6"><text x="320" y="407" text-anchor="middle" font-size="10" fill="#c4b5fd">of the reference — it points at the SAME string object</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="189" y="162" width="34" height="18" rx="9"/><text x="206" y="174.5" text-anchor="middle" font-size="9" font-style="italic">int</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="181" y="208" width="50" height="18" rx="9"/><text x="206" y="220.5" text-anchor="middle" font-size="9" font-style="italic">string</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="386" y="162" width="44" height="18" rx="9"/><text x="408" y="174.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="386" y="208" width="44" height="18" rx="9"/><text x="408" y="220.5" text-anchor="middle" font-size="9" font-style="italic">fixed</text></g></g>
+<g class="st" data-s="6-6"><g class="arrow-pill"><rect x="168" y="331" width="76" height="18" rx="9"/><text x="206" y="343.5" text-anchor="middle" font-size="9" font-style="italic">same object</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="ov1-o1t"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="ov1-o2t"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><b>Setup.</b> <code>Main</code> has <code>n</code> (an <code>int</code>: the value 5 sits right in the stack frame) and <code>s</code> (a reference to a string object on the heap). <code>Print(int)</code> and <code>Print(string)</code> are <b>two separate pieces of code</b> at different (illustrative) addresses.</li><li><b>Build time:</b> the argument <code>n</code> is declared <code>int</code>, so the compiler writes the address of <code>Print(int)</code> straight into that call.</li><li><b>Build time:</b> the argument <code>s</code> is declared <code>string</code>, so its call gets the address of <code>Print(string)</code>.</li><li><b>Run time:</b> each call just jumps to its fixed address (📞) with a copy of the argument (the value 5, or the reference). Nothing is looked up and nothing is allocated — overloading is decided entirely before the program runs.</li></ol>
+<ol class="st-caps"><li><b><code>int n = 5;</code></b> writes the value 5 right into <code>n</code>’s cell in the stack frame. <code>Print(int)</code> and <code>Print(string)</code> are <b>two separate pieces of code</b> at different (illustrative) addresses.</li><li><b><code>string s = "hi";</code></b> allocates a string object on the heap and writes its address into <code>s</code>.</li><li><b>Build time:</b> the argument <code>n</code> is declared <code>int</code>, so the compiler writes the address of <code>Print(int)</code> straight into that call.</li><li><b>Build time:</b> the argument <code>s</code> is declared <code>string</code>, so its call gets the address of <code>Print(string)</code>.</li><li><b><code>Print(n);</code> at run time:</b> the call jumps to its fixed address (📞) and the called method gets its own stack frame holding a <b>copy</b> of the value 5. Nothing is looked up.</li><li><b><code>Print(s);</code> at run time:</b> same jump to a fixed address; the new frame holds a copy of the <b>reference</b> — it points at the same string object (nothing on the heap is copied). Overloading was decided entirely before the program ran.</li></ol>
 <figcaption><strong>What you're seeing:</strong> overloading: the choice is baked into the compiled call. (Addresses are illustrative; the JIT compiles a method the first time it is needed.)</figcaption>
 </figure>
   </section>
@@ -148,8 +160,8 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">📞 Override: a virtual call walks from the variable to the object to its type</div>
-<figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A virtual call a.Speak(): the compiler only fixes the slot number, then at run time the runtime follows a to the Dog object, reads the type pointer stored in its header area to reach Dog’s method table, takes that table’s slot for Speak and jumps to Dog.Speak">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="A virtual call a.Speak(): new Dog() allocates the object and writes its type pointer, a is assigned its address; the compiler only fixes the slot number, then at run time the runtime follows a to the Dog object, reads the type pointer stored in its header area to reach Dog’s method table, takes that table’s slot for Speak and jumps to Dog.Speak">
 <defs><marker id="ov2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="24" width="100" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -165,77 +177,80 @@
 <g class="st" data-s="1-"><text class="zone-title" x="344" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Dog MethodTable</text></g>
 <rect class="zone" x="502" y="24" width="128" height="250" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="516" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE</text>
-<g class="st" data-s="1-"><path id="ov2-w1" d="M100,97 L130,97" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov2A)"/></g>
+<g class="st" data-s="2-"><path id="ov2-w1" d="M100,97 L130,97" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov2A)"/></g>
 <g class="st" data-s="1-"><path id="ov2-w2" d="M294,107 L314,107 L314,219 L330,219" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov2A)"/></g>
 <g class="st" data-s="1-"><path id="ov2-w4" d="M476,83 L512,83" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ov2A)"/></g>
 <g class="st" data-s="1-"><path id="ov2-w3" d="M476,227 L512,227" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ov2A)"/></g>
 <path id="ov2-w1t" d="M100,97 L116,97" fill="none" stroke="none"/>
 <path id="ov2-w2t" d="M294,107 L314,107 L314,219 L314,219" fill="none" stroke="none"/>
 <path id="ov2-w3t" d="M476,227 L494,227" fill="none" stroke="none"/>
-<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="20" y="74" width="80" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="3"><text x="60" y="95" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a : Animal</text></g>
-<g class="st" data-s="1-" data-hl="3"><text x="60" y="107" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…A1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="72" width="156" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="96" width="156" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="120" width="156" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 3</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="338" y="216" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="407" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="3-"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="3-"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="338" y="216" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="407" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><rect class="bx" x="20" y="74" width="80" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><text x="60" y="95" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a : Animal</text></g>
+<g class="st" data-s="2-" data-hl="2,,,4"><text x="60" y="107" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…A1</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="72" width="156" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="96" width="156" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="120" width="156" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 3</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="1-5"><rect class="bx" x="338" y="216" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5"><text x="407" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="338" y="216" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="407" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="512" y="63" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="566" y="79.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Animal.Speak</text></g>
 <g class="st" data-s="1-"><text x="566" y="91.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">"..."</text></g>
-<g class="st" data-s="1-" data-hl="6"><rect class="bx" x="512" y="207.0" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="6"><text x="566" y="223.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Dog.Speak</text></g>
-<g class="st" data-s="1-" data-hl="6"><text x="566" y="235.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">"Woof"</text></g>
+<g class="st" data-s="1-" data-hl="7"><rect class="bx" x="512" y="207.0" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="7"><text x="566" y="223.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Dog.Speak</text></g>
+<g class="st" data-s="1-" data-hl="7"><text x="566" y="235.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">"Woof"</text></g>
 <rect class="bx" x="10" y="290" width="300" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="312" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Animal a = new Dog();</text>
 <text x="24" y="327" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">a.Speak();</text>
-<g class="st" data-s="1-1"><rect class="cur" x="14" y="302" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="1-1"><text class="cur" x="16" y="311.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="2-6"><rect class="cur" x="14" y="317" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="2-6"><text class="cur" x="16" y="326.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#67e8f9">Setup: a holds the address of a Dog object;</text></g>
-<g class="st" data-s="1-1"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#67e8f9">its type pointer leads to Dog’s MethodTable</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: the compiler only knows that Speak is a</text></g>
-<g class="st" data-s="2-2"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#fcd34d">virtual method, slot 0 (Animal’s table) — not which code</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#67e8f9">Run time 1: follow a to the object</text></g>
-<g class="st" data-s="3-3"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#67e8f9">on the heap</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#c4b5fd">Run time 2: read its type pointer →</text></g>
-<g class="st" data-s="4-4"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#c4b5fd">Dog’s MethodTable (the object’s REAL type)</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#fcd34d">Run time 3: take slot 0 of THAT table —</text></g>
-<g class="st" data-s="5-5"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#fcd34d">Dog replaced it with Dog.Speak</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#6ee7b7">Jump: Dog.Speak runs with this = the object.</text></g>
-<g class="st" data-s="6-6"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#6ee7b7">Animal’s own table is never touched.</text></g>
-<g class="st" data-s="3-3"><g class="tok" data-path="ov2-w1t"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="ov2-w2t"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="5-5"><g class="tok" data-path="ov2-w3t"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="1-2"><rect class="cur" x="14" y="302" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-2"><text class="cur" x="16" y="311.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-7"><rect class="cur" x="14" y="317" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-7"><text class="cur" x="16" y="326.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#6ee7b7">new Dog() allocates the object on the heap: header, the type</text></g>
+<g class="st" data-s="1-1"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#6ee7b7">pointer is WRITTEN (→ Dog’s table), Age = 3</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#67e8f9">Animal a = … stores the new object’s address</text></g>
+<g class="st" data-s="2-2"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#67e8f9">in the variable a (written on the stack)</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: the compiler only knows that Speak is a</text></g>
+<g class="st" data-s="3-3"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#fcd34d">virtual method, slot 0 (Animal’s table) — not which code</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#67e8f9">Run time 1: follow a to the object</text></g>
+<g class="st" data-s="4-4"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#67e8f9">on the heap</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#c4b5fd">Run time 2: read its type pointer →</text></g>
+<g class="st" data-s="5-5"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#c4b5fd">Dog’s MethodTable (the object’s REAL type)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#fcd34d">Run time 3: take slot 0 of THAT table —</text></g>
+<g class="st" data-s="6-6"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#fcd34d">Dog replaced it with Dog.Speak</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="320" y="290" width="310" height="70" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="475" y="321" text-anchor="middle" font-size="9" fill="#6ee7b7">Jump: Dog.Speak runs with this = the object.</text></g>
+<g class="st" data-s="7-7"><text x="475" y="334" text-anchor="middle" font-size="9" fill="#6ee7b7">Animal’s own table is never touched.</text></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ov2-w1t"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="ov2-w2t"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="ov2-w3t"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><b>Setup.</b> <code>a</code> (on the stack) holds the address of a <b>Dog object</b> on the heap. Every object starts with a small header and a <b>type pointer</b> that leads to its type’s <b>MethodTable</b> (one table per type, shared by all objects of that type).</li><li><b>Build time.</b> <code>a</code> is declared <code>Animal</code>, so the compiler can only note: “<code>Speak</code> is a virtual method, <b>slot 0</b>”. It does not know which code will run.</li><li><b>Run time 1.</b> Follow the address in <code>a</code> to the object on the heap.</li><li><b>Run time 2.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.</li><li><b>Run time 3.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).</li><li><b>Jump.</b> <code>Dog.Speak</code> runs with <code>this</code> = the object. The slot number came from the compiler; the target came from the object at run time.</li></ol>
+<ol class="st-caps"><li><b><code>new Dog()</code></b> allocates the <b>Dog object</b> on the heap: a small header, a <b>type pointer</b> that is written to lead to Dog’s <b>MethodTable</b> (one table per type, shared by all objects of that type), and the fields.</li><li><b><code>Animal a = …</code></b> writes the new object’s address into <code>a</code> on the stack.</li><li><b>Build time.</b> <code>a</code> is declared <code>Animal</code>, so the compiler can only note: “<code>Speak</code> is a virtual method, <b>slot 0</b>”. It does not know which code will run.</li><li><b>Run time 1.</b> Follow the address in <code>a</code> to the object on the heap.</li><li><b>Run time 2.</b> Read the object’s type pointer: it leads to <b>Dog’s</b> MethodTable — the object’s <i>real</i> type, whatever the variable says.</li><li><b>Run time 3.</b> Take <b>slot 0</b> of that table. Dog <code>override</code>s Speak, so its slot 0 holds <code>Dog.Speak</code> (Animal’s table still holds <code>Animal.Speak</code>).</li><li><b>Jump.</b> <code>Dog.Speak</code> runs with <code>this</code> = the object. The slot number came from the compiler; the target came from the object at run time.</li></ol>
 <figcaption><strong>What you're seeing:</strong> override = the slot is replaced in the derived type’s table. Slot numbers and the exact table layout are a teaching picture of the classic runtime model.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🪞 New (hiding): a separate method, the slot is NOT replaced</div>
-<figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Hiding with new: variables a (typed Animal) and d (typed Dog) both refer to the same Dog object, whose type pointer leads to Dog’s method table; slot 0 of that table still points to Animal.Speak and Dog’s new Speak sits in its own slot 1; the compiler turns a.Speak() into a virtual call through slot 0, so Animal.Speak runs, and binds d.Speak() to Dog’s own method in slot 1, so Dog.Speak runs">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 450" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="Hiding with new: variables a (typed Animal) and d (typed Dog) both refer to the same Dog object, whose type pointer leads to Dog’s method table; slot 0 of that table still points to Animal.Speak and Dog’s new Speak sits in its own slot 1; the compiler turns a.Speak() into a virtual call through slot 0, so Animal.Speak runs, and binds d.Speak() to Dog’s own method in slot 1, so Dog.Speak runs">
 <defs><marker id="ov3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ov3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="24" width="100" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -254,92 +269,104 @@
 <rect class="zone" x="10" y="190" width="302" height="144" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🔧 CALL SITES (compiled, in Main)</text>
 <g class="st" data-s="1-"><path id="ov3-ha" d="M100,71 L130,71" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
-<g class="st" data-s="1-"><path id="ov3-hd" d="M100,123 L130,123" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
+<g class="st" data-s="2-"><path id="ov3-hd" d="M100,123 L130,123" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
 <g class="st" data-s="1-"><path d="M294,107 L314,107 L314,188 L407,188 L407,216" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
 <g class="st" data-s="1-"><path d="M476,83 L512,83" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
 <g class="st" data-s="1-"><path id="ov3-s0" d="M476,253 L497,253 L497,97 L512,97" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
-<g class="st" data-s="1-"><path id="ov3-s1" d="M476,277 L512,277" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
-<g class="st" data-s="3-4"><path id="ov3-ca" d="M174,233 L296,233 L296,253 L338,253" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
-<g class="st" data-s="5-"><path id="ov3-cd" d="M174,297 L304,297 L304,277 L338,277" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
+<g class="st" data-s="6-"><path id="ov3-s1" d="M476,277 L512,277" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
+<g class="st" data-s="4-5"><path id="ov3-ca" d="M174,233 L296,233 L296,253 L338,253" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
+<g class="st" data-s="6-"><path id="ov3-cd" d="M174,297 L304,297 L304,277 L338,277" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#ov3A)"/></g>
 <path id="ov3-cat" d="M174,233 L296,233 L296,253 L318,253" fill="none" stroke="none"/>
 <path id="ov3-cdt" d="M174,297 L304,297 L304,277 L318,277" fill="none" stroke="none"/>
 <path id="ov3-s0t" d="M476,253 L497,253 L497,97 L497,97" fill="none" stroke="none"/>
 <path id="ov3-s1t" d="M476,277 L496,277" fill="none" stroke="none"/>
-<g class="st" data-s="1-" data-hl="2,,,3"><rect class="bx" x="20" y="52" width="80" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="2,,,3"><text x="60" y="69" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a : Animal</text></g>
-<g class="st" data-s="1-" data-hl="2,,,3"><text x="60" y="81" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…A1</text></g>
-<g class="st" data-s="1-" data-hl="5,,,6"><rect class="bx" x="20" y="104" width="80" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="5,,,6"><text x="60" y="121" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">d : Dog</text></g>
-<g class="st" data-s="1-" data-hl="5,,,6"><text x="60" y="133" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">0x…A1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="72" width="156" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="96" width="156" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="138" y="120" width="156" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="216" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 3</text></g>
+<g class="st" data-s="1-" data-hl="1,,,3,,,4,,,5"><rect class="bx" x="20" y="52" width="80" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,3,,,4,,,5"><text x="60" y="69" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a : Animal</text></g>
+<g class="st" data-s="1-" data-hl="1,,,3,,,4,,,5"><text x="60" y="81" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…A1</text></g>
+<g class="st" data-s="2-" data-hl="2,,,6,,,7"><rect class="bx" x="20" y="104" width="80" height="38" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2,,,6,,,7"><text x="60" y="121" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">d : Dog</text></g>
+<g class="st" data-s="2-" data-hl="2,,,6,,,7"><text x="60" y="133" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">0x…A1</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="72" width="156" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="96" width="156" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="138" y="120" width="156" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="216" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 3</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="338" y="72" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="407" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="338" y="266" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="407" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 1: Speak (new)</text></g>
-<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-4" data-hl="3"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="5-"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="5-"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="338" y="266" width="138" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="407" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">slot 1: Speak (new)</text></g>
-<g class="st" data-s="1-" data-hl="3,,,4"><rect class="bx" x="512" y="63.0" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="3,,,4"><text x="566" y="79.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Animal.Speak</text></g>
-<g class="st" data-s="1-" data-hl="3,,,4"><text x="566" y="91.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">prints "..."</text></g>
-<g class="st" data-s="1-" data-hl="6"><rect class="bx" x="512" y="257.0" width="108" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="6"><text x="566" y="273.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Dog.Speak</text></g>
-<g class="st" data-s="1-" data-hl="6"><text x="566" y="285.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">prints "Woof"</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="512" y="108" width="108" height="24" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="566" y="122.5" text-anchor="middle" font-size="9" fill="#fcd34d">prints "..."</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="512" y="226" width="108" height="24" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="566" y="240.5" text-anchor="middle" font-size="9" fill="#fda4af">prints "Woof"</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="24" y="216" width="150" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="99" y="229.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a.Speak()</text></g>
-<g class="st" data-s="1-1"><text x="99" y="241.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">a is declared Animal</text></g>
-<g class="st" data-s="2-" data-hl="2,,,3"><rect class="bx" x="24" y="216" width="150" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2,,,3"><text x="99" y="229.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a.Speak()</text></g>
-<g class="st" data-s="2-" data-hl="2,,,3"><text x="99" y="241.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">→ virtual call, slot 0</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="24" y="280" width="150" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="99" y="293.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">d.Speak()</text></g>
-<g class="st" data-s="1-4"><text x="99" y="305.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">d is declared Dog</text></g>
-<g class="st" data-s="5-" data-hl="5,,,6"><rect class="bx" x="24" y="280" width="150" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5,,,6"><text x="99" y="293.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">d.Speak()</text></g>
-<g class="st" data-s="5-" data-hl="5,,,6"><text x="99" y="305.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">→ Dog’s own, slot 1</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Setup: a and d are two variables holding the SAME Dog object;</text></g>
-<g class="st" data-s="1-1"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Dog’s table keeps slot 0 → Animal.Speak and adds its own method in slot 1</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#67e8f9">Build time, a.Speak(): a is declared Animal,</text></g>
-<g class="st" data-s="2-2"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">so the compiler writes “virtual call, slot 0”</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#fcd34d">Run time: follow a to the object, its type ptr to Dog’s table,</text></g>
-<g class="st" data-s="3-3"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">take slot 0 — which Dog never replaced</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#fcd34d">Slot 0 still points to Animal.Speak → it runs and prints "..."</text></g>
-<g class="st" data-s="4-4"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">(the object’s real type did not matter)</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#fda4af">Build time, d.Speak(): d is declared Dog, so the compiler binds</text></g>
-<g class="st" data-s="5-5"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#fda4af">the call to Dog’s own method (slot 1 in this picture)</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="10" y="346" width="620" height="62" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="373" text-anchor="middle" font-size="9.5" fill="#fda4af">Run time: Dog.Speak runs and prints "Woof". Same object, different answer —</text></g>
-<g class="st" data-s="6-6"><text x="320" y="386.5" text-anchor="middle" font-size="9.5" fill="#fda4af">override replaces slot 0, new does not</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="338" y="266" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="407" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 1: Speak (new)</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="338" y="242" width="138" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="407" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Speak</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="338" y="266" width="138" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="407" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">slot 1: Speak (new)</text></g>
+<g class="st" data-s="1-" data-hl="4,,,5"><rect class="bx" x="512" y="63.0" width="108" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4,,,5"><text x="566" y="79.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Animal.Speak</text></g>
+<g class="st" data-s="1-" data-hl="4,,,5"><text x="566" y="91.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">prints "..."</text></g>
+<g class="st" data-s="1-" data-hl="7"><rect class="bx" x="512" y="257.0" width="108" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="7"><text x="566" y="273.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Dog.Speak</text></g>
+<g class="st" data-s="1-" data-hl="7"><text x="566" y="285.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">prints "Woof"</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="24" y="216" width="150" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="99" y="229.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a.Speak()</text></g>
+<g class="st" data-s="1-2"><text x="99" y="241.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">a is declared Animal</text></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><rect class="bx" x="24" y="216" width="150" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><text x="99" y="229.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a.Speak()</text></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><text x="99" y="241.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">→ virtual call, slot 0</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="24" y="280" width="150" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="99" y="293.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">d.Speak()</text></g>
+<g class="st" data-s="2-5"><text x="99" y="305.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">d is declared Dog</text></g>
+<g class="st" data-s="6-" data-hl="6,,,7"><rect class="bx" x="24" y="280" width="150" height="34" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6,,,7"><text x="99" y="293.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">d.Speak()</text></g>
+<g class="st" data-s="6-" data-hl="6,,,7"><text x="99" y="305.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">→ Dog’s own, slot 1</text></g>
+<rect class="bx" x="10" y="346" width="300" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="368" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Animal a = new Dog();</text>
+<text x="24" y="383" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Dog d = (Dog)a;</text>
+<text x="24" y="398" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">a.Speak();</text>
+<text x="24" y="413" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">d.Speak();</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="358" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="367.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="373" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="382.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-5"><rect class="cur" x="14" y="388" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-5"><text class="cur" x="16" y="397.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-7"><rect class="cur" x="14" y="403" width="292" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-7"><text class="cur" x="16" y="412.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#c4b5fd">new Dog() allocates the object; a gets its address.</text></g>
+<g class="st" data-s="1-1"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#c4b5fd">Dog’s table: slot 0 still → Animal.Speak (not replaced)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#fda4af">Dog d = (Dog)a; copies the SAME address into d —</text></g>
+<g class="st" data-s="2-2"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#fda4af">no new object, just a second variable</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#67e8f9">Build time, a.Speak(): a is declared Animal,</text></g>
+<g class="st" data-s="3-3"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#67e8f9">so the compiler writes “virtual call, slot 0”</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#fcd34d">Run time: follow a to the object, its type ptr to</text></g>
+<g class="st" data-s="4-4"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#fcd34d">Dog’s table, take slot 0 — which Dog never replaced</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#fcd34d">Slot 0 still → Animal.Speak: it runs and prints "..."</text></g>
+<g class="st" data-s="5-5"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#fcd34d">(the object’s real type did not matter)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#fda4af">Build time, d.Speak(): d is declared Dog, so the compiler</text></g>
+<g class="st" data-s="6-6"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#fda4af">binds Dog’s own method — slot 1, added by new</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="320" y="346" width="310" height="82" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="475" y="383" text-anchor="middle" font-size="9" fill="#fda4af">Run time: Dog.Speak runs and prints "Woof". Same object,</text></g>
+<g class="st" data-s="7-7"><text x="475" y="396" text-anchor="middle" font-size="9" fill="#fda4af">different answer — override replaces slot 0, new does not</text></g>
 <g class="st" data-s="1-"><g class="arrow-pill"><rect x="332" y="179" width="60" height="18" rx="9"/><text x="362" y="191.5" text-anchor="middle" font-size="9" font-style="italic">type ptr</text></g></g>
-<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="210" y="224" width="50" height="18" rx="9"/><text x="235" y="236.5" text-anchor="middle" font-size="9" font-style="italic">slot 0</text></g></g>
-<g class="st" data-s="5-"><g class="arrow-pill"><rect x="214" y="288" width="50" height="18" rx="9"/><text x="239" y="300.5" text-anchor="middle" font-size="9" font-style="italic">slot 1</text></g></g>
-<g class="st" data-s="3-3"><g class="tok" data-path="ov3-cat"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="ov3-s0t"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="5-5"><g class="tok" data-path="ov3-cdt"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="6-6"><g class="tok" data-path="ov3-s1t"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="4-5"><g class="arrow-pill"><rect x="210" y="224" width="50" height="18" rx="9"/><text x="235" y="236.5" text-anchor="middle" font-size="9" font-style="italic">slot 0</text></g></g>
+<g class="st" data-s="6-"><g class="arrow-pill"><rect x="214" y="288" width="50" height="18" rx="9"/><text x="239" y="300.5" text-anchor="middle" font-size="9" font-style="italic">slot 1</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="ov3-cat"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="ov3-s0t"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="ov3-cdt"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
+<g class="st" data-s="7-7"><g class="tok" data-path="ov3-s1t"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><b>Setup.</b> <code>a</code> (typed Animal) and <code>d</code> (typed Dog) hold the <b>same</b> Dog object, whose type pointer leads to Dog’s MethodTable. With <code>new</code>, Dog does <b>not</b> replace slot 0: it still points to <code>Animal.Speak</code>. Dog’s <code>Speak</code> is a <b>separate</b> method in its own slot.</li><li><b>Build time, through an Animal variable.</b> The compiler only sees the type Animal, so it compiles <code>a.Speak()</code> as a virtual call through slot 0.</li><li><b>Run time.</b> Follow <code>a</code> to the object, its type pointer to Dog’s table, and take slot 0 — which Dog never replaced.</li><li>Slot 0 still points to <code>Animal.Speak</code>, so that runs and prints <code>"..."</code>. The object really is a Dog, but that did not matter.</li><li><b>Build time, through a Dog variable.</b> The compiler sees type Dog, so it binds <code>d.Speak()</code> to Dog’s own method (slot 1 in this teaching picture).</li><li><b>Run time.</b> <code>Dog.Speak</code> runs and prints <code>"Woof"</code>. Same object, different answer — <code>override</code> replaces the slot, <code>new</code> does not.</li></ol>
+<ol class="st-caps"><li><b><code>new Dog()</code></b> allocates the object; <code>a</code> (typed Animal) holds its address and its type pointer leads to Dog’s MethodTable. With <code>new</code>, Dog does <b>not</b> replace slot 0: it still points to <code>Animal.Speak</code>.</li><li><b><code>Dog d = (Dog)a;</code></b> copies the same address into <code>d</code> (typed Dog) — no new object, just a second variable. Dog’s <code>Speak</code> is a <b>separate</b> method in its own slot.</li><li><b>Build time, through an Animal variable.</b> The compiler only sees the type Animal, so it compiles <code>a.Speak()</code> as a virtual call through slot 0.</li><li><b>Run time.</b> Follow <code>a</code> to the object, its type pointer to Dog’s table, and take slot 0 — which Dog never replaced.</li><li>Slot 0 still points to <code>Animal.Speak</code>, so that runs and prints <code>"..."</code>. The object really is a Dog, but that did not matter.</li><li><b>Build time, through a Dog variable.</b> The compiler sees type Dog, so it binds <code>d.Speak()</code> to Dog’s own method (slot 1 in this teaching picture — the slot appears now).</li><li><b>Run time.</b> <code>Dog.Speak</code> runs and prints <code>"Woof"</code>. Same object, different answer — <code>override</code> replaces the slot, <code>new</code> does not.</li></ol>
 <figcaption><strong>What you're seeing:</strong> the only difference is whether Dog’s table slot 0 was replaced. That is why polymorphism needs virtual + override.</figcaption>
 </figure>
   </section>

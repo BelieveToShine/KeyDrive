@@ -52,48 +52,46 @@ def d_dy1():
     return d
 
 def d_dy2():
-    d = Diagram('dy2', 640, 530, 'Reflection step by step: order points to an Order object whose type pointer leads to Order’s type data; GetMethod creates a MethodInfo object on the heap that m points to; new object[]{5} creates an array whose slot refers to a new heap box holding a copy of 5; Invoke runs Ship in a temporary frame with n = 5 copied out of the box; the result 3 is boxed in a new heap object that r points to; (int)r copies 3 into the stack variable days; afterwards the array and the box of 5 are unreachable garbage while the MethodInfo and the box of 3 are still referenced')
-    d.code_box(10, 8, 440, 78, [(0, 'Order order = new Order();', ''), (0, 'var m = typeof(Order).GetMethod("Ship");', ''), (0, 'object r = m.Invoke(order, new object[] { 5 });', ''), (0, 'int days = (int)r;', '')], 'n', size=8.8, lh=15)
-    run_line(d, 10, 8, 440, [0, 1, 2, 2, 2, 3, None], size=8.8, lh=15)
-    d.note(460, 12, 170, 70, 'teaching picture:|addresses and the exact|MethodInfo contents|are simplified', 'amber', size=9)
-    d.zone(10, 98, 130, 290, 'cyan', '📚 STACK')
-    d.zone(175, 98, 295, 360, 'emerald', '🏠 HEAP')
-    d.zone(478, 98, 152, 150, 'violet', '🧬 TYPE DATA')
-    # stack frame of the caller: one cell per variable, appearing when the variable exists
-    main = card(d, 18, 148, 'caller frame', [('order → Order', 'f', '1-'), ('m → MethodInfo', 'f', '2-'), ('r → boxed 3', 'f', '5-'), ('days = 3', 'f', '6-')], 'cyan', w=114, st=1)
-    ship = card(d, 18, 294, 'Ship frame', [('this → Order', 'f'), ('n = 5 (copy)', 'f')], 'amber', w=114, st='4-4', hl=4)
-    # heap, left column: Order, MethodInfo, boxed result
-    od = card(d, 183, 124, 'Order object', [('header (sync block)', 'hdr'), ('type ptr → Order MT', 'tp'), ('fields …', 'f')], 'emerald', w=140, st='1-', hl=1)
-    mi = card(d, 183, 244, 'MethodInfo', [('header + type ptr', 'hdr'), ('describes: Ship', 'f', '2-3'), ('of type: Order', 'f')], 'emerald', w=140, st='2-', hl=2)
-    cell(d, mi, 1, 'describes: Ship', 'amber', st='4-4', hl=4)
-    cell(d, mi, 1, 'describes: Ship', 'emerald', st='5-')
-    b3 = card(d, 183, 364, 'boxed int (result)', [('header + type ptr', 'hdr'), ('value 3', 'f')], 'amber', w=140, st='5-', hl=5)
-    # heap, right column: argument array and the boxed 5 (they become garbage in step 7)
-    ar = card(d, 331, 204, 'object[1] (args)', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f')], 'emerald', w=131, st='3-6', hl=3)
-    b5 = card(d, 331, 324, 'boxed int', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'amber', w=131, st='3-6', hl=3)
-    card(d, 331, 204, 'object[1]: unreachable', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f')], 'n', w=131, st='7-', hl=7, dash=True)
-    card(d, 331, 324, 'boxed 5: unreachable', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'n', w=131, st='7-', hl=7, dash=True)
-    # type data of Order
-    mt = card(d, 486, 148, 'Order type data', [('Order MethodTable', 'f'), ('method Ship', 'f', '1-3')], 'violet', w=136, st=1)
-    cell(d, mt, 1, 'method Ship', 'amber', st='4-4', hl=4)
-    cell(d, mt, 1, 'method Ship', 'violet', st='5-')
-    # arrows
-    d.arrow([(134, 185), (191, 185)], 'cyan', st='1-', id='ro')
+    d = Diagram('dy2', 640, 550, 'Reflection step by step: order points to an Order object whose type pointer leads to Order’s type data; GetMethod creates a MethodInfo object on the heap that m points to; new object[]{5} creates an array, then a heap box holding a copy of 5 is created and the array slot refers to it; Invoke runs Ship in a temporary frame whose this points to the Order and whose n is a copy of the 5 in the box; the result 3 is boxed in a new heap object that r points to; (int)r copies 3 into the stack variable days; afterwards the array and the box of 5 are unreachable garbage while the MethodInfo and the box of 3 are still referenced')
+    d.code_box(10, 8, 440, 98, [(0, 'Order order = new Order();', ''), (0, 'var m = typeof(Order).GetMethod("Ship");', ''), (0, 'var args = new object[] { 5 };', ''), (0, 'object r = m.Invoke(order, args);', ''), (0, 'int days = (int)r;', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 440, [0, 1, 2, 2, 3, 3, 4, None], size=8.8, lh=15)
+    d.note(460, 12, 170, 90, 'teaching picture:|addresses and the exact|MethodInfo contents|are simplified', 'amber', size=9)
+    d.zone(10, 118, 130, 310, 'cyan', '📚 STACK')
+    d.zone(175, 118, 295, 360, 'emerald', '🏠 HEAP')
+    d.zone(478, 118, 152, 150, 'violet', '🧬 TYPE DATA')
+    main = card(d, 18, 168, 'caller frame', [('order → Order', 'f', '1-'), ('m → MethodInfo', 'f', '2-'), ('r → boxed 3', 'f', '6-'), ('days = 3', 'f', '7-')], 'cyan', w=114, st=1)
+    ship = card(d, 18, 314, 'Ship frame', [('this → Order', 'f'), ('n = 5 (copy)', 'f')], 'amber', w=114, st='5-5', hl=5)
+    od = card(d, 183, 144, 'Order object', [('header (sync block)', 'hdr'), ('type ptr → Order MT', 'tp'), ('fields …', 'f')], 'emerald', w=140, st='1-', hl=1)
+    mi = card(d, 183, 264, 'MethodInfo', [('header + type ptr', 'hdr'), ('describes: Ship', 'f', '2-4'), ('of type: Order', 'f')], 'emerald', w=140, st='2-', hl=2)
+    cell(d, mi, 1, 'describes: Ship', 'amber', st='5-5', hl=5)
+    cell(d, mi, 1, 'describes: Ship', 'emerald', st='6-')
+    b3 = card(d, 183, 384, 'boxed int (result)', [('header + type ptr', 'hdr'), ('value 3', 'f')], 'amber', w=140, st='6-', hl=6)
+    ar = card(d, 331, 224, 'object[1] (args)', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f', '4-7')], 'emerald', w=131, st='3-7', hl=3)
+    cell(d, ar, 2, 'slot 0 = null', 'amber', st='3-3', hl=3)
+    b5 = card(d, 331, 344, 'boxed int', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'amber', w=131, st='4-7', hl=4)
+    card(d, 331, 224, 'object[1]: unreachable', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f')], 'n', w=131, st='8-', hl=8, dash=True)
+    card(d, 331, 344, 'boxed 5: unreachable', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'n', w=131, st='8-', hl=8, dash=True)
+    mt = card(d, 486, 168, 'Order type data', [('Order MethodTable', 'f'), ('method Ship', 'f', '1-4')], 'violet', w=136, st=1)
+    cell(d, mt, 1, 'method Ship', 'amber', st='5-5', hl=5)
+    cell(d, mt, 1, 'method Ship', 'violet', st='6-')
+    d.arrow([(134, 205), (191, 205)], 'cyan', st='1-', id='ro')
     d.arrow([(od['rows'][1]['r'][0], od['rows'][1]['y']), (mt['rows'][0]['l'][0], mt['rows'][0]['y'])], 'violet', st=1, id='tpa')
-    d.arrow([(134, 209), (166, 209), (166, 281), (191, 281)], 'cyan', st='2-', id='rm')
-    d.arrow([(134, 233), (158, 233), (158, 401), (191, 401)], 'cyan', st='5-', id='rr')
-    d.arrow([(440, ar['rows'][2]['top'] + ar['rows'][2]['h']), (440, b5['rows'][0]['top'])], 'amber', st='3-6', id='sl')
-    d.arrow([(191, 425), (148, 425), (148, 257), (134, 257)], 'amber', st='6-', id='cp')
-    d.token('cp', '📋', 15, 'amber', st='6-6')
+    d.arrow([(134, 229), (166, 229), (166, 301), (191, 301)], 'cyan', st='2-', id='rm')
+    d.arrow([(134, 253), (158, 253), (158, 421), (191, 421)], 'cyan', st='6-', id='rr')
+    d.arrow([(440, ar['rows'][2]['top'] + ar['rows'][2]['h']), (440, b5['rows'][0]['top'])], 'amber', st='4-7', id='sl')
+    d.arrow([(134, 352), (176, 352), (176, 240), (183, 240)], 'amber', st='5-5', id='th')
+    d.arrow([(331, 378), (134, 378)], 'amber', st='5-5', id='nn')
+    d.arrow([(191, 445), (148, 445), (148, 277), (134, 277)], 'amber', st='7-', id='cp')
     for i, (t, c) in enumerate([
-        ('Setup: order → an Order object on the heap;|its type ptr leads to Order’s type data', 'cyan'),
-        ('GetMethod("Ship") looks the NAME up at run time and|hands back a MethodInfo object; m points to it', 'emerald'),
-        ('new object[] { 5 }: the int 5 is COPIED into a new heap|box (boxing); the array slot refers to the box', 'amber'),
-        ('Invoke runs Ship in a temporary frame:|this = order, n = a copy of the unboxed 5', 'amber'),
+        ('Line 1: order → an Order object on the heap;|its type ptr leads to Order’s type data', 'cyan'),
+        ('Line 2: GetMethod("Ship") looks the NAME up at run time and|hands back a MethodInfo object; m points to it', 'emerald'),
+        ('Line 3, part 1: new object[ ] creates an array on the heap;|its slot is still empty (null)', 'amber'),
+        ('Line 3, part 2: the int 5 is COPIED into a new heap box (boxing);|the array slot now refers to the box', 'amber'),
+        ('Line 4: Invoke runs Ship in a temporary frame: this → the Order,|n = a copy of the unboxed 5', 'amber'),
         ('Ship returns: its frame is popped. The result 3 is boxed|into a new heap object; r points to it', 'amber'),
-        ('(int)r unboxes: the value 3 is COPIED from|the box into the stack variable days', 'amber'),
+        ('Line 5: (int)r unboxes: the value 3 is COPIED from|the box into the stack variable days', 'amber'),
         ('Now the args array and boxed 5 have no reference left:|garbage for the GC to clear later. m and r keep theirs', 'rose')]):
-        d.note(10, 468, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 488, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def build_dynamic_reflection():
@@ -119,7 +117,8 @@ def build_dynamic_reflection():
             ('story', '🔎 Reflection: asking by name — and what it puts on the heap', (d_dy2(), [
                 '<b>Setup.</b> <code>order</code> on the stack points to an <b>Order object</b>; its type pointer leads to Order’s type data (shared by all Orders).',
                 '<code>GetMethod("Ship")</code> finds the method <b>by its name</b>, at run time. It gives back a <b>MethodInfo</b> object on the heap; <code>m</code> points to it.',
-                '<code>new object[] { 5 }</code>: an <code>object[]</code> needs references, so the int 5 is <b>boxed</b> — <b>copied</b> into a new heap object. The array slot refers to that box.',
+                '<code>new object[] { 5 }</code> (part 1): the <code>object[]</code> array is created on the heap; its slot is still empty.',
+                '<code>new object[] { 5 }</code> (part 2): an <code>object[]</code> needs references, so the int 5 is <b>boxed</b> — <b>copied</b> into a new heap object. The array slot refers to that box.',
                 '<code>Invoke</code> runs <code>Ship</code> in a normal <b>temporary stack frame</b>: <code>this</code> = the Order, <code>n</code> = a copy of the unboxed 5.',
                 '<code>Ship</code> returns, so its <b>frame is popped</b>. The result is returned as <code>object</code>: the 3 is <b>boxed</b> into a new heap object and <code>r</code> points to it.',
                 '<code>(int)r</code> <b>unboxes</b>: the value 3 is <b>copied</b> from the box into the stack variable <code>days</code>. Box and <code>days</code> are now two separate values.',
@@ -143,7 +142,8 @@ d.Quack();               // 2nd: cached rule reused
 
 Order order = new Order();
 var m = typeof(Order).GetMethod("Ship");          // reflection: by name
-object r = m.Invoke(order, new object[] { 5 });   // 5 is boxed; r is an object
+var args = new object[] { 5 };                    // 5 is boxed into the array
+object r = m.Invoke(order, args);                 // r is an object
 int days = (int)r;                                // unboxing copies 3 into days''',
               'Prefer normal typed code. Use dynamic or reflection only when the shape really is unknown until run time.'),
         clean=('Who clears this memory?', ['The garbage collector, as usual, for the MethodInfo, argument arrays and boxes: they become <b>unreachable</b> when the last variable or array slot that refers to them is gone, and are cleared at a later GC. The <b>call site</b> is reachable from a static field, so it (and its cached rules) stays for the life of the app — a small price per <code>dynamic</code> operation in your code.']),

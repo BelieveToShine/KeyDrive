@@ -147,7 +147,7 @@
   <section class="kd-section ">
     <div class="sec-label see">♻️ ArrayPool: borrow, use, give back</div>
 <figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 386" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation">
+<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation">
 <defs><marker id="sp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="8" width="126" height="244" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">📌 STATIC</text>
@@ -230,22 +230,28 @@
 <g class="st" data-s="5-5" data-hl="5"><text x="271" y="223.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">data: 7 7 7 7 … (stale!)</text></g>
 <g class="st" data-s="1-1"><text class="free" x="516" y="120" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">no call running yet</text></g>
 <g class="st" data-s="4-4"><text class="free" x="516" y="120" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">(frame popped: nothing in use)</text></g>
+<g class="st" data-s="5-5"><text class="free" x="516" y="120" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">call 1 is over: its rented is gone</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="158" y="222" width="226" height="24" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="271" y="236.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">🆕 rent #1: the array is lent out</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="158" y="222" width="226" height="24" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="271" y="236.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">🔁 rent #2: the SAME array again</text></g>
 <g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="418" y="162" width="196" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="2-3" data-hl="2"><text x="516" y="175.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">rented = reference</text></g>
 <g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="418" y="162" width="196" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="516" y="175.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">rented = reference</text></g>
-<rect class="bx" x="10" y="312" width="620" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<g class="st" data-s="5-5" data-hl="5"><text x="516" y="175.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">again = reference (2nd Rent)</text></g>
+<rect class="bx" x="10" y="312" width="620" height="80" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="334" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var rented = ArrayPool&lt;byte&gt;.Shared.Rent(100);</text>
 <text x="24" y="348" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">try { Fill(rented); }</text>
 <text x="24" y="362" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">finally { ArrayPool&lt;byte&gt;.Shared.Return(rented); }</text>
+<text x="24" y="376" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var again = ArrayPool&lt;byte&gt;.Shared.Rent(100);   // later: a 2nd call</text>
 <g class="st" data-s="2-2"><rect class="cur" x="14" y="324" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="2-2"><text class="cur" x="16" y="333.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="3-3"><rect class="cur" x="14" y="338" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="3-3"><text class="cur" x="16" y="347.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="4-4"><rect class="cur" x="14" y="352" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="4-4"><text class="cur" x="16" y="361.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="5-5"><rect class="cur" x="14" y="324" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="5-5"><text class="cur" x="16" y="333.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="366" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="375.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="260" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="278" text-anchor="middle" font-size="9" fill="#fcd34d">An earlier caller used Return(): the array sits idle on the pool’s shelf</text></g>
 <g class="st" data-s="1-1"><text x="320" y="291" text-anchor="middle" font-size="9" fill="#fcd34d">the static Shared reaches the pool, so the GC keeps the array (teaching picture)</text></g>
@@ -426,154 +432,163 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">⚠️ Trap 1: stackalloc in a loop</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="stackalloc inside a loop: each iteration adds another block to the same stack frame and none is released until the method returns, so the frame keeps growing until the stack runs out">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="stackalloc inside a loop: the for line sets i, then each iteration adds another block to the same stack frame and none is released until the method returns, so the frame keeps growing until the stack runs out">
 <defs><marker id="sp4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="8" width="312" height="200" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<g class="st" data-s="1-1"><rect class="zone" x="18" y="34" width="296" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-1"><rect class="zone" x="18" y="34" width="296" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-1"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Loop()</text></g>
-<g class="st" data-s="2-2"><rect class="zone" x="18" y="34" width="296" height="106" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-2"><rect class="zone" x="18" y="34" width="296" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-2"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Loop()</text></g>
-<g class="st" data-s="3-3"><rect class="zone" x="18" y="34" width="296" height="130" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-3"><rect class="zone" x="18" y="34" width="296" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="3-3"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Loop()</text></g>
-<g class="st" data-s="4-4"><rect class="zone" x="18" y="34" width="296" height="154" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="4-4"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">frame of Loop() keeps growing</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="18" y="34" width="296" height="106" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Loop()</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="18" y="34" width="296" height="154" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">frame of Loop() keeps growing</text></g>
 <g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-1" data-hl="1"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 0</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 1: 256 bytes (illustrative)</text></g>
 <g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 1</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 0</text></g>
 <g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="2-2" data-hl="2"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 1: 256 bytes (illustrative)</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="26" y="108" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="166" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 2: 256 bytes (illustrative)</text></g>
 <g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 2</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 1</text></g>
 <g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="3-3" data-hl="3"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 1: 256 bytes (illustrative)</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="108" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="166" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 2: 256 bytes (illustrative)</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="132" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="166" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 3: 256 bytes (illustrative)</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">i = 9999 …</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">block 1: 256 bytes</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="108" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="166" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">block 2: 256 bytes</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="132" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="166" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">… thousands more blocks …</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="156" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="166" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">no room left in the stack</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">i = 1</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 1: 256 bytes (illustrative)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="108" width="280" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="166" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">block 2: 256 bytes (illustrative)</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="60" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="166" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">i = 9999 …</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="84" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="166" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">block 1: 256 bytes</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="108" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="166" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">block 2: 256 bytes</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="132" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="166" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">… thousands more blocks …</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="156" width="280" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="166" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">no room left in the stack</text></g>
 <rect class="bx" x="334" y="8" width="296" height="100" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="348" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">void Loop(int n) {</text>
 <text x="358" y="44" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">for (int i = 0; i &lt; n; i++) {</text>
 <text x="368" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; b = stackalloc byte[256];</text>
 <text x="358" y="72" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
 <text x="348" y="86" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
-<g class="st" data-s="1-4"><rect class="cur" x="338" y="48" width="288" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="1-4"><text class="cur" x="340" y="57.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="334" y="124" width="296" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="482" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">💥 stack overflow</text></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="482" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">the process crashes</text></g>
+<g class="st" data-s="1-1"><rect class="cur" x="338" y="34" width="288" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="340" y="43.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="338" y="48" width="288" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="340" y="57.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="338" y="34" width="288" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="340" y="43.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-5"><rect class="cur" x="338" y="48" width="288" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-5"><text class="cur" x="340" y="57.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="334" y="124" width="296" height="60" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="482" y="151.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">💥 stack overflow</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="482" y="164.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">the process crashes</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#67e8f9">Iteration 0: stackalloc takes 256 bytes from Loop’s own frame</text></g>
-<g class="st" data-s="1-1"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#67e8f9">(sizes are a teaching picture)</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fcd34d">Iteration 1: another block is added to the same frame</text></g>
-<g class="st" data-s="2-2"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fcd34d">block 1 is NOT released: the iteration ended, the method did not</text></g>
+<g class="st" data-s="1-1"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#67e8f9">The for line runs: i = 0, the loop starts</text></g>
+<g class="st" data-s="1-1"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#67e8f9">the frame has no block yet (sizes are a teaching picture)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#67e8f9">Iteration 0: stackalloc takes 256 bytes from Loop’s own frame</text></g>
+<g class="st" data-s="2-2"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#67e8f9">block 1 appears in the frame</text></g>
 <g class="st" data-s="3-3"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fcd34d">Iteration 2: a third block</text></g>
-<g class="st" data-s="3-3"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fcd34d">stack space is only released when the method returns</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fda4af">Many iterations: the frame keeps growing until the thread’s stack runs out</text></g>
-<g class="st" data-s="4-4"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fda4af">a heap array would only have made garbage for the GC</text></g>
+<g class="st" data-s="3-3"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fcd34d">The for line runs again: i++ makes i = 1, the next iteration starts</text></g>
+<g class="st" data-s="3-3"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fcd34d">block 1 is NOT released: the iteration ended, the method did not</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fcd34d">Iteration 1: stackalloc adds block 2 to the same frame</text></g>
+<g class="st" data-s="4-4"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fcd34d">stack space is only released when the method returns</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="216" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="234" text-anchor="middle" font-size="9" fill="#fda4af">Many iterations later: the frame keeps growing until the thread’s stack runs out</text></g>
+<g class="st" data-s="5-5"><text x="320" y="247" text-anchor="middle" font-size="9" fill="#fda4af">a heap array would only have made garbage for the GC</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Iteration 0: <code>stackalloc</code> takes 256 bytes from <code>Loop</code>’s own frame (sizes: teaching picture).</li><li>Iteration 1: another block is added to the <b>same frame</b>. Block 1 is not released: the iteration ended, the method did not.</li><li>Iteration 2: a third block. Stack space is released only when the <b>method returns</b>.</li><li>After many iterations the frame keeps growing until the thread’s stack <b>runs out</b>. Allocate outside the loop, or use a pool.</li></ol>
+<ol class="st-caps"><li>The <code>for</code> line runs: <code>i = 0</code>. The frame has no block yet (sizes: teaching picture).</li><li>Iteration 0: <code>stackalloc</code> takes 256 bytes from <code>Loop</code>’s own frame. Block 1 appears.</li><li>The <code>for</code> line runs again: <code>i++</code> makes <code>i = 1</code>. Block 1 is not released: the iteration ended, the method did not.</li><li>Iteration 1: another block is added to the <b>same frame</b>. Stack space is released only when the <b>method returns</b>.</li><li>After many iterations the frame keeps growing until the thread’s stack <b>runs out</b>. Allocate outside the loop, or use a pool.</li></ol>
 <figcaption><strong>What you're seeing:</strong> stackalloc memory belongs to the method’s frame, not to the loop body.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">⚠️ Trap 2: returning a Span over stackalloc</div>
 <figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 350" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Imagining that Bad could return a Span over its stackalloc buffer: the Span value (pointer and length) would be copied into the caller variable r; when Bad returns its frame is popped, so r would point at freed stack space; the compiler refuses the return at build time so this never happens">
+<div class="st-stage"><svg viewBox="0 0 640 396" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Main calls Bad, which stackallocs 4 bytes in its own frame. The line return s would copy the Span (pointer and length) into r, but the compiler refuses it, so r stays unset. Had it compiled, Bad returning would pop its frame and r would point at freed stack space">
 <defs><marker id="sp5A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp5S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sp5T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="8" width="420" height="188" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
 <g class="st" data-s="1-"><rect class="zone" x="18" y="34" width="380" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Main()</text></g>
-<g class="st" data-s="1-2"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-2"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Bad()</text></g>
-<g class="st" data-s="4-4"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="4-4"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Bad(): still running, nothing escaped</text></g>
-<g class="st" data-s="3-3"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="3-3"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Bad() returned: its frame is popped</text></g>
-<g class="st" data-s="1-2"><path d="M390,137 L402,137 L402,161 L390,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sp5A)"/></g>
-<g class="st" data-s="4-4"><path d="M390,137 L402,137 L402,161 L390,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sp5A)"/></g>
-<g class="st" data-s="2-2"><path d="M390,71 L416,71 L416,161 L390,161" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#sp5A)"/></g>
-<g class="st" data-s="3-3"><path d="M390,71 L416,71 L416,161 L390,161" fill="none" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#sp5A)"/></g>
-<g class="st" data-s="4-4"><path d="M390,71 L416,71 L416,161 L390,161" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#sp5A)"/></g>
-<g class="st" data-s="1-1"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">r : Span&lt;byte&gt;   (not set yet)</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">r = ptr + len 4  (copy of s)</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">r = ptr + len 4  → DANGLING</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="26" y="126" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="208" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">s = ptr + len 4</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">4 bytes: ? ? ? ?</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="126" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="208" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">s = ptr + len 4</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">4 bytes: ? ? ? ?</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">freed stack space: the next call may reuse it</text></g>
-<g class="st" data-s="4-4"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">r : not set (the build fails here)</text></g>
-<g class="st" data-s="4-4"><text class="free" x="431" y="121.0" text-anchor="middle" font-size="14" font-weight="400" fill="#fda4af">✘</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="442" y="70" width="188" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="536" y="96.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">✘ compiler refuses</text></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="536" y="109" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">the return statement</text></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="536" y="121.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">(ref-safety rules)</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="10" y="258" width="620" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="24" y="280" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; Bad() {</text></g>
-<g class="st" data-s="1-3"><text x="34" y="294" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; s = stackalloc byte[4];</text></g>
-<g class="st" data-s="1-3"><text x="34" y="308" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">return s;      // imagine this were allowed</text></g>
-<g class="st" data-s="1-3"><text x="24" y="322" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
-<g class="st" data-s="4-4"><rect class="bx" x="10" y="258" width="620" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4"><text x="24" y="280" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; Bad() {</text></g>
-<g class="st" data-s="4-4"><text x="34" y="294" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; s = stackalloc byte[4];</text></g>
-<g class="st" data-s="4-4"><text x="34" y="308" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">return s;      // ✘ error: does not compile</text></g>
-<g class="st" data-s="4-4"><text x="24" y="322" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
+<g class="st" data-s="1-1"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-1"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Bad(): just called</text></g>
+<g class="st" data-s="2-3"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame of Bad()</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="18" y="100" width="380" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="32" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">if it compiled: Bad() returns, frame popped</text></g>
+<g class="st" data-s="2-3"><path d="M390,137 L402,137 L402,161 L390,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sp5A)"/></g>
+<g class="st" data-s="3-3"><path d="M390,71 L416,71 L416,161 L390,161" fill="none" stroke="#5b6577" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#sp5A)"/></g>
+<g class="st" data-s="4-4"><path d="M390,71 L416,71 L416,161 L390,161" fill="none" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#sp5A)"/></g>
+<g class="st" data-s="1-3"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">r : Span&lt;byte&gt;   (not set yet)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="60" width="364" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="208" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">r = ptr + len 4  → would DANGLE</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="126" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="208" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">s : not set yet</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">(no buffer yet)</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="26" y="126" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="208" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">s = ptr + len 4</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">4 bytes: ? ? ? ?</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="150" width="364" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="208" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">freed stack space: the next call may reuse it</text></g>
+<g class="st" data-s="3-3"><text class="free" x="431" y="121.0" text-anchor="middle" font-size="14" font-weight="400" fill="#fda4af">✘</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="442" y="70" width="188" height="70" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="536" y="96.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">✘ compiler refuses</text></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="536" y="109" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">the return statement</text></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="536" y="121.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">(ref-safety rules)</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="10" y="258" width="620" height="134" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="24" y="280" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">void Main() {</text></g>
+<g class="st" data-s="1-2"><text x="34" y="294" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var r = Bad();</text></g>
+<g class="st" data-s="1-2"><text x="24" y="308" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
+<g class="st" data-s="1-2"><text x="24" y="322" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; Bad() {</text></g>
+<g class="st" data-s="1-2"><text x="34" y="336" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; s = stackalloc byte[4];</text></g>
+<g class="st" data-s="1-2"><text x="34" y="350" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">return s;</text></g>
+<g class="st" data-s="1-2"><text x="24" y="364" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="10" y="258" width="620" height="134" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="24" y="280" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">void Main() {</text></g>
+<g class="st" data-s="3-4"><text x="34" y="294" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var r = Bad();</text></g>
+<g class="st" data-s="3-4"><text x="24" y="308" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
+<g class="st" data-s="3-4"><text x="24" y="322" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; Bad() {</text></g>
+<g class="st" data-s="3-4"><text x="34" y="336" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Span&lt;byte&gt; s = stackalloc byte[4];</text></g>
+<g class="st" data-s="3-4"><text x="34" y="350" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">return s;      // ✘ error: does not compile</text></g>
+<g class="st" data-s="3-4"><text x="24" y="364" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text></g>
 <g class="st" data-s="1-1"><rect class="cur" x="14" y="284" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="1-1"><text class="cur" x="16" y="293.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="2-2"><rect class="cur" x="14" y="298" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="2-2"><text class="cur" x="16" y="307.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="3-3"><rect class="cur" x="14" y="312" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="3-3"><text class="cur" x="16" y="321.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="4-4"><rect class="cur" x="14" y="298" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="4-4"><text class="cur" x="16" y="307.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="326" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="335.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="340" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="349.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="354" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="363.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="206" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#67e8f9">Main calls Bad(): the 4 bytes sit in Bad’s frame; s = pointer + length</text></g>
-<g class="st" data-s="1-1"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#67e8f9">r in Main has no value yet</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="206" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#fcd34d">Imagine return s compiled: the Span (pointer + length) is copied into r</text></g>
-<g class="st" data-s="2-2"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#fcd34d">r would point into Bad’s frame (hypothetical: it never compiles)</text></g>
+<g class="st" data-s="1-1"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#67e8f9">var r = Bad(); Main calls Bad(): Bad gets its own frame</text></g>
+<g class="st" data-s="1-1"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#67e8f9">r in Main has no value yet, s in Bad has none either</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="206" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#67e8f9">stackalloc runs: the 4 bytes sit inside Bad’s frame, s = pointer + length</text></g>
+<g class="st" data-s="2-2"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#67e8f9">r in Main is still not set</text></g>
 <g class="st" data-s="3-3"><rect class="bx note" x="10" y="206" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#fda4af">Bad returns: its frame is popped and the bytes are freed, but r still holds the pointer</text></g>
-<g class="st" data-s="3-3"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#fda4af">dangling: it could read bytes of some later call</text></g>
+<g class="st" data-s="3-3"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#fda4af">return s; the compiler refuses this line at build time: a Span over stackalloc memory cannot leave the method</text></g>
+<g class="st" data-s="3-3"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#fda4af">so r is never set (it blocks the obvious cases; not magic for every pointer trick)</text></g>
 <g class="st" data-s="4-4"><rect class="bx note" x="10" y="206" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#fda4af">So the compiler stops it at build time: a Span over stackalloc memory cannot leave the method</text></g>
-<g class="st" data-s="4-4"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#fda4af">(it blocks the obvious cases; it is not magic for every pointer trick)</text></g>
+<g class="st" data-s="4-4"><text x="320" y="224" text-anchor="middle" font-size="9" fill="#fda4af">Why it refuses: had it compiled, the closing } of Bad would pop its frame, but r would still hold the pointer</text></g>
+<g class="st" data-s="4-4"><text x="320" y="237" text-anchor="middle" font-size="9" fill="#fda4af">dangling: it could read bytes of some later call (hypothetical: it never compiles)</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Main calls <code>Bad()</code>: the 4 bytes sit in Bad’s frame. <code>s</code> = pointer + length. <code>r</code> in Main has no value yet.</li><li>Imagine <code>return s</code> compiled: the Span (pointer + length) would be <b>copied</b> into <code>r</code>, pointing into Bad’s frame. (Hypothetical.)</li><li><code>Bad()</code> returns: its frame is popped and the bytes are freed, but <code>r</code> still holds the pointer: <b>dangling</b>.</li><li>So the compiler <b>refuses</b> the return at build time. It blocks the obvious cases of a Span escaping its memory.</li></ol>
+<ol class="st-caps"><li><code>var r = Bad();</code> Main calls <code>Bad()</code>: Bad gets its own frame. <code>r</code> has no value yet.</li><li><code>stackalloc</code> runs: the 4 bytes sit in Bad’s frame. <code>s</code> = pointer + length.</li><li><code>return s;</code> The compiler <b>refuses</b> this line at build time, so <code>r</code> is never set. It blocks the obvious cases of a Span escaping its memory.</li><li>Why: had it compiled, Bad’s closing <code>}</code> would pop its frame while <code>r</code> still held the pointer: <b>dangling</b>. (Hypothetical.)</li></ol>
 <figcaption><strong>What you're seeing:</strong> a Span must never outlive the memory it points at; the compiler enforces it for stackalloc memory.</figcaption>
 </figure>
   </section>

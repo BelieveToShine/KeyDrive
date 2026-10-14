@@ -44,7 +44,7 @@ def d_sp1():
 
 # ------------------------------------------------------------ diagram 2: ArrayPool rent / return / rent again
 def d_sp2():
-    d = Diagram('sp2', 640, 386, 'An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation')
+    d = Diagram('sp2', 640, 400, 'An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation')
     d.zone(10, 8, 126, 244, 'violet', '📌 STATIC')
     d.zone(146, 8, 250, 244, 'emerald', '🏠 HEAP')
     d.zone(402, 8, 228, 244, 'cyan', '📚 STACK')
@@ -67,12 +67,15 @@ def d_sp2():
         d.arrow([pr['r'], (pr['r'][0] + 8, pr['y']), (pr['r'][0] + 8, a['R'][1]), a['R']], 'amber', 'ref', at=(pr['r'][0] + 8, 100), st=st)
     d.text(516, 120, 'no call running yet', 'n', size=9, st='1-1')
     d.text(516, 120, '(frame popped: nothing in use)', 'n', size=9, st='4-4')
+    d.text(516, 120, 'call 1 is over: its rented is gone', 'n', size=9, st='5-5')
+    d.box(158, 222, 226, 24, [('🆕 rent #1: the array is lent out', 's')], 'cyan', rx=4, st='2-3', hl=2)
+    d.box(158, 222, 226, 24, [('🔁 rent #2: the SAME array again', 's')], 'amber', rx=4, st='5-5', hl=5)
     for st, title in [('2-3', 'frame of Process (call 1)'), ('5-5', 'frame of Process (call 2)')]:
-        f = card(d, 410, 136, title, [('rented = reference', 'f')], 'cyan', w=212, st=st, hl=2 if st == '2-3' else 5)
+        f = card(d, 410, 136, title, [('rented = reference' if st == '2-3' else 'again = reference (2nd Rent)', 'f')], 'cyan', w=212, st=st, hl=2 if st == '2-3' else 5)
         fy = f['rows'][0]['y']
         d.arrow([f['rows'][0]['l'], (400, fy), (400, a['R'][1]), a['R']], 'cyan', st=st)
-    d.code_box(10, 312, 620, 66, [(0, 'var rented = ArrayPool<byte>.Shared.Rent(100);', ''), (0, 'try { Fill(rented); }', ''), (0, 'finally { ArrayPool<byte>.Shared.Return(rented); }', '')], 'n', size=9, lh=14)
-    run_line(d, 10, 312, 620, [None, 0, 1, 2, 0], size=9, lh=14)
+    d.code_box(10, 312, 620, 80, [(0, 'var rented = ArrayPool<byte>.Shared.Rent(100);', ''), (0, 'try { Fill(rented); }', ''), (0, 'finally { ArrayPool<byte>.Shared.Return(rented); }', ''), (0, 'var again = ArrayPool<byte>.Shared.Rent(100);   // later: a 2nd call', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 312, 620, [None, 0, 1, 2, 3], size=9, lh=14)
     for i, (t, c) in enumerate([
             ('An earlier caller used Return(): the array sits idle on the pool’s shelf|the static Shared reaches the pool, so the GC keeps the array (teaching picture)', 'amber'),
             ('Rent(100): the pool lends the array that ALREADY exists; no new object|it can be longer than you asked (128 ≥ 100); the shelf slot is empty now', 'cyan'),
@@ -135,53 +138,51 @@ def d_sp3():
 
 # ------------------------------------------------------------ diagram 4: stackalloc inside a loop
 def d_sp4():
-    d = Diagram('sp4', 640, 270, 'stackalloc inside a loop: each iteration adds another block to the same stack frame and none is released until the method returns, so the frame keeps growing until the stack runs out')
+    d = Diagram('sp4', 640, 270, 'stackalloc inside a loop: the for line sets i, then each iteration adds another block to the same stack frame and none is released until the method returns, so the frame keeps growing until the stack runs out')
     d.zone(10, 8, 312, 200, 'cyan', '📚 STACK')
-    for k in range(1, 4):
-        rows = [(f'i = {k - 1}', 'f')] + [(f'block {j}: 256 bytes (illustrative)', 'f') for j in range(1, k + 1)]
+    for k, (iv, nb) in enumerate([(0, 0), (0, 1), (1, 1), (1, 2)], 1):
+        rows = [(f'i = {iv}', 'f')] + [(f'block {j}: 256 bytes (illustrative)', 'f') for j in range(1, nb + 1)]
         card(d, 18, 34, 'frame of Loop()', rows, 'cyan', w=296, st=f'{k}-{k}', hl=k)
     rows = [('i = 9999 …', 'f'), ('block 1: 256 bytes', 'f'), ('block 2: 256 bytes', 'f'), ('… thousands more blocks …', 'f'), ('no room left in the stack', 'f')]
-    g = card(d, 18, 34, 'frame of Loop() keeps growing', rows, 'rose', w=296, st='4-4', hl=4)
+    card(d, 18, 34, 'frame of Loop() keeps growing', rows, 'rose', w=296, st='5-5', hl=5)
     d.code_box(334, 8, 296, 100, [(0, 'void Loop(int n) {', ''), (10, 'for (int i = 0; i < n; i++) {', ''), (20, 'Span<byte> b = stackalloc byte[256];', ''), (10, '}', ''), (0, '}', '')], 'n', size=9, lh=14)
-    run_line(d, 334, 8, 296, [2, 2, 2, 2], size=9, lh=14)
-    d.box(334, 124, 296, 60, [('💥 stack overflow', 't'), ('the process crashes', 's')], 'rose', st='4-4', hl=4)
+    run_line(d, 334, 8, 296, [1, 2, 1, 2, 2], size=9, lh=14)
+    d.box(334, 124, 296, 60, [('💥 stack overflow', 't'), ('the process crashes', 's')], 'rose', st='5-5', hl=5)
     for i, (t, c) in enumerate([
-            ('Iteration 0: stackalloc takes 256 bytes from Loop’s own frame|(sizes are a teaching picture)', 'cyan'),
-            ('Iteration 1: another block is added to the same frame|block 1 is NOT released: the iteration ended, the method did not', 'amber'),
-            ('Iteration 2: a third block|stack space is only released when the method returns', 'amber'),
-            ('Many iterations: the frame keeps growing until the thread’s stack runs out|a heap array would only have made garbage for the GC', 'rose')]):
+            ('The for line runs: i = 0, the loop starts|the frame has no block yet (sizes are a teaching picture)', 'cyan'),
+            ('Iteration 0: stackalloc takes 256 bytes from Loop’s own frame|block 1 appears in the frame', 'cyan'),
+            ('The for line runs again: i++ makes i = 1, the next iteration starts|block 1 is NOT released: the iteration ended, the method did not', 'amber'),
+            ('Iteration 1: stackalloc adds block 2 to the same frame|stack space is only released when the method returns', 'amber'),
+            ('Many iterations later: the frame keeps growing until the thread’s stack runs out|a heap array would only have made garbage for the GC', 'rose')]):
         d.note(10, 216, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
 # ------------------------------------------------------------ diagram 5: why a Span over stackalloc memory cannot be returned
 def d_sp5():
-    d = Diagram('sp5', 640, 350, 'Imagining that Bad could return a Span over its stackalloc buffer: the Span value (pointer and length) would be copied into the caller variable r; when Bad returns its frame is popped, so r would point at freed stack space; the compiler refuses the return at build time so this never happens')
+    d = Diagram('sp5', 640, 396, 'Main calls Bad, which stackallocs 4 bytes in its own frame. The line return s would copy the Span (pointer and length) into r, but the compiler refuses it, so r stays unset. Had it compiled, Bad returning would pop its frame and r would point at freed stack space')
     d.zone(10, 8, 420, 188, 'cyan', '📚 STACK')
-    m = card(d, 18, 34, 'frame of Main()', [('r : Span<byte>   (not set yet)', 'f', '1-1')], 'cyan', w=380, st=1)
-    cell(d, m, 0, 'r = ptr + len 4  (copy of s)', 'amber', st='2-2', hl=2)
-    cell(d, m, 0, 'r = ptr + len 4  → DANGLING', 'rose', st='3-3', hl=3)
-    b = card(d, 18, 100, 'frame of Bad()', [('s = ptr + len 4', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=380, st='1-2')
-    card(d, 18, 100, 'frame of Bad(): still running, nothing escaped', [('s = ptr + len 4', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=380, st='4-4', hl=4)
-    d.zone(18, 100, 380, 82, 'rose', 'Bad() returned: its frame is popped', st='3-3')
-    d.box(26, 150, 364, 22, [('freed stack space: the next call may reuse it', 'm')], 'rose', rx=4, st='3-3', hl=3)
-    cell(d, m, 0, 'r : not set (the build fails here)', 'n', st='4-4')
+    m = card(d, 18, 34, 'frame of Main()', [('r : Span<byte>   (not set yet)', 'f', '1-3')], 'cyan', w=380, st=1)
+    cell(d, m, 0, 'r = ptr + len 4  → would DANGLE', 'rose', st='4-4', hl=4)
+    b = card(d, 18, 100, 'frame of Bad(): just called', [('s : not set yet', 'f'), ('(no buffer yet)', 'f')], 'cyan', w=380, st='1-1', hl=1)
+    card(d, 18, 100, 'frame of Bad()', [('s = ptr + len 4', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=380, st='2-3', hl=2)
+    d.zone(18, 100, 380, 82, 'rose', 'if it compiled: Bad() returns, frame popped', st='4-4')
+    d.box(26, 150, 364, 22, [('freed stack space: the next call may reuse it', 'm')], 'rose', rx=4, st='4-4', hl=4)
     y0, y1 = b['rows'][0]['y'], b['rows'][1]['y']
     ry = m['rows'][0]['y']
-    d.arrow([(390, y0), (402, y0), (402, y1), (390, y1)], 'cyan', st='1-2')
-    d.arrow([(390, y0), (402, y0), (402, y1), (390, y1)], 'cyan', st='4-4')
-    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'amber', dash=True, st='2-2')
-    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'rose', dash=True, st='3-3')
-    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'n', dash=True, st='4-4')
-    d.text(431, (ry + y1) / 2 + 5, '✘', 'rose', size=14, st='4-4')
-    d.box(442, 70, 188, 70, [('✘ compiler refuses', 't'), ('the return statement', 's'), ('(ref-safety rules)', 's')], 'rose', st='4-4', hl=4)
-    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // imagine this were allowed', ''), (0, '}', '')], 'n', size=9, lh=14, st='1-3')
-    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // ✘ error: does not compile', ''), (0, '}', '')], 'n', size=9, lh=14, st='4-4')
-    run_line(d, 10, 258, 620, [1, 2, 3, 2], size=9, lh=14)
+    d.arrow([(390, y0), (402, y0), (402, y1), (390, y1)], 'cyan', st='2-3')
+    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'n', dash=True, st='3-3')
+    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'rose', dash=True, st='4-4')
+    d.text(431, (ry + y1) / 2 + 5, '✘', 'rose', size=14, st='3-3')
+    d.box(442, 70, 188, 70, [('✘ compiler refuses', 't'), ('the return statement', 's'), ('(ref-safety rules)', 's')], 'rose', st='3-4', hl=3)
+    CB = [(0, 'void Main() {', ''), (10, 'var r = Bad();', ''), (0, '}', ''), (0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', '')]
+    d.code_box(10, 258, 620, 134, CB + [(10, 'return s;', ''), (0, '}', '')], 'n', size=9, lh=14, st='1-2')
+    d.code_box(10, 258, 620, 134, CB + [(10, 'return s;      // ✘ error: does not compile', ''), (0, '}', '')], 'n', size=9, lh=14, st='3-4')
+    run_line(d, 10, 258, 620, [1, 4, 5, 6], size=9, lh=14)
     for i, (t, c) in enumerate([
-            ('Main calls Bad(): the 4 bytes sit in Bad’s frame; s = pointer + length|r in Main has no value yet', 'cyan'),
-            ('Imagine return s compiled: the Span (pointer + length) is copied into r|r would point into Bad’s frame (hypothetical: it never compiles)', 'amber'),
-            ('Bad returns: its frame is popped and the bytes are freed, but r still holds the pointer|dangling: it could read bytes of some later call', 'rose'),
-            ('So the compiler stops it at build time: a Span over stackalloc memory cannot leave the method|(it blocks the obvious cases; it is not magic for every pointer trick)', 'rose')]):
+            ('var r = Bad(); Main calls Bad(): Bad gets its own frame|r in Main has no value yet, s in Bad has none either', 'cyan'),
+            ('stackalloc runs: the 4 bytes sit inside Bad’s frame, s = pointer + length|r in Main is still not set', 'cyan'),
+            ('return s; the compiler refuses this line at build time: a Span over stackalloc memory cannot leave the method|so r is never set (it blocks the obvious cases; not magic for every pointer trick)', 'rose'),
+            ('Why it refuses: had it compiled, the closing } of Bad would pop its frame, but r would still hold the pointer|dangling: it could read bytes of some later call (hypothetical: it never compiles)', 'rose')]):
         d.note(10, 206, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
@@ -218,16 +219,17 @@ def build_span_stackalloc():
                 '<code>AsSpan(1, 3)</code> creates <b>no object</b>. The span (on the stack) is a <b>pointer to the “e” inside the same string</b> plus a length of 3. A view, not a copy.'],
                 'a Span is a view: a pointer plus a length. The Span value sits on the stack (or inside another ref struct); the memory it points at is owned by someone else, and may be heap, stack or native memory.')),
             ('story', '⚠️ Trap 1: stackalloc in a loop', (d_sp4(), [
-                'Iteration 0: <code>stackalloc</code> takes 256 bytes from <code>Loop</code>’s own frame (sizes: teaching picture).',
-                'Iteration 1: another block is added to the <b>same frame</b>. Block 1 is not released: the iteration ended, the method did not.',
-                'Iteration 2: a third block. Stack space is released only when the <b>method returns</b>.',
+                'The <code>for</code> line runs: <code>i = 0</code>. The frame has no block yet (sizes: teaching picture).',
+                'Iteration 0: <code>stackalloc</code> takes 256 bytes from <code>Loop</code>’s own frame. Block 1 appears.',
+                'The <code>for</code> line runs again: <code>i++</code> makes <code>i = 1</code>. Block 1 is not released: the iteration ended, the method did not.',
+                'Iteration 1: another block is added to the <b>same frame</b>. Stack space is released only when the <b>method returns</b>.',
                 'After many iterations the frame keeps growing until the thread’s stack <b>runs out</b>. Allocate outside the loop, or use a pool.'],
                 'stackalloc memory belongs to the method’s frame, not to the loop body.')),
             ('story', '⚠️ Trap 2: returning a Span over stackalloc', (d_sp5(), [
-                'Main calls <code>Bad()</code>: the 4 bytes sit in Bad’s frame. <code>s</code> = pointer + length. <code>r</code> in Main has no value yet.',
-                'Imagine <code>return s</code> compiled: the Span (pointer + length) would be <b>copied</b> into <code>r</code>, pointing into Bad’s frame. (Hypothetical.)',
-                '<code>Bad()</code> returns: its frame is popped and the bytes are freed, but <code>r</code> still holds the pointer: <b>dangling</b>.',
-                'So the compiler <b>refuses</b> the return at build time. It blocks the obvious cases of a Span escaping its memory.'],
+                '<code>var r = Bad();</code> Main calls <code>Bad()</code>: Bad gets its own frame. <code>r</code> has no value yet.',
+                '<code>stackalloc</code> runs: the 4 bytes sit in Bad’s frame. <code>s</code> = pointer + length.',
+                '<code>return s;</code> The compiler <b>refuses</b> this line at build time, so <code>r</code> is never set. It blocks the obvious cases of a Span escaping its memory.',
+                'Why: had it compiled, Bad’s closing <code>}</code> would pop its frame while <code>r</code> still held the pointer: <b>dangling</b>. (Hypothetical.)'],
                 'a Span must never outlive the memory it points at; the compiler enforces it for stackalloc memory.')),
             ('table', '🧰 The toolbox', ['Tool', 'Where the memory is', 'Cleaned by', 'Watch out'], [
                 ['<code>new T[n]</code>', 'heap (LOH if ≥ 85,000 bytes)', 'GC', 'garbage in hot paths'],

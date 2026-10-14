@@ -108,8 +108,10 @@ def d_mc3():
     d.zone(150, 166 + O, 244, 64, 'violet', '📋 finalizer queue', dash=True, st='3-5')
     d.text(272, 212 + O, 'empty again', 'n', 9, anchor='middle', st='5-5')
     d.box(172, 192 + O, 200, 32, [('finalizer of the handle', 't')], 'violet', st='3-4', hl='3,4')
-    d.arrow([fs['B'], (272, 192 + O)], 'violet', 'queued', at=(318, 146 + O), st='3-3', id='c4')
-    d.arrow([(200, 192 + O), (200, 126 + O)], 'violet', 'kept alive', at=(200, 146 + O), st='3-4', id='c5')
+    d.arrow([fs['B'], (272, 192 + O)], 'violet', st='3-3', id='c4')
+    d.text(264, 144 + O, 'queued', 'violet', 9, anchor='end', st='3-3')
+    d.arrow([(360, 192 + O), (360, 126 + O)], 'violet', st='3-4', id='c5')
+    d.text(352, 144 + O, 'kept alive', 'violet', 9, anchor='end', st='3-4')
     d.text(386, 56 + O, 'finalizer queue holds a reference', 'violet', 9, anchor='end', st='3-4')
     d.arrow([(372, 208 + O), (529, 208 + O), (529, 133 + O)], 'violet', 'closes', at=(450, 208 + O), st='4-4', id='c3')
     caps = [('1 · Same start, but written without using: a FileStream owns an OS handle and the file is locked.', 'emerald'),
