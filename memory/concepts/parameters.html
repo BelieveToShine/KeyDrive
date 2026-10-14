@@ -44,41 +44,54 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Passing a value-type argument: the method gets a copy of the number, so doubling the parameter n inside the method does not change the caller’s variable x">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Passing a value-type argument: the call pushes a new stack frame for Double with its own slot n, the 5 is copied from x into n, doubling n changes only n, and returning pops the frame so x is still 5">
 <defs><marker id="pa1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="330" y="6" width="300" height="262" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="344" y="25" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="bx" x="10" y="8" width="300" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int x = 5;</text>
-<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">Double(x);</text>
-<text x="24" y="60" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">void Double(int n) { n = n * 2; }</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="350" y="40" width="260" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="480" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Main frame: x</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="480" y="75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">5</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="350" y="130" width="260" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="480" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Double frame: n</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="480" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">5  (a copy)</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="350" y="130" width="260" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="480" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Double frame: n</text></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="480" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">10</text></g>
-<g class="st" data-s="2-2"><text class="emo" x="480" y="110" text-anchor="middle" font-size="18">✂️</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="350" y="204" width="260" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="480" y="225" text-anchor="middle" font-size="10" fill="#6ee7b7">x is still 5!</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="480" y="239" text-anchor="middle" font-size="10" fill="#6ee7b7">only the copy changed</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="100" width="300" height="70" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="160" y="138" text-anchor="middle" font-size="10" fill="#67e8f9">x holds 5</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="100" width="300" height="70" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="160" y="138" text-anchor="middle" font-size="10" fill="#c4b5fd">The call copies 5 into the new parameter n</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="100" width="300" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="160" y="138" text-anchor="middle" font-size="10" fill="#fcd34d">n = n * 2 changes only the copy</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="100" width="300" height="70" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="160" y="138" text-anchor="middle" font-size="10" fill="#6ee7b7">Return: n is gone; x is untouched</text></g>
+<rect class="zone" x="10" y="24" width="290" height="232" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (one frame per call)</text>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="46" width="210" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="34" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧱 Main frame</text></g>
+<g class="st" data-s="2-4"><rect class="zone" x="20" y="150" width="210" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><text class="zone-title" x="34" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧱 Double frame</text></g>
+<g class="st" data-s="3-3"><path id="pa1-c1" d="M222,83 L250,83 L250,187 L222,187" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa1A)"/></g>
+<rect class="bx" x="320" y="24" width="310" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="334" y="46" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int x = 5;</text>
+<text x="334" y="61" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">Double(x);</text>
+<text x="334" y="76" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">void Double(int n) { n = n * 2; }</text>
+<g class="st" data-s="1-4"><rect class="bx" x="28" y="72" width="194" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="125" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">x = 5</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="28" y="176" width="194" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="125" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">n = (empty slot)</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="28" y="176" width="194" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="125" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">n = 5</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="28" y="176" width="194" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="125" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">n = 10</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="28" y="72" width="194" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="125" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">x = 5</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="320" y="112" width="310" height="56" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="475" y="136" text-anchor="middle" font-size="9.5" fill="#67e8f9">Main’s frame has a slot x.</text></g>
+<g class="st" data-s="1-1"><text x="475" y="149.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The int 5 sits right inside it.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="320" y="112" width="310" height="56" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="475" y="136" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The call pushes a new frame with</text></g>
+<g class="st" data-s="2-2"><text x="475" y="149.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">its own slot n (nothing copied yet)</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="320" y="112" width="310" height="56" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="475" y="136" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The argument is COPIED:</text></g>
+<g class="st" data-s="3-3"><text x="475" y="149.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">5 is written into n. x keeps its 5.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="320" y="112" width="310" height="56" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="475" y="136" text-anchor="middle" font-size="9.5" fill="#fcd34d">n = n * 2 changes n’s slot only.</text></g>
+<g class="st" data-s="4-4"><text x="475" y="149.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">x is a different slot.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="320" y="112" width="310" height="56" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="475" y="136" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return pops the frame: n is gone.</text></g>
+<g class="st" data-s="5-5"><text x="475" y="149.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">x is still 5 — no GC involved.</text></g>
+<text class="free" x="475" y="196" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: the stack is drawn as</text>
+<text class="free" x="475" y="210" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">labelled slots, not real addresses</text>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="230.5" y="126" width="39" height="18" rx="9"/><text x="250" y="138.5" text-anchor="middle" font-size="9" font-style="italic">copy</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="pa1-c1"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">5</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>x</code> holds 5 in the caller’s frame.</li><li>The call <b>copies</b> the 5 into a brand-new parameter <code>n</code> in the method’s own frame.</li><li><code>n = n * 2</code> changes only the copy.</li><li>Return: <code>n</code> is gone. <code>x</code> is <b>still 5</b>. For value types, the method can never change the caller’s variable (unless you use <code>ref</code> — page page 11).</li></ol>
-<figcaption><strong>What you're seeing:</strong> by default, every argument is copied into the parameter. For a number, the copy is the number.</figcaption>
+<ol class="st-caps"><li><code>x</code> is a slot in Main’s frame with the int <code>5</code> right inside it.</li><li>The call pushes a new frame for <code>Double</code> with its own slot <code>n</code>.</li><li>The argument is <b>copied</b>: the 5 is written into <code>n</code>. <code>x</code> keeps its own 5.</li><li><code>n = n * 2</code> changes only <code>n</code>’s slot.</li><li>Return pops the frame: <code>n</code> is gone and <code>x</code> is <b>still 5</b>. For value types, the method can never change the caller’s variable (unless you use <code>ref</code> — page 11).</li></ol>
+<figcaption><strong>What you're seeing:</strong> by default, every argument is copied into a new slot in the method’s frame. For a number, the copy is the number.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b>Arguments are always copied. For an object, the copy is the address — so the method can change the object but cannot change which object the caller points to.</b></span></div>
@@ -92,95 +105,235 @@
   <section class="kd-section ">
     <div class="sec-label see">🏠 Passing an object: changes are visible to the caller</div>
 <figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 390" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Passing an object: the parameter p is a copy of the address, so both the caller’s variable and the parameter point to the same Person; changing p.Name inside the method changes the one shared object and the caller sees it without any return value">
+<div class="st-stage"><svg viewBox="0 0 640 410" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Passing an object: the call copies the address into q, so two stack slots hold the same address and lead to the one Person object on the heap; q.Name = "Ravi" points the object’s Name field at a new string object, and after the frame is popped the caller still reaches the changed object through p">
 <defs><marker id="pa2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="190" height="244" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="10" y="86" width="210" height="270" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="270" y="86" width="360" height="244" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="284" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M186,138 L350,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
-<g class="st" data-s="2-3"><path d="M186,218 L240,218 L240,170 L350,170" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
+<rect class="zone" x="240" y="86" width="390" height="270" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="254" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="112" width="190" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="34" y="131" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧱 Main frame</text></g>
+<g class="st" data-s="2-3"><rect class="zone" x="20" y="230" width="190" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="34" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧱 Rename frame</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="258" y="116" width="190" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="272" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person @ 0x…B1</text></g>
+<g class="st" data-s="1-2"><rect class="zone" x="468" y="116" width="150" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-2"><text class="zone-title" x="482" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string "Asha"</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="468" y="116" width="150" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="482" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">string "Asha" (no ref)</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="468" y="246" width="150" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="482" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">string "Ravi"</text></g>
+<g class="st" data-s="1-"><path id="pa2-ap" d="M202,149 L228,149 L228,173 L266,173" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
+<g class="st" data-s="2-3"><path id="pa2-aq" d="M202,267 L232,267 L232,181 L266,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
+<g class="st" data-s="1-2"><path id="pa2-an1" d="M440,201 L458,201 L458,177 L476,177" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
+<g class="st" data-s="3-"><path id="pa2-an2" d="M440,201 L458,201 L458,307 L476,307" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pa2A)"/></g>
 <rect class="bx" x="10" y="8" width="400" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
 <text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Rename(p);</text>
 <text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Rename(Person q) { q.Name = "Ravi"; }</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="116" width="162" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="105" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p  (caller)</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="105" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…B1</text></g>
-<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="24" y="196" width="162" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="105" y="216" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">q  (parameter)</text></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="105" y="228" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">0x…B1  (a copy)</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="350" y="130" width="230" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="465" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
-<g class="st" data-s="1-2"><text x="465" y="168" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Asha"</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="350" y="130" width="230" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="465" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Person object</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="465" y="168" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = "Ravi"</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="340" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="362.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">p holds the address of one Person object</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="340" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="362.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: q gets a COPY of the address — a second arrow to the SAME object</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="340" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="362.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">q.Name = "Ravi" follows the address and changes the one shared object</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="340" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="362.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: q is gone, but the object keeps "Ravi" — the caller sees it. No return value needed.</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="256.5" y="129" width="23" height="18" rx="9"/><text x="268" y="141.5" text-anchor="middle" font-size="9" font-style="italic">p</text></g></g>
-<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="228.5" y="185" width="23" height="18" rx="9"/><text x="240" y="197.5" text-anchor="middle" font-size="9" font-style="italic">q</text></g></g>
+<g class="st" data-s="1-3"><rect class="bx" x="28" y="138" width="174" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="115" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">p = 0x…B1</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="28" y="256" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="115" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">q = 0x…B1 (copy)</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="28" y="138" width="174" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="115" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">p = 0x…B1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="142" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="166" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="190" width="174" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name → string ref</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="476" y="142" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="543" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="476" y="166" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="543" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="476" y="190" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="543" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Asha"</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="476" y="142" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="543" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="476" y="166" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="543" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="476" y="190" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="543" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">"Asha"</text></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><rect class="bx" x="476" y="272" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><text x="543" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><rect class="bx" x="476" y="296" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><text x="543" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><rect class="bx" x="476" y="320" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,4"><text x="543" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"Ravi"</text></g>
+<text class="free" x="353" y="300" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">addresses &amp; layout: teaching picture</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="364" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="386.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">p holds the address of ONE Person object. Its Name field refers to a separate string object "Asha".</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="364" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="386.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: Rename gets a frame; q is a NEW slot holding a COPY of the address. Still one object, two references.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="364" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="386.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">q.Name = "Ravi": follow q, write the object’s Name field. "Ravi" is a NEW string; "Asha" is left without a reference.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="364" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="386.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: the frame and q are popped. p still leads to the same object, so the caller sees "Ravi".</text></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="pa2-aq"><circle r="8.68" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>p</code> in the caller holds the address of one Person object.</li><li>The call copies that <b>address</b> into the parameter <code>q</code>. There is still only <b>one</b> Person object; now two arrows point to it.</li><li><code>q.Name = "Ravi"</code> follows the address and changes the shared object.</li><li>Return: <code>q</code> is gone, but the object keeps <code>"Ravi"</code>. The caller sees the change <b>without any return value</b>.</li></ol>
-<figcaption><strong>What you're seeing:</strong> this is why a method can “return” results simply by changing the object it was given.</figcaption>
+<ol class="st-caps"><li><code>p</code> (a stack slot) holds the address of one Person object. Its header and type pointer come first; <code>Name</code> is a field that refers to a <b>separate string object</b>.</li><li>The call pushes <code>Rename</code>’s frame. <code>q</code> is a <b>new slot</b> holding a <b>copy of the address</b>. There is still only <b>one</b> Person object; now two references reach it.</li><li><code>q.Name = "Ravi"</code> follows the address and rewrites the object’s <code>Name</code> field. <code>"Ravi"</code> is a <b>new string object</b>; <code>"Asha"</code> is no longer referenced.</li><li>Return: the frame and <code>q</code> are popped. <code>p</code> still reaches the same object, so the caller sees <code>"Ravi"</code> <b>without any return value</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a method can “return” results by changing the object it was given. Addresses and exact layout are a teaching picture; the pointer-to-header-and-type-pointer structure is the classic runtime model.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">✂️ Reassigning the parameter: the caller does not see it</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Reassigning a parameter: inside the method q = new Person(Zed) only moves the parameter’s own arrow to a new object, so the caller’s variable p still points at the original Asha object and the new Zed object becomes garbage after the method returns">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Reassigning a parameter: q = new Person(Zed) builds a second object and overwrites only the stack slot q with the new address; p still holds the old address; after the frame is popped nothing points at Zed, and a later GC reclaims it">
 <defs><marker id="pa3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="190" height="262" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="10" y="86" width="210" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="270" y="86" width="360" height="262" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="284" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M186,138 L350,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
-<g class="st" data-s="2-2"><path d="M186,242 L236,242 L236,150 L350,150" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
-<g class="st" data-s="3-3"><path d="M186,252 L350,252" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
+<rect class="zone" x="240" y="86" width="390" height="290" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="254" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="112" width="190" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="34" y="131" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧱 Main frame</text></g>
+<g class="st" data-s="2-4"><rect class="zone" x="20" y="240" width="190" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><text class="zone-title" x="34" y="259" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧱 Reset frame</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="258" y="116" width="190" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="272" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person @ 0x…B1</text></g>
+<g class="st" data-s="3-4"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-4"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Person @ 0x…C4</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person @ 0x…C4 — no ref</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-" data-hl="6"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">freed by a later GC</text></g>
+<g class="st" data-s="1-"><path id="pa3-ap" d="M202,149 L228,149 L228,173 L266,173" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
+<g class="st" data-s="2-3"><path id="pa3-aq" d="M202,277 L232,277 L232,181 L266,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
+<g class="st" data-s="4-4"><path id="pa3-aq2" d="M202,277 L236,277 L236,307 L266,307" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pa3A)"/></g>
 <rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
 <text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Reset(p);</text>
 <text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Reset(Person q) { q = new Person("Zed"); }</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="116" width="162" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="105" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p  (caller)</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="105" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">→ Asha</text></g>
-<g class="st" data-s="2-3" data-hl="2,,,3"><rect class="bx" x="24" y="220" width="162" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2,,,3"><text x="105" y="240" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">q  (parameter)</text></g>
-<g class="st" data-s="2-3" data-hl="2,,,3"><text x="105" y="252" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">→ Asha, then Zed</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="350" y="110" width="230" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="465" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person "Asha"</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="350" y="110" width="230" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="465" y="132.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Person "Asha"</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="465" y="145.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">still the caller’s</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="350" y="250" width="230" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="465" y="279" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Person "Zed"</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="350" y="250" width="230" height="50" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="465" y="272.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Person "Zed"</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="465" y="285.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">garbage now</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="358" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="380.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">p → Asha</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="358" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="380.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: q is a copy of the address, also → Asha</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="358" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="380.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">q = new Person("Zed"): q’s OWN arrow moves to a new object. p is not touched.</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="358" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="380.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: p still → Asha. Zed has no references: garbage.</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="256.5" y="129" width="23" height="18" rx="9"/><text x="268" y="141.5" text-anchor="middle" font-size="9" font-style="italic">p</text></g></g>
-<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="224.5" y="187" width="23" height="18" rx="9"/><text x="236" y="199.5" text-anchor="middle" font-size="9" font-style="italic">q</text></g></g>
-<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="246" y="243" width="44" height="18" rx="9"/><text x="268" y="255.5" text-anchor="middle" font-size="9" font-style="italic">q now</text></g></g>
+<g class="st" data-s="1-"><rect class="bx" x="28" y="138" width="174" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="115" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">p = 0x…B1</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="28" y="266" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="115" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">q = 0x…B1 (copy)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="28" y="266" width="174" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="115" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">q = 0x…C4</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="142" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="166" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="190" width="174" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name → string ref</text></g>
+<g class="st" data-s="6-"><rect class="bx note" x="466" y="140" width="152" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-"><text x="542" y="158" text-anchor="middle" font-size="9" fill="#67e8f9">GC root: p</text></g>
+<g class="st" data-s="6-"><text x="542" y="171" text-anchor="middle" font-size="9" fill="#67e8f9">keeps Asha alive</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="272" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="296" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="320" width="174" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name → string ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="272" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="296" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Person MT</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="320" width="174" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name → string ref</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="466" y="272" width="152" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="542" y="290" text-anchor="middle" font-size="9" fill="#fda4af">nothing points</text></g>
+<g class="st" data-s="5-5"><text x="542" y="303" text-anchor="middle" font-size="9" fill="#fda4af">here any more</text></g>
+<text class="free" x="535" y="366" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">addresses &amp; layout: teaching picture</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">p holds the address of Person Asha (strings not drawn here).</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: q is a NEW slot with a COPY of the address. Two references to Asha.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">new Person("Zed") allocates a second object on the heap. Nothing points at it yet.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">q = …: q’s own slot is overwritten with Zed’s address. p is untouched — the caller’s slot is a different slot.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Return: the frame and q are popped. Zed is now unreachable (no reference reaches it) — but not freed yet.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Some later GC finds Zed unreachable and reclaims it. Asha stays: p, a root on the stack, still reaches it.</text></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="pa3-aq2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>p</code> points at Asha.</li><li>The call copies the address: <code>q</code> also points at Asha.</li><li><code>q = new Person("Zed")</code> builds a new object and moves <b>q’s own arrow</b> to it. <code>p</code> is not touched.</li><li>Return: <code>p</code> still points at Asha. Zed has no references and is garbage. To change the caller’s variable you would need <code>ref</code> (next-but-one page).</li></ol>
-<figcaption><strong>What you're seeing:</strong> changing the object = visible. Changing which object the parameter points to = private to the method.</figcaption>
+<ol class="st-caps"><li><code>p</code> holds the address of the Asha object.</li><li>The call copies the address into a new slot <code>q</code>. Two references to Asha.</li><li><code>new Person("Zed")</code> allocates a second object on the heap. Nothing points at it yet.</li><li><code>q = …</code> overwrites <b>q’s own slot</b> with Zed’s address. <code>p</code> is a different slot and is not touched.</li><li>Return: the frame and <code>q</code> are popped. Zed is <b>unreachable</b> — but not freed yet.</li><li>A later GC reclaims Zed. Asha stays because <code>p</code> (a root) still reaches it. To change the caller’s variable you would need <code>ref</code> (page 11).</li></ol>
+<figcaption><strong>What you're seeing:</strong> changing the object = visible. Changing which object the parameter points to = private to the method. Unreachable is not the same as freed: the GC frees it later.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔤 Passing a string: why “changing” it never reaches the caller</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Passing a string: s is a copy of the address of the string "asha"; s.ToUpper() builds a new string object "ASHA" because strings never change in place; s = … only overwrites the slot s, so the caller’s name still leads to "asha"">
+<defs><marker id="pa4A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa4S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="pa4T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="210" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="240" y="86" width="390" height="290" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="254" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="20" y="112" width="190" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="34" y="131" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧱 Main frame</text></g>
+<g class="st" data-s="2-4"><rect class="zone" x="20" y="240" width="190" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><text class="zone-title" x="34" y="259" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧱 Shout frame</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="258" y="116" width="190" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="272" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string "asha" @ 0x…S1</text></g>
+<g class="st" data-s="3-4"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-4"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">string "ASHA" @ 0x…S2</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string "ASHA" @ 0x…S2 — no ref</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="zone" x="258" y="246" width="190" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-" data-hl="6"><text class="zone-title" x="272" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">freed by a later GC</text></g>
+<g class="st" data-s="1-"><path id="pa4-ap" d="M202,149 L228,149 L228,173 L266,173" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#pa4A)"/></g>
+<g class="st" data-s="2-3"><path id="pa4-aq" d="M202,277 L232,277 L232,181 L266,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#pa4A)"/></g>
+<g class="st" data-s="4-4"><path id="pa4-aq2" d="M202,277 L236,277 L236,307 L266,307" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#pa4A)"/></g>
+<rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">string name = "asha";</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Shout(name);</text>
+<text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Shout(string s) { s = s.ToUpper(); }</text>
+<g class="st" data-s="1-"><rect class="bx" x="28" y="138" width="174" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="115" y="151.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">name = 0x…S1</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="28" y="266" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="115" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">s = 0x…S1 (copy)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="28" y="266" width="174" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="115" y="279.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">s = 0x…S2</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="142" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="166" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="266" y="190" width="174" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="353" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"asha"</text></g>
+<g class="st" data-s="6-"><rect class="bx note" x="466" y="140" width="152" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-"><text x="542" y="158" text-anchor="middle" font-size="9" fill="#67e8f9">GC root: name</text></g>
+<g class="st" data-s="6-"><text x="542" y="171" text-anchor="middle" font-size="9" fill="#67e8f9">keeps "asha" alive</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="272" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="296" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="266" y="320" width="174" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="353" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"ASHA"</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="272" width="174" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="296" width="174" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="266" y="320" width="174" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="353" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"ASHA"</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="466" y="272" width="152" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="542" y="290" text-anchor="middle" font-size="9" fill="#fda4af">nothing points</text></g>
+<g class="st" data-s="5-5"><text x="542" y="303" text-anchor="middle" font-size="9" fill="#fda4af">here any more</text></g>
+<text class="free" x="535" y="366" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">addresses &amp; layout: teaching picture</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">name holds the address of the string object "asha".</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: s is a NEW slot with a COPY of the address. Two references to "asha".</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">s.ToUpper() cannot change "asha" (strings are immutable), so it builds a NEW string object "ASHA".</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">s = …: only the slot s is overwritten with the new address. name is a different slot.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#fda4af">Return: Shout’s frame is popped. The caller’s name still leads to "asha"; "ASHA" is unreachable.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="382" width="620" height="34" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="401.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Some later GC reclaims "ASHA". "asha" stays: name, a root on the stack, still reaches it.</text></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="pa4-aq2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📞</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>name</code> holds the address of the string object <code>"asha"</code>.</li><li>The call copies the address into a new slot <code>s</code>.</li><li><code>s.ToUpper()</code> cannot edit <code>"asha"</code> — strings are immutable — so it builds a <b>new</b> string object <code>"ASHA"</code>.</li><li><code>s = …</code> overwrites only the slot <code>s</code> with the new address.</li><li>Return: the frame is popped. <code>name</code> still leads to <code>"asha"</code>; <code>"ASHA"</code> is unreachable.</li><li>A later GC reclaims <code>"ASHA"</code>. This is why <code>Shout(name)</code> never changes the caller’s string.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a string parameter is just the “reassign” picture again: the method can only point its own slot at a new string.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
@@ -190,7 +343,7 @@
   <section class="kd-section ">
     <div class="sec-label why">⚡ Performance lens — think like this</div>
     <div class="kd-card why-box">
-      <p>Passing a <b>class</b> costs only an address. Passing a <b>large struct</b> copies all of it on every call — use <code>in</code> (page page 11) or make it a class.</p>
+      <p>Passing a <b>class</b> costs only an address. Passing a <b>large struct</b> copies all of it on every call — use <code>in</code> (page 11) or make it a class.</p>
       <p>Because an object parameter can be changed, a method may “return” a result by <b>filling an object</b> the caller made — no new allocation. But hidden changes surprise readers: document them.</p>
       <p>Passing a collection and then modifying it inside the method changes the <b>caller’s</b> collection too. Pass a copy (<code>ToList()</code>) only when you need isolation — it allocates.</p>
     </div>
@@ -199,7 +352,7 @@
     <div class="sec-label see">🧪 Tiny code</div>
     <div class="code-block"><pre><span class="kw">void</span> Double(<span class="kw">int</span> n)        { n = n * 2; }            <span class="cmt">// n is a copy: caller's x unchanged</span>
 <span class="kw">void</span> Rename(Person q)     { q.Name = <span class="str">"Ravi"</span>; }      <span class="cmt">// same object: caller sees "Ravi"</span>
-<span class="kw">void</span> Reset(Person q)      { q = <span class="kw">new</span> Person(<span class="str">"Zed"</span>); }<span class="cmt">// q's own arrow moves: caller unaffected</span>
+<span class="kw">void</span> Reset(Person q)      { q = <span class="kw">new</span> Person(<span class="str">"Zed"</span>); }<span class="cmt">// q's own slot is overwritten: caller unaffected</span>
 <span class="kw">void</span> Shout(<span class="kw">string</span> s)      { s = s.ToUpper(); }      <span class="cmt">// new string for the method only</span>
 
 <span class="kw">int</span> x = 5;                Double(x);        <span class="cmt">// x is 5</span>
@@ -210,7 +363,7 @@
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p>Parameters live in the frame and vanish at return. The <b>objects</b> they point to are cleaned by the GC only when <b>no one</b> — the caller, a static, another object — still references them. In the Reset example the new Zed object is unreachable the moment the method returns.</p>
+      <p>Parameters live in the frame: the slots are <b>popped</b> at return — no GC involved. The <b>objects</b> they point to are reclaimed by a GC only when <b>no root</b> (a stack local, a static…) or other reachable object still references them. In the Reset example Zed is unreachable the moment the frame is popped, but it is freed only when a later GC runs.</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -224,7 +377,7 @@
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>Arguments are copied: value → the value; object → the address.</li><li>You can change the object, not which object the caller points to.</li><li>ref/out change the caller’s variable itself.</li><li>Strings are immutable; arrays are objects.</li></ul>
+      <ul><li>Arguments are copied into a new slot: value → the value; object → the address.</li><li>You can change the object, not which object the caller points to.</li><li>ref/out change the caller’s variable itself.</li><li>Strings are immutable; arrays are objects.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
@@ -243,7 +396,7 @@
       <span>Next: how results come back — return values, objects and tuples.</span>
       <a class="next-link" href="return-values.html">Return Values & Tuples <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 Default passing: a copy of the value for value types and a copy of the reference for reference types; changes to the pointed-to object are visible to the caller: Microsoft Learn “Method parameters and modifiers” and the older C# FAQ “How are parameters passed in C#?”. Strings immutable, arrays reference types: C# docs. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters" target="_blank" rel="noopener">Method parameters and modifiers (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
+  </section>  <p class="fact-note">📌 Default passing: a copy of the value for value types and a copy of the reference for reference types; changes to the pointed-to object are visible to the caller: Microsoft Learn “Method parameters and modifiers” and the older C# FAQ “How are parameters passed in C#?”. Strings immutable, arrays reference types: C# docs. Header + type pointer before the fields: Microsoft’s older article “How the CLR Creates Runtime Objects” (classic model; addresses and layout are a teaching picture). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters" target="_blank" rel="noopener">Method parameters and modifiers (C# reference)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
 
 
 </main>
@@ -252,6 +405,6 @@
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

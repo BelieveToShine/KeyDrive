@@ -39,49 +39,136 @@
     <div class="eyebrow">Concept 4 of 29 · 📚 Stack & heap</div>
     <h1>The <span class="grad-text">warehouse</span> and the <span class="grad-text">claim ticket</span>.</h1>
     <p class="sub">What <code>new</code> does step by step: it finds room on the managed heap, prepares the object and hands back an address you keep on the stack.</p>
-    <div class="interview-q">❓ "What happens in memory when you write new Person()?"</div>
+    <div class="interview-q">❓ "What happens in memory when you write new Person("Asha")?"</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="What new does: the runtime finds free space at the next free spot on the heap, sets every field to its default value, runs the constructor, and returns the address that is stored in the variable on the stack">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 452" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="What one new does in memory: the runtime reserves room on the heap, zero-fills it and sets the header and type pointer, the constructor makes Name refer to a separate string object, the address is stored in the stack variable p, and after p is set to null the unreachable Person and string are cleared by a later garbage collection">
 <defs><marker id="hp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="74" width="170" height="256" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="200" y="74" width="430" height="256" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="214" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="4-"><path id="hp1-ad" d="M166,132 L200,132 L200,215 L535,215 L535,200" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp1A)"/></g>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
-<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">// class Person { string Name; int Age; }</text>
-<g class="st" data-s="1-"><rect class="bx" x="215" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="250" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="295" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="330" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 2</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="375" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="410" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 3</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="455" y="110" width="160" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="535" y="135" text-anchor="middle" font-size="10" fill="#fcd34d">next free spot ⟶</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="455" y="110" width="160" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="535" y="147" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="535" y="159" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="535" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 0</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="455" y="110" width="160" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="535" y="147" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="535" y="159" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Asha"</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="535" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 0</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="24" y="110" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="130" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="95" y="142" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…C7</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="215" y="250" width="400" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="415" y="282.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">new = find room · set defaults · run constructor · hand back the address</text></g>
-<g class="st" data-s="4-"><g class="arrow-pill"><rect x="322.5" y="206" width="55" height="18" rx="9"/><text x="350" y="218.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+<rect class="zone" x="10" y="82" width="110" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="101" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (Main)</text>
+<rect class="zone" x="130" y="82" width="330" height="290" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="144" y="101" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="470" y="82" width="160" height="150" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="484" y="101" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="1-1"><rect class="zone" x="140" y="104" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-1"><text class="zone-title" x="154" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="140" y="104" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="154" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="1-3"><rect class="zone" x="300" y="232" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-3"><text class="zone-title" x="314" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="300" y="232" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="314" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="480" y="104" width="140" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="494" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Person MethodTable</text></g>
+<g class="st" data-s="2-2"><rect class="zone" x="140" y="104" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-2"><text class="zone-title" x="154" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">room reserved</text></g>
+<g class="st" data-s="3-5"><rect class="zone" x="140" y="104" width="150" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-5"><text class="zone-title" x="154" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person @ 0x…A0</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="140" y="104" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="154" y="123" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Person (unreachable)</text></g>
+<g class="st" data-s="4-5"><rect class="zone" x="300" y="232" width="150" height="130" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-5"><text class="zone-title" x="314" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string @ 0x…B4</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="300" y="232" width="150" height="130" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="314" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">string (unreachable)</text></g>
+<g class="st" data-s="3-6"><path id="hp1-tp" d="M282,165 L488,165" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#hp1A)"/></g>
+<g class="st" data-s="4-6"><path id="hp1-nm" d="M282,189 L375,189 L375,232" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#hp1A)"/></g>
+<g class="st" data-s="5-5"><path id="hp1-pa" d="M110,163 L148,165" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp1A)"/></g>
+<rect class="bx" x="10" y="6" width="380" height="64" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Person { string Name; int Age;</text>
+<text x="24" y="43" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">   public Person(string n) { Name = n; } }</text>
+<text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");   ...   p = null;</text>
+<g class="st" data-s="1-4"><rect class="bx" x="20" y="140" width="90" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="65" y="161" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">p : Person</text></g>
+<g class="st" data-s="1-4"><text x="65" y="173" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">not set</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="20" y="140" width="90" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="65" y="161" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p : Person</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="65" y="173" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…A0</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="20" y="140" width="90" height="46" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="65" y="161" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">p : Person</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="65" y="173" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">null</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="488" y="130" width="124" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">one per type</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="488" y="154" width="124" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="550" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">shared by all</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="148" y="130" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="215" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">…</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="148" y="154" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="215" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">…</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="148" y="178" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="215" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">…</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="148" y="202" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="215" y="215.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">…</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="148" y="130" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="215" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync info)</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="148" y="154" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="215" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="148" y="178" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="215" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
+<g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="148" y="202" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5" data-hl="3"><text x="215" y="215.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 0</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="148" y="178" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="215" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name ──▶</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="148" y="130" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="215" y="143.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="148" y="154" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="215" y="167.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="148" y="178" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="215" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">Name ──▶</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="148" y="202" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="215" y="215.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">Age = 0</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="308" y="258" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="375" y="271.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="308" y="282" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="375" y="295.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="308" y="306" width="134" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="375" y="319.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">length = 4</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="308" y="330" width="134" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="375" y="343.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">A  s  h  a</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="308" y="258" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="375" y="271.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="308" y="282" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="375" y="295.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="308" y="306" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="375" y="319.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">length = 4</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="308" y="330" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="375" y="343.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">A  s  h  a</text></g>
+<rect class="bx note" x="470" y="244" width="160" height="78" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="550" y="266.5" text-anchor="middle" font-size="8.5" fill="#fcd34d">Teaching picture:</text>
+<text x="550" y="279" text-anchor="middle" font-size="8.5" fill="#fcd34d">header, type pointer, field</text>
+<text x="550" y="291.5" text-anchor="middle" font-size="8.5" fill="#fcd34d">order and addresses are</text>
+<text x="550" y="304" text-anchor="middle" font-size="8.5" fill="#fcd34d">illustrative</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#67e8f9">Before new: p exists on the stack but holds</text></g>
+<g class="st" data-s="1-1"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">nothing yet. The heap has free space.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#fcd34d">new asks the runtime for room for a Person:</text></g>
+<g class="st" data-s="2-2"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">header, type pointer and its fields.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The room is zero-filled (Name=null, Age=0),</text></g>
+<g class="st" data-s="3-3"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">the type pointer is set to Person’s MethodTable.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#fda4af">The constructor runs. “Asha” is a SEPARATE string</text></g>
+<g class="st" data-s="4-4"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#fda4af">object; Name now holds its address.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#67e8f9">new returns the object’s address (a copy of it)</text></g>
+<g class="st" data-s="5-5"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">and it is stored in p. Age lives inside the object.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#fda4af">p = null: no variable reaches the Person, so it</text></g>
+<g class="st" data-s="6-6"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#fda4af">and its string are unreachable (not freed yet).</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="382" width="620" height="60" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="408" text-anchor="middle" font-size="9.5" fill="#6ee7b7">A later GC clears the unreachable objects.</text></g>
+<g class="st" data-s="7-7"><text x="320" y="421.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Nobody frees them by hand.</text></g>
+<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="365.5" y="156" width="39" height="18" rx="9"/><text x="385" y="168.5" text-anchor="middle" font-size="9" font-style="italic">type</text></g></g>
+<g class="st" data-s="4-6"><g class="arrow-pill"><rect x="342" y="187" width="66" height="18" rx="9"/><text x="375" y="199.5" text-anchor="middle" font-size="9" font-style="italic">reference</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="hp1-pa"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📍</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>The heap already holds a few objects. New objects go at the <b>next free spot</b> (a teaching simplification of how the runtime hands out space).</li><li>Room is reserved for a <b>Person</b>. Every field starts at its <b>default</b>: <code>Name = null</code>, <code>Age = 0</code>.</li><li>The <b>constructor runs</b> and fills the fields: <code>Name = "Asha"</code>.</li><li>The runtime returns the object’s <b>address</b>, and it is stored in the stack variable <code>p</code>.</li><li><code>new</code> = find room → set defaults → run constructor → hand back the address.</li></ol>
-<figcaption><strong>What you're seeing:</strong> what one new does, in order. The stack slot is the claim ticket; the heap holds the parcel.</figcaption>
+<ol class="st-caps"><li><b>Before <code>new</code>.</b> The stack slot <code>p</code> exists but holds nothing. The heap has free space (the picture shows free space as a plain area; how the runtime hands it out is an internal detail).</li><li><b>Room.</b> <code>new</code> asks the runtime for room: a hidden <b>header</b>, a <b>type pointer</b>, then the fields <code>Name</code> and <code>Age</code>.</li><li><b>Zero-filled.</b> The memory starts cleared, so <code>Name = null</code> and <code>Age = 0</code>. The type pointer leads to Person’s <b>MethodTable</b> (one per type, shared by all Persons).</li><li><b>Constructor.</b> <code>"Asha"</code> is a <b>separate string object</b> on the heap. <code>Name</code> is a reference field, so it now holds that string’s address. <code>Age</code> stays 0.</li><li><b>Hand back.</b> <code>new</code> returns the address of the Person and it is stored in <code>p</code> (a copy of the address). <code>Age</code> is a value, so it lives <b>inside</b> the object, not on the stack.</li><li><b><code>p = null</code>.</b> Nothing on the stack points to the Person any more, so the Person and its string are <b>unreachable</b> — but still in memory.</li><li><b>Later GC.</b> The garbage collector finds nothing reaches them and clears them. You never free heap memory by hand.</li></ol>
+<figcaption><strong>What you're seeing:</strong> what one new does, in order. The stack slot is the claim ticket; the heap holds the parcel. Addresses and layout are a teaching picture.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b><code>new</code> builds the object on the heap and gives you back its address.</b></span></div>
@@ -93,56 +180,121 @@
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🔤 Strings and arrays are heap objects too</div>
-<figure class="diagram-card kd-story" data-steps="3">
-<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="Strings and arrays are objects too: the variable on the stack holds an address, and the string characters or array elements are on the heap">
+    <div class="sec-label see">🔤 Arrays: numbers inside, or addresses inside</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 450" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Arrays on the heap: an int array holds the number values inside its own cells, while a Person array holds references; a new Person array has null cells and the Person objects are separate heap objects; copying an array variable copies only the address">
 <defs><marker id="hp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="74" width="200" height="196" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="300" y="74" width="330" height="196" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="314" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M196,126 L380,126" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
-<g class="st" data-s="2-"><path d="M196,192 L380,192" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
-<rect class="bx" x="10" y="8" width="300" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">string s = "hello";</text>
-<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int[] nums = new int[3];</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="104" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="110" y="124" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">s</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="110" y="136" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…D2</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="170" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="110" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">nums</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="110" y="202" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…D9</text></g>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="380" y="100" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="465" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">string object</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="465" y="132" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">h e l l o</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="170" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="465" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">int[3] object</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="465" y="202" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0 | 0 | 0</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="320" y="228" width="290" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="465" y="247.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The ints sit inside the array object</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="255" y="117" width="66" height="18" rx="9"/><text x="288" y="129.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="255" y="183" width="66" height="18" rx="9"/><text x="288" y="195.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+<rect class="zone" x="10" y="82" width="620" height="62" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="101" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (Main)</text>
+<rect class="zone" x="10" y="154" width="620" height="218" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="173" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-"><rect class="zone" x="140" y="178" width="140" height="178" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="154" y="197" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">int[3] @ 0x…10</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="300" y="178" width="150" height="154" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="314" y="197" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person[2] @ 0x…40</text></g>
+<g class="st" data-s="5-"><rect class="zone" x="480" y="226" width="140" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-"><text class="zone-title" x="494" y="245" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person @ 0x…70</text></g>
+<g class="st" data-s="2-"><path id="hp2-n1" d="M184,138 L184,178" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<g class="st" data-s="3-"><path id="hp2-c1" d="M385,138 L385,178" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<g class="st" data-s="6-"><path id="hp2-b1" d="M271,138 L271,178" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<g class="st" data-s="5-"><path id="hp2-r1" d="M442,287 L488,287" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<rect class="bx" x="10" y="6" width="380" height="66" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="28" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int[] nums = new int[3];   Person[] crew = new Person[2];</text>
+<text x="24" y="43" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">nums[1] = 7;            crew[0] = new Person();</text>
+<text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int[] b = nums;</text>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="145" y="100" width="78" height="38" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="184" y="117" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">nums</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="184" y="129" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">not set</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="145" y="100" width="78" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="184" y="117" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">nums</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="184" y="129" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…10</text></g>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="330" y="100" width="110" height="38" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="385" y="117" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">crew</text></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="385" y="129" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">not set</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="330" y="100" width="110" height="38" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="385" y="117" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">crew</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="385" y="129" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">0x…40</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="232" y="100" width="78" height="38" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="271" y="117" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">b</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="271" y="129" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…10</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="148" y="204" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="210" y="217.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="148" y="228" width="124" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="210" y="241.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="148" y="252" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="210" y="265.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length = 3</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="148" y="276" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="210" y="289.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[0] = 0</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="148" y="300" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="210" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[1] = 0</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="148" y="324" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="210" y="337.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[2] = 0</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="148" y="300" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="210" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">[1] = 7</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="308" y="204" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="375" y="217.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="308" y="228" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="375" y="241.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="308" y="252" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="375" y="265.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length = 2</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="308" y="276" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="375" y="289.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[0] = null</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="308" y="300" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="375" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">[1] = null</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="308" y="276" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="375" y="289.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">[0] = 0x…70</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="488" y="252" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="550" y="265.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="488" y="276" width="124" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="550" y="289.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type pointer</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="488" y="300" width="124" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="550" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name, Age …</text></g>
+<rect class="bx note" x="480" y="336" width="140" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="550" y="349" text-anchor="middle" font-size="8.5" fill="#fcd34d">Teaching picture:</text>
+<text x="550" y="361.5" text-anchor="middle" font-size="8.5" fill="#fcd34d">illustrative layout</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="413.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Two stack slots exist, but neither array does yet.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="407" text-anchor="middle" font-size="9.5" fill="#6ee7b7">new int[3]: ONE heap object. The three numbers</text></g>
+<g class="st" data-s="2-2"><text x="320" y="420.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">sit inside its own cells, all 0.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="407" text-anchor="middle" font-size="9.5" fill="#c4b5fd">new Person[2]: one object whose cells are references.</text></g>
+<g class="st" data-s="3-3"><text x="320" y="420.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">They start null: no Person exists yet.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="407" text-anchor="middle" font-size="9.5" fill="#fcd34d">nums[1] = 7: follow the address and change the</text></g>
+<g class="st" data-s="4-4"><text x="320" y="420.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">number in place. Nothing is copied out.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="407" text-anchor="middle" font-size="9.5" fill="#fda4af">new Person() is a SEPARATE heap object.</text></g>
+<g class="st" data-s="5-5"><text x="320" y="420.5" text-anchor="middle" font-size="9.5" fill="#fda4af">The cell holds its address; an arrow now points to it.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="382" width="620" height="58" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="407" text-anchor="middle" font-size="9.5" fill="#67e8f9">b = nums copies the ADDRESS: two variables,</text></g>
+<g class="st" data-s="6-6"><text x="320" y="420.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">ONE array. Change via b and nums sees it.</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A <code>string</code> variable holds an address; the characters are an object on the heap.</li><li>An array is also an object. <code>new int[3]</code> builds it on the heap with all elements 0.</li><li>The three ints sit <b>inside</b> the array object.</li></ol>
-<figcaption><strong>What you're seeing:</strong> reference variables on the left, objects on the right.</figcaption>
+<ol class="st-caps"><li><b>Setup.</b> Two stack slots, <code>nums</code> and <code>crew</code>. The arrays do not exist yet.</li><li><b><code>new int[3]</code></b> makes <b>one</b> heap object: header, type pointer, a <b>length</b>, then the three numbers <b>inside</b> it.</li><li><b><code>new Person[2]</code></b> makes one object whose cells are <b>references</b>. They start as <code>null</code>: no Person exists yet.</li><li><b><code>nums[1] = 7</code></b> follows the address and changes that cell in place.</li><li><b><code>crew[0] = new Person()</code></b> creates a separate Person object; the cell now holds its address.</li><li><b><code>int[] b = nums;</code></b> copies only the address. One array, two variables — a change through one is seen through the other.</li></ol>
+<figcaption><strong>What you're seeing:</strong> int[] holds the values themselves; Person[] holds addresses of separate objects. Layout and addresses are a teaching picture.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
-    <div class="sec-label why">🔬 Hidden bookkeeping (teaching picture)</div>
+    <div class="sec-label why">🔬 Hidden bookkeeping</div>
     <div class="kd-card why-box">
-      <p>Besides your fields, every heap object carries a little hidden information, such as which <b>type</b> it is (this is how the runtime knows which methods to call — page 16). The exact layout and sizes are runtime internals, so this lab draws them only as a simple picture and never quotes byte sizes.</p>
+      <p>Every heap object starts with a hidden <b>header</b> and a <b>type pointer</b> to its type’s MethodTable (one per type, shared by all its objects), then your fields. A reference points at the type-pointer word. This is how the runtime knows which methods to call — see page 16. Exact sizes and field order differ between runtime versions, so this lab never quotes byte sizes; the pictures are a <b>teaching picture</b>.</p>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🧪 Tiny code</div>
-    <div class="code-block"><pre><span class="kw">class</span> Person { <span class="kw">public</span> <span class="kw">string</span> Name; <span class="kw">public</span> <span class="kw">int</span> Age; }
+    <div class="code-block"><pre><span class="kw">class</span> Person {
+    <span class="kw">public</span> <span class="kw">string</span> Name; <span class="kw">public</span> <span class="kw">int</span> Age;
+    <span class="kw">public</span> Person(<span class="kw">string</span> n) { Name = n; }
+}
 
-<span class="kw">var</span> p = <span class="kw">new</span> Person();     <span class="cmt">// 1) room on the heap  2) Name=null, Age=0</span>
-                          <span class="cmt">// 3) constructor runs  4) address stored in p</span>
-p.Name = <span class="str">"Asha"</span>;          <span class="cmt">// follow the address and change the object</span></pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Fields get default values (0, false, null) before your constructor code runs.</p>
+<span class="kw">var</span> p = <span class="kw">new</span> Person(<span class="str">"Asha"</span>);  <span class="cmt">// 1) room  2) zeroed: Name=null, Age=0</span>
+                             <span class="cmt">// 3) ctor: Name = reference to the string "Asha"</span>
+                             <span class="cmt">// 4) address stored in p</span>
+<span class="kw">var</span> q = p;                   <span class="cmt">// copies the address: still ONE Person</span>
+p = <span class="kw">null</span>;                    <span class="cmt">// q still reaches it, so it stays alive</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Fields get default values (0, false, null) before your constructor code runs. The string <code>"Asha"</code> is its own object; <code>Name</code> only holds its address.</p>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
@@ -156,22 +308,23 @@ p.Name = <span class="str">"Asha"</span>;          <span class="cmt">// follow t
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Person()</code> returns the object itself.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It returns a <b>reference</b> (address) to the object.</p></div></details>
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> Fields of a new object start at default values (0, null, false).</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes, before the constructor body runs.</p></div></details>
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> Setting <code>p = null</code> immediately frees the object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It drops one reference; the GC frees the object later, if nothing else points to it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> In a <code>Person</code> object, the <code>Name</code> characters are stored inside the Person.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> No. <code>Name</code> holds the address of a separate string object.</p></div></details>
     </div>
   </section>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li><code>new</code>: reserve room on the heap → default values → constructor → return address.</li><li>The variable holds the address; the object is on the heap.</li><li>You do not free heap memory yourself; the GC does.</li></ul>
+      <ul><li><code>new</code>: reserve room on the heap → default values → constructor → return address.</li><li>A heap object = header + type pointer + fields; reference fields point to other objects.</li><li>The variable holds the address; you do not free heap memory yourself — the GC does.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">“new allocates the object on the managed heap, zero-initialises its fields, runs the constructor and returns a reference, which the variable holds. The garbage collector reclaims it when no references remain.”</div>
+    <div class="kd-card saythis-box">“new allocates the object on the managed heap, zero-initialises its fields, runs the constructor and returns a reference, which the variable holds. Reference fields such as a string point to separate heap objects. The garbage collector reclaims them when nothing reachable references them.”</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p>Thinking <code>= null</code> “deletes” the object. It only removes that variable’s reference.</p>
+      <p>Thinking <code>= null</code> “deletes” the object. It only removes that variable’s reference; the memory is cleared by a later GC, if nothing else reaches it.</p>
     </div>
   </section>
   <section class="kd-section next" id="next">
@@ -180,7 +333,7 @@ p.Name = <span class="str">"Asha"</span>;          <span class="cmt">// follow t
       <span>Next: what if a <i>value</i> has to be treated as an object? That is boxing.</span>
       <a class="next-link" href="boxing.html">Boxing <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 Default values and constructor behaviour: C# docs. Heap/reference behaviour: GC fundamentals. “Next free spot” and the hidden bookkeeping picture are simplifications (🟨 K): the lab does not claim sizes or exact layout. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
+  </section>  <p class="fact-note">📌 Default values and constructor behaviour: C# docs. Heap/reference behaviour and roots: GC fundamentals. Object header, type pointer and MethodTable are the classic runtime model (MSDN Magazine “How the CLR Creates Runtime Objects”, dotnet/runtime Book of the Runtime); addresses, layout and the free-space area are a teaching picture (🟨 K): the lab does not claim sizes or exact layout. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
 
 
 </main>
@@ -189,6 +342,6 @@ p.Name = <span class="str">"Asha"</span>;          <span class="cmt">// follow t
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

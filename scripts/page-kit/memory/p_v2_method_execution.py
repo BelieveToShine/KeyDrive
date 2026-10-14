@@ -1,0 +1,120 @@
+from p_common import *
+
+def _notes(d, y, h, caps, size=9.5, x=10, w=620):
+    for i, (t, c) in enumerate(caps):
+        d.note(x, y, w, h, t, c, st=f'{i + 1}-{i + 1}', size=size)
+
+def d_me1():
+    d = Diagram('me1', 640, 436, 'Calling order.AddItem("pen"): the runtime pushes a frame whose slots this and name are copies of two addresses; this leads to the same Order object that order points to; Count++ changes the field in the heap object; when the frame is popped the object keeps Count = 1')
+    d.code_box(10, 8, 380, 48, [(0, 'var order = new Order();', ''), (0, 'order.AddItem("pen");     // inside: Count++', '')], 'n', size=9, lh=15)
+    d.note(400, 8, 230, 48, 'teaching picture: addresses are made up;|header / type pointer widths vary', 'n', size=8.8)
+    d.zone(10, 70, 220, 300, 'cyan', '📚 STACK (one frame per call)')
+    d.zone(260, 70, 370, 300, 'emerald', '🏠 HEAP')
+    mf = card(d, 20, 100, 'Main frame', [('order = 0x…A1', 'f')], 'cyan', w=200, st=1)
+    af = card(d, 20, 200, 'AddItem frame (pushed)', [('this = ?', 'f', '2-2'), ('name = ?', 'f', '2-2')], 'violet', w=200, st='2-4')
+    cell(d, af, 0, 'this = 0x…A1  (copy)', 'violet', st='3-4', hl=3)
+    cell(d, af, 1, 'name = 0x…S1  (copy)', 'violet', st='3-4', hl=3)
+    oc = card(d, 275, 100, 'Order object @ 0x…A1', [('header (sync block)', 'hdr'), ('type ptr → Order MethodTable', 'tp'), ('Count = 0', 'f', '1-3')], 'emerald', w=340, st=1)
+    cell(d, oc, 2, 'Count = 1', 'amber', st='4-', hl=4)
+    sc = card(d, 275, 214, 'string object "pen" (a literal, already exists)', [('header', 'hdr'), ('type ptr → String MethodTable', 'tp'), ('length = 3', 'f'), ('chars: p e n (UTF-16)', 'f')], 'emerald', w=340, st=1)
+    otp, stp = oc['rows'][1], sc['rows'][1]
+    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (240, mf['rows'][0]['y']), (240, otp['y']), (otp['l'][0], otp['y'])], 'cyan', 'order', at=(240, 136), st='1-', id='ao')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (250, af['rows'][0]['y']), (250, otp['y']), (otp['l'][0], otp['y'])], 'violet', 'this', at=(250, 222), st='3-4', id='at')
+    d.arrow([(af['rows'][1]['r'][0], af['rows'][1]['y']), (246, af['rows'][1]['y']), (246, stp['y']), (stp['l'][0], stp['y'])], 'violet', 'name', at=(246, 300), st='3-4')
+    d.token('at', '✏️', 15, 'amber', st='4-4')
+    _notes(d, 380, 50, [('The variable order (in Main’s frame) holds the address of the Order object.|The string "pen" is its own object.', 'cyan'),
+                        ('Call: a new frame is pushed on top of the stack. |Its slots this and name exist but are not filled yet.', 'violet'),
+                        ('The caller’s values are COPIED into the slots:|this = a copy of order’s address, name = a copy of the string’s address. |Two references, one object.', 'violet'),
+                        ('Count++: follow this to the heap object and change its field, 0 → 1. Only the object changes.', 'amber'),
+                        ('Return: the frame is popped, so this and name are gone.|order still points to the object, and Count = 1 stays.', 'emerald')], size=9.5)
+    return d
+
+def d_me2():
+    d = Diagram('me2', 640, 420, 'Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, which leads to the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B')
+    d.zone(10, 24, 140, 270, 'cyan', '📚 STACK')
+    d.zone(180, 24, 180, 270, 'emerald', '🏠 HEAP')
+    d.zone(410, 24, 220, 270, 'violet', '🧬 TYPE DATA (one per type)')
+    mf = card(d, 18, 50, 'Main frame', [('o1 = 0x…A1', 'f'), ('o2 = 0x…B1', 'f')], 'cyan', w=124, st=1)
+    af = card(d, 18, 150, 'AddItem frame', [('this = 0x…A1', 'f', '4-4')], 'violet', w=124, st='4-5')
+    cell(d, af, 0, 'this = 0x…B1', 'violet', st='5-5', hl=5)
+    A = card(d, 190, 50, 'Order A @ 0x…A1', [('header', 'hdr'), ('type ptr', 'tp'), ('Count = 0', 'f', '1-3')], 'emerald', w=160, st=1)
+    cell(d, A, 2, 'Count = 1', 'amber', st='4-', hl=4)
+    B = card(d, 190, 166, 'Order B @ 0x…B1', [('header', 'hdr'), ('type ptr', 'tp'), ('Count = 0', 'f', '1-4')], 'emerald', w=160, st=1)
+    cell(d, B, 2, 'Count = 1', 'amber', st='5-', hl=5)
+    mt = card(d, 420, 50, 'Order MethodTable', [('slot: AddItem', 'code')], 'violet', w=200, st='2-')
+    d.box(440, 190, 160, 50, [('AddItem native code', 't'), ('compiled once', 's')], 'amber', st='3-', hl=3)
+    d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (166, mf['rows'][0]['y']), (166, A['rows'][1]['y']), (A['rows'][1]['l'][0], A['rows'][1]['y'])], 'cyan', 'o1', at=(166, 95), st=1)
+    d.arrow([(mf['rows'][1]['r'][0], mf['rows'][1]['y']), (172, mf['rows'][1]['y']), (172, B['rows'][1]['y']), (B['rows'][1]['l'][0], B['rows'][1]['y'])], 'cyan', 'o2', at=(172, 150), st=1)
+    ty = mt['rows'][0]['y']
+    d.arrow([(A['rows'][1]['r'][0], A['rows'][1]['y']), (385, A['rows'][1]['y']), (385, ty), (mt['rows'][0]['l'][0], ty)], 'violet', 'type ptr', at=(385, 90), st='2-', id='ta')
+    d.arrow([(B['rows'][1]['r'][0], B['rows'][1]['y']), (385, B['rows'][1]['y']), (385, ty), (mt['rows'][0]['l'][0], ty)], 'violet', st='2-')
+    d.arrow([(520, mt['rows'][0]['top'] + mt['rows'][0]['h']), (520, 190)], 'amber', 'entry', at=(520, 150), st='3-', id='tc')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, A['rows'][0]['y']), (A['rows'][0]['l'][0], A['rows'][0]['y'])], 'violet', 'this', at=(158, 130), st='4-4')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (176, af['rows'][0]['y']), (176, B['rows'][0]['y']), (B['rows'][0]['l'][0], B['rows'][0]['y'])], 'violet', 'this', at=(176, 200), st='5-5')
+    d.code_box(10, 306, 270, 50, [(0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=15)
+    d.note(10, 366, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
+    _notes(d, 306, 52, [('Two objects, each with its own header,|type pointer and Count. o1 and o2 hold|their addresses.', 'cyan'),
+                        ('Both type pointers lead to the SAME Order|MethodTable: one per type, shared by|every Order.', 'violet'),
+                        ('The MethodTable leads to AddItem’s compiled|code. That code exists once.', 'amber'),
+                        ('o1.AddItem(): a frame is pushed with|this = Order A’s address. The shared|code runs on A: Count 0 → 1.', 'amber'),
+                        ('Return, then o2.AddItem(): a new frame,|this = Order B’s address. The SAME|code runs on B: Count 0 → 1.', 'amber'),
+                        ('Return: the frame is popped.|Per object: header, type ptr, Count. Per type: one MethodTable,|one code. A million Orders still|share both.', 'emerald')], x=290, w=340, size=9)
+    return d
+
+def build_method_execution():
+    return mem_page(dict(
+        slug='method-execution', title='How a Method Runs: the Frame, this and the Code', group='⚙️ Static & methods', crumb='How a method runs',
+        h1='<span class="grad-text">One clerk</span> serving many customer files.',
+        sub='What really happens when you call a method on an object: a stack frame is pushed, the object’s address travels in as <code>this</code>, and the one shared copy of the code works on that object’s data.',
+        ivq='What happens in memory when you call an instance method?',
+        prob=(d_me1(), [
+            '<code>order</code> is a stack variable holding the address of an <b>Order</b> object on the heap. The object starts with a header and a type pointer, then its field <code>Count</code>. The string <code>"pen"</code> is a separate object.',
+            '<code>order.AddItem("pen")</code>: a <b>new frame</b> is pushed on top of the stack, with slots for <code>this</code> and the parameter <code>name</code>.',
+            'The slots are filled with <b>copies of addresses</b>: <code>this</code> = a copy of <code>order</code>’s address (the object the method was called on), <code>name</code> = a copy of the string’s address. Two references, still <b>one</b> object.',
+            'The method uses <code>this</code> to <b>follow the address</b> to the heap object and changes its field: <code>Count++</code>, 0 → 1.',
+            'Return: the frame is popped. <code>this</code> and <code>name</code> disappear — but <code>Count = 1</code> <b>stays in the object</b>, because the object lives on the heap.'],
+            'a method call = one frame on the stack, plus an address (this) that leads to the data on the heap.'),
+        one='<b>A method call pushes a frame; <code>this</code> carries the object’s address; the method changes the object on the heap, not the frame.</b>',
+        real=['🗂️ A <b>clerk</b> (the method) and many <b>customer files</b> (objects). There is only <b>one clerk’s procedure book</b> for the whole office. When a customer comes, the clerk is handed <b>that customer’s file</b> (this) and works on <b>it</b>. When the clerk is done, the clerk puts the file back with the changes written in — the clerk’s own scratch notes (the frame) are thrown away.'],
+        parts=[
+            ('story', '📜 One code, many objects: how the code is found', (d_me2(), [
+                'Two <code>Order</code> objects on the heap. Each holds <b>only its own data</b>: a header, a type pointer and its own <code>Count</code>.',
+                'Both type pointers lead to the <b>same MethodTable</b> — one per type, shared by all its objects.',
+                'The MethodTable leads to the compiled code of <code>AddItem</code>. That code exists <b>once</b>.',
+                '<code>o1.AddItem()</code>: a frame is pushed with <code>this</code> = Order A’s address. The shared code runs on A: Count becomes 1.',
+                'Return, then <code>o2.AddItem()</code>: a new frame with <code>this</code> = Order B’s address. The same code runs on B: Count becomes 1.',
+                'Return. A million objects would still share one MethodTable and one copy of the code — only the data is per object.'],
+                'objects carry data (and a pointer to their type); the type carries the code. At call time <code>this</code> says which object the shared code works on.')),
+            ('table', '🎒 What is in the frame of an instance method', ['In the frame', 'Example', 'Where the real data is'], [
+                ['<code>this</code> (the object’s address)', 'a copy of the address', 'the object on the <b>heap</b>'],
+                ['Parameters', '<code>string name</code>', 'a copy of the value, or a copy of the address'],
+                ['Local variables', '<code>int total = 0;</code>', 'right in the frame (values) or on the heap (objects they point to)']]),
+            perf([
+                'A call itself is cheap: it only pushes and pops a frame. The cost you <b>notice</b> comes from what the method <b>allocates</b> (new objects, boxing, strings) — those create work for the GC (see [[p:heap-and-new]] and [[p:boxing]]).',
+                'Because the frame is thrown away at return, <b>the frame itself never needs garbage collection</b>. Only objects do (the references inside a live frame count as roots that keep objects alive). Keep temporary values as locals and you give the GC nothing to do.']),
+            ('text', '🔬 Honest note', ['Calling <code>this</code> a “hidden argument” is a teaching picture, and so are the made-up addresses and the exact MethodTable layout (the header, type pointer and MethodTable come from Microsoft’s older runtime article and the Book of the Runtime; current versions may differ); Microsoft’s docs describe <code>this</code> as “the current instance”. How the JIT passes it (for example in a CPU register) is an implementation detail.']),
+        ],
+        code=('''
+class Order
+{
+    public int Count;                         // data: lives inside each Order object (heap)
+
+    public void AddItem(string name)          // code: one copy for the whole type
+    {
+        this.Count++;                         // this = the address of the object it was called on
+    }                                         // frame (this, name) popped here
+}
+
+var order = new Order();
+order.AddItem("pen");                         // order.Count is now 1''',
+              '<code>this.</code> is optional in C# — <code>Count++</code> means the same. The address is still what makes it work.'),
+        clean=('Who clears this memory?', ['The <b>frame</b>: popped at return — instantly. The <b>object</b>: the GC, after nobody references it. Notice that a method <b>cannot free</b> the object it works on: only the GC can, and only when it is unreachable.']),
+        quiz=[('Each Order object contains its own copy of the AddItem code.', True, 'The code exists once per type; objects hold only data.'),
+              ('<code>this</code> lets a method find the data of the object it was called on.', False, 'Yes — it is the address of that object.'),
+              ('Changes made through <code>this</code> disappear when the method returns.', True, 'The frame disappears, but the object is on the heap and keeps the change.')],
+        recall=['Call = push a frame (this + parameters + locals); return = pop it.', '<code>this</code> = address of the object; data on the heap, code once per type.', 'Changes to fields persist; changes to frame locals vanish.'],
+        say='“An instance method call pushes a stack frame containing this — the reference to the object — plus parameters and locals. The method reads and writes the object’s fields on the heap; when it returns the frame is popped, but field changes persist. The method code itself is shared by all instances of the type.”',
+        trap=['Believing a method “has its own copy” of the object. It only holds an address; changing a field changes the one real object.'],
+        next=('Next: what changes when the method is <b>static</b> — no object, no <code>this</code>.', 'static-methods.html', 'Static Methods & Classes'),
+        facts=('this = the current instance; stack frames hold parameters and locals; objects hold instance fields: Microsoft Learn (this keyword, classes). Code stored once per type rather than per object is the standard .NET model (🟨 K: not quoted from one page). “Hidden argument” is a teaching picture.', [('this keyword (C# reference)', 'https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/this'), DOC_GC])))
+

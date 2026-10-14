@@ -44,43 +44,110 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 336" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="An interface cannot be created with new; an IPayable variable is just a reference that points at some class object such as an Invoice or a Subscription, and calling Pay runs that object’s own Pay">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay">
 <defs><marker id="if1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="170" height="200" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="260" y="86" width="370" height="200" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="274" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="2-"><path d="M166,148 L330,148" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if1A)"/></g>
-<g class="st" data-s="3-"><path d="M166,228 L330,228" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if1A)"/></g>
-<rect class="bx" x="10" y="8" width="400" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">interface IPayable { void Pay(); }</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Invoice : IPayable { public void Pay() { } }</text>
-<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable p = new Invoice();</text>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="440" y="8" width="190" height="54" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="535" y="30" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">new IPayable()</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="535" y="45" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">❌ compile error</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="126" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p  (IPayable)</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="95" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…P1</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="24" y="206" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="226" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">q  (IPayable)</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="95" y="238" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…P6</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="330" y="120" width="230" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="445" y="145.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Invoice object</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="445" y="158.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">(a class object)</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="330" y="200" width="230" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="445" y="225.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Subscription object</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="445" y="238.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">(a class object)</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="296" width="620" height="32" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="320" y="314.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">p.Pay() runs Invoice’s Pay · q.Pay() runs Subscription’s Pay</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="215" y="139" width="66" height="18" rx="9"/><text x="248" y="151.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="215" y="219" width="66" height="18" rx="9"/><text x="248" y="231.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+<rect class="zone" x="10" y="24" width="120" height="270" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="140" y="24" width="170" height="270" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="154" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="320" y="24" width="180" height="270" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="334" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<rect class="zone" x="510" y="24" width="120" height="270" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="524" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE</text>
+<g class="st" data-s="1-"><rect class="zone" x="150" y="46" width="150" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="164" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Invoice @ 0x2000</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="328" y="46" width="164" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="342" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Invoice MethodTable</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="150" y="190" width="150" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="164" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Subscription @ 0x3000</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="328" y="190" width="164" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="342" y="209" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Subscription MethodTable</text></g>
+<g class="st" data-s="1-"><path id="if1-a1" d="M120,107 L158,107" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="1-"><path id="if1-a2" d="M292,107 L314,107 L314,83 L336,83" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="1-"><path id="if1-a3" d="M484,107 L505,107 L505,82 L518,82" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="2-"><path id="if1-b1" d="M120,251 L158,251" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="2-"><path id="if1-b2" d="M292,251 L314,251 L314,227 L336,227" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="2-"><path id="if1-b3" d="M484,251 L505,251 L505,226 L518,226" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#if1A)"/></g>
+<g class="st" data-s="1-" data-hl="3"><rect class="bx" x="20" y="87" width="100" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="3"><text x="70" y="105" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p : IPayable</text></g>
+<g class="st" data-s="1-" data-hl="3"><text x="70" y="117" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x2000</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="158" y="72" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="225" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="158" y="96" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="225" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="158" y="120" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="225" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Amount = 40</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="336" y="72" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="410" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">interface map: IPayable</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="336" y="96" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="410" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Pay → Invoice.Pay</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="336" y="72" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="410" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">interface map: IPayable</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="336" y="96" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="410" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Pay → Invoice.Pay</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="158" y="96" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="225" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="158" y="96" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="225" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="336" y="72" width="148" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="410" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">interface map: IPayable</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="336" y="96" width="148" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="410" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Pay → Invoice.Pay</text></g>
+<g class="st" data-s="1-" data-hl="5"><rect class="bx" x="518" y="64" width="104" height="36" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="5"><text x="570" y="78.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Invoice.Pay</text></g>
+<g class="st" data-s="1-" data-hl="5"><text x="570" y="90.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">code</text></g>
+<g class="st" data-s="2-" data-hl="6"><rect class="bx" x="20" y="231" width="100" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="6"><text x="70" y="249" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">q : IPayable</text></g>
+<g class="st" data-s="2-" data-hl="6"><text x="70" y="261" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x3000</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="158" y="216" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="225" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="158" y="240" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="225" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="158" y="264" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="225" y="277.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Plan = "Pro"</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="336" y="216" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="410" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">interface map: IPayable</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="336" y="240" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="410" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Pay → Subscription.Pay</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="336" y="240" width="148" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="410" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Pay → Subscription.Pay</text></g>
+<g class="st" data-s="2-" data-hl="6"><rect class="bx" x="518" y="208" width="104" height="36" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="6"><text x="570" y="222.25" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Subscription.Pay</text></g>
+<g class="st" data-s="2-" data-hl="6"><text x="570" y="234.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">code</text></g>
+<rect class="bx" x="10" y="306" width="300" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="328" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable p = new Invoice();</text>
+<text x="24" y="343" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable q = new Subscription();</text>
+<text x="24" y="358" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">p.Pay();     q.Pay();</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#6ee7b7">new Invoice(): a heap object with header + type pointer.</text></g>
+<g class="st" data-s="1-1"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#6ee7b7">p holds its address. Addresses are illustrative.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#6ee7b7">Another class, another object, another MethodTable.</text></g>
+<g class="st" data-s="2-2"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#6ee7b7">q has the same variable type as p.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#67e8f9">p.Pay() ①: follow p to the object</text></g>
+<g class="st" data-s="3-3"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#67e8f9">on the heap</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#c4b5fd">② read its type pointer: it leads to the</text></g>
+<g class="st" data-s="4-4"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#c4b5fd">MethodTable of the object’s REAL class</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#fcd34d">③ the interface map says which method is Pay</text></g>
+<g class="st" data-s="5-5"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#fcd34d">→ jump to Invoice.Pay (teaching picture)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#fcd34d">q.Pay(): same walk, another table</text></g>
+<g class="st" data-s="6-6"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#fcd34d">→ lands on Subscription.Pay</text></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="if1-a1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="if1-a2"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="if1-a3"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="if1-b1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="if1-b2"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="if1-b3"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>new IPayable()</code> — <b>not allowed</b>. An interface only describes methods; it has no object of its own.</li><li><code>IPayable p = new Invoice();</code> — the object is a normal <b>Invoice</b> on the heap. The variable <code>p</code> is typed as the interface and holds its address.</li><li>Another variable <code>q</code> points to a <b>Subscription</b> object. Same variable type, different object type.</li><li>Calling <code>p.Pay()</code> runs the Invoice’s <code>Pay</code>; <code>q.Pay()</code> runs the Subscription’s. The interface adds <b>no memory</b> of its own.</li></ol>
-<figcaption><strong>What you're seeing:</strong> an interface is a type of variable, not a type of object. Only class (or struct) objects exist in memory.</figcaption>
+<ol class="st-caps"><li><code>IPayable p = new Invoice();</code> — <code>new</code> creates a normal <b>Invoice object</b> on the heap: a header, a <b>type pointer</b>, then its fields. <code>p</code> (on the stack) holds its address. (<code>new IPayable()</code> is not allowed: an interface only lists methods, so no object of it can exist.)</li><li><code>IPayable q = new Subscription();</code> — another class, so another object with its own type pointer and its own MethodTable. <code>q</code> has the <b>same variable type</b> as <code>p</code>.</li><li><b>p.Pay() ①.</b> Follow the address in <code>p</code> to the object on the heap.</li><li><b>p.Pay() ②.</b> Read the object’s type pointer: it leads to the MethodTable of its <b>real</b> class, <code>Invoice</code> — not to anything called IPayable.</li><li><b>p.Pay() ③.</b> That table has an <b>interface map</b>: for IPayable, <code>Pay</code> is <code>Invoice.Pay</code>. The call jumps there. (Real runtimes speed this up with cached stubs — a teaching picture.)</li><li><b>q.Pay()</b> does the same walk through Subscription’s table and lands on <code>Subscription.Pay</code>. The interface added <b>no field to either object</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> an interface is a type of variable, not a type of object. Only class (or struct) objects exist on the heap; each class’s MethodTable (loaded once per type, shared by all its objects) carries the interface map. Addresses and the exact map layout are a teaching picture of the classic runtime model.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b>An interface never has memory of its own: it is a label on a variable that points to a real class object.</b></span></div>
@@ -92,40 +159,85 @@
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">📦 A struct behind an interface gets boxed</div>
-<figure class="diagram-card kd-story" data-steps="3">
-<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="A struct Coupon stored in an interface variable is boxed: a copy of the struct is placed in a new heap object and the variable points to it, so later changing the original struct does not change the boxed copy">
+    <div class="sec-label see">📦 A struct behind an interface gets boxed — and unboxed</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot">
 <defs><marker id="if2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="if2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="200" height="234" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="300" y="86" width="330" height="234" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="314" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="2-"><path d="M196,212 L380,212" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if2A)"/></g>
-<rect class="bx" x="10" y="8" width="420" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">struct Coupon : IPayable { public int Value; ... }</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Coupon c = new Coupon { Value = 5 };</text>
-<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable s = c;      c.Value = 9;</text>
-<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="24" y="118" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="110" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">c  (struct)</text></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="110" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Value = 5</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="24" y="118" width="172" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="110" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">c  (struct)</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="110" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Value = 9</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="190" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="110" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">s  (IPayable)</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="110" y="222" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…Q2</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="190" width="190" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="475" y="213" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">boxed Coupon</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="475" y="225" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Value = 5</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="310" y="256" width="310" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="465" y="275" text-anchor="middle" font-size="9.5" fill="#fcd34d">The box is a COPY: c.Value = 9</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="465" y="288.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">does not change it</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="255" y="203" width="66" height="18" rx="9"/><text x="288" y="215.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+<rect class="zone" x="10" y="24" width="200" height="270" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="220" y="24" width="190" height="190" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="234" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="420" y="24" width="210" height="130" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="434" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="3-"><rect class="zone" x="230" y="66" width="170" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="244" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">boxed Coupon @ 0x4000</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="428" y="66" width="194" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="442" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Coupon MethodTable</text></g>
+<g class="st" data-s="3-"><path id="if2-s1" d="M200,81 L208,81 L208,127 L238,127" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#if2A)"/></g>
+<g class="st" data-s="3-3"><path id="if2-cp" d="M200,151 L238,151" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#if2A)"/></g>
+<g class="st" data-s="3-"><path id="if2-s2" d="M392,127 L414,127 L414,103 L436,103" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#if2A)"/></g>
+<g class="st" data-s="6-6"><path id="if2-un" d="M315,172 L315,239 L200,239" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#if2A)"/></g>
+<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="20" y="126" width="180" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3" data-hl="1"><text x="110" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">c : Coupon</text></g>
+<g class="st" data-s="1-3" data-hl="1"><text x="110" y="154.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Value = 5</text></g>
+<g class="st" data-s="1-3" data-hl="1"><text x="110" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">no header, no type ptr</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="126" width="180" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="110" y="142.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">c : Coupon</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="110" y="154.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Value = 9</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="110" y="167.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">no header, no type ptr</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="20" y="56" width="180" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="110" y="79" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">s : IPayable</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="110" y="91" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">null — not a reference yet</text></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><rect class="bx" x="20" y="56" width="180" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><text x="110" y="79" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">s : IPayable</text></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><text x="110" y="91" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x4000</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="238" y="92" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="315" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="238" y="116" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="315" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="238" y="140" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="315" y="153.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Value = 5</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="436" y="92" width="178" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="525" y="105.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">interface map: IPayable</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="436" y="116" width="178" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="525" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Pay → Coupon.Pay</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="436" y="116" width="178" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="525" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Pay → Coupon.Pay</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="436" y="116" width="178" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="525" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Pay → Coupon.Pay</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="20" y="214" width="180" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="110" y="230.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">c2 : Coupon</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="110" y="242.75" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Value = 5</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="110" y="255.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">copy out of the box</text></g>
+<rect class="bx" x="10" y="306" width="300" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="328" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">Coupon c = new Coupon { Value = 5 };</text>
+<text x="24" y="343" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">IPayable s = c;      c.Value = 9;</text>
+<text x="24" y="358" text-anchor="start" font-size="8.6" font-family="'JetBrains Mono'" fill="#93a0b8">s.Pay();   Coupon c2 = (Coupon)s;</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#67e8f9">A struct sits right in its stack slot:</text></g>
+<g class="st" data-s="1-1"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#67e8f9">no header, no type pointer</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#fda4af">IPayable s needs a reference, but c is not an object</text></g>
+<g class="st" data-s="2-2"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#fda4af">(s is still empty)</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#fcd34d">Boxing: a NEW heap object (header + type ptr + value)</text></g>
+<g class="st" data-s="3-3"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#fcd34d">gets a COPY of 5. s holds its address. (Addresses illustrative)</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#fcd34d">c.Value = 9 changes only the stack slot.</text></g>
+<g class="st" data-s="4-4"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#fcd34d">The box still says 5</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#c4b5fd">s.Pay() follows s to the box, then its type ptr to</text></g>
+<g class="st" data-s="5-5"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#c4b5fd">Coupon’s table: it runs on the box</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="320" y="306" width="310" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="475" y="333" text-anchor="middle" font-size="9" fill="#67e8f9">Unboxing (Coupon)s copies 5 out into another stack</text></g>
+<g class="st" data-s="6-6"><text x="475" y="346" text-anchor="middle" font-size="9" fill="#67e8f9">slot. The box stays until the GC clears it</text></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="if2-s1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="if2-s2"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>Coupon</code> is a <b>struct</b> (a value type). The local <code>c</code> holds its data directly on the stack.</li><li><code>IPayable s = c;</code> — an interface variable needs a reference, so the struct is <b>boxed</b>: copied into a new heap object, and <code>s</code> points to the box.</li><li>Change the original: <code>c.Value = 9</code>. The <b>boxed copy still says 5</b>. They are two separate values now.</li></ol>
-<figcaption><strong>What you're seeing:</strong> boxing again (page 5): a struct stored in an interface variable lives in a heap box.</figcaption>
+<ol class="st-caps"><li><code>Coupon</code> is a <b>struct</b> (a value type). The local <code>c</code> holds its data directly in its stack slot — <b>no header, no type pointer</b>.</li><li><code>IPayable s = c;</code> — an interface variable must hold a <b>reference</b>, but <code>c</code> is not an object, so <code>s</code> has nothing to point at yet.</li><li><b>Boxing.</b> The runtime allocates a new heap object (header + type pointer + the value) and <b>copies</b> 5 into it. <code>s</code> holds its address; its type pointer leads to Coupon’s MethodTable.</li><li>Change the original: <code>c.Value = 9</code>. Only the stack slot changes; the <b>box still says 5</b>. They are two separate values now.</li><li><code>s.Pay()</code> follows <code>s</code> to the box, then its type pointer to Coupon’s table. The call runs <b>on the box</b>, not on <code>c</code>.</li><li><b>Unboxing.</b> <code>(Coupon)s</code> copies the value back out into a new stack slot. The box stays on the heap until the GC finds it unreachable.</li></ol>
+<figcaption><strong>What you're seeing:</strong> boxing again (page page 5): a struct stored in an interface variable lives in a heap box. Addresses are illustrative.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
@@ -148,7 +260,7 @@ IPayable s = <span class="kw">new</span> Coupon { Value = 5 };  <span class="cmt
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p>The garbage collector frees the real object (or the box) when no variable — interface-typed or not — still points to it. Interfaces themselves need no cleaning: they are not stored anywhere.</p>
+      <p>The garbage collector frees the real object (or the box) when no variable — interface-typed or not — still points to it. The interface adds <b>no memory to each object</b>. Type data (the MethodTables with their interface maps) is loaded once per type and is shared by every object — it is not cleared when an object dies.</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -162,7 +274,7 @@ IPayable s = <span class="kw">new</span> Coupon { Value = 5 };  <span class="cmt
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>Interfaces have no objects of their own.</li><li>An interface variable = a reference to an object whose class implements it.</li><li>A struct behind an interface is boxed (heap copy).</li></ul>
+      <ul><li>Interfaces have no objects of their own.</li><li>An interface variable = a reference to an object whose class implements it.</li><li>p.Pay(): follow p → object → type pointer → MethodTable → interface map → method.</li><li>A struct behind an interface is boxed (heap object with header + type pointer + a COPY of the value).</li></ul>
     </div>
   </section>
   <section class="kd-section ">
@@ -172,7 +284,7 @@ IPayable s = <span class="kw">new</span> Coupon { Value = 5 };  <span class="cmt
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p>Calling a struct’s interface method in a hot loop through an interface variable allocates one box per assignment. Use generics with a constraint (<code>where T : IPayable</code>) to avoid boxing.</p>
+      <p>Calling a struct’s interface method in a hot loop through an interface variable allocates one box per assignment. Use generics with a constraint (<code>where T : IPayable</code>) to avoid boxing. Also: calling a mutating method through the interface changes the <b>box</b>, not your original struct variable.</p>
     </div>
   </section>
   <section class="kd-section next" id="next">
@@ -190,6 +302,6 @@ IPayable s = <span class="kw">new</span> Coupon { Value = 5 };  <span class="cmt
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>
