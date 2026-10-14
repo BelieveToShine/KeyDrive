@@ -60,7 +60,7 @@ def d_vr3():
     fr = card(d, 20, 124, 'frame: Run()', [('total = 9', 'f', '1-3'), ('o = 0x…B4', 'f', '3-4')], 'cyan', w=180, st='1-4')
     cell(d, fr, 0, 'total = 9', 'amber', st='4-4', hl=4)
     gcard(d, 20, 124, 'frame: Run() · popped', ['total = 9', 'o = 0x…B4'], 180, '5-5')
-    od = card(d, 300, 156, 'Order object @ 0x…B4', [('Qty = 3   (int field)', 'f')], 'emerald', w=200, st='2-4')
+    od = card(d, 300, 156, 'Order object @ 0x…B4', [('Qty = 3   (int field)', 'f', '2-3')], 'emerald', w=200, st='2-4')
     cell(d, od, 0, 'Qty = 3   (int field)', 'amber', st='4-4', hl=4)
     gcard(d, 300, 156, 'Order · nothing points here', ['Qty = 3   (int field)'], 200, '5-5')
     d.arrow([(fr['rows'][1]['r'][0], fr['rows'][1]['y']), (od['L'][0], fr['rows'][1]['y'])], 'cyan', st='3-4', id='o')

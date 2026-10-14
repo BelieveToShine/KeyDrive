@@ -36,11 +36,9 @@ def d_dl1():
     # call frame, this-arrow ends lower on the Person border so it does not merge with person's arrow
     fr = card(d, 14, 150, 'SayHi frame', [('this = 0x…A1', 'f')], 'cyan', w=112, st='6-6', hl=6)
     d.arrow([(118, 187), (134, 187), (134, 135), (150, 135)], 'cyan', st='6-6', id='th')
-    d.token('g1', '📞', 15, 'cyan', st='6-6')
-    d.token('t1', '📞', 15, 'amber', st='6-6')
     d.emoji(278, 66, '✅', 14, st='7-')
     d.code_box(10, 356, 300, 62, [(0, 'var person = new Person("Asha");', ''), (0, 'Action greet = person.SayHi;', ''), (0, 'greet();    person = null;', '')], 'n', size=8.8, lh=15)
-    _teach(d, 160, 432, ('teaching picture: addresses, field names', 'illustrative.   📞 = a call being made'))
+    _teach(d, 160, 432, ('teaching picture: addresses and', 'field names are illustrative'))
     for i, (t, c) in enumerate([
             ('new Person("Asha"): the Person AND its name|string are two heap objects; Name is a reference.|Type ptr → the one shared MethodTable.', 'emerald'),
             ('person (stack) = a copy of the Person’s address.|person.SayHi is only EVALUATED, not called:|its code is stored once with the type.', 'cyan'),
@@ -74,10 +72,8 @@ def d_dl2():
     d.arrow([(352, 261), (380, 261), (380, 170), (265, 170), (265, 136)], 'amber', st='3-')
     d.arrow([(352, 237), (400, 237), (400, 309), (450, 309)], 'amber', st='3-')
     d.arrow([(134, 241), (170, 241)], 'cyan', st='4-', id='a1')
-    d.token('a1', '📞', 15, 'cyan', st='5-5')
-    d.token('a1', '📞', 15, 'cyan', st='7-7')
     d.code_box(10, 356, 300, 76, [(0, 'var inc = MakeCounter();', ''), (0, 'inc(); inc();', ''), (0, '// MakeCounter() {', ''), (0, '//   int count = 0; return () => count++; }', '')], 'n', size=8.8, lh=15)
-    _teach(d, 160, 452, ('teaching picture: addresses, closure/lambda', 'internals simplified.   📞 = a call being made'))
+    _teach(d, 160, 452, ('teaching picture: addresses, closure/lambda', 'internals simplified'))
     for i, (t, c) in enumerate([
             ('MakeCounter() runs: its frame holds a plain local|count = 0. Main’s inc is declared, not assigned yet.', 'cyan'),
             ('The lambda uses count, so the compiler keeps it in a|heap Closure object. The frame keeps only a hidden|reference to it. (compiler rewrite)', 'amber'),

@@ -81,30 +81,30 @@ def d_rf3():
 
 # ------------------------------------------------------------ 4. in: read-only alias avoids copying a big struct
 def d_rf4():
-    d = Diagram('rf4', 640, 460, 'Passing a large struct: by value the call copies every field of big into the callee’s frame; with in the callee’s frame holds only a read-only alias to big, so nothing is copied and an attempt to assign through it is a compile error')
+    d = Diagram('rf4', 640, 474, 'Passing a large struct: by value the call copies every field of big into the callee’s frame; with in the callee’s frame holds only a read-only alias to big, so nothing is copied and an attempt to assign through it is a compile error')
     d.code_box(10, 6, 300, 52, [(0, 'Sum(big);', ''), (0, 'decimal Sum(BigStruct data) => ...;', '')], 'n', size=9, lh=15)
     d.code_box(330, 6, 300, 52, [(0, 'Sum(big);', ''), (0, 'decimal Sum(in BigStruct data) => ...;', '')], 'n', size=9, lh=15)
-    d.zone(10, 66, 300, 280, 'cyan', '📚 STACK — by value')
-    d.zone(330, 66, 300, 280, 'cyan', '📚 STACK — in')
+    d.zone(10, 66, 300, 296, 'cyan', '📚 STACK — by value')
+    d.zone(330, 66, 300, 296, 'cyan', '📚 STACK — in')
     big = [('A = 1', 'f'), ('B = 2', 'f'), ('C = 3', 'f')]
     lm = card(d, 22, 92, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
-    card(d, 22, 232, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st=1, dash=True)
-    lf = card(d, 22, 232, 'Sum frame: data', [('A = 1  (copy)', 'f'), ('B = 2  (copy)', 'f'), ('C = 3  (copy)', 'f')], 'cyan', w=276, st='2-3', hl=2)
-    card(d, 22, 232, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st=4, dash=True)
-    d.arrow([lm['B'], lf['T']], 'amber', 'copy all fields', at=(160, 215), st='2-2', id='lc')
+    card(d, 22, 246, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
+    lf = card(d, 22, 246, 'Sum frame: data', [('A = 1  (copy)', 'f'), ('B = 2  (copy)', 'f'), ('C = 3  (copy)', 'f')], 'cyan', w=276, st='2-3', hl=2)
+    card(d, 22, 246, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
+    d.arrow([lm['B'], lf['T']], 'amber', 'copy all fields', at=(160, 222), st='2-2', id='lc')
     rm = card(d, 342, 92, 'Main frame: big (struct, data in place)', big, 'cyan', w=276, st=1)
-    card(d, 342, 232, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st=1, dash=True)
-    rf = card(d, 342, 232, 'Sum frame', [('data = address of big', 'f')], 'violet', w=276, st='2-3', hl=2)
-    card(d, 342, 232, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st=4, dash=True)
-    d.arrow([(480, 258), rm['B']], 'violet', 'alias, read-only', at=(480, 215), st='2-3', id='ra')
-    d.note(22, 354, 276, 30, 'a write here would change only the copy', 'amber', st='3-3', size=9)
-    d.note(342, 354, 276, 30, 'data.A = 9;   ✗ compile error', 'rose', st='3-3', size=9.5)
-    d.text(160, 400, 'teaching picture: a real big struct has more fields', 'n', 8)
+    card(d, 342, 246, '(Sum frame will go here)', [('…', 'f')], 'n', w=276, st='1-1', dash=True)
+    rf = card(d, 342, 246, 'Sum frame', [('data = address of big', 'f')], 'violet', w=276, st='2-3', hl=2)
+    card(d, 342, 246, 'Sum frame (popped)', [('gone', 'f')], 'n', w=276, st='4-4', dash=True)
+    d.arrow([(480, 272), rm['B']], 'violet', 'alias, read-only', at=(480, 224), st='2-3', id='ra')
+    d.note(22, 368, 276, 30, 'a write here would change only the copy', 'amber', st='3-3', size=9)
+    d.note(342, 368, 276, 30, 'data.A = 9;   ✗ compile error', 'rose', st='3-3', size=9.5)
+    d.text(160, 414, 'teaching picture: a real big struct has more fields', 'n', 8)
     for i, (t, c) in enumerate([('big is a struct: its fields sit in place inside Main’s frame (no header, no heap object).', 'cyan'),
                                 ('Call. LEFT: a new frame, and EVERY field of big is copied into it.|RIGHT: a new frame with one slot that holds the ADDRESS of big. Nothing is copied.', 'violet'),
                                 ('Inside Sum. LEFT: reads its own copy (a write would change only the copy).|RIGHT: reads big through the alias; assigning through it is rejected by the compiler.', 'rose'),
                                 ('Return: both frames are popped. big is unchanged in both columns.|The in call just avoided copying every field.', 'emerald')]):
-        d.note(10, 408, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 424, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 # ------------------------------------------------------------ 5. ref return + ref local: alias to ONE array element
@@ -118,7 +118,7 @@ def d_rf5():
     ar = card(d, 260, 100, 'int[3] array object', [('length = 3', 'f'), ('arr[0] = 10', 'f'), ('arr[1] = 20', 'f', '1-4'), ('arr[2] = 30', 'f')], 'emerald', w=190, st=1)
     cell(d, ar, 2, 'arr[1] = 99', 'amber', st='5-', hl=5)
     e1 = _ry(ar, 2)
-    d.arrow([(202, _ry(mf, 0)), (240, _ry(mf, 0)), (240, ar['L'][1]), ar['L']], 'cyan', 'ref', at=(240, 150), st='1-', id='ra')
+    d.arrow([(202, _ry(mf, 0)), (240, _ry(mf, 0)), (240, ar['L'][1]), ar['L']], 'cyan', st='1-', id='ra')
     d.arrow([(202, _ry(sf, 1)), (355, _ry(sf, 1)), ar['B']], 'violet', 'copy', at=(300, _ry(sf, 1)), st='2-3', id='rb')
     d.arrow([(202, _ry(sf, 0)), (238, _ry(sf, 0)), (238, e1), (260, e1)], 'amber', 'ret', at=(238, 250), st='3-3', id='rc')
     d.arrow([(202, _ry(mf, 1)), (224, _ry(mf, 1)), (224, e1), (260, e1)], 'violet', st='4-', id='rd')

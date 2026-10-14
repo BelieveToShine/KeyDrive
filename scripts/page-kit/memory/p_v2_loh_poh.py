@@ -132,7 +132,7 @@ def d_lo3():
     d.zone(338, 196, 292, 62, 'amber', '⚙️ NATIVE CODE', st='3-')
     d.box(399, 218, 170, 34, [('raw address', 't'), ('(a copy of the address)', 'm')], 'amber', st='3-', hl=3)
     d.arrow([(484, 218), poh['B']], 'amber', 'uses', at=(512, 200), st='3-')
-    d.text(612, 198, 'same place, same address', 'emerald', size=9, anchor='end', st='5-5')
+    d.text(620, 24, 'same place, same address', 'emerald', size=9, anchor='end', st='5-5')
     for i, (t, c) in enumerate([
             ('Ordinary objects live in the small object heap: X and Y are reachable, the middle one has no reference (garbage)|the POH exists but is still empty', 'emerald'),
             ('GC.AllocateArray<byte>(4096, pinned: true) puts the array in the POH, away from ordinary objects|buf is an ordinary stack reference to it (layout: teaching picture)', 'amber'),

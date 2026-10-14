@@ -2,15 +2,13 @@ from p_common import *
 
 # ---- D1: one block, built in order (7 -> 6 steps) -------------------------------------------
 def d_in1():
-    d = Diagram('in1', 640, 330, 'new Dog() allocates ONE heap object with an object header, a type pointer to the Dog MethodTable and the fields Name and Breed, which are references to separate string objects; the Dog constructor runs Dog field initializers, calls the Animal constructor, then finishes its own body, and only at the end the reference is stored in the variable d')
-    d.zone(10, 24, 120, 196, 'cyan', '📚 STACK')
-    d.zone(140, 24, 302, 196, 'emerald', '🏠 HEAP')
-    d.zone(450, 24, 180, 196, 'violet', '🧬 TYPE DATA')
-    card_x = 282
-    c = card(d, card_x, 46, 'ONE Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp', '1-2'), ('Name = null', 'f', '1-2'), ('Breed = null', 'f', '1-1')], 'emerald', w=150, st=1)
+    d = Diagram('in1', 640, 330, 'new Dog() allocates ONE heap object with an object header, a type pointer to the Dog MethodTable and the fields Name and Breed, which are references to separate string objects; the Dog constructor runs Dog field initializers, calls the Animal constructor (which shares the same this), then finishes its own body, and only at the end the reference is stored in the variable d')
+    d.zone(10, 24, 130, 200, 'cyan', '📚 STACK')
+    d.zone(144, 24, 298, 200, 'emerald', '🏠 HEAP')
+    d.zone(450, 24, 180, 200, 'violet', '🧬 TYPE DATA')
+    c = card(d, 150, 46, 'ONE Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp', '1-2'), ('Name = null', 'f', '1-2'), ('Breed = null', 'f', '1-1')], 'emerald', w=150, st=1)
     cell(d, c, 1, 'type ptr → Dog MT', 'amber', st='3-4', hl='3,4')
     cell(d, c, 1, 'type ptr → Dog MT', 'violet', st='5-')
-    # Name: null (1-2), '?' (3), 'Rex' (4-)
     cell(d, c, 2, 'Name → string', 'amber', st='3-3', hl=3)
     cell(d, c, 2, 'Name → string', 'amber', st='4-4', hl=4)
     cell(d, c, 2, 'Name → string', 'emerald', st='5-')
@@ -18,44 +16,49 @@ def d_in1():
     cell(d, c, 3, 'Breed → string', 'emerald', st='3-4')
     cell(d, c, 3, 'Breed → string', 'amber', st='5-5', hl=5)
     cell(d, c, 3, 'Breed → string', 'emerald', st='6-')
-    yh, yt, yn, yb = [c['rows'][i]['y'] for i in range(4)]
-    lx, rx = c['rows'][0]['l'][0], 240
-    dy = lambda i: c['rows'][0]['y'] + i * RH       # string level i (row 1..4)
-    # type data
-    m = card(d, 458, 70, 'Dog MethodTable', [('parent → Animal MT', 'f'), ('vtable slots, size …', 'f')], 'violet', w=164, st=1)
-    d.text(540, 172, 'one per type,', 'violet', 9, st=1)
-    d.text(540, 186, 'shared by every Dog', 'violet', 9, st=1)
-    d.arrow([(c['rows'][1]['r'][0], yt), (m['rows'][0]['l'][0], yt)], 'violet', st=1, id='tp')
-    # strings (each is its own heap object; header/type/length/chars not drawn)
+    yt, yn, yb = [c['rows'][i]['y'] for i in (1, 2, 3)]
+    rx = c['rows'][0]['r'][0]
+    SX = 330
+    lvl = lambda i: c['rows'][2]['y'] + (i - 1) * RH     # string slots: 1="?" (Name row), 2="Rex", 3="Lab", 4="Pug"
+    m = card(d, 458, 66, 'Dog MethodTable', [('Dog (parent: Animal)', 'f'), ('vtable slots, size …', 'f')], 'violet', w=164, st=1)
+    d.text(540, 176, 'one per type,', 'violet', 9, st=1)
+    d.text(540, 190, 'shared by every Dog', 'violet', 9, st=1)
+    d.arrow([(rx, yt), m['L']], 'violet', st=1)
     def sbox(i, txt, col, st, hl=None):
-        d.box(148, dy(i) - 11, 92, 22, [(txt, 'm')], col, rx=4, st=st, hl=hl)
+        d.box(SX, lvl(i) - 11, 100, 22, [(txt, 'm')], col, rx=4, st=st, hl=hl)
     sbox(3, '"Lab"', 'amber', '2-2', 2)
     sbox(3, '"Lab"', 'emerald', '3-4')
     sbox(3, '"Lab" no ref', 'n', '5-')
-    sbox(2, '"?"', 'amber', '3-3', 3)
-    sbox(2, '"?" no ref', 'n', '4-')
-    sbox(1, '"Rex"', 'amber', '4-4', 4)
-    sbox(1, '"Rex"', 'emerald', '5-')
+    sbox(1, '"?"', 'amber', '3-3', 3)
+    sbox(1, '"?" no ref', 'n', '4-')
+    sbox(2, '"Rex"', 'amber', '4-4', 4)
+    sbox(2, '"Rex"', 'emerald', '5-')
     sbox(4, '"Pug"', 'amber', '5-5', 5)
     sbox(4, '"Pug"', 'emerald', '6-')
-    d.arrow([(lx, yb), (rx, yb)], 'emerald', st='2-4')
-    d.arrow([(lx, yn), (rx, yn)], 'emerald', st='3-3')
-    d.arrow([(lx, yn), (252, yn), (252, dy(1)), (rx, dy(1))], 'emerald', st='4-')
-    d.arrow([(lx, yb), (252, yb), (252, dy(4)), (rx, dy(4))], 'emerald', st='5-')
-    d.text(296, 212, 'each "…" is its own string object', 'emerald', 8.5, st=1)
-    # stack
-    d.box(18, dy(0) - 11, 104, 22, [('d = null', 'm')], 'n', rx=4, st='1-5')
-    d.box(18, dy(0) - 11, 104, 22, [('d = ref', 'm')], 'cyan', rx=4, st='6-', hl=6)
-    d.box(18, 100, 104, 40, [('Dog()', 't'), ('this → object', 'm')], 'amber', st='1-5', hl='1,2,5')
-    d.box(18, 150, 104, 40, [('Animal()', 't'), ('this → object', 'm')], 'amber', st='3-4', hl='3,4')
-    d.arrow([(122, yh), (lx, yh)], 'cyan', 'reference', at=(200, yh), st='6-', id='dr')
+    d.arrow([(rx, yb), (302, yb), (302, lvl(3)), (SX, lvl(3))], 'emerald', st='2-4')
+    d.arrow([(rx, yn), (SX, yn)], 'emerald', st='3-3')
+    d.arrow([(rx, yn), (314, yn), (314, lvl(2)), (SX, lvl(2))], 'emerald', st='4-')
+    d.arrow([(rx, yb), (302, yb), (302, lvl(4)), (SX, lvl(4))], 'emerald', st='5-')
+    d.text(152, 196, 'each "…" = its own string object', 'emerald', 8, anchor='start', st=1)
+    d.text(152, 210, 'grey = no reference left (not freed yet)', 'n', 8, anchor='start', st='4-')
+    # stack: d, then the two constructor frames; every frame's `this` points at the same object
+    ly = c['L'][1]
+    d.box(18, 50, 104, 24, [('d = null', 'm')], 'n', rx=4, st='1-5')
+    d.box(18, 50, 104, 24, [('d = ref', 'm')], 'cyan', rx=4, st='6-', hl=6)
+    d.box(18, ly - 20, 104, 40, [('Dog()', 't'), ('this', 'm')], 'amber', st='1-5', hl='1,2,5')
+    d.box(18, ly + 30, 104, 40, [('Animal()', 't'), ('same this', 'm')], 'amber', st='3-4', hl='3,4')
+    d.zone(18, ly + 30, 104, 40, 'n', 'Animal() popped', st='5-5')
+    d.zone(18, ly - 20, 104, 40, 'n', 'Dog() popped', st='6-6')
+    d.arrow([(122, ly), c['L']], 'amber', st='1-5')
+    d.arrow([(122, ly + 50), (134, ly + 50), (134, ly), c['L']], 'amber', st='3-4')
+    d.arrow([(122, 62), (134, 62), (134, ly), c['L']], 'cyan', st='6-')
     d.code_box(10, 232, 360, 78, [(0, 'class Animal { string Name = "?";', ''), (0, '   public Animal() { Name = "Rex"; } }', ''), (0, 'class Dog : Animal { string Breed = "Lab";', ''), (0, '   public Dog() { Breed = "Pug"; } }', '')], 'n', size=8.8, lh=15)
     for i, (t, col) in enumerate([
-            ('new: one zeroed block. Its type ptr|already says Dog. Dog() is called.', 'emerald'),
+            ('new: one zeroed block. Its type ptr|already says Dog. Dog() is called|with this = the block.', 'emerald'),
             ('Dog() starts with ITS field|initializer: Breed = "Lab".', 'amber'),
-            ('Dog() calls Animal(): Animal\'s|initializer Name = "?" runs.|(type ptr is still Dog!)', 'amber'),
+            ('Dog() calls Animal() (same this): Animal\'s|initializer Name = "?" runs.|(type ptr is still Dog!)', 'amber'),
             ('Animal() body: Name = "Rex".|"?" has no reference now.', 'amber'),
-            ('Animal() returns. Back in Dog():|Breed = "Pug". "Lab" is unreferenced.', 'amber'),
+            ('Animal() returns (frame popped). Back in|Dog(): Breed = "Pug". "Lab" is unreferenced.', 'amber'),
             ('new returns; Dog() popped. The|address is copied into d.', 'cyan')]):
         d.note(380, 232, 250, 78, t, col, st=f'{i + 1}-{i + 1}', size=9)
     d.text(320, 324, 'teaching picture: row order and frame details simplified, sizes not shown', 'n', 8.5, st=1)
@@ -63,29 +66,24 @@ def d_in1():
 
 # ---- D2: the variable type is a view; the type pointer is the truth ---------------------------
 def d_in2():
-    d = Diagram('in2', 640, 356, 'Animal a = new Dog(): variable a points at one Dog object whose type pointer leads to the Dog MethodTable; the compiler only lets a use Animal members, the cast (Dog)a compares the object type pointer with Dog and copies the same reference into dog, and a cast to Cat fails at run time')
+    d = Diagram('in2', 640, 356, 'Animal a = new Dog(): variable a points at one Dog object whose type pointer leads to the Dog MethodTable; the compiler only lets a use Animal members, the cast (Dog)a compares the object type pointer with Dog and copies the same reference into dog, and a cast to Cat fails at run time because the type pointer says Dog')
     d.zone(10, 24, 130, 172, 'cyan', '📚 STACK')
     d.zone(150, 24, 206, 172, 'emerald', '🏠 HEAP')
     d.zone(366, 24, 264, 238, 'violet', '🧬 TYPE DATA (one per type)')
-    c = card(d, 156, 46, 'Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp'), ('Name  (ref)', 'f', '1-1'), ('Breed  (ref)', 'f', '1-3')], 'emerald', w=194, st=1)
-    cell(d, c, 2, 'Name  (ref)', 'amber', st='2-4', hl=2)
-    cell(d, c, 2, 'Name  (ref)', 'emerald', st='5-')
-    cell(d, c, 3, 'Breed  (ref)', 'amber', st='4-4', hl=4)
-    cell(d, c, 3, 'Breed  (ref)', 'emerald', st='5-')
-    yh, yt = c['rows'][0]['y'], c['rows'][1]['y']
-    dm = card(d, 374, 70, 'Dog MethodTable', [('type = Dog  ·  parent: Animal', 'f', '1-2'), ('vtable slots, size …', 'f')], 'violet', w=248, st=1)
+    c = card(d, 156, 46, 'Dog object', [('object header', 'hdr'), ('type ptr → Dog MT', 'tp'), ('Name  (ref)', 'f'), ('Breed  (ref)', 'f')], 'emerald', w=194, st=1)
+    yt = c['rows'][1]['y']; ly = c['L'][1]
+    dm = card(d, 374, 66, 'Dog MethodTable', [('type = Dog  ·  parent: Animal', 'f', '1-2'), ('vtable slots, size …', 'f')], 'violet', w=248, st=1)
     cell(d, dm, 0, 'type = Dog  ==  Dog ✓ match', 'emerald', st='3-4', hl=3)
     cell(d, dm, 0, 'type = Dog  !=  Cat ✗ no match', 'rose', st='5-', hl=5)
-    card(d, 374, 170, 'Animal MethodTable', [('type = Animal', 'f'), ('vtable slots, size …', 'f')], 'violet', w=248, st=1)
-    d.arrow([(c['rows'][1]['r'][0], yt), (dm['rows'][0]['l'][0], yt)], 'violet', st=1, id='tp')
-    d.token('tp', '📞', 15, 'violet', st='3-3')
-    d.token('tp', '📞', 15, 'rose', st='5-5')
-    d.box(20, yh - 17, 110, 34, [('a', 't'), ('declared Animal', 's')], 'cyan', st=1, hl=1)
+    card(d, 374, 176, 'Cat MethodTable (asked for)', [('type = Cat', 'f')], 'rose', w=248, st='5-', dash=True)
+    d.arrow([(c['rows'][1]['r'][0], yt), dm['L']], 'violet', st=1)
+    d.text(498, 168, 'highlight = the check happening now', 'n', 8, st='3-')
+    d.box(20, ly - 17, 110, 34, [('a', 't'), ('declared Animal', 's')], 'cyan', st=1, hl=1)
     d.box(20, 130, 110, 34, [('dog', 't'), ('declared Dog', 's')], 'cyan', st='4-', hl=4)
-    d.arrow([(130, yh), (c['rows'][0]['l'][0], yh)], 'cyan', st=1, id='a')
-    d.arrow([(130, 147), (142, 147), (142, yh), (c['rows'][0]['l'][0], yh)], 'cyan', st='4-', id='b')
-    # compiler lens (not memory)
-    d.zone(10, 204, 346, 58, 'amber', '🔍 WHAT THE COMPILER ALLOWS (build time, not memory)')
+    d.arrow([(130, ly), c['L']], 'cyan', st=1)
+    d.arrow([(130, 147), (143, 147), (143, ly), c['L']], 'cyan', st='4-')
+    d.zone(10, 204, 346, 58, 'amber', '🔍 WHAT THE COMPILER ALLOWS (build time, not memory)', st='2-')
+    d.note(10, 210, 346, 46, 'The variable a is typed Animal; the object it|holds is a Dog (see the type pointer).', 'cyan', st=1, size=9)
     d.box(18, 228, 160, 26, [('a.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='2-3')
     d.box(184, 228, 164, 26, [('a.Breed ❌ build error', 'm')], 'rose', rx=4, st='2-3')
     d.box(18, 228, 160, 26, [('dog.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='4-4')
