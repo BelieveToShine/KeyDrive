@@ -26,7 +26,7 @@ def d_sp1():
     # --- B(): stackalloc frame
     fb = card(d, 18, 34, 'frame of B()', [('s : Span<byte> (ptr + len)', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=196, st='5-5', hl=5)
     r0, r1 = fb['rows'][0], fb['rows'][1]
-    d.arrow([(r0['r'][0], r0['y']), (232, r0['y']), (232, r1['y']), (r1['r'][0], r1['y'])], 'cyan', 'ptr', at=(232, (r0['y'] + r1['y']) / 2), st='5-5')
+    d.arrow([(r0['r'][0], r0['y']), (232, r0['y']), (232, r1['y']), (r1['r'][0], r1['y'])], 'cyan', st='5-5')
     d.text(116, 134, 'no header, no type pointer: not an object', 'cyan', size=8.5, st='5-5')
     d.text(130, 78, '(frame popped: buffer gone with it)', 'n', size=9, st='6-6')
     # --- code + step marker
@@ -90,11 +90,11 @@ def d_sp3():
     # string "Hello!"
     s1 = card(d, CX, 34, 'string object "Hello!"', [('header', 'hdr'), ('type ptr → string MT', 'tp'), ('length = 6', 'f'), ('', 'f', '0-0')], 'emerald', w=CW, st=1)
     for i, ch in enumerate('Hello!'):
-        d.box(X0 + PITCH * i, 134, W, 18, [(ch, 't')], 'emerald', rx=3, st='1-2' if 1 <= i <= 3 else 1)
+        d.box(X0 + PITCH * i, 134, W, 18, [(ch, 'm')], 'emerald', rx=3, st='1-2' if 1 <= i <= 3 else 1)
         if 1 <= i <= 3:
-            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 't')], 'amber', rx=3, st='3-3', hl=3)
-            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 't')], 'emerald', rx=3, st='4-5')
-            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 't')], 'amber', rx=3, st='6-6', hl=6)
+            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 'm')], 'amber', rx=3, st='3-3', hl=3)
+            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 'm')], 'emerald', rx=3, st='4-5')
+            d.box(X0 + PITCH * i, 134, W, 18, [(ch, 'm')], 'amber', rx=3, st='6-6', hl=6)
     # stack slot s
     _slot(d, 18, 78, 's', 'reference', 'cyan', w=160, st=1)
     d.arrow([(178, 95), (s1['rows'][1]['l'][0], 95)], 'cyan', st=1)
@@ -104,15 +104,15 @@ def d_sp3():
     card(d, CX, 176, 'string "ell": a COPY', rows2, 'emerald', w=CW, st='3-3', hl=3)
     card(d, CX, 176, '"ell": unreachable, not freed yet', rows2, 'rose', w=CW, st='4-4', hl=4)
     for i, ch in enumerate('ell'):
-        d.box(X0 + PITCH * i, 276, W, 18, [(ch, 't')], 'amber', rx=3, st='3-3', hl=3)
-        d.box(X0 + PITCH * i, 276, W, 18, [(ch, 't')], 'rose', rx=3, st='4-4')
+        d.box(X0 + PITCH * i, 276, W, 18, [(ch, 'm')], 'amber', rx=3, st='3-3', hl=3)
+        d.box(X0 + PITCH * i, 276, W, 18, [(ch, 'm')], 'rose', rx=3, st='4-4')
     d.box(CX, 176, CW, 130, [('free space', 't'), ('🧹 GC ran: "ell" was not reachable', 's')], 'n', st='5-', hl=5)
     # copy arrow between the char rows
-    d.arrow([(s1['rows'][3]['r'][0], 143), (610, 143), (610, 285), (c2['rows'][3]['r'][0], 285)], 'amber', 'copy', at=(610, 215), st='3-3')
+    d.text(420, 172, '↓ e l l copied ↓', 'amber', size=8.5, st='3-3')
     # stack: copy slot
-    _slot(d, 18, 220, 'copy', '(not set yet)', 'n', st='2-2')
-    _slot(d, 18, 220, 'copy', 'reference', 'cyan', st='3-3', hl=3)
-    _slot(d, 18, 220, 'copy', 'null', 'n', st='4-', hl=4)
+    _slot(d, 18, 220, 'copy', '(not set yet)', 'n', st='2-2', w=160)
+    _slot(d, 18, 220, 'copy', 'reference', 'cyan', st='3-3', w=160)
+    _slot(d, 18, 220, 'copy', 'null', 'n', st='4-', w=160, hl=4)
     d.arrow([(178, 237), (c2['rows'][1]['l'][0], 237)], 'cyan', st='3-3')
     # stack: span
     sp = card(d, 18, 130, 'span (ref struct)', [('pointer →', 'f'), ('length = 3', 'f')], 'violet', w=160, st='6-6', hl=6)
@@ -141,7 +141,7 @@ def d_sp4():
         card(d, 18, 34, 'frame of Loop()', rows, 'cyan', w=296, st=f'{k}-{k}', hl=k)
     rows = [('i = 9999 …', 'f'), ('block 1: 256 bytes', 'f'), ('block 2: 256 bytes', 'f'), ('… thousands more blocks …', 'f'), ('no room left in the stack', 'f')]
     g = card(d, 18, 34, 'frame of Loop() keeps growing', rows, 'rose', w=296, st='4-4', hl=4)
-    d.code_box(334, 8, 296, 100, [(0, 'void Loop(int n) {', ''), (0, '  for (int i = 0; i < n; i++) {', ''), (0, '    Span<byte> b = stackalloc byte[256];', ''), (0, '  }', ''), (0, '}', '')], 'n', size=9, lh=14)
+    d.code_box(334, 8, 296, 100, [(0, 'void Loop(int n) {', ''), (10, 'for (int i = 0; i < n; i++) {', ''), (20, 'Span<byte> b = stackalloc byte[256];', ''), (10, '}', ''), (0, '}', '')], 'n', size=9, lh=14)
     d.text(342, 8 + 22 + 2 * 14, '▶', 'amber', size=9, anchor='middle', st='1-4')
     d.box(334, 124, 296, 60, [('💥 stack overflow', 't'), ('the process crashes', 's')], 'rose', st='4-4', hl=4)
     for i, (t, c) in enumerate([
@@ -167,7 +167,7 @@ def d_sp5():
     d.arrow([(390, m['rows'][0]['y']), (416, m['rows'][0]['y']), (416, y1), (390, y1)], 'amber', dash=True, st='2-2')
     d.arrow([(390, m['rows'][0]['y']), (416, m['rows'][0]['y']), (416, y1), (390, y1)], 'rose', dash=True, st='3-')
     d.box(442, 70, 188, 70, [('✘ compiler refuses', 't'), ('the return statement', 's'), ('(ref-safety rules)', 's')], 'rose', st='4-4', hl=4)
-    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (0, '    Span<byte> s = stackalloc byte[4];', ''), (0, '    return s;      // ✘ does not compile', ''), (0, '}', '')], 'n', size=9, lh=14)
+    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // ✘ does not compile', ''), (0, '}', '')], 'n', size=9, lh=14)
     for line, steps in [(0, '1-1'), (2, '2-4')]:
         _marker(d, 10, 258, line, steps)
     _marker(d, 10, 258, 1, '1-1')

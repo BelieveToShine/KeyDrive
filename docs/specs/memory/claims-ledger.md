@@ -196,6 +196,9 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | Exact singleton creation moment depends on registration | 🟨 K | stated generally |
 | Singleton lives in gen 2; scoped/transient die young | 🟦 I | general GC behaviour (pages 20, 14), not documented by DI |
 
+## Memory-level rebuild (2026-10-14)
+All diagrams were rebuilt with object header / type pointer / MethodTable / stack-slot / static-area cells. The additional claims per page, each tagged verified-doc / classic-model / teaching-picture, are in `claims-ledger-rebuild.md`. Source of the classic model: MSDN Magazine 2005 "How the CLR Creates Runtime Objects" and the dotnet/runtime Book of the Runtime (type loader, virtual stub dispatch). Stack-allocation example thresholds 128 and 256 bytes are illustrative.
+
 ## Cross-page notes
 - Illustrative literals: Amount = 100, qty = 1, Total = 2, "Rex"/"Pug", card ending 1234.
 - Illustrative sizes: new byte[1000], new byte[100_000] ("100 KB" buffer per request), 60,000 bytes; threshold 85,000 bytes is documented.

@@ -77,9 +77,9 @@ def d_ab2():
     notes = [('Two stack variables, both typed Payment, hold references|to two DIFFERENT heap objects. Each starts with a header and a type pointer.', 'cyan'),
              ('Each type pointer leads to its own type’s MethodTable (one per type).|The child filled Pay’s slot with its own code.', 'violet'),
              ('Build time: Payment.Pay is a virtual slot, the same number in|every child table (here: slot 0). The compiler knows only the slot.', 'amber'),
-             ('p1.Pay() ①: follow the reference in p1 to the object on the heap.', 'cyan'),
-             ('p1.Pay() ②: read the object’s type pointer → CardPayment’s table,|take slot 0. The object’s real type picked the table, not p1’s type.', 'violet'),
-             ('p1.Pay() ③: jump to CardPayment.Pay. p2.Pay() takes its own object|→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.', 'emerald')]
+             ('p1.Pay() 1 ·: follow the reference in p1 to the object on the heap.', 'cyan'),
+             ('p1.Pay() 2 ·: read the object’s type pointer → CardPayment’s table,|take slot 0. The object’s real type picked the table, not p1’s type.', 'violet'),
+             ('p1.Pay() 3 ·: jump to CardPayment.Pay. p2.Pay() takes its own object|→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.', 'emerald')]
     for i, (t, c) in enumerate(notes):
         d.note(10, 442, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9)
     d.text(630, 434, 'teaching picture: layout and slot numbers are illustrative', 'n', size=8, anchor='end')
@@ -108,8 +108,8 @@ def build_abstract_base():
                 'Two stack variables, both typed <code>Payment</code> (the abstract base), hold references to <b>different</b> heap objects: a CardPayment and a UpiPayment. Each object starts with a header and a type pointer.',
                 'Each type pointer leads to its own type’s <b>MethodTable</b> (one per type, shared by all its objects). Each child filled the slot for <code>Pay</code> with its own code. The abstract <code>Pay</code> has a slot but no code of its own.',
                 '<b>Build time.</b> <code>p1</code> is typed <code>Payment</code>, so the compiler only records “<code>Pay</code> is virtual slot N” (slot 0 here). The slot number is a constant; the target is not known yet.',
-                '<b>Run time ①.</b> <code>p1.Pay()</code> follows the reference in <code>p1</code> to the object on the heap.',
-                '<b>Run time ②.</b> It reads the object’s type pointer: that leads to <b>CardPayment’s</b> table. The object’s <i>real</i> type chose the table, not the variable’s type. Take the slot.',
+                '<b>Run time 1 ·.</b> <code>p1.Pay()</code> follows the reference in <code>p1</code> to the object on the heap.',
+                '<b>Run time 2 ·.</b> It reads the object’s type pointer: that leads to <b>CardPayment’s</b> table. The object’s <i>real</i> type chose the table, not the variable’s type. Take the slot.',
                 '<b>Jump.</b> The slot holds <code>CardPayment.Pay</code>, so that code runs. <code>p2.Pay()</code> uses the same slot number, but its own object leads to UpiPayment’s table. More in [[p:virtual-override-overload]].'],
                 'one variable type, many object types. The checkout code only knows “Payment”; each object brings its own table. (Slot numbers and layout: teaching picture of the classic runtime model.)')),
             ('table', '🔍 Abstract class vs ordinary base class', ['', 'Ordinary base class', 'Abstract base class'], [

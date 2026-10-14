@@ -104,7 +104,7 @@ def build_interfaces_memory():
                 'Change the original: <code>c.Value = 9</code>. Only the stack slot changes; the <b>box still says 5</b>. They are two separate values now.',
                 '<code>s.Pay()</code> follows <code>s</code> to the box, then its type pointer to Coupon’s table. The call runs <b>on the box</b>, not on <code>c</code>.',
                 '<b>Unboxing.</b> <code>(Coupon)s</code> copies the value back out into a new stack slot. The box stays on the heap until the GC finds it unreachable.'],
-                'boxing again (page [[p:boxing]]): a struct stored in an interface variable lives in a heap box. Addresses are illustrative.')),
+                'boxing again ([[p:boxing]]): a struct stored in an interface variable lives in a heap box. Addresses are illustrative.')),
             ('table', '🧾 Class object vs interface variable', ['', 'Class object', 'Interface variable'], [
                 ['Takes memory on the heap', '✅ yes', '❌ no — it is only a reference slot'],
                 ['Created with <code>new</code>', '✅ yes', '❌ never'],
