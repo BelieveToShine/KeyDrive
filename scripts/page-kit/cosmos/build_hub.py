@@ -131,7 +131,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', '<title>Cosmos DB Perfo
   <div class="wrap">KeyDrive · Data Systems · Cosmos DB Performance Lab · {nw} / {nt} concepts written</div>
 </footer>
 
-<script src="../assets/site.js?v=20261019"></script>
+<script src="../assets/site.js?v=20261020"></script>
 </body>
 </html>
 '''

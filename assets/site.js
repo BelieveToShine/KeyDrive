@@ -434,18 +434,22 @@
 })();
 
 
-/* Journey-map node labels: shrink the font until the label fits inside its box, so long titles never spill over the
-   border or collide with the emoji / neighbouring pills. Runs on every hub page that has an SVG journey map. */
+/* Journey-map node labels: shrink the font until the label fits inside its box with a clear margin, so long titles never
+   spill over the border or collide with the emoji / neighbouring pills. Re-runs a few times because emoji fonts and web
+   fonts can finish loading late (and differ per OS). Runs on every hub page that has an SVG journey map. */
 (function () {
   function fit() {
     document.querySelectorAll(".jm-node").forEach(function (g) {
       var r = g.querySelector("rect"), t = g.querySelector("text");
-      if (!r || !t || !t.getComputedTextLength) return;
-      var max = parseFloat(r.getAttribute("width")) - 22, fs = parseFloat(t.getAttribute("font-size")) || 14;
-      while (t.getComputedTextLength() > max && fs > 8.5) { fs -= 0.5; t.setAttribute("font-size", fs); }
+      if (!r || !t || !t.getBBox) return;
+      var max = parseFloat(r.getAttribute("width")) - 44, fs = 14;
+      t.setAttribute("font-size", fs);
+      var guard = 0;
+      while (t.getBBox().width > max && fs > 8 && guard++ < 40) { fs -= 0.5; t.setAttribute("font-size", fs); }
     });
   }
+  fit();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   window.addEventListener("load", fit);
-  fit();
+  [300, 900, 2000].forEach(function (ms) { setTimeout(fit, ms); });
 })();
