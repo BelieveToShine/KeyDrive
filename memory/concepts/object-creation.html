@@ -45,7 +45,7 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="What new Order() does in memory, step by step: the variable o exists first and is empty; the runtime allocates a heap object with a header, a type pointer to the Order MethodTable and default field values; the constructor runs in its own stack frame with this pointing at the object, sets qty and note (note refers to a separate string object); the frame is popped (drawn faded) and the reference is stored in o">
+<div class="st-stage"><svg viewBox="0 0 640 456" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="What new Order() does in memory, step by step: the variable o exists first and is empty; the runtime allocates a heap object with a header, a type pointer to the Order MethodTable and default field values; the constructor runs in its own stack frame with this pointing at the object, sets qty and note (note refers to a separate string object); the frame is popped (drawn faded) and the reference is stored in o">
 <defs><marker id="oc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="8" width="150" height="190" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -95,10 +95,22 @@
 <g class="st" data-s="2-"><text x="555" y="71.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable, GC info</text></g>
 <g class="st" data-s="2-"><rect class="bx" x="496" y="82" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="2-"><text x="555" y="95.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">shared by all</text></g>
-<rect class="bx" x="10" y="322" width="620" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="344" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Order { int qty = 1; string note; public Order() { note = "new"; } }</text>
-<text x="24" y="360" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">var o = new Order();</text>
-<text class="free" x="320" y="394" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">amber = just written · green = default value · teaching picture: real addresses and widths vary by runtime version</text>
+<rect class="bx" x="10" y="322" width="620" height="106" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="344" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Order {</text>
+<text x="24" y="358" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  int qty = 1;</text>
+<text x="24" y="372" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  string note;</text>
+<text x="24" y="386" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  public Order() { note = "new"; }</text>
+<text x="24" y="400" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">}</text>
+<text x="24" y="414" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">var o = new Order();</text>
+<g class="st" data-s="1-2"><rect class="cur" x="14" y="404" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-2"><text class="cur" x="16" y="413.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="348" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="357.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-5"><rect class="cur" x="14" y="376" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-5"><text class="cur" x="16" y="385.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="404" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="413.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<text class="free" x="320" y="446" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">amber = just written · green = default value · teaching picture: real addresses and widths vary by runtime version</text>
 <g class="st" data-s="2-"><g class="arrow-pill"><rect x="394" y="72" width="60" height="18" rx="9"/><text x="424" y="84.5" text-anchor="middle" font-size="9" font-style="italic">type ptr</text></g></g>
 <g class="st" data-s="4-"><g class="arrow-pill"><rect x="370" y="191" width="60" height="18" rx="9"/><text x="400" y="203.5" text-anchor="middle" font-size="9" font-style="italic">note ref</text></g></g>
 </svg></div>
@@ -119,7 +131,7 @@
   <section class="kd-section ">
     <div class="sec-label see">🪆 An object that holds another object</div>
 <figure class="diagram-card kd-story" data-steps="7">
-<div class="st-stage"><svg viewBox="0 0 640 392" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="new Order() where Order has a field initializer new Customer(): two separate heap objects, each with its own header and type pointer; the cust field holds a reference to the Customer, o holds a reference to the Order; when o is cleared nothing points to the Order, so both objects become unreachable and a later GC frees them">
+<div class="st-stage"><svg viewBox="0 0 640 444" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="new Order() where Order has a field initializer new Customer(): two separate heap objects, each with its own header and type pointer; the cust field holds a reference to the Customer, o holds a reference to the Order; when o is cleared nothing points to the Order, so both objects become unreachable and a later GC frees them">
 <defs><marker id="oc2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="8" width="150" height="178" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -196,10 +208,22 @@
 <g class="st" data-s="3-"><text x="520" y="209.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable, GC info</text></g>
 <g class="st" data-s="3-"><rect class="bx" x="428" y="220" width="184" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="3-"><text x="520" y="233.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">shared by every Customer</text></g>
-<rect class="bx" x="10" y="310" width="620" height="52" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="332" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Customer { int id; }   class Order { Customer cust = new Customer(); }</text>
-<text x="24" y="348" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">var o = new Order();   ...   o = null;</text>
-<text class="free" x="320" y="382" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">amber = just written · rose dashed = unreachable (not freed yet) · teaching picture: addresses and widths vary by runtime version</text>
+<rect class="bx" x="10" y="310" width="620" height="106" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="332" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Customer { int id; }</text>
+<text x="24" y="346" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Order {</text>
+<text x="24" y="360" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  Customer cust = new Customer();</text>
+<text x="24" y="374" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">}</text>
+<text x="24" y="388" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">var o = new Order();</text>
+<text x="24" y="402" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">o = null;</text>
+<g class="st" data-s="1-2"><rect class="cur" x="14" y="378" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-2"><text class="cur" x="16" y="387.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-4"><rect class="cur" x="14" y="350" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-4"><text class="cur" x="16" y="359.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="378" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="387.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="392" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="401.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<text class="free" x="320" y="434" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">amber = just written · rose dashed = unreachable (not freed yet) · teaching picture: addresses and widths vary by runtime version</text>
 <g class="st" data-s="4-6"><g class="arrow-pill"><rect x="360.5" y="141" width="39" height="18" rx="9"/><text x="380" y="153.5" text-anchor="middle" font-size="9" font-style="italic">cust</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
@@ -270,6 +294,12 @@
 <text x="24" y="414" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var a = new Person[3];</text>
 <text x="24" y="430" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">a[0] = new Person();</text>
 <text x="24" y="446" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#fcd34d">a[1].Name = "x";      // slot 1 is null → NullReferenceException</text>
+<g class="st" data-s="1-3"><rect class="cur" x="14" y="404" width="612" height="16" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-3"><text class="cur" x="16" y="413.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-5"><rect class="cur" x="14" y="420" width="612" height="16" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-5"><text class="cur" x="16" y="429.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="436" width="612" height="16" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="445.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <text class="free" x="320" y="478" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">amber = just written · green = default (null) · rose = the problem · teaching picture: addresses and widths vary by runtime version</text>
 <g class="st" data-s="5-"><g class="arrow-pill"><rect x="164.5" y="191" width="39" height="18" rx="9"/><text x="184" y="203.5" text-anchor="middle" font-size="9" font-style="italic">a[0]</text></g></g>
 </svg></div>

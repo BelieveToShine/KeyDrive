@@ -5,7 +5,7 @@ FOOT2 = 'amber = just written · rose dashed = unreachable (not freed yet) · te
 FOOT3 = 'amber = just written · green = default (null) · rose = the problem · teaching picture: addresses and widths vary by runtime version'
 
 def d_oc1():
-    d = Diagram('oc1', 640, 404, 'What new Order() does in memory, step by step: the variable o exists first and is empty; the runtime allocates a heap object with a header, a type pointer to the Order MethodTable and default field values; the constructor runs in its own stack frame with this pointing at the object, sets qty and note (note refers to a separate string object); the frame is popped (drawn faded) and the reference is stored in o')
+    d = Diagram('oc1', 640, 456, 'What new Order() does in memory, step by step: the variable o exists first and is empty; the runtime allocates a heap object with a header, a type pointer to the Order MethodTable and default field values; the constructor runs in its own stack frame with this pointing at the object, sets qty and note (note refers to a separate string object); the frame is popped (drawn faded) and the reference is stored in o')
     d.zone(10, 8, 150, 190, 'cyan', '📚 STACK')
     main = card(d, 18, 32, 'Main() frame', [('o = (not set yet)', 'f', '1-5')], 'cyan', w=134, st='1-', hl=1)
     cell(d, main, 0, 'o = ref', 'amber', st='6-', hl=6)
@@ -24,12 +24,13 @@ def d_oc1():
     d.arrow([(ctor['rows'][0]['r'][0], ctor['rows'][0]['y']), (o['x'], ctor['rows'][0]['y'])], 'cyan', st='3-4', id='r2')
     ny, sy = o['rows'][3]['y'], s['R'][1]
     d.arrow([(o['rows'][3]['r'][0], ny), (400, ny), (400, sy), (s['x'] + s['w'], sy)], 'amber', 'note ref', at=(400, 200), st='4-', id='r3')
-    d.code_box(10, 322, 620, 52, [(0, 'class Order { int qty = 1; string note; public Order() { note = "new"; } }', ''), (0, 'var o = new Order();', 'k')], 'n', size=9, lh=16)
-    d.text(320, 394, FOOT, 'n', 9)
+    d.code_box(10, 322, 620, 106, [(0, 'class Order {', ''), (0, '  int qty = 1;', ''), (0, '  string note;', ''), (0, '  public Order() { note = "new"; }', ''), (0, '}', ''), (0, 'var o = new Order();', 'k')], 'n', size=9, lh=14)
+    run_line(d, 10, 322, 620, [5, 5, 1, 3, 3, 5], size=9, lh=14)
+    d.text(320, 446, FOOT, 'n', 9)
     return d
 
 def d_oc2():
-    d = Diagram('oc2', 640, 392, 'new Order() where Order has a field initializer new Customer(): two separate heap objects, each with its own header and type pointer; the cust field holds a reference to the Customer, o holds a reference to the Order; when o is cleared nothing points to the Order, so both objects become unreachable and a later GC frees them')
+    d = Diagram('oc2', 640, 444, 'new Order() where Order has a field initializer new Customer(): two separate heap objects, each with its own header and type pointer; the cust field holds a reference to the Customer, o holds a reference to the Order; when o is cleared nothing points to the Order, so both objects become unreachable and a later GC frees them')
     d.zone(10, 8, 150, 178, 'cyan', '📚 STACK')
     main = card(d, 18, 32, 'Main() frame', [('o = (not set yet)', 'f', '1-4')], 'cyan', w=134, st='1-', hl=1)
     cell(d, main, 0, 'o = ref', 'amber', st='5-5', hl=5)
@@ -51,8 +52,9 @@ def d_oc2():
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (o['x'], main['rows'][0]['y'])], 'cyan', st='5-5', id='r1')
     d.arrow([(ctor['rows'][0]['r'][0], ctor['rows'][0]['y']), (o['x'], ctor['rows'][0]['y'])], 'cyan', st='2-4', id='r0')
     d.arrow([(o['rows'][2]['r'][0], o['rows'][2]['y']), (380, o['rows'][2]['y']), (380, 200), (c['x'] + c['w'], 200)], 'amber', 'cust', at=(380, 150), st='4-6', id='r2')
-    d.code_box(10, 310, 620, 52, [(0, 'class Customer { int id; }   class Order { Customer cust = new Customer(); }', ''), (0, 'var o = new Order();   ...   o = null;', 'k')], 'n', size=9, lh=16)
-    d.text(320, 382, FOOT2, 'n', 9)
+    d.code_box(10, 310, 620, 106, [(0, 'class Customer { int id; }', ''), (0, 'class Order {', ''), (0, '  Customer cust = new Customer();', ''), (0, '}', ''), (0, 'var o = new Order();', 'k'), (0, 'o = null;', 'k')], 'n', size=9, lh=14)
+    run_line(d, 10, 310, 620, [4, 4, 2, 2, 4, 5, None], size=9, lh=14)
+    d.text(320, 434, FOOT2, 'n', 9)
     return d
 
 def d_oc3():
@@ -76,6 +78,7 @@ def d_oc3():
     s0 = arr['rows'][3]['y']
     d.arrow([(arr['rows'][3]['l'][0], s0), (184, s0), (184, 300), (p['x'], 300)], 'amber', 'a[0]', at=(184, 200), st='5-', id='r2')
     d.code_box(10, 392, 620, 66, [(0, 'var a = new Person[3];', ''), (0, 'a[0] = new Person();', ''), (0, 'a[1].Name = "x";      // slot 1 is null → NullReferenceException', 'k')], 'n', size=9, lh=16)
+    run_line(d, 10, 392, 620, [0, 0, 0, 1, 1, 2], size=9, lh=16)
     d.text(320, 478, FOOT3, 'n', 9)
     return d
 
