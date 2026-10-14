@@ -1,4 +1,5 @@
 from data_web import mk, method
+import clinics
 def build():
     S = {}; add = mk(S, 'react', 'rc')
     add('react-mental-model', 'r-1', 'Watch it happen: render, then commit', '1', 'A render is React calling your function to ask what the screen should look like and a commit is React changing the DOM to match',
@@ -53,4 +54,5 @@ def build():
         [('👆','Act like a user','click, type'),('⏳','Wait','for React to finish'),('👀','Look at the screen','what is shown?'),('✅','Assert','on that')],
         ['Do what a user does: click, type.','Wait for React to finish updating.','Look at what is on the screen.','Assert on that, not on internals. ✅'], 'user-shaped tests.')
     method(add, 'react-debugging-playbook', 'r-18', '18')
+    S.update(clinics.build_for(['react-clinic'], 'rc'))
     return S

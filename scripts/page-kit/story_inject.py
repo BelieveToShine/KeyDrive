@@ -8,14 +8,16 @@ HERE = Path(__file__).resolve().parent; R = HERE.parents[1]
 sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE / 'stories'))
 import kit, common
 cat = sys.argv[1]
+hub = cat.startswith('hub:')
+if hub: cat = cat[4:]
 kit.configure(cat, cat, '')
-mod = importlib.import_module(cat)
+mod = importlib.import_module('hubs' if hub else cat)
 n = 0
-for rel, (sid, title, fig) in mod.build().items():
-    p = R / cat / rel; h = p.read_text()
+for rel, (sid, title, fig) in (mod.build(cat) if hub else mod.build()).items():
+    p = R / cat / ('index.html' if hub else rel); h = p.read_text()
     block = common.section(sid, title, fig)
     h = re.sub(r'<!-- kd-story:%s -->.*?<!-- /kd-story:%s -->\n' % (re.escape(sid), re.escape(sid)), '', h, flags=re.S)
-    m = re.search(r'<div class="one-sentence">.*?</div>\n', h, re.S)
+    m = re.search(r'<div class="one-sentence">.*?</div>\n', h, re.S) if not hub else re.search(r'<section class="kd-hero[^"]*">.*?</section>\n', h, re.S)
     assert m, rel
     h = h[:m.end()] + '\n' + block + h[m.end():]
     p.write_text(h); n += 1

@@ -1,4 +1,5 @@
 from data_web import mk, method
+import clinics
 def build():
     S = {}; add = mk(S, 'sql', 'sq')
     add('query-journey', 's-1', 'Watch it happen: what you want vs how it is done', '1', 'SQL states what you want, the optimizer chooses how to get it, and a poor how is what most slow queries really are',
@@ -38,4 +39,5 @@ def build():
         [('📏','Measure before','same way'),('🔧','One change','just one'),('📏','Measure after','same way'),('✅','Compare','real evidence')],
         ['Measure first, in a fixed way.','Make one change.','Measure again the same way.','Compare — now you have evidence, not a hunch. ✅'], 'same lens before and after.')
     method(add, 'debugging-playbook', 's-13', '13')
+    S.update(clinics.build_for(['slow-query-clinic'], 'sq'))
     return S

@@ -1,4 +1,5 @@
 from data_web import mk, method
+import clinics
 def build():
     S = {}; add = mk(S, 'angular', 'ng')
     add('angular-mental-model', 'a-1', 'Watch it happen: class + template', '1', 'An Angular app is a tree of components and each pairs a class holding state with a template for its look joined by bindings',
@@ -59,4 +60,5 @@ def build():
         [('🧪','Fake services','for each one'),('▶️','Do the action','like a user'),('⏳','Wait','for stability'),('✅','Assert','on behaviour')],
         ['Give the component a fake for each service.','Do the action.','Wait for stability.','Assert on the behaviour. ✅'], 'behaviour, not internals.')
     method(add, 'angular-debugging-playbook', 'a-20', '20')
+    S.update(clinics.build_for(['angular-clinic'], 'ng'))
     return S

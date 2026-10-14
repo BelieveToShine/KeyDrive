@@ -1,4 +1,5 @@
 from data_web import mk, method
+import clinics
 def build():
     S = {}; add = mk(S, 'cosmos', 'co')
     add('cosmos-mental-model', 'c-1', 'Watch it happen: items, containers, key, RUs', '1', 'Cosmos DB stores JSON items in containers spread across machines by a key you choose and charges every request in Request Units',
@@ -34,4 +35,5 @@ def build():
     add('global-distribution', 'c-11', 'Watch it happen: bring data close', '11', 'Adding regions brings data close to users and survives a region loss, with single-write for simplicity or multi-write for local write speed and conflicts to plan for',
         [('🌍','Add regions','copies elsewhere'),('📍','Close to users','faster reads'),('🛟','Region loss','another takes over'),('⚔️','Multi-write','plan for conflicts')],
         ['Add regions to hold copies of the data.','Users read from a nearby region.','If a region is lost, another carries on.','Multi-write gives local write speed but you must plan for conflicts. ✅'], 'single-write is simpler; multi-write is faster locally.')
+    S.update(clinics.build_for(['cosmos-cost-clinic'], 'co'))
     return S
