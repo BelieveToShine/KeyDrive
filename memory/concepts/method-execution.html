@@ -55,19 +55,19 @@
 <g class="st" data-s="1-"><text class="zone-title" x="34" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
 <g class="st" data-s="2-4"><rect class="zone" x="20" y="200" width="200" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-4"><text class="zone-title" x="34" y="219" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">AddItem frame (pushed)</text></g>
-<g class="st" data-s="1-"><rect class="zone" x="275" y="100" width="340" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><rect class="zone" x="275" y="100" width="340" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="289" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order object @ 0x…A1</text></g>
-<g class="st" data-s="1-"><rect class="zone" x="275" y="214" width="340" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="289" y="233" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object "pen" (a literal, already exists)</text></g>
-<g class="st" data-s="1-"><path id="me1-ao" d="M212,137 L240,137 L240,161 L283,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me1A)"/></g>
-<g class="st" data-s="3-4"><path id="me1-at" d="M212,237 L250,237 L250,161 L283,161" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
-<g class="st" data-s="3-4"><path d="M212,261 L246,261 L246,275 L283,275" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<g class="st" data-s="1-"><rect class="zone" x="275" y="214" width="340" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="289" y="233" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object "pen" (a literal, created earlier)</text></g>
+<g class="st" data-s="1-"><path id="me1-ao" d="M212,137 L275,137" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<g class="st" data-s="3-4"><path id="me1-at" d="M212,237 L250,237 L250,146 L275,146" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
+<g class="st" data-s="3-4"><path d="M212,261 L275,261" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me1A)"/></g>
 <rect class="bx" x="10" y="8" width="380" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var order = new Order();</text>
 <text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">order.AddItem("pen");     // inside: Count++</text>
 <rect class="bx note" x="400" y="8" width="230" height="48" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="515" y="28" text-anchor="middle" font-size="8.8" fill="#e7ebf3">teaching picture: addresses are made up;</text>
-<text x="515" y="40.8" text-anchor="middle" font-size="8.8" fill="#e7ebf3">header / type pointer widths vary</text>
+<text x="515" y="40.8" text-anchor="middle" font-size="8.8" fill="#e7ebf3">amber = value just changed</text>
 <g class="st" data-s="1-"><rect class="bx" x="28" y="126" width="184" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="120" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">order = 0x…A1</text></g>
 <g class="st" data-s="2-2"><rect class="bx" x="28" y="226" width="184" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
@@ -78,22 +78,15 @@
 <g class="st" data-s="3-4" data-hl="3"><text x="120" y="239.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">this = 0x…A1  (copy)</text></g>
 <g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="28" y="250" width="184" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="3-4" data-hl="3"><text x="120" y="263.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">name = 0x…S1  (copy)</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="126" width="324" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="150" width="324" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MethodTable</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="283" y="174" width="324" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="445" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="283" y="174" width="324" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="445" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="240" width="324" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="264" width="324" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="277.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MethodTable</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="288" width="324" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length = 3</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="283" y="312" width="324" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="445" y="325.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">chars: p e n (UTF-16)</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="283" y="126" width="324" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="445" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="283" y="126" width="324" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="445" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="283" y="240" width="324" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="445" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length = 3, chars: p e n</text></g>
+<rect class="bx note" x="275" y="296" width="340" height="44" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="445" y="314" text-anchor="middle" font-size="8.8" fill="#e7ebf3">header and type pointer are left out here (this picture is about the frame);</text>
+<text x="445" y="326.8" text-anchor="middle" font-size="8.8" fill="#e7ebf3">the next picture shows them</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="380" width="620" height="50" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="401" text-anchor="middle" font-size="9.5" fill="#67e8f9">The variable order (in Main’s frame) holds the address of the Order object.</text></g>
 <g class="st" data-s="1-1"><text x="320" y="414.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The string "pen" is its own object.</text></g>
@@ -109,14 +102,13 @@
 <g class="st" data-s="5-5"><rect class="bx note" x="10" y="380" width="620" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="5-5"><text x="320" y="401" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Return: the frame is popped, so this and name are gone.</text></g>
 <g class="st" data-s="5-5"><text x="320" y="414.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">order still points to the object, and Count = 1 stays.</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="218" y="127" width="44" height="18" rx="9"/><text x="240" y="139.5" text-anchor="middle" font-size="9" font-style="italic">order</text></g></g>
-<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="230.5" y="213" width="39" height="18" rx="9"/><text x="250" y="225.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
-<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="226.5" y="291" width="39" height="18" rx="9"/><text x="246" y="303.5" text-anchor="middle" font-size="9" font-style="italic">name</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="me1-at"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">✏️</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="226" y="116" width="44" height="18" rx="9"/><text x="248" y="128.5" text-anchor="middle" font-size="9" font-style="italic">order</text></g></g>
+<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="230.5" y="187" width="39" height="18" rx="9"/><text x="250" y="199.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
+<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="228.5" y="240" width="39" height="18" rx="9"/><text x="248" y="252.5" text-anchor="middle" font-size="9" font-style="italic">name</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>order</code> is a stack variable holding the address of an <b>Order</b> object on the heap. The object starts with a header and a type pointer, then its field <code>Count</code>. The string <code>"pen"</code> is a separate object.</li><li><code>order.AddItem("pen")</code>: a <b>new frame</b> is pushed on top of the stack, with slots for <code>this</code> and the parameter <code>name</code>.</li><li>The slots are filled with <b>copies of addresses</b>: <code>this</code> = a copy of <code>order</code>’s address (the object the method was called on), <code>name</code> = a copy of the string’s address. Two references, still <b>one</b> object.</li><li>The method uses <code>this</code> to <b>follow the address</b> to the heap object and changes its field: <code>Count++</code>, 0 → 1.</li><li>Return: the frame is popped. <code>this</code> and <code>name</code> disappear — but <code>Count = 1</code> <b>stays in the object</b>, because the object lives on the heap.</li></ol>
+<ol class="st-caps"><li><code>order</code> is a stack variable holding the address of an <b>Order</b> object on the heap. The object holds its field <code>Count</code> (header and type pointer come in the next picture). The string <code>"pen"</code> is a separate object.</li><li><code>order.AddItem("pen")</code>: a <b>new frame</b> is pushed on top of the stack, with slots for <code>this</code> and the parameter <code>name</code>.</li><li>The slots are filled with <b>copies of addresses</b>: <code>this</code> = a copy of <code>order</code>’s address (the object the method was called on), <code>name</code> = a copy of the string’s address. Two references, still <b>one</b> object.</li><li>The method uses <code>this</code> to <b>follow the address</b> to the heap object and changes its field: <code>Count++</code>, 0 → 1.</li><li>Return: the frame is popped. <code>this</code> and <code>name</code> disappear — but <code>Count = 1</code> <b>stays in the object</b>, because the object lives on the heap.</li></ol>
 <figcaption><strong>What you're seeing:</strong> a method call = one frame on the stack, plus an address (this) that leads to the data on the heap.</figcaption>
 </figure>
   </section>
@@ -130,31 +122,35 @@
   <section class="kd-section ">
     <div class="sec-label see">📜 One code, many objects: how the code is found</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, which leads to the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B">
+<div class="st-stage"><svg viewBox="0 0 640 452" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two Order objects, one type: each object holds its own Count and a type pointer; both type pointers lead to the same Order MethodTable, whose slot holds the address of the AddItem code that exists once; o1.AddItem() pushes a frame with this = Order A, o2.AddItem() pushes a frame with this = Order B">
 <defs><marker id="me2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="me2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="24" width="140" height="270" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="10" y="24" width="140" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="180" y="24" width="180" height="270" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="180" y="24" width="170" height="290" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="194" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<rect class="zone" x="410" y="24" width="220" height="270" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="424" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA (one per type)</text>
+<g class="st" data-s="1-"><rect class="zone" x="410" y="24" width="220" height="290" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="424" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">🧬 TYPE DATA (appears next)</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="410" y="24" width="220" height="290" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="424" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA (one per type)</text></g>
 <g class="st" data-s="1-"><rect class="zone" x="18" y="50" width="124" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="32" y="69" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
 <g class="st" data-s="4-5"><rect class="zone" x="18" y="214" width="124" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="4-5"><text class="zone-title" x="32" y="233" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">AddItem frame</text></g>
-<g class="st" data-s="1-"><rect class="zone" x="190" y="50" width="160" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><rect class="zone" x="190" y="50" width="150" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="204" y="69" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order A @ 0x…A1</text></g>
-<g class="st" data-s="1-"><rect class="zone" x="190" y="166" width="160" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="204" y="185" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order B @ 0x…B1</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="190" y="176" width="150" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="204" y="195" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order B @ 0x…B1</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="190" y="288" width="150" height="24" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="204" y="307" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">… + 999,998 more Orders</text></g>
 <g class="st" data-s="2-"><rect class="zone" x="420" y="50" width="200" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-"><text class="zone-title" x="434" y="69" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Order MethodTable</text></g>
-<g class="st" data-s="1-"><path d="M134,87 L198,87" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
-<g class="st" data-s="1-"><path d="M134,111 L170,111 L170,203 L198,203" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
-<g class="st" data-s="2-"><path id="me2-ta" d="M342,111 L385,111 L385,87 L428,87" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
-<g class="st" data-s="2-"><path d="M342,227 L385,227 L385,87 L428,87" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="1-"><path d="M134,87 L190,87" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="1-"><path d="M134,111 L172,111 L172,188 L190,188" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="2-"><path id="me2-ta" d="M332,111 L380,111 L380,79 L420,79" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="2-"><path d="M332,237 L380,237 L380,79" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
 <g class="st" data-s="3-"><path id="me2-tc" d="M520,98 L520,190" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#me2A)"/></g>
-<g class="st" data-s="4-4"><path d="M134,251 L156,251 L156,135 L198,135" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
-<g class="st" data-s="5-5"><path d="M134,251 L198,251" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="4-4"><path d="M134,251 L158,251 L158,150 L190,150" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
+<g class="st" data-s="5-5"><path d="M134,251 L190,250" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#me2A)"/></g>
 <g class="st" data-s="1-"><rect class="bx" x="26" y="76" width="108" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="80" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">o1 = 0x…A1</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="26" y="100" width="108" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
@@ -163,66 +159,67 @@
 <g class="st" data-s="4-4"><text x="80" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">this = 0x…A1</text></g>
 <g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="240" width="108" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="5-5" data-hl="5"><text x="80" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">this = 0x…B1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="198" y="76" width="144" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="270" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="198" y="100" width="144" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="270" y="113.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="198" y="124" width="144" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="270" y="137.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="198" y="124" width="144" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="270" y="137.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="198" y="192" width="144" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="270" y="205.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="198" y="216" width="144" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="270" y="229.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="198" y="240" width="144" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="270" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="198" y="240" width="144" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="270" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="198" y="76" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="265" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="198" y="100" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="265" y="113.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="198" y="124" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="265" y="137.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="198" y="124" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="265" y="137.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="198" y="202" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="265" y="215.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="198" y="226" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="265" y="239.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="198" y="250" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="265" y="263.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Count = 0</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="198" y="250" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="265" y="263.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Count = 1</text></g>
 <g class="st" data-s="2-"><rect class="bx" x="428" y="76" width="184" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="520" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot: AddItem</text></g>
+<g class="st" data-s="2-"><text x="520" y="89.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot: AddItem → code address</text></g>
 <g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="190" width="160" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="3-" data-hl="3"><text x="520" y="212.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">AddItem native code</text></g>
 <g class="st" data-s="3-" data-hl="3"><text x="520" y="225.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">compiled once</text></g>
-<rect class="bx" x="10" y="306" width="270" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="328" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">o1.AddItem();</text>
-<text x="24" y="343" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">o2.AddItem();</text>
-<rect class="bx note" x="10" y="366" width="620" height="46" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="320" y="385" text-anchor="middle" font-size="8.8" fill="#e7ebf3">teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;</text>
-<text x="320" y="397.8" text-anchor="middle" font-size="8.8" fill="#e7ebf3">the MethodTable link shows where the shared type data and the one copy of the code are found.</text>
-<g class="st" data-s="1-1"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="460" y="321.5" text-anchor="middle" font-size="9" fill="#67e8f9">Two objects, each with its own header,</text></g>
-<g class="st" data-s="1-1"><text x="460" y="334.5" text-anchor="middle" font-size="9" fill="#67e8f9">type pointer and Count. o1 and o2 hold</text></g>
-<g class="st" data-s="1-1"><text x="460" y="347.5" text-anchor="middle" font-size="9" fill="#67e8f9">their addresses.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="460" y="321.5" text-anchor="middle" font-size="9" fill="#c4b5fd">Both type pointers lead to the SAME Order</text></g>
-<g class="st" data-s="2-2"><text x="460" y="334.5" text-anchor="middle" font-size="9" fill="#c4b5fd">MethodTable: one per type, shared by</text></g>
-<g class="st" data-s="2-2"><text x="460" y="347.5" text-anchor="middle" font-size="9" fill="#c4b5fd">every Order.</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="460" y="328" text-anchor="middle" font-size="9" fill="#fcd34d">The MethodTable leads to AddItem’s compiled</text></g>
-<g class="st" data-s="3-3"><text x="460" y="341" text-anchor="middle" font-size="9" fill="#fcd34d">code. That code exists once.</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="460" y="321.5" text-anchor="middle" font-size="9" fill="#fcd34d">o1.AddItem(): a frame is pushed with</text></g>
-<g class="st" data-s="4-4"><text x="460" y="334.5" text-anchor="middle" font-size="9" fill="#fcd34d">this = Order A’s address. The shared</text></g>
-<g class="st" data-s="4-4"><text x="460" y="347.5" text-anchor="middle" font-size="9" fill="#fcd34d">code runs on A: Count 0 → 1.</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="460" y="321.5" text-anchor="middle" font-size="9" fill="#fcd34d">Return, then o2.AddItem(): a new frame,</text></g>
-<g class="st" data-s="5-5"><text x="460" y="334.5" text-anchor="middle" font-size="9" fill="#fcd34d">this = Order B’s address. The SAME</text></g>
-<g class="st" data-s="5-5"><text x="460" y="347.5" text-anchor="middle" font-size="9" fill="#fcd34d">code runs on B: Count 0 → 1.</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="290" y="306" width="340" height="52" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="460" y="321.5" text-anchor="middle" font-size="9" fill="#6ee7b7">Return: frame popped. Per object: header,</text></g>
-<g class="st" data-s="6-6"><text x="460" y="334.5" text-anchor="middle" font-size="9" fill="#6ee7b7">type ptr, Count. Per type: one MethodTable</text></g>
-<g class="st" data-s="6-6"><text x="460" y="347.5" text-anchor="middle" font-size="9" fill="#6ee7b7">and one code, shared by a million Orders.</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="153.5" y="78" width="29" height="18" rx="9"/><text x="168" y="90.5" text-anchor="middle" font-size="9" font-style="italic">o1</text></g></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="155.5" y="166" width="29" height="18" rx="9"/><text x="170" y="178.5" text-anchor="middle" font-size="9" font-style="italic">o2</text></g></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="355" y="161" width="60" height="18" rx="9"/><text x="385" y="173.5" text-anchor="middle" font-size="9" font-style="italic">type ptr</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="498" y="141" width="44" height="18" rx="9"/><text x="520" y="153.5" text-anchor="middle" font-size="9" font-style="italic">entry</text></g></g>
-<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="136.5" y="191" width="39" height="18" rx="9"/><text x="156" y="203.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
-<g class="st" data-s="5-5"><g class="arrow-pill"><rect x="140.5" y="242" width="39" height="18" rx="9"/><text x="160" y="254.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
+<rect class="bx" x="10" y="326" width="270" height="50" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="348" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">o1.AddItem();</text>
+<text x="24" y="363" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">o2.AddItem();</text>
+<rect class="bx note" x="10" y="392" width="620" height="46" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="320" y="411" text-anchor="middle" font-size="8.8" fill="#e7ebf3">teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;</text>
+<text x="320" y="423.8" text-anchor="middle" font-size="8.8" fill="#e7ebf3">the MethodTable link shows where the shared type data and the one copy of the code are found.</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#67e8f9">Two objects, each with its own header,</text></g>
+<g class="st" data-s="1-1"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#67e8f9">type pointer and Count. o1 and o2 hold</text></g>
+<g class="st" data-s="1-1"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#67e8f9">their addresses. (Type data comes next.)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#c4b5fd">Both type pointers lead to the SAME Order</text></g>
+<g class="st" data-s="2-2"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#c4b5fd">MethodTable: one per type, shared by</text></g>
+<g class="st" data-s="2-2"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#c4b5fd">every Order.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#fcd34d">The MethodTable’s slot holds the address of</text></g>
+<g class="st" data-s="3-3"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#fcd34d">AddItem’s compiled code. That code</text></g>
+<g class="st" data-s="3-3"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#fcd34d">exists once.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#fcd34d">o1.AddItem(): a frame is pushed with</text></g>
+<g class="st" data-s="4-4"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#fcd34d">this = Order A’s address. The shared</text></g>
+<g class="st" data-s="4-4"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#fcd34d">code runs on A: Count 0 → 1.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#fcd34d">Return, then o2.AddItem(): a new frame,</text></g>
+<g class="st" data-s="5-5"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#fcd34d">this = Order B’s address. The SAME</text></g>
+<g class="st" data-s="5-5"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#fcd34d">code runs on B: Count 0 → 1.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="290" y="326" width="340" height="52" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="460" y="341.5" text-anchor="middle" font-size="9" fill="#6ee7b7">Return: frame popped. Per object: header,</text></g>
+<g class="st" data-s="6-6"><text x="460" y="354.5" text-anchor="middle" font-size="9" fill="#6ee7b7">type ptr, Count. Per type: one MethodTable</text></g>
+<g class="st" data-s="6-6"><text x="460" y="367.5" text-anchor="middle" font-size="9" fill="#6ee7b7">and one code, shared by a million Orders.</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="151.5" y="66" width="29" height="18" rx="9"/><text x="166" y="78.5" text-anchor="middle" font-size="9" font-style="italic">o1</text></g></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="157.5" y="131" width="29" height="18" rx="9"/><text x="172" y="143.5" text-anchor="middle" font-size="9" font-style="italic">o2</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="350" y="103" width="60" height="18" rx="9"/><text x="380" y="115.5" text-anchor="middle" font-size="9" font-style="italic">type ptr</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="484.5" y="141" width="71" height="18" rx="9"/><text x="520" y="153.5" text-anchor="middle" font-size="9" font-style="italic">address of</text></g></g>
+<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="138.5" y="223" width="39" height="18" rx="9"/><text x="158" y="235.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
+<g class="st" data-s="5-5"><g class="arrow-pill"><rect x="146.5" y="256" width="39" height="18" rx="9"/><text x="166" y="268.5" text-anchor="middle" font-size="9" font-style="italic">this</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Two <code>Order</code> objects on the heap. Each holds <b>only its own data</b>: a header, a type pointer and its own <code>Count</code>.</li><li>Both type pointers lead to the <b>same MethodTable</b> — one per type, shared by all its objects.</li><li>The MethodTable leads to the compiled code of <code>AddItem</code>. That code exists <b>once</b>.</li><li><code>o1.AddItem()</code>: a frame is pushed with <code>this</code> = Order A’s address. The shared code runs on A: Count becomes 1.</li><li>Return, then <code>o2.AddItem()</code>: a new frame with <code>this</code> = Order B’s address. The same code runs on B: Count becomes 1.</li><li>Return. A million objects would still share one MethodTable and one copy of the code — only the data is per object.</li></ol>
+<ol class="st-caps"><li>Two <code>Order</code> objects on the heap. Each holds <b>only its own data</b>: a header, a type pointer and its own <code>Count</code> (the TYPE DATA area appears next).</li><li>Both type pointers lead to the <b>same MethodTable</b> — one per type, shared by all its objects.</li><li>The MethodTable’s slot for <code>AddItem</code> holds the address of its compiled code. That code exists <b>once</b>.</li><li><code>o1.AddItem()</code>: a frame is pushed with <code>this</code> = Order A’s address. The shared code runs on A: Count becomes 1.</li><li>Return, then <code>o2.AddItem()</code>: a new frame with <code>this</code> = Order B’s address. The same code runs on B: Count becomes 1.</li><li>Return. A million objects (dashed ghost) would still share one MethodTable and one copy of the code — only the data is per object.</li></ol>
 <figcaption><strong>What you're seeing:</strong> objects carry data (and a pointer to their type); the type carries the code. At call time <code>this</code> says which object the shared code works on.</figcaption>
 </figure>
   </section>

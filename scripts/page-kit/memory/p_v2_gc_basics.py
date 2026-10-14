@@ -1,63 +1,55 @@
 from p_common import *
 
 # ================================================================= 13. GC BASICS (v2: memory level)
-CW = 134
-def obj(d, x, y, name, nextv, st_a, st_b, st_c=None, st_d=None):
-    """One Order object as a real memory card. States by step range:
-    st_a: plain (not yet visited), st_b: reached (green), st_c: unreached (rose), st_d: orphaned after a = null (amber). Returns anchors."""
-    rows = lambda: [('header (sync block)', 'hdr'), ('type ptr → Order MT', 'tp'), (f'next = {nextv}', 'f')]
-    g = None
-    for st, color, tag in ((st_a, 'n', ''), (st_b, 'emerald', ': reached'), (st_c, 'rose', ': no path'), (st_d, 'amber', ': no root')):
-        if st is None: continue
-        g = card(d, x, y, f'Order {name}{tag}', rows(), color, w=CW, st=st, hl=int(str(st).split('-')[0]) if tag else None)
-    return g
+OW, OH = 108, 50
+def obj(d, x, y, name, nextv, spans):
+    """One Order object = one box. spans: [(st, color, tag)]  (colour carries meaning: see legend)."""
+    for st, color, tag in spans:
+        d.box(x, y, OW, OH, [(f'Order {name}', 't'), (f'next = {nextv}', 'm')], color, rx=6, st=st, hl=int(st.split('-')[0]) if tag else None)
 
 def d_gc1():
-    d = Diagram('gc1', 640, 352, 'Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free')
-    d.zone(160, 24, 460, 254, 'emerald', '🏠 HEAP')
-    X1, X2, X3 = 170, 322, 474
-    Y1, Y2 = 52, 168
-    A = obj(d, X1, Y1, 'A', 'ref', '1-1', '2-6', None, '7-')
-    B = obj(d, X2, Y1, 'B', 'null', '1-2', '3-6', None, '7-')
-    # B and A: after step 7 they are orphaned (not freed) -- A/B plain until reached
-    D = obj(d, X1, Y2, 'D', 'null', '1-3', '4-')
-    C = obj(d, X2, Y2, 'C', 'null', '1-4', None, '5-5')
-    E = obj(d, X3, Y1, 'E', 'ref', '1-4', None, '5-5')
-    F = obj(d, X3, Y2, 'F', 'ref', '1-4', None, '5-5')
-    # step 6+: the unreached ones are reclaimed -> free blocks (zones with dashes)
-    for (x, y) in ((X2, Y2), (X3, Y1), (X3, Y2)):
-        d.zone(x, y, CW, 106, 'n', 'free space', st='6-')
-    # ---- roots
+    d = Diagram('gc1', 640, 372, 'Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free')
+    d.zone(160, 24, 472, 220, 'emerald', '🏠 HEAP')
+    X1, X2, X3 = 190, 354, 518
+    Y1, Y2 = 62, 160
+    obj(d, X1, Y1, 'A', 'ref', [('1-1', 'n', ''), ('2-6', 'emerald', 1)])
+    obj(d, X1, Y1, 'A', 'ref', [('7-', 'amber', 1)])
+    obj(d, X2, Y1, 'B', 'null', [('1-2', 'n', ''), ('3-6', 'emerald', 1)])
+    obj(d, X2, Y1, 'B', 'null', [('7-', 'amber', 1)])
+    obj(d, X1, Y2, 'D', 'null', [('1-3', 'n', ''), ('4-', 'emerald', 1)])
+    for nm, x, y, nx in (('C', X2, Y2, 'null'), ('E', X3, Y1, 'ref'), ('F', X3, Y2, 'ref')):
+        obj(d, x, y, nm, nx, [('1-4', 'n', ''), ('5-5', 'rose', 1)])
+        d.zone(x, y, OW, OH, 'n', 'free space', st='6-')
+    # roots
     d.zone(10, 24, 140, 98, 'cyan', '📚 STACK: Run()')
     d.box(18, 52, 124, 22, [('a = ref', 'm')], 'cyan', rx=4, st='1-6', hl=2)
     d.box(18, 52, 124, 22, [('a = null', 'm')], 'rose', rx=4, st='7-', hl=7)
-    d.zone(10, 168, 140, 70, 'amber', '📌 STATICS: Program')
-    d.box(18, 194, 124, 22, [('Cache = ref', 'm')], 'amber', rx=4, st=1, hl=4)
-    tpA = A['rows'][1]['y']; tpD = D['rows'][1]['y']
-    # a slot row sits at y=52..74 (mid 63); route to A's type-ptr row
-    d.arrow([(142, 63), (156, 63), (156, tpA), (A['rows'][1]['l'][0], tpA)], 'cyan', id='r1', st='1-6')
-    d.arrow([(142, 205), (156, 205), (156, tpD), (D['rows'][1]['l'][0], tpD)], 'amber', id='r2', st=1)
-    # heap references
-    fA = A['rows'][2]; fB = B['rows'][1]
-    d.arrow([(fA['r'][0], fA['y']), (X1 + CW + 9, fA['y']), (X1 + CW + 9, fB['y']), (fB['l'][0], fB['y'])], 'emerald', id='r3', st=1)
-    # cycle E <-> F : E.next -> F type ptr (right side), F.next -> E type ptr (left side)
-    eF, eT = E['rows'][2], E['rows'][1]; fF, fT = F['rows'][2], F['rows'][1]
-    xr = X3 + CW - 8
-    d.arrow([(eF['r'][0], eF['y']), (X3 + CW + 6, eF['y']), (X3 + CW + 6, fT['y']), (fT['r'][0], fT['y'])], 'n', st='1-5')
-    d.arrow([(fF['l'][0], fF['y']), (X3 - 8, fF['y']), (X3 - 8, eT['y']), (eT['l'][0], eT['y'])], 'n', st='1-5')
+    d.zone(10, 160, 140, 70, 'amber', '📌 STATICS: Program')
+    d.box(18, 186, 124, 22, [('Cache = ref', 'm')], 'amber', rx=4, st=1, hl=4)
+    # root arrows end on the object's border
+    d.arrow([(142, 63), (X1, 63)], 'cyan', id='r1', st='1-6')
+    d.arrow([(142, 197), (X1, 197)], 'amber', id='r2', st=1)
+    d.arrow([(X1 + OW, 87), (X2, 87)], 'emerald', id='r3', st=1)
+    # cycle E <-> F : two vertical arrows (E.next -> F, F.next -> E)
+    d.arrow([(X3 + 28, Y1 + OH), (X3 + 28, Y2)], 'n', st='1-5')
+    d.arrow([(X3 + 80, Y2), (X3 + 80, Y1 + OH)], 'n', st='1-5')
     d.token('r1', '🔍', 15, 'cyan', st='2-2')
     d.token('r3', '🔍', 15, 'emerald', st='3-3')
     d.token('r2', '🔍', 15, 'amber', st='4-4')
-    caps = [('Setup: two roots hold references: slot a in the stack frame, field Cache in the statics.|The heap has six Order objects: header, type pointer, field. E and F reference each other.', 'cyan'),
+    # legend
+    d.text(12, 270, 'colour legend:', 'n', 9, anchor='start')
+    for i, (c, t) in enumerate((('n', 'not visited'), ('emerald', 'reached'), ('rose', 'no path from root'), ('amber', 'root dropped it'))):
+        d.box(100 + i * 135, 258, 128, 18, [(t, 'm')], c, rx=4)
+    caps = [('Setup: two roots hold references: slot a in the stack frame, field Cache in the statics.|The heap has six Order objects. E and F reference each other.', 'cyan'),
             ('Mark from root a: follow its reference to Order A.|A is reached.', 'cyan'),
             ('A’s field next holds a reference to B: follow it.|B is reached.', 'emerald'),
             ('Mark from root Cache: follow its reference to D.|D is reached.', 'amber'),
             ('Nothing else to follow. C, E and F were never reached.|E and F reference each other, but no root leads to them.', 'rose'),
             ('The collector reclaims the space of the unreached objects.|It is now free for new objects.', 'emerald'),
-            ('Later a = null: the slot no longer references A.|A and B are unreachable now, but still in memory until a later GC.', 'violet')]
+            ('Later: a = null (before any new GC runs). The slot no longer references A.|A and B are unreachable now, but still in memory until a later GC.', 'violet')]
     for i, (t, c) in enumerate(caps):
         d.note(10, 288, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=10)
-    d.text(630, 346, 'teaching picture: layout and colours are illustrative (marking is drawn as colour only)', 'n', 8.5, anchor='end')
+    d.text(630, 362, 'teaching picture: layout and colours are illustrative; Order MT and header are left out here (page on objects)', 'n', 8.5, anchor='end')
     return d
 
 def d_gc2():
@@ -74,7 +66,8 @@ def d_gc2():
     live = [(0, 'A', '0x1000'), (2, 'B', '0x3000'), (3, 'D', '0x4000')]
     dead = [(1, 'C', '0x2000'), (4, 'E', '0x5000'), (5, 'F', '0x6000')]
     for i, n, a in dead:
-        d.box(xs[i], Y, W, H, [(f'Order {n}', 't'), (f'@{a}', 'm'), ('unreached', 'm')], 'rose', st='1-3', hl=1)
+        d.box(xs[i], Y, W, H, [(f'Order {n}', 't'), (f'@{a}', 'm'), ('unreached', 'm')], 'rose', st='1-1', hl=1)
+        d.box(xs[i], Y, W, H, [(f'Order {n}', 't'), (f'@{a}', 'm'), ('will be freed', 'm')], 'rose', st='2-3')
     # A (stays)
     d.box(xs[0], Y, W, H, [('Order A', 't'), ('@0x1000', 'm'), ('next = 0x3000', 'm')], 'emerald', st='1-2')
     d.box(xs[0], Y, W, H, [('Order A', 't'), ('@0x1000', 'm'), ('next = 0x2000', 'm')], 'amber', st='3-', hl=3)
@@ -110,7 +103,7 @@ def build_gc_basics():
         sub='How the GC decides what is garbage: start at the roots, follow every reference, and reclaim whatever you never reached — then slide the survivors together.',
         ivq='How does the .NET garbage collector decide which objects to free?',
         prob=(d_gc1(), [
-            'The GC wants to know which heap objects are still needed. It starts from the <b>roots</b>: slots the running program can use directly — here the local variable <code>a</code> in the stack frame of <code>Run()</code> and the static field <code>Cache</code>. Each heap object is a header, a type pointer and its fields.',
+            'The GC wants to know which heap objects are still needed. It starts from the <b>roots</b>: slots the running program can use directly — here the local variable <code>a</code> in the stack frame of <code>Run()</code> and the static field <code>Cache</code>. Each box is one Order object with its field <code>next</code> (the header and type pointer from the object pages are left out here). Colours: grey = not visited, green = reached, rose = no path from a root, amber = no root holds it any more.',
             'From root <code>a</code> the GC follows the reference to <b>Order A</b>: A is <b>reached</b>.',
             'A’s field <code>next</code> holds a reference to <b>B</b>. The GC follows it: B is reached too.',
             'The static field <code>Cache</code> references <b>D</b>: reached.',

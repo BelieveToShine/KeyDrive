@@ -1,7 +1,7 @@
 from p_common import *
 
 def d_if1():
-    d = Diagram('if1', 640, 380, 'Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay')
+    d = Diagram('if1', 640, 392, 'Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay')
     d.zone(10, 24, 120, 280, 'cyan', '📚 STACK')
     d.zone(140, 24, 170, 280, 'emerald', '🏠 HEAP')
     d.zone(320, 24, 180, 280, 'violet', '🧬 TYPE DATA')
@@ -18,12 +18,11 @@ def d_if1():
     cell(d, m1, 1, 'Pay → Invoice.Pay', 'amber', st='5-5', hl=5)
     d.box(518, 64, 104, 36, [('Invoice.Pay', 'm'), ('code', 's')], 'amber', st=1, hl='5')
     t1 = o1['rows'][1]['y']
-    d.arrow([(120, t1), (o1['rows'][1]['l'][0], t1)], 'cyan', st='1-', id='a1')
-    d.arrow([(o1['rows'][1]['r'][0], t1), (314, t1), (314, m1['rows'][0]['y']), (m1['rows'][0]['l'][0], m1['rows'][0]['y'])], 'violet', st='1-', id='a2')
+    d.arrow([(120, t1), (o1['L'][0], t1)], 'cyan', st='1-', id='a1')
+    d.arrow([(o1['rows'][1]['r'][0], t1), (314, t1), (314, m1['L'][1]), (m1['L'][0], m1['L'][1])], 'violet', st='1-', id='a2')
     d.arrow([(m1['rows'][1]['r'][0], m1['rows'][1]['y']), (505, m1['rows'][1]['y']), (505, 82), (518, 82)], 'amber', st='1-', id='a3')
     d.token('a1', '📞', 15, 'cyan', st='3-3')
     d.token('a2', '📞', 15, 'violet', st='4-4')
-    d.token('a3', '📞', 15, 'amber', st='5-5')
     # set 2: Subscription
     d.box(20, 231, 100, 40, [('q : IPayable', 't'), ('0x3000', 'm')], 'cyan', st='2-', hl='6')
     o2 = card(d, 150, 190, 'Subscription @ 0x3000', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Plan = "Pro"', 'f')], 'emerald', w=150, st=2)
@@ -31,51 +30,57 @@ def d_if1():
     cell(d, m2, 1, 'Pay → Subscription.Pay', 'amber', st='6-6', hl=6)
     d.box(518, 208, 104, 36, [('Subscription.Pay', 'm'), ('code', 's')], 'amber', st=2, hl='6')
     t2 = o2['rows'][1]['y']
-    d.arrow([(120, t2), (o2['rows'][1]['l'][0], t2)], 'cyan', st='2-', id='b1')
-    d.arrow([(o2['rows'][1]['r'][0], t2), (314, t2), (314, m2['rows'][0]['y']), (m2['rows'][0]['l'][0], m2['rows'][0]['y'])], 'violet', st='2-', id='b2')
+    d.arrow([(120, t2), (o2['L'][0], t2)], 'cyan', st='2-', id='b1')
+    d.arrow([(o2['rows'][1]['r'][0], t2), (314, t2), (314, m2['L'][1]), (m2['L'][0], m2['L'][1])], 'violet', st='2-', id='b2')
     d.arrow([(m2['rows'][1]['r'][0], m2['rows'][1]['y']), (505, m2['rows'][1]['y']), (505, 226), (518, 226)], 'amber', st='2-', id='b3')
     d.token('b1', '📞', 15, 'cyan', st='6-6')
     d.token('b2', '📞', 15, 'violet', st='6-6')
     d.token('b3', '📞', 15, 'amber', st='6-6')
+    d.text(320, 384, '📞 = the call’s current hop   ·   CODE = compiled method bodies   ·   one MethodTable per class, shared by all its objects', 'n', size=8)
     d.code_box(10, 310, 300, 58, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();     q.Pay();', '')], 'n', size=9, lh=15)
-    for i, (t, c) in enumerate([('new Invoice(): a heap object with header + type pointer.|p holds its address. Addresses are illustrative.', 'emerald'),
+    for i, (t, c) in enumerate([('new Invoice(): a heap object with header, type ptr|and its field Amount. p holds its address (illustrative)', 'emerald'),
                                 ('Another class, another object, another MethodTable.|q has the same variable type as p.', 'emerald'),
-                                ('p.Pay() 1 ·: follow p to the object|on the heap', 'cyan'),
-                                ('2 · read its type pointer: it leads to the|MethodTable of the object’s REAL class', 'violet'),
-                                ('3 · the interface map says which method is Pay|→ jump to Invoice.Pay (teaching picture)', 'amber'),
+                                ('p.Pay() step 1: follow p to the object|on the heap', 'cyan'),
+                                ('step 2: read its type pointer: it leads to the|MethodTable of the object’s REAL class', 'violet'),
+                                ('step 3: the interface map (one entry per interface|the class implements) names Pay → Invoice.Pay', 'amber'),
                                 ('q.Pay(): same walk, another table|→ lands on Subscription.Pay', 'amber')]):
         d.note(320, 306, 310, 62, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
 def d_if2():
-    d = Diagram('if2', 640, 372, 'A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot')
+    d = Diagram('if2', 640, 388, 'A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot')
     d.zone(10, 24, 200, 280, 'cyan', '📚 STACK')
     d.zone(220, 24, 190, 190, 'emerald', '🏠 HEAP')
+    card(d, 230, 66, 'no box yet', [], 'n', w=170, st='1-2', dash=True)
     d.zone(420, 24, 210, 130, 'violet', '🧬 TYPE DATA')
     d.box(20, 126, 180, 50, [('c : Coupon', 't'), ('Value = 5', 'm'), ('no header, no type ptr', 's')], 'cyan', st='1-3', hl='1')
     d.box(20, 126, 180, 50, [('c : Coupon', 't'), ('Value = 9', 'm'), ('no header, no type ptr', 's')], 'amber', st='4-', hl='4')
     d.box(20, 56, 180, 50, [('s : IPayable', 't'), ('null — not a reference yet', 'm')], 'n', st='2-2', hl='2')
-    d.box(20, 56, 180, 50, [('s : IPayable', 't'), ('0x4000', 'm')], 'cyan', st='3-', hl='3,5')
-    bx = card(d, 230, 66, 'boxed Coupon @ 0x4000', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Value = 5', 'f')], 'amber', w=170, st=3)
-    mt = card(d, 428, 66, 'Coupon MethodTable', [('interface map: IPayable', 'f'), ('Pay → Coupon.Pay', 'f', '3-4')], 'violet', w=194, st=3)
+    d.box(20, 56, 180, 50, [('s : IPayable', 't'), ('0x4000', 'm')], 'cyan', st='3-6', hl='3,5')
+    d.box(20, 56, 180, 50, [('s : IPayable', 't'), ('out of scope', 'm')], 'n', st='7-', hl='7')
+    bx = card(d, 230, 66, 'boxed Coupon @ 0x4000', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Value = 5', 'f')], 'amber', w=170, st='3-6')
+    mt = card(d, 428, 66, 'Coupon MethodTable', [('interface map: IPayable', 'f'), ('Pay → Coupon.Pay', 'f', '1-4')], 'violet', w=194, st=1)
     cell(d, mt, 1, 'Pay → Coupon.Pay', 'violet', st='6-')
     cell(d, mt, 1, 'Pay → Coupon.Pay', 'amber', st='5-5', hl=5)
     d.box(20, 214, 180, 50, [('c2 : Coupon', 't'), ('Value = 5', 'm'), ('copy out of the box', 's')], 'cyan', st='6-', hl='6')
+    card(d, 230, 66, 'boxed Coupon (unreachable)', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Value = 5', 'f')], 'n', w=170, st='7-', dash=True)
     ty = bx['rows'][1]['y']
     vy = bx['rows'][2]['y']
-    d.arrow([(200, 81), (208, 81), (208, ty), (bx['rows'][1]['l'][0], ty)], 'cyan', st='3-', id='s1')
-    d.arrow([(200, 151), (bx['rows'][2]['l'][0], vy)], 'amber', dash=True, st='3-3', id='cp')
-    d.arrow([(bx['rows'][1]['r'][0], ty), (414, ty), (414, mt['rows'][0]['y']), (mt['rows'][0]['l'][0], mt['rows'][0]['y'])], 'violet', st='3-', id='s2')
-    d.arrow([(315, bx['y'] + bx['h']), (315, 239), (200, 239)], 'amber', dash=True, st='6-6', id='un')
+    d.arrow([(200, 81), (215, 81), (215, bx['L'][1]), (bx['L'][0], bx['L'][1])], 'cyan', st='3-6', id='s1')
+    d.arrow([(200, 151), (215, 151), (215, bx['L'][1] + 20), (bx['L'][0], bx['L'][1] + 20)], 'amber', dash=True, st='3-3', id='cp')
+    d.arrow([(bx['rows'][1]['r'][0], ty), (414, ty), (414, mt['L'][1]), (mt['L'][0], mt['L'][1])], 'violet', st='3-6', id='s2')
+    d.arrow([(315, bx['y'] + bx['h']), (315, 239), (200, 239)], 'amber', dash=True, label='copy', st='6-6', id='un')
+    d.text(320, 382, '📞 = the call’s current hop', 'n', size=8)
     d.token('s1', '📞', 15, 'cyan', st='5-5')
     d.token('s2', '📞', 15, 'violet', st='5-5')
     d.code_box(10, 306, 300, 62, [(0, 'Coupon c = new Coupon { Value = 5 };', ''), (0, 'IPayable s = c;      c.Value = 9;', ''), (0, 's.Pay();   Coupon c2 = (Coupon)s;', '')], 'n', size=8.6, lh=15)
     for i, (t, c) in enumerate([('A struct sits right in its stack slot:|no header, no type pointer', 'cyan'),
                                 ('IPayable s needs a reference, but c is not an object|(s is still empty)', 'rose'),
-                                ('Boxing: a NEW heap object (header + type ptr + value)|gets a COPY of 5. s holds its address. (Addresses illustrative)', 'amber'),
+                                ('Boxing: a NEW heap object (header + type ptr + value)|gets a COPY of 5 (dashed arrow).|s holds its address (illustrative)', 'amber'),
                                 ('c.Value = 9 changes only the stack slot.|The box still says 5', 'amber'),
                                 ('s.Pay() follows s to the box, then its type ptr to|Coupon’s table: it runs on the box', 'violet'),
-                                ('Unboxing (Coupon)s copies 5 out into another stack|slot. The box stays until the GC clears it', 'cyan')]):
+                                ('Unboxing (Coupon)s copies 5 out into another stack|slot. The box is still on the heap', 'cyan'),
+                                ('s goes out of scope: nothing points to the box any more.|It is unreachable, but stays until a GC runs', 'n')]):
         d.note(320, 306, 310, 62, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
@@ -88,9 +93,9 @@ def build_interfaces_memory():
         prob=(d_if1(), [
             '<code>IPayable p = new Invoice();</code> — <code>new</code> creates a normal <b>Invoice object</b> on the heap: a header, a <b>type pointer</b>, then its fields. <code>p</code> (on the stack) holds its address. (<code>new IPayable()</code> is not allowed: an interface only lists methods, so no object of it can exist.)',
             '<code>IPayable q = new Subscription();</code> — another class, so another object with its own type pointer and its own MethodTable. <code>q</code> has the <b>same variable type</b> as <code>p</code>.',
-            '<b>p.Pay() 1 ·.</b> Follow the address in <code>p</code> to the object on the heap.',
-            '<b>p.Pay() 2 ·.</b> Read the object’s type pointer: it leads to the MethodTable of its <b>real</b> class, <code>Invoice</code> — not to anything called IPayable.',
-            '<b>p.Pay() 3 ·.</b> That table has an <b>interface map</b>: for IPayable, <code>Pay</code> is <code>Invoice.Pay</code>. The call jumps there. (Real runtimes speed this up with cached stubs — a teaching picture.)',
+            '<b>p.Pay(), step 1.</b> Follow the address in <code>p</code> to the object on the heap.',
+            '<b>p.Pay(), step 2.</b> Read the object’s type pointer: it leads to the MethodTable of its <b>real</b> class, <code>Invoice</code> — not to anything called IPayable.',
+            '<b>p.Pay(), step 3.</b> That table has an <b>interface map</b> (a class can implement many interfaces; the map lists each one): for IPayable, <code>Pay</code> is <code>Invoice.Pay</code>. The call jumps there. (Real runtimes speed this up with cached stubs — a teaching picture.)',
             '<b>q.Pay()</b> does the same walk through Subscription’s table and lands on <code>Subscription.Pay</code>. The interface added <b>no field to either object</b>.'],
             'an interface is a type of variable, not a type of object. Only class (or struct) objects exist on the heap; each class’s MethodTable (loaded once per type, shared by all its objects) carries the interface map. Addresses and the exact map layout are a teaching picture of the classic runtime model.'),
         one='<b>An interface never has memory of its own: it is a label on a variable that points to a real class object.</b>',
@@ -103,7 +108,8 @@ def build_interfaces_memory():
                 '<b>Boxing.</b> The runtime allocates a new heap object (header + type pointer + the value) and <b>copies</b> 5 into it. <code>s</code> holds its address; its type pointer leads to Coupon’s MethodTable.',
                 'Change the original: <code>c.Value = 9</code>. Only the stack slot changes; the <b>box still says 5</b>. They are two separate values now.',
                 '<code>s.Pay()</code> follows <code>s</code> to the box, then its type pointer to Coupon’s table. The call runs <b>on the box</b>, not on <code>c</code>.',
-                '<b>Unboxing.</b> <code>(Coupon)s</code> copies the value back out into a new stack slot. The box stays on the heap until the GC finds it unreachable.'],
+                '<b>Unboxing.</b> <code>(Coupon)s</code> copies the value back out into a new stack slot. The box stays on the heap.',
+                '<code>s</code> goes out of scope. Nothing points to the box any more, so it is <b>unreachable</b>, but its memory is only reclaimed when a GC runs.'],
                 'boxing again ([[p:boxing]]): a struct stored in an interface variable lives in a heap box. Addresses are illustrative.')),
             ('table', '🧾 Class object vs interface variable', ['', 'Class object', 'Interface variable'], [
                 ['Takes memory on the heap', '✅ yes', '❌ no — it is only a reference slot'],

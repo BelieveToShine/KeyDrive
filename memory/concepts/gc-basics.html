@@ -45,146 +45,85 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="7">
-<div class="st-stage"><svg viewBox="0 0 640 352" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free">
+<div class="st-stage"><svg viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free">
 <defs><marker id="gc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="gc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="160" y="24" width="460" height="254" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="160" y="24" width="472" height="220" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="174" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-1"><rect class="zone" x="170" y="52" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-1"><text class="zone-title" x="184" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order A</text></g>
-<g class="st" data-s="2-6"><rect class="zone" x="170" y="52" width="134" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-6"><text class="zone-title" x="184" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order A: reached</text></g>
-<g class="st" data-s="7-"><rect class="zone" x="170" y="52" width="134" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
-<g class="st" data-s="7-"><text class="zone-title" x="184" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Order A: no root</text></g>
-<g class="st" data-s="1-2"><rect class="zone" x="322" y="52" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-2"><text class="zone-title" x="336" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order B</text></g>
-<g class="st" data-s="3-6"><rect class="zone" x="322" y="52" width="134" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="3-6"><text class="zone-title" x="336" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order B: reached</text></g>
-<g class="st" data-s="7-"><rect class="zone" x="322" y="52" width="134" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
-<g class="st" data-s="7-"><text class="zone-title" x="336" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Order B: no root</text></g>
-<g class="st" data-s="1-3"><rect class="zone" x="170" y="168" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-3"><text class="zone-title" x="184" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order D</text></g>
-<g class="st" data-s="4-"><rect class="zone" x="170" y="168" width="134" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="4-"><text class="zone-title" x="184" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order D: reached</text></g>
-<g class="st" data-s="1-4"><rect class="zone" x="322" y="168" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-4"><text class="zone-title" x="336" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order C</text></g>
-<g class="st" data-s="5-5"><rect class="zone" x="322" y="168" width="134" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="5-5"><text class="zone-title" x="336" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Order C: no path</text></g>
-<g class="st" data-s="1-4"><rect class="zone" x="474" y="52" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-4"><text class="zone-title" x="488" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order E</text></g>
-<g class="st" data-s="5-5"><rect class="zone" x="474" y="52" width="134" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="5-5"><text class="zone-title" x="488" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Order E: no path</text></g>
-<g class="st" data-s="1-4"><rect class="zone" x="474" y="168" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-4"><text class="zone-title" x="488" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order F</text></g>
-<g class="st" data-s="5-5"><rect class="zone" x="474" y="168" width="134" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
-<g class="st" data-s="5-5"><text class="zone-title" x="488" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Order F: no path</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="322" y="168" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="336" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="474" y="52" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="488" y="71" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="474" y="168" width="134" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="488" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="354" y="160" width="108" height="50" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="368" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="518" y="62" width="108" height="50" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="532" y="81" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="518" y="160" width="108" height="50" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="532" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
 <rect class="zone" x="10" y="24" width="140" height="98" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK: Run()</text>
-<rect class="zone" x="10" y="168" width="140" height="70" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="187" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATICS: Program</text>
-<g class="st" data-s="1-6"><path id="gc1-r1" d="M142,63 L156,63 L156,113 L178,113" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
-<g class="st" data-s="1-"><path id="gc1-r2" d="M142,205 L156,205 L156,229 L178,229" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
-<g class="st" data-s="1-"><path id="gc1-r3" d="M296,137 L313,137 L313,113 L330,113" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
-<g class="st" data-s="1-5"><path d="M600,137 L614,137 L614,229 L600,229" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
-<g class="st" data-s="1-5"><path d="M482,253 L466,253 L466,113 L482,113" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
-<g class="st" data-s="1-1"><rect class="bx" x="178" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="237" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="178" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="237" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="178" y="126" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="237" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="178" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="2-6" data-hl="2"><text x="237" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="178" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-6" data-hl="2"><text x="237" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="178" y="126" width="118" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-6" data-hl="2"><text x="237" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="178" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="237" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="178" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="237" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="178" y="126" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="237" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="330" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="389" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="330" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="389" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="330" y="126" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="389" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="330" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6" data-hl="3"><text x="389" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="330" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6" data-hl="3"><text x="389" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="330" y="126" width="118" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6" data-hl="3"><text x="389" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="330" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="389" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="330" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="389" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="330" y="126" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="389" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="178" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="237" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="178" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="237" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="178" y="242" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="237" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="178" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="237" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="178" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="237" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="178" y="242" width="118" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="237" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="330" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="389" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="330" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="389" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="330" y="242" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="389" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="330" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="389" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="330" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="389" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="330" y="242" width="118" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="389" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = null</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="126" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="78" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="91.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="102" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="115.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="126" width="118" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="1-4"><rect class="bx" x="482" y="242" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="541" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="194" width="118" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="218" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="231.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="482" y="242" width="118" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="541" y="255.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = ref</text></g>
+<rect class="zone" x="10" y="160" width="140" height="70" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="179" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATICS: Program</text>
+<g class="st" data-s="1-6"><path id="gc1-r1" d="M142,63 L190,63" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
+<g class="st" data-s="1-"><path id="gc1-r2" d="M142,197 L190,197" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
+<g class="st" data-s="1-"><path id="gc1-r3" d="M298,87 L354,87" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
+<g class="st" data-s="1-5"><path d="M546,112 L546,160" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
+<g class="st" data-s="1-5"><path d="M598,160 L598,112" fill="none" stroke="#5b6577" stroke-width="1.6" marker-end="url(#gc1A)"/></g>
+<g class="st" data-s="1-1"><rect class="bx" x="190" y="62" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="244" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order A</text></g>
+<g class="st" data-s="1-1"><text x="244" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="2-6" data-hl="2"><rect class="bx" x="190" y="62" width="108" height="50" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-6" data-hl="2"><text x="244" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order A</text></g>
+<g class="st" data-s="2-6" data-hl="2"><text x="244" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="190" y="62" width="108" height="50" rx="6" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="244" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order A</text></g>
+<g class="st" data-s="7-" data-hl="7"><text x="244" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="354" y="62" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="408" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order B</text></g>
+<g class="st" data-s="1-2"><text x="408" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="354" y="62" width="108" height="50" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="408" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order B</text></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="408" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="354" y="62" width="108" height="50" rx="6" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="408" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order B</text></g>
+<g class="st" data-s="7-" data-hl="7"><text x="408" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="190" y="160" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="244" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order D</text></g>
+<g class="st" data-s="1-3"><text x="244" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="190" y="160" width="108" height="50" rx="6" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="244" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order D</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="244" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="354" y="160" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="408" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order C</text></g>
+<g class="st" data-s="1-4"><text x="408" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="354" y="160" width="108" height="50" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="408" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order C</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="408" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = null</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="518" y="62" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="572" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order E</text></g>
+<g class="st" data-s="1-4"><text x="572" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="518" y="62" width="108" height="50" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="572" y="85" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order E</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="572" y="97" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="518" y="160" width="108" height="50" rx="6" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="572" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">Order F</text></g>
+<g class="st" data-s="1-4"><text x="572" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">next = ref</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="518" y="160" width="108" height="50" rx="6" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="572" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order F</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="572" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">next = ref</text></g>
 <g class="st" data-s="1-6" data-hl="2"><rect class="bx" x="18" y="52" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-6" data-hl="2"><text x="80" y="65.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a = ref</text></g>
 <g class="st" data-s="7-" data-hl="7"><rect class="bx" x="18" y="52" width="124" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="7-" data-hl="7"><text x="80" y="65.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">a = null</text></g>
-<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="18" y="194" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="4"><text x="80" y="207.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = ref</text></g>
+<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="18" y="186" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4"><text x="80" y="199.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = ref</text></g>
+<text class="free" x="12" y="270" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colour legend:</text>
+<rect class="bx" x="100" y="258" width="128" height="18" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="164" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">not visited</text>
+<rect class="bx" x="235" y="258" width="128" height="18" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/>
+<text x="299" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">reached</text>
+<rect class="bx" x="370" y="258" width="128" height="18" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<text x="434" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">no path from root</text>
+<rect class="bx" x="505" y="258" width="128" height="18" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/>
+<text x="569" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">root dropped it</text>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="288" width="620" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="307" text-anchor="middle" font-size="10" fill="#67e8f9">Setup: two roots hold references: slot a in the stack frame, field Cache in the statics.</text></g>
-<g class="st" data-s="1-1"><text x="320" y="321" text-anchor="middle" font-size="10" fill="#67e8f9">The heap has six Order objects: header, type pointer, field. E and F reference each other.</text></g>
+<g class="st" data-s="1-1"><text x="320" y="321" text-anchor="middle" font-size="10" fill="#67e8f9">The heap has six Order objects. E and F reference each other.</text></g>
 <g class="st" data-s="2-2"><rect class="bx note" x="10" y="288" width="620" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="2-2"><text x="320" y="307" text-anchor="middle" font-size="10" fill="#67e8f9">Mark from root a: follow its reference to Order A.</text></g>
 <g class="st" data-s="2-2"><text x="320" y="321" text-anchor="middle" font-size="10" fill="#67e8f9">A is reached.</text></g>
@@ -201,16 +140,16 @@
 <g class="st" data-s="6-6"><text x="320" y="307" text-anchor="middle" font-size="10" fill="#6ee7b7">The collector reclaims the space of the unreached objects.</text></g>
 <g class="st" data-s="6-6"><text x="320" y="321" text-anchor="middle" font-size="10" fill="#6ee7b7">It is now free for new objects.</text></g>
 <g class="st" data-s="7-7"><rect class="bx note" x="10" y="288" width="620" height="46" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="7-7"><text x="320" y="307" text-anchor="middle" font-size="10" fill="#c4b5fd">Later a = null: the slot no longer references A.</text></g>
+<g class="st" data-s="7-7"><text x="320" y="307" text-anchor="middle" font-size="10" fill="#c4b5fd">Later: a = null (before any new GC runs). The slot no longer references A.</text></g>
 <g class="st" data-s="7-7"><text x="320" y="321" text-anchor="middle" font-size="10" fill="#c4b5fd">A and B are unreachable now, but still in memory until a later GC.</text></g>
-<text class="free" x="630" y="346" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: layout and colours are illustrative (marking is drawn as colour only)</text>
+<text class="free" x="630" y="362" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: layout and colours are illustrative; Order MT and header are left out here (page on objects)</text>
 <g class="st" data-s="2-2"><g class="tok" data-path="gc1-r1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🔍</text></g></g>
 <g class="st" data-s="3-3"><g class="tok" data-path="gc1-r3"><circle r="9.3" fill="#0b0f19" stroke="#34d399" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🔍</text></g></g>
 <g class="st" data-s="4-4"><g class="tok" data-path="gc1-r2"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🔍</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>The GC wants to know which heap objects are still needed. It starts from the <b>roots</b>: slots the running program can use directly — here the local variable <code>a</code> in the stack frame of <code>Run()</code> and the static field <code>Cache</code>. Each heap object is a header, a type pointer and its fields.</li><li>From root <code>a</code> the GC follows the reference to <b>Order A</b>: A is <b>reached</b>.</li><li>A’s field <code>next</code> holds a reference to <b>B</b>. The GC follows it: B is reached too.</li><li>The static field <code>Cache</code> references <b>D</b>: reached.</li><li>No chain of references from any root leads to <b>C, E or F</b>. They are <b>garbage</b> — even E and F, which reference each other. (Referencing each other is not enough to be “in use”.)</li><li>The space of the unreached objects is <b>reclaimed</b>: it becomes free memory.</li><li>Later the code runs <code>a = null</code>. The slot no longer references A, so A and B are now unreachable — but they stay in memory until a <b>later</b> GC reclaims them.</li></ol>
+<ol class="st-caps"><li>The GC wants to know which heap objects are still needed. It starts from the <b>roots</b>: slots the running program can use directly — here the local variable <code>a</code> in the stack frame of <code>Run()</code> and the static field <code>Cache</code>. Each box is one Order object with its field <code>next</code> (the header and type pointer from the object pages are left out here). Colours: grey = not visited, green = reached, rose = no path from a root, amber = no root holds it any more.</li><li>From root <code>a</code> the GC follows the reference to <b>Order A</b>: A is <b>reached</b>.</li><li>A’s field <code>next</code> holds a reference to <b>B</b>. The GC follows it: B is reached too.</li><li>The static field <code>Cache</code> references <b>D</b>: reached.</li><li>No chain of references from any root leads to <b>C, E or F</b>. They are <b>garbage</b> — even E and F, which reference each other. (Referencing each other is not enough to be “in use”.)</li><li>The space of the unreached objects is <b>reclaimed</b>: it becomes free memory.</li><li>Later the code runs <code>a = null</code>. The slot no longer references A, so A and B are now unreachable — but they stay in memory until a <b>later</b> GC reclaims them.</li></ol>
 <figcaption><strong>What you're seeing:</strong> the GC does not count references; it asks “can the program still reach this from a root?”. Colours show the GC’s result; the real marking bookkeeping is not drawn.</figcaption>
 </figure>
   </section>
@@ -248,18 +187,30 @@
 <g class="st" data-s="3-" data-hl="3"><rect class="bx" x="320" y="40" width="94" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="3-" data-hl="3"><text x="367" y="60" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Cache</text></g>
 <g class="st" data-s="3-" data-hl="3"><text x="367" y="72" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0x3000</text></g>
-<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="112" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="159" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order C</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="159" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x2000</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="159" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
-<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="424" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="471" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order E</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="471" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x5000</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="471" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
-<g class="st" data-s="1-3" data-hl="1"><rect class="bx" x="528" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="575" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order F</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="575" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x6000</text></g>
-<g class="st" data-s="1-3" data-hl="1"><text x="575" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="112" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="159" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order C</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="159" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x2000</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="159" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="112" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="159" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order C</text></g>
+<g class="st" data-s="2-3"><text x="159" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x2000</text></g>
+<g class="st" data-s="2-3"><text x="159" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">will be freed</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="424" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="471" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order E</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="471" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x5000</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="471" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="424" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="471" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order E</text></g>
+<g class="st" data-s="2-3"><text x="471" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x5000</text></g>
+<g class="st" data-s="2-3"><text x="471" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">will be freed</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="528" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="575" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order F</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="575" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x6000</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="575" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreached</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="528" y="150" width="94" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="575" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">Order F</text></g>
+<g class="st" data-s="2-3"><text x="575" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">@0x6000</text></g>
+<g class="st" data-s="2-3"><text x="575" y="203" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">will be freed</text></g>
 <g class="st" data-s="1-2"><rect class="bx" x="8" y="150" width="94" height="74" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-2"><text x="55" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order A</text></g>
 <g class="st" data-s="1-2"><text x="55" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">@0x1000</text></g>

@@ -45,7 +45,7 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="7">
-<div class="st-stage"><svg viewBox="0 0 640 472" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="new Payment on the abstract class is a compile error and allocates nothing; new CardPayment allocates ONE heap object with a header, a type pointer to the CardPayment MethodTable, the base field Amount and the derived field CardEnd that refers to a separate string object; the base constructor sets Amount to 100; the stack variable p holds a reference to the whole object; when p is gone the GC frees the object and the string while the type data stays">
+<div class="st-stage"><svg viewBox="0 0 640 472" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="new Payment on the abstract class is a compile error and allocates nothing; new CardPayment allocates ONE heap object with a header, a type pointer to the CardPayment MethodTable, the base field Amount and the derived field CardEnd that refers to a separate string object; the base constructor sets Amount to 100; the stack variable p holds a reference to the whole object; when p is gone the object and its string become unreachable and a later GC frees them while the type data stays">
 <defs><marker id="ab1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="124" width="120" height="150" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -53,21 +53,25 @@
 <text class="zone-title" x="164" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
 <rect class="zone" x="390" y="124" width="240" height="200" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="404" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA (one per type)</text>
+<g class="st" data-s="1-1"><rect class="zone" x="160" y="150" width="210" height="56" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="1-1"><text class="zone-title" x="174" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">nothing allocated</text></g>
+<g class="st" data-s="6-6"><rect class="zone" x="20" y="192" width="100" height="46" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="6-6"><text class="zone-title" x="34" y="211" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">p: frame popped</text></g>
 <g class="st" data-s="2-5"><rect class="zone" x="160" y="150" width="210" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-5"><text class="zone-title" x="174" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CardPayment object (ONE)</text></g>
 <g class="st" data-s="6-6"><rect class="zone" x="160" y="150" width="210" height="130" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
 <g class="st" data-s="6-6"><text class="zone-title" x="174" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">unreachable (no reference)</text></g>
-<g class="st" data-s="3-5"><rect class="zone" x="160" y="302" width="210" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-5"><rect class="zone" x="160" y="302" width="180" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="3-5"><text class="zone-title" x="174" y="321" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string object (separate)</text></g>
-<g class="st" data-s="6-6"><rect class="zone" x="160" y="302" width="210" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-6"><rect class="zone" x="160" y="302" width="180" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
 <g class="st" data-s="6-6"><text class="zone-title" x="174" y="321" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">unreachable (no reference)</text></g>
 <g class="st" data-s="1-"><rect class="zone" x="400" y="232" width="220" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="414" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Payment MethodTable</text></g>
+<g class="st" data-s="1-"><text class="zone-title" x="414" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Payment MT (no object)</text></g>
 <g class="st" data-s="2-"><rect class="zone" x="400" y="150" width="220" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
 <g class="st" data-s="2-"><text class="zone-title" x="414" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">CardPayment MethodTable</text></g>
-<g class="st" data-s="2-6"><path d="M362,211 L385,211 L385,187 L408,187" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
-<g class="st" data-s="3-6"><path d="M362,259 L376,259 L376,363 L362,363" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
-<g class="st" data-s="5-5"><path d="M120,211 L168,211" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
+<g class="st" data-s="2-5"><path d="M362,211 L385,211 L385,179 L400,179" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
+<g class="st" data-s="3-5"><path d="M362,259 L372,259 L372,343 L340,343" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
+<g class="st" data-s="5-5"><path d="M120,215 L160,215" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab1A)"/></g>
 <rect class="bx" x="10" y="8" width="400" height="106" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">abstract class Payment { public decimal Amount;</text>
 <text x="24" y="43" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  protected Payment() { Amount = 100; }</text>
@@ -81,14 +85,16 @@
 <g class="st" data-s="2-" data-hl="2"><rect class="bx" x="424" y="8" width="206" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="2-" data-hl="2"><text x="527" y="28" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">new CardPayment()</text></g>
 <g class="st" data-s="2-" data-hl="2"><text x="527" y="43" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">✅ allowed</text></g>
-<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="20" y="188" width="100" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-4" data-hl="2"><text x="70" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
-<g class="st" data-s="2-4" data-hl="2"><text x="70" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">null</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="20" y="188" width="100" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="70" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="70" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
+<g class="st" data-s="6-6"><text class="free" x="527" y="74" text-anchor="middle" font-size="8.5" font-weight="400" fill="#fda4af">red = unreachable (nothing points to it)</text></g>
+<g class="st" data-s="1-1"><text class="free" x="265" y="192" text-anchor="middle" font-size="8.5" font-weight="400" fill="#fda4af">new Payment() never reaches the heap</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="20" y="192" width="100" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="70" y="213" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="70" y="225" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">null</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="20" y="192" width="100" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="70" y="213" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="70" y="225" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
 <g class="st" data-s="2-5"><rect class="bx" x="168" y="176" width="194" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="2-5"><text x="265" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block word)</text></g>
+<g class="st" data-s="2-5"><text x="265" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
 <g class="st" data-s="2-5"><rect class="bx" x="168" y="200" width="194" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="2-5"><text x="265" y="213.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → CardPayment MT</text></g>
 <g class="st" data-s="2-3"><rect class="bx" x="168" y="224" width="194" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
@@ -100,55 +106,55 @@
 <g class="st" data-s="3-5" data-hl="3"><rect class="bx" x="168" y="248" width="194" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="3-5" data-hl="3"><text x="265" y="261.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">CardEnd = ref ●</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="168" y="176" width="194" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="6-6"><text x="265" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block word)</text></g>
+<g class="st" data-s="6-6"><text x="265" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="168" y="200" width="194" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="6-6"><text x="265" y="213.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → CardPayment MT</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="168" y="224" width="194" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="6-6"><text x="265" y="237.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Amount = 100</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="168" y="248" width="194" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="6-6"><text x="265" y="261.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">CardEnd = ref ●</text></g>
-<g class="st" data-s="3-5"><rect class="bx" x="168" y="328" width="194" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="3-5"><text x="265" y="341.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
-<g class="st" data-s="3-5"><rect class="bx" x="168" y="352" width="194" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-5"><text x="265" y="365.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"1234"  (UTF-16 chars)</text></g>
-<g class="st" data-s="6-6"><rect class="bx" x="168" y="328" width="194" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="6-6"><text x="265" y="341.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
-<g class="st" data-s="6-6"><rect class="bx" x="168" y="352" width="194" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="6-6"><text x="265" y="365.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"1234"  (UTF-16 chars)</text></g>
+<g class="st" data-s="3-5"><rect class="bx" x="168" y="328" width="164" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5"><text x="250" y="341.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="3-5"><rect class="bx" x="168" y="352" width="164" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-5"><text x="250" y="365.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"1234"  (UTF-16 chars)</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="168" y="328" width="164" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="250" y="341.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="168" y="352" width="164" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="250" y="365.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"1234"  (UTF-16 chars)</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="408" y="258" width="204" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="510" y="271.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay (no code)</text></g>
 <g class="st" data-s="2-"><rect class="bx" x="408" y="176" width="204" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="2-"><text x="510" y="189.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay → CardPayment.Pay</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="390" y="416.5" text-anchor="middle" font-size="9" fill="#fda4af">Compile error: Payment is marked abstract, so the</text></g>
-<g class="st" data-s="1-1"><text x="390" y="429.5" text-anchor="middle" font-size="9" fill="#fda4af">compiler refuses new. Nothing reaches memory.</text></g>
+<g class="st" data-s="1-1"><text x="390" y="429.5" text-anchor="middle" font-size="9" fill="#fda4af">compiler refuses new. Nothing reaches the heap.</text></g>
 <g class="st" data-s="1-1"><text x="390" y="442.5" text-anchor="middle" font-size="9" fill="#fda4af">Its type data (MethodTable) still exists.</text></g>
 <g class="st" data-s="2-2"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="2-2"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#6ee7b7">ONE object: one header, one type pointer, fields of</text></g>
 <g class="st" data-s="2-2"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#6ee7b7">BOTH classes (zeroed). p is still null.</text></g>
 <g class="st" data-s="3-3"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#fcd34d">CardPayment’s initializer: CardEnd refers to a</text></g>
-<g class="st" data-s="3-3"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fcd34d">SEPARATE string object; the object holds only a reference.</text></g>
+<g class="st" data-s="3-3"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#fcd34d">CardPayment’s field initializer runs first: CardEnd refers</text></g>
+<g class="st" data-s="3-3"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fcd34d">to a SEPARATE string object; the object holds a reference.</text></g>
 <g class="st" data-s="4-4"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#fcd34d">Base constructor body runs before the derived one:</text></g>
-<g class="st" data-s="4-4"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fcd34d">Amount = 100. No separate Payment object exists.</text></g>
+<g class="st" data-s="4-4"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#fcd34d">Then the base constructor body runs before the derived</text></g>
+<g class="st" data-s="4-4"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fcd34d">one: Amount = 100. No separate Payment object exists.</text></g>
 <g class="st" data-s="5-5"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#67e8f9">p (typed Payment) gets a reference to the WHOLE</text></g>
-<g class="st" data-s="5-5"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#67e8f9">object (it points at the type-pointer word).</text></g>
+<g class="st" data-s="5-5"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#67e8f9">p (typed Payment) gets a reference to the WHOLE object:</text></g>
+<g class="st" data-s="5-5"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#67e8f9">the arrow ends on the object, not on one field.</text></g>
 <g class="st" data-s="6-6"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="6-6"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#fda4af">Method ends: p’s frame is popped. Nothing refers to the</text></g>
-<g class="st" data-s="6-6"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fda4af">object or its string — unreachable, but NOT yet freed.</text></g>
+<g class="st" data-s="6-6"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#fda4af">object or its string: unreachable, but NOT yet freed.</text></g>
 <g class="st" data-s="7-7"><rect class="bx note" x="150" y="404" width="480" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="7-7"><text x="390" y="423" text-anchor="middle" font-size="9" fill="#6ee7b7">A later GC frees the object and the string. The type data</text></g>
 <g class="st" data-s="7-7"><text x="390" y="436" text-anchor="middle" font-size="9" fill="#6ee7b7">stays: it is shared by all CardPayment objects.</text></g>
 <text class="free" x="630" y="464" text-anchor="end" font-size="8" font-weight="400" fill="#93a0b8">teaching picture: field order, slot numbers and layout are illustrative</text>
-<g class="st" data-s="7-7"><rect class="bx note" x="160" y="244" width="210" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="7-7"><text x="265" y="260" text-anchor="middle" font-size="9" fill="#6ee7b7">free space</text></g>
-<g class="st" data-s="7-7"><text x="265" y="273" text-anchor="middle" font-size="9" fill="#6ee7b7">(object + string reclaimed)</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="160" y="224" width="210" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="265" y="240" text-anchor="middle" font-size="9" fill="#6ee7b7">free space</text></g>
+<g class="st" data-s="7-7"><text x="265" y="253" text-anchor="middle" font-size="9" fill="#6ee7b7">(object + string reclaimed)</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>new Payment()</code> — <b>not allowed</b>. The class is marked <code>abstract</code>, so the compiler refuses <code>new</code> (even if it had no abstract members). It is a <b>build-time rule</b>: nothing is ever allocated. The type’s own data (its MethodTable) still exists.</li><li><code>new CardPayment()</code> allocates <b>ONE</b> heap object: a header, a <b>type pointer</b> to the CardPayment MethodTable, and room for the fields of <b>both</b> classes, all zeroed. <code>p</code> is still <code>null</code>.</li><li>CardPayment’s initializer runs first: <code>CardEnd</code> holds a <b>reference</b> to a <b>separate string object</b> on the heap. The object stores only that reference.</li><li>Then the <b>base constructor body</b> runs, before CardPayment’s own constructor body: <code>Amount = 100</code>. There is no separate Payment object.</li><li>The variable <code>p</code> (typed <code>Payment</code>) receives a reference to the <b>whole</b> object. Its type limits what you may call, not what the object is.</li><li>When the method ends, <code>p</code>’s slot disappears with its frame. The object and its string are now <b>unreachable</b> — but still occupy the heap.</li><li>A <b>later GC</b> frees the object and the string together. The MethodTable stays: it belongs to the type, not to one object.</li></ol>
+<ol class="st-caps"><li><code>new Payment()</code> — <b>not allowed</b>. The class is marked <code>abstract</code>, so the compiler refuses <code>new</code> (even if it had no abstract members). It is a <b>build-time rule</b>: nothing is ever allocated. The type’s own data (its MethodTable) still exists.</li><li><code>new CardPayment()</code> allocates <b>ONE</b> heap object: a header, a <b>type pointer</b> to the CardPayment MethodTable, and room for the fields of <b>both</b> classes, all zeroed. <code>p</code> is still <code>null</code>.</li><li>CardPayment’s initializer runs first: <code>CardEnd</code> holds a <b>reference</b> to a <b>separate string object</b> on the heap. The object stores only that reference.</li><li>Then the <b>base constructor body</b> runs, before CardPayment’s own constructor body: <code>Amount = 100</code>. There is no separate Payment object.</li><li>The variable <code>p</code> (typed <code>Payment</code>) receives a reference to the <b>whole</b> object (the arrow ends on the object, not on one field). Its type limits what you may call, not what the object is.</li><li>When the method ends, <code>p</code>’s slot disappears with its frame. The object and its string are now <b>unreachable</b> — but still occupy the heap.</li><li>A <b>later GC</b> frees the object and the string together. The MethodTable stays: it belongs to the type, not to one object.</li></ol>
 <figcaption><strong>What you're seeing:</strong> an abstract class has no objects of its own. Its fields exist only inside child objects, which share one header and one type pointer. (Field order and layout are a teaching picture.)</figcaption>
 </figure>
   </section>
@@ -162,37 +168,45 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🛒 One base type, many kinds of objects: how p1.Pay() finds the right method</div>
-<figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 490" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two variables typed Payment refer to a CardPayment object and a UpiPayment object; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; the slot number is fixed at build time, the target is found at run time">
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 490" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="Two variables typed Payment refer to a CardPayment object and a UpiPayment object; at build time the compiler records only that Pay is virtual slot 0; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; p2.Pay() uses the same slot number but ends in UpiPayment.Pay">
 <defs><marker id="ab2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="90" width="110" height="330" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
 <rect class="zone" x="130" y="90" width="200" height="330" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="144" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<rect class="zone" x="340" y="90" width="150" height="330" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="354" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
-<rect class="zone" x="500" y="90" width="130" height="330" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="514" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE</text>
+<g class="st" data-s="2-"><rect class="zone" x="340" y="90" width="150" height="330" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="354" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="500" y="90" width="130" height="330" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="514" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE</text></g>
 <g class="st" data-s="1-"><rect class="zone" x="138" y="116" width="184" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="152" y="135" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CardPayment object</text></g>
 <g class="st" data-s="1-"><rect class="zone" x="138" y="264" width="184" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="152" y="283" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">UpiPayment object</text></g>
-<g class="st" data-s="2-"><rect class="zone" x="348" y="140.0" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-"><text class="zone-title" x="362" y="159.0" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">CardPayment MT</text></g>
-<g class="st" data-s="2-"><rect class="zone" x="348" y="288.0" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-"><text class="zone-title" x="362" y="307.0" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">UpiPayment MT</text></g>
-<g class="st" data-s="1-"><path id="ab2-r1" d="M110,177 L146,177" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
-<g class="st" data-s="1-"><path id="ab2-r2" d="M110,325 L146,325" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
-<g class="st" data-s="2-"><path id="ab2-t1" d="M314,177 L356,177" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
-<g class="st" data-s="2-"><path id="ab2-t2" d="M314,325 L356,325" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
-<g class="st" data-s="2-"><path id="ab2-c1" d="M474,177 L508,177" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
-<g class="st" data-s="2-"><path id="ab2-c2" d="M474,325 L508,325" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="2-"><rect class="zone" x="348" y="152.0" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="362" y="171.0" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">CardPayment MT</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="348" y="300.0" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="362" y="319.0" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">UpiPayment MT</text></g>
+<g class="st" data-s="3-3"><rect class="zone" x="348" y="214" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-3"><text class="zone-title" x="362" y="233" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Payment MT (abstract)</text></g>
+<g class="st" data-s="1-"><path d="M110,181 L138,181" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="1-"><path d="M110,329 L138,329" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="2-"><path d="M314,177 L336,177 L336,181 L348,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="2-"><path d="M314,325 L336,325 L336,329 L348,329" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="2-"><path d="M474,189 L508,189" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
+<g class="st" data-s="2-"><path d="M474,337 L508,337" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#ab2A)"/></g>
 <rect class="bx" x="10" y="8" width="330" height="70" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Payment p1 = new CardPayment();</text>
 <text x="24" y="44" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Payment p2 = new UpiPayment();</text>
 <text x="24" y="58" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#fcd34d">p1.Pay();    // which Pay runs?</text>
+<g class="st" data-s="3-3"><rect class="bx note" x="350" y="12" width="280" height="54" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="490" y="35" text-anchor="middle" font-size="9" fill="#fcd34d">compiler records only:</text></g>
+<g class="st" data-s="3-3"><text x="490" y="48" text-anchor="middle" font-size="9" fill="#fcd34d">"Pay = virtual slot 0" (a constant)</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="350" y="12" width="280" height="54" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="490" y="35" text-anchor="middle" font-size="9" fill="#6ee7b7">p2.Pay(): same slot 0,</text></g>
+<g class="st" data-s="7-7"><text x="490" y="48" text-anchor="middle" font-size="9" fill="#6ee7b7">but p2’s OWN object picks the table</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="142" width="168" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="230" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><text x="230" y="155.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="166" width="168" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="230" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → CardPayment</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="190" width="168" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
@@ -200,56 +214,65 @@
 <g class="st" data-s="1-"><rect class="bx" x="146" y="214" width="168" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="230" y="227.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">CardEnd = string ref</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="290" width="168" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="230" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><text x="230" y="303.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="314" width="168" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="230" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → UpiPayment</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="338" width="168" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="230" y="351.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Amount = 100</text></g>
 <g class="st" data-s="1-"><rect class="bx" x="146" y="362" width="168" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
 <g class="st" data-s="1-"><text x="230" y="375.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">UpiId = string ref</text></g>
-<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="20" y="154.0" width="90" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="4"><text x="65" y="175" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p1</text></g>
-<g class="st" data-s="1-" data-hl="4"><text x="65" y="187" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
-<g class="st" data-s="1-"><rect class="bx" x="20" y="302.0" width="90" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-"><text x="65" y="323" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p2</text></g>
-<g class="st" data-s="1-"><text x="65" y="335" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
-<g class="st" data-s="2-2"><rect class="bx" x="356" y="166.0" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2"><text x="415" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
-<g class="st" data-s="2-2"><rect class="bx" x="356" y="314.0" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2"><text x="415" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="356" y="166.0" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="415" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="356" y="314.0" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="415" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
-<g class="st" data-s="2-" data-hl="6"><rect class="bx" x="508" y="160.0" width="114" height="34" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="6"><text x="565" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">CardPayment.Pay</text></g>
-<g class="st" data-s="2-"><rect class="bx" x="508" y="308.0" width="114" height="34" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="565" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">UpiPayment.Pay</text></g>
+<g class="st" data-s="1-" data-hl="4"><rect class="bx" x="20" y="158.0" width="90" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="4"><text x="65" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p1</text></g>
+<g class="st" data-s="1-" data-hl="4"><text x="65" y="191" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
+<g class="st" data-s="1-" data-hl="7"><rect class="bx" x="20" y="306.0" width="90" height="46" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="7"><text x="65" y="327" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p2</text></g>
+<g class="st" data-s="1-" data-hl="7"><text x="65" y="339" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">type Payment</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="356" y="178.0" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="415" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="356" y="326.0" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="415" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
+<g class="st" data-s="3-3"><rect class="bx" x="356" y="240" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3"><text x="415" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">slot 0: no code</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="356" y="240" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="415" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: no code</text></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><rect class="bx" x="356" y="178.0" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><text x="415" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
+<g class="st" data-s="3-" data-hl="3,,,7"><rect class="bx" x="356" y="326.0" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,7"><text x="415" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot 0: Pay</text></g>
+<g class="st" data-s="2-" data-hl="6"><rect class="bx" x="508" y="172.0" width="114" height="34" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="6"><text x="565" y="191.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">CardPayment.Pay</text></g>
+<g class="st" data-s="2-" data-hl="7"><rect class="bx" x="508" y="320.0" width="114" height="34" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="7"><text x="565" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">UpiPayment.Pay</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="146" y="166" width="168" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="230" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → CardPayment</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="146" y="314" width="168" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="230" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → UpiPayment</text></g>
+<g class="st" data-s="4-7"><text class="free" x="560" y="438" text-anchor="middle" font-size="8" font-weight="400" fill="#93a0b8">highlight = the step that is happening</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#67e8f9">Two stack variables, both typed Payment, hold references</text></g>
-<g class="st" data-s="1-1"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#67e8f9">to two DIFFERENT heap objects. Each starts with a header and a type pointer.</text></g>
+<g class="st" data-s="1-1"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#67e8f9">to two DIFFERENT heap objects. Each has a header and a type pointer.</text></g>
 <g class="st" data-s="2-2"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="2-2"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#c4b5fd">Each type pointer leads to its own type’s MethodTable (one per type).</text></g>
 <g class="st" data-s="2-2"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#c4b5fd">The child filled Pay’s slot with its own code.</text></g>
 <g class="st" data-s="3-3"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: Payment.Pay is a virtual slot, the same number in</text></g>
-<g class="st" data-s="3-3"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#fcd34d">every child table (here: slot 0). The compiler knows only the slot.</text></g>
+<g class="st" data-s="3-3"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: the abstract Payment.Pay has slot 0 but no code. The compiler</text></g>
+<g class="st" data-s="3-3"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#fcd34d">records only the slot number; the same number sits in every child table.</text></g>
 <g class="st" data-s="4-4"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="464.5" text-anchor="middle" font-size="9" fill="#67e8f9">p1.Pay() 1 ·: follow the reference in p1 to the object on the heap.</text></g>
+<g class="st" data-s="4-4"><text x="320" y="464.5" text-anchor="middle" font-size="9" fill="#67e8f9">p1.Pay() step 1: follow the reference in p1 to the object on the heap.</text></g>
 <g class="st" data-s="5-5"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#c4b5fd">p1.Pay() 2 ·: read the object’s type pointer → CardPayment’s table,</text></g>
-<g class="st" data-s="5-5"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#c4b5fd">take slot 0. The object’s real type picked the table, not p1’s type.</text></g>
+<g class="st" data-s="5-5"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#c4b5fd">p1.Pay() step 2: read the object’s type pointer → CardPayment’s table, take</text></g>
+<g class="st" data-s="5-5"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#c4b5fd">slot 0. The object’s real type picked the table, not p1’s type.</text></g>
 <g class="st" data-s="6-6"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#6ee7b7">p1.Pay() 3 ·: jump to CardPayment.Pay. p2.Pay() takes its own object</text></g>
-<g class="st" data-s="6-6"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#6ee7b7">→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.</text></g>
+<g class="st" data-s="6-6"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#6ee7b7">p1.Pay() step 3: the slot holds CardPayment.Pay, so that code runs.</text></g>
+<g class="st" data-s="6-6"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#6ee7b7">(The target was found at run time; the slot number was fixed at build time.)</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#6ee7b7">p2.Pay() does the same walk: its own object → UpiPayment’s table →</text></g>
+<g class="st" data-s="7-7"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#6ee7b7">slot 0 → UpiPayment.Pay. Same slot number, other target.</text></g>
 <text class="free" x="630" y="434" text-anchor="end" font-size="8" font-weight="400" fill="#93a0b8">teaching picture: layout and slot numbers are illustrative</text>
-<g class="st" data-s="4-4"><g class="tok" data-path="ab2-r1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="5-5"><g class="tok" data-path="ab2-t1"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
-<g class="st" data-s="6-6"><g class="tok" data-path="ab2-c1"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Two stack variables, both typed <code>Payment</code> (the abstract base), hold references to <b>different</b> heap objects: a CardPayment and a UpiPayment. Each object starts with a header and a type pointer.</li><li>Each type pointer leads to its own type’s <b>MethodTable</b> (one per type, shared by all its objects). Each child filled the slot for <code>Pay</code> with its own code. The abstract <code>Pay</code> has a slot but no code of its own.</li><li><b>Build time.</b> <code>p1</code> is typed <code>Payment</code>, so the compiler only records “<code>Pay</code> is virtual slot N” (slot 0 here). The slot number is a constant; the target is not known yet.</li><li><b>Run time 1 ·.</b> <code>p1.Pay()</code> follows the reference in <code>p1</code> to the object on the heap.</li><li><b>Run time 2 ·.</b> It reads the object’s type pointer: that leads to <b>CardPayment’s</b> table. The object’s <i>real</i> type chose the table, not the variable’s type. Take the slot.</li><li><b>Jump.</b> The slot holds <code>CardPayment.Pay</code>, so that code runs. <code>p2.Pay()</code> uses the same slot number, but its own object leads to UpiPayment’s table. More in page 16.</li></ol>
+<ol class="st-caps"><li>Two stack variables, both typed <code>Payment</code> (the abstract base), hold references to <b>different</b> heap objects: a CardPayment and a UpiPayment. Each object starts with a header and a type pointer.</li><li>Each type pointer leads to its own type’s <b>MethodTable</b> (one per type, shared by all its objects). Each child filled the slot for <code>Pay</code> with its own code. </li><li><b>Build time.</b> <code>p1</code> is typed <code>Payment</code>, so the compiler only records “<code>Pay</code> is virtual slot N” (slot 0 here). The abstract <code>Pay</code> has the slot but no code of its own (see Payment’s table). The slot number is a constant; the target is not known yet.</li><li><b>Run time 1.</b> <code>p1.Pay()</code> follows the reference in <code>p1</code> to the object on the heap.</li><li><b>Run time 2.</b> It reads the object’s type pointer: that leads to <b>CardPayment’s</b> table. The object’s <i>real</i> type chose the table, not the variable’s type. Take the slot.</li><li><b>Jump.</b> The slot holds <code>CardPayment.Pay</code>, so that code runs.</li><li><code>p2.Pay()</code> does the same walk with the same slot number, but its own object leads to UpiPayment’s table and so to <code>UpiPayment.Pay</code>. More in page 16.</li></ol>
 <figcaption><strong>What you're seeing:</strong> one variable type, many object types. The checkout code only knows “Payment”; each object brings its own table. (Slot numbers and layout: teaching picture of the classic runtime model.)</figcaption>
 </figure>
   </section>

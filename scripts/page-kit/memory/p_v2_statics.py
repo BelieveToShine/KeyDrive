@@ -2,63 +2,70 @@ from p_common import *
 
 # ================================================================= 6. STATICS (v2: memory-level)
 def d_st1():
-    d = Diagram('st1', 640, 350, 'Two Counter objects on the heap, each with a header, a type pointer to the one Counter MethodTable, and its own Id; the single static Total sits in the type’s static area; the constructor adds one to Total and copies its value into the new object’s Id')
-    d.note(10, 8, 320, 56, 'Teaching picture: addresses, field order|and sizes are illustrative', 'n', size=9)
-    d.code_box(340, 4, 290, 68, [(0, 'static int Total;   int Id;', ''), (0, 'Counter() { Total++; Id = Total; }', ''), (0, 'var a = new Counter();', ''), (0, 'var b = new Counter();', '')], 'n', size=8.8, lh=13)
-    d.zone(10, 76, 110, 264, 'cyan', '📚 STACK')
-    d.zone(130, 76, 190, 264, 'emerald', '🏠 HEAP')
-    d.zone(340, 76, 290, 264, 'violet', '🧬 TYPE: Counter')
-    fr = card(d, 16, 120, 'Main frame', [('a = null', 'f', '1-4'), ('b = null', 'f', '1-7')], 'cyan', w=98, st=1)
+    d = Diagram('st1', 640, 372, 'Two Counter objects on the heap, each with its own Id; the single static Total sits in the type’s static area; each constructor adds one to Total and then copies its value into the new object’s Id')
+    d.code_box(10, 4, 620, 62, [(0, 'class Counter { static int Total;   int Id;', ''), (0, '    public Counter() { Total++; Id = Total; } }', ''), (0, 'var a = new Counter();    var b = new Counter();', '')], 'n', size=8.8, lh=13)
+    d.zone(10, 72, 110, 264, 'cyan', '📚 STACK')
+    d.zone(130, 72, 170, 264, 'emerald', '🏠 HEAP')
+    d.zone(330, 72, 300, 264, 'violet', '🧬 TYPE: Counter')
+    fr = card(d, 16, 104, 'Main frame', [('a = null', 'f', '1-4'), ('b = null', 'f', '1-8')], 'cyan', w=98, st=1)
     cell(d, fr, 0, 'a = ref', 'amber', st='5-', hl=5)
-    cell(d, fr, 1, 'b = ref', 'amber', st='8-', hl=8)
-    d.box(350, 120, 170, 76, [('Counter MethodTable', 't'), ('vtable slots, GC info,', 'm'), ('instance size …', 'm')], 'violet', st=1)
-    sa = card(d, 348, 262, 'static area', [('Total = 0', 'f', '1-2')], 'amber', w=274, st=1)
-    cell(d, sa, 0, 'Total = 1', 'amber', st='3-6', hl=3)
-    cell(d, sa, 0, 'Total = 2', 'amber', st='7-', hl=7)
-    o1 = card(d, 138, 96, 'Counter object #1', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 0', 'f', '2-3')], 'emerald', w=170, st='2-')
-    cell(d, o1, 2, 'Id = 1', 'amber', st='4-6', hl=4)
-    cell(d, o1, 2, 'Id = 1', 'emerald', st='7-', hl=7)
-    o2 = card(d, 138, 214, 'Counter object #2', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 0', 'f', '6-6')], 'emerald', w=170, st='6-')
-    cell(d, o2, 2, 'Id = 2', 'amber', st='7-', hl=7)
-    d.arrow([(300, 157), (350, 157)], 'violet', st='2-', id='tp1')
-    d.arrow([(300, 275), (336, 275), (336, 181), (350, 181)], 'violet', st='6-', id='tp2')
-    d.arrow([(106, 157), (146, 157)], 'cyan', st='5-', id='ra')
-    d.arrow([(106, 181), (124, 181), (124, 275), (146, 275)], 'cyan', st='8-', id='rb')
-    d.arrow([(590, 72), (590, 288)], 'amber', 'Total++', at=(590, 214), st='3-3', id='inc1')
-    d.arrow([(590, 72), (590, 288)], 'amber', 'Total++', at=(590, 214), st='7-7', id='inc2')
-    d.arrow([(356, 299), (326, 299), (326, 181), (300, 181)], 'amber', 'copy', at=(326, 240), st='4-4', id='cp1')
-    d.arrow([(356, 299), (300, 299)], 'amber', st='7-7', id='cp2')
-    d.token('inc1', '➕', 14, 'amber', st='3-3')
-    d.token('inc2', '➕', 14, 'amber', st='7-7')
-    d.token('cp1', '📋', 14, 'amber', st='4-4')
-    d.token('cp2', '📋', 14, 'amber', st='7-7')
+    cell(d, fr, 1, 'b = ref', 'amber', st='9-', hl=9)
+    d.note(142, 130, 146, 36, '(no objects yet)', 'n', st='1-1', size=9)
+    sa = card(d, 345, 160, 'static area · ONE per type', [('Total = 0', 'f', '1-2')], 'amber', w=270, st=1)
+    cell(d, sa, 0, 'Total = 1', 'amber', st='3-3', hl=3)
+    cell(d, sa, 0, 'Total = 1', 'n', st='4-6')
+    cell(d, sa, 0, 'Total = 2', 'amber', st='7-7', hl=7)
+    cell(d, sa, 0, 'Total = 2', 'n', st='8-')
+    o1 = card(d, 138, 104, 'Counter object #1', [('Id = 0', 'f', '2-3')], 'emerald', w=154, st='2-')
+    cell(d, o1, 0, 'Id = 1', 'amber', st='4-4', hl=4)
+    cell(d, o1, 0, 'Id = 1', 'emerald', st='5-')
+    o2 = card(d, 138, 214, 'Counter object #2', [('Id = 0', 'f', '6-7')], 'emerald', w=154, st='6-')
+    cell(d, o2, 0, 'Id = 2', 'amber', st='8-8', hl=8)
+    cell(d, o2, 0, 'Id = 2', 'emerald', st='9-')
+    d.arrow([fr['rows'][0]['r'], (122, fr['rows'][0]['y']), (122, o1['L'][1]), o1['L']], 'cyan', st='5-', id='ra')
+    d.arrow([fr['rows'][1]['r'], (122, fr['rows'][1]['y']), (122, o2['L'][1]), o2['L']], 'cyan', st='9-', id='rb')
+    ty = sa['L'][1]
+    d.arrow([o1['R'], (316, o1['R'][1]), (316, ty), sa['L']], 'amber', 'Total++', at=(316, 168), st='3-3', id='inc1')
+    d.arrow([sa['rows'][0]['l'], (308, ty), (308, o1['R'][1]), (o1['R'][0] - 8, o1['R'][1])], 'amber', 'copy', at=(308, 170), st='4-4', id='cp1')
+    d.arrow([o2['R'], (316, o2['R'][1]), (316, ty), sa['L']], 'amber', 'Total++', at=(316, 214), st='7-7', id='inc2')
+    d.arrow([sa['rows'][0]['l'], (308, ty), (308, o2['R'][1]), (o2['R'][0] - 8, o2['R'][1])], 'amber', 'copy', at=(308, 214), st='8-8', id='cp2')
+    d.note(10, 344, 620, 22, 'Teaching picture (layout, addresses illustrative)  ·  amber = the value that changes in this step', 'n', size=9)
     return d
 
 def d_st2():
-    d = Diagram('st2', 640, 348, 'A static field Cache holds a reference to a List object on the heap; after Load() returns, its local tmp is gone and the Order is unreachable, a later GC run reclaims the Order but keeps the List because the static slot is a root; setting Cache to null makes the List unreachable too')
-    d.code_box(10, 8, 330, 58, [(0, 'static List<int> Cache = new();', ''), (0, 'void Load() { var tmp = new Order(); }', ''), (0, 'Cache = null;      // much later', '')], 'n', size=9, lh=14)
-    d.note(350, 8, 280, 56, 'Teaching picture: where the objects sit|and their addresses are illustrative', 'n', size=9)
-    d.zone(10, 76, 150, 262, 'cyan', '📚 STACK')
-    d.zone(170, 76, 170, 262, 'amber', '📌 STATIC AREA')
-    d.zone(350, 76, 280, 262, 'emerald', '🏠 HEAP')
-    sc = card(d, 178, 130, 'static field', [('Cache = null', 'f', '1-1')], 'amber', w=154, st=1)
-    cell(d, sc, 0, 'Cache = ref', 'amber', st='2-7', hl=2)
-    cell(d, sc, 0, 'Cache = null', 'amber', st='8-', hl=8)
-    lrows = [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('items (internal array)', 'f')]
-    card(d, 358, 106, 'List<int> object', lrows, 'emerald', w=264, st='2-5')
-    card(d, 358, 106, 'List<int>: reached from a root', lrows, 'amber', w=264, st='6-7')
-    card(d, 358, 106, 'List<int>: unreachable', lrows, 'n', w=264, st=8)
-    orows = [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('fields …', 'f')]
-    card(d, 358, 222, 'Order object', orows, 'emerald', w=264, st='4-4')
-    card(d, 358, 222, 'Order: unreachable, not freed yet', orows, 'n', w=264, st='5-6')
-    d.zone(358, 222, 264, 106, 'n', 'free space (Order reclaimed)', st='7-')
-    fr = card(d, 18, 246, 'Load() frame', [('tmp = null', 'f', '3-3')], 'cyan', w=134, st='3-4')
+    d = Diagram('st2', 640, 400, 'A static field Cache holds a reference to a List object on the heap; after Load() returns, its local tmp is gone and the Order is unreachable, a GC run reclaims the Order but keeps the List because the static slot is a root; setting Cache to null makes the List unreachable too')
+    d.code_box(10, 4, 620, 62, [(0, 'static List<int> Cache = new();', ''), (0, 'void Load() { var tmp = new Order(); }', ''), (0, 'Cache = null;      // much later', '')], 'n', size=9, lh=14)
+    d.zone(10, 72, 110, 264, 'cyan', '📚 STACK')
+    d.zone(130, 72, 170, 264, 'emerald', '🏠 HEAP')
+    d.zone(330, 72, 300, 264, 'amber', '📌 STATIC AREA (a GC root)')
+    d.note(18, 130, 94, 36, '(no frames)', 'n', st='1-2', size=9)
+    d.note(18, 104, 94, 44, 'Load() frame|popped: gone', 'n', st='5-', size=9)
+    d.note(142, 130, 146, 36, '(empty)', 'n', st='1-1', size=9)
+    sc = card(d, 345, 104, 'static field', [('Cache = null', 'f', '1-1')], 'amber', w=270, st=1)
+    cell(d, sc, 0, 'Cache = ref', 'amber', st='2-5', hl=2)
+    cell(d, sc, 0, 'Cache = ref  ◀ ROOT', 'amber', st='6-6', hl=6)
+    cell(d, sc, 0, 'Cache = ref', 'amber', st='7-7')
+    cell(d, sc, 0, 'Cache = null', 'rose', st='8-', hl=8)
+    lrows = [('items (internal array)', 'f')]
+    li = card(d, 138, 104, 'List<int> object', lrows, 'emerald', w=154, st='2-5')
+    card(d, 138, 104, 'List<int>: reached by GC', lrows, 'amber', w=154, st='6-6')
+    card(d, 138, 104, 'List<int>: still live', lrows, 'emerald', w=154, st='7-7')
+    card(d, 138, 104, 'List<int>: unreachable', lrows, 'n', w=154, st='8-', dash=True)
+    orows = [('fields …', 'f')]
+    od = card(d, 138, 214, 'Order object', orows, 'emerald', w=154, st='4-4')
+    card(d, 138, 214, 'Order: unreachable', orows, 'n', w=154, st='5-5', dash=True)
+    card(d, 138, 214, 'Order: not reached', orows, 'n', w=154, st='6-6', dash=True)
+    d.zone(138, 214, 154, 58, 'n', 'free space (Order gone)', st='7-')
+    fr = card(d, 16, 104, 'Load() frame', [('tmp = null', 'f', '3-3')], 'cyan', w=98, st='3-4')
     cell(d, fr, 0, 'tmp = ref', 'amber', st='4-4', hl=4)
-    d.arrow([(324, 167), (366, 167)], 'amber', st='2-7', id='cr')
-    d.arrow([(144, 283), (366, 283)], 'cyan', 'ref', at=(255, 283), st='4-4', id='tr')
-    d.token('cr', '🔎', 14, 'amber', st='6-6')
-    d.note(18, 110, 134, 66, 'GC runs|roots: statics|+ stack locals', 'amber', st='6-7', size=9)
-    d.note(18, 110, 134, 66, 'Cache = null:|no root reaches|the List now', 'rose', st=8, size=9)
+    cy = sc['rows'][0]['y']
+    d.arrow([sc['rows'][0]['l'], (316, cy), (316, li['R'][1]), li['R']], 'amber', st='2-7', id='cr')
+    d.arrow([fr['rows'][0]['r'], (122, fr['rows'][0]['y']), (122, od['L'][1]), od['L']], 'cyan', st='4-4', id='tr')
+    d.note(10, 342, 620, 24, 'Step 6 ·  GC starts at its roots (statics + stack locals) and follows pointers', 'amber', st='6-6', size=9)
+    d.note(10, 342, 620, 24, 'Step 7 ·  only the unreached Order is reclaimed; the List stays', 'emerald', st='7-7', size=9)
+    d.note(10, 342, 620, 24, 'Step 8 ·  no root reaches the List now: unreachable, a later GC may free it', 'rose', st='8-8', size=9)
+    d.note(10, 342, 620, 24, 'Frame popped: Order unreachable but NOT freed until a GC runs', 'n', st='5-5', size=9)
+    d.note(10, 370, 620, 22, 'Legend: green = live  ·  amber = reached by GC / changed  ·  grey dashed = unreachable', 'n', size=9)
     return d
 
 def build_statics():
@@ -68,13 +75,14 @@ def build_statics():
         sub='Where static fields live, how many copies exist, when static constructors run, and why a static reference can keep objects alive for the life of the app.',
         ivq='Where are static variables stored in .NET and when are they cleaned?',
         prob=(d_st1(), [
-            '<b>Before any object exists</b>, the type <code>Counter</code> already has its MethodTable and a <b>static area</b> holding <code>Total = 0</code>. <code>a</code> and <code>b</code> are empty slots in Main’s stack frame.',
-            '<code>new Counter()</code>: a heap object appears: a header, a <b>type pointer</b> to Counter’s one MethodTable, and its own <code>Id</code> (still 0).',
+            '<b>Before any object exists</b>, the type <code>Counter</code> already has a <b>static area</b> holding <code>Total = 0</code>. <code>a</code> and <code>b</code> are empty slots in Main’s stack frame; the heap is empty.',
+            '<code>new Counter()</code>: a heap object appears with its own <code>Id</code> (still 0).',
             'The constructor runs <code>Total++</code>. The code reaches <code>Total</code> through the <b>type</b>, not through the object: the one <code>Total</code> goes 0 → 1.',
             '<code>Id = Total</code> <b>copies</b> the value 1 into the object. Two separate numbers now: if <code>Total</code> changes later, this <code>Id</code> does not.',
             'Now <code>a = </code> the new object: <code>a</code> (on the stack) holds a reference that points at the object.',
-            '<code>var b = new Counter()</code>: a <b>second</b> object with its own header and <code>Id</code>. Its type pointer leads to the <b>same</b> MethodTable.',
-            'Its constructor does <code>Total++</code> on the <b>same</b> <code>Total</code> (now 2) and copies 2 into <i>this</i> object’s <code>Id</code>. Object #1 still says <code>Id = 1</code>.',
+            '<code>var b = new Counter()</code>: a <b>second</b> object appears with its own <code>Id</code> (still 0).',
+            'Its constructor does <code>Total++</code> on the <b>same</b> <code>Total</code>: 1 → 2.',
+            '<code>Id = Total</code> copies 2 into <i>this</i> object’s <code>Id</code>. Object #1 still says <code>Id = 1</code>.',
             '<code>b</code> now references the second object. Final picture: <b>two</b> <code>Id</code> boxes (one per object, heap), <b>one</b> <code>Total</code> (one per type).'],
             'instance fields: one copy per object (heap). Static fields: one copy per type, in the type’s static area. The picture’s layout is a teaching picture; the exact storage of statics is a runtime detail.'),
         one='<b>A static field belongs to the type, not to any object: one copy for the whole app, alive until the app ends.</b>',
@@ -87,8 +95,8 @@ def build_statics():
                 '<code>Load()</code> is called: a <b>stack frame</b> appears with its local <code>tmp</code> (empty).',
                 '<code>new Order()</code> creates an Order object on the heap and <code>tmp</code> holds a reference to it.',
                 '<code>Load()</code> returns: the <b>frame is popped</b>, so <code>tmp</code> is gone. The Order is still in the heap, but nothing points to it: <b>unreachable, not freed yet</b>.',
-                'A GC runs. It starts from its <b>roots</b> — statics and stack locals — and follows references. <code>Cache</code> is a root, so the List is reached.',
-                'The Order was never reached, so its memory is reclaimed. The List stays, because a static reference is a GC root.',
+                'A GC runs. It starts from its <b>roots</b> — statics and stack locals (the stack is empty now) — and follows references. <code>Cache</code> is a root, so the List is reached; the Order is not.',
+                'The Order was never reached, so its memory is reclaimed (the List does not move here). The List stays, because a static reference is a GC root.',
                 'Much later: <code>Cache = null</code>. No root reaches the List any more: it is unreachable (and a later GC may reclaim it). Until then, the static slot kept it — and anything it holds — alive.'],
                 'a static reference is a permanent “ticket”: whatever it points to is never freed while it points there. Unreachable is not the same as freed: the memory is reclaimed only when a GC runs. (Layout is a teaching picture; the GC is covered on ' + pref('gc-basics') + '.)')),
             ('table', '🧾 Instance vs static', ['', 'Instance field', 'Static field'], [

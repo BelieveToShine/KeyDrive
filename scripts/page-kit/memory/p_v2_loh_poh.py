@@ -19,8 +19,9 @@ def d_lo1():
     d.note(366, 34, 256, 50, 'array ≥ 85,000 bytes → LOH|(sizes: teaching picture)', 'amber', size=9, st='2-2')
     c1 = card(d, 366, 100, 'byte[100_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 100,000 data bytes', 'f')], 'amber', w=256, st='2-3')
     card(d, 366, 100, 'byte[100_000] unreachable', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 100,000 data bytes', 'f')], 'rose', w=256, st='4-4', hl=4)
-    d.zone(366, 100, 256, 106, 'n', 'free hole (was big)', st='5-', hl=5)
-    d.text(494, 168, 'freed, nothing moved: the hole stays', 'n', size=9, st='5-')
+    d.zone(366, 100, 256, 106, 'n', 'free hole: 100,000 bytes (was big)', st='5-', hl=5)
+    d.text(494, 160, 'freed, nothing moved: the hole stays', 'n', size=9, st='5-')
+    d.text(494, 184, '150,000 needed > 100,000 free: does not fit', 'rose', size=9, st='6-', hl=6)
     c2 = card(d, 366, 212, 'byte[90_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 90,000 data bytes', 'f')], 'amber', w=256, st='3-')
     c3 = card(d, 366, 324, 'byte[150_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 150,000 data bytes', 'f')], 'amber', w=256, st='6-', hl=6)
     # --- stack slots aligned with the target rows
@@ -86,14 +87,13 @@ def d_lo2():
     # free tail
     d.box(554, ys, 66, H, [('free', 't'), ('0x600', 'm')], 'n', st='1-4')
     d.box(448, ys, 172, H, [('one free block', 't'), ('from 0x500', 'm')], 'n', st='5-5')
-    d.box(448, ys, 132, H, [('N: bigger', 't'), ('0x500', 'm')], 'emerald', st='6-', hl=6)
-    d.box(588, ys, 32, H, [], 'n', st='6-')
-    d.text(184, 196, 'hole: stays unusable for N', 'rose', size=9, st='6-')
+    d.box(448, ys, 150, H, [('N: bigger than the hole', 't'), ('0x500', 'm')], 'emerald', st='6-', hl=6)
+    d.text(178, 182, 'hole too small for N', 'rose', size=9, anchor='middle', st='6-')
     _slot(d, 552, 36, 'n', 'reference', 'cyan', w=68, st='6-', hl=6)
-    d.arrow([(565, 70), (565, ys)], 'cyan', st='6-')
+    d.arrow([(586, 70), (586, ys)], 'cyan', st='6-')
     # native code
     d.zone(10, 232, 620, 44, 'amber', '⚙️ NATIVE CODE', st='2-')
-    d.box(219, 240, 130, 30, [('raw address 0x300', 'm')], 'amber', st='2-', hl=2)
+    d.box(189, 240, 190, 30, [('raw copy of 0x300 (not a GC reference)', 'm')], 'amber', st='2-', hl=2)
     d.arrow([(284, 240), (284, ys + H)], 'amber', st='2-')
     for i, (t, c) in enumerate([
             ('Heap in address order. a, buf and b are stack references to A, P, B;|nothing points at the objects at 0x200 and 0x400', 'cyan'),
@@ -107,35 +107,40 @@ def d_lo2():
 
 # ------------------------------------------------------------ diagram 3: the pinned object heap
 def d_lo3():
-    d = Diagram('lo3', 640, 372, 'A buffer allocated with GC.AllocateArray pinned true lives in the separate pinned object heap, so when the small object heap compacts its survivors slide together without having to work around the buffer, and native code keeps a valid address')
-    d.zone(10, 8, 190, 232, 'emerald', '🏠 SMALL OBJECT HEAP')
-    d.zone(214, 8, 110, 232, 'cyan', '📚 STACK')
-    d.zone(338, 8, 292, 232, 'amber', '📌 PINNED OBJECT HEAP')
-    poh = card(d, 346, 34, 'byte[4096] pinned buffer', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 4,096 data bytes', 'f')], 'amber', w=276, st='1-')
-    _slot(d, 224, poh['rows'][1]['y'] - 17, 'buf', 'reference', 'cyan', w=90, st='1-', hl=1)
-    d.arrow([(314, poh['rows'][1]['y']), (poh['rows'][1]['l'][0], poh['rows'][1]['y'])], 'cyan', st='1-')
-    # small heap: X, dead, Y
+    d = Diagram('lo3', 640, 386, 'A pinned buffer allocated with GC.AllocateArray pinned true goes into the separate pinned object heap; native code takes its raw address; when a garbage object in the small object heap is freed, the survivor Y slides up to close the gap while the buffer does not move and the native address stays valid')
+    d.zone(10, 8, 190, 250, 'emerald', '🏠 SMALL OBJECT HEAP')
+    d.zone(214, 8, 110, 250, 'cyan', '📚 STACK')
+    d.zone(338, 8, 292, 176, 'amber', '📌 PINNED OBJECT HEAP (POH)')
+    d.zone(346, 70, 276, 106, 'n', 'empty so far: the buffer will go here', dash=True, st='1-1')
+    poh = card(d, 346, 70, 'byte[4096] pinned buffer', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 4,096 data bytes', 'f')], 'amber', w=276, st='2-')
+        # small heap: X, garbage, Y
     R = [40, 96, 152]; H = 40
-    d.box(20, R[0], 170, H, [('X', 't'), ('live', 'm')], 'emerald', st='2-')
-    d.box(20, R[1], 170, H, [('object', 't'), ('unreachable', 'm')], 'rose', st='2-2', hl=2)
-    d.box(20, R[1], 170, H, [('Y ✔ live', 't'), ('slid up', 'm')], 'emerald', st='3-', hl=3)
-    d.box(20, R[2], 170, H, [('Y', 't'), ('live', 'm')], 'emerald', st='2-2')
-    d.box(20, R[2], 170, H, [('one free block', 't')], 'n', st='3-')
-    _slot(d, 224, 34, 'x', 'reference', 'cyan', w=90, st='2-')
-    _slot(d, 224, R[2] + 3, 'y', 'reference', 'cyan', w=90, st='2-')
-    d.arrow([(224, 51), (190, 51)], 'cyan', st='2-')
-    d.arrow([(224, R[2] + 20), (190, R[2] + 20)], 'cyan', st='2-2')
-    d.arrow([(224, R[2] + 20), (207, R[2] + 20), (207, R[1] + 20), (190, R[1] + 20)], 'cyan', st='3-')
+    d.box(20, R[0], 170, H, [('X', 't'), ('live', 'm')], 'emerald')
+    d.box(20, R[1], 170, H, [('object', 't'), ('no reference: garbage', 'm')], 'rose', st='1-3', hl=1)
+    d.box(20, R[1], 170, H, [('free space', 't'), ('(was garbage)', 'm')], 'n', st='4-4', hl=4)
+    d.box(20, R[1], 170, H, [('Y', 't'), ('live, slid up', 'm')], 'emerald', st='5-', hl=5)
+    d.box(20, R[2], 170, H, [('Y', 't'), ('live', 'm')], 'emerald', st='1-4')
+    d.box(20, R[2], 170, H, [('one free block', 't')], 'n', st='5-', hl=5)
+    _slot(d, 224, R[0] + 3, 'x', 'reference', 'cyan', w=90)
+    _slot(d, 224, R[2] + 3, 'y', 'reference', 'cyan', w=90)
+    d.arrow([(224, R[0] + 20), (190, R[0] + 20)], 'cyan')
+    d.arrow([(224, R[2] + 20), (190, R[2] + 20)], 'cyan', st='1-4')
+    d.arrow([(224, R[2] + 20), (207, R[2] + 20), (207, R[1] + 20), (190, R[1] + 20)], 'cyan', st='5-', hl=5)
+    _slot(d, 224, poh['L'][1] - 17, 'buf', 'reference', 'cyan', w=90, st='2-', hl=2)
+    d.arrow([(314, poh['L'][1]), poh['L']], 'cyan', st='2-')
     # native code
-    d.box(430, 160, 130, 40, [('native code', 't'), ('raw address', 'm')], 'amber', st='4-', hl=4)
-    d.arrow([(495, 160), (495, poh['y'] + poh['h'])], 'amber', st='4-')
+    d.zone(338, 196, 292, 62, 'amber', '⚙️ NATIVE CODE', st='3-')
+    d.box(419, 218, 130, 34, [('raw address', 't'), ('(a copy of the address)', 'm')], 'amber', st='3-', hl=3)
+    d.arrow([(484, 218), poh['B']], 'amber', 'uses', at=(512, 200), st='3-')
+    d.text(612, 198, 'same place, same address', 'emerald', size=9, anchor='end', st='5-5')
     for i, (t, c) in enumerate([
-            ('GC.AllocateArray<byte>(4096, pinned: true) puts the array in the POH, away from the normal heap|buf is an ordinary stack reference to it (layout: teaching picture)', 'amber'),
-            ('Ordinary objects go in the small object heap: X and Y are reachable, one object between them is not|the pinned buffer is nowhere near them', 'emerald'),
-            ('The small heap compacts: Y slides up and the free space becomes one block|nothing in this heap is pinned, so nothing blocks the slide', 'violet'),
-            ('Native code uses the buffer through a raw address, which stays valid: the POH buffer never moves|(that is what the API is for)', 'amber')]):
-        d.note(10, 256, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.code_box(10, 314, 620, 46, [(0, 'byte[] buf = GC.AllocateArray<byte>(4096, pinned: true);', ''), (0, '// POH: the .NET 5+ API for arrays that must not move', '')], 'n', size=9, lh=14)
+            ('Ordinary objects live in the small object heap: X and Y are reachable, the middle one has no reference (garbage)|the POH exists but is still empty', 'emerald'),
+            ('GC.AllocateArray<byte>(4096, pinned: true) puts the array in the POH, away from ordinary objects|buf is an ordinary stack reference to it (layout: teaching picture)', 'amber'),
+            ('Native code keeps a raw address into the buffer|a plain copy of the address: the GC cannot update it, so the buffer must not move', 'amber'),
+            ('A GC finds nothing pointing at the middle object: it is freed|but the survivor Y has not moved yet, so the free space is split in two', 'rose'),
+            ('The small heap compacts: Y slides up, the free space becomes one block|the POH buffer stays where it is, so the native address is still valid', 'violet')]):
+        d.note(10, 270, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9)
+    d.code_box(10, 328, 620, 46, [(0, 'byte[] buf = GC.AllocateArray<byte>(4096, pinned: true);', ''), (0, '// POH: the .NET 5+ API for arrays that must not move', '')], 'n', size=9, lh=14)
     return d
 
 def build_loh_poh():
@@ -165,10 +170,11 @@ def build_loh_poh():
                 'A new object N that is bigger than the hole goes after B. Free space split into pieces is <b>fragmentation</b>.'],
                 'pinning is a promise to native code that an address will not change, and compaction has to work around it.')),
             ('story', '📍 The pinned object heap: pinned buffers kept out of the way', (d_lo3(), [
+                'Ordinary objects live in the small object heap: X and Y are reachable, one object between them has no reference (garbage). The POH exists but is still empty.',
                 'A buffer created with <code>GC.AllocateArray&lt;byte&gt;(4096, pinned: true)</code> is placed in the <b>pinned object heap (POH)</b>, not among the ordinary objects.',
-                'Ordinary objects live in the small object heap: X and Y are reachable, one object between them is not.',
-                'When the small heap compacts, Y slides up and the free space becomes <b>one block</b>. No pinned buffer sits in the middle to block it.',
-                'Native code keeps a raw address into the buffer, and it stays valid because the POH buffer never moves.'],
+                'Native code keeps a <b>raw address</b> into the buffer: a plain copy the GC cannot update, so the buffer must not move.',
+                'A GC frees the garbage object, but Y has not moved yet: the free space is split in two.',
+                'When the small heap compacts, Y slides up and the free space becomes <b>one block</b>. No pinned buffer sits in the middle to block it, and the POH buffer (and the native address) stay put.'],
                 'the POH keeps long-lived pinned buffers away from the heap that gets compacted. (The layout is a teaching picture.)')),
             ('table', '🧾 The heaps at a glance', ['Heap', 'Holds', 'Collected with', 'Compaction'], [
                 ['Small object heap', 'objects below the 85,000-byte threshold', 'gen 0 / 1 / 2 as they age', 'survivors can slide together (compaction)'],

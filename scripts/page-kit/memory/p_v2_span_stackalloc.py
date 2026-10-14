@@ -17,12 +17,12 @@ def d_sp1():
     d.text(130, 78, '(frame popped: stack is empty)', 'n', size=9, st='3-4')
     # --- the heap array object
     obj_rows = [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length = 4', 'f'), ('data: 0 0 0 0', 'f')]
-    card(d, 274, 34, 'byte[4] object', obj_rows, 'emerald', w=340, st='2-2', hl=2)
+    ga = card(d, 274, 34, 'byte[4] object', obj_rows, 'emerald', w=340, st='2-2', hl=2)
     card(d, 274, 34, 'byte[4]: unreachable, NOT freed yet', obj_rows, 'rose', w=340, st='3-3', hl=3)
     d.box(274, 34, 340, 130, [('free space', 't'), ('the GC reclaimed the array', 's')], 'n', st='4-', hl=4)
     d.box(274, 170, 340, 30, [('🧹 GC: no root reaches it → reclaimed', 's')], 'violet', st='4-4', hl=4)
     d.box(274, 170, 340, 30, [('stackalloc used no heap: nothing to free', 's')], 'emerald', st='5-6', hl=6)
-    d.arrow([(fa['rows'][0]['r'][0], fa['rows'][0]['y']), (258, fa['rows'][0]['y']), (258, 95), (282, 95)], 'cyan', st='2-2')
+    d.arrow([(fa['rows'][0]['r'][0], fa['rows'][0]['y']), (258, fa['rows'][0]['y']), (258, ga['L'][1]), (ga['L'][0], ga['L'][1])], 'cyan', st='2-2')
     # --- B(): stackalloc frame
     fb = card(d, 18, 34, 'frame of B()', [('s : Span<byte> (ptr + len)', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=196, st='5-5', hl=5)
     r0, r1 = fb['rows'][0], fb['rows'][1]
@@ -45,34 +45,36 @@ def d_sp1():
 # ------------------------------------------------------------ diagram 2: ArrayPool rent / return / rent again
 def d_sp2():
     d = Diagram('sp2', 640, 372, 'An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation')
-    d.zone(10, 8, 380, 244, 'emerald', '🏠 HEAP')
+    d.zone(10, 8, 126, 244, 'violet', '📌 STATIC')
+    d.zone(146, 8, 250, 244, 'emerald', '🏠 HEAP')
     d.zone(402, 8, 228, 244, 'cyan', '📚 STACK')
-    # pool object
-    pool = card(d, 40, 34, 'pool object (held by static Shared)', [('shelf slot: → array', 'f', '1-1')], 'amber', w=330, st=1)
+    sh = card(d, 18, 34, 'static field', [('Shared = ref', 'f')], 'violet', w=110)
+    CXp, CWp = 158, 226
+    pool = card(d, CXp, 34, 'pool object', [('shelf slot: → array', 'f', '1-1')], 'amber', w=CWp, st=1)
     cell(d, pool, 0, 'shelf slot: empty (lent out)', 'n', st='2-3')
     cell(d, pool, 0, 'shelf slot: → array', 'amber', st='4-4', hl=4)
     cell(d, pool, 0, 'shelf slot: empty (lent out)', 'n', st='5-5')
-    # the array, in each state
-    arr_rows = lambda data: [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length = 128 (asked for 100)', 'f'), (data, 'f')]
+    d.arrow([sh['rows'][0]['r'], pool['L']], 'violet')
+    arr_rows = lambda data: [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length = 128 (asked 100)', 'f'), (data, 'f')]
     for st, col, title, data, hl in [('1-1', 'emerald', 'byte[128]: idle on the shelf', 'data: (old contents)', None),
                                      ('2-2', 'amber', 'byte[128]: RENTED, in use', 'data: (old contents)', 2),
                                      ('3-3', 'amber', 'byte[128]: RENTED, in use', 'data: 7 7 7 7 …', 3),
-                                     ('4-4', 'emerald', 'byte[128]: back on the shelf, alive', 'data: 7 7 7 7 … (not cleared)', 4),
-                                     ('5-5', 'amber', 'byte[128]: RENTED again, same object', 'data: 7 7 7 7 … (stale!)', 5)]:
-        a = card(d, 40, 112, title, arr_rows(data), col, w=330, st=st, hl=hl)
-    tpy = a['rows'][1]['y']
-    d.arrow([(pool['rows'][0]['l'][0], pool['rows'][0]['y']), (26, pool['rows'][0]['y']), (26, tpy), (a['rows'][1]['l'][0], tpy)], 'amber', 'ref', at=(26, 120), st='1-1')
-    d.arrow([(pool['rows'][0]['l'][0], pool['rows'][0]['y']), (26, pool['rows'][0]['y']), (26, tpy), (a['rows'][1]['l'][0], tpy)], 'amber', 'ref', at=(26, 120), st='4-4')
-    # stack frames
+                                     ('4-4', 'emerald', 'byte[128]: back on shelf, alive', 'data: 7 7 7 7 … (kept)', 4),
+                                     ('5-5', 'amber', 'byte[128]: RENTED again', 'data: 7 7 7 7 … (stale!)', 5)]:
+        a = card(d, CXp, 112, title, arr_rows(data), col, w=CWp, st=st, hl=hl)
+    pr = pool['rows'][0]
+    for st in ('1-1', '4-4'):
+        d.arrow([pr['r'], (pr['r'][0] + 8, pr['y']), (pr['r'][0] + 8, a['R'][1]), a['R']], 'amber', 'ref', at=(pr['r'][0] + 8, 100), st=st)
     d.text(516, 120, 'no call running yet', 'n', size=9, st='1-1')
     d.text(516, 120, '(frame popped: nothing in use)', 'n', size=9, st='4-4')
     for st, title in [('2-3', 'frame of Process (call 1)'), ('5-5', 'frame of Process (call 2)')]:
         f = card(d, 410, 136, title, [('rented = reference', 'f')], 'cyan', w=212, st=st, hl=2 if st == '2-3' else 5)
-        d.arrow([(f['rows'][0]['l'][0], f['rows'][0]['y']), (a['rows'][1]['r'][0], tpy)], 'cyan', st=st)
+        fy = f['rows'][0]['y']
+        d.arrow([f['rows'][0]['l'], (400, fy), (400, a['R'][1]), a['R']], 'cyan', st=st)
     d.code_box(10, 312, 620, 52, [(0, 'var rented = ArrayPool<byte>.Shared.Rent(100);', ''), (0, 'try { Fill(rented); } finally { ArrayPool<byte>.Shared.Return(rented); }', '')], 'n', size=9, lh=14)
     _marker(d, 10, 312, 0, '2-2'); _marker(d, 10, 312, 0, '5-5'); _marker(d, 10, 312, 1, '3-4')
     for i, (t, c) in enumerate([
-            ('An earlier caller used Return(): the array sits idle on the pool’s shelf|the pool object is reachable from a static, so the GC keeps the array (teaching picture)', 'amber'),
+            ('An earlier caller used Return(): the array sits idle on the pool’s shelf|the static Shared reaches the pool, so the GC keeps the array (teaching picture)', 'amber'),
             ('Rent(100): the pool lends the array that ALREADY exists; no new object|it can be longer than you asked (128 ≥ 100); the shelf slot is empty now', 'cyan'),
             ('You fill it: the data cells change|it is still an ordinary heap array', 'emerald'),
             ('Return() in finally: the frame is gone, the array is back on the shelf: alive, not freed|its contents are left as they were (clearing is optional)', 'amber'),
@@ -160,14 +162,21 @@ def d_sp5():
     cell(d, m, 0, 'r = ptr + len 4  (copy of s)', 'amber', st='2-2', hl=2)
     cell(d, m, 0, 'r = ptr + len 4  → DANGLING', 'rose', st='3-', hl=3)
     b = card(d, 18, 100, 'frame of Bad()', [('s = ptr + len 4', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=380, st='1-2')
-    d.zone(18, 100, 380, 82, 'rose', 'Bad() returned: its frame is popped', st='3-')
-    d.box(26, 150, 364, 22, [('freed stack space: the next call may reuse it', 'm')], 'rose', rx=4, st='3-', hl=3)
+    card(d, 18, 100, 'frame of Bad(): still running, nothing escaped', [('s = ptr + len 4', 'f'), ('4 bytes: ? ? ? ?', 'f')], 'cyan', w=380, st='4-4', hl=4)
+    d.zone(18, 100, 380, 82, 'rose', 'Bad() returned: its frame is popped', st='3-3')
+    d.box(26, 150, 364, 22, [('freed stack space: the next call may reuse it', 'm')], 'rose', rx=4, st='3-3', hl=3)
+    cell(d, m, 0, 'r : not set (the build fails here)', 'n', st='4-4')
     y0, y1 = b['rows'][0]['y'], b['rows'][1]['y']
+    ry = m['rows'][0]['y']
     d.arrow([(390, y0), (402, y0), (402, y1), (390, y1)], 'cyan', st='1-2')
-    d.arrow([(390, m['rows'][0]['y']), (416, m['rows'][0]['y']), (416, y1), (390, y1)], 'amber', dash=True, st='2-2')
-    d.arrow([(390, m['rows'][0]['y']), (416, m['rows'][0]['y']), (416, y1), (390, y1)], 'rose', dash=True, st='3-')
+    d.arrow([(390, y0), (402, y0), (402, y1), (390, y1)], 'cyan', st='4-4')
+    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'amber', dash=True, st='2-2')
+    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'rose', dash=True, st='3-3')
+    d.arrow([(390, ry), (416, ry), (416, y1), (390, y1)], 'n', dash=True, st='4-4')
+    d.text(416, (ry + y1) / 2 + 6, '✘', 'rose', size=18, st='4-4')
     d.box(442, 70, 188, 70, [('✘ compiler refuses', 't'), ('the return statement', 's'), ('(ref-safety rules)', 's')], 'rose', st='4-4', hl=4)
-    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // ✘ does not compile', ''), (0, '}', '')], 'n', size=9, lh=14)
+    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // imagine this were allowed', ''), (0, '}', '')], 'n', size=9, lh=14, st='1-3')
+    d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // ✘ error: does not compile', ''), (0, '}', '')], 'n', size=9, lh=14, st='4-4')
     for line, steps in [(0, '1-1'), (2, '2-4')]:
         _marker(d, 10, 258, line, steps)
     _marker(d, 10, 258, 1, '1-1')

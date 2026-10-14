@@ -5,41 +5,37 @@ def d_lk1():
     d = Diagram('lk1', 640, 372, 'A leak through a static event: the window object on the heap is referenced by the stack variable window, and the static field Bus.Tick points to a delegate object whose target is that window; after the stack frame is popped the garbage collector still reaches the window from the static root through the delegate, so it is kept; after Tick -= OnTick nothing reaches the delegate or the window and the next collection frees them')
     d.zone(10, 24, 130, 110, 'cyan', '📚 STACK (root)')
     d.zone(10, 150, 130, 110, 'amber', '📌 STATIC (root)')
-    d.zone(160, 24, 330, 276, 'emerald', '🏠 HEAP')
-    d.zone(505, 24, 125, 110, 'violet', '🧬 TYPE DATA')
+    d.zone(160, 24, 470, 276, 'emerald', '🏠 HEAP')
     # stack frame: exists steps 1-3, popped from 4
-    card(d, 20, 68, 'Main frame', [('window=0x…A1', 'f')], 'cyan', w=110, st='1-3')
-    d.text(75, 112, 'frame popped', 'n', 9, st='4-')
-    d.text(75, 126, 'slot gone', 'n', 9, st='4-')
+    card(d, 20, 52, 'Main frame', [('window=0x…A1', 'f')], 'cyan', w=110, st='1-3')
+    d.text(75, 100, 'frame popped', 'n', 9, st='4-')
+    d.text(75, 114, 'slot gone', 'n', 9, st='4-')
     # static field Tick: null at 1 and from 5, points to delegate 2-4
     card(d, 20, 182, 'Bus statics', [('Tick = null', 'f')], 'amber', w=110, st='1-1')
     card(d, 20, 182, 'Bus statics', [('Tick = 0x…D1', 'f')], 'amber', w=110, st='2-4', hl='2')
     card(d, 20, 182, 'Bus statics', [('Tick = null', 'f')], 'amber', w=110, st='5-', hl='5')
     # Window object (variants by state)
-    wrows = [('header (sync block)', 'hdr'), ('type ptr → Window MT', 'tp'), ('big UI data (fields)', 'f')]
-    card(d, 172, 44, 'Window @ 0x…A1', wrows, 'emerald', w=190, st='1-3', hl='1')
-    card(d, 172, 44, 'Window @ 0x…A1  ✔ marked', wrows, 'emerald', w=190, st='4-4', hl='4')
-    card(d, 172, 44, 'Window @ 0x…A1  ✘ unreachable', wrows, 'rose', w=190, st='5-5', hl='5')
+    wrows = [('big UI data (fields)', 'f')]
+    card(d, 172, 52, 'Window @ 0x…A1', wrows, 'emerald', w=190, st='1-2', hl='1')
+    card(d, 172, 52, 'Window · only the delegate holds it', wrows, 'amber', w=190, st='3-3', hl='3')
+    card(d, 172, 52, 'Window @ 0x…A1  ✔ marked', wrows, 'emerald', w=190, st='4-4', hl='4')
+    card(d, 172, 52, 'Window @ 0x…A1  ✘ unreachable', wrows, 'rose', w=190, st='5-5', hl='5')
     # Delegate object
-    drows = [('header (sync block)', 'hdr'), ('type ptr → Action MT', 'tp'), ('target → 0x…A1', 'f'), ('method: Window.OnTick', 'f')]
-    card(d, 172, 158, 'Delegate @ 0x…D1', drows, 'amber', w=190, st='2-3', hl='2')
-    card(d, 172, 158, 'Delegate @ 0x…D1  ✔ marked', drows, 'amber', w=190, st='4-4', hl='4')
-    card(d, 172, 158, 'Delegate @ 0x…D1  ✘ unreachable', drows, 'rose', w=190, st='5-5', hl='5')
+    drows = [('target → 0x…A1', 'f'), ('method: Window.OnTick', 'f')]
+    card(d, 172, 170, 'Delegate @ 0x…D1', drows, 'amber', w=190, st='2-3', hl='2')
+    card(d, 172, 170, 'Delegate @ 0x…D1  ✔ marked', drows, 'amber', w=190, st='4-4', hl='4')
+    card(d, 172, 170, 'Delegate @ 0x…D1  ✘ unreachable', drows, 'rose', w=190, st='5-5', hl='5')
     # type data
-    card(d, 515, 68, 'Window MT', [('one per type', 'f')], 'violet', w=105)
     # arrows
-    d.arrow([(122, 105), (180, 105)], 'cyan', 'ref', at=(147, 105), st='1-3', id='k0')
-    d.arrow([(354, 105), (515 + 0, 105)], 'violet', 'type ptr', at=(438, 105), st='1-5', id='k3')
-    d.arrow([(122, 219), (180, 219)], 'amber', 'ref', at=(147, 219), st='2-4', id='k1')
-    d.arrow([(354, 243), (392, 243), (392, 129), (354, 129)], 'amber', 'target', at=(392, 186), st='2-5', id='k2')
+    d.arrow([(122, 89), (172, 89)], 'cyan', st='1-3', id='k0')
+    d.arrow([(122, 219), (172, 219)], 'amber', st='2-4', id='k1')
+    d.arrow([(362, 231), (440, 231), (440, 89), (362, 89)], 'amber', 'target', at=(440, 160), st='2-5', id='k2')
     d.token('k1', '🔍', 14, 'amber', st='4-4')
     d.token('k2', '🔍', 14, 'amber', st='4-4')
     # freed
     d.text(327, 190, 'both objects freed:', 'emerald', 10, st='6-')
     d.text(327, 206, 'memory is reclaimed', 'emerald', 10, st='6-')
-    d.text(560, 150, 'type data stays:', 'n', 9, st='6-')
-    d.text(560, 163, 'shared by all Windows', 'n', 8.5, st='6-')
-    d.note(505, 190, 125, 70, 'teaching picture:|addresses are made up,|delegate fields are|simplified', 'n', size=8.5)
+    d.note(470, 200, 150, 80, 'teaching picture:|addresses made up,|delegate simplified|red = unreachable', 'n', size=8.5)
     d.note(10, 276, 130, 24, 'win = new Window();', 'n', size=8.5, st='1-1')
     d.note(10, 276, 130, 24, 'Bus.Tick += OnTick;', 'n', size=8.5, st='2-2')
     d.note(10, 276, 130, 24, 'Main returns', 'n', size=8.5, st='3-3')
@@ -60,18 +56,17 @@ def d_lk2():
     d.zone(10, 24, 130, 110, 'amber', '📌 STATIC (root)')
     d.zone(150, 24, 480, 300, 'emerald', '🏠 HEAP')
     card(d, 20, 68, 'Cache statics', [('Cache →', 'f')], 'amber', w=110)
-    lrows = lambda n: [('header (sync block)', 'hdr'), ('type ptr → List MT', 'tp'), ('_size = %s' % n, 'f'), ('_items → array', 'f')]
-    card(d, 170, 40, 'List object', lrows(2), 'emerald', w=150, st='1-1')
-    card(d, 170, 40, 'List object', lrows(6), 'emerald', w=150, st='2-3', hl=3)
-    card(d, 170, 40, 'List object', lrows(0), 'emerald', w=150, st='4-')
+    lrows = lambda n: [('_size = %s' % n, 'f'), ('_items → array', 'f')]
+    card(d, 170, 48, 'List object', lrows(2), 'emerald', w=150, st='1-1')
+    card(d, 170, 48, 'List object', lrows(6), 'emerald', w=150, st='2-3', hl=3)
+    card(d, 170, 48, 'List object', lrows(0), 'emerald', w=150, st='4-')
     d.arrow([(122, 105), (178, 105)], 'amber', 'ref', at=(147, 105), id='c1', st=1)
     # array strip
     d.zone(160, 190, 460, 54, 'emerald', None)
-    d.text(612, 203, 'byte[][] array object', 'emerald', 8.5, anchor='end')
+    d.text(612, 200, 'array of references to items', 'emerald', 8.5, anchor='end')
     cx = 168
-    for t, x, w in [('hdr', 168, 46), ('type', 216, 46), ('len', 264, 36)]:
-        d.box(x, 208, w, 24, [(t, 'm')], 'n' if t != 'type' else 'violet', rx=4)
-    d.arrow([(239, 160), (239, 208)], 'emerald', 'ref', at=(239, 180), id='c2', st=1)
+    d.box(168, 208, 132, 24, [('array header', 'm')], 'n', rx=4)
+    d.arrow([(239, 130), (239, 208)], 'emerald', 'ref', at=(239, 180), id='c2', st=1)
     SX = [304 + 50 * k for k in range(6)]
     for k, x in enumerate(SX):
         first = 1 if k < 2 else 2
@@ -86,20 +81,19 @@ def d_lk2():
         d.box(x, iy, 48, 38, lbl('✔ live'), 'emerald', rx=6, st='3-3', hl=3)
         d.box(x, iy, 48, 38, lbl('no ref'), 'rose', rx=6, st='4-4', hl=4)
         d.arrow([(x + 24, 232), (x + 24, iy)], 'emerald', st=f'{first}-3', id=f's{k}')
-        d.token(f's{k}', '🔍', 12, 'emerald', st='3-3')
+        d.box(x, iy, 48, 38, [('freed', 'm')], 'n', rx=6, st='5-')
     d.token('c1', '🔍', 12, 'amber', st='3-3')
-    d.token('c2', '🔍', 12, 'emerald', st='3-3')
     d.text(390, 318, 'each slot holds a reference to an item object', 'n', 8.5, st='1-3')
     d.text(390, 318, 'items freed: their memory is reclaimed', 'emerald', 9.5, st='5-')
     # heap meter (teaching picture)
-    d.text(170, 340, 'heap in use (teaching picture)', 'n', 9, anchor='start')
+    d.text(170, 340, 'heap in use (illustrative bar, no units)', 'n', 9, anchor='start')
     d.zone(170, 346, 450, 18, 'n', None, dash=False)
     d.box(172, 348, 98, 14, [], 'emerald', rx=4, st='1-1')
     d.box(172, 348, 296, 14, [], 'amber', rx=4, st='2-3')
     d.box(172, 348, 296, 14, [], 'rose', rx=4, st='4-4')
     d.box(172, 348, 50, 14, [], 'emerald', rx=4, st='5-')
     d.note(10, 160, 130, 24, 'Cache.Add(item)', 'n', size=8.5, st='1-2')
-    d.note(10, 160, 130, 24, 'GC runs', 'n', size=8.5, st='3-3')
+    d.note(10, 160, 130, 24, 'GC runs  (🔍 = marking)', 'n', size=8.5, st='3-3')
     d.note(10, 160, 130, 24, 'Cache.Clear()', 'n', size=8.5, st='4-4')
     d.note(10, 160, 130, 24, 'next GC runs', 'n', size=8.5, st='5-5')
     for i, (t, c) in enumerate([('Cache is a static field: a root. It points to a List,|whose array holds references to 2 items', 'amber'),
@@ -122,7 +116,7 @@ def build_leaks():
             'The window is closed and <code>Main</code> returns: its <b>stack frame is popped</b>, so the <code>window</code> slot is gone…',
             '…but <b>the GC runs</b> and starts from the roots: <code>Tick</code> → delegate → Window. The window is marked <b>reachable</b>, so it is <b>not freed</b>. That is the leak.',
             '<b>The fix:</b> <code>Bus.Tick -= OnTick</code>. The static field is <code>null</code> again, so no root reaches the delegate or the window.',
-            'On the <b>next GC</b> there is no path to either object, so both are freed. The window’s type data stays: it is shared by every window.'],
+            'On the <b>next GC</b> there is no path to either object, so both are freed. '],
             'a reference chain from a root (static field → delegate → object) keeps the object alive. Addresses are made up and the delegate’s fields are simplified: a teaching picture.'),
         one='<b>A managed “leak” is an object that is still reachable but no longer needed.</b>',
         real=['🚰 The GC is a cleaner who only throws away <b>what nobody is holding</b>. If you keep a <b>hand on the tap</b> — a static list, an event handler, an open file — the cleaner leaves it alone, even though you stopped using it long ago.'],

@@ -84,14 +84,14 @@ def d_di3():
     names = [('OrdersController', 64), ('OrderService', 164), ('OrderRepository', 264)]
     for i, (nm, y) in enumerate(names):
         n = i + 2
-        obj(d, 24, y, 150, [HDR(), ('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
+        obj(d, 24, y, 150, [('f', [('_mail = null', 1, n - 1), ('_mail = ref', n, None)])], [(nm, 'cyan', 1, 5, n), (nm, 'n', 6, 6)])
         obj(d, 236, y, 170, [('f', [(f'a new object, own data', n, None)])], [(f'EmailBuilder #{i + 1}', 'emerald', n, 5, n), (f'EmailBuilder #{i + 1} · disposed', 'amber', 6, 6)])
-        d.arrow([(166, y + 40), (236, y + 40)], 'cyan', 'new', at=(201, y + 40), st=_S(n, 5))
-    obj(d, 470, 64, 150, [HDR(lo=5), ('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
+        d.arrow([(166, y + 38), (236, y + 38)], 'cyan', 'new', at=(201, y + 38), st=_S(n, 5))
+    obj(d, 470, 64, 150, [('f', [('to dispose[0] = ref', 5, None)]), ('f', [('to dispose[1] = ref', 5, None)]), ('f', [('to dispose[2] = ref', 5, None)])],
         [('Scope (if IDisposable)', 'amber', 5, 5, 5), ('Scope · request ended', 'n', 6, 6)])
-    d.arrow([(478, 125), (406, 88)], 'amber', 'keeps', at=(442, 125), st='5-5')
-    d.arrow([(478, 149), (430, 149), (430, 188), (406, 188)], 'amber', st='5-5')
-    d.arrow([(478, 173), (445, 173), (445, 288), (406, 288)], 'amber', st='5-5')
+    d.arrow([(478, 88), (406, 88)], 'amber', 'keeps', at=(442, 88), st='5-5')
+    d.arrow([(478, 112), (430, 112), (430, 188), (406, 188)], 'amber', st='5-5')
+    d.arrow([(478, 136), (445, 136), (445, 288), (406, 288)], 'amber', st='5-5')
     return d
 
 def d_di4():

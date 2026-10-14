@@ -14,38 +14,43 @@ def d_bx1():
     for i, (t, c) in enumerate(notes):
         d.note(272, 8, 358, 92, t, c, st=f'{i + 1}-{i + 1}', size=9)
     d.zone(10, 106, 130, 214, 'cyan', '📚 STACK')
-    d.zone(160, 106, 220, 214, 'emerald', '🏠 HEAP')
+    d.zone(160, 106, 250, 214, 'emerald', '🏠 HEAP')
+    d.zone(160, 136, 190, 106, 'n', 'free space', st='1-1')
     # stack slots
     d.box(20, 136, 110, 40, [('o', 't'), ('reference', 's')], 'violet', st='4-6', hl=4)
     d.box(20, 136, 110, 40, [('o', 't'), ('null', 'm')], 'n', st='7-', hl=7)
     d.box(20, 201, 110, 40, [('n', 't'), ('42', 'm')], 'cyan', st='1-4', hl=1)
     d.box(20, 201, 110, 40, [('n', 't'), ('99', 'm')], 'amber', st='5-', hl=5)
     d.box(20, 266, 110, 40, [('m', 't'), ('42', 'm')], 'cyan', st='6-', hl=6)
-    # heap box
-    bx = card(d, 170, 136, '🎁 boxed Int32 (an object)', [('header (lock/GC info)', 'hdr'), ('type ptr → Int32', 'tp', '2-5'), ('value: (room for int)', 'f', '2-2')], 'amber', w=200, st='2-')
+    # heap box (one object: its border is what o points at)
+    bx = card(d, 170, 136, '🎁 boxed Int32 (an object)', [('header (lock/GC info)', 'hdr'), ('type ptr → Int32', 'tp', '2-5'), ('value: (room for int)', 'f', '2-2')], 'amber', w=180, st='2-')
     cell(d, bx, 2, 'value = 42', 'amber', st='3-6', hl=3)
     cell(d, bx, 2, 'value = 42', 'n', st='7-', hl=7)
     cell(d, bx, 1, 'type ptr → Int32', 'n', st='7-')
     cell(d, bx, 1, 'type ptr → Int32', 'violet', st='6-6', hl=6)
-    mt = card(d, 400, 160, '🧬 Int32 type data (MethodTable)', [('Int32: "this is an int"', 'f'), ('one per type, shared', 'f')], 'violet', w=230, st='2-')
-    # arrows
+    mt = card(d, 420, 160, '🧬 Int32 type data (MethodTable)', [('Int32: "this is an int"', 'f'), ('one per type, shared', 'f')], 'violet', w=210, st='1-')
     ty = bx['rows'][1]['y']; vy = bx['rows'][2]['y']
-    d.arrow([(130, 156), (150, 156), (150, ty), (bx['rows'][1]['l'][0], ty)], 'violet', st='4-6', id='ref')
-    d.arrow([(bx['rows'][1]['r'][0], ty), (mt['rows'][0]['l'][0], mt['rows'][0]['y'])], 'violet', st='2-', id='tp')
+    # o -> the box's border (not a row); tp -> the type data card border
+    d.arrow([(130, 156), (150, 156), (150, bx['L'][1]), bx['L']], 'violet', st='4-6', id='ref')
+    d.arrow([(bx['rows'][1]['r'][0], ty), (bx['rows'][1]['r'][0] + 12, ty), (mt['L'][0], ty)], 'violet', st='2-6', id='tp')
+    d.arrow([(bx['rows'][1]['r'][0], ty), (bx['rows'][1]['r'][0] + 12, ty), (mt['L'][0], ty)], 'n', st='7-')
     d.arrow([(130, 221), (bx['rows'][2]['l'][0], vy)], 'cyan', st='3-3', id='cp1')
     d.arrow([(bx['rows'][2]['l'][0], vy), (152, vy), (152, 286), (130, 286)], 'cyan', st='6-6', id='cp2')
-    d.token('cp1', '42', 11, 'cyan', st='3-3')
+    d.token('cp1', '42', 10, 'cyan', st='3-3')
     d.token('tp', '🔍', 13, 'violet', st='6-6')
-    d.token('cp2', '42', 11, 'cyan', st='6-6')
-    d.text(270, 266, '⚠ unreachable: no GC root points here', 'rose', size=9, st='7-')
-    d.text(515, 262, 'teaching picture: classic layout; real sizes', 'n', size=8.5)
-    d.text(515, 276, 'and field order vary by runtime version', 'n', size=8.5)
+    d.token('cp2', '42', 10, 'cyan', st='6-6')
+    d.text(290, 272, '⚠ unreachable: no GC root points here', 'rose', size=9, st='7-')
+    d.text(290, 288, 'the type data is NOT freed: other ints share it', 'violet', size=8.5, st='7-')
+    d.text(525, 282, 'colour key: amber = just copied / changed', 'amber', size=8.5)
+    d.text(525, 296, 'grey = unreachable (garbage)', 'n', size=8.5)
+    d.text(525, 312, 'teaching picture: classic layout; real sizes', 'n', size=8)
+    d.text(525, 324, 'and field order vary by runtime version', 'n', size=8)
     return d
 
 def d_bx2():
-    d = Diagram('bx2', 640, 450, 'Three numbers in two layouts: an ArrayList keeps an object array whose slots are references to three separate boxed heap objects (each with a header and type pointer), while a List of int keeps one int array holding the numbers side by side, so no extra objects; when the lists are dropped the boxes become garbage')
+    d = Diagram('bx2', 640, 545, 'Three numbers in two layouts: an ArrayList keeps an object array whose slots are references to three separate boxed heap objects (each with a header and type pointer), while a List of int keeps one int array holding the numbers side by side, so no extra objects; when the lists are dropped the boxes become garbage')
     d.code_box(10, 8, 262, 86, [(0, 'ArrayList a = new ArrayList();', ''), (0, 'List<int> b = new List<int>();', ''), (0, 'a.Add(1); a.Add(2); a.Add(3);', ''), (0, 'b.Add(1); b.Add(2); b.Add(3);', '')], 'n', size=9, lh=15)
-    notes = [('Both lists start with an empty array|(the list object itself is left out here)', 'cyan'),
+    notes = [('Both lists own an array with room for 3 (empty).|The list objects themselves are left out here', 'cyan'),
              ('Add(1): left makes a NEW box and stores its|reference; right writes 1 straight into slot 0', 'amber'),
              ('Add(2): another box on the left;|just a number written on the right', 'amber'),
              ('Add(3): the same again', 'amber'),
@@ -53,49 +58,44 @@ def d_bx2():
              ('a = null; b = null: nothing points to the arrays|or boxes. The GC must later free ALL of the left ones', 'rose')]
     for i, (t, c) in enumerate(notes):
         d.note(284, 8, 346, 86, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.zone(5, 106, 335, 312, 'rose', 'ArrayList: stores object')
-    d.zone(350, 106, 285, 312, 'emerald', 'List<int>: stores int')
-    # --- left
-    d.box(15, 146, 72, 40, [('a', 't'), ('ref', 's')], 'cyan', st='1-5', hl=1)
-    d.box(15, 146, 72, 40, [('a', 't'), ('null', 'm')], 'n', st='6-', hl=6)
-    def left_rows():
-        return [('hdr + type ptr', 'hdr'), ('slot 0: null', 'f', '1-1'), ('slot 1: null', 'f', '1-2'), ('slot 2: null', 'f', '1-3')]
-    arr = card(d, 100, 130, 'object[]', left_rows(), 'violet', w=110, st='1-5')
-    arr2 = card(d, 100, 130, 'object[]', [('hdr + type ptr', 'hdr'), ('slot 0: null', 'f', '0-0'), ('slot 1: null', 'f', '0-0'), ('slot 2: null', 'f', '0-0')], 'n', w=110, st='6-')
+    d.zone(5, 104, 630, 72, 'cyan', '📚 STACK')
+    d.zone(5, 186, 630, 346, 'emerald', '🏠 HEAP')
+    d.text(110, 204, 'ArrayList: stores object', 'rose', size=9.5, weight=700, anchor='start')
+    d.text(450, 204, 'List<int>: stores int', 'emerald', size=9.5, weight=700, anchor='end')
+    d.box(45, 130, 80, 38, [('a', 't'), ('ref', 's')], 'cyan', st='1-5', hl=1)
+    d.box(45, 130, 80, 38, [('a', 't'), ('null', 'm')], 'n', st='6-', hl=6)
+    d.box(425, 130, 80, 38, [('b', 't'), ('ref', 's')], 'cyan', st='1-5', hl=1)
+    d.box(425, 130, 80, 38, [('b', 't'), ('null', 'm')], 'n', st='6-', hl=6)
+    AY = 232
+    arr = card(d, 30, AY, 'object[]', [('hdr + type ptr', 'hdr'), ('slot 0: null', 'f', '1-1'), ('slot 1: null', 'f', '1-2'), ('slot 2: null', 'f', '1-3')], 'violet', w=110, st='1-5')
+    arr2 = card(d, 30, AY, 'object[] (garbage)', [('hdr + type ptr', 'hdr'), ('slot 0: ref', 'f'), ('slot 1: ref', 'f'), ('slot 2: ref', 'f')], 'n', w=110, st='6-')
     for i in range(3):
         cell(d, arr, 1 + i, f'slot {i}: ref', 'violet', st=f'{i + 2}-5', hl=i + 2)
-        cell(d, arr2, 1 + i, f'slot {i}: ref', 'n', st='6-')
-    ys = [154, 242, 330]
+    ys = [232, 318, 404]
     bxs = []
     for i in range(3):
-        g = card(d, 232, ys[i], 'boxed int', [('hdr + type ptr', 'hdr'), (f'value = {i + 1}', 'f')], 'amber', w=104, st=f'{i + 2}-5')
-        card(d, 232, ys[i], 'boxed int', [('hdr + type ptr', 'hdr'), (f'value = {i + 1}', 'f')], 'n', w=104, st='6-')
+        g = card(d, 220, ys[i], 'boxed int', [('hdr + type ptr', 'hdr'), (f'value = {i + 1}', 'f')], 'amber', w=104, st=f'{i + 2}-5', hl=i + 2)
+        card(d, 220, ys[i], 'boxed int (garbage)', [('hdr + type ptr', 'hdr'), (f'value = {i + 1}', 'f')], 'n', w=104, st='6-')
         bxs.append(g)
-    # reference arrows slot i -> box i (elbows at distinct x so none cross)
-    xs = [None, 222, 216]
+    lanes = [160, 192, 176]
     for i in range(3):
-        sy = arr['rows'][1 + i]['y']; tx = bxs[i]['rows'][0]['l'][0]; ty = bxs[i]['rows'][0]['y']; sx = arr['rows'][1 + i]['r'][0]
-        pts = [(sx, sy), (tx, ty)] if abs(sy - ty) < 1 else [(sx, sy), (xs[i], sy), (xs[i], ty), (tx, ty)]
-        d.arrow(pts, 'violet', st=f'{i + 2}-5', id=f'r{i}')
+        sy = arr['rows'][1 + i]['y']; sx = arr['rows'][1 + i]['r'][0]; L = bxs[i]['L']
+        d.arrow([(sx, sy), (lanes[i], sy), (lanes[i], L[1]), L], 'violet', st=f'{i + 2}-5', id=f'r{i}')
         d.token(f'r{i}', '🎁', 12, 'violet', st=f'{i + 2}-{i + 2}')
-    d.arrow([(87, 166), (arr['rows'][0]['l'][0], arr['rows'][0]['y'])], 'cyan', st='1-5')
-    # --- right
-    d.box(360, 146, 72, 40, [('b', 't'), ('ref', 's')], 'cyan', st='1-5', hl=1)
-    d.box(360, 146, 72, 40, [('b', 't'), ('null', 'm')], 'n', st='6-', hl=6)
-    rarr = card(d, 450, 130, 'int[]', [('hdr + type ptr', 'hdr'), ('slot 0: 0', 'f', '1-1'), ('slot 1: 0', 'f', '1-2'), ('slot 2: 0', 'f', '1-3')], 'emerald', w=170, st='1-5')
-    rarr2 = card(d, 450, 130, 'int[]', [('hdr + type ptr', 'hdr'), ('slot 0: 0', 'f', '0-0'), ('slot 1: 0', 'f', '0-0'), ('slot 2: 0', 'f', '0-0')], 'n', w=170, st='6-')
+    d.arrow([(85, 168), arr['T']], 'cyan', st='1-5')
+    rarr = card(d, 370, AY, 'int[]', [('hdr + type ptr', 'hdr'), ('slot 0: 0', 'f', '1-1'), ('slot 1: 0', 'f', '1-2'), ('slot 2: 0', 'f', '1-3')], 'emerald', w=190, st='1-5')
+    rarr2 = card(d, 370, AY, 'int[] (garbage)', [('hdr + type ptr', 'hdr'), ('slot 0: 1', 'f'), ('slot 1: 2', 'f'), ('slot 2: 3', 'f')], 'n', w=190, st='6-')
     for i in range(3):
         cell(d, rarr, 1 + i, f'slot {i}: {i + 1}', 'emerald', st=f'{i + 2}-5', hl=i + 2)
-        cell(d, rarr2, 1 + i, f'slot {i}: {i + 1}', 'n', st='6-')
-    d.arrow([(432, 166), (rarr['rows'][0]['l'][0], rarr['rows'][0]['y'])], 'cyan', st='1-5')
-    d.text(492, 288, 'numbers sit side by side:', 'emerald', size=9, st='2-5')
-    d.text(492, 302, 'no header per number, no extra objects', 'emerald', size=9, st='2-5')
-    # counters
-    d.note(360, 340, 265, 34, 'heap objects: 1 array = 1', 'emerald', st='5-5', hl=5, size=9.5)
-    d.note(360, 340, 265, 34, 'garbage: 1 array (unreachable)', 'n', st='6-', size=9.5)
-    d.text(172, 438, 'object[] + 3 boxes = 4 heap objects', 'rose', size=9.5, st='5-5')
-    d.text(172, 438, '4 unreachable objects for the GC to free', 'n', size=9.5, st='6-')
-    d.text(492, 438, 'teaching picture: simplified layout', 'n', size=8.5)
+    d.arrow([(465, 168), rarr['T']], 'cyan', st='1-5')
+    d.text(465, 382, 'numbers sit side by side:', 'emerald', size=9, st='2-5')
+    d.text(465, 396, 'no header per number, no extra objects', 'emerald', size=9, st='2-5')
+    d.note(350, 420, 270, 34, 'heap objects: 1 (the int[])', 'emerald', st='5-5', hl=5, size=9.5)
+    d.note(350, 420, 270, 34, 'garbage: 1 object (the int[])', 'n', st='6-', size=9.5)
+    d.note(30, 494, 310, 30, 'heap objects: 4 (object[] + 3 boxes)', 'rose', st='5-5', hl=5, size=9.5)
+    d.note(30, 494, 310, 30, 'garbage: 4 objects for the GC to free', 'n', st='6-', size=9.5)
+    d.text(470, 512, 'teaching picture: simplified layout', 'n', size=8.5)
+    d.text(470, 524, 'grey = unreachable (garbage)', 'n', size=8.5, st='6-')
     return d
 
 def build_boxing():
