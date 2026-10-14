@@ -9,12 +9,14 @@ def d_th1():
     d.zone(490, 76, 140, 244, 'violet', '🧵 THREAD 2 · own stack', st=2)
     d.zone(168, 170, 304, 150, 'emerald', '🏠 SHARED HEAP', st=1)
     f1 = card(d, 16, 106, 'Main frame', [('i = 3', 'f'), ('c = @A1', 'f')], 'cyan', w=128, st=1)
-    f2 = card(d, 496, 106, 'Work frame', [('n = —', 'f', '2-3'), ('o = —', 'f', '2')], 'violet', w=128, st=2)
+    f2 = card(d, 496, 106, 'Work frame', [('n = —', 'f', '2-3'), ('o = —', 'f', '2-2')], 'violet', w=128, st=2)
     cell(d, f2, 1, 'o = @A1', 'amber', st='3-', hl=3)
-    cell(d, f2, 0, 'n = 7', 'amber', st=4, hl=4)
+    cell(d, f2, 0, 'n = 7', 'amber', st='4-4', hl=4)
     cell(d, f2, 0, 'n = 7', 'violet', st='5-')
-    ct = card(d, 200, 196, 'Counter object @A1', [('header (sync block)', 'hdr'), ('type ptr → Counter MT', 'tp'), ('Value = 5', 'f')], 'emerald', w=240, st=1)
-    sa = card(d, 168, 106, '📌 STATIC AREA (one, shared)', [('Total = 0', 'f', '5')], 'amber', w=304, st='5-')
+    crow = [('header (sync block)', 'hdr'), ('type ptr → Counter MT', 'tp'), ('Value = 5', 'f')]
+    ct = card(d, 200, 196, 'Counter object @A1', crow, 'emerald', w=240, st='1-6')
+    card(d, 200, 196, 'Counter @A1 · 2 thread roots reach it', crow, 'amber', w=240, st=7)
+    sa = card(d, 168, 106, '📌 STATIC AREA (one, shared)', [('Total = 0', 'f', '5-5')], 'amber', w=304, st='5-')
     cell(d, sa, 0, 'Total = 1', 'amber', st='6-', hl=6)
     tp = ct['rows'][1]['y']
     d.arrow([(144, f1['rows'][1]['y']), (159, f1['rows'][1]['y']), (159, tp), (200 + 8, tp)], 'cyan', 'ref', at=(159, 200), st=1, id='c1')
@@ -25,7 +27,6 @@ def d_th1():
     d.token('s2', '➕', 14, 'violet', st='6-6')
     d.note(16, 262, 128, 50, 'GC root:|this stack', 'amber', st=7, size=9)
     d.note(496, 262, 128, 50, 'GC root:|this stack', 'amber', st=7, size=9)
-    d.note(210, 276, 220, 36, 'Counter: reached from two roots', 'amber', st=7, size=9)
     caps = [('Main thread: new Counter() is a heap object; c (in Main’s frame on THIS thread’s stack) holds its address', 'cyan'),
             ('Thread 2 starts: a brand-new, separate stack with its own frame (slots not set yet)', 'violet'),
             ('Start(c) COPIES the address into o. One object, two references: the object is not copied', 'violet'),
@@ -44,16 +45,16 @@ def d_th2():
     d.zone(10, 76, 124, 156, 'cyan', '🧵 THREAD 1 stack', st=1)
     d.zone(506, 76, 124, 156, 'violet', '🧵 THREAD 2 stack', st=1)
     d.zone(144, 76, 352, 156, 'emerald', '🏠 SHARED HEAP', st=1)
-    f1 = card(d, 16, 130, 'Work frame', [('c = @A1', 'f'), ('tmp = —', 'f', '1')], 'cyan', w=112, st=1)
+    f1 = card(d, 16, 130, 'Work frame', [('c = @A1', 'f'), ('tmp = —', 'f', '1-1')], 'cyan', w=112, st=1)
     f2 = card(d, 512, 130, 'Work frame', [('c = @A1', 'f'), ('tmp = —', 'f', '1-2')], 'violet', w=112, st=1)
-    cell(d, f1, 1, 'tmp = 5', 'amber', st=2, hl=2)
-    cell(d, f1, 1, 'tmp = 5', 'cyan', st=3)
+    cell(d, f1, 1, 'tmp = 5', 'amber', st='2-2', hl=2)
+    cell(d, f1, 1, 'tmp = 5', 'cyan', st='3-3')
     cell(d, f1, 1, 'tmp = 6', 'amber', st='4-', hl=4)
-    cell(d, f2, 1, 'tmp = 5', 'amber', st=3, hl=3)
-    cell(d, f2, 1, 'tmp = 5', 'violet', st=4)
+    cell(d, f2, 1, 'tmp = 5', 'amber', st='3-3', hl=3)
+    cell(d, f2, 1, 'tmp = 5', 'violet', st='4-4')
     cell(d, f2, 1, 'tmp = 6', 'amber', st='5-', hl=5)
     ct = card(d, 236, 106, 'Counter object @A1', [('header (sync block)', 'hdr'), ('type ptr → Counter MT', 'tp'), ('Value = 5', 'f', '1-5')], 'emerald', w=168, st=1)
-    cell(d, ct, 2, 'Value = 6', 'amber', st=6, hl=6)
+    cell(d, ct, 2, 'Value = 6', 'amber', st='6-6', hl=6)
     cell(d, ct, 2, 'Value = 6  (want 7)', 'rose', st='7-', hl=7)
     tp, vy = ct['rows'][1]['y'], ct['rows'][2]['y']
     cy1, ty1 = f1['rows'][0]['y'], f1['rows'][1]['y']

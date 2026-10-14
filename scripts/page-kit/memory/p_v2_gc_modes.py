@@ -162,9 +162,9 @@ def build_gc_modes():
                 '<b>Why only gen 2?</b> (explanation, not a quoted rule) Gen 0 and gen 1 are small, so stopping the app for them is cheap. Gen 2 can be huge, and reading it all while stopped is what hurts.',
                 'In containers or with limited CPU, <b>test before switching</b> — more heaps means more memory. Don’t tune until a measurement tells you to.']),
             ('text', '🧠 How this ties back to earlier pages', [
-                '<b>Roots</b> (page 13): the stack slot and statics are roots in every mode. Modes change <i>who</i> cleans and <i>when</i> the app stops, never <i>what</i> counts as live.',
-                '<b>Generations</b> (page 14): short gen 0/1 collections are blocking; concurrent GC only helps the long gen 2 ones.',
-                '<b>LOH</b> (page 15): large allocations raise the number of gen 2 collections, so they also raise how often background GC is needed.']),
+                '<b>Roots</b> ([[p:gc-basics]]): the stack slot and statics are roots in every mode. Modes change <i>who</i> cleans and <i>when</i> the app stops, never <i>what</i> counts as live.',
+                '<b>Generations</b> ([[p:generations]]): short gen 0/1 collections are blocking; concurrent GC only helps the long gen 2 ones.',
+                '<b>LOH</b> ([[p:loh-poh]]): large allocations raise the number of gen 2 collections, so they also raise how often background GC is needed.']),
         ],
         code=('''
 Console.WriteLine(System.Runtime.GCSettings.IsServerGC);   // which flavour is running now
