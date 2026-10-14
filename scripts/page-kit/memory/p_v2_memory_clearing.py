@@ -97,7 +97,7 @@ def d_mc3():
     d.text(272, 212, 'empty again', 'n', 9, anchor='middle', st='5-5')
     d.box(172, 192, 200, 32, [('finalizer of the handle', 't')], 'violet', st='3-4', hl='3,4')
     d.arrow([fs['B'], (272, 192)], 'violet', 'queued', at=(318, 176), st='3-3', id='c4')
-    d.arrow([(372, 208), (529, 208), (529, 125)], 'violet', 'closes', at=(450, 208), st='4-4', id='c3')
+    d.arrow([(372, 208), (529, 208), (529, 133)], 'violet', 'closes', at=(450, 208), st='4-4', id='c3')
     caps = [('1 · Same start, but written without using: a FileStream owns an OS handle and the file is locked.', 'emerald'),
             ('2 · The method returns without calling Dispose. The frame is popped: the object is unreachable.|But the OS entry is NOT in the heap, so the file stays open and locked.', 'rose'),
             ('3 · Much later (nobody controls when) a GC finds the unreachable object.|The handle has a finalizer, so a clean-up call is queued (teaching picture).', 'violet'),

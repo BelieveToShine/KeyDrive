@@ -2,56 +2,53 @@ from p_common import *
 
 # ================================================================= 12. DYNAMIC / REFLECTION  (v2: true memory level)
 def d_dy1():
-    d = Diagram('dy1', 640, 530, 'dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder reads the Duck’s type pointer, finds Quack and stores a rule; the second call checks the type against the rule and jumps to Quack; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field')
+    d = Diagram('dy1', 640, 450, 'dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder follows the Duck’s type pointer to the type data and finds Quack by name, and a rule is stored in the CallSite; the second call checks the type against the rule and jumps to Quack without any lookup; d.Swim() is not in the type data so it fails at run time; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field')
     d.code_box(10, 8, 400, 78, [(0, 'dynamic d = new Duck();', ''), (0, 'd.Quack();     // 1st call', ''), (0, 'd.Quack();     // 2nd call', ''), (0, '// d.Swim();   // compiles, fails at run time', '')], 'n', size=8.8, lh=15)
     d.note(420, 12, 210, 70, 'teaching picture:|call-site / rule internals|differ by runtime version', 'amber', size=9)
-    d.zone(10, 98, 110, 110, 'cyan', '📚 STACK')
-    d.zone(140, 98, 230, 368, 'emerald', '🏠 HEAP')
-    d.zone(392, 98, 238, 130, 'violet', '🧬 TYPE DATA')
-    # stack: d is just a reference
-    d.box(20, 165, 90, 40, [('d', 't'), ('dynamic · ref', 'm')], 'cyan', st='1-7', hl=1)
-    # Duck object + its type data
+    d.zone(10, 98, 110, 280, 'cyan', '📚 STACK')
+    d.zone(140, 98, 230, 280, 'emerald', '🏠 HEAP')
+    d.zone(392, 98, 238, 170, 'violet', '🧬 TYPE DATA')
+    d.box(20, 157, 90, 40, [('d', 't'), ('dynamic · ref', 'm')], 'cyan', st='1-7', hl=1)
     kids = [('header (sync block)', 'hdr'), ('type ptr → Duck MT', 'tp'), ('fields …', 'f')]
-    duck = card(d, 148, 124, 'Duck object', [kids[0], ('type ptr → Duck MT', 'tp', '1-3'), kids[2]], 'emerald', w=214, st='1-7', hl=1)
+    duck = card(d, 148, 124, 'Duck object', [kids[0], ('type ptr → Duck MT', 'tp', '1-3'), kids[2]], 'emerald', w=190, st='1-7', hl=1)
     cell(d, duck, 1, 'type ptr → Duck MT', 'amber', st='4-4', hl=4)
     cell(d, duck, 1, 'type ptr → Duck MT', 'violet', st='5-5')
     cell(d, duck, 1, 'type ptr → Duck MT', 'amber', st='6-6', hl=6)
     cell(d, duck, 1, 'type ptr → Duck MT', 'violet', st='7-7')
-    ghost = card(d, 148, 124, 'Duck: unreachable', kids, 'n', w=214, st='8-', hl=8, dash=True)
-    mt = card(d, 400, 148, 'Duck type data', [('Duck MethodTable', 'f'), ('method Quack', 'f', '1-3')], 'violet', w=222, st=1)
+    card(d, 148, 124, 'Duck: unreachable', kids, 'n', w=190, st='8-', hl=8, dash=True)
+    mt = card(d, 408, 148, 'Duck type data', [('Duck MethodTable', 'f'), ('method Quack', 'f', '1-3')], 'violet', w=206, st=1)
     cell(d, mt, 1, 'method Quack  ✔ found', 'amber', st='4-4', hl=4)
-    cell(d, mt, 1, 'method Quack', 'violet', st='5-6')
-    cell(d, mt, 1, 'has Quack, no Swim', 'rose', st='7-7', hl=7)
-    cell(d, mt, 1, 'method Quack', 'violet', st='8-')
-    d.arrow([(110, 185), (156, 185)], 'cyan', st='1-7', id='ref')
-    d.arrow([(duck['rows'][1]['r'][0], duck['rows'][1]['y']), (mt['rows'][0]['l'][0], mt['rows'][0]['y'])], 'violet', st=1, id='tpa')
-    d.token('tpa', '🔎', 15, 'violet', st='4-4')
-    # static area: the call-site field
-    d.zone(392, 240, 238, 110, 'amber', '⚙ STATIC AREA (a root)', st='2-')
-    st = card(d, 400, 274, 'compiler-made class', [('callSite1 = null', 'f')], 'amber', w=222, st='2-2', hl=2)
+    cell(d, mt, 1, 'method Quack', 'violet', st='5-5')
+    cell(d, mt, 1, 'method Quack  ✔ reused', 'amber', st='6-6', hl=6)
+    cell(d, mt, 1, 'method Quack', 'violet', st='7-')
+    d.box(416, 236, 190, 24, [('Swim:  not found  ✖', 'm')], 'rose', rx=4, st='7-7', hl=7)
+    d.arrow([(duck['x'] - 38, 177), (148, 177)], 'cyan', st='1-7')
+    ty = duck['rows'][1]['y']
+    d.arrow([(330, ty), (416, ty)], 'violet', st='1-3')
+    d.arrow([(330, ty), (416, ty)], 'violet', st='5-8')
+    d.arrow([(330, ty), (416, ty)], 'amber', st='4-4', label='lookup', at=(373, ty), id='lk')
+    d.arrow([(330, ty), (416, ty)], 'amber', st='6-6', label='type?', at=(373, ty))
+    d.zone(392, 282, 238, 96, 'amber', '⚙ STATIC AREA (a root)', st='2-')
+    st = card(d, 400, 312, 'compiler-made class', [('callSite1 = null', 'f', '2-2')], 'amber', w=222, st='2-', hl=2)
     cell(d, st, 0, 'callSite1 → CallSite', 'emerald', st='3-', hl=3)
-    # heap: the CallSite object and the cached rule
-    cs = card(d, 148, 250, 'CallSite object', [('header (sync block)', 'hdr'), ('type ptr', 'tp'), ('rules: (empty)', 'f', '3-4')], 'emerald', w=214, st='3-', hl=3)
-    cell(d, cs, 2, 'rules: [ rule 1 ]', 'emerald', st='5-', hl=5)
-    d.arrow([(st['rows'][0]['l'][0], st['rows'][0]['y']), (cs['rows'][1]['r'][0], cs['rows'][1]['y'])], 'amber', st='3-', id='sa')
-    rule = card(d, 148, 372, 'Rule (teaching picture)', [('if type ptr == Duck MT', 'f', '5-5'), ('then call Duck.Quack', 'code')], 'emerald', w=214, st='5-', hl=5)
-    cell(d, rule, 0, 'if type ptr == Duck MT  ✔', 'amber', st='6-6', hl=6)
-    cell(d, rule, 0, 'if type ptr == Duck MT', 'emerald', st='7-')
-    d.arrow([(340, cs['rows'][2]['top'] + cs['rows'][2]['h']), (340, rule['rows'][0]['top'])], 'emerald', st='5-', id='cr')
-    d.zone(392, 380, 238, 74, 'amber', '📜 CODE', st='5-')
-    d.box(402, 418, 218, 30, [('Duck.Quack', 'm')], 'amber', st='5-', hl='5,6')
-    d.arrow([(rule['rows'][1]['r'][0], rule['rows'][1]['y']), (402, 433)], 'amber', st='5-', id='rq')
-    d.token('rq', '📞', 15, 'amber', st='6-6')
+    cs = card(d, 148, 262, 'CallSite object', [('rules: (empty)', 'f', '3-4')], 'emerald', w=190, st='3-', hl=3)
+    cell(d, cs, 0, 'rule: Duck → Quack', 'emerald', st='5-5', hl=5)
+    cell(d, cs, 0, 'rule: Duck → Quack  ✔ hit', 'amber', st='6-6', hl=6)
+    cell(d, cs, 0, 'rule: Duck → Quack', 'emerald', st='7-')
+    d.arrow([(400, 349), (243, 349), (243, 320)], 'amber', st='3-')
+    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'emerald', st='5-5')
+    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'amber', st='6-6', label='no lookup', at=(385, 254), sw=2.2)
+    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'emerald', st='7-')
     for i, (t, c) in enumerate([
         ('dynamic d is just a normal reference:|d → Duck object → its type data', 'cyan'),
         ('The compiler adds a call site for d.Quack():|a static field, still null', 'amber'),
         ('1st call: a CallSite object is created on the|heap and the static field points to it', 'emerald'),
-        ('The binder reads the Duck’s type ptr → Duck’s|type data and looks Quack up BY NAME', 'violet'),
-        ('The answer is cached: a rule “if the type is|Duck, call Duck.Quack” inside the CallSite', 'emerald'),
-        ('2nd call: compare the Duck’s type ptr with the|rule (match) → jump. No lookup this time', 'amber'),
+        ('The binder (run-time code) follows the Duck’s type ptr|to its type data and looks Quack up BY NAME', 'violet'),
+        ('The answer is cached: a rule “if the type is Duck,|call Quack” is stored inside the CallSite', 'emerald'),
+        ('2nd call: compare the Duck’s type with the rule (hit)|and go to Quack. The by-name lookup is skipped', 'amber'),
         ('d.Swim(): the binder finds no Swim in Duck’s|type data → RuntimeBinderException, at run time', 'rose'),
-        ('When d goes away the Duck is garbage; the|CallSite and rule stay (static field = root)', 'emerald')]):
-        d.note(10, 474, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        ('When d goes away the Duck is garbage; the CallSite|and rule stay (static field = root)', 'emerald')]):
+        d.note(10, 392, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def d_dy2():
@@ -62,7 +59,7 @@ def d_dy2():
     d.zone(175, 98, 295, 360, 'emerald', '🏠 HEAP')
     d.zone(478, 98, 152, 150, 'violet', '🧬 TYPE DATA')
     # stack frame of the caller: one cell per variable, appearing when the variable exists
-    main = card(d, 18, 148, 'caller frame', [('order → Order', 'f', '1-'), ('m → MethodInfo', 'f', '2-'), ('r → box(3)', 'f', '5-'), ('days = 3', 'f', '6-')], 'cyan', w=114, st=1)
+    main = card(d, 18, 148, 'caller frame', [('order → Order', 'f', '1-'), ('m → MethodInfo', 'f', '2-'), ('r → boxed 3', 'f', '5-'), ('days = 3', 'f', '6-')], 'cyan', w=114, st=1)
     ship = card(d, 18, 294, 'Ship frame', [('this → Order', 'f'), ('n = 5 (copy)', 'f')], 'amber', w=114, st='4-4', hl=4)
     # heap, left column: Order, MethodInfo, boxed result
     od = card(d, 183, 124, 'Order object', [('header (sync block)', 'hdr'), ('type ptr → Order MT', 'tp'), ('fields …', 'f')], 'emerald', w=140, st='1-', hl=1)
@@ -71,9 +68,9 @@ def d_dy2():
     cell(d, mi, 1, 'describes: Ship', 'emerald', st='5-')
     b3 = card(d, 183, 364, 'boxed int (result)', [('header + type ptr', 'hdr'), ('value 3', 'f')], 'amber', w=140, st='5-', hl=5)
     # heap, right column: argument array and the boxed 5 (they become garbage in step 7)
-    ar = card(d, 331, 204, 'object[1] (args)', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → box(5)', 'f')], 'emerald', w=131, st='3-6', hl=3)
+    ar = card(d, 331, 204, 'object[1] (args)', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f')], 'emerald', w=131, st='3-6', hl=3)
     b5 = card(d, 331, 324, 'boxed int', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'amber', w=131, st='3-6', hl=3)
-    card(d, 331, 204, 'object[1]: unreachable', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → box(5)', 'f')], 'n', w=131, st='7-', hl=7, dash=True)
+    card(d, 331, 204, 'object[1]: unreachable', [('header + type ptr', 'hdr'), ('length = 1', 'f'), ('slot 0 → boxed 5', 'f')], 'n', w=131, st='7-', hl=7, dash=True)
     card(d, 331, 324, 'boxed 5: unreachable', [('header + type ptr', 'hdr'), ('value 5', 'f')], 'n', w=131, st='7-', hl=7, dash=True)
     # type data of Order
     mt = card(d, 486, 148, 'Order type data', [('Order MethodTable', 'f'), ('method Ship', 'f', '1-3')], 'violet', w=136, st=1)
@@ -94,7 +91,7 @@ def d_dy2():
         ('Invoke runs Ship in a temporary frame:|this = order, n = a copy of the unboxed 5', 'amber'),
         ('Ship returns: its frame is popped. The result 3 is boxed|into a new heap object; r points to it', 'amber'),
         ('(int)r unboxes: the value 3 is COPIED from|the box into the stack variable days', 'amber'),
-        ('Now the args array and box(5) have no reference left:|garbage for the GC to clear later. m and r keep theirs', 'rose')]):
+        ('Now the args array and boxed 5 have no reference left:|garbage for the GC to clear later. m and r keep theirs', 'rose')]):
         d.note(10, 468, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
@@ -125,7 +122,7 @@ def build_dynamic_reflection():
                 '<code>Invoke</code> runs <code>Ship</code> in a normal <b>temporary stack frame</b>: <code>this</code> = the Order, <code>n</code> = a copy of the unboxed 5.',
                 '<code>Ship</code> returns, so its <b>frame is popped</b>. The result is returned as <code>object</code>: the 3 is <b>boxed</b> into a new heap object and <code>r</code> points to it.',
                 '<code>(int)r</code> <b>unboxes</b>: the value 3 is <b>copied</b> from the box into the stack variable <code>days</code>. Box and <code>days</code> are now two separate values.',
-                'After the line nothing refers to the <b>args array</b> or <b>box(5)</b>: they are <b>unreachable</b> (not freed yet) — the GC clears them later. <code>m</code> and <code>r</code> still keep the MethodInfo and box(3) alive.'],
+                'After the line nothing refers to the <b>args array</b> or <b>boxed 5</b>: they are <b>unreachable</b> (not freed yet) — the GC clears them later. <code>m</code> and <code>r</code> still keep the MethodInfo and box(3) alive.'],
                 'one reflection call: a MethodInfo, an argument array, a box per int argument and a box for the result. Everything is plain heap garbage later. (Addresses and MethodInfo contents are a teaching picture.)')),
             ('table', '🧾 Three ways to call a method', ['', 'Normal call', '<code>dynamic</code>', 'Reflection'], [
                 ['Checked by the compiler?', '✅ yes', '❌ no (checked at run time)', '❌ no'],
