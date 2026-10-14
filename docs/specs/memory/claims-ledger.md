@@ -70,6 +70,21 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | Calling virtual method from base constructor runs derived override before derived init | ✅ V | well-known C# rule (CA2214 analyzer); 🟨 K for rule text |
 | Counter/Animal/Dog/Payment examples; addresses 0x…; CardEnd 1234 | 🟦 I | illustrative |
 
+## Pages 10–12 — Interfaces, virtual/override/overload, dynamic & reflection
+| Claim | Status | Note |
+|---|---|---|
+| Interfaces cannot be instantiated; interface variable refers to an object of an implementing type | ✅ V | C# docs (interfaces) |
+| Interfaces have no instance fields | ✅ V | C# docs |
+| Struct assigned to an interface variable is boxed (copy on the heap) | ✅ V | MS Learn boxing and unboxing |
+| Generic constraint where T : IPayable avoids boxing | 🟨 K | commonly documented; not re-verified |
+| Overload resolution is done by the compiler from argument types | ✅ V | C# spec / overload resolution docs |
+| virtual+override: run-time type decides; new hides: variable (compile-time) type decides | ✅ V | MS Learn "Knowing when to use override and new" + polymorphism (verified in research pass) |
+| Each type has a method list the runtime consults; object knows its type | 🟨 K | older articles; drawn as teaching picture, no sizes |
+| dynamic: compiler emits call site held in a compiler-generated static field; runtime binder resolves using DLR rules and caches by operand type; errors at run time (RuntimeBinderException) | ✅ V | MS archive blogs + CallSite API pages (older sources) |
+| Reflection MethodBase.Invoke takes object[] args (so value types boxed) and returns object | ✅ V | MethodBase.Invoke API |
+| MethodInfo describes the method and is a heap object | 🟨 K | class instance; stated as such |
+| Animal/Dog/Payment/Coupon/Duck/Order examples | 🟦 I | illustrative |
+
 ## Cross-page notes
 - Illustrative literals: Amount = 100, qty = 1, Total = 2, "Rex"/"Pug", card ending 1234.
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.

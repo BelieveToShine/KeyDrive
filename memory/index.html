@@ -41,7 +41,7 @@
     <div class="eyebrow">🧠 .NET / C# memory · stack, heap, statics and the garbage collector — step by step</div>
     <h1>See where every byte lives in .NET — <span class="grad-text">stack, heap, statics and the garbage collector</span>, animated step by step.</h1>
     <p class="sub">From <b>“where does an int live?”</b> to <b>generations G0 / G1 / G2</b>, finalizers, threads and <b>async/await</b>: every page is an animated memory story with an everyday picture and a few lines of C#. Includes <b>inheritance, abstract classes, interfaces, override vs overload</b> and <b>dynamic</b> at the memory level.</p>
-    <p class="hub-note">🗺️ <b>9 of 22</b> concepts are written — the rest (13) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>12 of 22</b> concepts are written — the rest (10) are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/memory-map.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -65,9 +65,9 @@
 <path class="jm-link done" d="M320,596 V686" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,730 V766" marker-end="url(#jmArrow)"/>
 <path class="jm-link done" d="M320,810 V846" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,890 V926" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,970 V1006" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,1050 V1086" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,890 V926" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,970 V1006" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,1050 V1086" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1130 V1220" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1264 V1300" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,1344 V1380" marker-end="url(#jmArrow)"/>
@@ -108,9 +108,9 @@
 <a class="jm-hit" xlink:href="concepts/object-creation.html"><g class="jm-node done"><rect x="220" y="686" width="200" height="44" rx="12"/><text x="320" y="713" text-anchor="middle" font-size="14" font-weight="700">🧱 Creating an Object</text></g></a>
 <a class="jm-hit" xlink:href="concepts/inheritance-memory.html"><g class="jm-node done"><rect x="220" y="766" width="200" height="44" rx="12"/><text x="320" y="793" text-anchor="middle" font-size="14" font-weight="700">👪 Inheritance</text></g></a>
 <a class="jm-hit" xlink:href="concepts/abstract-base.html"><g class="jm-node done"><rect x="220" y="846" width="200" height="44" rx="12"/><text x="320" y="873" text-anchor="middle" font-size="14" font-weight="700">🧩 Abstract &amp; Base Classes</text></g></a>
-<g class="jm-node locked"><rect x="220" y="926" width="200" height="44" rx="12"/><text x="320" y="953" text-anchor="middle" font-size="14" font-weight="700">🔌 Interfaces</text></g>
-<g class="jm-node locked"><rect x="220" y="1006" width="200" height="44" rx="12"/><text x="320" y="1033" text-anchor="middle" font-size="14" font-weight="700">🎯 Override vs Overload</text></g>
-<g class="jm-node locked"><rect x="220" y="1086" width="200" height="44" rx="12"/><text x="320" y="1113" text-anchor="middle" font-size="14" font-weight="700">🔮 Dynamic &amp; Reflection</text></g>
+<a class="jm-hit" xlink:href="concepts/interfaces-memory.html"><g class="jm-node done"><rect x="220" y="926" width="200" height="44" rx="12"/><text x="320" y="953" text-anchor="middle" font-size="14" font-weight="700">🔌 Interfaces</text></g></a>
+<a class="jm-hit" xlink:href="concepts/virtual-override-overload.html"><g class="jm-node done"><rect x="220" y="1006" width="200" height="44" rx="12"/><text x="320" y="1033" text-anchor="middle" font-size="14" font-weight="700">🎯 Override vs Overload</text></g></a>
+<a class="jm-hit" xlink:href="concepts/dynamic-reflection.html"><g class="jm-node done"><rect x="220" y="1086" width="200" height="44" rx="12"/><text x="320" y="1113" text-anchor="middle" font-size="14" font-weight="700">🔮 Dynamic &amp; Reflection</text></g></a>
 <g class="jm-node locked"><rect x="220" y="1220" width="200" height="44" rx="12"/><text x="320" y="1247" text-anchor="middle" font-size="14" font-weight="700">♻️ How the GC Thinks</text></g>
 <g class="jm-node locked"><rect x="220" y="1300" width="200" height="44" rx="12"/><text x="320" y="1327" text-anchor="middle" font-size="14" font-weight="700">🌱 G0, G1, G2</text></g>
 <g class="jm-node locked"><rect x="220" y="1380" width="200" height="44" rx="12"/><text x="320" y="1407" text-anchor="middle" font-size="14" font-weight="700">🐘 Large &amp; Pinned Objects</text></g>
@@ -157,9 +157,9 @@
       <li class="concept-row done"><span class="cr-num">7</span><span class="cr-main"><a href="concepts/object-creation.html">What happens in memory when you create an object</a><span class="cr-tail">building a house: land, frame, rooms</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">8</span><span class="cr-main"><a href="concepts/inheritance-memory.html">Subclass creation: one object, parent and child inside</a><span class="cr-tail">a nesting doll</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row done"><span class="cr-num">9</span><span class="cr-main"><a href="concepts/abstract-base.html">Abstract and base classes: allocated only inside a child</a><span class="cr-tail">a blueprint nobody can live in</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">10</span><span class="cr-main"><span class="cr-name">Interfaces in memory: a reference with a label</span><span class="cr-tail">a remote control for any TV</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">11</span><span class="cr-main"><span class="cr-name">Virtual, override and overload at the memory level</span><span class="cr-tail">the phone book vs the menu</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">12</span><span class="cr-main"><span class="cr-name">dynamic and reflection: decided at run time</span><span class="cr-tail">asking at the door instead of knowing the guest</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">10</span><span class="cr-main"><a href="concepts/interfaces-memory.html">Interfaces in memory: a reference with a label</a><span class="cr-tail">a remote control for any TV</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">11</span><span class="cr-main"><a href="concepts/virtual-override-overload.html">Virtual, override and overload at the memory level</a><span class="cr-tail">the phone book vs the menu</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">12</span><span class="cr-main"><a href="concepts/dynamic-reflection.html">dynamic and reflection: decided at run time</a><span class="cr-tail">asking at the door instead of knowing the guest</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">13</span><span class="cr-main"><span class="cr-name">Garbage collector basics: roots and reachability</span><span class="cr-tail">the cleaner who keeps only what is on the guest list</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">14</span><span class="cr-main"><span class="cr-name">Generations 0, 1 and 2: young objects die young</span><span class="cr-tail">the nursery, the school and the retirement home</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">15</span><span class="cr-main"><span class="cr-name">The Large Object Heap and Pinned Object Heap</span><span class="cr-tail">the oversize parcel shelf</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -176,7 +176,7 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Software Design · .NET Memory Lab · 9 / 22 concepts written</div>
+  <div class="wrap">KeyDrive · Software Design · .NET Memory Lab · 12 / 22 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>

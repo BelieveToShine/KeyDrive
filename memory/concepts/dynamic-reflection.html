@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dynamic and Reflection: Decided at Run Time — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Dynamic & reflection</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 12 of 22 · 🧬 Objects & types</div>
+    <h1><span class="grad-text">Asking at the door</span> instead of knowing the guest in advance.</h1>
+    <p class="sub">What the compiler does with <code>dynamic</code>, how the first call differs from later calls, and what reflection allocates on the heap.</p>
+    <div class="interview-q">❓ "How does dynamic work at run time and what does it do to memory?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With dynamic the compiler cannot check d.Quack(); it emits a call site stored in a static field; the first call asks the runtime binder to look at the real type and finds Quack, and the result is cached as a rule so the next call with the same type skips the lookup">
+<defs><marker id="dy1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<g class="st" data-s="2-"><path d="M170,111 L290,111" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="3-"><path id="dy1-sv" d="M375,138 L375,196" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="5-"><path id="dy1-sc" d="M95,138 L95,223 L290,223" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">dynamic d = new Duck();</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">d.Quack();   d.Quack();</text>
+<g class="st" data-s="1-" data-hl="1,,,5"><rect class="bx" x="20" y="84" width="150" height="54" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,5"><text x="95" y="108.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Call site</text></g>
+<g class="st" data-s="1-" data-hl="1,,,5"><text x="95" y="121.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">(static field)</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="290" y="84" width="170" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="375" y="108.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Runtime binder</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="375" y="121.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">looks at the real type</text></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><rect class="bx" x="290" y="196" width="170" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><text x="375" y="221" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Cached rule</text></g>
+<g class="st" data-s="3-" data-hl="3,,,5"><text x="375" y="233" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">type Duck → Quack</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="270" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="291" text-anchor="middle" font-size="9.5" fill="#fcd34d">The compiler skipped its checks: a wrong name is only found at RUN time</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="320" y="304.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Later calls with the same type reuse the cached rule</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="200" y="102" width="60" height="18" rx="9"/><text x="230" y="114.5" text-anchor="middle" font-size="9" font-style="italic">1st call</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="342" y="158" width="66" height="18" rx="9"/><text x="375" y="170.5" text-anchor="middle" font-size="9" font-style="italic">save rule</text></g></g>
+<g class="st" data-s="5-"><g class="arrow-pill"><rect x="65" y="171" width="60" height="18" rx="9"/><text x="95" y="183.5" text-anchor="middle" font-size="9" font-style="italic">2nd call</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>dynamic d</code>: the compiler does <b>not</b> check what <code>d</code> can do. Instead it creates a <b>call site</b> — a small helper kept in a compiler-generated <b>static field</b>.</li><li><b>First call.</b> The call site asks the <b>runtime binder</b>: it looks at the <b>real type</b> of the object (Duck) and tries to find <code>Quack</code>, using the same rules as the compiler.</li><li>The answer is saved as a <b>rule</b> in the call site: “for type Duck, call Quack”.</li><li>The price: mistakes (a wrong name) are found only <b>at run time</b>, not when you build.</li><li><b>Second call</b> with the same type: the call site finds the cached rule and <b>skips the lookup</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> dynamic = “decide when the call happens”. The cache makes repeats cheap.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b><code>dynamic</code> postpones the “which method?” decision to run time; the call site caches the answer so repeats are cheaper.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🚪 A doorman who has <b>no guest list</b>: for each guest he must <b>ask who they are</b> (look up the real type). The first time takes a moment; he then <b>writes it in his notebook</b> (the cached rule) so the same kind of guest is waved through next time.</p>
+      <p>Normal C# is a doorman with a printed guest list: he knew everyone before the party began (compile time).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔎 Reflection: asking by name</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Reflection creating objects: GetMethod makes a MethodInfo object on the heap, Invoke takes its arguments in an object array so an int is boxed, and the returned value comes back as an object">
+<defs><marker id="dy2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="170" height="234" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="200" y="86" width="430" height="234" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="214" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M166,138 L280,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="2-"><path d="M450,211 L480,211" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var m = typeof(Order).GetMethod("Ship");</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">object r = m.Invoke(order, new object[] { 5 });</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">int days = (int)r;</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="116" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="95" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">m</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="95" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…S1</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="280" y="116" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="365" y="135.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">MethodInfo object</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="365" y="148.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">describes "Ship"</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="280" y="186" width="170" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="365" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">object[] args</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="365" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot0 → box(5)</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="480" y="186" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="545" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">boxed int</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="545" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">5</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="280" y="256" width="170" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="365" y="279" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">result object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="365" y="291" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">boxed 3</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="480" y="256" width="130" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="545" y="277" text-anchor="middle" font-size="9.5" fill="#fda4af">extra heap objects</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="545" y="290.5" text-anchor="middle" font-size="9.5" fill="#fda4af">for the GC</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="190" y="129" width="66" height="18" rx="9"/><text x="223" y="141.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>GetMethod("Ship")</code> finds the method <b>by its name</b>, at run time. A <code>MethodInfo</code> object describes it; <code>m</code> points to it.</li><li>To call it, the arguments go into an <code>object[]</code>. A plain <code>int</code> must be <b>boxed</b> to fit — one more heap object.</li><li><code>Invoke</code> returns the result as an <code>object</code> (an int result is boxed again).</li><li>Lots of small heap objects for one call. Fine once; heavy if done in a hot loop.</li></ol>
+<figcaption><strong>What you're seeing:</strong> reflection builds objects to describe and call things. Each call allocates; the GC cleans up.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 Three ways to call a method</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Normal call</th><th scope="col"><code>dynamic</code></th><th scope="col">Reflection</th></tr></thead><tbody><tr><th scope="row">Checked by the compiler?</th><td>✅ yes</td><td>❌ no (checked at run time)</td><td>❌ no</td></tr><tr><th scope="row">Method found…</th><td>when you build</td><td>at run time, then cached</td><td>at run time, by name</td></tr><tr><th scope="row">Extra heap objects?</th><td>none</td><td>a call site (kept for the app) + cached rules</td><td>MethodInfo, argument arrays, boxed values</td></tr><tr><th scope="row">Use when…</th><td>always, if you can</td><td>working with COM/JSON-like shapes you cannot know</td><td>plug-ins, serializers, frameworks</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Honest notes</div>
+    <div class="kd-card why-box">
+      <p>The call-site / binder / cached-rule picture comes from Microsoft’s documentation of the Dynamic Language Runtime (older articles and API pages). The internals can change between runtime versions, so the lab does not give timings or cache sizes.</p>
+      <p>To the compiler, a <code>dynamic</code> variable is typed <code>object</code> underneath, but with all type checking switched off for operations on it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre>dynamic d = <span class="kw">new</span> Duck();
+d.Quack();               <span class="cmt">// 1st: binder looks at the real type, caches the rule</span>
+d.Quack();               <span class="cmt">// 2nd: cached rule reused</span>
+<span class="cmt">// d.Swim();             // compiles! but throws RuntimeBinderException when run</span>
+
+<span class="kw">var</span> m = typeof(Order).GetMethod(<span class="str">"Ship"</span>);          <span class="cmt">// reflection: by name</span>
+object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span class="cmt">// 5 is boxed; r is an object</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Prefer normal typed code. Use dynamic or reflection only when the shape really is unknown until run time.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The garbage collector, as usual, for the MethodInfo, argument arrays and boxes. The <b>call site</b> lives in a static field, so it (and its cached rules) stays for the life of the app — a small price per <code>dynamic</code> operation in your code.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> With <code>dynamic</code>, a misspelled method name is caught when you build.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It is only caught at run time (RuntimeBinderException).</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Repeated <code>dynamic</code> calls on the same type reuse a cached rule.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — that is the call-site cache.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Reflection <code>Invoke</code> with an int argument boxes it.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes: arguments travel in an <code>object[]</code>.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li><code>dynamic</code> → compiler emits a call site; run time binder resolves by real type; result is cached.</li><li>Errors appear at run time.</li><li>Reflection allocates MethodInfo, <code>object[]</code> args and boxes.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“dynamic defers member binding to run time: the compiler emits a call site, the runtime binder resolves the call using the actual type, and the result is cached in the call site for later calls. Reflection does a by-name lookup at run time and allocates metadata objects and boxed arguments.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Using <code>dynamic</code> or reflection inside a tight loop “because it is flexible”. Resolve once (cache the MethodInfo or use a typed delegate) and reuse.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>That finishes <b>who owns what</b>. Next: who cleans up — the garbage collector. <i>(coming soon: How the GC Thinks)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 dynamic/DLR call sites, binder and rule caching: Microsoft Learn articles on the Dynamic Language Runtime and CallSite API (some are older .NET Framework-era pages; the idea is stable but internals may differ by version — 🟨 K for details). Reflection argument arrays: MethodBase.Invoke API. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamic-language-runtime-overview" target="_blank" rel="noopener">Dynamic Language Runtime overview</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interop/using-type-dynamic" target="_blank" rel="noopener">Using type dynamic (C# guide)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

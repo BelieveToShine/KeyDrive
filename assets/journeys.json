@@ -662,7 +662,10 @@
       "statics",
       "object-creation",
       "inheritance-memory",
-      "abstract-base"
+      "abstract-base",
+      "interfaces-memory",
+      "virtual-override-overload",
+      "dynamic-reflection"
     ],
     "sub": {},
     "subTitles": {}

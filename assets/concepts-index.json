@@ -5282,5 +5282,83 @@
     "summary": "The classic mistake with Abstract and Base Classes: Allocated Only Inside a Child.",
     "keywords": "memory abstract class base class payment polymorphism trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "memory-interfaces-memory",
+    "title": "Interfaces in Memory: a Reference with a Label",
+    "category": "Memory",
+    "page": "memory/concepts/interfaces-memory.html",
+    "summary": "Interfaces have no memory of their own; interface variables and boxed structs",
+    "keywords": "memory interface reference boxing struct implementing class"
+  },
+  {
+    "id": "memory-interfaces-memory-recall",
+    "title": "Interfaces in Memory: a Reference with a Label — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/interfaces-memory.html",
+    "summary": "Quick recall points: Interfaces in Memory: a Reference with a Label.",
+    "keywords": "memory interface reference boxing struct implementing class interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-interfaces-memory-trap",
+    "title": "Interfaces in Memory: a Reference with a Label — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/interfaces-memory.html",
+    "summary": "The classic mistake with Interfaces in Memory: a Reference with a Label.",
+    "keywords": "memory interface reference boxing struct implementing class trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-virtual-override-overload",
+    "title": "Virtual, Override and Overload at the Memory Level",
+    "category": "Memory",
+    "page": "memory/concepts/virtual-override-overload.html",
+    "summary": "Overload is compile time, override is run time by the object, new hides by variable type",
+    "keywords": "memory virtual override overload new hiding polymorphism dispatch method table"
+  },
+  {
+    "id": "memory-virtual-override-overload-recall",
+    "title": "Virtual, Override and Overload at the Memory Level — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/virtual-override-overload.html",
+    "summary": "Quick recall points: Virtual, Override and Overload at the Memory Level.",
+    "keywords": "memory virtual override overload new hiding polymorphism dispatch method table interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-virtual-override-overload-trap",
+    "title": "Virtual, Override and Overload at the Memory Level — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/virtual-override-overload.html",
+    "summary": "The classic mistake with Virtual, Override and Overload at the Memory Level.",
+    "keywords": "memory virtual override overload new hiding polymorphism dispatch method table trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-dynamic-reflection",
+    "title": "dynamic and Reflection: Decided at Run Time",
+    "category": "Memory",
+    "page": "memory/concepts/dynamic-reflection.html",
+    "summary": "How dynamic call sites cache binding and what reflection allocates",
+    "keywords": "memory dynamic reflection DLR call site binder methodinfo invoke boxing"
+  },
+  {
+    "id": "memory-dynamic-reflection-recall",
+    "title": "dynamic and Reflection: Decided at Run Time — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/dynamic-reflection.html",
+    "summary": "Quick recall points: dynamic and Reflection: Decided at Run Time.",
+    "keywords": "memory dynamic reflection DLR call site binder methodinfo invoke boxing interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-dynamic-reflection-trap",
+    "title": "dynamic and Reflection: Decided at Run Time — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/dynamic-reflection.html",
+    "summary": "The classic mistake with dynamic and Reflection: Decided at Run Time.",
+    "keywords": "memory dynamic reflection DLR call site binder methodinfo invoke boxing trap mistake",
+    "anchor": "trap"
   }
 ]
