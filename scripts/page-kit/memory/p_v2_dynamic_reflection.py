@@ -4,6 +4,7 @@ from p_common import *
 def d_dy1():
     d = Diagram('dy1', 640, 450, 'dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder follows the Duck’s type pointer to the type data and finds Quack by name, and a rule is stored in the CallSite; the second call checks the type against the rule and jumps to Quack without any lookup; d.Swim() is not in the type data so it fails at run time; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field')
     d.code_box(10, 8, 400, 78, [(0, 'dynamic d = new Duck();', ''), (0, 'd.Quack();     // 1st call', ''), (0, 'd.Quack();     // 2nd call', ''), (0, '// d.Swim();   // compiles, fails at run time', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 400, [0, 1, 1, 1, 1, 2, 3, None], size=8.8, lh=15)
     d.note(420, 12, 210, 70, 'teaching picture:|call-site / rule internals|differ by runtime version', 'amber', size=9)
     d.zone(10, 98, 110, 280, 'cyan', '📚 STACK')
     d.zone(140, 98, 230, 280, 'emerald', '🏠 HEAP')
@@ -53,6 +54,7 @@ def d_dy1():
 def d_dy2():
     d = Diagram('dy2', 640, 530, 'Reflection step by step: order points to an Order object whose type pointer leads to Order’s type data; GetMethod creates a MethodInfo object on the heap that m points to; new object[]{5} creates an array whose slot refers to a new heap box holding a copy of 5; Invoke runs Ship in a temporary frame with n = 5 copied out of the box; the result 3 is boxed in a new heap object that r points to; (int)r copies 3 into the stack variable days; afterwards the array and the box of 5 are unreachable garbage while the MethodInfo and the box of 3 are still referenced')
     d.code_box(10, 8, 440, 78, [(0, 'Order order = new Order();', ''), (0, 'var m = typeof(Order).GetMethod("Ship");', ''), (0, 'object r = m.Invoke(order, new object[] { 5 });', ''), (0, 'int days = (int)r;', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 440, [0, 1, 2, 2, 2, 3, None], size=8.8, lh=15)
     d.note(460, 12, 170, 70, 'teaching picture:|addresses and the exact|MethodInfo contents|are simplified', 'amber', size=9)
     d.zone(10, 98, 130, 290, 'cyan', '📚 STACK')
     d.zone(175, 98, 295, 360, 'emerald', '🏠 HEAP')

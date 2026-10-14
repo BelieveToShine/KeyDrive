@@ -7,7 +7,8 @@ def _slot(d, x, y, w, h, name, vals, color='cyan'):
 
 def d_hp1():
     d = Diagram('hp1', 640, 452, 'What one new does in memory: the runtime reserves room on the heap, zero-fills it and sets the header and type pointer, the constructor makes Name refer to a separate string object, the address is stored in the stack variable p, and after p is set to null the unreachable Person and string are cleared by a later garbage collection')
-    d.code_box(10, 6, 380, 64, [(0, 'class Person { string Name; int Age;', ''), (0, '   public Person(string n) { Name = n; } }', ''), (0, 'var p = new Person("Asha");   ...   p = null;', '')], 'n', size=9, lh=15)
+    d.code_box(10, 6, 380, 74, [(0, 'class Person { string Name; int Age;', ''), (0, '   public Person(string n) { Name = n; } }', ''), (0, 'var p = new Person("Asha");', ''), (0, 'p = null;   // later', '')], 'n', size=9, lh=13)
+    run_line(d, 10, 6, 380, [None, 2, 2, 1, 2, 3, None], size=9, lh=13)
     d.zone(10, 82, 110, 290, 'cyan', '📚 STACK (Main)')
     d.zone(130, 82, 330, 290, 'emerald', '🏠 HEAP')
     d.zone(470, 82, 160, 290, 'violet', '🧬 TYPE DATA')
@@ -50,27 +51,28 @@ def d_hp1():
     return d
 
 def d_hp2():
-    d = Diagram('hp2', 640, 420, 'Arrays on the heap: an int array holds the number values inside its own cells, while a Person array holds references; a new Person array has null cells; a new Person is a separate heap object whose address is then copied into a cell; copying an array variable copies only the address')
-    d.code_box(10, 6, 380, 66, [(0, 'int[] nums = new int[3];   Person[] crew = new Person[2];', ''), (0, 'nums[1] = 7;            crew[0] = new Person();', ''), (0, 'int[] b = nums;', '')], 'n', size=9, lh=15)
-    d.zone(10, 82, 620, 62, 'cyan', '📚 STACK (Main)')
-    d.zone(10, 154, 620, 176, 'emerald', '🏠 HEAP')
-    d.text(320, 250, '(no arrays yet)', 'n', size=10, st='1-1')
-    d.box(145, 100, 78, 38, [('nums', 't'), ('not set', 'm')], 'n', st='1-1', hl=1)
-    d.box(145, 100, 78, 38, [('nums', 't'), ('0x…10', 'm')], 'cyan', st='2-', hl=2)
-    d.box(330, 100, 110, 38, [('crew', 't'), ('not set', 'm')], 'n', st='1-2', hl=1)
-    d.box(330, 100, 110, 38, [('crew', 't'), ('0x…40', 'm')], 'violet', st='3-', hl=3)
-    d.box(232, 100, 78, 38, [('b', 't'), ('0x…10', 'm')], 'cyan', st='7-', hl=7)
-    ia = card(d, 140, 178, 'int[3] @ 0x…10', [('length = 3', 'f'), ('[0] = 0', 'f'), ('[1] = 0', 'f', '2-3'), ('[2] = 0', 'f')], 'emerald', w=140, st='2-')
+    d = Diagram('hp2', 640, 434, 'Arrays on the heap: an int array holds the number values inside its own cells, while a Person array holds references; a new Person array has null cells; a new Person is a separate heap object whose address is then copied into a cell; copying an array variable copies only the address')
+    d.code_box(10, 6, 380, 82, [(0, 'int[] nums = new int[3];', ''), (0, 'Person[] crew = new Person[2];', ''), (0, 'nums[1] = 7;', ''), (0, 'crew[0] = new Person();', ''), (0, 'int[] b = nums;', '')], 'n', size=9, lh=12)
+    run_line(d, 10, 6, 380, [None, 0, 1, 2, 3, 3, 4], size=9, lh=12)
+    d.zone(10, 96, 620, 62, 'cyan', '📚 STACK (Main)')
+    d.zone(10, 168, 620, 176, 'emerald', '🏠 HEAP')
+    d.text(320, 264, '(no arrays yet)', 'n', size=10, st='1-1')
+    d.box(145, 114, 78, 38, [('nums', 't'), ('not set', 'm')], 'n', st='1-1', hl=1)
+    d.box(145, 114, 78, 38, [('nums', 't'), ('0x…10', 'm')], 'cyan', st='2-', hl=2)
+    d.box(330, 114, 110, 38, [('crew', 't'), ('not set', 'm')], 'n', st='1-2', hl=1)
+    d.box(330, 114, 110, 38, [('crew', 't'), ('0x…40', 'm')], 'violet', st='3-', hl=3)
+    d.box(232, 114, 78, 38, [('b', 't'), ('0x…10', 'm')], 'cyan', st='7-', hl=7)
+    ia = card(d, 140, 192, 'int[3] @ 0x…10', [('length = 3', 'f'), ('[0] = 0', 'f'), ('[1] = 0', 'f', '2-3'), ('[2] = 0', 'f')], 'emerald', w=140, st='2-')
     cell(d, ia, 2, '[1] = 7', 'amber', st='4-', hl=4)
-    pa = card(d, 300, 178, 'Person[2] @ 0x…40', [('length = 2', 'f'), ('[0] = null', 'f', '3-5'), ('[1] = null', 'f')], 'emerald', w=150, st='3-')
+    pa = card(d, 300, 192, 'Person[2] @ 0x…40', [('length = 2', 'f'), ('[0] = null', 'f', '3-5'), ('[1] = null', 'f')], 'emerald', w=150, st='3-')
     cell(d, pa, 1, '[0] = 0x…70 (copy)', 'amber', st='6-', hl=6)
-    po = card(d, 480, 198, 'Person @ 0x…70', [('Name = null', 'f'), ('Age = 0', 'f')], 'rose', w=140, st='5-', hl=5)
-    d.arrow([(184, 138), (184, 178)], 'cyan', st='2-', id='n1')
-    d.arrow([(385, 138), (385, 178)], 'violet', st='3-', id='c1')
-    d.arrow([(271, 138), (271, 178)], 'cyan', st='7-', id='b1')
+    po = card(d, 480, 212, 'Person @ 0x…70', [('Name = null', 'f'), ('Age = 0', 'f')], 'rose', w=140, st='5-', hl=5)
+    d.arrow([(184, 152), (184, 192)], 'cyan', st='2-', id='n1')
+    d.arrow([(385, 152), (385, 192)], 'violet', st='3-', id='c1')
+    d.arrow([(271, 152), (271, 192)], 'cyan', st='7-', id='b1')
     d.arrow([(pa['rows'][1]['r'][0], pa['rows'][1]['y']), po['L']], 'amber', st='6-', id='r1')
     for k, ln in enumerate(['Teaching picture: layout is', 'illustrative; hidden header', '+ type pointer left out']):
-        d.text(550, 298 + k * 11, ln, 'n', size=8)
+        d.text(550, 312 + k * 11, ln, 'n', size=8)
     for i, (t, c) in enumerate([
         ('Two stack slots exist, but neither array does yet.', 'cyan'),
         ('new int[3]: ONE heap object. The three numbers|sit inside its own cells, all 0.', 'emerald'),
@@ -79,7 +81,7 @@ def d_hp2():
         ('new Person() makes a SEPARATE heap object (zeroed).|Nothing refers to it yet: the cell is still null.', 'rose'),
         ('crew[0] = ...: a COPY of the address goes into the cell.|Now an arrow points to the Person.', 'amber'),
         ('b = nums copies the ADDRESS: two variables,|ONE array. Change via b and nums sees it.', 'cyan')]):
-        d.note(10, 340, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 354, 620, 58, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def build_heap_and_new():

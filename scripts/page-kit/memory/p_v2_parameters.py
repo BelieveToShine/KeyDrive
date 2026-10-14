@@ -8,6 +8,7 @@ def _rowy(g, i): return g['rows'][i]['y']
 def d_pa1():
     d = Diagram('pa1', 640, 270, 'Passing a value-type argument: the call pushes a new stack frame for Double with its own slot n, the 5 is copied from x into n, doubling n changes only n, and returning pops the frame so x is still 5')
     d.code_box(320, 24, 310, 66, [(0, 'int x = 5;', ''), (0, 'Double(x);', ''), (0, 'void Double(int n) { n = n * 2; }', '')], 'n', size=9.5, lh=15)
+    run_line(d, 320, 24, 310, [0, 1, 1, 2, 1], size=9.5, lh=15)
     d.zone(10, 24, 290, 232, 'cyan', '📚 STACK (one frame per call)')
     mf = card(d, 20, 46, '🧱 Main frame', [('x = 5', 'f', '1-4')], 'cyan', w=210, st=1)
     df = card(d, 20, 150, '🧱 Double frame', [('n = (empty slot)', 'f', '2-2')], 'violet', w=210, st='2-4')
@@ -31,6 +32,7 @@ LEG = 'green = reachable · amber = new / changed · red = unreachable'
 def d_pa2():
     d = Diagram('pa2', 640, 340, 'Passing an object: the call copies the address into q, so two stack slots hold the same address and lead to the one Person object on the heap; q.Name = "Ravi" points the object’s Name field at a new string object, and after the frame is popped the caller still reaches the changed object through p')
     d.code_box(10, 8, 400, 62, [(0, 'var p = new Person("Asha");', ''), (0, 'Rename(p);', ''), (0, 'void Rename(Person q) { q.Name = "Ravi"; }', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 400, [0, 1, 2, 1], size=9, lh=15)
     d.zone(10, 86, 210, 204, 'cyan', '📚 STACK')
     d.zone(240, 86, 390, 204, 'emerald', '🏠 HEAP')
     mf = card(d, 20, 112, '🧱 Main frame', [('p = 0x…B1', 'f', '1-3')], 'cyan', w=190, st=1)
@@ -60,6 +62,7 @@ def _reassign(mid, label, code, var, par, frame, obj_t, obj_rows, new_t, new_row
     n = len(caps)
     d = Diagram(mid, 640, 340, label)
     d.code_box(10, 8, 440, 62, code, 'n', size=9, lh=15)
+    run_line(d, 10, 8, 440, [0, 1, 2, 2, 1, None][:n], size=9, lh=15)
     d.zone(10, 86, 210, 204, 'cyan', '📚 STACK')
     d.zone(240, 86, 390, 204, 'emerald', '🏠 HEAP')
     mf = card(d, 20, 112, '🧱 Main frame', [(f'{var} = {addr_old}', 'f')], 'cyan', w=190, st=1)

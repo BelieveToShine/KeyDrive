@@ -14,20 +14,21 @@ def _notes(d, y, h, items, size=9.5):
 
 # ---------------------------------------------------------------- D1: returning a value
 def d_rv1():
-    d = Diagram('rv1', 640, 420, 'Returning an int: Main has a slot t, calling Total pushes a frame with its own slot sum = 42, the return copies 42 into t while sum keeps its own 42, then the Total frame is popped and t stays; the heap is untouched')
-    d.code_box(10, 8, 330, 48, [(0, 'int Total() { int sum = 42; return sum; }', ''), (0, 'int t = Total();', '')], 'n', size=9, lh=15)
+    d = Diagram('rv1', 640, 444, 'Returning an int: Main has a slot t, calling Total pushes a frame with its own slot sum = 42, the return copies 42 into t while sum keeps its own 42, then the Total frame is popped and t stays; the heap is untouched')
+    d.code_box(10, 8, 330, 82, [(0, 'int Total() {', ''), (0, '  int sum = 42;', ''), (0, '  return sum; }', ''), (0, 'int t = Total();', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 330, [3, 3, 1, 2, 3], size=9, lh=15)
     _tag(d)
-    d.zone(10, 70, 310, 300, 'cyan', '📚 STACK')
-    d.zone(340, 70, 290, 300, 'emerald', '🏠 HEAP')
-    d.text(485, 224, 'empty: no allocation', 'n', size=10)
-    main = card(d, 22, 100, 'Main frame', [('t : int = (not set yet)', 'f', '1-3')], 'cyan', w=286, st='1-')
+    d.zone(10, 94, 310, 300, 'cyan', '📚 STACK')
+    d.zone(340, 94, 290, 300, 'emerald', '🏠 HEAP')
+    d.text(485, 248, 'empty: no allocation', 'n', size=10)
+    main = card(d, 22, 124, 'Main frame', [('t : int = (not set yet)', 'f', '1-3')], 'cyan', w=286, st='1-')
     cell(d, main, 0, 't : int = 42', 'amber', st='4-4', hl=4)
     cell(d, main, 0, 't : int = 42', 'emerald', st='5-5')
-    tot = card(d, 22, 220, 'Total frame', [('sum : int = (not set yet)', 'f', '2-2')], 'violet', w=286, st='2-4')
+    tot = card(d, 22, 244, 'Total frame', [('sum : int = (not set yet)', 'f', '2-2')], 'violet', w=286, st='2-4')
     cell(d, tot, 0, 'sum : int = 42', 'violet', st='3-4', hl=3)
-    d.arrow([(165, tot['rows'][0]['top']), (165, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of 42', at=(165, 194), st='4-4')
-    d.text(165, 268, 'frame popped, slot gone', 'n', size=10, st='5-')
-    _notes(d, 380, 34, [
+    d.arrow([(165, tot['rows'][0]['top']), (165, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of 42', at=(165, 218), st='4-4')
+    d.text(165, 292, 'frame popped, slot gone', 'n', size=10, st='5-')
+    _notes(d, 404, 34, [
         ('Main is about to call Total: t is an empty int slot', 'cyan'), ('Call: Total gets its OWN frame with its own slot sum', 'violet'),
         ('sum = 42 is stored inside Total’s frame', 'violet'), ('return sum: 42 is COPIED into t — sum still holds its own 42', 'amber'),
         ('Total’s frame is popped; t keeps 42. The heap never changed', 'emerald')])
@@ -35,37 +36,38 @@ def d_rv1():
 
 # ---------------------------------------------------------------- D2: returning an object
 def d_rv2():
-    d = Diagram('rv2', 640, 460, 'Returning an object: Make allocates a Person object on the heap whose Name field is a reference to a separate string object, and its local p points to it; the return copies the address into who so two variables point to one object; Make’s frame is popped and the Person survives; later who is set to null and the Person and its string become unreachable until a GC reclaims them')
-    d.code_box(10, 8, 400, 48, [(0, 'Person Make() { var p = new Person("Asha"); return p; }', ''), (0, 'var who = Make();', '')], 'n', size=8.8, lh=15)
+    d = Diagram('rv2', 640, 500, 'Returning an object: Make allocates a Person object on the heap whose Name field is a reference to a separate string object, and its local p points to it; the return copies the address into who so two variables point to one object; Make’s frame is popped and the Person survives; later who is set to null and the Person and its string become unreachable until a GC reclaims them')
+    d.code_box(10, 8, 400, 97, [(0, 'Person Make() {', ''), (0, '  var p = new Person("Asha");', ''), (0, '  return p; }', ''), (0, 'var who = Make();', ''), (0, 'who = null;', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 400, [3, 3, 1, 1, 2, 3, 4, None], size=8.8, lh=15)
     _tag(d)
-    d.zone(10, 66, 150, 316, 'cyan', '📚 STACK')
-    d.zone(170, 66, 460, 316, 'emerald', '🏠 HEAP')
-    main = card(d, 18, 90, 'Main frame', [('who = null', 'f', '1-4')], 'cyan', w=134, st='1-')
+    d.zone(10, 106, 150, 316, 'cyan', '📚 STACK')
+    d.zone(170, 106, 460, 316, 'emerald', '🏠 HEAP')
+    main = card(d, 18, 130, 'Main frame', [('who = null', 'f', '1-4')], 'cyan', w=134, st='1-')
     cell(d, main, 0, 'who = 0x…F1', 'amber', st='5-5', hl=5)
     cell(d, main, 0, 'who = 0x…F1', 'emerald', st='6-6')
     cell(d, main, 0, 'who = null', 'cyan', st='7-', hl=7)
-    mk = card(d, 18, 230, 'Make frame', [('p = (unset)', 'f', '2-3')], 'violet', w=134, st='2-5')
+    mk = card(d, 18, 270, 'Make frame', [('p = (unset)', 'f', '2-3')], 'violet', w=134, st='2-5')
     cell(d, mk, 0, 'p = 0x…F1', 'violet', st='4-5', hl=4)
     rows = [('Id = 7', 'f'), ('Name = ref', 'f')]
-    per = card(d, 290, 140, 'Person @ 0x…F1', rows, 'emerald', w=200, st='3-6')
-    perg = card(d, 290, 140, 'Person — unreachable', rows, 'rose', w=200, st='7-7', dash=True)
+    per = card(d, 290, 180, 'Person @ 0x…F1', rows, 'emerald', w=200, st='3-6')
+    perg = card(d, 290, 180, 'Person — unreachable', rows, 'rose', w=200, st='7-7', dash=True)
     stg0 = [('"Asha" (UTF-16 chars)', 'f')]
-    st_ = card(d, 290, 260, 'string "Asha"', stg0, 'emerald', w=200, st='3-6')
-    stg = card(d, 290, 260, 'string — unreachable', stg0, 'rose', w=200, st='7-7', dash=True)
+    st_ = card(d, 290, 300, 'string "Asha"', stg0, 'emerald', w=200, st='3-6')
+    stg = card(d, 290, 300, 'string — unreachable', stg0, 'rose', w=200, st='7-7', dash=True)
     # Name reference: field -> string card border
     ny = per['rows'][1]['y']; sy = st_['L'][1]
     rx = per['x'] + per['w']
-    d.arrow([(rx - 8, ny), (rx + 22, ny), (rx + 22, sy), (rx, sy)], 'emerald', 'Name', at=(rx + 22, 232), st='3-6')
+    d.arrow([(rx - 8, ny), (rx + 22, ny), (rx + 22, sy), (rx, sy)], 'emerald', 'Name', at=(rx + 22, 272), st='3-6')
     # who and p: two separate arrows ending at different points of the Person border
     y_who = per['y'] + per['h'] * 0.3; y_p = per['y'] + per['h'] * 0.72
     lx = per['x']
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (200, main['rows'][0]['y']), (200, y_who), (lx, y_who)], 'cyan', 'who', at=(245, y_who - 8), st='5-6', id='wa')
     d.arrow([(mk['rows'][0]['r'][0], mk['rows'][0]['y']), (232, mk['rows'][0]['y']), (232, y_p), (lx, y_p)], 'violet', 'p', at=(262, y_p + 10), st='4-5', id='pa')
-    d.arrow([(118, mk['rows'][0]['top']), (118, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of address', at=(118, 186), st='5-5')
-    d.text(85, 262, 'frame popped', 'n', size=10, st='6-')
-    d.text(400, 352, 'green = still reachable · red dashed = unreachable (nothing points to it)', 'n', size=9, st='7-7')
-    d.text(400, 352, 'space reclaimed by a later GC', 'n', size=10, st='8-8')
-    _notes(d, 392, 66, [
+    d.arrow([(118, mk['rows'][0]['top']), (118, main['rows'][0]['top'] + main['rows'][0]['h'])], 'amber', 'copy of address', at=(118, 226), st='5-5')
+    d.text(85, 302, 'frame popped', 'n', size=10, st='6-')
+    d.text(400, 392, 'green = still reachable · red dashed = unreachable (nothing points to it)', 'n', size=9, st='7-7')
+    d.text(400, 392, 'space reclaimed by a later GC', 'n', size=10, st='8-8')
+    _notes(d, 432, 66, [
         ('Main has a slot who for the result. It holds null: no object yet', 'cyan'),
         ('Calling Make pushes a frame with its own slot p (not set yet)', 'violet'),
         ('new Person: an object on the HEAP, whose Name field is a reference|to a SEPARATE string object', 'emerald'),
@@ -80,6 +82,7 @@ def d_rv2():
 def d_rv3():
     d = Diagram('rv3', 640, 420, 'Returning a value tuple: r is two slots side by side in Main’s frame, Stats builds Count = 3 and Sum = 59.5 in its own frame, the return copies both values into r, the Stats frame is popped and the heap is untouched; in a contrast version where Stats returned the old Tuple class, r2 in the same Main frame would hold a reference to a new heap object with Item1 and Item2')
     d.code_box(10, 8, 380, 62, [(0, '(int Count, decimal Sum) Stats() => (3, 59.5m);', ''), (0, 'var r = Stats();', ''), (0, '// old class: var r2 = Tuple.Create(3, 59.5m);', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 380, [1, 0, 1, 1, 2], size=8.8, lh=15)
     _tag(d)
     d.zone(10, 84, 330, 286, 'cyan', '📚 STACK')
     d.zone(360, 84, 270, 286, 'emerald', '🏠 HEAP')

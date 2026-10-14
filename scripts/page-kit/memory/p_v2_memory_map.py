@@ -1,38 +1,39 @@
 from p_common import *
 
 def d_map1():
-    d = Diagram('mm1', 640, 420, 'One call of Hello(): the static field already exists, the call pushes a frame with slots age and p, the string Asha and then the Person object (header, type pointer to its MethodTable, Name reference to the string) are built on the heap, p receives the address; when Hello returns the frame is popped, the objects become unreachable, and a later GC reclaims them while the static field stays')
-    d.code_box(10, 6, 620, 52, [(0, 'static int count = 1;                 // a class field: lives in static memory', ''),
-                                (0, 'void Hello() { int age = 30; var p = new Person("Asha"); }', '')], 'n', size=9.5, lh=15)
-    d.zone(10, 70, 140, 304, 'cyan', '📚 STACK (one per thread)')
-    d.zone(170, 70, 290, 304, 'emerald', '🏠 HEAP (shared)')
-    d.zone(470, 70, 160, 172, 'violet', '🧬 TYPE DATA')
-    d.zone(470, 252, 160, 122, 'amber', '📌 STATIC AREA')
+    d = Diagram('mm1', 640, 456, 'One call of Hello(): the static field already exists, the call pushes a frame with slots age and p, the string Asha and then the Person object (header, type pointer to its MethodTable, Name reference to the string) are built on the heap, p receives the address; when Hello returns the frame is popped, the objects become unreachable, and a later GC reclaims them while the static field stays')
+    d.code_box(10, 6, 620, 88, [(0, 'static int count = 1;                 // a class field: lives in static memory', ''),
+                                (0, 'void Hello() {', ''), (0, '    int age = 30;', ''), (0, '    var p = new Person("Asha");', ''), (0, '}', '')], 'n', size=9.5, lh=15)
+    run_line(d, 10, 6, 620, [0, 1, 2, 3, 3, 3, 4, None], size=9.5, lh=15)
+    d.zone(10, 106, 140, 304, 'cyan', '📚 STACK (one per thread)')
+    d.zone(170, 106, 290, 304, 'emerald', '🏠 HEAP (shared)')
+    d.zone(470, 106, 160, 172, 'violet', '🧬 TYPE DATA')
+    d.zone(470, 288, 160, 122, 'amber', '📌 STATIC AREA')
     # stack frame
-    fr = card(d, 18, 96, 'Hello() frame', [('age = (unset)', 'f', '2-2'), ('p = (unset)', 'f', '2-5')], 'cyan', w=124, st='2-6', hl=2)
+    fr = card(d, 18, 132, 'Hello() frame', [('age = (unset)', 'f', '2-2'), ('p = (unset)', 'f', '2-5')], 'cyan', w=124, st='2-6', hl=2)
     cell(d, fr, 0, 'age = 30', 'cyan', st='3-6', hl=3)
     cell(d, fr, 1, 'p = 0x…A1', 'cyan', st='6-6', hl=6)
-    card(d, 18, 96, 'frame popped', [('age', 'f'), ('p', 'f')], 'n', w=124, st='7-8', dash=True)
+    card(d, 18, 132, 'frame popped', [('age', 'f'), ('p', 'f')], 'n', w=124, st='7-8', dash=True)
     # heap objects
     prow = [('header (sync block)', 'hdr'), ('type ptr → Person MT', 'tp'), ('Name = ref → 0x…B7', 'f')]
     srow = [('header (sync block)', 'hdr'), ('type ptr → String MT', 'tp'), ('length = 4', 'f'), ('\'A\' \'s\' \'h\' \'a\'  (UTF-16)', 'f')]
-    card(d, 178, 96, 'heap: no objects yet', [], 'n', w=274, st='1-3', dash=True)
-    sg = card(d, 178, 234, 'string object @ 0x…B7', srow, 'emerald', w=274, st='4-6', hl=4)
-    pg = card(d, 178, 96, 'Person object @ 0x…A1', prow, 'emerald', w=274, st='5-6', hl=5)
-    card(d, 178, 96, 'Person object (unreachable)', prow, 'n', w=274, st='7-7', dash=True)
-    card(d, 178, 234, 'string object (unreachable)', srow, 'n', w=274, st='7-7', dash=True)
-    d.note(178, 130, 274, 76, 'GC ran: no root reaches these|objects, so their memory is|reclaimed', 'emerald', st='8-', hl=8, size=9.5)
+    card(d, 178, 132, 'heap: no objects yet', [], 'n', w=274, st='1-3', dash=True)
+    sg = card(d, 178, 270, 'string object @ 0x…B7', srow, 'emerald', w=274, st='4-6', hl=4)
+    pg = card(d, 178, 132, 'Person object @ 0x…A1', prow, 'emerald', w=274, st='5-6', hl=5)
+    card(d, 178, 132, 'Person object (unreachable)', prow, 'n', w=274, st='7-7', dash=True)
+    card(d, 178, 270, 'string object (unreachable)', srow, 'n', w=274, st='7-7', dash=True)
+    d.note(178, 166, 274, 76, 'GC ran: no root reaches these|objects, so their memory is|reclaimed', 'emerald', st='8-', hl=8, size=9.5)
     # type data + statics
-    mt = card(d, 478, 96, 'Person MethodTable', [('method slots, GC info', 'f')], 'violet', w=144, st='1-')
-    smt = card(d, 478, 166, 'String MethodTable', [('method slots, GC info', 'f')], 'violet', w=144, st='1-')
-    card(d, 478, 282, 'Program statics', [('count = 1', 'f')], 'amber', w=144, st='1-', hl='1,8')
+    mt = card(d, 478, 132, 'Person MethodTable', [('method slots, GC info', 'f')], 'violet', w=144, st='1-')
+    smt = card(d, 478, 202, 'String MethodTable', [('method slots, GC info', 'f')], 'violet', w=144, st='1-')
+    card(d, 478, 318, 'Program statics', [('count = 1', 'f')], 'amber', w=144, st='1-', hl='1,8')
     # arrows
     d.arrow([fr['rows'][1]['r'], pg['L']], 'cyan', st='6-6', id='a1')
     d.arrow([(pg['rows'][1]['r'][0], pg['rows'][1]['y']), (466, pg['rows'][1]['y']), (466, mt['L'][1]), mt['L']], 'violet', st='5-6', id='a2')
-    d.arrow([(pg['rows'][2]['r'][0], pg['rows'][2]['y']), (458, pg['rows'][2]['y']), (458, 222), (sg['T'][0], 222), sg['T']], 'emerald', st='5-6', id='a3')
+    d.arrow([(pg['rows'][2]['r'][0], pg['rows'][2]['y']), (458, pg['rows'][2]['y']), (458, 258), (sg['T'][0], 258), sg['T']], 'emerald', st='5-6', id='a3')
     d.arrow([(sg['rows'][1]['r'][0], sg['rows'][1]['y']), (466, sg['rows'][1]['y']), (466, smt['L'][1]), smt['L']], 'violet', st='4-6', id='a4')
-    d.text(320, 392, 'grey dashed = unreachable or already gone   ·   header = a bookkeeping word (holds the sync block index)', 'n', size=8.5)
-    d.text(320, 407, 'Addresses (0x…A1, 0x…B7) and the layout are a teaching picture of the classic runtime model; real widths vary.', 'n', size=8.5)
+    d.text(320, 428, 'grey dashed = unreachable or already gone   ·   header = a bookkeeping word (holds the sync block index)', 'n', size=8.5)
+    d.text(320, 443, 'Addresses (0x…A1, 0x…B7) and the layout are a teaching picture of the classic runtime model; real widths vary.', 'n', size=8.5)
     return d
 
 def build_memory_map():

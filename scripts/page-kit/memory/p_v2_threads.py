@@ -3,8 +3,11 @@ from p_common import *
 # ================================================================= 18. THREADS (v2: memory-level)
 def d_th1():
     d = Diagram('th1', 640, 384, 'Two threads, each with its own stack, share one Counter object on the heap and one static field: the second thread gets a copy of the reference, its locals stay private, and the stacks plus the statics are the roots the GC starts from')
-    d.code_box(10, 8, 410, 58, [(0, 'static int Total;   var c = new Counter { Value = 5 };   int i = 3;', ''), (0, 'new Thread(Work).Start(c);', ''), (0, 'void Work(object o) { int n = 7;  Total++; }', '')], 'n', size=8.8, lh=14)
-    d.note(430, 8, 200, 58, 'Teaching picture: addresses|and layout are illustrative.|Amber = changed / GC root', 'n', size=9)
+    d.code_box(10, 2, 214, 69, [(0, 'static int Total;', ''), (0, 'int i = 3;', ''), (0, 'var c = new Counter { Value = 5 };', ''), (0, 'new Thread(Work).Start(c);', '')], 'n', size=8.8, lh=13)
+    run_line(d, 10, 2, 214, [2, 3, 3], size=8.8, lh=13)
+    d.code_box(232, 2, 190, 69, [(0, 'void Work(object o) {', ''), (12, 'int n = 7;', ''), (12, 'Total++;', ''), (0, '}', '')], 'n', size=8.8, lh=13)
+    run_line(d, 232, 2, 190, [None, 0, 0, 1, 2, 2], size=8.8, lh=13)
+    d.note(430, 2, 200, 69, 'Teaching picture: addresses|and layout are illustrative.|Amber = changed / GC root', 'n', size=9)
     d.zone(10, 76, 130, 244, 'cyan', '🧵 THREAD 1 · own stack', st=1)
     d.zone(500, 76, 130, 244, 'violet', '🧵 THREAD 2 · own stack', st='2-')
     d.zone(500, 76, 130, 244, 'n', '🧵 THREAD 2 · not started', st='1-1')
@@ -41,6 +44,7 @@ def d_th1():
 def d_th2():
     d = Diagram('th2', 640, 330, 'A lost update on the shared Counter: both threads copy Value (5) into their own private tmp, each adds one in its own stack, and both write 6 back, so the heap ends at 6 instead of 7')
     d.code_box(10, 8, 330, 58, [(0, 'tmp = c.Value;   // READ', ''), (0, 'tmp = tmp + 1;   // ADD', ''), (0, 'c.Value = tmp;   // WRITE   (= c.Value++)', '')], 'n', size=8.8, lh=14)
+    run_line(d, 10, 8, 330, [None, 0, 0, 1, 1, 2, 2], size=8.8, lh=14)
     d.note(350, 8, 280, 58, 'Amber = just changed · rose = wrong result|Teaching picture: the JIT may keep tmp in a|CPU register; either way it is private', 'n', size=9)
     d.zone(10, 76, 124, 180, 'cyan', '🧵 THREAD 1 stack', st=1)
     d.zone(506, 76, 124, 180, 'violet', '🧵 THREAD 2 stack', st=1)

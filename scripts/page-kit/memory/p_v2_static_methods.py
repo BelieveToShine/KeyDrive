@@ -6,12 +6,13 @@ DOC_STATICCLS = ('Static classes and static class members (C#)', 'https://learn.
 def d_sm1():
     d = Diagram('sm1', 640, 420, 'Calling the static method Tax.Add(100m): Main’s frame has the local total; the static area of Tax holds Rate; the code of Add exists once; the call pushes a frame with only the parameter x and a result slot, the method runs the code and reads Rate to get 118, the result 118 is copied into total, the frame is popped, and the heap stays empty because no Tax object exists')
     d.code_box(10, 8, 620, 62, [(0, 'static class Tax { public static decimal Rate = 0.18m;', ''), (0, '   public static decimal Add(decimal x) => x + x * Rate; }', ''), (0, 'var total = Tax.Add(100m);        // inside Main  (new Tax() does not compile)', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 620, [0, 2, 1, 2, None], size=9, lh=15)
     d.zone(10, 82, 190, 256, 'cyan', '📚 STACK (main thread)')
     d.zone(210, 82, 170, 100, 'amber', '📌 STATIC AREA')
     d.zone(210, 192, 170, 146, 'violet', '📜 CODE')
     d.zone(390, 82, 240, 256, 'emerald', '🏠 HEAP')
     mf = card(d, 18, 108, 'Main frame', [('total = (not set yet)', 'f', '1-4')], 'cyan', w=160, st=1)
-    cell(d, mf, 0, 'total = 118', 'amber', st='5-', hl=4)
+    cell(d, mf, 0, 'total = 118', 'amber', st='4-', hl=4)
     tx = card(d, 218, 108, 'Tax (static area)', [('Rate = 0.18', 'f')], 'amber', w=154, st=1, hl='3')
     d.box(240, 219, 130, 44, [('Tax.Add', 'm'), ('one copy of the code', 's')], 'violet', st=1, hl='2')
     af = card(d, 18, 200, 'Add frame', [('x = 100  (copy)', 'f'), ('result = (not set yet)', 'f', '2-2')], 'violet', w=160, st='2-4', hl=2)
@@ -37,6 +38,7 @@ def d_sm1():
 def d_sm2():
     d = Diagram('sm2', 640, 410, 'Instance call versus static call on the same stack: order.AddItem(2) pushes a frame whose this slot is a copy of the reference to the Order object on the heap, and changes its Count; the static call Tax.Add(100m) pushes a frame with only the parameter x, which has no this and no object to point to, and reads Rate from the static area of Tax')
     d.code_box(10, 8, 620, 46, [(0, 'order.AddItem(2);        // instance: Count += qty', ''), (0, 'var total = Tax.Add(100m);   // static', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 620, [None, 0, 0, 0, 1, 1], size=9, lh=15)
     d.zone(10, 66, 210, 270, 'cyan', '📚 STACK')
     d.zone(230, 66, 200, 270, 'emerald', '🏠 HEAP')
     d.zone(450, 66, 180, 270, 'amber', '📌 STATIC AREA')
@@ -67,6 +69,7 @@ def d_sm2():
 def d_sm3():
     d = Diagram('sm3', 640, 450, 'A static field is one shared slot: Settings.Language holds a reference to a string on the heap; thread A writes a reference to a new string fr, so the slot now points to fr; thread B reads the same slot and gets fr; the old string en is then unreachable and a later garbage collection frees it')
     d.code_box(10, 8, 620, 46, [(0, 'Thread A:  Settings.Language = "fr";', ''), (0, 'Thread B:  var s = Settings.Language;', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 620, [None, 0, 0, 1, None, None], size=9, lh=15)
     d.zone(350, 62, 280, 320, 'emerald', '🏠 HEAP (shared by all threads)')
     a = card(d, 10, 70, '📚 Stack of thread A', [('Handle() frame', 'f')], 'cyan', w=140, st=1, hl=2)
     b = card(d, 10, 238, '📚 Stack of thread B', [('Handle() frame', 'f'), ('s = (not set yet)', 'f', '1-3')], 'violet', w=140, st=1)

@@ -148,7 +148,8 @@ def d_ov2():
     d.token('w1t', '📞', 15, 'cyan', st='3-3')
     d.token('w2t', '📞', 15, 'violet', st='4-4')
     d.token('w3t', '📞', 15, 'amber', st='5-5')
-    d.code_box(10, 290, 300, 36, [(0, 'Animal a = new Dog();    a.Speak();', '')], 'n', size=9, lh=15)
+    d.code_box(10, 290, 300, 52, [(0, 'Animal a = new Dog();', ''), (0, 'a.Speak();', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 290, 300, [0, 1, 1, 1, 1, 1], size=9, lh=15)
     for i, (t, c) in enumerate([('Setup: a holds the address of a Dog object;|its type pointer leads to Dog’s MethodTable', 'cyan'), ('Build time: the compiler only knows that Speak is a|virtual method, slot 0 (Animal’s table) — not which code', 'amber'),
                                 ('Run time 1: follow a to the object|on the heap', 'cyan'), ('Run time 2: read its type pointer →|Dog’s MethodTable (the object’s REAL type)', 'violet'), ('Run time 3: take slot 0 of THAT table —|Dog replaced it with Dog.Speak', 'amber'), ('Jump: Dog.Speak runs with this = the object.|Animal’s own table is never touched.', 'emerald')]):
         d.note(320, 290, 310, 70, t, c, st=f'{i + 1}-{i + 1}', size=9)

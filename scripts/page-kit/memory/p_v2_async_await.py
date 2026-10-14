@@ -2,8 +2,11 @@ from p_common import *
 
 def d_as1():
     d = Diagram('as1', 640, 486, 'Memory during an async call: the state machine starts in the LoadAsync frame, is copied (boxed) to a heap object at the first real wait, the Task of int is created, the frame is popped, the delay task later resumes the heap copy in a new frame, the result goes into the Task of int, and only then do the state machine and the delay task become garbage and get freed')
-    d.code_box(10, 8, 410, 48, [(0, 'async Task<int> LoadAsync() { int a = 1;', ''), (0, '   await Task.Delay(100);  return a + 1; }', '')], 'n', size=8.8, lh=15)
-    d.note(430, 8, 200, 48, 'teaching picture: simplified|Release build, names illustrative', 'amber', size=8.5)
+    d.code_box(10, 1, 200, 67, [(0, 'async Task<int> LoadAsync() {', ''), (12, 'int a = 1;', ''), (12, 'await Task.Delay(100);', ''), (12, 'return a + 1; }', '')], 'n', size=8.8, lh=13)
+    run_line(d, 10, 1, 200, [1, 2, 2, 2, 2, 3, 3], size=8.8, lh=13)
+    d.code_box(218, 1, 170, 67, [(0, '// caller', ''), (0, 'var t = LoadAsync();', '')], 'n', size=8.8, lh=13)
+    run_line(d, 218, 1, 170, [1, 1, 1, 1, 1], size=8.8, lh=13)
+    d.note(396, 1, 234, 67, 'teaching picture: simplified|Release build, names illustrative', 'amber', size=8.5)
     d.zone(10, 70, 170, 340, 'cyan', '📚 STACK (one thread)')
     d.zone(190, 70, 440, 340, 'emerald', '🏠 HEAP')
     # ---- stack

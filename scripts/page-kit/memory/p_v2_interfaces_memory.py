@@ -1,7 +1,7 @@
 from p_common import *
 
 def d_if1():
-    d = Diagram('if1', 640, 392, 'Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay')
+    d = Diagram('if1', 640, 416, 'Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay')
     d.zone(10, 24, 120, 280, 'cyan', '📚 STACK')
     d.zone(140, 24, 170, 280, 'emerald', '🏠 HEAP')
     d.zone(320, 24, 180, 280, 'violet', '🧬 TYPE DATA')
@@ -36,8 +36,9 @@ def d_if1():
     d.token('b1', '📞', 15, 'cyan', st='6-6')
     d.token('b2', '📞', 15, 'violet', st='6-6')
     d.token('b3', '📞', 15, 'amber', st='6-6')
-    d.text(320, 384, '📞 = the call’s current hop   ·   CODE = compiled method bodies   ·   one MethodTable per class, shared by all its objects', 'n', size=8)
-    d.code_box(10, 310, 300, 58, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();     q.Pay();', '')], 'n', size=9, lh=15)
+    d.text(320, 408, '📞 = the call’s current hop   ·   CODE = compiled method bodies   ·   one MethodTable per class, shared by all its objects', 'n', size=8)
+    d.code_box(10, 310, 300, 82, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();', ''), (0, 'q.Pay();', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 310, 300, [0, 1, 2, 2, 2, 3], size=9, lh=15)
     for i, (t, c) in enumerate([('new Invoice(): a heap object with header, type ptr|and its field Amount. p holds its address (illustrative)', 'emerald'),
                                 ('Another class, another object, another MethodTable.|q has the same variable type as p.', 'emerald'),
                                 ('p.Pay() step 1: follow p to the object|on the heap', 'cyan'),
@@ -48,7 +49,7 @@ def d_if1():
     return d
 
 def d_if2():
-    d = Diagram('if2', 640, 388, 'A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot')
+    d = Diagram('if2', 640, 424, 'A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot')
     d.zone(10, 24, 200, 280, 'cyan', '📚 STACK')
     d.zone(220, 24, 190, 190, 'emerald', '🏠 HEAP')
     card(d, 230, 66, 'no box yet', [], 'n', w=170, st='1-2', dash=True)
@@ -70,10 +71,11 @@ def d_if2():
     d.arrow([(200, 151), (215, 151), (215, bx['L'][1] + 20), (bx['L'][0], bx['L'][1] + 20)], 'amber', dash=True, st='3-3', id='cp')
     d.arrow([(bx['rows'][1]['r'][0], ty), (414, ty), (414, mt['L'][1]), (mt['L'][0], mt['L'][1])], 'violet', st='3-6', id='s2')
     d.arrow([(315, bx['y'] + bx['h']), (315, 239), (200, 239)], 'amber', dash=True, label='copy', st='6-6', id='un')
-    d.text(320, 382, '📞 = the call’s current hop', 'n', size=8)
+    d.text(320, 418, '📞 = the call’s current hop', 'n', size=8)
     d.token('s1', '📞', 15, 'cyan', st='5-5')
     d.token('s2', '📞', 15, 'violet', st='5-5')
-    d.code_box(10, 306, 300, 62, [(0, 'Coupon c = new Coupon { Value = 5 };', ''), (0, 'IPayable s = c;      c.Value = 9;', ''), (0, 's.Pay();   Coupon c2 = (Coupon)s;', '')], 'n', size=8.6, lh=15)
+    d.code_box(10, 306, 300, 97, [(0, 'Coupon c = new Coupon { Value = 5 };', ''), (0, 'IPayable s = c;', ''), (0, 'c.Value = 9;', ''), (0, 's.Pay();', ''), (0, 'Coupon c2 = (Coupon)s;', '')], 'n', size=8.6, lh=15)
+    run_line(d, 10, 306, 300, [0, 1, 1, 2, 3, 4], size=8.6, lh=15)
     for i, (t, c) in enumerate([('A struct sits right in its stack slot:|no header, no type pointer', 'cyan'),
                                 ('IPayable s needs a reference, but c is not an object|(s is still empty)', 'rose'),
                                 ('Boxing: a NEW heap object (header + type ptr + value)|gets a COPY of 5 (dashed arrow).|s holds its address (illustrative)', 'amber'),

@@ -7,76 +7,83 @@ def _ry(g, i): return g['rows'][i]['y']
 
 # ------------------------------------------------------------ 1. ref int: copy vs alias, side by side
 def d_rf1():
-    d = Diagram('rf1', 640, 360, 'The same call two ways: by value the call copies 5 into a new slot n so n++ changes only the copy and x stays 5; with ref the slot n holds an alias to x, so n++ writes into x itself and x becomes 6')
-    d.code_box(10, 6, 300, 58, [(0, 'int x = 5;', ''), (0, 'AddOne(x);', ''), (0, 'void AddOne(int n) { n++; }', '')], 'n', size=9, lh=15)
-    d.code_box(330, 6, 300, 58, [(0, 'int x = 5;', ''), (0, 'AddOne(ref x);', ''), (0, 'void AddOne(ref int n) { n++; }', '')], 'n', size=9, lh=15)
-    d.zone(10, 70, 300, 210, 'cyan', '📚 STACK — by value')
-    d.zone(330, 70, 300, 210, 'cyan', '📚 STACK — ref')
-    lm = card(d, 22, 96, 'Main frame', [('x = 5', 'f')], 'cyan', w=276, st=1)
-    lf = card(d, 22, 206, 'AddOne frame', [('n = 5  (a copy)', 'f', '2-2')], 'cyan', w=276, st='2-3')
+    o = 34
+    d = Diagram('rf1', 640, 360 + o, 'The same call two ways: by value the call copies 5 into a new slot n so n++ changes only the copy and x stays 5; with ref the slot n holds an alias to x, so n++ writes into x itself and x becomes 6')
+    d.code_box(10, 6, 300, 92, [(0, 'int x = 5;', ''), (0, 'AddOne(x);', ''), (0, 'void AddOne(int n) {', ''), (0, '  n++;', ''), (0, '}', '')], 'n', size=9, lh=14)
+    d.code_box(330, 6, 300, 92, [(0, 'int x = 5;', ''), (0, 'AddOne(ref x);', ''), (0, 'void AddOne(ref int n) {', ''), (0, '  n++;', ''), (0, '}', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 6, 300, [0, 1, 3, 4], size=9, lh=14)
+    run_line(d, 330, 6, 300, [0, 1, 3, 4], size=9, lh=14)
+    d.zone(10, 70 + o, 300, 210, 'cyan', '📚 STACK — by value')
+    d.zone(330, 70 + o, 300, 210, 'cyan', '📚 STACK — ref')
+    lm = card(d, 22, 96 + o, 'Main frame', [('x = 5', 'f')], 'cyan', w=276, st=1)
+    lf = card(d, 22, 206 + o, 'AddOne frame', [('n = 5  (a copy)', 'f', '2-2')], 'cyan', w=276, st='2-3')
     cell(d, lf, 0, 'n = 6  (only the copy changed)', 'amber', st='3-3', hl=3)
-    d.arrow([lm['B'], lf['T']], 'amber', 'copy 5', at=(160, 180), st='2-2', id='lc')
-    rm = card(d, 342, 96, 'Main frame', [('x = 5', 'f', '1-2')], 'cyan', w=276, st=1)
+    d.arrow([lm['B'], lf['T']], 'amber', 'copy 5', at=(160, 180 + o), st='2-2', id='lc')
+    rm = card(d, 342, 96 + o, 'Main frame', [('x = 5', 'f', '1-2')], 'cyan', w=276, st=1)
     cell(d, rm, 0, 'x = 6', 'amber', st='3-', hl=3)
-    rf = card(d, 342, 206, 'AddOne frame', [('n = address of x', 'f')], 'violet', w=276, st='2-3')
-    d.arrow([(480, 232), rm['B']], 'violet', 'alias (no copy)', at=(480, 180), st='2-3', id='ra')
-    d.text(320, 296, 'amber = just written · teaching picture: an alias is really an address kept in the slot', 'n', 8)
-    for i, (t, c) in enumerate([('Both columns: x is one slot in Main’s frame and holds 5.', 'cyan'),
-                                ('Call. LEFT: a new frame with a NEW slot n, and the 5 is COPIED into it.|RIGHT: a new frame whose slot n holds the ADDRESS of x. The 5 is not copied.', 'violet'),
-                                ('n++. LEFT: changes the copy only, x is still 5.|RIGHT: follows the alias and writes into x itself, so x becomes 6.', 'amber'),
-                                ('Return: both frames are popped.|LEFT: x is still 5.  RIGHT: x is 6. The method changed the caller’s own variable.', 'emerald')]):
-        d.note(10, 306, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    rf = card(d, 342, 206 + o, 'AddOne frame', [('n = address of x', 'f')], 'violet', w=276, st='2-3')
+    d.arrow([(480, 232 + o), rm['B']], 'violet', 'alias (no copy)', at=(480, 180 + o), st='2-3', id='ra')
+    d.text(320, 296 + o, 'amber = just written · teaching picture: an alias is really an address kept in the slot', 'n', 8)
+    for i, (t, c) in enumerate([('x = 5: x is one slot in Main’s frame and holds 5 (both columns).', 'cyan'),
+                                ('AddOne(...) call. LEFT: a new frame with a NEW slot n, and the 5 is COPIED into it.|RIGHT: a new frame whose slot n holds the ADDRESS of x. The 5 is not copied.', 'violet'),
+                                ('n++ runs. LEFT: changes the copy only, x is still 5.|RIGHT: follows the alias and writes into x itself, so x becomes 6.', 'amber'),
+                                ('} Return: both frames are popped.|LEFT: x is still 5.  RIGHT: x is 6. The method changed the caller’s own variable.', 'emerald')]):
+        d.note(10, 306 + o, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 # ------------------------------------------------------------ 2. ref Person: the caller's own arrow moves
 def d_rf2():
-    d = Diagram('rf2', 640, 366, 'Passing a reference variable with ref: the parameter q is an alias of the caller’s variable p, so q = new Person("Zed") builds a new Person object and rewrites p itself to point at it; the Asha object is left with no reference until a later garbage collection')
-    d.code_box(10, 6, 440, 62, [(0, 'var p = new Person("Asha");', ''), (0, 'Replace(ref p);', ''), (0, 'void Replace(ref Person q) { q = new Person("Zed"); }', '')], 'n', size=9, lh=15)
-    d.zone(10, 78, 210, 220, 'cyan', '📚 STACK')
-    d.zone(226, 78, 404, 220, 'emerald', '🏠 HEAP')
-    mf = card(d, 20, 108, 'Main frame', [('p = reference', 'f', '1-3')], 'cyan', w=190, st=1)
+    o = 30
+    d = Diagram('rf2', 640, 366 + o, 'Passing a reference variable with ref: the parameter q is an alias of the caller’s variable p, so q = new Person("Zed") builds a new Person object and rewrites p itself to point at it; the Asha object is left with no reference until a later garbage collection')
+    d.code_box(10, 6, 440, 92, [(0, 'var p = new Person("Asha");', ''), (0, 'Replace(ref p);', ''), (0, 'void Replace(ref Person q) {', ''), (0, '  q = new Person("Zed");', ''), (0, '}', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 6, 440, [0, 1, 3, 3, 4, None], size=9, lh=14)
+    d.zone(10, 78 + o, 210, 220, 'cyan', '📚 STACK')
+    d.zone(226, 78 + o, 404, 220, 'emerald', '🏠 HEAP')
+    mf = card(d, 20, 108 + o, 'Main frame', [('p = reference', 'f', '1-3')], 'cyan', w=190, st=1)
     cell(d, mf, 0, 'p = reference', 'amber', st='4-', hl=4)
-    qf = card(d, 20, 200, 'Replace frame', [('q = address of p', 'f')], 'violet', w=190, st='2-4', hl=2)
-    card(d, 244, 108, 'Person "Asha"', [('Name → "Asha"', 'f')], 'emerald', w=190, st='1-4')
-    card(d, 244, 108, 'Person "Asha"', [('Name → "Asha"', 'f')], 'rose', w=190, st='5-5', hl=5)
-    card(d, 244, 108, 'Person "Asha" (reclaimed)', [('freed by a later GC', 'f')], 'n', w=190, st='6-', hl=6, dash=True)
-    card(d, 244, 200, '(new object goes here)', [('…', 'f')], 'n', w=190, st='1-2', dash=True)
-    card(d, 244, 200, 'Person "Zed"', [('Name → "Zed"', 'f')], 'amber', w=190, st='3-4', hl=3)
-    card(d, 244, 200, 'Person "Zed"', [('Name → "Zed"', 'f')], 'emerald', w=190, st='5-')
+    qf = card(d, 20, 200 + o, 'Replace frame', [('q = address of p', 'f')], 'violet', w=190, st='2-4', hl=2)
+    card(d, 244, 108 + o, 'Person "Asha"', [('Name → "Asha"', 'f')], 'emerald', w=190, st='1-4')
+    card(d, 244, 108 + o, 'Person "Asha"', [('Name → "Asha"', 'f')], 'rose', w=190, st='5-5', hl=5)
+    card(d, 244, 108 + o, 'Person "Asha" (reclaimed)', [('freed by a later GC', 'f')], 'n', w=190, st='6-', hl=6, dash=True)
+    card(d, 244, 200 + o, '(new object goes here)', [('…', 'f')], 'n', w=190, st='1-2', dash=True)
+    card(d, 244, 200 + o, 'Person "Zed"', [('Name → "Zed"', 'f')], 'amber', w=190, st='3-4', hl=3)
+    card(d, 244, 200 + o, 'Person "Zed"', [('Name → "Zed"', 'f')], 'emerald', w=190, st='5-')
     py = _ry(mf, 0)
-    d.arrow([(202, py), (235, py), (235, 126), (244, 126)], 'cyan', 'ref', at=(235, 190), st='1-3', id='ap1')
-    d.arrow([(202, py), (235, py), (235, 229), (244, 229)], 'amber', 'ref', at=(235, 190), st='4-', id='ap2')
-    d.arrow([(140, 226), (140, 166)], 'violet', 'alias', at=(140, 196), st='2-4', id='aq')
-    d.note(452, 124, 168, 44, 'nothing points|here any more', 'rose', st='5-5', size=9)
-    d.note(452, 214, 168, 44, 'GC root: p|keeps Zed alive', 'cyan', st='5-', size=9)
-    d.text(428, 276, 'green = reachable · amber = new / changed · red = unreachable', 'n', 8.5)
-    d.text(428, 289, 'addresses illustrative; strings drawn inline (teaching picture)', 'n', 8)
-    for i, (t, c) in enumerate([('p (on the stack) leads to the Person object "Asha" on the heap.', 'cyan'),
-                                ('Replace(ref p): q is a slot holding the ADDRESS OF p. It is not a copy of p’s arrow (compare the previous page).', 'violet'),
+    d.arrow([(202, py), (235, py), (235, 126 + o), (244, 126 + o)], 'cyan', 'ref', at=(235, 190 + o), st='1-3', id='ap1')
+    d.arrow([(202, py), (235, py), (235, 229 + o), (244, 229 + o)], 'amber', 'ref', at=(235, 190 + o), st='4-', id='ap2')
+    d.arrow([(140, 226 + o), (140, 166 + o)], 'violet', 'alias', at=(140, 196 + o), st='2-4', id='aq')
+    d.note(452, 124 + o, 168, 44, 'nothing points|here any more', 'rose', st='5-5', size=9)
+    d.note(452, 214 + o, 168, 44, 'GC root: p|keeps Zed alive', 'cyan', st='5-', size=9)
+    d.text(428, 276 + o, 'green = reachable · amber = new / changed · red = unreachable', 'n', 8.5)
+    d.text(428, 289 + o, 'addresses illustrative; strings drawn inline (teaching picture)', 'n', 8)
+    for i, (t, c) in enumerate([('var p = new Person("Asha"): p (on the stack) leads to the Person object "Asha" on the heap.', 'cyan'),
+                                ('Replace(ref p) call: q is a slot holding the ADDRESS OF p. It is not a copy of p’s arrow (compare the previous page).', 'violet'),
                                 ('q = new Person("Zed") first builds a new Person on the heap. Nothing points at it yet.', 'amber'),
-                                ('The assignment goes through the alias and rewrites p itself: p’s arrow now leads to Zed. Asha still exists in memory.', 'amber'),
-                                ('Return: the Replace frame and the alias are popped; p still points at Zed.|Nothing reaches Asha any more: unreachable, not yet freed.', 'rose'),
-                                ('Later, a GC finds Asha is not marked and reclaims it. It runs when the runtime decides, not at return.', 'emerald')]):
-        d.note(10, 308, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+                                ('The same line then assigns through the alias and rewrites p itself: p’s arrow now leads to Zed. Asha still exists in memory.', 'amber'),
+                                ('} Return: the Replace frame and the alias are popped; p still points at Zed.|Nothing reaches Asha any more: unreachable, not yet freed.', 'rose'),
+                                ('Later (no code line runs), a GC finds Asha is not marked and reclaims it. It runs when the runtime decides, not at return.', 'emerald')]):
+        d.note(10, 308 + o, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 # ------------------------------------------------------------ 3. out: the callee writes into the caller's slot
 def d_rf3():
-    d = Diagram('rf3', 640, 370, 'An out parameter: the caller declares n with no value, the method receives an alias to n, must assign it before returning, and after the return n holds 42 with no result object allocated on the heap')
-    d.code_box(10, 6, 400, 52, [(0, 'void GetAnswer(out int value) { value = 42; }', ''), (0, 'GetAnswer(out int n);', '')], 'n', size=9, lh=15)
-    d.zone(10, 68, 300, 204, 'cyan', '📚 STACK')
-    d.zone(330, 68, 300, 204, 'emerald', '🏠 HEAP')
-    d.note(350, 140, 260, 60, 'nothing is allocated here:|the 42 goes straight into n', 'emerald', size=9.5)
-    mf = card(d, 22, 96, 'Main frame', [('n = (no value yet)', 'f', '1-2')], 'cyan', w=276, st=1)
+    o = 32
+    d = Diagram('rf3', 640, 370 + o, 'An out parameter: the caller declares n with no value, the method receives an alias to n, must assign it before returning, and after the return n holds 42 with no result object allocated on the heap')
+    d.code_box(10, 6, 400, 92, [(0, 'int n;', ''), (0, 'GetAnswer(out n);', ''), (0, 'void GetAnswer(out int value) {', ''), (0, '  value = 42;', ''), (0, '}', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 6, 400, [0, 1, 3, 4], size=9, lh=14)
+    d.zone(10, 68 + o, 300, 204, 'cyan', '📚 STACK')
+    d.zone(330, 68 + o, 300, 204, 'emerald', '🏠 HEAP')
+    d.note(350, 140 + o, 260, 60, 'nothing is allocated here:|the 42 goes straight into n', 'emerald', size=9.5)
+    mf = card(d, 22, 96 + o, 'Main frame', [('n = (no value yet)', 'f', '1-2')], 'cyan', w=276, st=1)
     cell(d, mf, 0, 'n = 42', 'amber', st='3-', hl=3)
-    gf = card(d, 22, 196, 'GetAnswer frame', [('value = address of n', 'f')], 'violet', w=276, st='2-3')
-    d.arrow([(160, 222), mf['B']], 'violet', 'alias', at=(160, 188), st='2-3', id='oa')
-    d.text(320, 290, 'amber = just written · teaching picture: the alias is an address held in the slot', 'n', 8)
-    for i, (t, c) in enumerate([('The caller declares n. Its slot exists in Main’s frame but holds no value yet. (Allowed for out, not for ref.)', 'cyan'),
-                                ('The call: a new frame with a slot holding the ADDRESS of n: an alias, like ref. Nothing is copied, nothing is on the heap.', 'violet'),
+    gf = card(d, 22, 196 + o, 'GetAnswer frame', [('value = address of n', 'f')], 'violet', w=276, st='2-3')
+    d.arrow([(160, 222 + o), mf['B']], 'violet', 'alias', at=(160, 188 + o), st='2-3', id='oa')
+    d.text(320, 290 + o, 'amber = just written · teaching picture: the alias is an address held in the slot', 'n', 8)
+    for i, (t, c) in enumerate([('int n; the caller declares n. Its slot exists in Main’s frame but holds no value yet. (Allowed for out, not for ref.)', 'cyan'),
+                                ('GetAnswer(out n) call: a new frame with a slot holding the ADDRESS of n: an alias, like ref. Nothing is copied, nothing is on the heap.', 'violet'),
                                 ('value = 42 writes through the alias, straight into n. The compiler REQUIRES the method to assign it before it returns.', 'amber'),
-                                ('Return: the frame is popped. n holds 42. No tuple or result object was allocated: that is why int.TryParse uses out.', 'emerald')]):
-        d.note(10, 304, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+                                ('} Return: the frame is popped. n holds 42. No tuple or result object was allocated: that is why int.TryParse uses out.', 'emerald')]):
+        d.note(10, 304 + o, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 # ------------------------------------------------------------ 4. in: read-only alias avoids copying a big struct

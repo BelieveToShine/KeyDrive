@@ -7,7 +7,7 @@ def _teach(d, x, y, lines=('teaching picture: addresses and field names are illu
     for i, t in enumerate(lines): d.text(x, y + i * 12, t, 'n', 8.5)
 
 def d_dl1():
-    d = Diagram('dl1', 640, 450, 'Creating a delegate from person.SayHi: the Person object (header, type pointer, a Name reference to a separate string object) and a new Delegate object (target = copy of the Person address, method = the code of SayHi stored once) are two heap objects; calling greet pushes a SayHi frame with this = the target; the Delegate keeps the Person reachable even when person is set to null')
+    d = Diagram('dl1', 640, 470, 'Creating a delegate from person.SayHi: the Person object (header, type pointer, a Name reference to a separate string object) and a new Delegate object (target = copy of the Person address, method = the code of SayHi stored once) are two heap objects; calling greet pushes a SayHi frame with this = the target; the Delegate keeps the Person reachable even when person is set to null')
     d.zone(10, 24, 120, 320, 'cyan', '📚 STACK')
     d.zone(140, 24, 270, 320, 'emerald', '🏠 HEAP')
     d.zone(420, 24, 210, 320, 'violet', '🧬 TYPE DATA & CODE')
@@ -37,11 +37,12 @@ def d_dl1():
     fr = card(d, 14, 150, 'SayHi frame', [('this = 0x…A1', 'f')], 'cyan', w=112, st='6-6', hl=6)
     d.arrow([(118, 187), (134, 187), (134, 135), (150, 135)], 'cyan', st='6-6', id='th')
     d.emoji(278, 66, '✅', 14, st='7-')
-    d.code_box(10, 356, 300, 62, [(0, 'var person = new Person("Asha");', ''), (0, 'Action greet = person.SayHi;', ''), (0, 'greet();    person = null;', '')], 'n', size=8.8, lh=15)
-    _teach(d, 160, 432, ('teaching picture: addresses and', 'field names are illustrative'))
+    d.code_box(10, 356, 300, 82, [(0, 'var person = new Person("Asha");', ''), (0, 'Action greet = person.SayHi;', ''), (0, 'greet();', ''), (0, 'person = null;', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 356, 300, [0, 0, 1, 1, 1, 2, 3], size=8.8, lh=15)
+    _teach(d, 20, 454, ('teaching picture: addresses and', 'field names are illustrative'))
     for i, (t, c) in enumerate([
             ('new Person("Asha"): the Person AND its name|string are two heap objects; Name is a reference.|Type ptr → the one shared MethodTable.', 'emerald'),
-            ('person (stack) = a copy of the Person’s address.|person.SayHi is only EVALUATED, not called:|its code is stored once with the type.', 'cyan'),
+            ('person (stack) = a copy of the Person’s address.|SayHi’s code is stored once with the type,|not once per object.', 'cyan'),
             ('A new Delegate object on the heap:|two fields, still empty.', 'amber'),
             ('Filled: target = copy of the Person’s address|(the Person is NOT copied); method = where|SayHi’s code is.', 'amber'),
             ('greet (stack) = address of the Delegate.|Two objects now: the Person and the Delegate.', 'cyan'),
@@ -51,7 +52,7 @@ def d_dl1():
     return d
 
 def d_dl2():
-    d = Diagram('dl2', 640, 476, 'A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2')
+    d = Diagram('dl2', 640, 500, 'A returned lambda that captures count: while MakeCounter runs, count looks like a stack local; the compiler stores it in a heap Closure object instead, creates a Delegate object (target = the closure, method = the lambda code), the return copies the Delegate address into inc and pops the MakeCounter frame, and each inc() call runs the lambda in a frame with this = the closure and then pops it, raising count to 1 then 2')
     d.zone(10, 24, 140, 320, 'cyan', '📚 STACK')
     d.zone(160, 24, 270, 320, 'emerald', '🏠 HEAP')
     d.zone(440, 24, 190, 320, 'amber', '📜 CODE')
@@ -72,8 +73,9 @@ def d_dl2():
     d.arrow([(352, 261), (380, 261), (380, 170), (265, 170), (265, 136)], 'amber', st='3-')
     d.arrow([(352, 237), (400, 237), (400, 309), (450, 309)], 'amber', st='3-')
     d.arrow([(134, 241), (170, 241)], 'cyan', st='4-', id='a1')
-    d.code_box(10, 356, 300, 76, [(0, 'var inc = MakeCounter();', ''), (0, 'inc(); inc();', ''), (0, '// MakeCounter() {', ''), (0, '//   int count = 0; return () => count++; }', '')], 'n', size=8.8, lh=15)
-    _teach(d, 160, 452, ('teaching picture: addresses, closure/lambda', 'internals simplified'))
+    d.code_box(10, 356, 300, 112, [(0, 'var inc = MakeCounter();', ''), (0, 'inc();', ''), (0, 'inc();', ''), (0, '// MakeCounter() {', ''), (0, '//   int count = 0;', ''), (0, '//   return () => count++; }', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 356, 300, [4, 4, 5, 0, 1, 1, 2, 2], size=8.8, lh=15)
+    _teach(d, 20, 482, ('teaching picture: addresses, closure/lambda', 'internals simplified'))
     for i, (t, c) in enumerate([
             ('MakeCounter() runs: its frame holds a plain local|count = 0. Main’s inc is declared, not assigned yet.', 'cyan'),
             ('The lambda uses count, so the compiler keeps it in a|heap Closure object. The frame keeps only a hidden|reference to it. (compiler rewrite)', 'amber'),
@@ -108,9 +110,10 @@ def d_dl3():
         d.zone(x, y, w, h, 'rose', None, st='5-5')
     d.text(285, 180, 'freed: this memory can be reused', 'emerald', 10, st=6)
     d.emoji(285, 205, '✅', 20, st=6)
-    d.code_box(440, 160, 190, 92, [(0, 'static Action keep;', ''), (0, 'void Run(Page page) {', ''), (0, '  var inc = MakeCounter(page);', ''), (0, '  keep = inc;', ''), (0, '}   // Run returns', '')], 'n', size=8.5, lh=15)
-    d.note(440, 262, 190, 48, '✔ = marked live by the GC|rose dashed = unreachable,|not freed yet', 'rose', size=8.5)
-    _teach(d, 535, 326, ('teaching picture: addresses,', 'field names illustrative'))
+    d.code_box(440, 160, 190, 112, [(0, 'static Action keep;', ''), (0, 'void Run(Page page) {', ''), (0, '  var inc = MakeCounter(page);', ''), (0, '  keep = inc;', ''), (0, '}   // Run returns', ''), (0, 'keep = null;   // later', '')], 'n', size=8.5, lh=15)
+    run_line(d, 440, 160, 190, [2, 3, 4, None, 5, None], size=8.5, lh=15)
+    d.note(440, 280, 190, 42, '✔ = marked live by the GC|rose dashed = unreachable,|not freed yet', 'rose', size=8.5)
+    _teach(d, 535, 336, ('teaching picture: addresses,', 'field names illustrative'))
     for i, (t, c) in enumerate([
             ('Run() holds inc → Delegate → Closure → Page (built by|MakeCounter(page); count already reached 2). The static|keep is still null.', 'cyan'),
             ('keep = inc;  the static now holds a SECOND copy of|the Delegate’s address. A static is a GC root.', 'rose'),

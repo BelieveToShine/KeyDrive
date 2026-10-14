@@ -8,7 +8,7 @@ def _marker(d, bx, by, line, steps, lh=14):
 
 # ------------------------------------------------------------ diagram 1: heap array vs stackalloc, and who cleans up
 def d_sp1():
-    d = Diagram('sp1', 640, 330, 'A method A creates new byte[4]: a frame with a local a appears, the array object (header, type pointer, length, data) is allocated on the heap and a references it; when A returns the frame is popped and the array is unreachable garbage until a GC reclaims it. A method B uses stackalloc: its 4 bytes sit inside its own stack frame with no header, a Span points to them, and when B returns the frame and buffer vanish without any heap object or GC work')
+    d = Diagram('sp1', 640, 386, 'A method A creates new byte[4]: a frame with a local a appears, the array object (header, type pointer, length, data) is allocated on the heap and a references it; when A returns the frame is popped and the array is unreachable garbage until a GC reclaims it. A method B uses stackalloc: its 4 bytes sit inside its own stack frame with no header, a Span points to them, and when B returns the frame and buffer vanish without any heap object or GC work')
     d.zone(10, 8, 240, 200, 'cyan', '📚 STACK')
     d.zone(266, 8, 364, 200, 'emerald', '🏠 HEAP')
     # --- A(): frame + local a
@@ -30,8 +30,8 @@ def d_sp1():
     d.text(116, 134, 'no header, no type pointer: not an object', 'cyan', size=8.5, st='5-5')
     d.text(130, 78, '(frame popped: buffer gone with it)', 'n', size=9, st='6-6')
     # --- code + step marker
-    d.code_box(10, 266, 620, 52, [(0, 'void A() { var a = new byte[4]; }', ''), (0, 'void B() { Span<byte> s = stackalloc byte[4]; }', '')], 'n', size=9, lh=14)
-    _marker(d, 10, 266, 0, '1-4'); _marker(d, 10, 266, 1, '5-6')
+    d.code_box(10, 266, 620, 106, [(0, 'void A() {', ''), (10, 'var a = new byte[4];', ''), (0, '}', ''), (0, 'void B() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (0, '}', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 266, 620, [0, 1, 2, None, 4, 5], size=9, lh=14)
     for i, (t, c) in enumerate([
             ('A() is called: its frame appears on the stack with the local a|a has no value yet', 'cyan'),
             ('new byte[4] allocates an array OBJECT on the heap: header, type pointer, length, data|a holds a reference to it (4 bytes: teaching picture)', 'emerald'),
@@ -44,7 +44,7 @@ def d_sp1():
 
 # ------------------------------------------------------------ diagram 2: ArrayPool rent / return / rent again
 def d_sp2():
-    d = Diagram('sp2', 640, 372, 'An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation')
+    d = Diagram('sp2', 640, 386, 'An idle array sits on the shelf of the pool object; Rent hands out that existing array and the pool shelf is empty while a stack reference points to it; the caller fills it with data; Return puts it back on the shelf alive with its contents left; a later Rent hands out the same array again with no new allocation')
     d.zone(10, 8, 126, 244, 'violet', '📌 STATIC')
     d.zone(146, 8, 250, 244, 'emerald', '🏠 HEAP')
     d.zone(402, 8, 228, 244, 'cyan', '📚 STACK')
@@ -71,8 +71,8 @@ def d_sp2():
         f = card(d, 410, 136, title, [('rented = reference', 'f')], 'cyan', w=212, st=st, hl=2 if st == '2-3' else 5)
         fy = f['rows'][0]['y']
         d.arrow([f['rows'][0]['l'], (400, fy), (400, a['R'][1]), a['R']], 'cyan', st=st)
-    d.code_box(10, 312, 620, 52, [(0, 'var rented = ArrayPool<byte>.Shared.Rent(100);', ''), (0, 'try { Fill(rented); } finally { ArrayPool<byte>.Shared.Return(rented); }', '')], 'n', size=9, lh=14)
-    _marker(d, 10, 312, 0, '2-2'); _marker(d, 10, 312, 0, '5-5'); _marker(d, 10, 312, 1, '3-4')
+    d.code_box(10, 312, 620, 66, [(0, 'var rented = ArrayPool<byte>.Shared.Rent(100);', ''), (0, 'try { Fill(rented); }', ''), (0, 'finally { ArrayPool<byte>.Shared.Return(rented); }', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 312, 620, [None, 0, 1, 2, 0], size=9, lh=14)
     for i, (t, c) in enumerate([
             ('An earlier caller used Return(): the array sits idle on the pool’s shelf|the static Shared reaches the pool, so the GC keeps the array (teaching picture)', 'amber'),
             ('Rent(100): the pool lends the array that ALREADY exists; no new object|it can be longer than you asked (128 ≥ 100); the shelf slot is empty now', 'cyan'),
@@ -122,8 +122,7 @@ def d_sp3():
     d.arrow([(sp['rows'][0]['r'][0], py), (343, py), (343, 152)], 'violet', st='6-6')
     # code + marker
     d.code_box(10, 368, 620, 82, [(0, 'string s = "Hello!";', ''), (0, 'string copy = s.Substring(1, 3);', ''), (0, 'copy = null;', ''), (0, 'ReadOnlySpan<char> span = s.AsSpan(1, 3);', '')], 'n', size=9, lh=14)
-    for line, steps in [(0, '1-1'), (1, '2-3'), (2, '4-5'), (3, '6-6')]:
-        _marker(d, 10, 368, line, steps)
+    run_line(d, 10, 368, 620, [0, 1, 1, 2, None, 3], size=9, lh=14)
     for i, (t, c) in enumerate([
             ('A string is a heap object: header, type pointer, length, then the UTF-16 characters|s is a stack reference to it (layout: teaching picture)', 'emerald'),
             ('Substring(1, 3) allocates a SECOND string object on the heap, sized for 3 characters|the original is untouched', 'rose'),
@@ -144,7 +143,7 @@ def d_sp4():
     rows = [('i = 9999 …', 'f'), ('block 1: 256 bytes', 'f'), ('block 2: 256 bytes', 'f'), ('… thousands more blocks …', 'f'), ('no room left in the stack', 'f')]
     g = card(d, 18, 34, 'frame of Loop() keeps growing', rows, 'rose', w=296, st='4-4', hl=4)
     d.code_box(334, 8, 296, 100, [(0, 'void Loop(int n) {', ''), (10, 'for (int i = 0; i < n; i++) {', ''), (20, 'Span<byte> b = stackalloc byte[256];', ''), (10, '}', ''), (0, '}', '')], 'n', size=9, lh=14)
-    d.text(342, 8 + 22 + 2 * 14, '▶', 'amber', size=9, anchor='middle', st='1-4')
+    run_line(d, 334, 8, 296, [2, 2, 2, 2], size=9, lh=14)
     d.box(334, 124, 296, 60, [('💥 stack overflow', 't'), ('the process crashes', 's')], 'rose', st='4-4', hl=4)
     for i, (t, c) in enumerate([
             ('Iteration 0: stackalloc takes 256 bytes from Loop’s own frame|(sizes are a teaching picture)', 'cyan'),
@@ -177,9 +176,7 @@ def d_sp5():
     d.box(442, 70, 188, 70, [('✘ compiler refuses', 't'), ('the return statement', 's'), ('(ref-safety rules)', 's')], 'rose', st='4-4', hl=4)
     d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // imagine this were allowed', ''), (0, '}', '')], 'n', size=9, lh=14, st='1-3')
     d.code_box(10, 258, 620, 82, [(0, 'Span<byte> Bad() {', ''), (10, 'Span<byte> s = stackalloc byte[4];', ''), (10, 'return s;      // ✘ error: does not compile', ''), (0, '}', '')], 'n', size=9, lh=14, st='4-4')
-    for line, steps in [(0, '1-1'), (2, '2-4')]:
-        _marker(d, 10, 258, line, steps)
-    _marker(d, 10, 258, 1, '1-1')
+    run_line(d, 10, 258, 620, [1, 2, 3, 2], size=9, lh=14)
     for i, (t, c) in enumerate([
             ('Main calls Bad(): the 4 bytes sit in Bad’s frame; s = pointer + length|r in Main has no value yet', 'cyan'),
             ('Imagine return s compiled: the Span (pointer + length) is copied into r|r would point into Bad’s frame (hypothetical: it never compiles)', 'amber'),

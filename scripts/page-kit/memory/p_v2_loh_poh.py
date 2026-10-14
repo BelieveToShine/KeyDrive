@@ -11,8 +11,7 @@ def d_lo1():
     d.zone(358, 8, 272, 430, 'amber', '🐘 LARGE OBJECT HEAP (with gen 2)')
     # --- code + step marker
     d.code_box(10, 164, 190, 100, [(0, 'var small = new byte[1_000];', ''), (0, 'var big = new byte[100_000];', ''), (0, 'var other = new byte[90_000];', ''), (0, 'big = null;', ''), (0, 'var more = new byte[150_000];', '')], 'n', size=9, lh=14)
-    for line, steps in [(0, '1-1'), (1, '2-2'), (2, '3-3'), (3, '4-5'), (4, '6-6')]:
-        d.text(18, 164 + 22 + line * 14, '▶', 'amber', size=9, anchor='middle', st=steps)
+    run_line(d, 10, 164, 190, [0, 1, 2, 3, None, 4], size=9, lh=14)
     # --- small object heap: one array object
     sm = card(d, 18, 34, 'byte[1_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 1,000 data bytes', 'f')], 'emerald', w=174, st='1-')
     # --- LOH: three slots in address order (teaching picture)
@@ -141,6 +140,7 @@ def d_lo3():
             ('The small heap compacts: Y slides up, the free space becomes one block|the POH buffer stays where it is, so the native address is still valid', 'violet')]):
         d.note(10, 270, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9)
     d.code_box(10, 328, 620, 46, [(0, 'byte[] buf = GC.AllocateArray<byte>(4096, pinned: true);', ''), (0, '// POH: the .NET 5+ API for arrays that must not move', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 328, 620, [None, 0, None, None, None], size=9, lh=14)
     return d
 
 def build_loh_poh():

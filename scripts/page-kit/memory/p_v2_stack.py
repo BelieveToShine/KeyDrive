@@ -35,6 +35,8 @@ def d_stk1():
 def d_stk2():
     d = Diagram('sk2', 640, 356, 'Why the stack runs out: every recursive call pushes another frame into a fixed-size region, the next push would cross the limit and the process ends, while the loop version keeps one frame and changes n in place')
     d.code_box(10, 8, 300, 78, [(0, '// recursion: a new frame per call', ''), (0, 'int Forever(int n) => 1 + Forever(n + 1);', ''), (0, '// loop: one frame, n changes in place', ''), (0, 'for (int n = 0; ; n++) { }', '')], 'n', size=8.5, lh=14)
+    run_line(d, 10, 8, 300, [1, 1, 1, 1, 1, 1], size=8.5, lh=14)
+    run_line(d, 10, 8, 300, [3, 3, 3, 3, 3, None], size=8.5, lh=14)
     d.zone(10, 96, 300, 170, 'emerald', '🔁 The loop: ONE frame, ever')
     lp = card(d, 60, 130, 'Loop frame', [('n = 0', 'f', '1-1')], 'emerald', w=200)
     for st, t in (('2-2', 'n = 1'), ('3-3', 'n = 6'), ('4-4', 'n = 10'), ('5-6', 'n = 11')):
@@ -61,6 +63,7 @@ def d_stk2():
 def d_stk3():
     d = Diagram('sk3', 640, 300, 'A reference local in a frame holds only a reference: the Person object with its header and type pointer sits on the heap; when the frame is popped the object stays, unreachable, until a later garbage collection reclaims it')
     d.code_box(10, 8, 300, 78, [(0, 'void Run() {', ''), (0, '    int count = 3;', ''), (0, '    var p = new Person();', ''), (0, '}', '')], 'n', size=9, lh=15)
+    run_line(d, 10, 8, 300, [1, 2, 3, None], size=9, lh=15)
     d.zone(10, 96, 200, 190, 'cyan', '📚 STACK')
     d.zone(222, 96, 408, 190, 'emerald', '🏠 HEAP and type data')
     fr = card(d, 22, 126, 'Run frame', [('count = 3', 'f', '1-2'), ('p = null', 'f', '1-1')], 'cyan', w=176, st='1-2')

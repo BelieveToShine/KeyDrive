@@ -3,8 +3,10 @@ from p_common import *
 # ================================================================= ABSTRACT / BASE (v2, memory level)
 def d_ab1():
     d = Diagram('ab1', 640, 472, 'new Payment on the abstract class is a compile error and allocates nothing; new CardPayment allocates ONE heap object with a header, a type pointer to the CardPayment MethodTable, the base field Amount and the derived field CardEnd that refers to a separate string object; the base constructor sets Amount to 100; the stack variable p holds a reference to the whole object; when p is gone the object and its string become unreachable and a later GC frees them while the type data stays')
-    d.code_box(10, 8, 400, 106, [(0, 'abstract class Payment { public decimal Amount;', ''), (0, '  protected Payment() { Amount = 100; }', ''), (0, '  public abstract void Pay(); }', ''),
-                                  (0, 'class CardPayment : Payment { string CardEnd = "1234";', ''), (0, '  public override void Pay() { } }', ''), (0, 'Payment p = new CardPayment();', 'k')], 'n', size=8.8, lh=13)
+    d.code_box(10, 8, 400, 114, [(0, 'abstract class Payment { public decimal Amount;', ''), (0, '  protected Payment() { Amount = 100; }', ''), (0, '  public abstract void Pay(); }', ''),
+                                  (0, 'class CardPayment : Payment { string CardEnd = "1234";', ''), (0, '  public override void Pay() { } }', ''),
+                                  (0, 'var x = new Payment();   // abstract', ''), (0, 'Payment p = new CardPayment();', 'k')], 'n', size=8.8, lh=13)
+    run_line(d, 10, 8, 400, [5, 6, 3, 1, 6], size=8.8, lh=13)
     d.box(424, 8, 206, 50, [('new Payment()', 'm'), ('❌ compile error', 't')], 'rose', st='1-1', hl=1)
     d.box(424, 8, 206, 50, [('new CardPayment()', 'm'), ('✅ allowed', 't')], 'emerald', st='2-', hl=2)
     d.text(527, 74, 'red = unreachable (nothing points to it)', 'rose', 8.5, st='6-6')
@@ -50,7 +52,8 @@ def d_ab1():
 
 def d_ab2():
     d = Diagram('ab2', 640, 490, 'Two variables typed Payment refer to a CardPayment object and a UpiPayment object; at build time the compiler records only that Pay is virtual slot 0; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; p2.Pay() uses the same slot number but ends in UpiPayment.Pay')
-    d.code_box(10, 8, 330, 70, [(0, 'Payment p1 = new CardPayment();', ''), (0, 'Payment p2 = new UpiPayment();', ''), (0, 'p1.Pay();    // which Pay runs?', 'k')], 'n', size=8.8, lh=14)
+    d.code_box(10, 8, 330, 78, [(0, 'Payment p1 = new CardPayment();', ''), (0, 'Payment p2 = new UpiPayment();', ''), (0, 'p1.Pay();    // which Pay runs?', 'k'), (0, 'p2.Pay();', 'k')], 'n', size=8.8, lh=14)
+    run_line(d, 10, 8, 330, [1, None, 2, 2, 2, 2, 3], size=8.8, lh=14)
     d.note(350, 12, 280, 54, 'compiler records only:|"Pay = virtual slot 0" (a constant)', 'amber', st='3-3', size=9)
     d.note(350, 12, 280, 54, 'p2.Pay(): same slot 0,|but p2’s OWN object picks the table', 'emerald', st='7-7', size=9)
     Y = 90

@@ -4,6 +4,7 @@ from p_common import *
 def d_bx1():
     d = Diagram('bx1', 640, 340, 'Boxing at memory level: n holds 42 in its stack slot; object o = n allocates a new heap object with a header, a type pointer to the Int32 type data and a value slot, copies 42 into it and gives o a reference; n = 99 changes only n; (int)o checks the type pointer and copies 42 into m; o = null leaves the box unreachable until the GC frees it')
     d.code_box(10, 8, 250, 92, [(0, 'int n = 42;', ''), (0, 'object o = n;', ''), (0, 'n = 99;', ''), (0, 'int m = (int)o;', ''), (0, 'o = null;', '')], 'n', size=9.5, lh=14)
+    run_line(d, 10, 8, 250, [0, 1, 1, 1, 2, 3, 4], size=9.5, lh=14)
     notes = [('int n = 42: the number sits in the stack slot itself.|No header, no type pointer.', 'cyan'),
              ('object o = n: a NEW object is allocated on the heap:|header + type pointer (to Int32 type data) + room for an int.', 'amber'),
              ('...then 42 is COPIED into it. n still holds its own 42:|two separate copies.', 'amber'),
@@ -49,7 +50,8 @@ def d_bx1():
 
 def d_bx2():
     d = Diagram('bx2', 640, 545, 'Three numbers in two layouts: an ArrayList keeps an object array whose slots are references to three separate boxed heap objects (each with a header and type pointer), while a List of int keeps one int array holding the numbers side by side, so no extra objects; when the lists are dropped the boxes become garbage')
-    d.code_box(10, 8, 262, 86, [(0, 'ArrayList a = new ArrayList();', ''), (0, 'List<int> b = new List<int>();', ''), (0, 'a.Add(1); a.Add(2); a.Add(3);', ''), (0, 'b.Add(1); b.Add(2); b.Add(3);', '')], 'n', size=9, lh=15)
+    d.code_box(10, 4, 262, 98, [(0, 'ArrayList a = new ArrayList();', ''), (0, 'List<int> b = new List<int>();', ''), (0, 'a.Add(1); b.Add(1);', ''), (0, 'a.Add(2); b.Add(2);', ''), (0, 'a.Add(3); b.Add(3);', ''), (0, 'a = null; b = null;', '')], 'n', size=9, lh=13)
+    run_line(d, 10, 4, 262, [1, 2, 3, 4, None, 5], size=9, lh=13)
     notes = [('Both lists own an array with room for 3 (empty).|The list objects themselves are left out here', 'cyan'),
              ('Add(1): left makes a NEW box and stores its|reference; right writes 1 straight into slot 0', 'amber'),
              ('Add(2): another box on the left;|just a number written on the right', 'amber'),

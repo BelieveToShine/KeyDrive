@@ -45,44 +45,54 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Returning an int: Main has a slot t, calling Total pushes a frame with its own slot sum = 42, the return copies 42 into t while sum keeps its own 42, then the Total frame is popped and t stays; the heap is untouched">
+<div class="st-stage"><svg viewBox="0 0 640 444" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Returning an int: Main has a slot t, calling Total pushes a frame with its own slot sum = 42, the return copies 42 into t while sum keeps its own 42, then the Total frame is popped and t stays; the heap is untouched">
 <defs><marker id="rv1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rv1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rv1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="70" width="310" height="300" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="340" y="70" width="290" height="300" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="354" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><rect class="zone" x="22" y="100" width="286" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="36" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
-<g class="st" data-s="2-4"><rect class="zone" x="22" y="220" width="286" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-4"><text class="zone-title" x="36" y="239" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Total frame</text></g>
-<g class="st" data-s="4-4"><path d="M165,246 L165,148" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rv1A)"/></g>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int Total() { int sum = 42; return sum; }</text>
-<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int t = Total();</text>
+<rect class="zone" x="10" y="94" width="310" height="300" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="113" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="340" y="94" width="290" height="300" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="354" y="113" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="22" y="124" width="286" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="36" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
+<g class="st" data-s="2-4"><rect class="zone" x="22" y="244" width="286" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><text class="zone-title" x="36" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Total frame</text></g>
+<g class="st" data-s="4-4"><path d="M165,270 L165,172" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rv1A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="82" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int Total() {</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  int sum = 42;</text>
+<text x="24" y="60" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">  return sum; }</text>
+<text x="24" y="75" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int t = Total();</text>
+<g class="st" data-s="1-2"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-2"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="35" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="50" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="65" width="322" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <text class="free" x="630" y="20" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture · addresses illustrative</text>
-<text class="free" x="485" y="224" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">empty: no allocation</text>
-<g class="st" data-s="1-3"><rect class="bx" x="30" y="126" width="270" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="165" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">t : int = (not set yet)</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="30" y="126" width="270" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="165" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">t : int = 42</text></g>
-<g class="st" data-s="5-5"><rect class="bx" x="30" y="126" width="270" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5"><text x="165" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">t : int = 42</text></g>
-<g class="st" data-s="2-2"><rect class="bx" x="30" y="246" width="270" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2"><text x="165" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sum : int = (not set yet)</text></g>
-<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="30" y="246" width="270" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="3-4" data-hl="3"><text x="165" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sum : int = 42</text></g>
-<g class="st" data-s="5-"><text class="free" x="165" y="268" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">frame popped, slot gone</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="380" width="620" height="34" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="399.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Main is about to call Total: t is an empty int slot</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="380" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="399.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: Total gets its OWN frame with its own slot sum</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="380" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="399.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">sum = 42 is stored inside Total’s frame</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="380" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="399.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">return sum: 42 is COPIED into t — sum still holds its own 42</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="380" width="620" height="34" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="399.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Total’s frame is popped; t keeps 42. The heap never changed</text></g>
-<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="129.5" y="185" width="71" height="18" rx="9"/><text x="165" y="197.5" text-anchor="middle" font-size="9" font-style="italic">copy of 42</text></g></g>
+<text class="free" x="485" y="248" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">empty: no allocation</text>
+<g class="st" data-s="1-3"><rect class="bx" x="30" y="150" width="270" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="165" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">t : int = (not set yet)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="30" y="150" width="270" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="165" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">t : int = 42</text></g>
+<g class="st" data-s="5-5"><rect class="bx" x="30" y="150" width="270" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5"><text x="165" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">t : int = 42</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="30" y="270" width="270" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="165" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sum : int = (not set yet)</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="30" y="270" width="270" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="165" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">sum : int = 42</text></g>
+<g class="st" data-s="5-"><text class="free" x="165" y="292" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">frame popped, slot gone</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="404" width="620" height="34" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="423.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Main is about to call Total: t is an empty int slot</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="404" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="423.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Call: Total gets its OWN frame with its own slot sum</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="404" width="620" height="34" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="423.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">sum = 42 is stored inside Total’s frame</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="404" width="620" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="423.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">return sum: 42 is COPIED into t — sum still holds its own 42</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="404" width="620" height="34" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="423.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Total’s frame is popped; t keeps 42. The heap never changed</text></g>
+<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="129.5" y="209" width="71" height="18" rx="9"/><text x="165" y="221.5" text-anchor="middle" font-size="9" font-style="italic">copy of 42</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -100,81 +110,94 @@
   <section class="kd-section ">
     <div class="sec-label see">🎟️ Returning an object: the frame goes, the object stays</div>
 <figure class="diagram-card kd-story" data-steps="8">
-<div class="st-stage"><svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="Returning an object: Make allocates a Person object on the heap whose Name field is a reference to a separate string object, and its local p points to it; the return copies the address into who so two variables point to one object; Make’s frame is popped and the Person survives; later who is set to null and the Person and its string become unreachable until a GC reclaims them">
+<div class="st-stage"><svg viewBox="0 0 640 500" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="Returning an object: Make allocates a Person object on the heap whose Name field is a reference to a separate string object, and its local p points to it; the return copies the address into who so two variables point to one object; Make’s frame is popped and the Person survives; later who is set to null and the Person and its string become unreachable until a GC reclaims them">
 <defs><marker id="rv2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rv2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="rv2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="66" width="150" height="316" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="170" y="66" width="460" height="316" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="184" y="85" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><rect class="zone" x="18" y="90" width="134" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-"><text class="zone-title" x="32" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
-<g class="st" data-s="2-5"><rect class="zone" x="18" y="230" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-5"><text class="zone-title" x="32" y="249" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Make frame</text></g>
-<g class="st" data-s="3-6"><rect class="zone" x="290" y="140" width="200" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="3-6"><text class="zone-title" x="304" y="159" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person @ 0x…F1</text></g>
-<g class="st" data-s="7-7"><rect class="zone" x="290" y="140" width="200" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="7-7"><text class="zone-title" x="304" y="159" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person — unreachable</text></g>
-<g class="st" data-s="3-6"><rect class="zone" x="290" y="260" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="3-6"><text class="zone-title" x="304" y="279" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string "Asha"</text></g>
-<g class="st" data-s="7-7"><rect class="zone" x="290" y="260" width="200" height="58" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="7-7"><text class="zone-title" x="304" y="279" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string — unreachable</text></g>
-<g class="st" data-s="3-6"><path d="M482,201 L512,201 L512,289 L490,289" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
-<g class="st" data-s="5-6"><path id="rv2-wa" d="M144,127 L200,127 L200,164.6 L290,164.6" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
-<g class="st" data-s="4-5"><path id="rv2-pa" d="M144,267 L232,267 L232,199.04 L290,199.04" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
-<g class="st" data-s="5-5"><path d="M118,256 L118,138" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
-<rect class="bx" x="10" y="8" width="400" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Person Make() { var p = new Person("Asha"); return p; }</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var who = Make();</text>
+<rect class="zone" x="10" y="106" width="150" height="316" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="170" y="106" width="460" height="316" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="184" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="18" y="130" width="134" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="32" y="149" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
+<g class="st" data-s="2-5"><rect class="zone" x="18" y="270" width="134" height="58" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-5"><text class="zone-title" x="32" y="289" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Make frame</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="290" y="180" width="200" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="304" y="199" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Person @ 0x…F1</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="290" y="180" width="200" height="82" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="304" y="199" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">Person — unreachable</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="290" y="300" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="304" y="319" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">string "Asha"</text></g>
+<g class="st" data-s="7-7"><rect class="zone" x="290" y="300" width="200" height="58" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-7"><text class="zone-title" x="304" y="319" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">string — unreachable</text></g>
+<g class="st" data-s="3-6"><path d="M482,241 L512,241 L512,329 L490,329" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
+<g class="st" data-s="5-6"><path id="rv2-wa" d="M144,167 L200,167 L200,204.6 L290,204.6" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
+<g class="st" data-s="4-5"><path id="rv2-pa" d="M144,307 L232,307 L232,239.04 L290,239.04" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
+<g class="st" data-s="5-5"><path d="M118,296 L118,178" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#rv2A)"/></g>
+<rect class="bx" x="10" y="8" width="400" height="97" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Person Make() {</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  var p = new Person("Asha");</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  return p; }</text>
+<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var who = Make();</text>
+<text x="24" y="90" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">who = null;</text>
+<g class="st" data-s="1-2"><rect class="cur" x="14" y="65.2" width="392" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-2"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-4"><rect class="cur" x="14" y="35.2" width="392" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-4"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="50.2" width="392" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="65.2" width="392" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="74.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="7-7"><rect class="cur" x="14" y="80.2" width="392" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="7-7"><text class="cur" x="16" y="89.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
 <text class="free" x="630" y="20" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture · addresses illustrative</text>
-<g class="st" data-s="1-4"><rect class="bx" x="26" y="116" width="118" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-4"><text x="85" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">who = null</text></g>
-<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="116" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="5-5" data-hl="5"><text x="85" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">who = 0x…F1</text></g>
-<g class="st" data-s="6-6"><rect class="bx" x="26" y="116" width="118" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="6-6"><text x="85" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">who = 0x…F1</text></g>
-<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="26" y="116" width="118" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="7-" data-hl="7"><text x="85" y="129.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">who = null</text></g>
-<g class="st" data-s="2-3"><rect class="bx" x="26" y="256" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3"><text x="85" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">p = (unset)</text></g>
-<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="26" y="256" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="4-5" data-hl="4"><text x="85" y="269.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">p = 0x…F1</text></g>
-<g class="st" data-s="3-6"><rect class="bx" x="298" y="166" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6"><text x="390" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 7</text></g>
-<g class="st" data-s="3-6"><rect class="bx" x="298" y="190" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6"><text x="390" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = ref</text></g>
-<g class="st" data-s="7-7"><rect class="bx" x="298" y="166" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="7-7"><text x="390" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Id = 7</text></g>
-<g class="st" data-s="7-7"><rect class="bx" x="298" y="190" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="7-7"><text x="390" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name = ref</text></g>
-<g class="st" data-s="3-6"><rect class="bx" x="298" y="286" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-6"><text x="390" y="299.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Asha" (UTF-16 chars)</text></g>
-<g class="st" data-s="7-7"><rect class="bx" x="298" y="286" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="7-7"><text x="390" y="299.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"Asha" (UTF-16 chars)</text></g>
-<g class="st" data-s="6-"><text class="free" x="85" y="262" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">frame popped</text></g>
-<g class="st" data-s="7-7"><text class="free" x="400" y="352" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">green = still reachable · red dashed = unreachable (nothing points to it)</text></g>
-<g class="st" data-s="8-8"><text class="free" x="400" y="352" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">space reclaimed by a later GC</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Main has a slot who for the result. It holds null: no object yet</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Calling Make pushes a frame with its own slot p (not set yet)</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="421" text-anchor="middle" font-size="9.5" fill="#6ee7b7">new Person: an object on the HEAP, whose Name field is a reference</text></g>
-<g class="st" data-s="3-3"><text x="320" y="434.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">to a SEPARATE string object</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">p holds the address of the Person: it points at the object</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">return p copies the ADDRESS into who. Two slots, ONE object: the object is not copied</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Make’s frame is popped: p is gone. The Person stays: who still points to it</text></g>
-<g class="st" data-s="7-7"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="7-7"><text x="320" y="421" text-anchor="middle" font-size="9.5" fill="#fda4af">Later who = null: nothing points to the Person or its string any more:</text></g>
-<g class="st" data-s="7-7"><text x="320" y="434.5" text-anchor="middle" font-size="9.5" fill="#fda4af">unreachable (but their memory is NOT freed yet)</text></g>
-<g class="st" data-s="8-8"><rect class="bx note" x="10" y="392" width="620" height="66" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="8-8"><text x="320" y="427.75" text-anchor="middle" font-size="9.5" fill="#fda4af">A later GC finds the unreachable objects and reclaims their space</text></g>
-<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="492.5" y="223" width="39" height="18" rx="9"/><text x="512" y="235.5" text-anchor="middle" font-size="9" font-style="italic">Name</text></g></g>
-<g class="st" data-s="5-6"><g class="arrow-pill"><rect x="228" y="147.6" width="34" height="18" rx="9"/><text x="245" y="160.1" text-anchor="middle" font-size="9" font-style="italic">who</text></g></g>
-<g class="st" data-s="4-5"><g class="arrow-pill"><rect x="250.5" y="200.04" width="23" height="18" rx="9"/><text x="262" y="212.54" text-anchor="middle" font-size="9" font-style="italic">p</text></g></g>
-<g class="st" data-s="5-5"><g class="arrow-pill"><rect x="69" y="177" width="98" height="18" rx="9"/><text x="118" y="189.5" text-anchor="middle" font-size="9" font-style="italic">copy of address</text></g></g>
+<g class="st" data-s="1-4"><rect class="bx" x="26" y="156" width="118" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="85" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">who = null</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="26" y="156" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="85" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">who = 0x…F1</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="26" y="156" width="118" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="85" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">who = 0x…F1</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="26" y="156" width="118" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="85" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">who = null</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="26" y="296" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="85" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">p = (unset)</text></g>
+<g class="st" data-s="4-5" data-hl="4"><rect class="bx" x="26" y="296" width="118" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4"><text x="85" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">p = 0x…F1</text></g>
+<g class="st" data-s="3-6"><rect class="bx" x="298" y="206" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6"><text x="390" y="219.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 7</text></g>
+<g class="st" data-s="3-6"><rect class="bx" x="298" y="230" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6"><text x="390" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = ref</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="298" y="206" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="390" y="219.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Id = 7</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="298" y="230" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="390" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Name = ref</text></g>
+<g class="st" data-s="3-6"><rect class="bx" x="298" y="326" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6"><text x="390" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Asha" (UTF-16 chars)</text></g>
+<g class="st" data-s="7-7"><rect class="bx" x="298" y="326" width="184" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7"><text x="390" y="339.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">"Asha" (UTF-16 chars)</text></g>
+<g class="st" data-s="6-"><text class="free" x="85" y="302" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">frame popped</text></g>
+<g class="st" data-s="7-7"><text class="free" x="400" y="392" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">green = still reachable · red dashed = unreachable (nothing points to it)</text></g>
+<g class="st" data-s="8-8"><text class="free" x="400" y="392" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">space reclaimed by a later GC</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#67e8f9">Main has a slot who for the result. It holds null: no object yet</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Calling Make pushes a frame with its own slot p (not set yet)</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="461" text-anchor="middle" font-size="9.5" fill="#6ee7b7">new Person: an object on the HEAP, whose Name field is a reference</text></g>
+<g class="st" data-s="3-3"><text x="320" y="474.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">to a SEPARATE string object</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#c4b5fd">p holds the address of the Person: it points at the object</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">return p copies the ADDRESS into who. Two slots, ONE object: the object is not copied</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Make’s frame is popped: p is gone. The Person stays: who still points to it</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="461" text-anchor="middle" font-size="9.5" fill="#fda4af">Later who = null: nothing points to the Person or its string any more:</text></g>
+<g class="st" data-s="7-7"><text x="320" y="474.5" text-anchor="middle" font-size="9.5" fill="#fda4af">unreachable (but their memory is NOT freed yet)</text></g>
+<g class="st" data-s="8-8"><rect class="bx note" x="10" y="432" width="620" height="66" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="8-8"><text x="320" y="467.75" text-anchor="middle" font-size="9.5" fill="#fda4af">A later GC finds the unreachable objects and reclaims their space</text></g>
+<g class="st" data-s="3-6"><g class="arrow-pill"><rect x="492.5" y="263" width="39" height="18" rx="9"/><text x="512" y="275.5" text-anchor="middle" font-size="9" font-style="italic">Name</text></g></g>
+<g class="st" data-s="5-6"><g class="arrow-pill"><rect x="228" y="187.6" width="34" height="18" rx="9"/><text x="245" y="200.1" text-anchor="middle" font-size="9" font-style="italic">who</text></g></g>
+<g class="st" data-s="4-5"><g class="arrow-pill"><rect x="250.5" y="240.04" width="23" height="18" rx="9"/><text x="262" y="252.54" text-anchor="middle" font-size="9" font-style="italic">p</text></g></g>
+<g class="st" data-s="5-5"><g class="arrow-pill"><rect x="69" y="217" width="98" height="18" rx="9"/><text x="118" y="229.5" text-anchor="middle" font-size="9" font-style="italic">copy of address</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -206,6 +229,14 @@
 <text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">(int Count, decimal Sum) Stats() =&gt; (3, 59.5m);</text>
 <text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var r = Stats();</text>
 <text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">// old class: var r2 = Tuple.Create(3, 59.5m);</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="35.2" width="372" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="20.2" width="372" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="29.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-4"><rect class="cur" x="14" y="35.2" width="372" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-4"><text class="cur" x="16" y="44.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="50.2" width="372" height="15" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="59.5" text-anchor="start" font-size="5.800000000000001" fill="#fcd34d">▶</text></g>
 <text class="free" x="630" y="20" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture · addresses illustrative</text>
 <g class="st" data-s="1-4"><text class="free" x="495" y="230" text-anchor="middle" font-size="10" font-weight="400" fill="#93a0b8">empty: no allocation</text></g>
 <g class="st" data-s="1-2"><rect class="bx" x="32" y="138" width="136" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
