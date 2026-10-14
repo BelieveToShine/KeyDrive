@@ -602,5 +602,61 @@
       "transactional-outbox": "Transactional Outbox: save and announce reliably",
       "bulkhead": "Bulkhead: keep one leak from sinking the ship"
     }
+  },
+  "memory": {
+    "title": ".NET Memory Lab",
+    "order": [
+      "memory-map",
+      "stack",
+      "value-vs-reference",
+      "heap-and-new",
+      "boxing",
+      "statics",
+      "object-creation",
+      "inheritance-memory",
+      "abstract-base",
+      "interfaces-memory",
+      "virtual-override-overload",
+      "dynamic-reflection",
+      "gc-basics",
+      "generations",
+      "loh-poh",
+      "memory-clearing",
+      "leaks",
+      "threads",
+      "async-await",
+      "gc-modes",
+      "span-stackalloc",
+      "memory-clinic"
+    ],
+    "titles": {
+      "memory-map": "The .NET memory map: stack, heap, statics",
+      "stack": "The stack: one frame per method call",
+      "value-vs-reference": "Value types and reference types in memory",
+      "heap-and-new": "The heap: what new really does",
+      "boxing": "Boxing and unboxing: a value moves to the heap",
+      "statics": "Static fields: one copy for the whole app",
+      "object-creation": "What happens in memory when you create an object",
+      "inheritance-memory": "Subclass creation: one object, parent and child inside",
+      "abstract-base": "Abstract and base classes: allocated only inside a child",
+      "interfaces-memory": "Interfaces in memory: a reference with a label",
+      "virtual-override-overload": "Virtual, override and overload at the memory level",
+      "dynamic-reflection": "dynamic and reflection: decided at run time",
+      "gc-basics": "Garbage collector basics: roots and reachability",
+      "generations": "Generations 0, 1 and 2: young objects die young",
+      "loh-poh": "The Large Object Heap and Pinned Object Heap",
+      "memory-clearing": "How and when memory is cleared: scope, GC, Dispose, finalizers",
+      "leaks": "Memory leaks in a garbage-collected world",
+      "threads": "Threads: one stack each, one shared heap",
+      "async-await": "async and await: the state machine in memory",
+      "gc-modes": "Workstation, server and concurrent GC",
+      "span-stackalloc": "Span, stackalloc and pooling: allocating less",
+      "memory-clinic": "Capstone: the memory clinic"
+    },
+    "written": [
+      "memory-map"
+    ],
+    "sub": {},
+    "subTitles": {}
   }
 }

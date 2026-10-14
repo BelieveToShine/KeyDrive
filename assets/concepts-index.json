@@ -5048,5 +5048,31 @@
     "summary": "The classic mistake with Bulkhead: Keep One Leak from Sinking the Ship.",
     "keywords": "bulkhead pattern isolation resilience pool trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "memory-memory-map",
+    "title": "The .NET Memory Map: Stack, Heap and Statics",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "Stack, heap and static memory in .NET: where data lives and who cleans it",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives"
+  },
+  {
+    "id": "memory-memory-map-recall",
+    "title": "The .NET Memory Map: Stack, Heap and Statics — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "Quick recall points: The .NET Memory Map: Stack, Heap and Statics.",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-memory-map-trap",
+    "title": "The .NET Memory Map: Stack, Heap and Statics — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/memory-map.html",
+    "summary": "The classic mistake with The .NET Memory Map: Stack, Heap and Statics.",
+    "keywords": "memory stack heap static garbage collector .net c# where data lives trap mistake",
+    "anchor": "trap"
   }
 ]
