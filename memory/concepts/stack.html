@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Stack: One Frame per Method Call — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">The stack</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 2 of 22 · 📚 Stack & heap</div>
+    <h1>A <span class="grad-text">stack of plates</span> — one plate for every method call.</h1>
+    <p class="sub">How the call stack grows and shrinks: parameters and locals live in a frame that is pushed when a method starts and popped when it returns.</p>
+    <div class="interview-q">❓ "What is the call stack and what is stored on it?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Three methods call each other: Main calls Total which calls Tax. Each call pushes a new frame on top of the stack holding its parameters and locals; when a method returns its frame is popped and the one below becomes the top again">
+<defs><marker id="sk1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="300" y="6" width="330" height="316" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="314" y="25" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 THE STACK  (newest frame on top)</text>
+<rect class="bx" x="10" y="8" width="270" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8">void Main()  { int id = 7; Total(id); }</text>
+<text x="24" y="45" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8">void Total(int n) { Tax(n); }</text>
+<text x="24" y="60" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8">void Tax(int x)   { }</text>
+<g class="st" data-s="1-" data-hl="1,,,6"><rect class="bx" x="315" y="262" width="300" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,6"><text x="465" y="285" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">Main()</text></g>
+<g class="st" data-s="1-" data-hl="1,,,6"><text x="465" y="297" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">id = 7</text></g>
+<g class="st" data-s="2-5" data-hl="2,,,5"><rect class="bx" x="315" y="196" width="300" height="50" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5" data-hl="2,,,5"><text x="465" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Total(n)</text></g>
+<g class="st" data-s="2-5" data-hl="2,,,5"><text x="465" y="231" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">n = 7</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="315" y="130" width="300" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="465" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Tax(x)</text></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="465" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">x = 7</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#67e8f9">Main starts</text></g>
+<g class="st" data-s="1-1"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#67e8f9">its frame is pushed</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#c4b5fd">Main calls Total</text></g>
+<g class="st" data-s="2-2"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#c4b5fd">a new frame goes on top</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#fcd34d">Total calls Tax</text></g>
+<g class="st" data-s="3-3"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#fcd34d">another frame on top</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#fda4af">Tax returns</text></g>
+<g class="st" data-s="4-4"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#fda4af">top frame is popped 🧹</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#fda4af">Total returns</text></g>
+<g class="st" data-s="5-5"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#fda4af">popped 🧹 — back in Main</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="104" width="270" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="145" y="125" text-anchor="middle" font-size="10" fill="#6ee7b7">Main returns</text></g>
+<g class="st" data-s="6-6"><text x="145" y="139" text-anchor="middle" font-size="10" fill="#6ee7b7">the stack is empty</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><b>Main</b> starts. The runtime puts a <b>frame</b> on the stack with Main’s local variable <code>id</code>.</li><li>Main calls <b>Total</b>. A new frame (with parameter <code>n</code>) is placed <b>on top</b>.</li><li>Total calls <b>Tax</b>. Another frame goes on top. Only the top frame is “current”.</li><li>Tax returns. Its frame is <b>popped</b> — the memory is free for reuse at once.</li><li>Total returns. Its frame is popped too. We are back in Main.</li><li>Main returns. The stack is empty again.</li></ol>
+<figcaption><strong>What you're seeing:</strong> three calls pushing frames, then returning and popping them in the opposite order (last in, first out).</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Every method call gets a frame (parameters + locals) on the stack; returning from the method pops it.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🍽️ A stack of plates in a canteen. You can only add a plate on top and only take the top plate off. The plate you added last is the first to go.</p>
+      <p>A method call is a plate: it holds that method’s own notes (its parameters and local variables). When the method is done, the plate is removed and nobody has to “clean” it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">💥 When the stack runs out</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A method that calls itself forever keeps pushing frames; the stack has a fixed size so it fills up and the program stops with a stack overflow">
+<defs><marker id="sk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="300" y="6" width="330" height="288" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="314" y="25" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 THE STACK  (fixed size)</text>
+<rect class="bx" x="10" y="8" width="270" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">int Forever(int n) {</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">    return Forever(n + 1); }</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="315" y="244" width="300" height="28" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="465" y="260.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever(n = 0)</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="315" y="208" width="300" height="28" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="465" y="224.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever(n = 1)</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="315" y="172" width="300" height="28" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="188.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever(n = 2)</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="315" y="136" width="300" height="28" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="465" y="152.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever(n = 3)</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="315" y="100" width="300" height="28" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="465" y="116.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever(n = 4)</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="315" y="64" width="300" height="28" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="465" y="80.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Forever(n = 5)</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="10" y="120" width="270" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="145" y="141" text-anchor="middle" font-size="10" fill="#fcd34d">Each call adds a frame</text></g>
+<g class="st" data-s="2-"><text x="145" y="155" text-anchor="middle" font-size="10" fill="#fcd34d">nothing ever pops</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx note" x="10" y="190" width="270" height="60" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="145" y="209" text-anchor="middle" font-size="10" fill="#fda4af">No room left!</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="145" y="223" text-anchor="middle" font-size="10" fill="#fda4af">StackOverflowException</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="145" y="237" text-anchor="middle" font-size="10" fill="#fda4af">the app stops</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A method keeps calling itself. Each call pushes one more frame.</li><li>The frames pile up…</li><li>and up…</li><li>and up…</li><li>and up…</li><li>The stack has a fixed size, so it runs out: a <b>StackOverflowException</b> ends the program.</li></ol>
+<figcaption><strong>What you're seeing:</strong> endless recursion. Every call needs a frame, and frames are only popped on return.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🎒 What goes into a frame?</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">In the frame</th><th scope="col">Example</th><th scope="col">Note</th></tr></thead><tbody><tr><th scope="row">Parameters</th><td><code>int n</code></td><td>a copy of the value, or a copy of the reference</td></tr><tr><th scope="row">Local variables of value types</th><td><code>int id = 7;</code></td><td>the value sits right in the slot</td></tr><tr><th scope="row">Local variables of reference types</th><td><code>Person p</code></td><td>only the <b>reference</b>; the object is on the heap (next pages)</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⚠️ Honest notes</div>
+    <div class="kd-card why-box">
+      <p>Every thread has its <b>own</b> stack (page 18). Its size is fixed when the thread starts and is small compared with the heap — typically a few MB, and the default depends on the operating system and runtime version.</p>
+      <p>A stack overflow normally ends the process; you cannot rely on <code>try/catch</code> to recover from it. The cure is to stop the endless recursion (or make it loop), not to catch it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">int</span> Total(<span class="kw">int</span> n)          <span class="cmt">// n: a parameter, lives in Total's frame</span>
+{
+    <span class="kw">int</span> rate = 18;        <span class="cmt">// rate: a local, also in Total's frame</span>
+    <span class="kw">return</span> n * rate;
+}                         <span class="cmt">// frame popped here — nothing to "free" by hand</span>
+
+<span class="kw">int</span> Forever(<span class="kw">int</span> n) =&gt; Forever(n + 1);   <span class="cmt">// never returns → frames never popped → overflow</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Stack memory needs no garbage collector. It is reused simply by moving the “top” back down.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears the stack?</div>
+    <div class="kd-card why-box">
+      <p><b>Nobody has to.</b> When a method returns, its frame is popped and the space is reused by the next call. This is why the stack is so fast: it only moves a “top” marker.</p>
+      <p>The GC does <b>not</b> clean the stack. But the GC <b>reads</b> the stack: references in frames tell it which heap objects are still in use (page 13).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A local variable lives on after its method returns, because the GC keeps it.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> Its frame is popped on return. (An <b>object</b> it pointed to may live on, but the variable itself is gone.)</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The most recently called method’s frame is on top of the stack.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — last in, first out.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Recursion with no end case can fill the stack.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Right: each call needs a frame, so the stack runs out.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>A <b>frame</b> per method call holds parameters and locals.</li><li><b>Push</b> on call, <b>pop</b> on return — last in, first out.</li><li>Stack memory is reused instantly; the GC does not manage it.</li><li>Endless recursion → stack overflow.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“Each method call pushes a frame with its parameters and locals onto the thread’s stack, and returning pops it. It is fixed-size and very fast, and the garbage collector does not manage it — but it does scan the stack to find live object references.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Believing a deep recursion is “free”. Each level costs a frame; use a loop (or an explicit collection) when depth can be large.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what exactly sits in a stack slot for an <code>int</code> versus a class?</span>
+      <a class="next-link" href="value-vs-reference.html">Value vs Reference <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Stack frames, parameters/locals and the one-stack-per-thread model: Microsoft Learn (call stack / threads). Stack sizes differ by OS and version (page 18). That StackOverflowException normally ends the process is documented on its API page (stated from memory — 🟨 K in the ledger). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types" target="_blank" rel="noopener">Value types (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

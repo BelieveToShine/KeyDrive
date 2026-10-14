@@ -654,7 +654,11 @@
       "memory-clinic": "Capstone: the memory clinic"
     },
     "written": [
-      "memory-map"
+      "memory-map",
+      "stack",
+      "value-vs-reference",
+      "heap-and-new",
+      "boxing"
     ],
     "sub": {},
     "subTitles": {}

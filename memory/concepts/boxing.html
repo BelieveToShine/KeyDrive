@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boxing and Unboxing: a Value Moves to the Heap — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Boxing</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 5 of 22 · 📚 Stack & heap</div>
+    <h1><span class="grad-text">A coin in a gift box</span> — when a value must act like an object.</h1>
+    <p class="sub">Boxing wraps a value-type value in a heap object; unboxing copies it back. Why it costs memory, and how generics avoid it.</p>
+    <div class="interview-q">❓ "What are boxing and unboxing, and why can they hurt performance?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Boxing: assigning an int to an object variable copies the number into a new object on the heap and stores its address; unboxing copies it back into an int; changing the original int later does not change the box">
+<defs><marker id="bx1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bx1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bx1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="90" width="200" height="240" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="300" y="90" width="330" height="240" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="314" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="2-"><path d="M196,200 L380,200" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#bx1A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="64" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int n = 42;</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">object o = n;       // boxing</text>
+<text x="24" y="60" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int m = (int)o;     // unboxing</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="118" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="110" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">n</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="110" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">42</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="178" width="172" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="198" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">o</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="210" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">address 0x…E3</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="178" width="170" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="465" y="201" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">box (an object)</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="465" y="213" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">42</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="24" y="238" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="110" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">m</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="110" y="270" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">42</text></g>
+<g class="st" data-s="3-"><rect class="bx note" x="380" y="236" width="230" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-"><text x="495" y="252" text-anchor="middle" font-size="10" fill="#67e8f9">copy 42 out of the box</text></g>
+<g class="st" data-s="3-"><text x="495" y="266" text-anchor="middle" font-size="10" fill="#67e8f9">(unboxing)</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="312" y="286" width="306" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="465" y="305.5" text-anchor="middle" font-size="9" fill="#fcd34d">The box is a copy: n changes never reach it</text></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="255" y="191" width="66" height="18" rx="9"/><text x="288" y="203.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>int n = 42;</code> — a plain value in the stack slot <b>n</b>.</li><li><code>object o = n;</code> — an <code>object</code> variable needs an <b>object</b>. So the runtime makes a new object on the heap, <b>copies 42 into it</b> (the box), and <code>o</code> holds its address. This is <b>boxing</b>.</li><li><code>(int)o</code> reads the number back out into <code>m</code>. This is <b>unboxing</b> — a copy again.</li><li>The box is only a <b>copy</b>. Changing <code>n</code> later does not change the box.</li></ol>
+<figcaption><strong>What you're seeing:</strong> boxing wraps a value in a heap object; unboxing copies it back out.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>Boxing = copying a value into a new heap object so it can be used as an <code>object</code> (or an interface).</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🪙 A coin (value) fits in your pocket. But the post office only takes <b>parcels</b> (objects). So you put the coin into a <b>gift box</b> and post the box.</p>
+      <p>Each time you do that, a new box is made — and somebody (the garbage collector) has to throw the empty boxes away later.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔁 Why boxing in a loop is costly</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="A loop that boxes each int into an object list creates one heap box per number for the garbage collector to clean up, while a generic List of int stores the numbers directly with no boxes">
+<defs><marker id="bx2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bx2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="bx2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="300" height="234" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">🐌 ArrayList (stores object)</text>
+<rect class="zone" x="330" y="8" width="300" height="234" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="344" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">⚡ List&lt;int&gt; (generic)</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="26" y="44" width="80" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="66" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">box 1</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="346" y="44" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="386" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">1</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="118" y="44" width="80" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="158" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">box 2</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="438" y="44" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="478" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">2</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="210" y="44" width="80" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="250" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">box 3</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="530" y="44" width="80" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="570" y="68" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">3</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="26" y="110" width="268" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="160" y="135" text-anchor="middle" font-size="10" fill="#fda4af">3 numbers → 3 extra heap objects</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="346" y="110" width="268" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="480" y="128" text-anchor="middle" font-size="10" fill="#6ee7b7">3 numbers stored directly</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="480" y="142" text-anchor="middle" font-size="10" fill="#6ee7b7">no extra objects</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="26" y="172" width="268" height="54" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="160" y="195" text-anchor="middle" font-size="10" fill="#fda4af">More allocations</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="160" y="209" text-anchor="middle" font-size="10" fill="#fda4af">more work for the GC</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="346" y="172" width="268" height="54" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="480" y="195" text-anchor="middle" font-size="10" fill="#6ee7b7">Generics avoid boxing</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="480" y="209" text-anchor="middle" font-size="10" fill="#6ee7b7">(a good reason to use them)</text></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>Add the number 1 to an <code>ArrayList</code> (it stores <code>object</code>): a box is created. In a <code>List&lt;int&gt;</code> the number is stored directly.</li><li>Number 2: another box on the left, still nothing extra on the right.</li><li>Number 3: a third box.</li><li>Three numbers → three extra heap objects on the left, none on the right.</li><li>More allocations mean more garbage for the GC. <b>Generic collections avoid boxing.</b></li></ol>
+<figcaption><strong>What you're seeing:</strong> the same three numbers stored two ways.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">👀 Where boxing happens without you noticing</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Code</th><th scope="col">Why it boxes</th></tr></thead><tbody><tr><th scope="row"><code>object o = 5;</code></th><td>a value assigned to <code>object</code></td></tr><tr><th scope="row"><code>IComparable c = 5;</code></th><td>a struct assigned to an <b>interface</b> variable</td></tr><tr><th scope="row"><code>string.Format("{0}", 5)</code></th><td>an <code>int</code> passed as an <code>object</code> parameter</td></tr><tr><th scope="row"><code>ArrayList.Add(5)</code></th><td>the non-generic list stores <code>object</code></td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">int</span> n = 42;
+object o = n;          <span class="cmt">// boxing: new object on the heap holding a copy of 42</span>
+n = 99;                <span class="cmt">// o still holds 42 — the box is a copy</span>
+<span class="kw">int</span> m = (<span class="kw">int</span>)o;        <span class="cmt">// unboxing: m = 42</span>
+
+<span class="kw">var</span> good = <span class="kw">new</span> List&lt;<span class="kw">int</span>&gt;();   <span class="cmt">// generic: stores ints directly, no boxing</span>
+good.Add(5);</pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Unboxing to the wrong type throws an <code>InvalidCastException</code>: <code>(long)o</code> on a boxed int fails.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The box is an ordinary heap object. The <b>garbage collector</b> frees it when no reference points to it. That is exactly why many boxes in a hot loop create GC work.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>object o = 7;</code> creates a heap object.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — the int is boxed into a new object.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> After <code>object o = n; n = 99;</code>, o holds 99.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The box holds a copy of the old value, 42.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Using <code>List&lt;int&gt;</code> instead of <code>ArrayList</code> avoids boxing.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Right, generics store the value directly.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Boxing: value → new heap object (a copy). Unboxing: copy back.</li><li>Happens when a value type is used as <code>object</code> or an <b>interface</b>.</li><li>Costs an allocation + GC work; generics avoid it.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“Boxing copies a value type into a new object on the managed heap so it can be treated as an object or interface; unboxing copies it back. It allocates, so in hot paths I use generics or avoid object-typed APIs.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Hidden boxing: a struct passed to an interface-typed parameter or <code>object</code>-typed API is boxed on every call.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box locked">
+      <span>Next: static memory — where static fields live. <i>(coming soon: Statics)</i></span>
+    </div>
+  </section>  <p class="fact-note">📌 Boxing/unboxing definition, interface boxing and the InvalidCastException rule: Microsoft Learn “Boxing and unboxing”. Generic collections avoiding boxing: same docs. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/boxing-and-unboxing" target="_blank" rel="noopener">Boxing and unboxing (C# programming guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types" target="_blank" rel="noopener">Value types (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

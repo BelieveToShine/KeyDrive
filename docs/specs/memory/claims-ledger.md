@@ -35,5 +35,21 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | Value type inside an object lives inside that object (heap) | ✅ V | C# reference value types |
 | Addresses (0x…A1), "Person/Asha" example | 🟦 I | illustrative |
 
+## Pages 2–5 — Stack, value vs reference, heap & new, boxing
+| Claim | Status | Note |
+|---|---|---|
+| Each method call has a frame holding parameters and locals; popped on return | ✅ V | MS Learn call-stack docs / C# reference (simplified) |
+| Stack is per thread, fixed size, typically a few MB depending on OS | ✅ V | MS thread docs (see page 18 for the figures) |
+| StackOverflowException normally ends the process (cannot be caught) | 🟨 K | from the StackOverflowException API page, recalled not re-fetched |
+| GC does not manage the stack but scans it for references | ✅ V | GC fundamentals (roots) |
+| Value types copy data; reference types copy the reference | ✅ V | C# reference |
+| Value-type field inside a class lives inside the object on the heap | ✅ V | C# reference / MS blogs on value type location |
+| string is a reference type and immutable | ✅ V | C# docs |
+| Fields get default values before constructor body | ✅ V | C# language reference |
+| "Next free spot" allocation, hidden type info in objects | 🟨 K | teaching picture; no sizes quoted |
+| Boxing copies a value into a new heap object; unboxing copies back; wrong unbox type throws InvalidCastException; struct → interface boxes | ✅ V | MS Learn boxing and unboxing |
+| Generic collections avoid boxing | ✅ V | same page |
+| Person/Order/Asha examples, addresses 0x…, step shapes | 🟦 I | illustrative |
+
 ## Cross-page notes
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.

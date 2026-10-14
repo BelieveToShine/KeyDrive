@@ -41,7 +41,7 @@
     <div class="eyebrow">🧠 .NET / C# memory · stack, heap, statics and the garbage collector — step by step</div>
     <h1>See where every byte lives in .NET — <span class="grad-text">stack, heap, statics and the garbage collector</span>, animated step by step.</h1>
     <p class="sub">From <b>“where does an int live?”</b> to <b>generations G0 / G1 / G2</b>, finalizers, threads and <b>async/await</b>: every page is an animated memory story with an everyday picture and a few lines of C#. Includes <b>inheritance, abstract classes, interfaces, override vs overload</b> and <b>dynamic</b> at the memory level.</p>
-    <p class="hub-note">🗺️ <b>1 of 22</b> concepts are written — the rest (21) are on the map as locked steps.</p>
+    <p class="hub-note">🗺️ <b>5 of 22</b> concepts are written — the rest (17) are on the map as locked steps.</p>
     <a class="kd-cta" href="concepts/memory-map.html">Start at the beginning <span class="arrow">→</span></a>
   </section>
 
@@ -57,10 +57,10 @@
 <rect x="100" y="1186" width="440" height="414" rx="16" fill="rgba(251,113,133,.05)" stroke="rgba(251,113,133,.3)" stroke-dasharray="4 3"/><text x="116" y="1208" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">♻️ GARBAGE COLLECTOR</text>
 <rect x="100" y="1640" width="440" height="174" rx="16" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.3)" stroke-dasharray="4 3"/><text x="116" y="1662" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">🧵 THREADS &amp; ASYNC</text>
 <rect x="100" y="1854" width="440" height="254" rx="16" fill="rgba(167,139,250,.05)" stroke="rgba(167,139,250,.3)" stroke-dasharray="4 3"/><text x="116" y="1876" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">⚙️ TUNING &amp; JUDGEMENT</text>
-<path class="jm-link" d="M320,88 V178" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,222 V258" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,302 V338" marker-end="url(#jmArrow)"/>
-<path class="jm-link" d="M320,382 V418" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,88 V178" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,222 V258" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,302 V338" marker-end="url(#jmArrow)"/>
+<path class="jm-link done" d="M320,382 V418" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,462 V552" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,596 V686" marker-end="url(#jmArrow)"/>
 <path class="jm-link" d="M320,730 V766" marker-end="url(#jmArrow)"/>
@@ -100,10 +100,10 @@
 <g class="arrow-pill"><rect x="330" y="1941" width="193" height="18" rx="9"/><text x="426.5" y="1954" text-anchor="middle" font-size="9" font-style="italic">how do I avoid allocating at all?</text></g>
 <g class="arrow-pill"><rect x="330" y="2021" width="119" height="18" rx="9"/><text x="389.5" y="2034" text-anchor="middle" font-size="9" font-style="italic">put it all together</text></g>
 <a class="jm-hit" xlink:href="concepts/memory-map.html"><g class="jm-node done"><rect x="220" y="44" width="200" height="44" rx="12"/><text x="320" y="71" text-anchor="middle" font-size="14" font-weight="700">🗺️ The Memory Map</text></g></a>
-<g class="jm-node locked"><rect x="220" y="178" width="200" height="44" rx="12"/><text x="320" y="205" text-anchor="middle" font-size="14" font-weight="700">📚 The Stack</text></g>
-<g class="jm-node locked"><rect x="220" y="258" width="200" height="44" rx="12"/><text x="320" y="285" text-anchor="middle" font-size="14" font-weight="700">🔀 Value vs Reference</text></g>
-<g class="jm-node locked"><rect x="220" y="338" width="200" height="44" rx="12"/><text x="320" y="365" text-anchor="middle" font-size="14" font-weight="700">🏠 The Heap &amp; new</text></g>
-<g class="jm-node locked"><rect x="220" y="418" width="200" height="44" rx="12"/><text x="320" y="445" text-anchor="middle" font-size="14" font-weight="700">📦 Boxing</text></g>
+<a class="jm-hit" xlink:href="concepts/stack.html"><g class="jm-node done"><rect x="220" y="178" width="200" height="44" rx="12"/><text x="320" y="205" text-anchor="middle" font-size="14" font-weight="700">📚 The Stack</text></g></a>
+<a class="jm-hit" xlink:href="concepts/value-vs-reference.html"><g class="jm-node done"><rect x="220" y="258" width="200" height="44" rx="12"/><text x="320" y="285" text-anchor="middle" font-size="14" font-weight="700">🔀 Value vs Reference</text></g></a>
+<a class="jm-hit" xlink:href="concepts/heap-and-new.html"><g class="jm-node done"><rect x="220" y="338" width="200" height="44" rx="12"/><text x="320" y="365" text-anchor="middle" font-size="14" font-weight="700">🏠 The Heap &amp; new</text></g></a>
+<a class="jm-hit" xlink:href="concepts/boxing.html"><g class="jm-node done"><rect x="220" y="418" width="200" height="44" rx="12"/><text x="320" y="445" text-anchor="middle" font-size="14" font-weight="700">📦 Boxing</text></g></a>
 <g class="jm-node locked"><rect x="220" y="552" width="200" height="44" rx="12"/><text x="320" y="579" text-anchor="middle" font-size="14" font-weight="700">📌 Statics</text></g>
 <g class="jm-node locked"><rect x="220" y="686" width="200" height="44" rx="12"/><text x="320" y="713" text-anchor="middle" font-size="14" font-weight="700">🧱 Creating an Object</text></g>
 <g class="jm-node locked"><rect x="220" y="766" width="200" height="44" rx="12"/><text x="320" y="793" text-anchor="middle" font-size="14" font-weight="700">👪 Inheritance</text></g>
@@ -149,10 +149,10 @@
     <div class="sec-label" style="color:var(--ink-soft)">Full concept list</div>
     <ol class="concept-list">
       <li class="concept-row done"><span class="cr-num">1</span><span class="cr-main"><a href="concepts/memory-map.html">The .NET memory map: stack, heap, statics</a><span class="cr-tail">one picture of every place your data can live</span></span><span class="cr-status done">✅ written</span></li>
-      <li class="concept-row soon"><span class="cr-num">2</span><span class="cr-main"><span class="cr-name">The stack: one frame per method call</span><span class="cr-tail">the stack of plates</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">3</span><span class="cr-main"><span class="cr-name">Value types and reference types in memory</span><span class="cr-tail">a photo you copy vs a house address you share</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">4</span><span class="cr-main"><span class="cr-name">The heap: what new really does</span><span class="cr-tail">the warehouse and the claim ticket</span></span><span class="cr-status soon">🔒 coming soon</span></li>
-      <li class="concept-row soon"><span class="cr-num">5</span><span class="cr-main"><span class="cr-name">Boxing and unboxing: a value moves to the heap</span><span class="cr-tail">putting a coin into a gift box</span></span><span class="cr-status soon">🔒 coming soon</span></li>
+      <li class="concept-row done"><span class="cr-num">2</span><span class="cr-main"><a href="concepts/stack.html">The stack: one frame per method call</a><span class="cr-tail">the stack of plates</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">3</span><span class="cr-main"><a href="concepts/value-vs-reference.html">Value types and reference types in memory</a><span class="cr-tail">a photo you copy vs a house address you share</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">4</span><span class="cr-main"><a href="concepts/heap-and-new.html">The heap: what new really does</a><span class="cr-tail">the warehouse and the claim ticket</span></span><span class="cr-status done">✅ written</span></li>
+      <li class="concept-row done"><span class="cr-num">5</span><span class="cr-main"><a href="concepts/boxing.html">Boxing and unboxing: a value moves to the heap</a><span class="cr-tail">putting a coin into a gift box</span></span><span class="cr-status done">✅ written</span></li>
       <li class="concept-row soon"><span class="cr-num">6</span><span class="cr-main"><span class="cr-name">Static fields: one copy for the whole app</span><span class="cr-tail">the notice board in the lobby</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">7</span><span class="cr-main"><span class="cr-name">What happens in memory when you create an object</span><span class="cr-tail">building a house: land, frame, rooms</span></span><span class="cr-status soon">🔒 coming soon</span></li>
       <li class="concept-row soon"><span class="cr-num">8</span><span class="cr-main"><span class="cr-name">Subclass creation: one object, parent and child inside</span><span class="cr-tail">a nesting doll</span></span><span class="cr-status soon">🔒 coming soon</span></li>
@@ -176,7 +176,7 @@
 </main>
 
 <footer class="kd-foot">
-  <div class="wrap">KeyDrive · Software Design · .NET Memory Lab · 1 / 22 concepts written</div>
+  <div class="wrap">KeyDrive · Software Design · .NET Memory Lab · 5 / 22 concepts written</div>
 </footer>
 
 <script src="../assets/site.js?v=20261018"></script>

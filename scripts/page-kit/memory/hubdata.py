@@ -32,7 +32,7 @@ GROUPS = [('🗺️ THE MAP','167,139,250','#c4b5fd'),
 SUB = {}
 SUBT = {}
 SUBD = {}
-WRITTEN = ['memory-map']
+WRITTEN = ['memory-map','stack','value-vs-reference','heap-and-new','boxing']
 LADDER = [('1 · PICTURE','🌍 The everyday picture','A stack of plates, a warehouse ticket, a nesting doll — something you already know.'),
           ('2 · WATCH','🎬 Animated memory story','Step-by-step: exactly what is created, where, and in what order.'),
           ('3 · CODE','🧪 A few lines of C#','The smallest code that shows it.'),

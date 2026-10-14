@@ -5074,5 +5074,109 @@
     "summary": "The classic mistake with The .NET Memory Map: Stack, Heap and Statics.",
     "keywords": "memory stack heap static garbage collector .net c# where data lives trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "memory-stack",
+    "title": "The Stack: One Frame per Method Call",
+    "category": "Memory",
+    "page": "memory/concepts/stack.html",
+    "summary": "The call stack: frames pushed and popped per method call, and stack overflow",
+    "keywords": "memory stack frame call stack recursion stack overflow locals parameters"
+  },
+  {
+    "id": "memory-stack-recall",
+    "title": "The Stack: One Frame per Method Call — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/stack.html",
+    "summary": "Quick recall points: The Stack: One Frame per Method Call.",
+    "keywords": "memory stack frame call stack recursion stack overflow locals parameters interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-stack-trap",
+    "title": "The Stack: One Frame per Method Call — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/stack.html",
+    "summary": "The classic mistake with The Stack: One Frame per Method Call.",
+    "keywords": "memory stack frame call stack recursion stack overflow locals parameters trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-value-vs-reference",
+    "title": "Value Types and Reference Types in Memory",
+    "category": "Memory",
+    "page": "memory/concepts/value-vs-reference.html",
+    "summary": "What a variable holds: data (value types) or an address (reference types) and what copies do",
+    "keywords": "memory value type reference type struct class copy string immutable"
+  },
+  {
+    "id": "memory-value-vs-reference-recall",
+    "title": "Value Types and Reference Types in Memory — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/value-vs-reference.html",
+    "summary": "Quick recall points: Value Types and Reference Types in Memory.",
+    "keywords": "memory value type reference type struct class copy string immutable interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-value-vs-reference-trap",
+    "title": "Value Types and Reference Types in Memory — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/value-vs-reference.html",
+    "summary": "The classic mistake with Value Types and Reference Types in Memory.",
+    "keywords": "memory value type reference type struct class copy string immutable trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-heap-and-new",
+    "title": "The Heap: What new Really Does",
+    "category": "Memory",
+    "page": "memory/concepts/heap-and-new.html",
+    "summary": "What new does step by step on the managed heap",
+    "keywords": "memory heap new allocation constructor default values array string object"
+  },
+  {
+    "id": "memory-heap-and-new-recall",
+    "title": "The Heap: What new Really Does — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/heap-and-new.html",
+    "summary": "Quick recall points: The Heap: What new Really Does.",
+    "keywords": "memory heap new allocation constructor default values array string object interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-heap-and-new-trap",
+    "title": "The Heap: What new Really Does — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/heap-and-new.html",
+    "summary": "The classic mistake with The Heap: What new Really Does.",
+    "keywords": "memory heap new allocation constructor default values array string object trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-boxing",
+    "title": "Boxing and Unboxing: a Value Moves to the Heap",
+    "category": "Memory",
+    "page": "memory/concepts/boxing.html",
+    "summary": "Boxing wraps a value in a heap object; unboxing copies it back; why it costs",
+    "keywords": "memory boxing unboxing object interface generics list allocation"
+  },
+  {
+    "id": "memory-boxing-recall",
+    "title": "Boxing and Unboxing: a Value Moves to the Heap — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/boxing.html",
+    "summary": "Quick recall points: Boxing and Unboxing: a Value Moves to the Heap.",
+    "keywords": "memory boxing unboxing object interface generics list allocation interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-boxing-trap",
+    "title": "Boxing and Unboxing: a Value Moves to the Heap — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/boxing.html",
+    "summary": "The classic mistake with Boxing and Unboxing: a Value Moves to the Heap.",
+    "keywords": "memory boxing unboxing object interface generics list allocation trap mistake",
+    "anchor": "trap"
   }
 ]

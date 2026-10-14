@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Heap: What new Really Does — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">The heap and new</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 4 of 22 · 📚 Stack & heap</div>
+    <h1>The <span class="grad-text">warehouse</span> and the <span class="grad-text">claim ticket</span>.</h1>
+    <p class="sub">What <code>new</code> does step by step: it finds room on the managed heap, prepares the object and hands back an address you keep on the stack.</p>
+    <div class="interview-q">❓ "What happens in memory when you write new Person()?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="What new does: the runtime finds free space at the next free spot on the heap, sets every field to its default value, runs the constructor, and returns the address that is stored in the variable on the stack">
+<defs><marker id="hp1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="74" width="170" height="256" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="200" y="74" width="430" height="256" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="214" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="4-"><path id="hp1-ad" d="M166,132 L200,132 L200,215 L535,215 L535,200" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp1A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">var p = new Person("Asha");</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">// class Person { string Name; int Age; }</text>
+<g class="st" data-s="1-"><rect class="bx" x="215" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="250" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 1</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="295" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="330" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 2</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="375" y="110" width="70" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="410" y="134.75" text-anchor="middle" font-size="9.5" font-weight="400" fill="#93a0b8">old 3</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="455" y="110" width="160" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="535" y="135" text-anchor="middle" font-size="10" fill="#fcd34d">next free spot ⟶</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="455" y="110" width="160" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="535" y="147" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="535" y="159" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="535" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 0</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="455" y="110" width="160" height="90" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="147" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="159" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Asha"</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="535" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Age = 0</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="24" y="110" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="130" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">p</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="142" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…C7</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx note" x="215" y="250" width="400" height="60" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="415" y="282.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">new = find room · set defaults · run constructor · hand back the address</text></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="322.5" y="206" width="55" height="18" rx="9"/><text x="350" y="218.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>The heap already holds a few objects. New objects go at the <b>next free spot</b> (a teaching simplification of how the runtime hands out space).</li><li>Room is reserved for a <b>Person</b>. Every field starts at its <b>default</b>: <code>Name = null</code>, <code>Age = 0</code>.</li><li>The <b>constructor runs</b> and fills the fields: <code>Name = "Asha"</code>.</li><li>The runtime returns the object’s <b>address</b>, and it is stored in the stack variable <code>p</code>.</li><li><code>new</code> = find room → set defaults → run constructor → hand back the address.</li></ol>
+<figcaption><strong>What you're seeing:</strong> what one new does, in order. The stack slot is the claim ticket; the heap holds the parcel.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b><code>new</code> builds the object on the heap and gives you back its address.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🏬 A warehouse: you hand over a parcel, they find shelf space, put it there and give you a <b>claim ticket</b> with its shelf number. You keep the ticket (the reference); the parcel stays in the warehouse (the heap).</p>
+      <p>If you lose every copy of the ticket, nobody can fetch the parcel — the warehouse (the garbage collector) can eventually clear the shelf.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🔤 Strings and arrays are heap objects too</div>
+<figure class="diagram-card kd-story" data-steps="3">
+<div class="st-stage"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="Strings and arrays are objects too: the variable on the stack holds an address, and the string characters or array elements are on the heap">
+<defs><marker id="hp2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="hp2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="74" width="200" height="196" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="300" y="74" width="330" height="196" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="314" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M196,126 L380,126" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<g class="st" data-s="2-"><path d="M196,192 L380,192" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#hp2A)"/></g>
+<rect class="bx" x="10" y="8" width="300" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">string s = "hello";</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">int[] nums = new int[3];</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="104" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="110" y="124" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">s</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="110" y="136" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…D2</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="24" y="170" width="172" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">nums</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="110" y="202" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…D9</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="380" y="100" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="465" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">string object</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="465" y="132" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">h e l l o</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="380" y="170" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="465" y="190" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">int[3] object</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="465" y="202" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0 | 0 | 0</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="320" y="228" width="290" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="465" y="247.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">The ints sit inside the array object</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="255" y="117" width="66" height="18" rx="9"/><text x="288" y="129.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="255" y="183" width="66" height="18" rx="9"/><text x="288" y="195.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A <code>string</code> variable holds an address; the characters are an object on the heap.</li><li>An array is also an object. <code>new int[3]</code> builds it on the heap with all elements 0.</li><li>The three ints sit <b>inside</b> the array object.</li></ol>
+<figcaption><strong>What you're seeing:</strong> reference variables on the left, objects on the right.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Hidden bookkeeping (teaching picture)</div>
+    <div class="kd-card why-box">
+      <p>Besides your fields, every heap object carries a little hidden information, such as which <b>type</b> it is (this is how the runtime knows which methods to call — page 11). The exact layout and sizes are runtime internals, so this lab draws them only as a simple picture and never quotes byte sizes.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Person { <span class="kw">public</span> <span class="kw">string</span> Name; <span class="kw">public</span> <span class="kw">int</span> Age; }
+
+<span class="kw">var</span> p = <span class="kw">new</span> Person();     <span class="cmt">// 1) room on the heap  2) Name=null, Age=0</span>
+                          <span class="cmt">// 3) constructor runs  4) address stored in p</span>
+p.Name = <span class="str">"Asha"</span>;          <span class="cmt">// follow the address and change the object</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Fields get default values (0, false, null) before your constructor code runs.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The <b>garbage collector</b>, later, once no variable (and nothing else reachable) holds the address. Setting <code>p = null;</code> only removes <b>one</b> ticket; the object is freed only if no other reference remains. You never free heap memory by hand in C#.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Person()</code> returns the object itself.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It returns a <b>reference</b> (address) to the object.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Fields of a new object start at default values (0, null, false).</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes, before the constructor body runs.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Setting <code>p = null</code> immediately frees the object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It drops one reference; the GC frees the object later, if nothing else points to it.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li><code>new</code>: reserve room on the heap → default values → constructor → return address.</li><li>The variable holds the address; the object is on the heap.</li><li>You do not free heap memory yourself; the GC does.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“new allocates the object on the managed heap, zero-initialises its fields, runs the constructor and returns a reference, which the variable holds. The garbage collector reclaims it when no references remain.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Thinking <code>= null</code> “deletes” the object. It only removes that variable’s reference.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what if a <i>value</i> has to be treated as an object? That is boxing.</span>
+      <a class="next-link" href="boxing.html">Boxing <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Default values and constructor behaviour: C# docs. Heap/reference behaviour: GC fundamentals. “Next free spot” and the hidden bookkeeping picture are simplifications (🟨 K): the lab does not claim sizes or exact layout. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
