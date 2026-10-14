@@ -103,7 +103,7 @@ def d_di4():
     obj(d, 160, 66, 140, [HDR(), ('f', [('_db = null', 1, 2), ('_db = ref', 3, 6), ('_scopeFactory = ref', 7, None)])],
         [('CacheService (singleton)', 'amber', 1, 6, 3), ('CacheService (fixed)', 'emerald', 7, None, 7)])
     obj(d, 316, 66, 140, [HDR(lo=2), ('f', [('connection = open', 2, 3), ('connection = closed', 4, None)])],
-        [('DbContext #1', 'emerald', 2, 3, 2), ('DbContext #1 · disposed', 'amber', 4, 4, 4), ('DbContext #1 · STALE', 'rose', 5, 6, 5), ('DbContext #1 · unreachable', 'n', 7, None, 7)])
+        [('DbContext #1', 'emerald', 2, 3, 2), ('DbContext #1 · disposed', 'amber', 4, 4, 4), ('DbContext #1 · STALE', 'rose', 5, 6, 5), ('#1 · unreachable', 'n', 7, None, 7)])
     obj(d, 472, 66, 140, [HDR(lo=2), ('f', [('DbContext = ref', 2, None)])], [('Scope 1', 'cyan', 2, 3), ('Scope 1 · Dispose()', 'amber', 4, 4, 4)])
     obj(d, 316, 190, 140, [HDR(lo=6), ('f', [('connection = open', 6, None)])], [('DbContext #2', 'emerald', 6, None, 6)])
     obj(d, 472, 190, 140, [HDR(lo=6), ('f', [('DbContext = ref', 6, None)])], [('Scope 2', 'cyan', 6, None)])
