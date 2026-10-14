@@ -2,10 +2,10 @@ from p_common import *
 
 def d_if1():
     d = Diagram('if1', 640, 380, 'Calling p.Pay() on an interface variable: the variable holds the address of a heap object; the object’s type pointer leads to its type’s method table; the interface map in that table names which method is Pay; the call jumps to Invoice.Pay. A second variable q goes to a Subscription object and a different Pay')
-    d.zone(10, 24, 120, 270, 'cyan', '📚 STACK')
-    d.zone(140, 24, 170, 270, 'emerald', '🏠 HEAP')
-    d.zone(320, 24, 180, 270, 'violet', '🧬 TYPE DATA')
-    d.zone(510, 24, 120, 270, 'amber', '📜 CODE')
+    d.zone(10, 24, 120, 280, 'cyan', '📚 STACK')
+    d.zone(140, 24, 170, 280, 'emerald', '🏠 HEAP')
+    d.zone(320, 24, 180, 280, 'violet', '🧬 TYPE DATA')
+    d.zone(510, 24, 120, 280, 'amber', '📜 CODE')
     # set 1: Invoice
     d.box(20, 87, 100, 40, [('p : IPayable', 't'), ('0x2000', 'm')], 'cyan', st='1-', hl='3')
     o1 = card(d, 150, 46, 'Invoice @ 0x2000', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp', '1-3'), ('Amount = 40', 'f')], 'emerald', w=150, st=1)
@@ -37,7 +37,7 @@ def d_if1():
     d.token('b1', '📞', 15, 'cyan', st='6-6')
     d.token('b2', '📞', 15, 'violet', st='6-6')
     d.token('b3', '📞', 15, 'amber', st='6-6')
-    d.code_box(10, 306, 300, 62, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();     q.Pay();', '')], 'n', size=9, lh=15)
+    d.code_box(10, 310, 300, 58, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();     q.Pay();', '')], 'n', size=9, lh=15)
     for i, (t, c) in enumerate([('new Invoice(): a heap object with header + type pointer.|p holds its address. Addresses are illustrative.', 'emerald'),
                                 ('Another class, another object, another MethodTable.|q has the same variable type as p.', 'emerald'),
                                 ('p.Pay() ①: follow p to the object|on the heap', 'cyan'),
@@ -49,7 +49,7 @@ def d_if1():
 
 def d_if2():
     d = Diagram('if2', 640, 372, 'A struct Coupon assigned to an interface variable is boxed: a copy of its value goes into a new heap object that has a header and a type pointer, and the variable holds that object’s address; changing the original c does not change the box; a cast back copies the value out into a new stack slot')
-    d.zone(10, 24, 200, 270, 'cyan', '📚 STACK')
+    d.zone(10, 24, 200, 280, 'cyan', '📚 STACK')
     d.zone(220, 24, 190, 190, 'emerald', '🏠 HEAP')
     d.zone(420, 24, 210, 130, 'violet', '🧬 TYPE DATA')
     d.box(20, 126, 180, 50, [('c : Coupon', 't'), ('Value = 5', 'm'), ('no header, no type ptr', 's')], 'cyan', st='1-3', hl='1')

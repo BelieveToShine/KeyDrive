@@ -35,7 +35,7 @@ def d_me2():
     d.zone(180, 24, 180, 270, 'emerald', '🏠 HEAP')
     d.zone(410, 24, 220, 270, 'violet', '🧬 TYPE DATA (one per type)')
     mf = card(d, 18, 50, 'Main frame', [('o1 = 0x…A1', 'f'), ('o2 = 0x…B1', 'f')], 'cyan', w=124, st=1)
-    af = card(d, 18, 150, 'AddItem frame', [('this = 0x…A1', 'f', '4-4')], 'violet', w=124, st='4-5')
+    af = card(d, 18, 230, 'AddItem frame', [('this = 0x…A1', 'f', '4-4')], 'violet', w=124, st='4-5')
     cell(d, af, 0, 'this = 0x…B1', 'violet', st='5-5', hl=5)
     A = card(d, 190, 50, 'Order A @ 0x…A1', [('header', 'hdr'), ('type ptr', 'tp'), ('Count = 0', 'f', '1-3')], 'emerald', w=160, st=1)
     cell(d, A, 2, 'Count = 1', 'amber', st='4-', hl=4)
@@ -46,11 +46,11 @@ def d_me2():
     d.arrow([(mf['rows'][0]['r'][0], mf['rows'][0]['y']), (166, mf['rows'][0]['y']), (166, A['rows'][1]['y']), (A['rows'][1]['l'][0], A['rows'][1]['y'])], 'cyan', 'o1', at=(166, 95), st=1)
     d.arrow([(mf['rows'][1]['r'][0], mf['rows'][1]['y']), (172, mf['rows'][1]['y']), (172, B['rows'][1]['y']), (B['rows'][1]['l'][0], B['rows'][1]['y'])], 'cyan', 'o2', at=(172, 150), st=1)
     ty = mt['rows'][0]['y']
-    d.arrow([(A['rows'][1]['r'][0], A['rows'][1]['y']), (385, A['rows'][1]['y']), (385, ty), (mt['rows'][0]['l'][0], ty)], 'violet', 'type ptr', at=(385, 90), st='2-', id='ta')
+    d.arrow([(A['rows'][1]['r'][0], A['rows'][1]['y']), (385, A['rows'][1]['y']), (385, ty), (mt['rows'][0]['l'][0], ty)], 'violet', 'type ptr', at=(385, 170), st='2-', id='ta')
     d.arrow([(B['rows'][1]['r'][0], B['rows'][1]['y']), (385, B['rows'][1]['y']), (385, ty), (mt['rows'][0]['l'][0], ty)], 'violet', st='2-')
     d.arrow([(520, mt['rows'][0]['top'] + mt['rows'][0]['h']), (520, 190)], 'amber', 'entry', at=(520, 150), st='3-', id='tc')
-    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, A['rows'][0]['y']), (A['rows'][0]['l'][0], A['rows'][0]['y'])], 'violet', 'this', at=(158, 130), st='4-4')
-    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (176, af['rows'][0]['y']), (176, B['rows'][0]['y']), (B['rows'][0]['l'][0], B['rows'][0]['y'])], 'violet', 'this', at=(176, 200), st='5-5')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (156, af['rows'][0]['y']), (156, A['rows'][0]['y']), (A['rows'][0]['l'][0], A['rows'][0]['y'])], 'violet', 'this', at=(156, 180), st='4-4')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (178, af['rows'][0]['y']), (178, B['rows'][0]['y']), (B['rows'][0]['l'][0], B['rows'][0]['y'])], 'violet', 'this', at=(178, 245), st='5-5')
     d.code_box(10, 306, 270, 50, [(0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=15)
     d.note(10, 366, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
     _notes(d, 306, 52, [('Two objects, each with its own header,|type pointer and Count. o1 and o2 hold|their addresses.', 'cyan'),
@@ -58,7 +58,7 @@ def d_me2():
                         ('The MethodTable leads to AddItem’s compiled|code. That code exists once.', 'amber'),
                         ('o1.AddItem(): a frame is pushed with|this = Order A’s address. The shared|code runs on A: Count 0 → 1.', 'amber'),
                         ('Return, then o2.AddItem(): a new frame,|this = Order B’s address. The SAME|code runs on B: Count 0 → 1.', 'amber'),
-                        ('Return: the frame is popped.|Per object: header, type ptr, Count. Per type: one MethodTable,|one code. A million Orders still|share both.', 'emerald')], x=290, w=340, size=9)
+                        ('Return: frame popped. Per object: header,|type ptr, Count. Per type: one MethodTable|and one code, shared by a million Orders.', 'emerald')], x=290, w=340, size=9)
     return d
 
 def build_method_execution():

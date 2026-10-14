@@ -14,7 +14,7 @@ def d_oc1():
     cell(d, o, 3, 'note = ref', 'amber', st='4-', hl=4)
     s = card(d, 180, 190, 'string object "new"', [('header (sync block)', 'hdr'), ('type ptr → String MT', 'tp'), ('chars: "new"', 'f')], 'emerald', w=180, st='4-', hl=4)
     d.zone(480, 8, 150, 120, 'violet', '🧬 TYPE DATA')
-    mt = card(d, 488, 32, 'Order MethodTable', [('vtable, GC info', 'f'), ('shared by all Orders', 'f')], 'violet', w=134, st='2-')
+    mt = card(d, 488, 32, 'Order MethodTable', [('vtable, GC info', 'f'), ('shared by all', 'f')], 'violet', w=134, st='2-')
     ty, ry = o['rows'][1]['y'], mt['rows'][0]['y']
     d.arrow([(o['rows'][1]['r'][0], ty), (424, ty), (424, ry), (mt['rows'][0]['l'][0], ry)], 'violet', 'type ptr', at=(424, 81), st='2-', id='t1')
     d.arrow([(main['rows'][0]['r'][0], main['rows'][0]['y']), (166, main['rows'][0]['y']), (166, ty), (o['rows'][1]['l'][0], ty)], 'cyan', st='6-', id='r1')
