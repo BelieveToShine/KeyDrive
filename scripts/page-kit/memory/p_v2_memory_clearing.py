@@ -3,65 +3,68 @@ from p_common import *
 # ================================================================= HOW & WHEN MEMORY CLEARS (v2: memory level)
 CW = 140
 
+def _legend(d, y, text):
+    d.text(10, y, text, 'n', 9, anchor='start')
+
 def d_mc1():
-    d = Diagram('mc1', 640, 356, 'Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object')
-    d.zone(10, 24, 156, 266, 'cyan', '📚 STACK (roots)')
-    d.zone(176, 24, 454, 266, 'emerald', '🏠 HEAP')
-    # stack frames
-    card(d, 18, 68, 'Main() frame', [('cart = ref', 'f'), ('inv = null', 'f', '1-5')], 'cyan', w=140)
-    d.box(26, 120, 124, 22, [('inv = ref', 'm')], 'cyan', rx=4, st='6-', hl=6)
-    pr = card(d, 18, 196, 'Process() frame', [('order = ref', 'f')], 'cyan', w=140, st='1-1', hl=1)
-    # heap objects
-    cart = card(d, 185, 44, 'Cart', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Customer = null', 'f', '1-2')], 'emerald', w=CW)
-    cell(d, cart, 2, 'Customer = ref', 'emerald', st='3-', hl=3)
-    cus = card(d, 350, 44, 'Customer', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 42', 'f')], 'emerald', w=CW, st='3-', hl=3)
-    ord_ = card(d, 185, 172, 'Order (in use)', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'emerald', w=CW, st='1-1', hl=1)
-    card(d, 185, 172, 'Order: unreachable', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'amber', w=CW, st='2-3', hl=2)
-    card(d, 185, 172, 'Order', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 7', 'f')], 'amber', w=CW, st='4-4', hl=4)
-    d.zone(185, 172, CW, 106, 'n', 'free space', st='5-5', dash=True)
-    inv = card(d, 185, 172, 'Invoice (new)', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 9', 'f')], 'emerald', w=CW, st='6-', hl=6)
-    # badges from the mark phase
-    d.text(185 + CW - 8, 63, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
-    d.text(350 + CW - 8, 63, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
-    d.text(185 + CW - 8, 191, '✘ no path', 'rose', 9, anchor='end', st='4-4')
-    # arrows
-    d.arrow([(150, 105), (193, 105)], 'cyan', st='1-', id='a1')
-    d.arrow([(150, 233), (193, 233)], 'cyan', st='1-1', id='a2')
-    d.arrow([(cart['rows'][2]['r'][0], 129), (cart['rows'][2]['r'][0] + 16, 129), (cart['rows'][2]['r'][0] + 16, 105), (358, 105)], 'emerald', st='3-', id='a3')
-    d.arrow([(150, 129), (158, 129), (158, 233), (193, 233)], 'cyan', st='6-', id='a4')
-    d.token('a1', '🔍', 15, 'cyan', st='4-4')
-    d.token('a3', '🔍', 15, 'emerald', st='4-4')
+    d = Diagram('mc1', 640, 318, 'Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object')
+    d.zone(10, 24, 156, 196, 'cyan', '📚 STACK (roots)')
+    d.zone(176, 24, 454, 196, 'emerald', '🏠 HEAP')
+    main = card(d, 18, 44, 'Main() frame', [('cart = ref', 'f'), ('inv = null', 'f', '1-5')], 'cyan', w=140)
+    cell(d, main, 1, 'inv = ref', 'cyan', st='6-', hl=6)
+    card(d, 18, 140, 'Process() frame', [('order = ref', 'f')], 'cyan', w=140, st='1-1', hl=1)
+    d.zone(18, 140, 140, 58, 'n', 'Process() popped', dash=True, st='2-')
+    cart = card(d, 185, 52, 'Cart', [('Customer = null', 'f', '1-2')], 'emerald', w=CW)
+    cell(d, cart, 0, 'Customer = ref', 'emerald', st='3-', hl=3)
+    cus = card(d, 350, 52, 'Customer', [('Id = 42', 'f')], 'emerald', w=CW, st='3-', hl=3)
+    card(d, 185, 148, 'Order (in use)', [('Id = 7', 'f')], 'emerald', w=CW, st='1-1', hl=1)
+    ordu = card(d, 185, 148, 'Order: unreachable', [('Id = 7', 'f')], 'amber', w=CW, st='2-4', hl=2)
+    d.zone(185, 148, CW, 58, 'n', 'free space', st='5-5', dash=True)
+    inv = card(d, 185, 148, 'Invoice (new)', [('Id = 9', 'f')], 'emerald', w=CW, st='6-', hl=6)
+    d.box(505, 52, 115, 44, [('🧹 GC runs', 't'), ('marks from roots', 'm')], 'violet', st='4-5', hl='4,5')
+    d.text(185 + CW - 8, 70, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
+    d.text(350 + CW - 8, 70, '✔ marked', 'emerald', 9, anchor='end', st='4-4')
+    d.text(185 + CW - 8, 166, '✘ no path', 'rose', 9, anchor='end', st='4-4')
+    d.arrow([main['rows'][0]['r'], cart['L']], 'cyan', st='1-', id='a1')
+    d.arrow([(158, 177), ordu['L']], 'cyan', st='1-1', id='a2')
+    d.arrow([cart['rows'][0]['r'], (cart['x'] + cart['w'] + 8, cart['rows'][0]['y']), (cart['x'] + cart['w'] + 8, cus['L'][1]), cus['L']], 'emerald', st='3-', id='a3')
+    d.arrow([main['rows'][1]['r'], (168, main['rows'][1]['y']), (168, inv['L'][1]), inv['L']], 'cyan', st='6-', id='a4')
     caps = [('1 · Inside Process(): the local order (stack) references an Order object (heap).|The Main() frame holds cart → Cart.', 'emerald'),
-            ('2 · Process() returns: its frame is popped, order is gone.|Nothing references the Order now: unreachable, but its heap space is still taken.', 'amber'),
+            ('2 · Process() returns: its frame is popped, order is gone.|Nothing references the Order: unreachable, but its heap space is still taken.', 'amber'),
             ('3 · The program keeps working: a new Customer is allocated and Cart.Customer references it.|The unreachable Order is simply left where it is.', 'cyan'),
-            ('4 · Later a GC starts at the roots (stack slots), follows references: Cart ✔, Customer ✔.|Nothing leads to the Order: not marked.', 'violet'),
+            ('4 · Later a GC starts at the roots (stack slots) and follows references: Cart ✔, Customer ✔.|Nothing leads to the Order: not marked.', 'violet'),
             ('5 · The GC reclaims the unmarked Order: its space is free again.|It happened at the GC’s own moment, not when the method returned.', 'emerald'),
-            ('6 · New allocations can use the free space: here a new Invoice, referenced by inv.|(The GC may also compact survivors; see [[p:gc-basics]].)', 'emerald')]
+            ('6 · A new allocation can use the free space: a new Invoice, referenced by inv.|(The GC may also compact survivors; see [[p:gc-basics]].)', 'emerald')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 298, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
-    d.text(630, 350, 'teaching picture: positions and values are illustrative; the GC runs when it decides', 'n', 8.5, anchor='end')
+        d.note(10, 230, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    _legend(d, 288, 'colours: emerald = reachable / in use · amber = unreachable but not yet freed · dashed = free or popped')
+    d.text(630, 306, 'teaching picture: positions and values are illustrative; the GC runs when it decides', 'n', 8.5, anchor='end')
     return d
 
 def _fs(d, x, y, st, color, title, handle, hl=None):
-    return card(d, x, y, title, [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), (handle, 'f')], color, w=200, st=st, hl=hl)
+    return card(d, x, y, title, [(handle, 'f')], color, w=200, st=st, hl=hl)
 
 def _frame(d, st):
-    card(d, 18, 84, 'Run() frame', [('file = ref', 'f')], 'cyan', w=114, st=st)
+    card(d, 18, 68, 'Run() frame', [('file = ref', 'f')], 'cyan', w=114, st=st)
+
+def _scene(d, nid):
+    d.zone(10, 24, 130, 130, 'cyan', '📚 STACK')
+    d.zone(150, 24, 244, 130, 'emerald', '🏠 .NET HEAP')
+    d.zone(414, 24, 216, 130, 'amber', '🖥️ OS (outside the heap)')
 
 def d_mc2():
-    d = Diagram('mc2', 640, 340, 'With using: a FileStream object on the heap owns an operating-system file handle; at the closing brace Dispose closes the handle so the file is unlocked at once, but the FileStream object stays on the heap as unreachable memory until a later garbage collection reclaims it')
-    d.zone(10, 24, 130, 160, 'cyan', '📚 STACK')
-    d.zone(150, 24, 244, 160, 'emerald', '🏠 .NET HEAP')
-    d.zone(414, 24, 216, 160, 'amber', '🖥️ OS (outside the heap)')
+    d = Diagram('mc2', 640, 262, 'With using: a FileStream object on the heap owns an operating-system file handle; at the closing brace Dispose closes the handle so the file is unlocked at once, but the FileStream object stays on the heap as unreachable memory until a later garbage collection reclaims it')
+    _scene(d, 2)
     _frame(d, '1-3')
-    _fs(d, 172, 60, '1-2', 'emerald', 'FileStream (in use)', 'handle = #7C')
-    _fs(d, 172, 60, '3-3', 'emerald', 'FileStream', 'handle = closed', hl=3)
-    _fs(d, 172, 60, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed')
-    d.zone(172, 60, 200, 106, 'n', 'free space', st='5-5', dash=True)
-    d.box(438, 117, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-2', hl=1)
-    d.box(438, 117, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='3-', hl=3)
-    d.arrow([(124, 121), (180, 121)], 'cyan', st='1-3', id='b1')
-    d.arrow([(364, 145), (438, 145)], 'amber', 'owns', at=(401, 145), st='1-2', id='b2')
+    d.zone(18, 68, 114, 58, 'n', 'Run() popped', dash=True, st='4-')
+    fs = _fs(d, 172, 68, '1-2', 'emerald', 'FileStream (in use)', 'handle = #7C')
+    _fs(d, 172, 68, '3-3', 'emerald', 'FileStream', 'handle = closed', hl=3)
+    _fs(d, 172, 68, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed')
+    d.zone(172, 68, 200, 58, 'n', 'free space', st='5-5', dash=True)
+    d.box(438, 69, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-2', hl=1)
+    d.box(438, 69, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='3-', hl=3)
+    d.arrow([(132, 97), fs['L']], 'cyan', st='1-3', id='b1')
+    d.arrow([fs['rows'][0]['r'], (438, 97)], 'amber', 'owns', at=(405, 97), st='1-2', id='b2')
     d.token('b1', '📞', 15, 'cyan', st='2-2')
     caps = [('1 · using var file = File.OpenRead(...): a FileStream object on the heap owns an OS file handle;|the OS marks data.txt as open and locked.', 'emerald'),
             ('2 · The block ends: the compiler-generated finally calls file.Dispose().|The call follows the reference from the stack slot to the object.', 'cyan'),
@@ -69,36 +72,41 @@ def d_mc2():
             ('4 · The method returns, the frame is popped: the FileStream is unreachable, but its memory is still there.|Dispose did not free any heap memory.', 'amber'),
             ('5 · A later GC reclaims the FileStream’s memory, like any other object.|The GC frees memory; Dispose released the file.', 'violet')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 232, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
-    d.text(630, 330, 'teaching picture: handle value and layout are illustrative; a real FileStream holds more internals', 'n', 8.5, anchor='end')
+        d.note(10, 166, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    _legend(d, 228, 'colours: emerald = in use / released · amber = unreachable or still open · dashed = free or popped')
+    d.text(630, 246, 'teaching picture: handle value and layout are illustrative; a real FileStream holds more internals', 'n', 8.5, anchor='end')
     return d
 
 def d_mc3():
-    d = Diagram('mc3', 640, 340, 'Without using: nobody calls Dispose, so after the method returns the FileStream is unreachable but the operating-system file stays open and locked; only when a later garbage collection finds the object and its finalizer runs is the handle closed, and the object memory is reclaimed even later')
-    d.zone(10, 24, 130, 160, 'cyan', '📚 STACK')
-    d.zone(150, 24, 244, 160, 'emerald', '🏠 .NET HEAP')
-    d.zone(414, 24, 216, 160, 'amber', '🖥️ OS (outside the heap)')
+    d = Diagram('mc3', 640, 336, 'Without using: nobody calls Dispose, so after the method returns the FileStream is unreachable but the operating-system file stays open and locked; only when a later garbage collection finds the object and its finalizer runs is the handle closed, and the object memory is reclaimed even later')
+    _scene(d, 3)
     _frame(d, '1-1')
-    _fs(d, 172, 60, '1-1', 'emerald', 'FileStream (in use)', 'handle = #7C')
-    _fs(d, 172, 60, '2-3', 'amber', 'FileStream: unreachable', 'handle = #7C', hl=2)
-    _fs(d, 172, 60, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed', hl=4)
-    d.zone(172, 60, 200, 106, 'n', 'free space', st='5-5', dash=True)
-    d.box(438, 117, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-1')
-    d.box(438, 117, 182, 56, [('STILL open', 't'), ('data.txt · locked', 'm')], 'rose', st='2-3', hl=2)
-    d.box(438, 117, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='4-', hl=4)
-    d.arrow([(124, 121), (180, 121)], 'cyan', st='1-1', id='c1')
-    d.arrow([(364, 145), (438, 145)], 'amber', 'owns', at=(401, 145), st='1-3', id='c2')
-    d.box(172, 188, 200, 36, [('finalizer of the handle', 't')], 'violet', st='3-4', hl='3,4')
-    d.arrow([(372, 206), (529, 206), (529, 173)], 'violet', 'closes', at=(450, 206), st='4-4', id='c3')
-    d.token('c3', '✖', 14, 'violet', st='4-4')
+    d.zone(18, 68, 114, 58, 'n', 'Run() popped', dash=True, st='2-')
+    fs = _fs(d, 172, 68, '1-1', 'emerald', 'FileStream (in use)', 'handle = #7C')
+    _fs(d, 172, 68, '2-3', 'amber', 'FileStream: unreachable', 'handle = #7C', hl=2)
+    _fs(d, 172, 68, '4-4', 'amber', 'FileStream: unreachable', 'handle = closed', hl=4)
+    d.zone(172, 68, 200, 58, 'n', 'free space', st='5-5', dash=True)
+    d.box(438, 69, 182, 56, [('open file entry', 't'), ('data.txt · locked', 'm')], 'amber', st='1-1')
+    d.box(438, 69, 182, 56, [('STILL open', 't'), ('data.txt · locked', 'm')], 'rose', st='2-3', hl=2)
+    d.box(438, 69, 182, 56, [('file entry closed', 't'), ('data.txt · unlocked', 'm')], 'emerald', st='4-', hl=4)
+    d.arrow([(132, 97), fs['L']], 'cyan', st='1-1', id='c1')
+    d.arrow([fs['rows'][0]['r'], (438, 97)], 'amber', 'owns', at=(405, 97), st='1-3', id='c2')
+    d.text(386, 40, 'GC #1', 'violet', 10, anchor='end', st='3-4')
+    d.text(386, 40, 'GC #2 (later)', 'violet', 10, anchor='end', st='5-5')
+    d.zone(150, 166, 244, 64, 'violet', '📋 finalizer queue', dash=True, st='3-5')
+    d.text(272, 212, 'empty again', 'n', 9, anchor='middle', st='5-5')
+    d.box(172, 192, 200, 32, [('finalizer of the handle', 't')], 'violet', st='3-4', hl='3,4')
+    d.arrow([fs['B'], (272, 192)], 'violet', 'queued', at=(318, 176), st='3-3', id='c4')
+    d.arrow([(372, 208), (529, 208), (529, 125)], 'violet', 'closes', at=(450, 208), st='4-4', id='c3')
     caps = [('1 · Same start, but written without using: a FileStream owns an OS handle and the file is locked.', 'emerald'),
             ('2 · The method returns without calling Dispose. The frame is popped: the object is unreachable.|But the OS entry is NOT in the heap, so the file stays open and locked.', 'rose'),
-            ('3 · Much later (nobody controls when) a GC finds the unreachable object.|The handle has a finalizer, so a clean-up call is scheduled.', 'violet'),
+            ('3 · Much later (nobody controls when) a GC finds the unreachable object.|The handle has a finalizer, so a clean-up call is queued (teaching picture).', 'violet'),
             ('4 · The finalizer runs and closes the handle. Only now is the file released: late and unpredictable.|The object memory is still in the heap.', 'violet'),
             ('5 · Reclaiming the memory itself takes another, later GC.|A finalizer is a safety net, not a plan.', 'violet')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 240, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
-    d.text(630, 330, 'teaching picture: when and how the GC queues finalizers is not drawn; times are unknown', 'n', 8.5, anchor='end')
+        d.note(10, 242, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+    _legend(d, 304, 'colours: emerald = in use / released · amber = unreachable · rose = file still locked · dashed = free, popped or queue')
+    d.text(630, 322, 'teaching picture: how the GC queues finalizers is not drawn exactly; times are unknown', 'n', 8.5, anchor='end')
     return d
 
 def build_memory_clearing():

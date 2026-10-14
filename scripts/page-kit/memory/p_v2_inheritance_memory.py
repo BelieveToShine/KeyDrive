@@ -83,7 +83,7 @@ def d_in2():
     d.arrow([(130, ly), c['L']], 'cyan', st=1)
     d.arrow([(130, 147), (143, 147), (143, ly), c['L']], 'cyan', st='4-')
     d.zone(10, 204, 346, 58, 'amber', '🔍 WHAT THE COMPILER ALLOWS (build time, not memory)', st='2-')
-    d.note(10, 210, 346, 46, 'The variable a is typed Animal; the object it|holds is a Dog (see the type pointer).', 'cyan', st=1, size=9)
+    d.note(10, 210, 346, 46, 'The variable a is typed Animal; the object it|holds is a Dog (see the type pointer).', 'cyan', st='1-1', size=9)
     d.box(18, 228, 160, 26, [('a.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='2-3')
     d.box(184, 228, 164, 26, [('a.Breed ❌ build error', 'm')], 'rose', rx=4, st='2-3')
     d.box(18, 228, 160, 26, [('dog.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='4-4')
