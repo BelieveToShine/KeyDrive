@@ -38,79 +38,128 @@
   <section class="kd-hero left">
     <div class="eyebrow">Concept 13 of 29 · 🧬 Objects & types</div>
     <h1><span class="grad-text">A nesting doll</span>: creating a Dog also builds the Animal inside it.</h1>
-    <p class="sub">What <code>new Dog()</code> allocates when Dog inherits from Animal: one object with both layers, the constructor order, and what a base-type variable can see.</p>
+    <p class="sub">What <code>new Dog()</code> allocates when Dog inherits from Animal: one object with a type pointer and both sets of fields, the constructor order, and what a base-type variable can see.</p>
     <div class="interview-q">❓ "When you create a subclass object, what happens to the base class memory?"</div>
   </section>
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Creating a Dog, a subclass of Animal, makes ONE heap object that contains both the Animal part and the Dog part; initializers run derived first then base, then constructors run base first then derived">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="new Dog() allocates ONE heap object with an object header, a type pointer to the Dog MethodTable and the fields Name and Breed, which are references to separate string objects; the Dog constructor runs Dog field initializers, calls the Animal constructor, then finishes its own body, and only at the end the reference is stored in the variable d">
 <defs><marker id="in1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="100" width="170" height="210" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="200" y="100" width="430" height="210" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="214" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 ONE Dog object on the heap</text>
-<g class="st" data-s="6-"><path d="M166,168 L260,168" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in1A)"/></g>
-<rect class="bx" x="10" y="8" width="400" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Animal { string Name = "?";</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Animal() { Name = "Rex"; } }</text>
-<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Dog : Animal { string Breed = "Lab";</text>
-<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Dog() { Breed = "Pug"; } }</text>
-<g class="st" data-s="1-1"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
-<g class="st" data-s="1-1"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
-<g class="st" data-s="1-1"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = null</text></g>
-<g class="st" data-s="2-2"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
-<g class="st" data-s="2-2"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐶 Dog part</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐾 Animal part</text></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = "?"</text></g>
-<g class="st" data-s="3-3"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
-<g class="st" data-s="3-3"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐾 Animal part</text></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
-<g class="st" data-s="4-4"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
-<g class="st" data-s="4-4"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
-<g class="st" data-s="5-"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="5-"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
-<g class="st" data-s="5-"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
-<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="5-" data-hl="5"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐶 Dog part</text></g>
-<g class="st" data-s="5-" data-hl="5"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed = "Pug"</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="24" y="146" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="95" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">d</text></g>
-<g class="st" data-s="6-" data-hl="6"><text x="95" y="178" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…K4</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">1 · whole object reserved: both parts, all defaults</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">2 · Dog’s field initializer runs first</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">3 · then Animal’s field initializer</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">4 · Animal’s constructor body (base first)</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">5 · Dog’s constructor body (derived last)</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">6 · one address for the whole Dog</text></g>
-<g class="st" data-s="6-"><g class="arrow-pill"><rect x="185.5" y="159" width="55" height="18" rx="9"/><text x="213" y="171.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+<rect class="zone" x="10" y="24" width="120" height="196" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="140" y="24" width="302" height="196" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="154" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="450" y="24" width="180" height="196" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="464" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="1-"><rect class="zone" x="282" y="46" width="150" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="296" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">ONE Dog object</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="458" y="70" width="164" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="472" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Dog MethodTable</text></g>
+<g class="st" data-s="1-"><path id="in1-tp" d="M424,107 L466,107" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="2-4"><path d="M290,155 L238,155" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="3-3"><path d="M290,131 L238,131" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="4-"><path d="M290,131 L252,131 L252,107 L238,107" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="5-"><path d="M290,155 L252,155 L252,179 L238,179" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="6-"><path id="in1-dr" d="M122,83 L290,83" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="290" y="72" width="134" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="357" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="290" y="96" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="357" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="290" y="120" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="357" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
+<g class="st" data-s="1"><rect class="bx" x="290" y="144" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1"><text x="357" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = null</text></g>
+<g class="st" data-s="3-4" data-hl="3,,,4"><rect class="bx" x="290" y="96" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3,,,4"><text x="357" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="290" y="96" width="134" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="357" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="290" y="120" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="357" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name → string</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="290" y="120" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="357" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name → string</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="290" y="120" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="357" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name → string</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="290" y="144" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="357" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed → string</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="290" y="144" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="357" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed → string</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="290" y="144" width="134" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="357" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed → string</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="290" y="144" width="134" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="357" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed → string</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="466" y="96" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="540" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">parent → Animal MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="466" y="120" width="148" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="540" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable slots, size …</text></g>
+<g class="st" data-s="1-"><text class="free" x="540" y="172" text-anchor="middle" font-size="9" font-weight="400" fill="#c4b5fd">one per type,</text></g>
+<g class="st" data-s="1-"><text class="free" x="540" y="186" text-anchor="middle" font-size="9" font-weight="400" fill="#c4b5fd">shared by every Dog</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="138" y="144.0" width="100" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="188" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"Lab"</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="138" y="144.0" width="100" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="188" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Lab"</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="138" y="144.0" width="100" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="188" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">"Lab" no ref</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="138" y="120.0" width="100" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="188" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"?"</text></g>
+<g class="st" data-s="3-3"><rect class="bx" x="138" y="120.0" width="100" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3"><text x="188" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"?"</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="138" y="120.0" width="100" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="188" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">"?" no ref</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="138" y="96.0" width="100" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="188" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"Rex"</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="138" y="96.0" width="100" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="188" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Rex"</text></g>
+<g class="st" data-s="5-5" data-hl="5"><rect class="bx" x="138" y="168.0" width="100" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5" data-hl="5"><text x="188" y="181.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">"Pug"</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="138" y="168.0" width="100" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="188" y="181.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">"Pug"</text></g>
+<g class="st" data-s="1-"><text class="free" x="190" y="212" text-anchor="middle" font-size="8.5" font-weight="400" fill="#6ee7b7">each "…" is its own string object</text></g>
+<g class="st" data-s="1-5"><rect class="bx" x="18" y="72.0" width="104" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5"><text x="70" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">d = null</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="18" y="72.0" width="104" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="70" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">d = ref</text></g>
+<g class="st" data-s="1-5" data-hl="1,,,2,,,5"><rect class="bx" x="18" y="100" width="104" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5" data-hl="1,,,2,,,5"><text x="70" y="118" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Dog()</text></g>
+<g class="st" data-s="1-5" data-hl="1,,,2,,,5"><text x="70" y="130" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">this → object</text></g>
+<g class="st" data-s="3-4" data-hl="3,,,4"><rect class="bx" x="18" y="150" width="104" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3,,,4"><text x="70" y="168" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Animal()</text></g>
+<g class="st" data-s="3-4" data-hl="3,,,4"><text x="70" y="180" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">this → object</text></g>
+<rect class="bx" x="10" y="232" width="360" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="254" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Animal { string Name = "?";</text>
+<text x="24" y="269" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Animal() { Name = "Rex"; } }</text>
+<text x="24" y="284" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Dog : Animal { string Breed = "Lab";</text>
+<text x="24" y="299" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Dog() { Breed = "Pug"; } }</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="505" y="267" text-anchor="middle" font-size="9" fill="#6ee7b7">new: one zeroed block. Its type ptr</text></g>
+<g class="st" data-s="1-1"><text x="505" y="280" text-anchor="middle" font-size="9" fill="#6ee7b7">already says Dog. Dog() is called.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="505" y="267" text-anchor="middle" font-size="9" fill="#fcd34d">Dog() starts with ITS field</text></g>
+<g class="st" data-s="2-2"><text x="505" y="280" text-anchor="middle" font-size="9" fill="#fcd34d">initializer: Breed = "Lab".</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="505" y="260.5" text-anchor="middle" font-size="9" fill="#fcd34d">Dog() calls Animal(): Animal's</text></g>
+<g class="st" data-s="3-3"><text x="505" y="273.5" text-anchor="middle" font-size="9" fill="#fcd34d">initializer Name = "?" runs.</text></g>
+<g class="st" data-s="3-3"><text x="505" y="286.5" text-anchor="middle" font-size="9" fill="#fcd34d">(type ptr is still Dog!)</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="505" y="267" text-anchor="middle" font-size="9" fill="#fcd34d">Animal() body: Name = "Rex".</text></g>
+<g class="st" data-s="4-4"><text x="505" y="280" text-anchor="middle" font-size="9" fill="#fcd34d">"?" has no reference now.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="505" y="267" text-anchor="middle" font-size="9" fill="#fcd34d">Animal() returns. Back in Dog():</text></g>
+<g class="st" data-s="5-5"><text x="505" y="280" text-anchor="middle" font-size="9" fill="#fcd34d">Breed = "Pug". "Lab" is unreferenced.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="380" y="232" width="250" height="78" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="505" y="267" text-anchor="middle" font-size="9" fill="#67e8f9">new returns; Dog() popped. The</text></g>
+<g class="st" data-s="6-6"><text x="505" y="280" text-anchor="middle" font-size="9" fill="#67e8f9">address is copied into d.</text></g>
+<g class="st" data-s="1-"><text class="free" x="320" y="324" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: row order and frame details simplified, sizes not shown</text></g>
+<g class="st" data-s="6-"><g class="arrow-pill"><rect x="167" y="74" width="66" height="18" rx="9"/><text x="200" y="86.5" text-anchor="middle" font-size="9" font-style="italic">reference</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>new Dog()</code> reserves <b>one</b> object on the heap. It already has room for the <b>Animal part</b> and the <b>Dog part</b>. All fields are default.</li><li><b>Field initializers run derived → base.</b> First Dog’s: <code>Breed = "Lab"</code>.</li><li>Then Animal’s: <code>Name = "?"</code>.</li><li><b>Constructor bodies run base → derived.</b> First Animal’s: <code>Name = "Rex"</code>.</li><li>Then Dog’s: <code>Breed = "Pug"</code>.</li><li>One address for the whole Dog object goes into the variable <code>d</code>.</li></ol>
-<figcaption><strong>What you're seeing:</strong> there is no separate Animal object. The Animal part is the first layer of the same object.</figcaption>
+<ol class="st-caps"><li><code>new Dog()</code> reserves <b>one</b> zeroed block on the heap: object header, <b>type pointer</b> (already Dog), and the fields <code>Name</code> and <code>Breed</code> (both null). The <code>Dog()</code> constructor is called with <code>this</code> = that block.</li><li><b>Dog’s field initializer runs first:</b> <code>Breed = "Lab"</code>. The string <code>"Lab"</code> is a <b>separate</b> heap object; the field holds a reference to it.</li><li><code>Dog()</code> calls <code>Animal()</code> (new frame, same <code>this</code>). Animal’s initializer runs: <code>Name = "?"</code>. The type pointer still says <b>Dog</b>.</li><li>Animal’s constructor body: <code>Name = "Rex"</code>. The field now points to a new string; <code>"?"</code> has no reference left (the GC frees it later, not now).</li><li><code>Animal()</code> returns and its frame is popped. Back in <code>Dog()</code>: <code>Breed = "Pug"</code>; <code>"Lab"</code> loses its reference.</li><li><code>new</code> returns the object’s address, <code>Dog()</code> is popped, and the address is copied into <code>d</code>. Only now does <code>d</code> refer to the object.</li></ol>
+<figcaption><strong>What you're seeing:</strong> there is no separate Animal object. The Animal fields are inside the same block. The row order here is a teaching picture; the runtime may order fields differently.</figcaption>
 </figure>
   </section>
-  <div class="one-sentence">🎯 <span class="grad-text"><b>A subclass object is ONE object that contains the base-class fields and the subclass fields.</b></span></div>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A subclass object is ONE object: header, type pointer, and the base-class fields plus the subclass fields.</b></span></div>
   <section class="kd-section " id="why">
     <div class="sec-label why">🌍 In real life</div>
     <div class="kd-card why-box">
@@ -120,49 +169,107 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">👁️ A base variable pointing at a child object</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="An Animal variable can point at a Dog object but only sees the Animal members; casting to Dog shows the whole object; the object itself stays a Dog the whole time">
+<figure class="diagram-card kd-story" data-steps="5">
+<div class="st-stage"><svg viewBox="0 0 640 356" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Animal a = new Dog(): variable a points at one Dog object whose type pointer leads to the Dog MethodTable; the compiler only lets a use Animal members, the cast (Dog)a compares the object type pointer with Dog and copies the same reference into dog, and a cast to Cat fails at run time">
 <defs><marker id="in2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="170" height="214" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="200" y="86" width="430" height="214" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="214" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M166,175 L260,175" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in2A)"/></g>
-<rect class="bx" x="10" y="8" width="380" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Animal a = new Dog();</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">a.Name = "Rex";            // ✅ Animal member</text>
-<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var b = ((Dog)a).Breed;   // ✅ cast to see Dog members</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="150" width="142" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="95" y="173" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a  (type Animal)</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="95" y="185" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…L2</text></g>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="260" y="118" width="190" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="355" y="148" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Dog object</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="355" y="160" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="355" y="172" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Pug"</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx note" x="470" y="118" width="150" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="545" y="138" text-anchor="middle" font-size="10" fill="#fcd34d">a sees: Name</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="470" y="160" width="150" height="34" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="545" y="180" text-anchor="middle" font-size="10" fill="#fda4af">a.Breed → ❌ error</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="470" y="118" width="150" height="76" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="545" y="152" text-anchor="middle" font-size="10" fill="#6ee7b7">(Dog)a sees:</text></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="545" y="166" text-anchor="middle" font-size="10" fill="#6ee7b7">Name + Breed</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="470" y="118" width="150" height="76" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="545" y="152" text-anchor="middle" font-size="10" fill="#c4b5fd">The object never</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="545" y="166" text-anchor="middle" font-size="10" fill="#c4b5fd">changes: it is a Dog</text></g>
-<g class="st" data-s="2-"><rect class="bx note" x="260" y="214" width="360" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-"><text x="440" y="232" text-anchor="middle" font-size="9.5" fill="#fcd34d">The variable’s type = what you may use.</text></g>
-<g class="st" data-s="2-"><text x="440" y="245.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">The object’s type = what it really is.</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="185.5" y="166" width="55" height="18" rx="9"/><text x="213" y="178.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+<rect class="zone" x="10" y="24" width="130" height="172" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="150" y="24" width="206" height="172" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="164" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="366" y="24" width="264" height="238" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="380" y="43" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA (one per type)</text>
+<g class="st" data-s="1-"><rect class="zone" x="156" y="46" width="194" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="170" y="65" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Dog object</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="374" y="70" width="248" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="388" y="89" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Dog MethodTable</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="374" y="170" width="248" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="388" y="189" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Animal MethodTable</text></g>
+<rect class="zone" x="10" y="204" width="346" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="223" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🔍 WHAT THE COMPILER ALLOWS (build time, not memory)</text>
+<g class="st" data-s="1-"><path id="in2-tp" d="M342,107 L382,107" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#in2A)"/></g>
+<g class="st" data-s="1-"><path id="in2-a" d="M130,83 L164,83" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in2A)"/></g>
+<g class="st" data-s="4-"><path id="in2-b" d="M130,147 L142,147 L142,83 L164,83" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in2A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="164" y="72" width="178" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="253" y="85.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">object header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="164" y="96" width="178" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="253" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Dog MT</text></g>
+<g class="st" data-s="1-1"><rect class="bx" x="164" y="120" width="178" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="253" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name  (ref)</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="164" y="144" width="178" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="253" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed  (ref)</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="164" y="120" width="178" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="253" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name  (ref)</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="164" y="120" width="178" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="253" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name  (ref)</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="164" y="144" width="178" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="253" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed  (ref)</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="164" y="144" width="178" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="253" y="157.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed  (ref)</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="382" y="96" width="232" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="498" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type = Dog  ·  parent: Animal</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="382" y="120" width="232" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="498" y="133.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable slots, size …</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="382" y="96" width="232" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="498" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">type = Dog  ==  Dog ✓ match</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="382" y="96" width="232" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="498" y="109.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">type = Dog  !=  Cat ✗ no match</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="382" y="196" width="232" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="498" y="209.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type = Animal</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="382" y="220" width="232" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="498" y="233.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable slots, size …</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="20" y="66.0" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="75" y="80.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="75" y="93.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">declared Animal</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="20" y="130" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="75" y="144.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">dog</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="75" y="157.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#9fe8f5">declared Dog</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="18" y="228" width="160" height="26" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="98" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">a.Name  ✅ allowed</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="184" y="228" width="164" height="26" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="266" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">a.Breed ❌ build error</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="18" y="228" width="160" height="26" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="98" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">dog.Name  ✅ allowed</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="184" y="228" width="164" height="26" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="266" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">dog.Breed ✅ allowed</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="18" y="228" width="330" height="26" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="183" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">(Cat)a  compiles ✅ — fails at run time ❌</text></g>
+<rect class="bx" x="10" y="276" width="346" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="298" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Animal a = new Dog();</text>
+<text x="24" y="313" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">a.Breed;             // ❌ build error</text>
+<text x="24" y="328" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var dog = (Dog)a;    // ✅ same object</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="366" y="276" width="264" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="498" y="296.5" text-anchor="middle" font-size="9" fill="#67e8f9">One Dog object. a (typed Animal)</text></g>
+<g class="st" data-s="1-1"><text x="498" y="309.5" text-anchor="middle" font-size="9" fill="#67e8f9">holds its address; the object's type</text></g>
+<g class="st" data-s="1-1"><text x="498" y="322.5" text-anchor="middle" font-size="9" fill="#67e8f9">ptr says Dog.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="366" y="276" width="264" height="62" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="498" y="296.5" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: through a only Animal</text></g>
+<g class="st" data-s="2-2"><text x="498" y="309.5" text-anchor="middle" font-size="9" fill="#fcd34d">members are allowed (Name). Nothing</text></g>
+<g class="st" data-s="2-2"><text x="498" y="322.5" text-anchor="middle" font-size="9" fill="#fcd34d">in memory changes.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="366" y="276" width="264" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="498" y="296.5" text-anchor="middle" font-size="9" fill="#6ee7b7">Run time: (Dog)a reads the object's</text></g>
+<g class="st" data-s="3-3"><text x="498" y="309.5" text-anchor="middle" font-size="9" fill="#6ee7b7">type ptr and compares it with Dog.</text></g>
+<g class="st" data-s="3-3"><text x="498" y="322.5" text-anchor="middle" font-size="9" fill="#6ee7b7">Match.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="366" y="276" width="264" height="62" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="498" y="303" text-anchor="middle" font-size="9" fill="#67e8f9">The SAME address is copied into dog.</text></g>
+<g class="st" data-s="4-4"><text x="498" y="316" text-anchor="middle" font-size="9" fill="#67e8f9">No new object; Breed is now allowed.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="366" y="276" width="264" height="62" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="498" y="296.5" text-anchor="middle" font-size="9" fill="#fda4af">(Cat)a: type ptr says Dog, not Cat →</text></g>
+<g class="st" data-s="5-5"><text x="498" y="309.5" text-anchor="middle" font-size="9" fill="#fda4af">InvalidCastException. The object</text></g>
+<g class="st" data-s="5-5"><text x="498" y="322.5" text-anchor="middle" font-size="9" fill="#fda4af">is untouched.</text></g>
+<g class="st" data-s="1-"><text class="free" x="320" y="351" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: slot contents simplified, no addresses or sizes claimed</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="336" y="88" width="60" height="18" rx="9"/><text x="366" y="100.5" text-anchor="middle" font-size="9" font-style="italic">type ptr</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="in2-tp"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="5-5"><g class="tok" data-path="in2-tp"><circle r="9.3" fill="#0b0f19" stroke="#fb7185" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>Animal a = new Dog();</code> — the variable is typed <b>Animal</b>, but it points at a full <b>Dog</b> object.</li><li>Through <code>a</code> you can only use <b>Animal</b> members. <code>a.Breed</code> will not compile.</li><li>A <b>cast</b> to <code>Dog</code> shows the whole object (and checks the object really is a Dog).</li><li>The object <b>never changes type</b>; only your “view” of it changes.</li></ol>
-<figcaption><strong>What you're seeing:</strong> one object, two possible views. The variable’s type limits what you can touch; it does not change the object.</figcaption>
+<ol class="st-caps"><li><code>Animal a = new Dog();</code> — the variable is typed <b>Animal</b>, but it holds the address of a full <b>Dog</b> object. Its <b>type pointer</b> leads to the Dog type data.</li><li><b>Build time.</b> Through <code>a</code> the compiler only allows Animal members, so <code>a.Breed</code> will not build. Nothing in memory changes: this is a rule about the variable’s type.</li><li><b>Run time.</b> <code>(Dog)a</code> reads the object’s type pointer and compares it with Dog. They match.</li><li>The <b>same address</b> is copied into a new variable <code>dog</code>. No new object: two references, one object. Now <code>Breed</code> is allowed.</li><li><code>(Cat)a</code> compiles, but the type pointer says Dog, not Cat, so it throws <code>InvalidCastException</code>. The object never changes type.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the variable’s type is a view decided at build time; the object’s real type is its type pointer. The string objects behind Name and Breed are not drawn here.</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">📋 The two orders to remember</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What</th><th scope="col">Order</th><th scope="col">Why it helps</th></tr></thead><tbody><tr><th scope="row">Field initializers</th><td>derived class first, then base</td><td>a documented C# rule</td></tr><tr><th scope="row">Constructor bodies</th><td>base class first, then derived</td><td>the parent part is ready before the child uses it</td></tr><tr><th scope="row">Memory</th><td>allocated once, for the whole object</td><td>there is just one object and one address</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What</th><th scope="col">Order</th><th scope="col">Why it helps</th></tr></thead><tbody><tr><th scope="row">Field initializers</th><td>derived class first, then base</td><td>a documented C# rule</td></tr><tr><th scope="row">Constructor bodies</th><td>base class first, then derived</td><td>the parent part is ready before the child uses it</td></tr><tr><th scope="row">Memory</th><td>allocated once, for the whole object</td><td>there is just one object and one type pointer</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label see">🧪 Tiny code</div>
@@ -180,36 +287,38 @@
 Animal a = <span class="kw">new</span> Dog();     <span class="cmt">// ONE Dog object on the heap</span>
 <span class="cmt">// a.Breed;               // ❌ not visible through an Animal variable</span>
 <span class="kw">var</span> dog = (Dog)a;         <span class="cmt">// ✅ same object, bigger view</span></pre></div>
-    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Never call an overridable method from a constructor: the child part may not be initialised yet (see the trap).</p>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Never call an overridable method from a constructor: the object’s type pointer already says Dog, so the override runs while the Dog fields may still be at their defaults (see the trap).</p>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p>The garbage collector frees the <b>whole</b> Dog object at once — base and derived layers together — when nothing references it. There is no way to free just the Animal part.</p>
+      <p>The garbage collector frees the <b>whole</b> Dog object at once — base and derived fields together — when nothing references it (both <code>a</code> and <code>dog</code> must be gone). There is no way to free just the Animal part.</p>
+      <p>Replaced strings (<code>"?"</code>, <code>"Lab"</code>) are separate heap objects: once unreferenced they are freed by a later GC, not at the moment of assignment.</p>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label trap">🎯 Check yourself</div>
     <div class="quiz">
-      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Dog()</code> creates a Dog object and a separate Animal object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> One object only. The Animal part is the first layer inside it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Dog()</code> creates a Dog object and a separate Animal object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> One object only. The Animal fields are inside it.</p></div></details>
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> Constructor bodies run base → derived.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes, the base constructor completes first.</p></div></details>
-      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>Animal a = new Dog();</code> turns the object into an Animal.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The object stays a Dog; only the variable’s view is Animal.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>Animal a = new Dog();</code> turns the object into an Animal.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The object stays a Dog (its type pointer says Dog); only the variable’s view is Animal.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>(Dog)a</code> makes a copy of the object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It copies the reference only: two variables, one object.</p></div></details>
     </div>
   </section>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>One object holds base + derived fields.</li><li>Field initializers: derived → base. Constructors: base → derived.</li><li>A base variable can point at a derived object but only sees base members.</li></ul>
+      <ul><li>One object holds base + derived fields, plus a type pointer that says Dog.</li><li>Field initializers: derived → base. Constructors: base → derived.</li><li>A base variable can point at a derived object but only sees base members; a cast copies the reference, not the object.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">“A derived-class instance is a single heap object containing the base fields and the derived fields. Field initializers run derived first then base, and constructors run base first then derived. A base-typed variable references the same object but only exposes base members.”</div>
+    <div class="kd-card saythis-box">“A derived-class instance is a single heap object containing the base fields and the derived fields, with a type pointer to its real type. Field initializers run derived first then base, and constructors run base first then derived. A base-typed variable references the same object but only exposes base members; a cast checks the real type and copies the reference.”</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
     <div class="kd-card trap-box">
-      <p>Calling a virtual method from a base constructor. It runs the <b>derived</b> override while the derived fields are still at their defaults (or only initializers have run) — a classic bug.</p>
+      <p>Calling a virtual method from a base constructor. The object’s type pointer already says <b>Dog</b>, so the <b>derived</b> override runs while the derived constructor body has not run yet (derived fields are still null or default, or only initializers have run) — a classic bug.</p>
     </div>
   </section>
   <section class="kd-section next" id="next">
@@ -218,7 +327,7 @@ Animal a = <span class="kw">new</span> Dog();     <span class="cmt">// ONE Dog o
       <span>Next: what if the parent is abstract and can never be created on its own?</span>
       <a class="next-link" href="abstract-base.html">Abstract & Base Classes <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 Constructor order and the initializer order are documented in the C# language reference (instance constructors / field initializers). Base-typed variables exposing only base members and casting: C# docs on inheritance and casting. The exact in-memory byte layout is a runtime detail and is not claimed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance" target="_blank" rel="noopener">Inheritance in C# (guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/instance-constructors" target="_blank" rel="noopener">Instance constructors</a></p>
+  </section>  <p class="fact-note">📌 Constructor order and the initializer order are documented in the C# language reference (instance constructors / field initializers). Base-typed variables exposing only base members and casting: C# docs on inheritance and casting. The object header, type pointer and MethodTable follow the classic runtime model (MSDN “How the CLR Creates Runtime Objects”, Book of the Runtime); row order, widths and addresses are a teaching picture and not claimed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance" target="_blank" rel="noopener">Inheritance in C# (guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/instance-constructors" target="_blank" rel="noopener">Instance constructors</a></p>
 
 
 </main>
@@ -227,6 +336,6 @@ Animal a = <span class="kw">new</span> Dog();     <span class="cmt">// ONE Dog o
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

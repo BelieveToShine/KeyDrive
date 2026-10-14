@@ -44,35 +44,123 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With dynamic the compiler cannot check d.Quack(); it emits a call site stored in a static field; the first call asks the runtime binder to look at the real type and finds Quack, and the result is cached as a rule so the next call with the same type skips the lookup">
+<figure class="diagram-card kd-story" data-steps="8">
+<div class="st-stage"><svg viewBox="0 0 640 530" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder reads the Duck’s type pointer, finds Quack and stores a rule; the second call checks the type against the rule and jumps to Quack; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field">
 <defs><marker id="dy1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="2-"><path d="M170,111 L290,111" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
-<g class="st" data-s="3-"><path id="dy1-sv" d="M375,138 L375,196" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
-<g class="st" data-s="5-"><path id="dy1-sc" d="M95,138 L95,223 L290,223" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">dynamic d = new Duck();</text>
-<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">d.Quack();   d.Quack();</text>
-<g class="st" data-s="1-" data-hl="1,,,5"><rect class="bx" x="20" y="84" width="150" height="54" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1,,,5"><text x="95" y="108.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Call site</text></g>
-<g class="st" data-s="1-" data-hl="1,,,5"><text x="95" y="121.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">(static field)</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="290" y="84" width="170" height="54" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="375" y="108.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Runtime binder</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="375" y="121.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#cdbffc">looks at the real type</text></g>
-<g class="st" data-s="3-" data-hl="3,,,5"><rect class="bx" x="290" y="196" width="170" height="54" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3,,,5"><text x="375" y="221" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Cached rule</text></g>
-<g class="st" data-s="3-" data-hl="3,,,5"><text x="375" y="233" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">type Duck → Quack</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="10" y="270" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="320" y="291" text-anchor="middle" font-size="9.5" fill="#fcd34d">The compiler skipped its checks: a wrong name is only found at RUN time</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="320" y="304.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Later calls with the same type reuse the cached rule</text></g>
-<g class="st" data-s="2-"><g class="arrow-pill"><rect x="200" y="102" width="60" height="18" rx="9"/><text x="230" y="114.5" text-anchor="middle" font-size="9" font-style="italic">1st call</text></g></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="342" y="158" width="66" height="18" rx="9"/><text x="375" y="170.5" text-anchor="middle" font-size="9" font-style="italic">save rule</text></g></g>
-<g class="st" data-s="5-"><g class="arrow-pill"><rect x="65" y="171" width="60" height="18" rx="9"/><text x="95" y="183.5" text-anchor="middle" font-size="9" font-style="italic">2nd call</text></g></g>
+<rect class="zone" x="10" y="98" width="110" height="110" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="140" y="98" width="230" height="368" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="154" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="392" y="98" width="238" height="130" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="406" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="1-7"><rect class="zone" x="148" y="124" width="214" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-7"><text class="zone-title" x="162" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Duck object</text></g>
+<g class="st" data-s="8-"><rect class="zone" x="148" y="124" width="214" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="8-"><text class="zone-title" x="162" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Duck: unreachable</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="400" y="148" width="222" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="414" y="167" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Duck type data</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="392" y="240" width="238" height="110" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="406" y="259" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">⚙ STATIC AREA (a root)</text></g>
+<g class="st" data-s="2-2"><rect class="zone" x="400" y="274" width="222" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-2"><text class="zone-title" x="414" y="293" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">compiler-made class</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="148" y="250" width="214" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="162" y="269" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">CallSite object</text></g>
+<g class="st" data-s="5-"><rect class="zone" x="148" y="372" width="214" height="82" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-"><text class="zone-title" x="162" y="391" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Rule (teaching picture)</text></g>
+<g class="st" data-s="5-"><rect class="zone" x="392" y="380" width="238" height="74" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-"><text class="zone-title" x="406" y="399" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📜 CODE</text></g>
+<g class="st" data-s="1-7"><path id="dy1-ref" d="M110,185 L156,185" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="1-"><path id="dy1-tpa" d="M354,185 L408,185" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="3-"><path id="dy1-sa" d="M408,311 L354,311" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="5-"><path id="dy1-cr" d="M340,346 L340,398" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<g class="st" data-s="5-"><path id="dy1-rq" d="M354,433 L402,433" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy1A)"/></g>
+<rect class="bx" x="10" y="8" width="400" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">dynamic d = new Duck();</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">d.Quack();     // 1st call</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">d.Quack();     // 2nd call</text>
+<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">// d.Swim();   // compiles, fails at run time</text>
+<rect class="bx note" x="420" y="12" width="210" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="525" y="36.5" text-anchor="middle" font-size="9" fill="#fcd34d">teaching picture:</text>
+<text x="525" y="49.5" text-anchor="middle" font-size="9" fill="#fcd34d">call-site / rule internals</text>
+<text x="525" y="62.5" text-anchor="middle" font-size="9" fill="#fcd34d">differ by runtime version</text>
+<g class="st" data-s="1-7" data-hl="1"><rect class="bx" x="20" y="165" width="90" height="40" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-7" data-hl="1"><text x="65" y="183" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">d</text></g>
+<g class="st" data-s="1-7" data-hl="1"><text x="65" y="195" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">dynamic · ref</text></g>
+<g class="st" data-s="1-7" data-hl="1"><rect class="bx" x="156" y="150" width="198" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-7" data-hl="1"><text x="255" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="1-7" data-hl="1"><rect class="bx" x="156" y="174" width="198" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-7" data-hl="1"><text x="255" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Duck MT</text></g>
+<g class="st" data-s="1-7" data-hl="1"><rect class="bx" x="156" y="198" width="198" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-7" data-hl="1"><text x="255" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">fields …</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="156" y="174" width="198" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="255" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">type ptr → Duck MT</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="156" y="174" width="198" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="255" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">type ptr → Duck MT</text></g>
+<g class="st" data-s="8-" data-hl="8"><rect class="bx" x="156" y="150" width="198" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="8-" data-hl="8"><text x="255" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="8-" data-hl="8"><rect class="bx" x="156" y="174" width="198" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="8-" data-hl="8"><text x="255" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Duck MT</text></g>
+<g class="st" data-s="8-" data-hl="8"><rect class="bx" x="156" y="198" width="198" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="8-" data-hl="8"><text x="255" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">fields …</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="408" y="174" width="206" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="511" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Duck MethodTable</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="408" y="198" width="206" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="511" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">method Quack</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="408" y="198" width="206" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="511" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">method Quack  ✔ found</text></g>
+<g class="st" data-s="7-7" data-hl="7"><rect class="bx" x="408" y="198" width="206" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="7-7" data-hl="7"><text x="511" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">has Quack, no Swim</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="408" y="300" width="206" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="511" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">callSite1 = null</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="408" y="300" width="206" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="511" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">callSite1 → CallSite</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="156" y="276" width="198" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="255" y="289.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="156" y="300" width="198" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="255" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr</text></g>
+<g class="st" data-s="3-4" data-hl="3"><rect class="bx" x="156" y="324" width="198" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4" data-hl="3"><text x="255" y="337.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">rules: (empty)</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="156" y="324" width="198" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="255" y="337.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">rules: [ rule 1 ]</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="156" y="398" width="198" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="255" y="411.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">if type ptr == Duck MT</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="156" y="422" width="198" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="255" y="435.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">then call Duck.Quack</text></g>
+<g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="156" y="398" width="198" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6" data-hl="6"><text x="255" y="411.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">if type ptr == Duck MT  ✔</text></g>
+<g class="st" data-s="5-" data-hl="5,,,6"><rect class="bx" x="402" y="418" width="218" height="30" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5,,,6"><text x="511" y="435.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Duck.Quack</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#67e8f9">dynamic d is just a normal reference:</text></g>
+<g class="st" data-s="1-1"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">d → Duck object → its type data</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#fcd34d">The compiler adds a call site for d.Quack():</text></g>
+<g class="st" data-s="2-2"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">a static field, still null</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1st call: a CallSite object is created on the</text></g>
+<g class="st" data-s="3-3"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">heap and the static field points to it</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The binder reads the Duck’s type ptr → Duck’s</text></g>
+<g class="st" data-s="4-4"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">type data and looks Quack up BY NAME</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The answer is cached: a rule “if the type is</text></g>
+<g class="st" data-s="5-5"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">Duck, call Duck.Quack” inside the CallSite</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#fcd34d">2nd call: compare the Duck’s type ptr with the</text></g>
+<g class="st" data-s="6-6"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">rule (match) → jump. No lookup this time</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#fda4af">d.Swim(): the binder finds no Swim in Duck’s</text></g>
+<g class="st" data-s="7-7"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#fda4af">type data → RuntimeBinderException, at run time</text></g>
+<g class="st" data-s="8-8"><rect class="bx note" x="10" y="474" width="620" height="46" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="8-8"><text x="320" y="493" text-anchor="middle" font-size="9.5" fill="#6ee7b7">When d goes away the Duck is garbage; the</text></g>
+<g class="st" data-s="8-8"><text x="320" y="506.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">CallSite and rule stay (static field = root)</text></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="dy1-tpa"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">🔎</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="dy1-rq"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>dynamic d</code>: the compiler does <b>not</b> check what <code>d</code> can do. Instead it creates a <b>call site</b> — a small helper kept in a compiler-generated <b>static field</b>.</li><li><b>First call.</b> The call site asks the <b>runtime binder</b>: it looks at the <b>real type</b> of the object (Duck) and tries to find <code>Quack</code>, using the same rules as the compiler.</li><li>The answer is saved as a <b>rule</b> in the call site: “for type Duck, call Quack”.</li><li>The price: mistakes (a wrong name) are found only <b>at run time</b>, not when you build.</li><li><b>Second call</b> with the same type: the call site finds the cached rule and <b>skips the lookup</b>.</li></ol>
-<figcaption><strong>What you're seeing:</strong> dynamic = “decide when the call happens”. The cache makes repeats cheap.</figcaption>
+<ol class="st-caps"><li><code>dynamic d = new Duck();</code> — <code>d</code> is an <b>ordinary reference</b> on the stack to a <b>Duck object</b> on the heap. The object has its header and its <b>type pointer</b> to Duck’s type data, like any other object.</li><li>For <code>d.Quack()</code> the compiler cannot check anything. It adds a <b>call site</b>: a field in the <b>static area</b> that is still <code>null</code>.</li><li><b>First call.</b> A <b>CallSite object</b> is created on the heap and the static field points to it.</li><li>The <b>binder</b> (run-time code, not memory) reads the Duck’s <b>type pointer</b>, reaches Duck’s type data and looks <code>Quack</code> up <b>by name</b>.</li><li>The answer is cached as a <b>rule</b> in the call site: “if the type is Duck, call <code>Duck.Quack</code>”.</li><li><b>Second call.</b> The call site compares the Duck’s type pointer with the rule. It matches, so it jumps to <code>Duck.Quack</code> — no lookup.</li><li>A wrong name like <code>d.Swim()</code> compiles, but the binder finds nothing in Duck’s type data: <b>RuntimeBinderException at run time</b>.</li><li><b>Clean-up.</b> When <code>d</code> goes away the Duck becomes garbage. The CallSite and its rule <b>stay</b>: the static field is a GC root.</li></ol>
+<figcaption><strong>What you're seeing:</strong> dynamic is a normal reference; the “which method?” decision is looked up by name once, then cached in a call site that lives in a static field. (Call-site internals are a teaching picture.)</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b><code>dynamic</code> postpones the “which method?” decision to run time; the call site caches the answer so repeats are cheaper.</b></span></div>
@@ -84,44 +172,135 @@
     </div>
   </section>
   <section class="kd-section ">
-    <div class="sec-label see">🔎 Reflection: asking by name</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Reflection creating objects: GetMethod makes a MethodInfo object on the heap, Invoke takes its arguments in an object array so an int is boxed, and the returned value comes back as an object">
+    <div class="sec-label see">🔎 Reflection: asking by name — and what it puts on the heap</div>
+<figure class="diagram-card kd-story" data-steps="7">
+<div class="st-stage"><svg viewBox="0 0 640 530" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="7" role="img" aria-label="Reflection step by step: order points to an Order object whose type pointer leads to Order’s type data; GetMethod creates a MethodInfo object on the heap that m points to; new object[]{5} creates an array whose slot refers to a new heap box holding a copy of 5; Invoke runs Ship in a temporary frame with n = 5 copied out of the box; the result 3 is boxed in a new heap object that r points to; (int)r copies 3 into the stack variable days; afterwards the array and the box of 5 are unreachable garbage while the MethodInfo and the box of 3 are still referenced">
 <defs><marker id="dy2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="dy2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="86" width="170" height="234" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="200" y="86" width="430" height="234" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="214" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M166,138 L280,138" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
-<g class="st" data-s="2-"><path d="M450,211 L480,211" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
-<rect class="bx" x="10" y="8" width="440" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var m = typeof(Order).GetMethod("Ship");</text>
-<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">object r = m.Invoke(order, new object[] { 5 });</text>
-<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">int days = (int)r;</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="116" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="95" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">m</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="95" y="148" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…S1</text></g>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="280" y="116" width="170" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="365" y="135.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">MethodInfo object</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="365" y="148.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">describes "Ship"</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="280" y="186" width="170" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="365" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">object[] args</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="365" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot0 → box(5)</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="480" y="186" width="130" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="545" y="209" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">boxed int</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="545" y="221" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">5</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="280" y="256" width="170" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="365" y="279" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">result object</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="365" y="291" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">boxed 3</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="480" y="256" width="130" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="545" y="277" text-anchor="middle" font-size="9.5" fill="#fda4af">extra heap objects</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="545" y="290.5" text-anchor="middle" font-size="9.5" fill="#fda4af">for the GC</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="190" y="129" width="66" height="18" rx="9"/><text x="223" y="141.5" text-anchor="middle" font-size="9" font-style="italic">points to</text></g></g>
+<rect class="zone" x="10" y="98" width="130" height="290" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="175" y="98" width="295" height="360" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="189" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="478" y="98" width="152" height="150" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="492" y="117" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE DATA</text>
+<g class="st" data-s="1-"><rect class="zone" x="18" y="148" width="114" height="130" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="32" y="167" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">caller frame</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="18" y="294" width="114" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="32" y="313" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Ship frame</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="183" y="124" width="140" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="197" y="143" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="183" y="244" width="140" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="197" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">MethodInfo</text></g>
+<g class="st" data-s="5-"><rect class="zone" x="183" y="364" width="140" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-"><text class="zone-title" x="197" y="383" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">boxed int (result)</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="331" y="204" width="131" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="345" y="223" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">object[1] (args)</text></g>
+<g class="st" data-s="3-6"><rect class="zone" x="331" y="324" width="131" height="82" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-6"><text class="zone-title" x="345" y="343" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">boxed int</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="331" y="204" width="131" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="345" y="223" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">object[1]: unreachable</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="331" y="324" width="131" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="345" y="343" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">boxed 5: unreachable</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="486" y="148" width="136" height="82" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="500" y="167" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">Order type data</text></g>
+<g class="st" data-s="1-"><path id="dy2-ro" d="M134,185 L191,185" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="1-"><path id="dy2-tpa" d="M315,185 L494,185" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="2-"><path id="dy2-rm" d="M134,209 L166,209 L166,281 L191,281" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="5-"><path id="dy2-rr" d="M134,233 L158,233 L158,401 L191,401" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="3-6"><path id="dy2-sl" d="M440,300 L440,350" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<g class="st" data-s="6-"><path id="dy2-cp" d="M191,425 L148,425 L148,257 L134,257" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#dy2A)"/></g>
+<rect class="bx" x="10" y="8" width="440" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Order order = new Order();</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var m = typeof(Order).GetMethod("Ship");</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">object r = m.Invoke(order, new object[] { 5 });</text>
+<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">int days = (int)r;</text>
+<rect class="bx note" x="460" y="12" width="170" height="70" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="545" y="30" text-anchor="middle" font-size="9" fill="#fcd34d">teaching picture:</text>
+<text x="545" y="43" text-anchor="middle" font-size="9" fill="#fcd34d">addresses and the exact</text>
+<text x="545" y="56" text-anchor="middle" font-size="9" fill="#fcd34d">MethodInfo contents</text>
+<text x="545" y="69" text-anchor="middle" font-size="9" fill="#fcd34d">are simplified</text>
+<g class="st" data-s="1-"><rect class="bx" x="26" y="174" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="75" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">order → Order</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="26" y="198" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="75" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">m → MethodInfo</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="26" y="222" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="75" y="235.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">r → box(3)</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="26" y="246" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="75" y="259.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">days = 3</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="320" width="98" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="75" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">this → Order</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="344" width="98" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="75" y="357.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">n = 5 (copy)</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="191" y="150" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="253" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="191" y="174" width="124" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="253" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → Order MT</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="191" y="198" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="253" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">fields …</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="191" y="270" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="253" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="191" y="294" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="253" y="307.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">describes: Ship</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="191" y="318" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="253" y="331.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">of type: Order</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="191" y="294" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="253" y="307.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">describes: Ship</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="191" y="390" width="124" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="253" y="403.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="191" y="414" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="253" y="427.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">value 3</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="339" y="230" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="396.5" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="339" y="254" width="115" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="396.5" y="267.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length = 1</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="339" y="278" width="115" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="396.5" y="291.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">slot 0 → box(5)</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="339" y="350" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="396.5" y="363.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="339" y="374" width="115" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="396.5" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">value 5</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="339" y="230" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="396.5" y="243.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="339" y="254" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="396.5" y="267.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">length = 1</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="339" y="278" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="396.5" y="291.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">slot 0 → box(5)</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="339" y="350" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="396.5" y="363.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header + type ptr</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="339" y="374" width="115" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="396.5" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">value 5</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="494" y="174" width="120" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="554" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">Order MethodTable</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="494" y="198" width="120" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="554" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">method Ship</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="494" y="198" width="120" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="554" y="211.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">method Ship</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#67e8f9">Setup: order → an Order object on the heap;</text></g>
+<g class="st" data-s="1-1"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">its type ptr leads to Order’s type data</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#6ee7b7">GetMethod("Ship") looks the NAME up at run time and</text></g>
+<g class="st" data-s="2-2"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">hands back a MethodInfo object; m points to it</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#fcd34d">new object[] { 5 }: the int 5 is COPIED into a new heap</text></g>
+<g class="st" data-s="3-3"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">box (boxing); the array slot refers to the box</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#fcd34d">Invoke runs Ship in a temporary frame:</text></g>
+<g class="st" data-s="4-4"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">this = order, n = a copy of the unboxed 5</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#fcd34d">Ship returns: its frame is popped. The result 3 is boxed</text></g>
+<g class="st" data-s="5-5"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">into a new heap object; r points to it</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#fcd34d">(int)r unboxes: the value 3 is COPIED from</text></g>
+<g class="st" data-s="6-6"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">the box into the stack variable days</text></g>
+<g class="st" data-s="7-7"><rect class="bx note" x="10" y="468" width="620" height="50" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="7-7"><text x="320" y="489" text-anchor="middle" font-size="9.5" fill="#fda4af">Now the args array and box(5) have no reference left:</text></g>
+<g class="st" data-s="7-7"><text x="320" y="502.5" text-anchor="middle" font-size="9.5" fill="#fda4af">garbage for the GC to clear later. m and r keep theirs</text></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="dy2-cp"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📋</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>GetMethod("Ship")</code> finds the method <b>by its name</b>, at run time. A <code>MethodInfo</code> object describes it; <code>m</code> points to it.</li><li>To call it, the arguments go into an <code>object[]</code>. A plain <code>int</code> must be <b>boxed</b> to fit — one more heap object.</li><li><code>Invoke</code> returns the result as an <code>object</code> (an int result is boxed again).</li><li>Lots of small heap objects for one call. Fine once; heavy if done in a hot loop.</li></ol>
-<figcaption><strong>What you're seeing:</strong> reflection builds objects to describe and call things. Each call allocates; the GC cleans up.</figcaption>
+<ol class="st-caps"><li><b>Setup.</b> <code>order</code> on the stack points to an <b>Order object</b>; its type pointer leads to Order’s type data (shared by all Orders).</li><li><code>GetMethod("Ship")</code> finds the method <b>by its name</b>, at run time. It gives back a <b>MethodInfo</b> object on the heap; <code>m</code> points to it.</li><li><code>new object[] { 5 }</code>: an <code>object[]</code> needs references, so the int 5 is <b>boxed</b> — <b>copied</b> into a new heap object. The array slot refers to that box.</li><li><code>Invoke</code> runs <code>Ship</code> in a normal <b>temporary stack frame</b>: <code>this</code> = the Order, <code>n</code> = a copy of the unboxed 5.</li><li><code>Ship</code> returns, so its <b>frame is popped</b>. The result is returned as <code>object</code>: the 3 is <b>boxed</b> into a new heap object and <code>r</code> points to it.</li><li><code>(int)r</code> <b>unboxes</b>: the value 3 is <b>copied</b> from the box into the stack variable <code>days</code>. Box and <code>days</code> are now two separate values.</li><li>After the line nothing refers to the <b>args array</b> or <b>box(5)</b>: they are <b>unreachable</b> (not freed yet) — the GC clears them later. <code>m</code> and <code>r</code> still keep the MethodInfo and box(3) alive.</li></ol>
+<figcaption><strong>What you're seeing:</strong> one reflection call: a MethodInfo, an argument array, a box per int argument and a box for the result. Everything is plain heap garbage later. (Addresses and MethodInfo contents are a teaching picture.)</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
@@ -131,8 +310,9 @@
   <section class="kd-section ">
     <div class="sec-label why">🔬 Honest notes</div>
     <div class="kd-card why-box">
-      <p>The call-site / binder / cached-rule picture comes from Microsoft’s documentation of the Dynamic Language Runtime (older articles and API pages). The internals can change between runtime versions, so the lab does not give timings or cache sizes.</p>
-      <p>To the compiler, a <code>dynamic</code> variable is typed <code>object</code> underneath, but with all type checking switched off for operations on it.</p>
+      <p>The call-site / binder / cached-rule picture comes from Microsoft’s documentation of the Dynamic Language Runtime (older articles and API pages). Where the call site sits (a compiler-made static field), what a rule contains and what a MethodInfo holds inside are drawn as a <b>teaching picture</b>: internals can change between runtime versions, so the lab gives no timings, sizes or cache limits.</p>
+      <p>The object header, type pointer and per-type type data come from the classic runtime model (the old MSDN article “How the CLR Creates Runtime Objects” and the Book of the Runtime). Boxing, unboxing, stack frames, statics as GC roots and “unreachable, then collected later” are documented behaviour.</p>
+      <p>To the compiler, a <code>dynamic</code> variable is typed <code>object</code> underneath, but with all type checking switched off for operations on it. Arguments of a dynamic call are also passed as objects, so value types are boxed there too.</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -142,14 +322,16 @@ d.Quack();               <span class="cmt">// 1st: binder looks at the real type
 d.Quack();               <span class="cmt">// 2nd: cached rule reused</span>
 <span class="cmt">// d.Swim();             // compiles! but throws RuntimeBinderException when run</span>
 
+Order order = <span class="kw">new</span> Order();
 <span class="kw">var</span> m = typeof(Order).GetMethod(<span class="str">"Ship"</span>);          <span class="cmt">// reflection: by name</span>
-object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span class="cmt">// 5 is boxed; r is an object</span></pre></div>
+object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span class="cmt">// 5 is boxed; r is an object</span>
+<span class="kw">int</span> days = (<span class="kw">int</span>)r;                                <span class="cmt">// unboxing copies 3 into days</span></pre></div>
     <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Prefer normal typed code. Use dynamic or reflection only when the shape really is unknown until run time.</p>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p>The garbage collector, as usual, for the MethodInfo, argument arrays and boxes. The <b>call site</b> lives in a static field, so it (and its cached rules) stays for the life of the app — a small price per <code>dynamic</code> operation in your code.</p>
+      <p>The garbage collector, as usual, for the MethodInfo, argument arrays and boxes: they become <b>unreachable</b> when the last variable or array slot that refers to them is gone, and are cleared at a later GC. The <b>call site</b> is reachable from a static field, so it (and its cached rules) stays for the life of the app — a small price per <code>dynamic</code> operation in your code.</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -163,7 +345,7 @@ object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span 
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li><code>dynamic</code> → compiler emits a call site; run time binder resolves by real type; result is cached.</li><li>Errors appear at run time.</li><li>Reflection allocates MethodInfo, <code>object[]</code> args and boxes.</li></ul>
+      <ul><li><code>dynamic</code> → a normal reference; the compiler emits a call site (static field → CallSite object); the binder reads the real type and the result is cached.</li><li>Errors appear at run time.</li><li>Reflection allocates MethodInfo, <code>object[]</code> args and boxes (arguments and result); <code>(int)r</code> copies back.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
@@ -182,7 +364,7 @@ object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span 
       <span>Next: a method stored in a variable — delegates and closures.</span>
       <a class="next-link" href="delegates-closures.html">Delegates & Closures <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 dynamic/DLR call sites, binder and rule caching: Microsoft Learn articles on the Dynamic Language Runtime and CallSite API (some are older .NET Framework-era pages; the idea is stable but internals may differ by version — 🟨 K for details). Reflection argument arrays: MethodBase.Invoke API. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamic-language-runtime-overview" target="_blank" rel="noopener">Dynamic Language Runtime overview</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interop/using-type-dynamic" target="_blank" rel="noopener">Using type dynamic (C# guide)</a></p>
+  </section>  <p class="fact-note">📌 dynamic/DLR call sites, binder and rule caching: Microsoft Learn articles on the Dynamic Language Runtime and CallSite API (some are older .NET Framework-era pages; the idea is stable but internals may differ by version — 🟨 K for details). Reflection argument arrays: MethodBase.Invoke API. Object header / type pointer / type data: classic model (MSDN Magazine 2005, Book of the Runtime) — teaching picture. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamic-language-runtime-overview" target="_blank" rel="noopener">Dynamic Language Runtime overview</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interop/using-type-dynamic" target="_blank" rel="noopener">Using type dynamic (C# guide)</a></p>
 
 
 </main>
@@ -191,6 +373,6 @@ object r = m.Invoke(order, <span class="kw">new</span> object[] { 5 });   <span 
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

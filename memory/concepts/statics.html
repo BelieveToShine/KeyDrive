@@ -44,42 +44,87 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Two Counter objects each have their own id field on the heap, but there is only one static Total field in static memory that both objects share; each new object adds one to that single Total">
+<figure class="diagram-card kd-story" data-steps="8">
+<div class="st-stage"><svg viewBox="0 0 640 350" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="Two Counter objects on the heap, each with a header, a type pointer to the one Counter MethodTable, and its own Id; the single static Total sits in the type’s static area; the constructor adds one to Total and copies its value into the new object’s Id">
 <defs><marker id="st1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="84" width="390" height="206" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP  (one object per new)</text>
-<rect class="zone" x="420" y="84" width="210" height="206" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="434" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC  (one copy)</text>
-<g class="st" data-s="3-"><path id="st1-sh1" d="M105,172 L105,228 L525,228 L525,172" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
-<g class="st" data-s="3-"><path d="M360,146 L440,146" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
-<rect class="bx" x="10" y="8" width="380" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Counter { public static int Total;</text>
-<text x="24" y="44" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">                 public int Id;</text>
-<text x="24" y="58" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  public Counter() { Total++; Id = Total; } }</text>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">1</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">2</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="30" y="120" width="150" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="105" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Counter object</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="105" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 1</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="210" y="120" width="150" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="285" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Counter object</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="285" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 2</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="30" y="240" width="340" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="200" y="261" text-anchor="middle" font-size="10" fill="#fcd34d">Many objects, ONE Total</text></g>
-<g class="st" data-s="3-"><g class="arrow-pill"><rect x="290" y="219" width="50" height="18" rx="9"/><text x="315" y="231.5" text-anchor="middle" font-size="9" font-style="italic">shared</text></g></g>
+<rect class="zone" x="10" y="76" width="110" height="264" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="130" y="76" width="190" height="264" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="144" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="340" y="76" width="290" height="264" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="354" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧬 TYPE: Counter</text>
+<g class="st" data-s="1-"><rect class="zone" x="16" y="120" width="98" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="30" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main frame</text></g>
+<g class="st" data-s="1-"><rect class="zone" x="348" y="262" width="274" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="362" y="281" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">static area</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="138" y="96" width="170" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="152" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Counter object #1</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="138" y="214" width="170" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="152" y="233" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Counter object #2</text></g>
+<g class="st" data-s="2-"><path id="st1-tp1" d="M300,157 L350,157" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="6-"><path id="st1-tp2" d="M300,275 L336,275 L336,181 L350,181" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="5-"><path id="st1-ra" d="M106,157 L146,157" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="8-"><path id="st1-rb" d="M106,181 L124,181 L124,275 L146,275" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="3-3"><path id="st1-inc1" d="M590,72 L590,288" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="7-7"><path id="st1-inc2" d="M590,72 L590,288" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="4-4"><path id="st1-cp1" d="M356,299 L326,299 L326,181 L300,181" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="7-7"><path id="st1-cp2" d="M356,299 L300,299" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<rect class="bx note" x="10" y="8" width="320" height="56" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="170" y="32" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: addresses, field order</text>
+<text x="170" y="45" text-anchor="middle" font-size="9" fill="#e7ebf3">and sizes are illustrative</text>
+<rect class="bx" x="340" y="4" width="290" height="68" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="354" y="26" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">static int Total;   int Id;</text>
+<text x="354" y="39" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Counter() { Total++; Id = Total; }</text>
+<text x="354" y="52" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var a = new Counter();</text>
+<text x="354" y="65" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var b = new Counter();</text>
+<g class="st" data-s="1-4"><rect class="bx" x="24" y="146" width="82" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="65" y="159.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">a = null</text></g>
+<g class="st" data-s="1-7"><rect class="bx" x="24" y="170" width="82" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-7"><text x="65" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">b = null</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="24" y="146" width="82" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="65" y="159.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">a = ref</text></g>
+<g class="st" data-s="8-" data-hl="8"><rect class="bx" x="24" y="170" width="82" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="8-" data-hl="8"><text x="65" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">b = ref</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="350" y="120" width="170" height="76" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="435" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">Counter MethodTable</text></g>
+<g class="st" data-s="1-"><text x="435" y="162" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">vtable slots, GC info,</text></g>
+<g class="st" data-s="1-"><text x="435" y="174" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">instance size …</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="356" y="288" width="258" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="485" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Total = 0</text></g>
+<g class="st" data-s="3-6" data-hl="3"><rect class="bx" x="356" y="288" width="258" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-6" data-hl="3"><text x="485" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Total = 1</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="356" y="288" width="258" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="485" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Total = 2</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="146" y="122" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="223" y="135.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="146" y="146" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="223" y="159.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="146" y="170" width="154" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="223" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 0</text></g>
+<g class="st" data-s="4-6" data-hl="4"><rect class="bx" x="146" y="170" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-6" data-hl="4"><text x="223" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Id = 1</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="146" y="170" width="154" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="223" y="183.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 1</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="146" y="240" width="154" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="223" y="253.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="146" y="264" width="154" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text x="223" y="277.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="146" y="288" width="154" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="223" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 0</text></g>
+<g class="st" data-s="7-" data-hl="7"><rect class="bx" x="146" y="288" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="7-" data-hl="7"><text x="223" y="301.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Id = 2</text></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="562.5" y="205" width="55" height="18" rx="9"/><text x="590" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Total++</text></g></g>
+<g class="st" data-s="7-7"><g class="arrow-pill"><rect x="562.5" y="205" width="55" height="18" rx="9"/><text x="590" y="217.5" text-anchor="middle" font-size="9" font-style="italic">Total++</text></g></g>
+<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="306.5" y="231" width="39" height="18" rx="9"/><text x="326" y="243.5" text-anchor="middle" font-size="9" font-style="italic">copy</text></g></g>
+<g class="st" data-s="3-3"><g class="tok" data-path="st1-inc1"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">➕</text></g></g>
+<g class="st" data-s="7-7"><g class="tok" data-path="st1-inc2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">➕</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="st1-cp1"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📋</text></g></g>
+<g class="st" data-s="7-7"><g class="tok" data-path="st1-cp2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">📋</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A class has a <b>static</b> field <code>Total</code> and an instance field <code>Id</code>. The static field lives in <b>static memory</b>, once, and starts at 0.</li><li><code>new Counter()</code>: a heap object with its own <code>Id = 1</code>. The constructor adds 1 to the one shared <code>Total</code>.</li><li>A second <code>new Counter()</code>: another heap object with <code>Id = 2</code>. Both objects use the <b>same</b> <code>Total</code>, now 2.</li><li>Many objects, <b>one</b> <code>Total</code>. That is what “static” means: it belongs to the type, not to any object.</li></ol>
-<figcaption><strong>What you're seeing:</strong> instance fields: one copy per object (heap). Static fields: one copy per type (static memory).</figcaption>
+<ol class="st-caps"><li><b>Before any object exists</b>, the type <code>Counter</code> already has its MethodTable and a <b>static area</b> holding <code>Total = 0</code>. <code>a</code> and <code>b</code> are empty slots in Main’s stack frame.</li><li><code>new Counter()</code>: a heap object appears: a header, a <b>type pointer</b> to Counter’s one MethodTable, and its own <code>Id</code> (still 0).</li><li>The constructor runs <code>Total++</code>. The code reaches <code>Total</code> through the <b>type</b>, not through the object: the one <code>Total</code> goes 0 → 1.</li><li><code>Id = Total</code> <b>copies</b> the value 1 into the object. Two separate numbers now: if <code>Total</code> changes later, this <code>Id</code> does not.</li><li>Now <code>a = </code> the new object: <code>a</code> (on the stack) holds a reference that points at the object.</li><li><code>var b = new Counter()</code>: a <b>second</b> object with its own header and <code>Id</code>. Its type pointer leads to the <b>same</b> MethodTable.</li><li>Its constructor does <code>Total++</code> on the <b>same</b> <code>Total</code> (now 2) and copies 2 into <i>this</i> object’s <code>Id</code>. Object #1 still says <code>Id = 1</code>.</li><li><code>b</code> now references the second object. Final picture: <b>two</b> <code>Id</code> boxes (one per object, heap), <b>one</b> <code>Total</code> (one per type).</li></ol>
+<figcaption><strong>What you're seeing:</strong> instance fields: one copy per object (heap). Static fields: one copy per type, in the type’s static area. The picture’s layout is a teaching picture; the exact storage of statics is a runtime detail.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b>A static field belongs to the type, not to any object: one copy for the whole app, alive until the app ends.</b></span></div>
@@ -92,49 +137,100 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">⚓ Why statics can keep objects alive</div>
-<figure class="diagram-card kd-story" data-steps="4">
-<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A static field Cache holds a reference to a List object on the heap, so the list stays alive after the method that created a temporary Order returns, while the unreferenced Order can be cleaned up">
+<figure class="diagram-card kd-story" data-steps="8">
+<div class="st-stage"><svg viewBox="0 0 640 348" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="8" role="img" aria-label="A static field Cache holds a reference to a List object on the heap; after Load() returns, its local tmp is gone and the Order is unreachable, a later GC run reclaims the Order but keeps the List because the static slot is a root; setting Cache to null makes the List unreachable too">
 <defs><marker id="st2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="72" width="170" height="218" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="190" y="72" width="140" height="218" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="204" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC</text>
-<rect class="zone" x="340" y="72" width="290" height="218" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="354" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<g class="st" data-s="1-"><path d="M320,130 L380,130" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/></g>
-<g class="st" data-s="2-2"><path d="M166,210 L380,210" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/></g>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="zone" x="10" y="76" width="150" height="262" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="170" y="76" width="170" height="262" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="184" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC AREA</text>
+<rect class="zone" x="350" y="76" width="280" height="262" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="364" y="95" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="178" y="130" width="154" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="192" y="149" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">static field</text></g>
+<g class="st" data-s="2-5"><rect class="zone" x="358" y="106" width="264" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-5"><text class="zone-title" x="372" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">List&lt;int&gt; object</text></g>
+<g class="st" data-s="6-7"><rect class="zone" x="358" y="106" width="264" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-7"><text class="zone-title" x="372" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">List&lt;int&gt;: reached from a root</text></g>
+<g class="st" data-s="8-"><rect class="zone" x="358" y="106" width="264" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="8-"><text class="zone-title" x="372" y="125" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">List&lt;int&gt;: unreachable</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="358" y="222" width="264" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="372" y="241" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="5-6"><rect class="zone" x="358" y="222" width="264" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55"/></g>
+<g class="st" data-s="5-6"><text class="zone-title" x="372" y="241" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Order: unreachable, not freed yet</text></g>
+<g class="st" data-s="7-"><rect class="zone" x="358" y="222" width="264" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="7-"><text class="zone-title" x="372" y="241" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space (Order reclaimed)</text></g>
+<g class="st" data-s="3-4"><rect class="zone" x="18" y="246" width="134" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-4"><text class="zone-title" x="32" y="265" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Load() frame</text></g>
+<g class="st" data-s="2-7"><path id="st2-cr" d="M324,167 L366,167" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="4-4"><path id="st2-tr" d="M144,283 L366,283" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="58" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">static List&lt;int&gt; Cache = new();</text>
-<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Load() { var tmp = new Order(); }</text>
-<g class="st" data-s="1-" data-hl="1,,,4"><rect class="bx" x="200" y="108" width="120" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1,,,4"><text x="260" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Cache</text></g>
-<g class="st" data-s="1-" data-hl="1,,,4"><text x="260" y="140" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">address 0x…F1</text></g>
-<g class="st" data-s="1-" data-hl="1,,,4"><rect class="bx" x="380" y="108" width="210" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1,,,4"><text x="485" y="127.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">List object</text></g>
-<g class="st" data-s="1-" data-hl="1,,,4"><text x="485" y="140.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">stays alive</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="24" y="188" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="95" y="208" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">tmp</text></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="95" y="220" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…F9</text></g>
-<g class="st" data-s="2-"><rect class="bx" x="380" y="188" width="210" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="485" y="214" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order object</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="22" y="244" width="150" height="36" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="97" y="264.5" text-anchor="middle" font-size="9" fill="#67e8f9">tmp is gone</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="344" y="244" width="280" height="36" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="484" y="264.5" text-anchor="middle" font-size="9" fill="#fda4af">Nobody points to Order: GC may free it</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="344" y="244" width="280" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="484" y="264.5" text-anchor="middle" font-size="9" fill="#fcd34d">Static still points to the List: kept alive</text></g>
-<g class="st" data-s="1-"><g class="arrow-pill"><rect x="330" y="121" width="34" height="18" rx="9"/><text x="347" y="133.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
-<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="232" y="201" width="82" height="18" rx="9"/><text x="273" y="213.5" text-anchor="middle" font-size="9" font-style="italic">tmp → Order</text></g></g>
+<text x="24" y="44" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Load() { var tmp = new Order(); }</text>
+<text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">Cache = null;      // much later</text>
+<rect class="bx note" x="350" y="8" width="280" height="56" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="490" y="32" text-anchor="middle" font-size="9" fill="#e7ebf3">Teaching picture: where the objects sit</text>
+<text x="490" y="45" text-anchor="middle" font-size="9" fill="#e7ebf3">and their addresses are illustrative</text>
+<g class="st" data-s="1-1"><rect class="bx" x="186" y="156" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="255" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = null</text></g>
+<g class="st" data-s="2-7" data-hl="2"><rect class="bx" x="186" y="156" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-7" data-hl="2"><text x="255" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = ref</text></g>
+<g class="st" data-s="8-" data-hl="8"><rect class="bx" x="186" y="156" width="138" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="8-" data-hl="8"><text x="255" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Cache = null</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="366" y="132" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="490" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="366" y="156" width="248" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="490" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="2-5"><rect class="bx" x="366" y="180" width="248" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-5"><text x="490" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">items (internal array)</text></g>
+<g class="st" data-s="6-7"><rect class="bx" x="366" y="132" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-7"><text x="490" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="6-7"><rect class="bx" x="366" y="156" width="248" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-7"><text x="490" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="6-7"><rect class="bx" x="366" y="180" width="248" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-7"><text x="490" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">items (internal array)</text></g>
+<g class="st" data-s="8-"><rect class="bx" x="366" y="132" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="8-"><text x="490" y="145.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="8-"><rect class="bx" x="366" y="156" width="248" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="8-"><text x="490" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="8-"><rect class="bx" x="366" y="180" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="8-"><text x="490" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">items (internal array)</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="366" y="248" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="490" y="261.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="366" y="272" width="248" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="490" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="366" y="296" width="248" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="490" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">fields …</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="366" y="248" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="490" y="261.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header (sync block)</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="366" y="272" width="248" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="490" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → MT</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="366" y="296" width="248" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="490" y="309.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">fields …</text></g>
+<g class="st" data-s="3-3"><rect class="bx" x="26" y="272" width="118" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3"><text x="85" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">tmp = null</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="26" y="272" width="118" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="85" y="285.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">tmp = ref</text></g>
+<g class="st" data-s="6-7"><rect class="bx note" x="18" y="110" width="134" height="66" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-7"><text x="85" y="132.5" text-anchor="middle" font-size="9" fill="#fcd34d">GC runs</text></g>
+<g class="st" data-s="6-7"><text x="85" y="145.5" text-anchor="middle" font-size="9" fill="#fcd34d">roots: statics</text></g>
+<g class="st" data-s="6-7"><text x="85" y="158.5" text-anchor="middle" font-size="9" fill="#fcd34d">+ stack locals</text></g>
+<g class="st" data-s="8-"><rect class="bx note" x="18" y="110" width="134" height="66" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="8-"><text x="85" y="132.5" text-anchor="middle" font-size="9" fill="#fda4af">Cache = null:</text></g>
+<g class="st" data-s="8-"><text x="85" y="145.5" text-anchor="middle" font-size="9" fill="#fda4af">no root reaches</text></g>
+<g class="st" data-s="8-"><text x="85" y="158.5" text-anchor="middle" font-size="9" fill="#fda4af">the List now</text></g>
+<g class="st" data-s="4-4"><g class="arrow-pill"><rect x="238" y="274" width="34" height="18" rx="9"/><text x="255" y="286.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
+<g class="st" data-s="6-6"><g class="tok" data-path="st2-cr"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">🔎</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A static field <code>Cache</code> points to a List on the heap. The static field itself lives for the whole app.</li><li><code>Load()</code> runs and makes a temporary <code>Order</code> on the heap, with <code>tmp</code> on the stack pointing to it.</li><li><code>Load()</code> returns. <code>tmp</code> is gone, so nothing points to the Order — the GC may free it.</li><li>But <code>Cache</code> still points to the List, so the List <b>stays alive</b>. Static references are <b>GC roots</b> (page 19).</li></ol>
-<figcaption><strong>What you're seeing:</strong> a static reference is a permanent “ticket”: whatever it points to is never freed while it points there.</figcaption>
+<ol class="st-caps"><li>When the type is first initialised, its <b>static area</b> exists. The static field <code>Cache</code> is a slot in it — empty (<code>null</code>) for now.</li><li>The initializer <code>new List&lt;int&gt;()</code> creates a List <b>object on the heap</b>; the static slot <code>Cache</code> now holds a reference to it.</li><li><code>Load()</code> is called: a <b>stack frame</b> appears with its local <code>tmp</code> (empty).</li><li><code>new Order()</code> creates an Order object on the heap and <code>tmp</code> holds a reference to it.</li><li><code>Load()</code> returns: the <b>frame is popped</b>, so <code>tmp</code> is gone. The Order is still in the heap, but nothing points to it: <b>unreachable, not freed yet</b>.</li><li>A GC runs. It starts from its <b>roots</b> — statics and stack locals — and follows references. <code>Cache</code> is a root, so the List is reached.</li><li>The Order was never reached, so its memory is reclaimed. The List stays, because a static reference is a GC root.</li><li>Much later: <code>Cache = null</code>. No root reaches the List any more: it is unreachable (and a later GC may reclaim it). Until then, the static slot kept it — and anything it holds — alive.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a static reference is a permanent “ticket”: whatever it points to is never freed while it points there. Unreachable is not the same as freed: the memory is reclaimed only when a GC runs. (Layout is a teaching picture; the GC is covered on page 19.)</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🧾 Instance vs static</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Instance field</th><th scope="col">Static field</th></tr></thead><tbody><tr><th scope="row">How many copies?</th><td>one per object</td><td>one per type (for the whole app)</td></tr><tr><th scope="row">Created when?</th><td>each <code>new</code></td><td>when the type is first initialised (see below)</td></tr><tr><th scope="row">Lives where?</th><td>inside the object on the heap</td><td>static memory belonging to the type</td></tr><tr><th scope="row">Cleared when?</th><td>when the GC frees the object</td><td>not during the run; ends with the app</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Instance field</th><th scope="col">Static field</th></tr></thead><tbody><tr><th scope="row">How many copies?</th><td>one per object</td><td>one per type (for the whole app)</td></tr><tr><th scope="row">Created when?</th><td>each <code>new</code></td><td>when the type is first initialised (see below)</td></tr><tr><th scope="row">Lives where?</th><td>inside the object on the heap</td><td>the type’s static area (shared by all instances and all threads)</td></tr><tr><th scope="row">Cleared when?</th><td>when the GC frees the object</td><td>not during the run; ends with the app</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">⏱️ When does the static part get set up?</div>
@@ -147,7 +243,8 @@
   <section class="kd-section ">
     <div class="sec-label why">🔬 Honest note on “where exactly”</div>
     <div class="kd-card why-box">
-      <p>Microsoft’s docs say static fields belong to the type and are shared by all instances. Exactly <b>which internal memory area</b> the runtime uses to hold them is an implementation detail that the public docs do not pin down, so this lab draws “static memory” as one box and does not claim more.</p>
+      <p>Microsoft’s docs say static fields belong to the type and are shared by all instances. The runtime keeps them in a per-type static area, reached through the type’s data; exactly <b>where</b> and in what layout is a runtime detail that changes between versions. So the pictures draw “each type has its own static area, all instances share it” as a <b>teaching picture</b> and do not promise more. Addresses and field order in the pictures are illustrative.</p>
+      <p>Statics are shared by <b>all threads</b> (each thread has its own stack, but one heap and one set of statics).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -163,13 +260,14 @@
 <span class="kw">var</span> a = <span class="kw">new</span> Counter();   <span class="cmt">// a.Id = 1, Total = 1</span>
 <span class="kw">var</span> b = <span class="kw">new</span> Counter();   <span class="cmt">// b.Id = 2, Total = 2</span>
 
-<span class="kw">static</span> <span class="kw">class</span> Cache { <span class="kw">public</span> <span class="kw">static</span> List&lt;<span class="kw">int</span>&gt; Items = <span class="kw">new</span>(); }   <span class="cmt">// lives as long as the app</span></pre></div>
+<span class="kw">static</span> <span class="kw">class</span> Holder { <span class="kw">public</span> <span class="kw">static</span> List&lt;<span class="kw">int</span>&gt; Cache = <span class="kw">new</span>(); }   <span class="cmt">// the slot lives as long as the app</span>
+<span class="cmt">// Holder.Cache = null;  -&gt; only now can the List become unreachable</span></pre></div>
     <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Counter.Total is reached through the type name, not through an object.</p>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">♻️ Who clears this memory?</div>
     <div class="kd-card why-box">
-      <p><b>Nobody during the run.</b> Static fields live until the app ends. Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 23).</p>
+      <p><b>Nobody during the run.</b> Static fields normally live until the app ends (you can overwrite the value, e.g. <code>Cache = null</code>, but the slot stays). Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 23).</p>
     </div>
   </section>
   <section class="kd-section ">
@@ -211,6 +309,6 @@
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

@@ -42,18 +42,18 @@ def d_stk2():
     d.text(160, 232, 'still one frame — nothing piles up', 'emerald', size=9, mono=True)
     d.note(10, 278, 300, 60, 'Teaching picture: real stacks hold thousands of|frames (size set by the OS / runtime version),|not 11 — the idea is the same', 'n', size=8.5)
     d.zone(330, 6, 300, 346, 'cyan', '📚 STACK of one thread — fixed size')
-    d.text(385, 44, 'LIMIT: end of this thread’s stack', 'rose', size=8.5, mono=True, anchor='start')
-    d.box(385, 62, 150, 3, [], 'rose', rx=1)
+    d.text(385, 39, 'LIMIT: end of this thread’s stack', 'rose', size=8.5, mono=True, anchor='start')
+    d.box(385, 68, 150, 3, [], 'rose', rx=1)
     for k in range(11):
         y = 322 - 25 * k
         s0 = {0: 1, 1: 2}.get(k, 3 if k <= 6 else 4)
         d.box(385, y, 150, 22, [(f'Forever  n = {k}', 'm')], 'cyan', rx=4, st=f'{s0}-5')
         d.box(385, y, 150, 22, [(f'Forever  n = {k}', 'm')], 'rose', rx=4, st='6-6')
-    d.box(385, 47, 150, 22, [('Forever  n = 11', 'm')], 'rose', rx=4, st='5-5', hl=5)
+    d.box(385, 44, 150, 22, [('Forever  n = 11', 'm')], 'rose', rx=4, st='5-5', hl=5)
     for st, y in (('1-1', 322), ('2-2', 297), ('3-3', 197), ('4-5', 72)):
         d.box(335, y, 42, 22, [('TOP', 'm')], 'amber', rx=5, st=st)
-    d.arrow([(535, 308), (570, 308), (570, 283), (535, 283)], 'cyan', 'n + 1', at=(592, 296), st='2-2', id='k1')
-    d.arrow([(535, 83), (570, 83), (570, 58), (535, 58)], 'rose', 'n + 1', at=(592, 70), st='5-5', id='k2')
+    d.arrow([(535, 333), (570, 333), (570, 308), (535, 308)], 'cyan', 'n + 1', at=(592, 320), st='2-2', id='k1')
+    d.arrow([(535, 83), (570, 83), (570, 55), (535, 55)], 'rose', 'n + 1', at=(592, 69), st='5-5', id='k2')
     d.box(545, 190, 78, 56, [('process', 's'), ('ends', 's')], 'rose', st='6-6', hl=6)
     return d
 

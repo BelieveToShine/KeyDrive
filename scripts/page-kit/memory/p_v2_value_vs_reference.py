@@ -22,10 +22,10 @@ def d_vr1():
 
 # ---------------------------------------------------------------- D2: copy a reference
 def d_vr2():
-    d = Diagram('vr2', 640, 410, 'Copying a reference: p1 holds the address of a Person object on the heap, and the Person field Name holds a reference to a separate string object; var p2 = p1 copies only the address, so both point to the same Person; p2.Name = "Ravi" makes a new string object and re-points the shared Name field, so p1 sees Ravi too, and the old Asha string is left with nothing pointing to it')
+    d = Diagram('vr2', 640, 414, 'Copying a reference: p1 holds the address of a Person object on the heap, and the Person field Name holds a reference to a separate string object; var p2 = p1 copies only the address, so both point to the same Person; p2.Name = "Ravi" makes a new string object and re-points the shared Name field, so p1 sees Ravi too, and the old Asha string is left with nothing pointing to it')
     d.code_box(10, 8, 330, 80, [(0, 'var p1 = new Person("Asha");', ''), (0, 'var p2 = p1;', ''), (0, 'p2.Name = "Ravi";', ''), (0, 'Console.WriteLine(p1.Name);', '')], 'n', size=9.5, lh=15)
-    d.zone(10, 100, 180, 300, 'cyan', '📚 STACK')
-    d.zone(200, 100, 430, 300, 'emerald', '🏠 HEAP')
+    d.zone(10, 100, 180, 284, 'cyan', '📚 STACK')
+    d.zone(200, 100, 430, 284, 'emerald', '🏠 HEAP')
     fr = card(d, 20, 150, 'frame: Main()', [('p1 = 0x…A1', 'f', '1-'), ('p2 = 0x…A1', 'f', '2-')], 'cyan', w=160, st=1)
     pe = card(d, 215, 126, 'Person object @ 0x…A1', [('header (sync block)', 'hdr'), ('type ptr → Person MT', 'tp'), ('Name = reference', 'f', '1-3')], 'emerald', w=170, st=1)
     a1 = card(d, 440, 126, 'string object "Asha"', [('header', 'hdr'), ('type ptr → String MT', 'tp'), ('chars: "Asha"', 'f')], 'emerald', w=180, st='1-3')
@@ -39,14 +39,14 @@ def d_vr2():
     d.arrow([(nm['r'][0], nm['y']), (412, nm['y']), (412, 331), (448, 331)], 'amber', st='4-', id='n2')
     d.token('a1', '📞', 15, 'cyan', st='5-5')
     d.token('n2', '📞', 15, 'amber', st='5-5')
-    cell(d, pe, 2, 'Name = reference', 'amber', st='4-4', hl=4)
+    cell(d, pe, 2, 'Name = reference', 'amber', st='4-', hl=4)
     for i, (t, c) in enumerate([('new: the Person and its string|are built on the heap;|p1 holds the Person’s address', 'cyan'),
                                 ('p2 = p1 copies the address bits.|No new Person was built', 'violet'),
                                 ('p2.Name = "Ravi": a NEW|string object is built', 'amber'),
                                 ('the shared Name field now|points to Ravi; “Asha” is not|reachable through Person', 'amber'),
                                 ('p1 → Person → Name → Ravi:|one object, two names', 'emerald')]):
         d.note(18, 244, 164, 64, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.text(320, 398, 'Addresses and layout are a teaching picture (the GC can move objects)', 'n', 8.5, anchor='middle')
+    d.text(320, 404, 'Addresses and layout are a teaching picture (the GC can move objects)', 'n', 8.5, anchor='middle')
     return d
 
 # ---------------------------------------------------------------- D3: a value inside an object

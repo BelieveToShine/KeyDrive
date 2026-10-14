@@ -2,32 +2,32 @@ from p_common import *
 
 # ================================================================= 6. STATICS (v2: memory-level)
 def d_st1():
-    d = Diagram('st1', 640, 336, 'Two Counter objects on the heap, each with a header, a type pointer to the one Counter MethodTable, and its own Id; the single static Total sits in the type’s static area; the constructor adds one to Total and copies its value into the new object’s Id')
+    d = Diagram('st1', 640, 350, 'Two Counter objects on the heap, each with a header, a type pointer to the one Counter MethodTable, and its own Id; the single static Total sits in the type’s static area; the constructor adds one to Total and copies its value into the new object’s Id')
     d.note(10, 8, 320, 56, 'Teaching picture: addresses, field order|and sizes are illustrative', 'n', size=9)
-    d.code_box(340, 8, 290, 58, [(0, 'static int Total;   int Id;', ''), (0, 'Counter() { Total++; Id = Total; }', ''), (0, 'var a = new Counter();', ''), (0, 'var b = new Counter();', '')], 'n', size=8.8, lh=13)
-    d.zone(10, 76, 110, 250, 'cyan', '📚 STACK')
-    d.zone(130, 76, 190, 250, 'emerald', '🏠 HEAP')
-    d.zone(340, 76, 290, 250, 'violet', '🧬 TYPE: Counter')
-    fr = card(d, 16, 106, 'Main frame', [('a = null', 'f', '1-4'), ('b = null', 'f', '1-7')], 'cyan', w=98, st=1)
+    d.code_box(340, 4, 290, 68, [(0, 'static int Total;   int Id;', ''), (0, 'Counter() { Total++; Id = Total; }', ''), (0, 'var a = new Counter();', ''), (0, 'var b = new Counter();', '')], 'n', size=8.8, lh=13)
+    d.zone(10, 76, 110, 264, 'cyan', '📚 STACK')
+    d.zone(130, 76, 190, 264, 'emerald', '🏠 HEAP')
+    d.zone(340, 76, 290, 264, 'violet', '🧬 TYPE: Counter')
+    fr = card(d, 16, 120, 'Main frame', [('a = null', 'f', '1-4'), ('b = null', 'f', '1-7')], 'cyan', w=98, st=1)
     cell(d, fr, 0, 'a = ref', 'amber', st='5-', hl=5)
     cell(d, fr, 1, 'b = ref', 'amber', st='8-', hl=8)
-    d.box(350, 106, 170, 76, [('Counter MethodTable', 't'), ('vtable slots, GC info,', 'm'), ('instance size …', 'm')], 'violet', st=1)
-    sa = card(d, 348, 248, 'static area', [('Total = 0', 'f', '1-2')], 'amber', w=274, st=1)
+    d.box(350, 120, 170, 76, [('Counter MethodTable', 't'), ('vtable slots, GC info,', 'm'), ('instance size …', 'm')], 'violet', st=1)
+    sa = card(d, 348, 262, 'static area', [('Total = 0', 'f', '1-2')], 'amber', w=274, st=1)
     cell(d, sa, 0, 'Total = 1', 'amber', st='3-6', hl=3)
     cell(d, sa, 0, 'Total = 2', 'amber', st='7-', hl=7)
-    o1 = card(d, 138, 82, 'Counter object #1', [('header (sync block)', 'hdr'), ('type ptr', 'tp'), ('Id = 0', 'f', '2-3')], 'emerald', w=170, st='2-')
+    o1 = card(d, 138, 96, 'Counter object #1', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 0', 'f', '2-3')], 'emerald', w=170, st='2-')
     cell(d, o1, 2, 'Id = 1', 'amber', st='4-6', hl=4)
     cell(d, o1, 2, 'Id = 1', 'emerald', st='7-', hl=7)
-    o2 = card(d, 138, 200, 'Counter object #2', [('header (sync block)', 'hdr'), ('type ptr', 'tp'), ('Id = 0', 'f', '6-6')], 'emerald', w=170, st='6-')
+    o2 = card(d, 138, 214, 'Counter object #2', [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('Id = 0', 'f', '6-6')], 'emerald', w=170, st='6-')
     cell(d, o2, 2, 'Id = 2', 'amber', st='7-', hl=7)
-    d.arrow([(300, 143), (350, 143)], 'violet', 'type ptr', at=(325, 143), st='2-', id='tp1')
-    d.arrow([(300, 261), (336, 261), (336, 167), (350, 167)], 'violet', st='6-', id='tp2')
-    d.arrow([(106, 143), (146, 143)], 'cyan', st='5-', id='ra')
-    d.arrow([(106, 167), (124, 167), (124, 261), (146, 261)], 'cyan', st='8-', id='rb')
-    d.arrow([(590, 66), (590, 274)], 'amber', 'Total++', at=(590, 200), st='3-3', id='inc1')
-    d.arrow([(590, 66), (590, 274)], 'amber', 'Total++', at=(590, 200), st='7-7', id='inc2')
-    d.arrow([(356, 285), (326, 285), (326, 167), (300, 167)], 'amber', 'copy', at=(326, 226), st='4-4', id='cp1')
-    d.arrow([(356, 285), (300, 285)], 'amber', st='7-7', id='cp2')
+    d.arrow([(300, 157), (350, 157)], 'violet', st='2-', id='tp1')
+    d.arrow([(300, 275), (336, 275), (336, 181), (350, 181)], 'violet', st='6-', id='tp2')
+    d.arrow([(106, 157), (146, 157)], 'cyan', st='5-', id='ra')
+    d.arrow([(106, 181), (124, 181), (124, 275), (146, 275)], 'cyan', st='8-', id='rb')
+    d.arrow([(590, 72), (590, 288)], 'amber', 'Total++', at=(590, 214), st='3-3', id='inc1')
+    d.arrow([(590, 72), (590, 288)], 'amber', 'Total++', at=(590, 214), st='7-7', id='inc2')
+    d.arrow([(356, 299), (326, 299), (326, 181), (300, 181)], 'amber', 'copy', at=(326, 240), st='4-4', id='cp1')
+    d.arrow([(356, 299), (300, 299)], 'amber', st='7-7', id='cp2')
     d.token('inc1', '➕', 14, 'amber', st='3-3')
     d.token('inc2', '➕', 14, 'amber', st='7-7')
     d.token('cp1', '📋', 14, 'amber', st='4-4')
@@ -44,17 +44,17 @@ def d_st2():
     sc = card(d, 178, 130, 'static field', [('Cache = null', 'f', '1-1')], 'amber', w=154, st=1)
     cell(d, sc, 0, 'Cache = ref', 'amber', st='2-7', hl=2)
     cell(d, sc, 0, 'Cache = null', 'amber', st='8-', hl=8)
-    lrows = [('header (sync block)', 'hdr'), ('type ptr', 'tp'), ('items (internal array)', 'f')]
+    lrows = [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('items (internal array)', 'f')]
     card(d, 358, 106, 'List<int> object', lrows, 'emerald', w=264, st='2-5')
     card(d, 358, 106, 'List<int>: reached from a root', lrows, 'amber', w=264, st='6-7')
     card(d, 358, 106, 'List<int>: unreachable', lrows, 'n', w=264, st=8)
-    orows = [('header (sync block)', 'hdr'), ('type ptr', 'tp'), ('fields …', 'f')]
-    card(d, 358, 222, 'Order object', orows, 'emerald', w=264, st=4)
+    orows = [('header (sync block)', 'hdr'), ('type ptr → MT', 'tp'), ('fields …', 'f')]
+    card(d, 358, 222, 'Order object', orows, 'emerald', w=264, st='4-4')
     card(d, 358, 222, 'Order: unreachable, not freed yet', orows, 'n', w=264, st='5-6')
     d.zone(358, 222, 264, 106, 'n', 'free space (Order reclaimed)', st='7-')
     fr = card(d, 18, 246, 'Load() frame', [('tmp = null', 'f', '3-3')], 'cyan', w=134, st='3-4')
-    cell(d, fr, 0, 'tmp = ref', 'amber', st=4, hl=4)
-    d.arrow([(324, 167), (366, 167)], 'amber', 'ref', at=(345, 167), st='2-7', id='cr')
+    cell(d, fr, 0, 'tmp = ref', 'amber', st='4-4', hl=4)
+    d.arrow([(324, 167), (366, 167)], 'amber', st='2-7', id='cr')
     d.arrow([(144, 283), (366, 283)], 'cyan', 'ref', at=(255, 283), st='4-4', id='tr')
     d.token('cr', '🔎', 14, 'amber', st='6-6')
     d.note(18, 110, 134, 66, 'GC runs|roots: statics|+ stack locals', 'amber', st='6-7', size=9)
@@ -115,9 +115,10 @@ class Counter
 var a = new Counter();   // a.Id = 1, Total = 1
 var b = new Counter();   // b.Id = 2, Total = 2
 
-static class Cache { public static List<int> Items = new(); }   // lives as long as the app''',
+static class Holder { public static List<int> Cache = new(); }   // the slot lives as long as the app
+// Holder.Cache = null;  -> only now can the List become unreachable''',
               'Counter.Total is reached through the type name, not through an object.'),
-        clean=('Who clears this memory?', ['<b>Nobody during the run.</b> Static fields live until the app ends. Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 17).']),
+        clean=('Who clears this memory?', ['<b>Nobody during the run.</b> Static fields normally live until the app ends (you can overwrite the value, e.g. <code>Cache = null</code>, but the slot stays). Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 17).']),
         quiz=[('Each <code>new Counter()</code> gets its own copy of the static <code>Total</code>.', True, 'There is one <code>Total</code> for the type.'),
               ('A List held by a static field is freed when the method that filled it returns.', True, 'The static reference keeps it alive for the whole app.'),
               ('Static constructors run once, automatically.', False, 'Yes — before first use of the type, at most once.')],

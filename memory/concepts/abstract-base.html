@@ -163,7 +163,7 @@
   <section class="kd-section ">
     <div class="sec-label see">🛒 One base type, many kinds of objects: how p1.Pay() finds the right method</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 478" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two variables typed Payment refer to a CardPayment object and a UpiPayment object; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; the slot number is fixed at build time, the target is found at run time">
+<div class="st-stage"><svg viewBox="0 0 640 490" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two variables typed Payment refer to a CardPayment object and a UpiPayment object; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; the slot number is fixed at build time, the target is found at run time">
 <defs><marker id="ab2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="ab2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
 <rect class="zone" x="10" y="90" width="110" height="330" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="109" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
@@ -225,24 +225,24 @@
 <g class="st" data-s="2-" data-hl="6"><text x="565" y="179.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">CardPayment.Pay</text></g>
 <g class="st" data-s="2-"><rect class="bx" x="508" y="308.0" width="114" height="34" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="2-"><text x="565" y="327.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">UpiPayment.Pay</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="446" text-anchor="middle" font-size="9" fill="#67e8f9">Two stack variables, both typed Payment, hold references</text></g>
-<g class="st" data-s="1-1"><text x="320" y="459" text-anchor="middle" font-size="9" fill="#67e8f9">to two DIFFERENT heap objects. Each starts with a header and a type pointer.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="446" text-anchor="middle" font-size="9" fill="#c4b5fd">Each type pointer leads to its own type’s MethodTable (one per type).</text></g>
-<g class="st" data-s="2-2"><text x="320" y="459" text-anchor="middle" font-size="9" fill="#c4b5fd">The child filled Pay’s slot with its own code.</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="446" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: Payment.Pay is a virtual slot, the same number in</text></g>
-<g class="st" data-s="3-3"><text x="320" y="459" text-anchor="middle" font-size="9" fill="#fcd34d">every child table (here: slot 0). The compiler knows only the slot.</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="452.5" text-anchor="middle" font-size="9" fill="#67e8f9">p1.Pay() ①: follow the reference in p1 to the object on the heap.</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="446" text-anchor="middle" font-size="9" fill="#c4b5fd">p1.Pay() ②: read the object’s type pointer → CardPayment’s table,</text></g>
-<g class="st" data-s="5-5"><text x="320" y="459" text-anchor="middle" font-size="9" fill="#c4b5fd">take slot 0. The object’s real type picked the table, not p1’s type.</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="10" y="430" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="446" text-anchor="middle" font-size="9" fill="#6ee7b7">p1.Pay() ③: jump to CardPayment.Pay. p2.Pay() takes its own object</text></g>
-<g class="st" data-s="6-6"><text x="320" y="459" text-anchor="middle" font-size="9" fill="#6ee7b7">→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.</text></g>
-<text class="free" x="630" y="424" text-anchor="end" font-size="8" font-weight="400" fill="#93a0b8">teaching picture: layout and slot numbers are illustrative</text>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#67e8f9">Two stack variables, both typed Payment, hold references</text></g>
+<g class="st" data-s="1-1"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#67e8f9">to two DIFFERENT heap objects. Each starts with a header and a type pointer.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#c4b5fd">Each type pointer leads to its own type’s MethodTable (one per type).</text></g>
+<g class="st" data-s="2-2"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#c4b5fd">The child filled Pay’s slot with its own code.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#fcd34d">Build time: Payment.Pay is a virtual slot, the same number in</text></g>
+<g class="st" data-s="3-3"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#fcd34d">every child table (here: slot 0). The compiler knows only the slot.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="464.5" text-anchor="middle" font-size="9" fill="#67e8f9">p1.Pay() ①: follow the reference in p1 to the object on the heap.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#c4b5fd">p1.Pay() ②: read the object’s type pointer → CardPayment’s table,</text></g>
+<g class="st" data-s="5-5"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#c4b5fd">take slot 0. The object’s real type picked the table, not p1’s type.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="442" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="458" text-anchor="middle" font-size="9" fill="#6ee7b7">p1.Pay() ③: jump to CardPayment.Pay. p2.Pay() takes its own object</text></g>
+<g class="st" data-s="6-6"><text x="320" y="471" text-anchor="middle" font-size="9" fill="#6ee7b7">→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.</text></g>
+<text class="free" x="630" y="434" text-anchor="end" font-size="8" font-weight="400" fill="#93a0b8">teaching picture: layout and slot numbers are illustrative</text>
 <g class="st" data-s="4-4"><g class="tok" data-path="ab2-r1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 <g class="st" data-s="5-5"><g class="tok" data-path="ab2-t1"><circle r="9.3" fill="#0b0f19" stroke="#a78bfa" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 <g class="st" data-s="6-6"><g class="tok" data-path="ab2-c1"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>

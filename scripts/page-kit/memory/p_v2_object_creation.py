@@ -42,8 +42,8 @@ def d_oc2():
     cm = card(d, 410, 170, 'Customer MethodTable', [('shared by every Customer', 'f')], 'violet', w=210, st='3-')
     d.zone(180, 32, 190, 244, 'n', 'freed: space can be reused', dash=True, st='7-')
     ty1, ty2 = 93, 231
-    d.arrow([(362, ty1), (380, ty1), (380, om['rows'][0]['y']), (418, om['rows'][0]['y'])], 'violet', 'type ptr', at=(380, 81), st='2-', id='t1')
-    d.arrow([(362, ty2), (380, ty2), (380, cm['rows'][0]['y']), (418, cm['rows'][0]['y'])], 'violet', 'type ptr', at=(380, 219), st='3-', id='t2')
+    d.arrow([(362, ty1), (380, ty1), (380, om['rows'][0]['y']), (418, om['rows'][0]['y'])], 'violet', st='2-6', id='t1')
+    d.arrow([(362, ty2), (380, ty2), (380, cm['rows'][0]['y']), (418, cm['rows'][0]['y'])], 'violet', st='3-6', id='t2')
     d.arrow([(main['rows'][0]['r'][0], ty1), (188, ty1)], 'cyan', st='5-5', id='r1')
     d.arrow([(188, 117), (176, 117), (176, ty2), (188, ty2)], 'amber', st='4-6', id='r2')
     d.code_box(10, 310, 620, 52, [(0, 'class Customer { int id; }   class Order { Customer cust = new Customer(); }', ''), (0, 'var o = new Order();   ...   o = null;', 'k')], 'n', size=9, lh=16)
@@ -64,8 +64,8 @@ def d_oc3():
     am = card(d, 410, 32, 'Person[] MethodTable', [('shared by every Person[]', 'f')], 'violet', w=210, st='2-')
     pm = card(d, 410, 226, 'Person MethodTable', [('shared by every Person', 'f')], 'violet', w=210, st='4-')
     ty1, ty2 = arr['rows'][1]['y'], p['rows'][1]['y']
-    d.arrow([(362, ty1), (380, ty1), (380, am['rows'][0]['y']), (418, am['rows'][0]['y'])], 'violet', 'type ptr', at=(380, 81), st='2-', id='t1')
-    d.arrow([(362, ty2), (380, ty2), (380, pm['rows'][0]['y']), (418, pm['rows'][0]['y'])], 'violet', 'type ptr', at=(380, 275), st='4-', id='t2')
+    d.arrow([(362, ty1), (380, ty1), (380, am['rows'][0]['y']), (418, am['rows'][0]['y'])], 'violet', st='2-', id='t1')
+    d.arrow([(362, ty2), (380, ty2), (380, pm['rows'][0]['y']), (418, pm['rows'][0]['y'])], 'violet', st='4-', id='t2')
     d.arrow([(main['rows'][0]['r'][0], ty1), (188, ty1)], 'cyan', st='3-', id='r1')
     s0 = arr['rows'][3]['y']
     d.arrow([(188, s0), (176, s0), (176, ty2), (188, ty2)], 'amber', st='5-', id='r2')

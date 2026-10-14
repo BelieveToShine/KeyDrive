@@ -92,11 +92,11 @@
   <section class="kd-section ">
     <div class="sec-label see">🏠 Reference types: copying the address</div>
 <figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 410" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Copying a reference: p1 holds the address of a Person object on the heap, and the Person field Name holds a reference to a separate string object; var p2 = p1 copies only the address, so both point to the same Person; p2.Name = "Ravi" makes a new string object and re-points the shared Name field, so p1 sees Ravi too, and the old Asha string is left with nothing pointing to it">
+<div class="st-stage"><svg viewBox="0 0 640 414" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Copying a reference: p1 holds the address of a Person object on the heap, and the Person field Name holds a reference to a separate string object; var p2 = p1 copies only the address, so both point to the same Person; p2.Name = "Ravi" makes a new string object and re-points the shared Name field, so p1 sees Ravi too, and the old Asha string is left with nothing pointing to it">
 <defs><marker id="vr2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vr2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="vr2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="100" width="180" height="300" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="10" y="100" width="180" height="284" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="24" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="200" y="100" width="430" height="300" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<rect class="zone" x="200" y="100" width="430" height="284" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="214" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
 <g class="st" data-s="1-"><rect class="zone" x="20" y="150" width="160" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
 <g class="st" data-s="1-"><text class="zone-title" x="34" y="169" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">frame: Main()</text></g>
@@ -147,8 +147,8 @@
 <g class="st" data-s="3-"><text x="530" y="333.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → String MT</text></g>
 <g class="st" data-s="3-"><rect class="bx" x="448" y="344" width="164" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="3-"><text x="530" y="357.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">chars: "Ravi"</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="223" y="200" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="300" y="213.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = reference</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="223" y="200" width="154" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="300" y="213.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = reference</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="18" y="244" width="164" height="64" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="100" y="265.5" text-anchor="middle" font-size="9" fill="#67e8f9">new: the Person and its string</text></g>
 <g class="st" data-s="1-1"><text x="100" y="278.5" text-anchor="middle" font-size="9" fill="#67e8f9">are built on the heap;</text></g>
@@ -166,7 +166,7 @@
 <g class="st" data-s="5-5"><rect class="bx note" x="18" y="244" width="164" height="64" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="5-5"><text x="100" y="272" text-anchor="middle" font-size="9" fill="#6ee7b7">p1 → Person → Name → Ravi:</text></g>
 <g class="st" data-s="5-5"><text x="100" y="285" text-anchor="middle" font-size="9" fill="#6ee7b7">one object, two names</text></g>
-<text class="free" x="320" y="398" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Addresses and layout are a teaching picture (the GC can move objects)</text>
+<text class="free" x="320" y="404" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">Addresses and layout are a teaching picture (the GC can move objects)</text>
 <g class="st" data-s="5-5"><g class="tok" data-path="vr2-a1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 <g class="st" data-s="5-5"><g class="tok" data-path="vr2-n2"><circle r="9.3" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
 </svg></div>

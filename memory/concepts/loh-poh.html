@@ -44,43 +44,123 @@
 
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
-<figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="Small objects go to the normal small object heap generation 0 while an object of 85,000 bytes or more goes to the large object heap, which is collected together with generation 2 and by default is not compacted so freed gaps remain">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 508" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Two arrays are created: a 1,000-byte array lands in the small object heap and a 100,000-byte array in the large object heap, each reached from a stack reference; when the reference to the big array is set to null a gen 2 collection frees it, leaving a hole the LOH does not close, and a larger new array is placed after the surviving one">
 <defs><marker id="lo1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="74" width="290" height="176" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 SMALL OBJECT HEAP (gen 0, 1, 2)</text>
-<rect class="zone" x="320" y="74" width="310" height="176" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="334" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🐘 LARGE OBJECT HEAP (≥ 85,000 bytes)</text>
-<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">var small = new byte[1_000];</text>
-<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">var big   = new byte[100_000];</text>
-<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="26" y="110" width="120" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-" data-hl="1"><text x="86" y="130" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">small</text></g>
-<g class="st" data-s="1-" data-hl="1"><text x="86" y="142" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">1,000 bytes</text></g>
-<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="340" y="110" width="270" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="475" y="130" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">big</text></g>
-<g class="st" data-s="2-3" data-hl="2"><text x="475" y="142" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">100,000 bytes</text></g>
-<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="340" y="110" width="270" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="4-" data-hl="4"><text x="475" y="129.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">freed gap</text></g>
-<g class="st" data-s="4-" data-hl="4"><text x="475" y="142.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">not compacted by default</text></g>
-<g class="st" data-s="3-"><rect class="bx" x="340" y="170" width="120" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="3-"><text x="400" y="189.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">other</text></g>
-<g class="st" data-s="3-"><text x="400" y="202.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">lives on</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="266" width="620" height="52" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="295" text-anchor="middle" font-size="10" fill="#6ee7b7">Small → small object heap (gen 0)</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="266" width="620" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="295" text-anchor="middle" font-size="10" fill="#fcd34d">≥ 85,000 bytes → large object heap</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="266" width="620" height="52" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="295" text-anchor="middle" font-size="10" fill="#c4b5fd">The LOH is collected together with gen 2 (rarely)</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="266" width="620" height="52" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="295" text-anchor="middle" font-size="10" fill="#fda4af">When big dies it leaves a gap — the LOH is swept, not compacted, by default</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="266" width="620" height="52" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="295" text-anchor="middle" font-size="10" fill="#fda4af">Gaps can only be reused by objects that fit → fragmentation</text></g>
+<rect class="zone" x="10" y="8" width="190" height="144" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 SMALL OBJECT HEAP (gen 0, 1, 2)</text>
+<rect class="zone" x="214" y="8" width="130" height="430" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="228" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (Main)</text>
+<rect class="zone" x="358" y="8" width="272" height="430" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="372" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🐘 LARGE OBJECT HEAP (with gen 2)</text>
+<g class="st" data-s="1-"><rect class="zone" x="18" y="34" width="174" height="106" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="32" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">byte[1_000] object</text></g>
+<g class="st" data-s="2-3"><rect class="zone" x="366" y="100" width="256" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-3"><text class="zone-title" x="380" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">byte[100_000] object</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="366" y="100" width="256" height="106" rx="14" fill="rgba(251,113,133,.05)" stroke="#fb7185" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="380" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#fda4af">byte[100_000] unreachable</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="zone" x="366" y="100" width="256" height="106" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-" data-hl="5"><text class="zone-title" x="380" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free hole (was big)</text></g>
+<g class="st" data-s="3-"><rect class="zone" x="366" y="212" width="256" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="380" y="231" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">byte[90_000] object</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="366" y="324" width="256" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="380" y="343" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">byte[150_000] object</text></g>
+<g class="st" data-s="5-6" data-hl="5"><rect class="zone" x="10" y="276" width="190" height="162" rx="14" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-6" data-hl="5"><text class="zone-title" x="24" y="295" font-size="9.5" font-family="'JetBrains Mono'" fill="#c4b5fd">🧹 gen 2 GC: mark from roots</text></g>
+<g class="st" data-s="1-"><path d="M224,95 L184,95" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
+<g class="st" data-s="2-3"><path d="M334,161 L374,161" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
+<g class="st" data-s="3-"><path d="M334,273 L374,273" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
+<g class="st" data-s="6-"><path d="M334,385 L374,385" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
+<rect class="bx" x="10" y="164" width="190" height="100" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="186" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var small = new byte[1_000];</text>
+<text x="24" y="200" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var big = new byte[100_000];</text>
+<text x="24" y="214" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var other = new byte[90_000];</text>
+<text x="24" y="228" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">big = null;</text>
+<text x="24" y="242" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var more = new byte[150_000];</text>
+<g class="st" data-s="1-1"><text class="free" x="18" y="186" text-anchor="middle" font-size="9" font-weight="400" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><text class="free" x="18" y="200" text-anchor="middle" font-size="9" font-weight="400" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><text class="free" x="18" y="214" text-anchor="middle" font-size="9" font-weight="400" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-5"><text class="free" x="18" y="228" text-anchor="middle" font-size="9" font-weight="400" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><text class="free" x="18" y="242" text-anchor="middle" font-size="9" font-weight="400" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="26" y="60" width="158" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="26" y="84" width="158" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="26" y="108" width="158" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="105" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">length + 1,000 data bytes</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="366" y="34" width="256" height="50" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="494" y="55" text-anchor="middle" font-size="9" fill="#fcd34d">array ≥ 85,000 bytes → LOH</text></g>
+<g class="st" data-s="2-2"><text x="494" y="68" text-anchor="middle" font-size="9" fill="#fcd34d">(sizes: teaching picture)</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="374" y="126" width="240" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="494" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="374" y="150" width="240" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="494" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="2-3"><rect class="bx" x="374" y="174" width="240" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3"><text x="494" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">length + 100,000 data bytes</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="374" y="126" width="240" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="494" y="139.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="374" y="150" width="240" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="494" y="163.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="374" y="174" width="240" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="494" y="187.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">length + 100,000 data bytes</text></g>
+<g class="st" data-s="5-"><text class="free" x="494" y="168" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">freed, nothing moved: the hole stays</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="374" y="238" width="240" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="494" y="251.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="374" y="262" width="240" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="494" y="275.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="374" y="286" width="240" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="494" y="299.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">length + 90,000 data bytes</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="374" y="350" width="240" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="494" y="363.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="374" y="374" width="240" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="494" y="387.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="374" y="398" width="240" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="494" y="411.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">length + 150,000 data bytes</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="224" y="78.0" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="279" y="93" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">small</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="279" y="105" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="2-3" data-hl="2"><rect class="bx" x="224" y="144.0" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="279" y="159" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">big</text></g>
+<g class="st" data-s="2-3" data-hl="2"><text x="279" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="224" y="144.0" width="110" height="34" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="279" y="159" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">big</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="279" y="171" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">null</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="224" y="256.0" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="279" y="271" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">other</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="279" y="283" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="224" y="368.0" width="110" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="279" y="383" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">more</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="279" y="395" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="18" y="306" width="174" height="36" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="105" y="326.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">small → marked ✔</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="18" y="348" width="174" height="36" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="105" y="368.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">other → marked ✔</text></g>
+<g class="st" data-s="5-6"><rect class="bx" x="18" y="390" width="174" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="5-6"><text x="105" y="406.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">big = null</text></g>
+<g class="st" data-s="5-6"><text x="105" y="418.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">its array not marked ✘</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#6ee7b7">small is a stack reference to an array object on the small heap: header, type pointer, length, data</text></g>
+<g class="st" data-s="1-1"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#6ee7b7">(1,000 bytes of data is far below 85,000)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#fcd34d">100,000 bytes of data is over 85,000, so this array goes to the LOH instead</text></g>
+<g class="st" data-s="2-2"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#fcd34d">the stack variable big still just holds a reference</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#fcd34d">A second big array, with its own reference other, is placed after it</text></g>
+<g class="st" data-s="3-3"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#fcd34d">(addresses grow downwards: teaching picture)</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#fda4af">big = null: nothing points at the first array any more, so it is unreachable</text></g>
+<g class="st" data-s="4-4"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#fda4af">but it is still sitting there; nobody has freed it yet</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#c4b5fd">A gen 2 GC marks from the roots: small and other are reachable, the first array is not</text></g>
+<g class="st" data-s="5-5"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#c4b5fd">its space becomes a hole; other is NOT moved (LOH is not compacted by default)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="450" width="620" height="48" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="470" text-anchor="middle" font-size="9" fill="#fda4af">A new 150,000-byte array does not fit the old hole, so it lands after other</text></g>
+<g class="st" data-s="6-6"><text x="320" y="483" text-anchor="middle" font-size="9" fill="#fda4af">the hole stays: gaps that nothing fits into = fragmentation (teaching picture)</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li><code>new byte[1_000]</code> is small: it goes to the normal <b>small object heap</b>, in generation 0.</li><li><code>new byte[100_000]</code> is <b>85,000 bytes or more</b>, so it goes to the <b>large object heap (LOH)</b>.</li><li>The LOH is logically part of <b>generation 2</b>: it is collected only when gen 2 is — so big temporary arrays can pile up between collections.</li><li>When a big object dies, it leaves a gap. By default the LOH is <b>swept but not compacted</b> (copying big objects is expensive).</li><li>Gaps only help later objects that <b>fit</b> in them. Too many gaps = <b>fragmentation</b>.</li></ol>
-<figcaption><strong>What you're seeing:</strong> big objects live in a separate heap with different rules: collected with gen 2, not moved by default.</figcaption>
+<ol class="st-caps"><li><code>small</code> is a <b>stack variable</b> holding a reference to a 1,000-byte array on the <b>small object heap</b>: header, type pointer, length, then the data.</li><li><code>new byte[100_000]</code> has more than <b>85,000 bytes</b>, so the runtime puts it on the <b>large object heap (LOH)</b>. <code>big</code> is still just a reference on the stack.</li><li>A second big array, <code>other</code>, is placed after it. The LOH is collected together with <b>generation 2</b>.</li><li><code>big = null</code>: nothing points at the first array now, so it is <b>unreachable</b>. It is not freed yet.</li><li>A <b>gen 2 GC</b> marks from the roots: <code>small</code> and <code>other</code> are reachable, the first array is not. Its space becomes a <b>hole</b>, and <code>other</code> does <b>not</b> move (not compacted by default).</li><li>A new 150,000-byte array does not fit the hole, so it goes after <code>other</code>. Holes that nothing fits into = <b>fragmentation</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a stack reference points at an object on the small heap or the LOH; the LOH is cleared only with gen 2 and its holes stay.</figcaption>
 </figure>
   </section>
   <div class="one-sentence">🎯 <span class="grad-text"><b>Objects of 85,000 bytes or more go to the Large Object Heap, which is collected with gen 2 and not compacted by default.</b></span></div>
@@ -93,54 +173,189 @@
   </section>
   <section class="kd-section ">
     <div class="sec-label see">📌 Pinned objects: the ones that cannot move</div>
-<figure class="diagram-card kd-story" data-steps="3">
-<div class="st-stage"><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="A pinned object cannot be moved, so during compaction the other survivors slide around it and a gap remains next to it, causing fragmentation">
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="A pinned object cannot move: with native code holding the raw address of P, a collection frees the dead objects but only B can slide next to P, so a hole remains between A and P and a new larger object cannot use it">
 <defs><marker id="lo2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="10" y="40" width="80" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="50" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">A</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="50" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">live</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="114" y="40" width="80" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="154" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">dead</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="154" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">free me</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="218" y="40" width="80" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="258" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📌 P</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="258" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">pin</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="322" y="40" width="80" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="362" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">dead</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="362" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">free me</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="426" y="40" width="80" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="466" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">B</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="466" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">live</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="530" y="40" width="80" height="44" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="570" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">dead</text></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="570" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">free me</text></g>
-<g class="st" data-s="2-"><rect class="bx" x="10" y="40" width="80" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="50" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">A</text></g>
-<g class="st" data-s="2-"><text x="50" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">live</text></g>
-<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="114" y="40" width="80" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-" data-hl="2"><text x="154" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📌 P</text></g>
-<g class="st" data-s="2-" data-hl="2"><text x="154" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fde59a">stays put</text></g>
-<g class="st" data-s="2-"><rect class="bx" x="218" y="40" width="80" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="258" y="59.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">B</text></g>
-<g class="st" data-s="2-"><text x="258" y="72.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">live</text></g>
-<g class="st" data-s="2-"><rect class="bx" x="322" y="40" width="80" height="44" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="2-"><text x="362" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">gap</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="110" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="134.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">A pinned object (📌 P) must not move — for example, native code holds its address</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="110" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="134.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">Compaction: A slides left, but P cannot move; B can only come right next to P — gaps stay on the other side</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="110" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="134.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">Many pinned objects → many small gaps (fragmentation)</text></g>
+<rect class="zone" x="10" y="8" width="620" height="70" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="10" y="90" width="620" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<g class="st" data-s="2-"><rect class="zone" x="10" y="232" width="620" height="44" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="24" y="251" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">⚙️ NATIVE CODE</text></g>
+<path d="M72,70 L72,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo2A)"/>
+<path d="M284,70 L284,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo2A)"/>
+<g class="st" data-s="1-4"><path d="M496,70 L496,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo2A)"/></g>
+<g class="st" data-s="5-"><path d="M448,53 L390,53 L390,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo2A)"/></g>
+<g class="st" data-s="6-"><path d="M565,70 L565,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo2A)"/></g>
+<g class="st" data-s="2-"><path d="M284,240 L284,164" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#lo2A)"/></g>
+<text class="free" x="24" y="212" text-anchor="start" font-size="9.5" font-weight="400" fill="#6ee7b7">🏠 SMALL OBJECT HEAP · addresses are a teaching picture</text>
+<rect class="bx" x="24" y="36" width="96" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="72" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a</text>
+<text x="72" y="63" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text>
+<rect class="bx" x="236" y="36" width="96" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="284" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">buf</text>
+<text x="284" y="63" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text>
+<rect class="bx" x="448" y="36" width="96" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="496" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">b</text>
+<text x="496" y="63" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text>
+<g class="st" data-s="1-2"><rect class="bx" x="24" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="72" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">A</text></g>
+<g class="st" data-s="1-2"><text x="72" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x100</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="24" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="72" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">A ✔ live</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="72" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x100</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="130" y="116" width="96" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="178" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">object</text></g>
+<g class="st" data-s="1-2"><text x="178" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0x200</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="130" y="116" width="96" height="48" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="178" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">✘ unmarked</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="178" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">0x200</text></g>
+<g class="st" data-s="4-"><rect class="bx" x="130" y="116" width="96" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-"><text x="178" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">free hole</text></g>
+<g class="st" data-s="4-"><text x="178" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0x200</text></g>
+<g class="st" data-s="1-1"><rect class="bx" x="236" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="284" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">P</text></g>
+<g class="st" data-s="1-1"><text x="284" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x300</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="236" y="116" width="96" height="48" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="284" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📌 P pinned</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="284" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0x300</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="236" y="116" width="96" height="48" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="284" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">📌 P ✔ live</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="284" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0x300</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="342" y="116" width="96" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="390" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">object</text></g>
+<g class="st" data-s="1-2"><text x="390" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0x400</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="342" y="116" width="96" height="48" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="390" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">✘ unmarked</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="390" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">0x400</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="342" y="116" width="96" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="390" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">free hole</text></g>
+<g class="st" data-s="4-4"><text x="390" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0x400</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="342" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="390" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">B ✔ live</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="390" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">moved to 0x400</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="448" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="496" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">B</text></g>
+<g class="st" data-s="1-2"><text x="496" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x500</text></g>
+<g class="st" data-s="3-4"><rect class="bx" x="448" y="116" width="96" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-4"><text x="496" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">B ✔ live</text></g>
+<g class="st" data-s="3-4"><text x="496" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x500</text></g>
+<g class="st" data-s="1-4"><rect class="bx" x="554" y="116" width="66" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-4"><text x="587" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">free</text></g>
+<g class="st" data-s="1-4"><text x="587" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">0x600</text></g>
+<g class="st" data-s="5-5"><rect class="bx" x="448" y="116" width="172" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="5-5"><text x="534" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">one free block</text></g>
+<g class="st" data-s="5-5"><text x="534" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">from 0x500</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="448" y="116" width="132" height="48" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="514" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">N: bigger</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="514" y="150" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">0x500</text></g>
+<g class="st" data-s="6-"><rect class="bx" x="588" y="116" width="32" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="6-"><text class="free" x="184" y="196" text-anchor="middle" font-size="9" font-weight="400" fill="#fda4af">hole: stays unusable for N</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="552" y="36" width="68" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="586" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">n</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="586" y="63" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="219" y="240" width="130" height="30" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="284" y="257.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">raw address 0x300</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#67e8f9">Heap in address order. a, buf and b are stack references to A, P, B;</text></g>
+<g class="st" data-s="1-1"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#67e8f9">nothing points at the objects at 0x200 and 0x400</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#fcd34d">buf is handed to native code, which keeps the raw address 0x300</text></g>
+<g class="st" data-s="2-2"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#fcd34d">the GC cannot update that copy, so P must not move: pinned</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#c4b5fd">A GC marks from the stack roots: A, P and B are reachable</text></g>
+<g class="st" data-s="3-3"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#c4b5fd">the two objects nobody points at are not marked</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#fda4af">The unmarked objects are garbage; their space is free</text></g>
+<g class="st" data-s="4-4"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#fda4af">but the objects around them have not moved yet</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#6ee7b7">Compaction slides survivors together: B moves to 0x400 (b updated)</text></g>
+<g class="st" data-s="5-5"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#6ee7b7">P stays at 0x300, so the hole at 0x200 cannot be closed</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="286" width="620" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="302" text-anchor="middle" font-size="9" fill="#fda4af">A new object N, bigger than the hole, goes after B</text></g>
+<g class="st" data-s="6-6"><text x="320" y="315" text-anchor="middle" font-size="9" fill="#fda4af">free space split into pieces = fragmentation (illustrative)</text></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>Normally the GC may move objects when it compacts. A <b>pinned</b> object is not allowed to move — for example while native code is holding its address.</li><li>Compaction slides A over, but must work around the pinned P. Free space on either side of P stays split into pieces.</li><li>The more pinned objects, the more small gaps remain: <b>fragmentation</b>.</li></ol>
-<figcaption><strong>What you're seeing:</strong> pinning is a promise to native code that an address will not change.</figcaption>
+<ol class="st-caps"><li><code>a</code>, <code>buf</code> and <code>b</code> are stack references to A, P and B. The two objects at 0x200 and 0x400 have no reference at all. (Addresses are invented for the picture.)</li><li><code>buf</code> is passed to native code, which keeps the <b>raw address</b> 0x300. The GC cannot update that copy, so P is <b>pinned</b>: it must not move.</li><li>The GC marks from the roots: A, P and B are reachable; the other two are not.</li><li>The unmarked objects are garbage and their space is free, but nothing has been moved yet.</li><li>Compaction slides survivors together. <b>B moves</b> next to P and <code>b</code> is updated. P stays, so the hole at 0x200 cannot be closed.</li><li>A new object N that is bigger than the hole goes after B. Free space split into pieces is <b>fragmentation</b>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> pinning is a promise to native code that an address will not change, and compaction has to work around it.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">📍 The pinned object heap: pinned buffers kept out of the way</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A buffer allocated with GC.AllocateArray pinned true lives in the separate pinned object heap, so when the small object heap compacts its survivors slide together without having to work around the buffer, and native code keeps a valid address">
+<defs><marker id="lo3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="lo3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="8" width="190" height="232" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 SMALL OBJECT HEAP</text>
+<rect class="zone" x="214" y="8" width="110" height="232" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="228" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="338" y="8" width="292" height="232" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="352" y="27" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 PINNED OBJECT HEAP</text>
+<g class="st" data-s="1-"><rect class="zone" x="346" y="34" width="276" height="106" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-"><text class="zone-title" x="360" y="53" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">byte[4096] pinned buffer</text></g>
+<g class="st" data-s="1-"><path d="M314,95 L354,95" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo3A)"/></g>
+<g class="st" data-s="2-"><path d="M224,60 L190,60" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo3A)"/></g>
+<g class="st" data-s="2-2"><path d="M224,172 L190,172" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo3A)"/></g>
+<g class="st" data-s="3-"><path d="M224,172 L207,172 L207,116 L190,116" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo3A)"/></g>
+<g class="st" data-s="4-"><path d="M495,160 L495,140" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#lo3A)"/></g>
+<g class="st" data-s="1-"><rect class="bx" x="354" y="60" width="260" height="22" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="484" y="73.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">header</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="354" y="84" width="260" height="22" rx="4" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="484" y="97.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">type ptr → byte[] MT</text></g>
+<g class="st" data-s="1-"><rect class="bx" x="354" y="108" width="260" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-"><text x="484" y="121.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">length + 4,096 data bytes</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="224" y="78.0" width="90" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="269" y="93" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">buf</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="269" y="105" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="20" y="40" width="170" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="105" y="58" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">X</text></g>
+<g class="st" data-s="2-"><text x="105" y="70" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">live</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="20" y="96" width="170" height="40" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="105" y="114" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fda4af">object</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="105" y="126" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">unreachable</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="20" y="96" width="170" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="105" y="114" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Y ✔ live</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="105" y="126" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">slid up</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="20" y="152" width="170" height="40" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="105" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Y</text></g>
+<g class="st" data-s="2-2"><text x="105" y="182" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">live</text></g>
+<g class="st" data-s="3-"><rect class="bx" x="20" y="152" width="170" height="40" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
+<g class="st" data-s="3-"><text x="105" y="176" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e7ebf3">one free block</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="224" y="43" width="90" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="269" y="58" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">x</text></g>
+<g class="st" data-s="2-"><text x="269" y="70" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="224" y="155" width="90" height="34" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="269" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">y</text></g>
+<g class="st" data-s="2-"><text x="269" y="182" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">reference</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="430" y="160" width="130" height="40" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="495" y="178" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">native code</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="495" y="190" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">raw address</text></g>
+<g class="st" data-s="2-"><text class="free" x="184" y="228" text-anchor="middle" font-size="8.5" font-weight="400" fill="#93a0b8">illustrative layout</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="256" width="620" height="48" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="276" text-anchor="middle" font-size="9" fill="#fcd34d">GC.AllocateArray&lt;byte&gt;(4096, pinned: true) puts the array in the POH, away from the normal heap</text></g>
+<g class="st" data-s="1-1"><text x="320" y="289" text-anchor="middle" font-size="9" fill="#fcd34d">buf is an ordinary stack reference to it (layout: teaching picture)</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="256" width="620" height="48" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="276" text-anchor="middle" font-size="9" fill="#6ee7b7">Ordinary objects go in the small object heap: X and Y are reachable, one object between them is not</text></g>
+<g class="st" data-s="2-2"><text x="320" y="289" text-anchor="middle" font-size="9" fill="#6ee7b7">the pinned buffer is nowhere near them</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="256" width="620" height="48" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="276" text-anchor="middle" font-size="9" fill="#c4b5fd">The small heap compacts: Y slides up and the free space becomes one block</text></g>
+<g class="st" data-s="3-3"><text x="320" y="289" text-anchor="middle" font-size="9" fill="#c4b5fd">nothing in this heap is pinned, so nothing blocks the slide</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="256" width="620" height="48" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="276" text-anchor="middle" font-size="9" fill="#fcd34d">Native code uses the buffer through a raw address, which stays valid: the POH buffer never moves</text></g>
+<g class="st" data-s="4-4"><text x="320" y="289" text-anchor="middle" font-size="9" fill="#fcd34d">(that is what the API is for)</text></g>
+<rect class="bx" x="10" y="314" width="620" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="336" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</text>
+<text x="24" y="350" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">// POH: the .NET 5+ API for arrays that must not move</text>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A buffer created with <code>GC.AllocateArray&lt;byte&gt;(4096, pinned: true)</code> is placed in the <b>pinned object heap (POH)</b>, not among the ordinary objects.</li><li>Ordinary objects live in the small object heap: X and Y are reachable, one object between them is not.</li><li>When the small heap compacts, Y slides up and the free space becomes <b>one block</b>. No pinned buffer sits in the middle to block it.</li><li>Native code keeps a raw address into the buffer, and it stays valid because the POH buffer never moves.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the POH keeps long-lived pinned buffers away from the heap that gets compacted. (The layout is a teaching picture.)</figcaption>
 </figure>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🧾 The heaps at a glance</div>
-    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Heap</th><th scope="col">Holds</th><th scope="col">Collected with</th><th scope="col">Compaction</th></tr></thead><tbody><tr><th scope="row">Small object heap</th><td>objects below the 85,000-byte threshold</td><td>gen 0 / 1 / 2 as they age</td><td>yes, when worthwhile</td></tr><tr><th scope="row">🐘 Large object heap (LOH)</th><td>objects of 85,000 bytes or more (big arrays, big strings)</td><td>gen 2</td><td>not by default (swept)</td></tr><tr><th scope="row">📌 Pinned object heap (POH)</th><td>arrays allocated as pinned with <code>GC.AllocateArray(..., pinned: true)</code></td><td>gen 2</td><td>never moved (that is its purpose)</td></tr></tbody></table></div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">Heap</th><th scope="col">Holds</th><th scope="col">Collected with</th><th scope="col">Compaction</th></tr></thead><tbody><tr><th scope="row">Small object heap</th><td>objects below the 85,000-byte threshold</td><td>gen 0 / 1 / 2 as they age</td><td>survivors can slide together (compaction)</td></tr><tr><th scope="row">🐘 Large object heap (LOH)</th><td>objects of 85,000 bytes or more (big arrays, big strings)</td><td>gen 2</td><td>not by default: holes stay</td></tr><tr><th scope="row">📌 Pinned object heap (POH)</th><td>arrays allocated as pinned with <code>GC.AllocateArray(..., pinned: true)</code></td><td>gen 2</td><td>never moved (that is its purpose; per the API docs)</td></tr></tbody></table></div>
   </section>
   <section class="kd-section ">
     <div class="sec-label why">🛠️ How to be kind to the LOH</div>
@@ -168,19 +383,19 @@ byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</pre></div>
     <div class="sec-label trap">🎯 Check yourself</div>
     <div class="quiz">
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> A 100,000-byte array is allocated in generation 0.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It goes to the large object heap, which is collected with gen 2.</p></div></details>
-      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The LOH is not compacted by default.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — it is swept, which can leave gaps.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The LOH is not compacted by default.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — freed space stays as holes.</p></div></details>
       <details class="zoom quiz-item"><summary><span class="chev">▾</span> Pinned objects make compaction easier.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> They cannot be moved, so they cause fragmentation.</p></div></details>
     </div>
   </section>
   <section class="kd-section " id="recall">
     <div class="sec-label recall">🔥 Interview recall</div>
     <div class="kd-card recall-box">
-      <ul><li>≥ 85,000 bytes → LOH (part of gen 2).</li><li>LOH swept, not compacted by default → fragmentation.</li><li>Pinned = must not move; POH keeps pinned arrays apart.</li></ul>
+      <ul><li>≥ 85,000 bytes → LOH (collected with gen 2).</li><li>LOH not compacted by default → holes stay → fragmentation.</li><li>Pinned = must not move; POH keeps pinned arrays apart.</li></ul>
     </div>
   </section>
   <section class="kd-section ">
     <div class="sec-label saythis">🎤 Say this in an interview</div>
-    <div class="kd-card saythis-box">“Objects of 85,000 bytes or more are allocated on the large object heap, which is logically part of generation 2 and, by default, is swept rather than compacted. Pinned objects can’t be moved, so too many of them fragment the heap; arrays pinned on purpose can go on the pinned object heap.”</div>
+    <div class="kd-card saythis-box">“Objects of 85,000 bytes or more are allocated on the large object heap, which is collected with generation 2 and, by default, is not compacted. Pinned objects can’t be moved, so too many of them fragment the heap; arrays pinned on purpose can go on the pinned object heap.”</div>
   </section>
   <section class="kd-section " id="trap">
     <div class="sec-label trap">⚠️ Common trap</div>
@@ -194,7 +409,7 @@ byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</pre></div>
       <span>Next: how and when memory is actually cleared — scope, GC, <code>Dispose</code> and finalizers.</span>
       <a class="next-link" href="memory-clearing.html">How & When Memory Clears <span class="arrow">→</span></a>
     </div>
-  </section>  <p class="fact-note">📌 85,000-byte threshold, LOH collected with gen 2, not compacted by default: Microsoft Learn “Large object heap”. Pinned objects cannot be moved and cause fragmentation: Microsoft Learn GC performance and metrics docs. POH and GC.AllocateArray(pinned:true): API docs (older .NET versions have a restriction on element types). Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/large-object-heap" target="_blank" rel="noopener">The large object heap on Windows systems (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/api/system.gc.allocatearray" target="_blank" rel="noopener">GC.AllocateArray (System)</a></p>
+  </section>  <p class="fact-note">📌 85,000-byte threshold, LOH collected with gen 2, not compacted by default: Microsoft Learn “Large object heap”. Pinned objects cannot be moved and cause fragmentation: Microsoft Learn GC performance and metrics docs. POH and GC.AllocateArray(pinned:true): API docs (older .NET versions have a restriction on element types). Addresses, hole sizes and positions in the pictures are a teaching picture. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/large-object-heap" target="_blank" rel="noopener">The large object heap on Windows systems (Microsoft Learn)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/api/system.gc.allocatearray" target="_blank" rel="noopener">GC.AllocateArray (System)</a></p>
 
 
 </main>
@@ -203,6 +418,6 @@ byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</pre></div>
   <div class="wrap">KeyDrive · Memory · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261022"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>

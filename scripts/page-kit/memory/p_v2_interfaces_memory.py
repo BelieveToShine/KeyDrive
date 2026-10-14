@@ -40,9 +40,9 @@ def d_if1():
     d.code_box(10, 310, 300, 58, [(0, 'IPayable p = new Invoice();', ''), (0, 'IPayable q = new Subscription();', ''), (0, 'p.Pay();     q.Pay();', '')], 'n', size=9, lh=15)
     for i, (t, c) in enumerate([('new Invoice(): a heap object with header + type pointer.|p holds its address. Addresses are illustrative.', 'emerald'),
                                 ('Another class, another object, another MethodTable.|q has the same variable type as p.', 'emerald'),
-                                ('p.Pay() ①: follow p to the object|on the heap', 'cyan'),
-                                ('② read its type pointer: it leads to the|MethodTable of the object’s REAL class', 'violet'),
-                                ('③ the interface map says which method is Pay|→ jump to Invoice.Pay (teaching picture)', 'amber'),
+                                ('p.Pay() 1 ·: follow p to the object|on the heap', 'cyan'),
+                                ('2 · read its type pointer: it leads to the|MethodTable of the object’s REAL class', 'violet'),
+                                ('3 · the interface map says which method is Pay|→ jump to Invoice.Pay (teaching picture)', 'amber'),
                                 ('q.Pay(): same walk, another table|→ lands on Subscription.Pay', 'amber')]):
         d.note(320, 306, 310, 62, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
@@ -88,9 +88,9 @@ def build_interfaces_memory():
         prob=(d_if1(), [
             '<code>IPayable p = new Invoice();</code> — <code>new</code> creates a normal <b>Invoice object</b> on the heap: a header, a <b>type pointer</b>, then its fields. <code>p</code> (on the stack) holds its address. (<code>new IPayable()</code> is not allowed: an interface only lists methods, so no object of it can exist.)',
             '<code>IPayable q = new Subscription();</code> — another class, so another object with its own type pointer and its own MethodTable. <code>q</code> has the <b>same variable type</b> as <code>p</code>.',
-            '<b>p.Pay() ①.</b> Follow the address in <code>p</code> to the object on the heap.',
-            '<b>p.Pay() ②.</b> Read the object’s type pointer: it leads to the MethodTable of its <b>real</b> class, <code>Invoice</code> — not to anything called IPayable.',
-            '<b>p.Pay() ③.</b> That table has an <b>interface map</b>: for IPayable, <code>Pay</code> is <code>Invoice.Pay</code>. The call jumps there. (Real runtimes speed this up with cached stubs — a teaching picture.)',
+            '<b>p.Pay() 1 ·.</b> Follow the address in <code>p</code> to the object on the heap.',
+            '<b>p.Pay() 2 ·.</b> Read the object’s type pointer: it leads to the MethodTable of its <b>real</b> class, <code>Invoice</code> — not to anything called IPayable.',
+            '<b>p.Pay() 3 ·.</b> That table has an <b>interface map</b>: for IPayable, <code>Pay</code> is <code>Invoice.Pay</code>. The call jumps there. (Real runtimes speed this up with cached stubs — a teaching picture.)',
             '<b>q.Pay()</b> does the same walk through Subscription’s table and lands on <code>Subscription.Pay</code>. The interface added <b>no field to either object</b>.'],
             'an interface is a type of variable, not a type of object. Only class (or struct) objects exist on the heap; each class’s MethodTable (loaded once per type, shared by all its objects) carries the interface map. Addresses and the exact map layout are a teaching picture of the classic runtime model.'),
         one='<b>An interface never has memory of its own: it is a label on a variable that points to a real class object.</b>',

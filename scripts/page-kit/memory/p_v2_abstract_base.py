@@ -46,7 +46,7 @@ def d_ab1():
     return d
 
 def d_ab2():
-    d = Diagram('ab2', 640, 478, 'Two variables typed Payment refer to a CardPayment object and a UpiPayment object; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; the slot number is fixed at build time, the target is found at run time')
+    d = Diagram('ab2', 640, 490, 'Two variables typed Payment refer to a CardPayment object and a UpiPayment object; p1.Pay() follows the reference to the object, reads its type pointer to the CardPayment MethodTable, takes the Pay slot that the child filled and jumps to CardPayment.Pay; the slot number is fixed at build time, the target is found at run time')
     d.code_box(10, 8, 330, 70, [(0, 'Payment p1 = new CardPayment();', ''), (0, 'Payment p2 = new UpiPayment();', ''), (0, 'p1.Pay();    // which Pay runs?', 'k')], 'n', size=8.8, lh=14)
     Y = 90
     d.zone(10, Y, 110, 330, 'cyan', '📚 STACK')
@@ -81,8 +81,8 @@ def d_ab2():
              ('p1.Pay() ②: read the object’s type pointer → CardPayment’s table,|take slot 0. The object’s real type picked the table, not p1’s type.', 'violet'),
              ('p1.Pay() ③: jump to CardPayment.Pay. p2.Pay() takes its own object|→ UpiPayment’s table → UpiPayment.Pay. Same slot, other target.', 'emerald')]
     for i, (t, c) in enumerate(notes):
-        d.note(10, 430, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.text(630, 424, 'teaching picture: layout and slot numbers are illustrative', 'n', size=8, anchor='end')
+        d.note(10, 442, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9)
+    d.text(630, 434, 'teaching picture: layout and slot numbers are illustrative', 'n', size=8, anchor='end')
     return d
 
 def build_abstract_base():
