@@ -98,7 +98,7 @@ def d_rv3():
     d.text(175, 268, 'frame popped', 'n', size=10, st='4-4')
     d.zone(22, 226, 306, 84, 'rose', 'Main frame, class version', st='5-')
     d.box(32, 254, 286, 44, [('r2 : Tuple<int,decimal>', 't'), ('0x…T1 (a reference)', 'm')], 'rose', st='5-', hl=5)
-    tup = card(d, 372, 100, 'Tuple object @ 0x…T1', [('header (sync block)', 'hdr'), ('type ptr → MethodTable', 'tp'), ('Item1 : int = 3', 'f'), ('Item2 : decimal = 59.5', 'f')], 'rose', w=246, st='5-', hl=5)
+    tup = card(d, 372, 116, 'Tuple object @ 0x…T1', [('header (sync block)', 'hdr'), ('type ptr → MethodTable', 'tp'), ('Item1 : int = 3', 'f'), ('Item2 : decimal = 59.5', 'f')], 'rose', w=246, st='5-', hl=5)
     d.arrow([(318, 276), (350, 276), (350, tup['rows'][1]['y']), (tup['rows'][1]['l'][0], tup['rows'][1]['y'])], 'rose', 'ref', at=(350, 210), st='5-')
     _notes(d, 380, 34, [
         ('r is ONE value made of two slots, side by side, inside Main’s frame', 'cyan'), ('Stats builds Count and Sum in its own frame', 'violet'),

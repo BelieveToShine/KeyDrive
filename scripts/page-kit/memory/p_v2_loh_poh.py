@@ -121,15 +121,14 @@ def d_lo3():
     d.box(20, R[1], 170, H, [('Y ✔ live', 't'), ('slid up', 'm')], 'emerald', st='3-', hl=3)
     d.box(20, R[2], 170, H, [('Y', 't'), ('live', 'm')], 'emerald', st='2-2')
     d.box(20, R[2], 170, H, [('one free block', 't')], 'n', st='3-')
-    _slot(d, 224, R[0] + 3, 'x', 'reference', 'cyan', w=90, st='2-')
+    _slot(d, 224, 34, 'x', 'reference', 'cyan', w=90, st='2-')
     _slot(d, 224, R[2] + 3, 'y', 'reference', 'cyan', w=90, st='2-')
-    d.arrow([(224, R[0] + 20), (190, R[0] + 20)], 'cyan', st='2-')
+    d.arrow([(224, 51), (190, 51)], 'cyan', st='2-')
     d.arrow([(224, R[2] + 20), (190, R[2] + 20)], 'cyan', st='2-2')
     d.arrow([(224, R[2] + 20), (207, R[2] + 20), (207, R[1] + 20), (190, R[1] + 20)], 'cyan', st='3-')
     # native code
     d.box(430, 160, 130, 40, [('native code', 't'), ('raw address', 'm')], 'amber', st='4-', hl=4)
     d.arrow([(495, 160), (495, poh['y'] + poh['h'])], 'amber', st='4-')
-    d.text(184, 228, 'illustrative layout', 'n', size=8.5, st='2-')
     for i, (t, c) in enumerate([
             ('GC.AllocateArray<byte>(4096, pinned: true) puts the array in the POH, away from the normal heap|buf is an ordinary stack reference to it (layout: teaching picture)', 'amber'),
             ('Ordinary objects go in the small object heap: X and Y are reachable, one object between them is not|the pinned buffer is nowhere near them', 'emerald'),

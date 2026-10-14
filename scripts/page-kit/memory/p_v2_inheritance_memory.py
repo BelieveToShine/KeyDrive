@@ -42,7 +42,7 @@ def d_in1():
     d.arrow([(lx, yn), (rx, yn)], 'emerald', st='3-3')
     d.arrow([(lx, yn), (252, yn), (252, dy(1)), (rx, dy(1))], 'emerald', st='4-')
     d.arrow([(lx, yb), (252, yb), (252, dy(4)), (rx, dy(4))], 'emerald', st='5-')
-    d.text(190, 212, 'each "…" is its own string object', 'emerald', 8.5, st=1)
+    d.text(296, 212, 'each "…" is its own string object', 'emerald', 8.5, st=1)
     # stack
     d.box(18, dy(0) - 11, 104, 22, [('d = null', 'm')], 'n', rx=4, st='1-5')
     d.box(18, dy(0) - 11, 104, 22, [('d = ref', 'm')], 'cyan', rx=4, st='6-', hl=6)
