@@ -72,11 +72,11 @@
 <g class="st" data-s="3-"><path d="M334,273 L374,273" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
 <g class="st" data-s="6-"><path d="M334,385 L374,385" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#lo1A)"/></g>
 <rect class="bx" x="10" y="164" width="190" height="100" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="186" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var small = new byte[1_000];</text>
-<text x="24" y="200" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var big = new byte[100_000];</text>
-<text x="24" y="214" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var other = new byte[90_000];</text>
-<text x="24" y="228" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">big = null;</text>
-<text x="24" y="242" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var more = new byte[150_000];</text>
+<text x="24" y="186" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var small = new byte[1_000];</text>
+<text x="24" y="200" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var big = new byte[100_000];</text>
+<text x="24" y="214" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var other = new byte[90_000];</text>
+<text x="24" y="228" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">big = null;</text>
+<text x="24" y="242" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var more = new byte[150_000];</text>
 <g class="st" data-s="1-1"><rect class="cur" x="14" y="176" width="182" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="1-1"><text class="cur" x="16" y="185.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="2-2"><rect class="cur" x="14" y="190" width="182" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
@@ -359,8 +359,8 @@
 <g class="st" data-s="5-5"><text x="320" y="290" text-anchor="middle" font-size="9" fill="#c4b5fd">The small heap compacts: Y slides up, the free space becomes one block</text></g>
 <g class="st" data-s="5-5"><text x="320" y="303" text-anchor="middle" font-size="9" fill="#c4b5fd">the POH buffer stays where it is, so the native address is still valid</text></g>
 <rect class="bx" x="10" y="328" width="620" height="46" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="350" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</text>
-<text x="24" y="364" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">// POH: the .NET 5+ API for arrays that must not move</text>
+<text x="24" y="350" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">byte[] buf = GC.AllocateArray&lt;byte&gt;(4096, pinned: true);</text>
+<text x="24" y="364" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// POH: the .NET 5+ API for arrays that must not move</text>
 <g class="st" data-s="2-2"><rect class="cur" x="14" y="340" width="612" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="2-2"><text class="cur" x="16" y="349.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="3-"><g class="arrow-pill"><rect x="492.5" y="191" width="39" height="18" rx="9"/><text x="512" y="203.5" text-anchor="middle" font-size="9" font-style="italic">uses</text></g></g>

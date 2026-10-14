@@ -1,4 +1,5 @@
 from p_common import *
+from p_codeshift import add_code
 
 DOC_DIASP = ('Dependency injection in ASP.NET Core (Microsoft Learn)', 'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection')
 DOC_DINET = ('Dependency injection in .NET (Microsoft Learn)', 'https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection')
@@ -52,6 +53,7 @@ def d_di1():
     d.arrow([(134, 205), (172, 205)], 'cyan', st='4-5')
     d.arrow([(134, 283), (172, 283)], 'cyan', st='5-5')
     d.arrow([(440, 257), (478, 257)], 'violet', st='3-6', id='tp1')
+    add_code(d, ['services.AddSingleton<IEmailSettings, EmailSettings>();   // registered: nothing built yet', '// request 1 (thread A):', 'var settings = sp.GetRequiredService<IEmailSettings>();   // first ask: built', '// request 2 (thread B):', 'var settings = sp.GetRequiredService<IEmailSettings>();   // same object', '// both requests end: stack frames pop', '// app shutdown: container disposed'], [0, 2, 2, 2, 4, 5, 6])
     return d
 
 def d_di2():
@@ -75,6 +77,7 @@ def d_di2():
     d.arrow([(292, 291), (312, 291)], 'emerald', st='3-7')
     d.arrow([(384, 162), (384, 230)], 'emerald', st='4-7')
     d.arrow([(540, 138), (540, 271), (456, 271)], 'emerald', 'same object', at=(540, 204), st='5-7')
+    add_code(d, ['using var scope = provider.CreateScope();   // request starts', '// builds OrdersController, OrderService, OrderRepository', 'OrderService(AppDbContext db, ...)   // 1st ask: scope allocates ONE', '_db = db;   // service keeps a copy of the reference', 'OrderRepository(AppDbContext db)   // 2nd ask: the SAME object', '}   // request ends: scope.Dispose() runs', '// frame pops, scope dropped', '// later: a GC run reclaims the 5 objects'], [0, 1, 2, 3, 4, 5, 6, 7])
     return d
 
 def d_di3():
@@ -92,6 +95,7 @@ def d_di3():
     d.arrow([(478, 88), (406, 88)], 'amber', 'keeps', at=(442, 88), st='5-5')
     d.arrow([(478, 112), (430, 112), (430, 188), (406, 188)], 'amber', st='5-5')
     d.arrow([(478, 136), (445, 136), (445, 288), (406, 288)], 'amber', st='5-5')
+    add_code(d, ['// 3 classes declare an IEmailBuilder parameter', 'OrdersController(IEmailBuilder mail)   // ask 1: new #1', 'OrderService(IEmailBuilder mail)       // ask 2: new #2', 'OrderRepository(IEmailBuilder mail)    // ask 3: new #3', '// IDisposable? the scope keeps a ref to each', '}   // request ends: scope disposes all three'], [0, 1, 2, 3, 4, 5])
     return d
 
 def d_di4():
@@ -117,6 +121,7 @@ def d_di4():
     d.arrow([(292, 127), (316, 127)], 'rose', st='5-6')
     d.arrow([(480, 251), (456, 251)], 'cyan', st='6-')
     d.arrow([(230, 138), (230, 190)], 'emerald', 'asks', at=(230, 164), st='7-7')
+    add_code(d, ['AddSingleton<CacheService>();   // one for the whole app', '// request 1: scope allocates DbContext #1', 'CacheService(AppDbContext db) { _db = db; }   // stores the ref', '}   // request 1 ends: Dispose() on #1', '// scope 1 dropped, but _db still points to #1', '// request 2: new scope, new DbContext #2', 'CacheService(IServiceScopeFactory f)   // the fix'], [0, 1, 2, 3, 4, 5, 6])
     return d
 
 def build_di_lifetimes():

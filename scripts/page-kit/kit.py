@@ -99,7 +99,7 @@ class Diagram:
             tw = len(text) * size * .6 + ind
             if tw > w - 28: raise ValueError(f'[{self.mid}] code line too wide ({tw:.0f}>{w-28}): {text!r}')
             fill = '#fcd34d' if kind == 'k' else so
-            self.add(f'<text x="{x+14+ind}" y="{cy}" text-anchor="start" font-size="{size}" font-family="\'JetBrains Mono\'" fill="{fill}">{esc(text)}</text>')
+            self.add(f'<text x="{x+14+ind}" y="{cy}" text-anchor="start" font-size="{size}" font-family="\'JetBrains Mono\'" fill="{fill}" xml:space="preserve" style="white-space:pre">{esc(text)}</text>')
             cy += lh
 
     def code_cursor(self, x, y, w, line, size=9, lh=13):

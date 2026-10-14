@@ -8,7 +8,7 @@ def obj(d, x, y, name, nextv, spans):
         d.box(x, y, OW, OH, [(f'Order {name}', 't'), (f'next = {nextv}', 'm')], color, rx=6, st=st, hl=int(st.split('-')[0]) if tag else None)
 
 def d_gc1():
-    d = Diagram('gc1', 640, 372, 'Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free')
+    d = Diagram('gc1', 640, 474, 'Memory view of the garbage collector marking: roots are a slot in the stack frame of Run and a static field slot; the collector follows reference fields from each root through the heap objects it can reach; objects it never reaches, including two that only reference each other, are garbage, and their space becomes free')
     d.zone(160, 24, 472, 220, 'emerald', '🏠 HEAP')
     X1, X2, X3 = 190, 354, 518
     Y1, Y2 = 62, 160
@@ -40,6 +40,9 @@ def d_gc1():
     d.text(12, 270, 'colour legend:', 'n', 9, anchor='start')
     for i, (c, t) in enumerate((('n', 'not visited'), ('emerald', 'reached'), ('rose', 'no path from root'), ('amber', 'root dropped it'))):
         d.box(100 + i * 135, 258, 128, 18, [(t, 'm')], c, rx=4)
+    d.code_box(10, 286, 620, 100, [(0, 'static Order Cache = new();     // static root → D', ''), (0, 'void Run() {', ''), (0, '  var a = new Order();          // root a → A → B', ''),
+                                   (0, '  // ... a GC runs here, later (steps 2-6) ...', ''), (0, '  a = null;                     // A and B: no root now', ''), (0, '}', '')], 'n', size=9, lh=13)
+    run_line(d, 10, 286, 620, [2, 3, 3, 3, 3, 3, 4], size=9, lh=13)
     caps = [('Setup: two roots hold references: slot a in the stack frame, field Cache in the statics.|The heap has six Order objects. E and F reference each other.', 'cyan'),
             ('Mark from root a: follow its reference to Order A.|A is reached.', 'cyan'),
             ('A’s field next holds a reference to B: follow it.|B is reached.', 'emerald'),
@@ -48,8 +51,8 @@ def d_gc1():
             ('The collector reclaims the space of the unreached objects.|It is now free for new objects.', 'emerald'),
             ('Later: a = null (before any new GC runs). The slot no longer references A.|A and B are unreachable now, but still in memory until a later GC.', 'violet')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 288, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=10)
-    d.text(630, 362, 'teaching picture: layout and colours are illustrative; Order MT and header are left out here (page on objects)', 'n', 8.5, anchor='end')
+        d.note(10, 394, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=10)
+    d.text(630, 462, 'teaching picture: layout and colours are illustrative; Order MT and header are left out here (page on objects)', 'n', 8.5, anchor='end')
     return d
 
 def d_gc2():

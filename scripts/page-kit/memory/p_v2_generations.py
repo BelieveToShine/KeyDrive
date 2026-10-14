@@ -1,7 +1,7 @@
 from p_common import *
 
 def d_ge2():
-    d = Diagram('ge2', 640, 452, 'A stack variable and a static field are the roots; a gen 0 collection marks what they reach, frees the unreached objects and moves survivors up to gen 1 with the variable updated; a gen 1 collection then moves them up to gen 2; a gen 2 collection checks every generation')
+    d = Diagram('ge2', 640, 562, 'A stack variable and a static field are the roots; a gen 0 collection marks what they reach, frees the unreached objects and moves survivors up to gen 1 with the variable updated; a gen 1 collection then moves them up to gen 2; a gen 2 collection checks every generation')
     d.zone(10, 24, 110, 100, 'cyan', '📚 STACK')
     d.box(20, 46, 90, 38, [('cart', 't'), ('local ref', 'm')], 'cyan', st=1)
     d.zone(10, 200, 110, 90, 'amber', '📌 STATICS')
@@ -64,6 +64,10 @@ def d_ge2():
     for i, (c, t, w) in enumerate((('emerald', 'object, not yet marked', 148), ('amber', 'reached / being collected', 150), ('rose', 'unreachable, will be freed', 170))):
         d.box(60 + [0, 158, 316][i], 348, w, 18, [(t, 'm')], c, rx=4)
     d.text(320, 382, 'teaching picture: addresses invented, generations are regions of one heap · box = a whole object (header + type pointer + fields) · arrow = reference', 'n', size=8.5)
+    d.code_box(10, 392, 620, 100, [(0, 'var cart = new Order();     // Order → List inside', ''), (0, 'Temp(); Temp(); Temp(); Temp();   // 4 temp strings', ''),
+                                   (0, '// gen 0 budget used up: a gen 0 GC runs', ''), (0, 'var g = Temp(); cache = new Order();   // G and H', ''),
+                                   (0, '// gen 1 GC runs (includes gen 0)', ''), (0, '// gen 2 (full) GC runs, LOH included', '')], 'n', size=9, lh=13)
+    run_line(d, 10, 392, 620, [1, 2, 2, 3, 4, 4, 5, 5], size=9, lh=13)
     caps = [('Allocation: all objects start in gen 0. cart → Order → List; the four temp strings have no reference at all', 'emerald'),
             ('Gen 0 GC, mark: start at the roots (cart, static fields), follow references. Order and List are reached;|the 4 strings are not (rose)', 'amber'),
             ('Sweep + compact: unreached strings are freed; survivors MOVE to gen 1 (new addresses),|so cart is updated to the new address. Gen 0 is empty', 'cyan'),
@@ -73,7 +77,7 @@ def d_ge2():
             ('Gen 2 GC (full), mark: roots are followed through every generation. A large object that no root|references sits in the LOH; it is not reached', 'amber'),
             ('Sweep: the unreachable large object is freed. Survivors move up one step: H goes gen 1 → gen 2,|cache is updated. Gen 0 and gen 1 are empty', 'violet')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 392, 620, 54, t, c, st=f'{i + 1}-{i + 1}', size=9)
+        d.note(10, 502, 620, 54, t, c, st=f'{i + 1}-{i + 1}', size=9)
     return d
 
 def build_generations():

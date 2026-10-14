@@ -1,4 +1,5 @@
 from p_common import *
+from p_codeshift import add_code
 
 # ================================================================= GC MODES (v2: memory level)
 CW = 110
@@ -79,6 +80,7 @@ def d_gm2():
         d.note(10, 298, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=10)
     d.text(630, 380, LEG + ' · amber = changed', 'n', 8.5, anchor='end')
     d.text(630, 394, 'teaching picture: how the runtime tracks the change is not drawn; pause details are simplified', 'n', 8.5, anchor='end')
+    add_code(d, ['// gen 2 fills up: a background GC starts (brief pause)', '// app keeps running; GC thread marks A', 'var d = new Order();   // Order D in gen 0', 'b.Next = d;            // app changes a pointer mid-GC', '// short pause: the GC finishes marking', '// GC reclaims C; the app runs on'], [0,1,2,3,4,5])
     return d
 
 # ---- workstation vs server: the SAME 12 objects, one heap vs four heaps
