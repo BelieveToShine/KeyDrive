@@ -39,7 +39,7 @@ def d_dl1():
     d.emoji(278, 66, '✅', 14, st='7-')
     d.code_box(10, 356, 300, 82, [(0, 'var person = new Person("Asha");', ''), (0, 'Action greet = person.SayHi;', ''), (0, 'greet();', ''), (0, 'person = null;', '')], 'n', size=8.8, lh=15)
     run_line(d, 10, 356, 300, [0, 0, 1, 1, 1, 2, 3], size=8.8, lh=15)
-    _teach(d, 20, 454, ('teaching picture: addresses and', 'field names are illustrative'))
+    _teach(d, 100, 454, ('teaching picture: addresses and', 'field names are illustrative'))
     for i, (t, c) in enumerate([
             ('new Person("Asha"): the Person AND its name|string are two heap objects; Name is a reference.|Type ptr → the one shared MethodTable.', 'emerald'),
             ('person (stack) = a copy of the Person’s address.|SayHi’s code is stored once with the type,|not once per object.', 'cyan'),
@@ -75,7 +75,7 @@ def d_dl2():
     d.arrow([(134, 241), (170, 241)], 'cyan', st='4-', id='a1')
     d.code_box(10, 356, 300, 112, [(0, 'var inc = MakeCounter();', ''), (0, 'inc();', ''), (0, 'inc();', ''), (0, '// MakeCounter() {', ''), (0, '//   int count = 0;', ''), (0, '//   return () => count++; }', '')], 'n', size=8.8, lh=15)
     run_line(d, 10, 356, 300, [4, 4, 5, 0, 1, 1, 2, 2], size=8.8, lh=15)
-    _teach(d, 20, 482, ('teaching picture: addresses, closure/lambda', 'internals simplified'))
+    _teach(d, 100, 482, ('teaching picture: addresses, closure/lambda', 'internals simplified'))
     for i, (t, c) in enumerate([
             ('MakeCounter() runs: its frame holds a plain local|count = 0. Main’s inc is declared, not assigned yet.', 'cyan'),
             ('The lambda uses count, so the compiler keeps it in a|heap Closure object. The frame keeps only a hidden|reference to it. (compiler rewrite)', 'amber'),

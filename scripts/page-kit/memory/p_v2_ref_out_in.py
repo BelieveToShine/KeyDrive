@@ -79,10 +79,10 @@ def d_rf3():
     gf = card(d, 22, 196 + o, 'GetAnswer frame', [('value = address of n', 'f')], 'violet', w=276, st='2-3')
     d.arrow([(160, 222 + o), mf['B']], 'violet', 'alias', at=(160, 188 + o), st='2-3', id='oa')
     d.text(320, 290 + o, 'amber = just written · teaching picture: the alias is an address held in the slot', 'n', 8)
-    for i, (t, c) in enumerate([('int n; the caller declares n. Its slot exists in Main’s frame but holds no value yet. (Allowed for out, not for ref.)', 'cyan'),
-                                ('GetAnswer(out n) call: a new frame with a slot holding the ADDRESS of n: an alias, like ref. Nothing is copied, nothing is on the heap.', 'violet'),
-                                ('value = 42 writes through the alias, straight into n. The compiler REQUIRES the method to assign it before it returns.', 'amber'),
-                                ('} Return: the frame is popped. n holds 42. No tuple or result object was allocated: that is why int.TryParse uses out.', 'emerald')]):
+    for i, (t, c) in enumerate([('int n; the caller declares n. Its slot exists in Main’s frame|but holds no value yet. (Allowed for out, not for ref.)', 'cyan'),
+                                ('GetAnswer(out n) call: a new frame with a slot holding the|ADDRESS of n: an alias, like ref. Nothing is copied, nothing is on the heap.', 'violet'),
+                                ('value = 42 writes through the alias, straight into n.|The compiler REQUIRES the method to assign it before it returns.', 'amber'),
+                                ('} Return: the frame is popped. n holds 42.|No tuple or result object was allocated: that is why int.TryParse uses out.', 'emerald')]):
         d.note(10, 304 + o, 620, 50, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
