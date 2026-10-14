@@ -142,7 +142,7 @@ class Diagram:
         """something that travels along the arrow `path_id` when its step starts (use st='3-3' etc.)"""
         fill = ARROW.get(color, '#22d3ee')
         inner = (f'<circle r="{size*0.62:g}" fill="#0b0f19" stroke="{fill}" stroke-width="1.4"/>'
-                 f'<text class="tok-t" y="{size*0.35:g}" text-anchor="middle" font-size="{size}">{ch}</text>') if ch != '●' else f'<circle r="6" fill="{fill}"/>'
+                 f'<text class="tok-t" y="{size*0.35:g}" text-anchor="middle" font-size="{size*0.8:g}" font-weight="700" fill="#f1f5f9">{ch}</text>') if ch != '●' else f'<circle r="6" fill="{fill}"/>'
         self.add(f'<g class="tok" data-path="{self.mid}-{path_id}">{inner}</g>')
 
     def note(self, x, y, w, h, text, color='amber', size=10):

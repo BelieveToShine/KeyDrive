@@ -3,11 +3,10 @@ from p_common import *
 # ================================================================= 2. STACK (v2: memory-level)
 def d_stk1():
     d = Diagram('sk1', 640, 350, 'Memory view of three nested calls: each call pushes a frame with its own slots, arguments are copied from the caller slot into the callee slot, a changed copy leaves the original untouched, a returned frame becomes free space that still holds old bytes, and the next call reuses that space; the heap is not used at all')
-    lines = [('Main:  int id = 7;', '1'), ('Main:  Total(id);', '2'), ('Total(int n): int rate = 18;', '3'), ('Total: Tax(n);', '4'),
-             ('Tax(int x): x = 9;', '5'), ('Tax returns (TOP moves down)', '6'), ('Total returns (TOP moves down)', '7'), ('Main:  Tax(2);', '8')]
-    for i, (t, h) in enumerate(lines):
-        d.code_box(10, 8 + 29 * i, 300, 27, [(0, t, '')], 'n', size=9, lh=13, hl=h)
-    d.note(10, 250, 300, 52, 'No heap here: only value copies, no objects.|Teaching picture: layout is made up; real frames|hold more (e.g. a return address)', 'n', size=8.5)
+    prog = ['void Main() {', '  int id = 7;', '  Total(id);', '  Tax(2);', '}', 'int Total(int n) {', '  int rate = 18;', '  Tax(n);', '  return n * rate;', '}', 'void Tax(int x) {', '  x = 9;', '}']
+    d.code_box(10, 8, 300, 206, [(0, t, '') for t in prog], 'n', size=9, lh=14)
+    run_line(d, 10, 8, 300, [1, 2, 6, 7, 11, 12, 9, 3], size=9, lh=14)
+    d.note(10, 232, 300, 52, 'No heap here: only value copies, no objects.|Teaching picture: layout is made up; real frames|hold more (e.g. a return address)', 'n', size=8.5)
     d.zone(330, 6, 300, 340, 'cyan', '📚 STACK of one thread')
     d.text(458, 66, 'free space above TOP', 'n', size=9, mono=True)
     # TOP marker (moves)
@@ -22,11 +21,11 @@ def d_stk1():
     card(d, 380, 114, 'free: old bytes stay', [('x = 9', 'f')], 'n', w=158, st='6-8', dash=True)
     card(d, 380, 186, 'free: old bytes stay', [('n = 7', 'f'), ('rate = 18', 'f')], 'n', w=158, st='7-7', dash=True)
     # step 8: new call reuses the same space
-    card(d, 380, 186, 'Tax(2) frame', [('x = 2', 'f')], 'amber', w=158, st='8-8', hl=8)
+    card(d, 380, 186, 'Tax frame (reused space)', [('x = 2', 'f')], 'amber', w=158, st='8-8', hl=8)
     d.zone(375, 181, 168, 92, 'n', '', dash=True, st='8-8')
-    d.box(383, 248, 152, 20, [('old Total: rate = 18', 'm')], 'n', rx=4, st='8-8')
+    d.box(383, 248, 152, 20, [('stale: rate = 18', 'm')], 'n', rx=4, st='8-8')
     # copy arrows
-    d.arrow([(530, 319), (580, 319), (580, 223), (530, 223)], 'cyan', 'copy of 7', at=(580, 271), st='2-3', id='c1')
+    d.arrow([(530, 319), (580, 319), (580, 223), (530, 223)], 'cyan', 'copy of 7', at=(580, 271), st='2-2', id='c1')
     d.arrow([(530, 223), (580, 223), (580, 151), (530, 151)], 'violet', 'copy of 7', at=(580, 187), st='4-4', id='c2')
     d.token('c1', '7', 14, 'amber', st='2-2')
     d.token('c2', '7', 14, 'amber', st='4-4')
@@ -34,25 +33,20 @@ def d_stk1():
 
 def d_stk2():
     d = Diagram('sk2', 640, 356, 'Why the stack runs out: every recursive call pushes another frame into a fixed-size region, the next push would cross the limit and the process ends, while the loop version keeps one frame and changes n in place')
-    d.code_box(10, 8, 300, 78, [(0, '// recursion: a new frame per call', ''), (0, 'int Forever(int n) => 1 + Forever(n + 1);', ''), (0, '// loop: one frame, n changes in place', ''), (0, 'for (int n = 0; ; n++) { }', '')], 'n', size=8.5, lh=14)
-    run_line(d, 10, 8, 300, [1, 1, 1, 1, 1, 1], size=8.5, lh=14)
-    run_line(d, 10, 8, 300, [3, 3, 3, 3, 3, None], size=8.5, lh=14)
-    d.zone(10, 96, 300, 170, 'emerald', '🔁 The loop: ONE frame, ever')
-    lp = card(d, 60, 130, 'Loop frame', [('n = 0', 'f', '1-1')], 'emerald', w=200)
-    for st, t in (('2-2', 'n = 1'), ('3-3', 'n = 6'), ('4-4', 'n = 10'), ('5-6', 'n = 11')):
-        cell(d, lp, 0, t, 'emerald', st=st, hl=int(st[0]))
-    d.text(160, 232, 'still one frame — nothing piles up', 'emerald', size=9, mono=True)
-    d.note(10, 278, 300, 60, 'Teaching picture: real stacks hold thousands of|frames (size set by the OS / runtime version),|not 11 — the idea is the same', 'n', size=8.5)
+    d.code_box(10, 8, 300, 84, [(0, 'Forever(0);            // from Main', ''), (0, 'int Forever(int n) {', ''), (0, '  return 1 + Forever(n + 1);', ''), (0, '}', '')], 'n', size=8.5, lh=14)
+    run_line(d, 10, 8, 300, [0, 2, 2, 2, 2, 2], size=8.5, lh=14)
+    d.note(10, 106, 300, 62, 'A loop version (for (int n = 0; ; n++) { })|keeps ONE frame and changes n in place:|it never piles up frames, so it never overflows', 'emerald', size=8.5)
+    d.note(10, 182, 300, 60, 'Teaching picture: real stacks hold thousands of|frames (size set by the OS / runtime version),|not 11 — the idea is the same', 'n', size=8.5)
     d.zone(330, 6, 300, 346, 'cyan', '📚 STACK of one thread — fixed size')
     d.text(385, 39, 'LIMIT: end of this thread’s stack', 'rose', size=8.5, mono=True, anchor='start')
-    d.box(385, 80, 150, 3, [], 'rose', rx=1)
+    d.box(385, 75, 150, 3, [], 'rose', rx=1)
     for k in range(11):
-        y = 322 - 24 * k + (0 if k < 10 else 4)
+        y = 322 - 24 * k + 0
         s0 = {0: 1, 1: 2}.get(k, 3 if k <= 6 else 4)
         d.box(385, y, 150, 21, [(f'Forever  n = {k}', 'm')], 'cyan', rx=4, st=f'{s0}-5')
         d.box(385, y, 150, 21, [(f'Forever  n = {k}', 'm')], 'rose', rx=4, st='6-6')
     d.box(385, 50, 150, 22, [('n = 11: no room', 'm')], 'rose', rx=4, st='5-6', hl=5)
-    for st, y in (('1-1', 321), ('2-2', 297), ('3-3', 177), ('4-5', 90)):
+    for st, y in (('1-1', 321), ('2-2', 297), ('3-3', 177), ('4-5', 82)):
         d.box(335, y, 42, 21, [('TOP', 'm')], 'amber', rx=5, st=st)
     d.arrow([(535, 332), (570, 332), (570, 308), (535, 308)], 'cyan', 'n + 1', at=(592, 320), st='2-2', id='k1')
     d.arrow([(535, 97), (562, 97), (562, 61), (535, 61)], 'rose', 'n + 1', at=(592, 79), st='5-5', id='k2')
@@ -103,10 +97,10 @@ def build_stack():
               'A method call is a plate: it holds that method’s own notes (its parameters and local variables). When the method is done, the plate is removed and nobody has to “clean” it.'],
         parts=[
             ('story', '💥 When the stack runs out', (d_stk2(), [
-                'A recursive method: <code>Forever(0)</code> gets a frame with its own <code>n</code>. A <b>loop</b> doing the same job uses one frame and changes <code>n</code> in place.',
-                '<code>Forever(1)</code>: the call needs <b>another frame</b> (n + 1 is copied in). Nothing returns, so nothing is popped. The loop still has one frame.',
-                'The frames pile up: n = 2 … 6. Each call takes more of the fixed-size region. The loop’s one frame now says <code>n = 6</code> — same slot, new value.',
-                'n = 7 … 10: the region is almost full — TOP is right under the LIMIT. The loop’s frame is the same size as at the start.',
+                'A recursive method: <code>Forever(0)</code> gets a frame with its own <code>n</code>. (A <b>loop</b> doing the same job would use one frame — see the note.)',
+                '<code>Forever(1)</code>: the call needs <b>another frame</b> (n + 1 is copied in). Nothing returns, so nothing is popped.',
+                'The frames pile up: n = 2 … 6. Each call takes more of the fixed-size region.',
+                'n = 7 … 10: the region is almost full — TOP is right under the LIMIT.',
                 'The next call (<code>n = 11</code>) would need a frame <b>beyond the limit</b> — the red box above the LIMIT line. There is no room, so it cannot be pushed.',
                 'The thread’s stack is exhausted (all frames turn red): the process ends with a <b>StackOverflowException</b>. The loop version never grows and never overflows.'],
                 'endless recursion fills a fixed-size stack one frame per call, while a loop reuses a single frame. (Teaching picture: real stacks hold thousands of frames; sizes depend on the OS and runtime version.)')),

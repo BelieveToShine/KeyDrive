@@ -76,17 +76,19 @@ def d_in2():
     dm = card(d, 374, 66, 'Dog MethodTable', [('type = Dog  ·  parent: Animal', 'f', '1-2'), ('vtable slots, size …', 'f')], 'violet', w=248, st=1)
     cell(d, dm, 0, 'type = Dog  ==  Dog ✓ match', 'emerald', st='3-4', hl=3)
     cell(d, dm, 0, 'type = Dog  !=  Cat ✗ no match', 'rose', st='5-', hl=5)
-    card(d, 374, 176, 'Cat MethodTable (asked for)', [('type = Cat', 'f')], 'rose', w=248, st='5-', dash=True)
+    card(d, 374, 176, 'Cat type data', [('exists once Cat is used/loaded;', 'f'), ('not part of this object', 'f')], 'rose', w=248, st='5-', dash=True)
     d.arrow([(c['rows'][1]['r'][0], yt), dm['L']], 'violet', st=1)
     d.text(498, 168, 'highlight = the check happening now', 'n', 8, st='3-')
     d.box(20, ly - 17, 110, 34, [('a', 't'), ('declared Animal', 's')], 'cyan', st=1, hl=1)
     d.box(20, 140, 110, 34, [('dog', 't'), ('declared Dog', 's')], 'cyan', st='4-', hl=4)
     d.arrow([(130, ly), c['L']], 'cyan', st=1)
     d.arrow([(130, 157), (143, 157), (143, ly), c['L']], 'cyan', st='4-')
-    d.zone(10, 204, 346, 58, 'amber', '🔍 WHAT THE COMPILER ALLOWS (build time, not memory)', st='2-')
+    d.zone(10, 204, 346, 58, 'amber', '🔍 COMPILE-TIME NOTE (build time, NOT memory)', st='2-2')
+    d.zone(10, 204, 346, 58, 'amber', '🔍 COMPILE-TIME NOTE (build time, NOT memory)', st='4-')
     d.note(10, 210, 346, 46, 'The variable a is typed Animal; the object it|holds is a Dog (see the type pointer).', 'cyan', st='1-1', size=9)
-    d.box(18, 228, 160, 26, [('a.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='2-3')
-    d.box(184, 228, 164, 26, [('a.Breed ❌ build error', 'm')], 'rose', rx=4, st='2-3')
+    d.box(18, 228, 160, 26, [('a.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='2-2')
+    d.box(184, 228, 164, 26, [('a.Breed ❌ build error', 'm')], 'rose', rx=4, st='2-2')
+    d.note(10, 210, 346, 46, 'Run time, in memory: the type ptr of the object|is read and compared with Dog (right, highlighted).', 'emerald', st='3-3', size=9)
     d.box(18, 228, 160, 26, [('dog.Name  ✅ allowed', 'm')], 'emerald', rx=4, st='4-4')
     d.box(184, 228, 164, 26, [('dog.Breed ✅ allowed', 'm')], 'emerald', rx=4, st='4-4', hl=4)
     d.box(18, 228, 330, 26, [('(Cat)a  compiles ✅ — fails at run time ❌', 'm')], 'rose', rx=4, st='5-', hl=5)
@@ -94,7 +96,7 @@ def d_in2():
     run_line(d, 10, 276, 346, [0, 1, 2, 2, 3], size=8.8, lh=15)
     for i, (t, col) in enumerate([
             ('One Dog object. a (typed Animal)|holds its address; the object\'s type|ptr says Dog.', 'cyan'),
-            ('Build time: through a only Animal|members are allowed (Name). Nothing|in memory changes.', 'amber'),
+            ('Build time (not memory): the compiler|lets the variable a use only Animal|members. Nothing in memory changes.', 'amber'),
             ('Run time: (Dog)a reads the object\'s|type ptr and compares it with Dog.|Match.', 'emerald'),
             ('The SAME address is copied into dog.|No new object; Breed is now allowed.', 'cyan'),
             ('(Cat)a: type ptr says Dog, not Cat →|InvalidCastException. The object|is untouched.', 'rose')]):
@@ -122,7 +124,7 @@ def build_inheritance_memory():
         parts=[
             ('story', '👁️ A base variable pointing at a child object', (d_in2(), [
                 '<code>Animal a = new Dog();</code> — the variable is typed <b>Animal</b>, but it holds the address of a full <b>Dog</b> object. Its <b>type pointer</b> leads to the Dog type data.',
-                '<b>Build time.</b> Through <code>a</code> the compiler only allows Animal members, so <code>a.Breed</code> will not build. Nothing in memory changes: this is a rule about the variable’s type.',
+                '<b>Build time.</b> The compiler lets the variable <code>a</code> use only Animal members, so <code>a.Breed</code> will not build. Nothing in memory changes: this is a rule about the variable’s type.',
                 '<b>Run time.</b> <code>(Dog)a</code> reads the object’s type pointer and compares it with Dog. They match.',
                 'The <b>same address</b> is copied into a new variable <code>dog</code>. No new object: two references, one object. Now <code>Breed</code> is allowed.',
                 '<code>(Cat)a</code> compiles, but the type pointer says Dog, not Cat, so it throws <code>InvalidCastException</code>. The object never changes type.'],

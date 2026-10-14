@@ -60,30 +60,44 @@
 <g class="st" data-s="7-7"><rect class="zone" x="380" y="186" width="158" height="82" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
 <g class="st" data-s="7-7"><text class="zone-title" x="394" y="205" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free: old bytes stay</text></g>
 <g class="st" data-s="8-8"><rect class="zone" x="380" y="186" width="158" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
-<g class="st" data-s="8-8"><text class="zone-title" x="394" y="205" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Tax(2) frame</text></g>
+<g class="st" data-s="8-8"><text class="zone-title" x="394" y="205" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Tax frame (reused space)</text></g>
 <g class="st" data-s="8-8"><rect class="zone" x="375" y="181" width="168" height="92" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="2-3"><path id="sk1-c1" d="M530,319 L580,319 L580,223 L530,223" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sk1A)"/></g>
+<g class="st" data-s="2-2"><path id="sk1-c1" d="M530,319 L580,319 L580,223 L530,223" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sk1A)"/></g>
 <g class="st" data-s="4-4"><path id="sk1-c2" d="M530,223 L580,223 L580,151 L530,151" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#sk1A)"/></g>
-<g class="st" data-hl="1"><rect class="bx" x="10" y="8" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="1"><text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Main:  int id = 7;</text></g>
-<g class="st" data-hl="2"><rect class="bx" x="10" y="37" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="2"><text x="24" y="59" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Main:  Total(id);</text></g>
-<g class="st" data-hl="3"><rect class="bx" x="10" y="66" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="3"><text x="24" y="88" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Total(int n): int rate = 18;</text></g>
-<g class="st" data-hl="4"><rect class="bx" x="10" y="95" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="4"><text x="24" y="117" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Total: Tax(n);</text></g>
-<g class="st" data-hl="5"><rect class="bx" x="10" y="124" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="5"><text x="24" y="146" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Tax(int x): x = 9;</text></g>
-<g class="st" data-hl="6"><rect class="bx" x="10" y="153" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="6"><text x="24" y="175" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Tax returns (TOP moves down)</text></g>
-<g class="st" data-hl="7"><rect class="bx" x="10" y="182" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="7"><text x="24" y="204" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Total returns (TOP moves down)</text></g>
-<g class="st" data-hl="8"><rect class="bx" x="10" y="211" width="300" height="27" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-hl="8"><text x="24" y="233" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Main:  Tax(2);</text></g>
-<rect class="bx note" x="10" y="250" width="300" height="52" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="160" y="265.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">No heap here: only value copies, no objects.</text>
-<text x="160" y="278.25" text-anchor="middle" font-size="8.5" fill="#e7ebf3">Teaching picture: layout is made up; real frames</text>
-<text x="160" y="290.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">hold more (e.g. a return address)</text>
+<rect class="bx" x="10" y="8" width="300" height="206" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">void Main() {</text>
+<text x="24" y="44" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  int id = 7;</text>
+<text x="24" y="58" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  Total(id);</text>
+<text x="24" y="72" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  Tax(2);</text>
+<text x="24" y="86" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
+<text x="24" y="100" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">int Total(int n) {</text>
+<text x="24" y="114" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  int rate = 18;</text>
+<text x="24" y="128" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  Tax(n);</text>
+<text x="24" y="142" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  return n * rate;</text>
+<text x="24" y="156" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
+<text x="24" y="170" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">void Tax(int x) {</text>
+<text x="24" y="184" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  x = 9;</text>
+<text x="24" y="198" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="34" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="43.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-2"><rect class="cur" x="14" y="48" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-2"><text class="cur" x="16" y="57.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="3-3"><rect class="cur" x="14" y="104" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="3-3"><text class="cur" x="16" y="113.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="118" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="127.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="174" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="183.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="188" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="197.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="7-7"><rect class="cur" x="14" y="146" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="7-7"><text class="cur" x="16" y="155.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="8-8"><rect class="cur" x="14" y="62" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="8-8"><text class="cur" x="16" y="71.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<rect class="bx note" x="10" y="232" width="300" height="52" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="160" y="247.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">No heap here: only value copies, no objects.</text>
+<text x="160" y="260.25" text-anchor="middle" font-size="8.5" fill="#e7ebf3">Teaching picture: layout is made up; real frames</text>
+<text x="160" y="272.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">hold more (e.g. a return address)</text>
 <text class="free" x="458" y="66" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">free space above TOP</text>
 <g class="st" data-s="1-1"><rect class="bx" x="334" y="300" width="42" height="22" rx="5" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="1-1"><text x="355" y="313.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">TOP</text></g>
@@ -118,11 +132,11 @@
 <g class="st" data-s="8-8" data-hl="8"><rect class="bx" x="388" y="212" width="142" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="8-8" data-hl="8"><text x="459" y="225.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">x = 2</text></g>
 <g class="st" data-s="8-8"><rect class="bx" x="383" y="248" width="152" height="20" rx="4" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/></g>
-<g class="st" data-s="8-8"><text x="459" y="260.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">old Total: rate = 18</text></g>
-<g class="st" data-s="2-3"><g class="arrow-pill"><rect x="547" y="262" width="66" height="18" rx="9"/><text x="580" y="274.5" text-anchor="middle" font-size="9" font-style="italic">copy of 7</text></g></g>
+<g class="st" data-s="8-8"><text x="459" y="260.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#93a0b8" font-family="'JetBrains Mono'">stale: rate = 18</text></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="547" y="262" width="66" height="18" rx="9"/><text x="580" y="274.5" text-anchor="middle" font-size="9" font-style="italic">copy of 7</text></g></g>
 <g class="st" data-s="4-4"><g class="arrow-pill"><rect x="547" y="178" width="66" height="18" rx="9"/><text x="580" y="190.5" text-anchor="middle" font-size="9" font-style="italic">copy of 7</text></g></g>
-<g class="st" data-s="2-2"><g class="tok" data-path="sk1-c1"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">7</text></g></g>
-<g class="st" data-s="4-4"><g class="tok" data-path="sk1-c2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="14">7</text></g></g>
+<g class="st" data-s="2-2"><g class="tok" data-path="sk1-c1"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="11.2" font-weight="700" fill="#f1f5f9">7</text></g></g>
+<g class="st" data-s="4-4"><g class="tok" data-path="sk1-c2"><circle r="8.68" fill="#0b0f19" stroke="#fbbf24" stroke-width="1.4"/><text class="tok-t" y="4.9" text-anchor="middle" font-size="11.2" font-weight="700" fill="#f1f5f9">7</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -143,41 +157,30 @@
 <figure class="diagram-card kd-story" data-steps="6">
 <div class="st-stage"><svg viewBox="0 0 640 356" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Why the stack runs out: every recursive call pushes another frame into a fixed-size region, the next push would cross the limit and the process ends, while the loop version keeps one frame and changes n in place">
 <defs><marker id="sk2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="sk2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="96" width="300" height="170" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="115" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🔁 The loop: ONE frame, ever</text>
-<rect class="zone" x="60" y="130" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
-<text class="zone-title" x="74" y="149" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Loop frame</text>
 <rect class="zone" x="330" y="6" width="300" height="346" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
 <text class="zone-title" x="344" y="25" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK of one thread — fixed size</text>
 <g class="st" data-s="2-2"><path id="sk2-k1" d="M535,332 L570,332 L570,308 L535,308" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#sk2A)"/></g>
 <g class="st" data-s="5-5"><path id="sk2-k2" d="M535,97 L562,97 L562,61 L535,61" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sk2A)"/></g>
 <g class="st" data-s="6-6"><path id="sk2-k3" d="M535,61 L587,61 L587,150" fill="none" stroke="#fb7185" stroke-width="1.6" marker-end="url(#sk2A)"/></g>
-<rect class="bx" x="10" y="8" width="300" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
-<text x="24" y="30" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// recursion: a new frame per call</text>
-<text x="24" y="44" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">int Forever(int n) =&gt; 1 + Forever(n + 1);</text>
-<text x="24" y="58" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// loop: one frame, n changes in place</text>
-<text x="24" y="72" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">for (int n = 0; ; n++) { }</text>
-<g class="st" data-s="1-6"><rect class="cur" x="14" y="34.5" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="1-6"><text class="cur" x="16" y="43.5" text-anchor="start" font-size="5.5" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="1-5"><rect class="cur" x="14" y="62.5" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="1-5"><text class="cur" x="16" y="71.5" text-anchor="start" font-size="5.5" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="1-1"><rect class="bx" x="68" y="156" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1"><text x="160" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">n = 0</text></g>
-<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="68" y="156" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="2-2" data-hl="2"><text x="160" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">n = 1</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="68" y="156" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="160" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">n = 6</text></g>
-<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="68" y="156" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4" data-hl="4"><text x="160" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">n = 10</text></g>
-<g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="68" y="156" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="5-6" data-hl="5"><text x="160" y="169.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">n = 11</text></g>
-<text class="free" x="160" y="232" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7" font-family="'JetBrains Mono'">still one frame — nothing piles up</text>
-<rect class="bx note" x="10" y="278" width="300" height="60" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="160" y="297.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">Teaching picture: real stacks hold thousands of</text>
-<text x="160" y="310.25" text-anchor="middle" font-size="8.5" fill="#e7ebf3">frames (size set by the OS / runtime version),</text>
-<text x="160" y="322.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">not 11 — the idea is the same</text>
+<rect class="bx" x="10" y="8" width="300" height="84" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Forever(0);            // from Main</text>
+<text x="24" y="44" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">int Forever(int n) {</text>
+<text x="24" y="58" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">  return 1 + Forever(n + 1);</text>
+<text x="24" y="72" text-anchor="start" font-size="8.5" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}</text>
+<g class="st" data-s="1-1"><rect class="cur" x="14" y="20.5" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="1-1"><text class="cur" x="16" y="29.5" text-anchor="start" font-size="5.5" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="2-6"><rect class="cur" x="14" y="48.5" width="292" height="14" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="2-6"><text class="cur" x="16" y="57.5" text-anchor="start" font-size="5.5" fill="#fcd34d">▶</text></g>
+<rect class="bx note" x="10" y="106" width="300" height="62" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="160" y="126.75" text-anchor="middle" font-size="8.5" fill="#6ee7b7">A loop version (for (int n = 0; ; n++) { })</text>
+<text x="160" y="139.25" text-anchor="middle" font-size="8.5" fill="#6ee7b7">keeps ONE frame and changes n in place:</text>
+<text x="160" y="151.75" text-anchor="middle" font-size="8.5" fill="#6ee7b7">it never piles up frames, so it never overflows</text>
+<rect class="bx note" x="10" y="182" width="300" height="60" rx="9" fill="#171c28" stroke="#2d364a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="160" y="201.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">Teaching picture: real stacks hold thousands of</text>
+<text x="160" y="214.25" text-anchor="middle" font-size="8.5" fill="#e7ebf3">frames (size set by the OS / runtime version),</text>
+<text x="160" y="226.75" text-anchor="middle" font-size="8.5" fill="#e7ebf3">not 11 — the idea is the same</text>
 <text class="free" x="385" y="39" text-anchor="start" font-size="8.5" font-weight="400" fill="#fda4af" font-family="'JetBrains Mono'">LIMIT: end of this thread’s stack</text>
-<rect class="bx" x="385" y="80" width="150" height="3" rx="1" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
+<rect class="bx" x="385" y="75" width="150" height="3" rx="1" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/>
 <g class="st" data-s="1-5"><rect class="bx" x="385" y="322" width="150" height="21" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
 <g class="st" data-s="1-5"><text x="460" y="335" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever  n = 0</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="385" y="322" width="150" height="21" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
@@ -218,10 +221,10 @@
 <g class="st" data-s="4-5"><text x="460" y="119" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever  n = 9</text></g>
 <g class="st" data-s="6-6"><rect class="bx" x="385" y="106" width="150" height="21" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="6-6"><text x="460" y="119" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Forever  n = 9</text></g>
-<g class="st" data-s="4-5"><rect class="bx" x="385" y="86" width="150" height="21" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="4-5"><text x="460" y="99" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever  n = 10</text></g>
-<g class="st" data-s="6-6"><rect class="bx" x="385" y="86" width="150" height="21" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
-<g class="st" data-s="6-6"><text x="460" y="99" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Forever  n = 10</text></g>
+<g class="st" data-s="4-5"><rect class="bx" x="385" y="82" width="150" height="21" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5"><text x="460" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">Forever  n = 10</text></g>
+<g class="st" data-s="6-6"><rect class="bx" x="385" y="82" width="150" height="21" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
+<g class="st" data-s="6-6"><text x="460" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">Forever  n = 10</text></g>
 <g class="st" data-s="5-6" data-hl="5"><rect class="bx" x="385" y="50" width="150" height="22" rx="4" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="5-6" data-hl="5"><text x="460" y="63.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fcc3cb" font-family="'JetBrains Mono'">n = 11: no room</text></g>
 <g class="st" data-s="1-1"><rect class="bx" x="335" y="321" width="42" height="21" rx="5" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
@@ -230,8 +233,8 @@
 <g class="st" data-s="2-2"><text x="356" y="310" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">TOP</text></g>
 <g class="st" data-s="3-3"><rect class="bx" x="335" y="177" width="42" height="21" rx="5" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
 <g class="st" data-s="3-3"><text x="356" y="190" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">TOP</text></g>
-<g class="st" data-s="4-5"><rect class="bx" x="335" y="90" width="42" height="21" rx="5" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-5"><text x="356" y="103" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">TOP</text></g>
+<g class="st" data-s="4-5"><rect class="bx" x="335" y="82" width="42" height="21" rx="5" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5"><text x="356" y="95" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">TOP</text></g>
 <g class="st" data-s="6-6" data-hl="6"><rect class="bx" x="552" y="150" width="70" height="52" rx="10" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.3"/></g>
 <g class="st" data-s="6-6" data-hl="6"><text x="587" y="172.5" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">process</text></g>
 <g class="st" data-s="6-6" data-hl="6"><text x="587" y="185" text-anchor="middle" font-size="9.5" font-weight="400" fill="#fcc3cb">ends</text></g>
@@ -241,7 +244,7 @@
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
-<ol class="st-caps"><li>A recursive method: <code>Forever(0)</code> gets a frame with its own <code>n</code>. A <b>loop</b> doing the same job uses one frame and changes <code>n</code> in place.</li><li><code>Forever(1)</code>: the call needs <b>another frame</b> (n + 1 is copied in). Nothing returns, so nothing is popped. The loop still has one frame.</li><li>The frames pile up: n = 2 … 6. Each call takes more of the fixed-size region. The loop’s one frame now says <code>n = 6</code> — same slot, new value.</li><li>n = 7 … 10: the region is almost full — TOP is right under the LIMIT. The loop’s frame is the same size as at the start.</li><li>The next call (<code>n = 11</code>) would need a frame <b>beyond the limit</b> — the red box above the LIMIT line. There is no room, so it cannot be pushed.</li><li>The thread’s stack is exhausted (all frames turn red): the process ends with a <b>StackOverflowException</b>. The loop version never grows and never overflows.</li></ol>
+<ol class="st-caps"><li>A recursive method: <code>Forever(0)</code> gets a frame with its own <code>n</code>. (A <b>loop</b> doing the same job would use one frame — see the note.)</li><li><code>Forever(1)</code>: the call needs <b>another frame</b> (n + 1 is copied in). Nothing returns, so nothing is popped.</li><li>The frames pile up: n = 2 … 6. Each call takes more of the fixed-size region.</li><li>n = 7 … 10: the region is almost full — TOP is right under the LIMIT.</li><li>The next call (<code>n = 11</code>) would need a frame <b>beyond the limit</b> — the red box above the LIMIT line. There is no room, so it cannot be pushed.</li><li>The thread’s stack is exhausted (all frames turn red): the process ends with a <b>StackOverflowException</b>. The loop version never grows and never overflows.</li></ol>
 <figcaption><strong>What you're seeing:</strong> endless recursion fills a fixed-size stack one frame per call, while a loop reuses a single frame. (Teaching picture: real stacks hold thousands of frames; sizes depend on the OS and runtime version.)</figcaption>
 </figure>
   </section>

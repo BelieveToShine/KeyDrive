@@ -237,7 +237,7 @@ def build_inheritance_memory():
         parts=[
             ('story', '👁️ A base variable pointing at a child object', (d_in2(), [
                 '<code>Animal a = new Dog();</code> — the variable is typed <b>Animal</b>, but it points at a full <b>Dog</b> object.',
-                'Through <code>a</code> you can only use <b>Animal</b> members. <code>a.Breed</code> will not compile.',
+                'Via the variable <code>a</code> you can only use <b>Animal</b> members. <code>a.Breed</code> will not compile.',
                 'A <b>cast</b> to <code>Dog</code> shows the whole object (and checks the object really is a Dog).',
                 'The object <b>never changes type</b>; only your “view” of it changes.'],
                 'one object, two possible views. The variable’s type limits what you can touch; it does not change the object.')),

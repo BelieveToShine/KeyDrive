@@ -45,94 +45,97 @@
   <section class="kd-section ">
     <div class="sec-label see">👁 See it first</div>
 <figure class="diagram-card kd-story" data-steps="6">
-<div class="st-stage"><svg viewBox="0 0 640 422" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object">
+<div class="st-stage"><svg viewBox="0 0 640 435" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Memory view: a method returns and its stack frame is popped, so nothing points to its Order object any more; the Order stays in the heap as unreachable garbage while the program keeps allocating, until a garbage collection marks from the roots, finds it unreached, and reclaims its space for a new object">
 <defs><marker id="mc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="120" width="156" height="204" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (roots)</text>
-<rect class="zone" x="176" y="120" width="454" height="204" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="190" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
-<rect class="zone" x="18" y="146" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/>
-<text class="zone-title" x="32" y="165" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main() frame</text>
-<g class="st" data-s="1-1"><rect class="zone" x="18" y="236" width="140" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-1"><text class="zone-title" x="32" y="255" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Process() frame</text></g>
-<g class="st" data-s="2-"><rect class="zone" x="18" y="236" width="140" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="2-"><text class="zone-title" x="32" y="255" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Process() popped</text></g>
-<rect class="zone" x="185" y="154" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
-<text class="zone-title" x="199" y="173" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Cart</text>
-<g class="st" data-s="3-"><rect class="zone" x="350" y="154" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="3-"><text class="zone-title" x="364" y="173" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Customer</text></g>
-<g class="st" data-s="1-1"><rect class="zone" x="185" y="244" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-1"><text class="zone-title" x="199" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order (in use)</text></g>
-<g class="st" data-s="2-4"><rect class="zone" x="185" y="244" width="140" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
-<g class="st" data-s="2-4"><text class="zone-title" x="199" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Order: unreachable</text></g>
-<g class="st" data-s="5-5"><rect class="zone" x="185" y="244" width="140" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="5-5"><text class="zone-title" x="199" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
-<g class="st" data-s="6-"><rect class="zone" x="185" y="244" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="6-"><text class="zone-title" x="199" y="263" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Invoice (new)</text></g>
-<g class="st" data-s="1-"><path id="mc1-a1" d="M150,183 L185,183" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
-<g class="st" data-s="1-1"><path id="mc1-a2" d="M158,273 L185,273" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
-<g class="st" data-s="3-"><path id="mc1-a3" d="M317,191 L333,191 L333,183 L350,183" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
-<g class="st" data-s="6-"><path id="mc1-a4" d="M150,207 L168,207 L168,273 L185,273" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
-<rect class="bx" x="10" y="4" width="620" height="88" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="zone" x="10" y="133" width="156" height="204" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="152" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK (roots)</text>
+<rect class="zone" x="176" y="133" width="454" height="204" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="190" y="152" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<rect class="zone" x="18" y="159" width="140" height="82" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/>
+<text class="zone-title" x="32" y="178" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Main() frame</text>
+<g class="st" data-s="1-1"><rect class="zone" x="18" y="249" width="140" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-1"><text class="zone-title" x="32" y="268" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Process() frame</text></g>
+<g class="st" data-s="2-"><rect class="zone" x="18" y="249" width="140" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="2-"><text class="zone-title" x="32" y="268" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Process() popped</text></g>
+<rect class="zone" x="185" y="167" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/>
+<text class="zone-title" x="199" y="186" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Cart</text>
+<g class="st" data-s="3-"><rect class="zone" x="350" y="167" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-"><text class="zone-title" x="364" y="186" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Customer</text></g>
+<g class="st" data-s="1-1"><rect class="zone" x="185" y="257" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-1"><text class="zone-title" x="199" y="276" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Order (in use)</text></g>
+<g class="st" data-s="2-4"><rect class="zone" x="185" y="257" width="140" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="2-4"><text class="zone-title" x="199" y="276" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">Order: unreachable</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="185" y="257" width="140" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="199" y="276" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="6-"><rect class="zone" x="185" y="257" width="140" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="6-"><text class="zone-title" x="199" y="276" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">Invoice (new)</text></g>
+<g class="st" data-s="1-"><path id="mc1-a1" d="M150,196 L185,196" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
+<g class="st" data-s="1-1"><path id="mc1-a2" d="M158,286 L185,286" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
+<g class="st" data-s="3-"><path id="mc1-a3" d="M317,204 L333,204 L333,196 L350,196" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
+<g class="st" data-s="6-"><path id="mc1-a4" d="M150,220 L168,220 L168,286 L185,286" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc1A)"/></g>
+<rect class="bx" x="10" y="4" width="620" height="101" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="26" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var cart = new Cart();</text>
-<text x="24" y="39" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Process();   // creates an Order, then returns</text>
+<text x="24" y="39" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">Process();   // inside it: var order = new Order();  then it returns</text>
 <text x="24" y="52" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">cart.Customer = new Customer();</text>
-<text x="24" y="65" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// ... a GC runs here, later</text>
-<text x="24" y="78" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var inv = new Invoice();</text>
+<text x="24" y="65" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// ... later: a GC starts, marks from the roots</text>
+<text x="24" y="78" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// ... later: the GC reclaims the unreachable Order</text>
+<text x="24" y="91" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var inv = new Invoice();</text>
 <g class="st" data-s="1-2"><rect class="cur" x="14" y="29" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="1-2"><text class="cur" x="16" y="38.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="3-3"><rect class="cur" x="14" y="42" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="3-3"><text class="cur" x="16" y="51.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="4-5"><rect class="cur" x="14" y="55" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="4-5"><text class="cur" x="16" y="64.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="6-6"><rect class="cur" x="14" y="68" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="6-6"><text class="cur" x="16" y="77.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<rect class="bx" x="26" y="172" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
-<text x="88" y="185.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">cart = ref</text>
-<g class="st" data-s="1-5"><rect class="bx" x="26" y="196" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-5"><text x="88" y="209.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inv = null</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="26" y="196" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="88" y="209.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inv = ref</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="262" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="88" y="275.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">order = ref</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="193" y="180" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="255" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Customer = null</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="193" y="180" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="255" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Customer = ref</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="358" y="180" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="420" y="193.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 42</text></g>
-<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="193" y="270" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-1" data-hl="1"><text x="255" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 7</text></g>
-<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="193" y="270" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="2-4" data-hl="2"><text x="255" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Id = 7</text></g>
-<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="193" y="270" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="6-" data-hl="6"><text x="255" y="283.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 9</text></g>
-<g class="st" data-s="4-5" data-hl="4,,,5"><rect class="bx" x="505" y="154" width="115" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
-<g class="st" data-s="4-5" data-hl="4,,,5"><text x="562.5" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧹 GC runs</text></g>
-<g class="st" data-s="4-5" data-hl="4,,,5"><text x="562.5" y="186" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">marks from roots</text></g>
-<g class="st" data-s="4-4"><text class="free" x="255.0" y="224" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7">✔ marked</text></g>
-<g class="st" data-s="4-4"><text class="free" x="420.0" y="224" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7">✔ marked</text></g>
-<g class="st" data-s="4-4"><text class="free" x="255.0" y="314" text-anchor="middle" font-size="9" font-weight="400" fill="#fda4af">✘ no path from any root</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1 · Inside Process(): the local order (stack) references an Order object (heap).</text></g>
-<g class="st" data-s="1-1"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The Main() frame holds cart → Cart.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#fcd34d">2 · Process() returns: its frame is popped, order is gone.</text></g>
-<g class="st" data-s="2-2"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Nothing references the Order: unreachable, but its heap space is still taken.</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#67e8f9">3 · The program keeps working: a new Customer is allocated and Cart.Customer references it.</text></g>
-<g class="st" data-s="3-3"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The unreachable Order is simply left where it is.</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#c4b5fd">4 · Later a GC starts at the roots (stack slots) and follows references: Cart ✔, Customer ✔.</text></g>
-<g class="st" data-s="4-4"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Nothing leads to the Order: not marked.</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#6ee7b7">5 · The GC reclaims the unmarked Order: its space is free again.</text></g>
-<g class="st" data-s="5-5"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">It happened at the GC’s own moment, not when the method returned.</text></g>
-<g class="st" data-s="6-6"><rect class="bx note" x="10" y="334" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="6-6"><text x="320" y="350" text-anchor="middle" font-size="9.5" fill="#6ee7b7">6 · A new allocation can use the free space: a new Invoice, referenced by inv.</text></g>
-<g class="st" data-s="6-6"><text x="320" y="363.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">(The GC may also compact survivors; see page 19.)</text></g>
-<text class="free" x="10" y="392" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colours: emerald = reachable / in use · amber = unreachable but not yet freed · dashed = free or popped</text>
-<text class="free" x="630" y="410" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: positions and values are illustrative; the GC runs when it decides</text>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="55" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="64.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="68" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="77.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="6-6"><rect class="cur" x="14" y="81" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="6-6"><text class="cur" x="16" y="90.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<rect class="bx" x="26" y="185" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/>
+<text x="88" y="198.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">cart = ref</text>
+<g class="st" data-s="1-5"><rect class="bx" x="26" y="209" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-5"><text x="88" y="222.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inv = null</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="26" y="209" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="88" y="222.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">inv = ref</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="26" y="275" width="124" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="88" y="288.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">order = ref</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="193" y="193" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="255" y="206.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Customer = null</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="193" y="193" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="255" y="206.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Customer = ref</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="358" y="193" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="420" y="206.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 42</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="193" y="283" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="255" y="296.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 7</text></g>
+<g class="st" data-s="2-4" data-hl="2"><rect class="bx" x="193" y="283" width="124" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-4" data-hl="2"><text x="255" y="296.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Id = 7</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="193" y="283" width="124" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="255" y="296.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 9</text></g>
+<g class="st" data-s="4-5" data-hl="4,,,5"><rect class="bx" x="505" y="167" width="115" height="44" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
+<g class="st" data-s="4-5" data-hl="4,,,5"><text x="562.5" y="187" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">🧹 GC runs</text></g>
+<g class="st" data-s="4-5" data-hl="4,,,5"><text x="562.5" y="199" text-anchor="middle" font-size="8.8" font-weight="400" fill="#cdbffc" font-family="'JetBrains Mono'">marks from roots</text></g>
+<g class="st" data-s="4-4"><text class="free" x="255.0" y="237" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7">✔ marked</text></g>
+<g class="st" data-s="4-4"><text class="free" x="420.0" y="237" text-anchor="middle" font-size="9" font-weight="400" fill="#6ee7b7">✔ marked</text></g>
+<g class="st" data-s="4-4"><text class="free" x="255.0" y="327" text-anchor="middle" font-size="9" font-weight="400" fill="#fda4af">✘ no path from any root</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1 · Inside Process(): the local order (stack) references an Order object (heap).</text></g>
+<g class="st" data-s="1-1"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The Main() frame holds cart → Cart.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#fcd34d">2 · Process() returns: its frame is popped, order is gone.</text></g>
+<g class="st" data-s="2-2"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Nothing references the Order: unreachable, but its heap space is still taken.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#67e8f9">3 · The program keeps working: a new Customer is allocated and Cart.Customer references it.</text></g>
+<g class="st" data-s="3-3"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The unreachable Order is simply left where it is.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#c4b5fd">4 · Later a GC starts at the roots (stack slots) and follows references: Cart ✔, Customer ✔.</text></g>
+<g class="st" data-s="4-4"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Nothing leads to the Order: not marked.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#6ee7b7">5 · The GC reclaims the unmarked Order: its space is free again.</text></g>
+<g class="st" data-s="5-5"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">It happened at the GC’s own moment, not when the method returned.</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="10" y="347" width="620" height="40" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="320" y="363" text-anchor="middle" font-size="9.5" fill="#6ee7b7">6 · A new allocation can use the free space: a new Invoice, referenced by inv.</text></g>
+<g class="st" data-s="6-6"><text x="320" y="376.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">(The GC may also compact survivors; see page 19.)</text></g>
+<text class="free" x="10" y="405" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colours: emerald = reachable / in use · amber = unreachable but not yet freed · dashed = free or popped</text>
+<text class="free" x="630" y="423" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: positions and values are illustrative; the GC runs when it decides</text>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -150,73 +153,75 @@
   <section class="kd-section ">
     <div class="sec-label see">🔑 With using: Dispose releases the file, not the memory</div>
 <figure class="diagram-card kd-story" data-steps="5">
-<div class="st-stage"><svg viewBox="0 0 640 358" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With using: a FileStream object on the heap owns an operating-system file handle; at the closing brace Dispose closes the handle so the file is unlocked at once, but the FileStream object stays on the heap as unreachable memory until a later garbage collection reclaims it">
+<div class="st-stage"><svg viewBox="0 0 640 371" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="5" role="img" aria-label="With using: a FileStream object on the heap owns an operating-system file handle; at the closing brace Dispose closes the handle so the file is unlocked at once, but the FileStream object stays on the heap as unreachable memory until a later garbage collection reclaims it">
 <defs><marker id="mc2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mc2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="mc2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
-<rect class="zone" x="10" y="120" width="130" height="130" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="24" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
-<rect class="zone" x="150" y="120" width="244" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="164" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 .NET HEAP</text>
-<rect class="zone" x="414" y="120" width="216" height="130" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
-<text class="zone-title" x="428" y="139" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🖥️ OS (outside the heap)</text>
-<g class="st" data-s="1-3"><rect class="zone" x="18" y="164" width="114" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-3"><text class="zone-title" x="32" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Run() frame</text></g>
-<g class="st" data-s="4-"><rect class="zone" x="18" y="164" width="114" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="4-"><text class="zone-title" x="32" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Run() popped</text></g>
-<g class="st" data-s="1-2"><rect class="zone" x="172" y="164" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="1-2"><text class="zone-title" x="186" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">FileStream (in use)</text></g>
-<g class="st" data-s="3-3"><rect class="zone" x="172" y="164" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
-<g class="st" data-s="3-3"><text class="zone-title" x="186" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">FileStream</text></g>
-<g class="st" data-s="4-4"><rect class="zone" x="172" y="164" width="200" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
-<g class="st" data-s="4-4"><text class="zone-title" x="186" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">FileStream: unreachable</text></g>
-<g class="st" data-s="5-5"><rect class="zone" x="172" y="164" width="200" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
-<g class="st" data-s="5-5"><text class="zone-title" x="186" y="183" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
-<g class="st" data-s="1-3"><path id="mc2-b1" d="M132,193 L172,193" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc2A)"/></g>
-<g class="st" data-s="1-2"><path id="mc2-b2" d="M364,201 L438,201" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#mc2A)"/></g>
-<rect class="bx" x="10" y="4" width="620" height="88" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<rect class="zone" x="10" y="133" width="130" height="130" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="152" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="150" y="133" width="244" height="130" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="164" y="152" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 .NET HEAP</text>
+<rect class="zone" x="414" y="133" width="216" height="130" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="428" y="152" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">🖥️ OS (outside the heap)</text>
+<g class="st" data-s="1-3"><rect class="zone" x="18" y="177" width="114" height="58" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-3"><text class="zone-title" x="32" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">Run() frame</text></g>
+<g class="st" data-s="4-"><rect class="zone" x="18" y="177" width="114" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="4-"><text class="zone-title" x="32" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">Run() popped</text></g>
+<g class="st" data-s="1-2"><rect class="zone" x="172" y="177" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="1-2"><text class="zone-title" x="186" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">FileStream (in use)</text></g>
+<g class="st" data-s="3-3"><rect class="zone" x="172" y="177" width="200" height="58" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55"/></g>
+<g class="st" data-s="3-3"><text class="zone-title" x="186" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">FileStream</text></g>
+<g class="st" data-s="4-4"><rect class="zone" x="172" y="177" width="200" height="58" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55"/></g>
+<g class="st" data-s="4-4"><text class="zone-title" x="186" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">FileStream: unreachable</text></g>
+<g class="st" data-s="5-5"><rect class="zone" x="172" y="177" width="200" height="58" rx="14" fill="#171c28" stroke="#2d364a" stroke-opacity=".55" stroke-dasharray="5 4"/></g>
+<g class="st" data-s="5-5"><text class="zone-title" x="186" y="196" font-size="9.5" font-family="'JetBrains Mono'" fill="#e7ebf3">free space</text></g>
+<g class="st" data-s="1-3"><path id="mc2-b1" d="M132,206 L172,206" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc2A)"/></g>
+<g class="st" data-s="1-2"><path id="mc2-b2" d="M364,214 L438,214" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#mc2A)"/></g>
+<rect class="bx" x="10" y="4" width="620" height="101" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="26" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">using (var file = File.OpenRead("data.txt"))</text>
 <text x="24" y="39" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">{</text>
 <text x="24" y="52" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">    // use the file</text>
 <text x="24" y="65" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">}     // Dispose() runs here</text>
-<text x="24" y="78" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// ... Run() returns; a GC runs later</text>
+<text x="24" y="78" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// ... Run() returns</text>
+<text x="24" y="91" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">// later: GC runs</text>
 <g class="st" data-s="1-1"><rect class="cur" x="14" y="16" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="1-1"><text class="cur" x="16" y="25.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
 <g class="st" data-s="2-3"><rect class="cur" x="14" y="55" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
 <g class="st" data-s="2-3"><text class="cur" x="16" y="64.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="4-5"><rect class="cur" x="14" y="68" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
-<g class="st" data-s="4-5"><text class="cur" x="16" y="77.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
-<g class="st" data-s="1-3"><rect class="bx" x="26" y="190" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
-<g class="st" data-s="1-3"><text x="75" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">file = ref</text></g>
-<g class="st" data-s="1-2"><rect class="bx" x="180" y="190" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2"><text x="272" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">handle = #7C</text></g>
-<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="180" y="190" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-3" data-hl="3"><text x="272" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">handle = closed</text></g>
-<g class="st" data-s="4-4"><rect class="bx" x="180" y="190" width="184" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="4-4"><text x="272" y="203.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">handle = closed</text></g>
-<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="438" y="173" width="182" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="529" y="199" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">open file entry</text></g>
-<g class="st" data-s="1-2" data-hl="1"><text x="529" y="211" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">data.txt · locked</text></g>
-<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="438" y="173" width="182" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
-<g class="st" data-s="3-" data-hl="3"><text x="529" y="199" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">file entry closed</text></g>
-<g class="st" data-s="3-" data-hl="3"><text x="529" y="211" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">data.txt · unlocked</text></g>
-<g class="st" data-s="1-1"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="1-1"><text x="320" y="280" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1 · using var file = File.OpenRead(...): a FileStream object on the heap owns an OS file handle;</text></g>
-<g class="st" data-s="1-1"><text x="320" y="293.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">the OS marks data.txt as open and locked.</text></g>
-<g class="st" data-s="2-2"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="2-2"><text x="320" y="280" text-anchor="middle" font-size="9.5" fill="#67e8f9">2 · The block ends: the compiler-generated finally calls file.Dispose().</text></g>
-<g class="st" data-s="2-2"><text x="320" y="293.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The call follows the reference from the stack slot to the object.</text></g>
-<g class="st" data-s="3-3"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="3-3"><text x="320" y="280" text-anchor="middle" font-size="9.5" fill="#6ee7b7">3 · Dispose asks the OS to close the handle: the file is released right now.</text></g>
-<g class="st" data-s="3-3"><text x="320" y="293.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The FileStream object itself is untouched in the heap.</text></g>
-<g class="st" data-s="4-4"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="4-4"><text x="320" y="280" text-anchor="middle" font-size="9.5" fill="#fcd34d">4 · The method returns, the frame is popped: the FileStream is unreachable, but its memory is still there.</text></g>
-<g class="st" data-s="4-4"><text x="320" y="293.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Dispose did not free any heap memory.</text></g>
-<g class="st" data-s="5-5"><rect class="bx note" x="10" y="262" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
-<g class="st" data-s="5-5"><text x="320" y="280" text-anchor="middle" font-size="9.5" fill="#c4b5fd">5 · A later GC reclaims the FileStream’s memory, like any other object.</text></g>
-<g class="st" data-s="5-5"><text x="320" y="293.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The GC frees memory; Dispose released the file.</text></g>
-<text class="free" x="10" y="324" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colours: emerald = in use / released · amber = unreachable or still open · dashed = free or popped</text>
-<text class="free" x="630" y="342" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: handle value and layout are illustrative; a real FileStream holds more internals</text>
-<g class="st" data-s="1-2"><g class="arrow-pill"><rect x="382.5" y="192" width="39" height="18" rx="9"/><text x="402" y="204.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g></g>
-<g class="st" data-s="2-2"><g class="tok" data-path="mc2-b1"><circle r="9.3" fill="#0b0f19" stroke="#22d3ee" stroke-width="1.4"/><text class="tok-t" y="5.25" text-anchor="middle" font-size="15">📞</text></g></g>
+<g class="st" data-s="4-4"><rect class="cur" x="14" y="68" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="4-4"><text class="cur" x="16" y="77.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="5-5"><rect class="cur" x="14" y="81" width="612" height="13" rx="4" fill="#fcd34d" fill-opacity=".16" stroke="#fcd34d" stroke-opacity=".55" stroke-width="1"/></g>
+<g class="st" data-s="5-5"><text class="cur" x="16" y="90.5" text-anchor="start" font-size="6" fill="#fcd34d">▶</text></g>
+<g class="st" data-s="1-3"><rect class="bx" x="26" y="203" width="98" height="22" rx="4" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-3"><text x="75" y="216.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">file = ref</text></g>
+<g class="st" data-s="1-2"><rect class="bx" x="180" y="203" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2"><text x="272" y="216.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">handle = #7C</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="180" y="203" width="184" height="22" rx="4" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="272" y="216.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">handle = closed</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="180" y="203" width="184" height="22" rx="4" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="272" y="216.5" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">handle = closed</text></g>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="438" y="186" width="182" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="529" y="212" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">open file entry</text></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="529" y="224" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">data.txt · locked</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="438" y="186" width="182" height="56" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="529" y="212" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">file entry closed</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="529" y="224" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">data.txt · unlocked</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="10" y="275" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="320" y="293" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1 · using var file = File.OpenRead(...): a FileStream object on the heap owns an OS file handle;</text></g>
+<g class="st" data-s="1-1"><text x="320" y="306.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">the OS marks data.txt as open and locked.</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="10" y="275" width="620" height="44" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="320" y="293" text-anchor="middle" font-size="9.5" fill="#67e8f9">2 · The block ends: the compiler-generated finally calls file.Dispose().</text></g>
+<g class="st" data-s="2-2"><text x="320" y="306.5" text-anchor="middle" font-size="9.5" fill="#67e8f9">The call follows the reference from the stack slot to the object.</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="10" y="275" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="320" y="293" text-anchor="middle" font-size="9.5" fill="#6ee7b7">3 · Dispose asks the OS to close the handle: the file is released right now.</text></g>
+<g class="st" data-s="3-3"><text x="320" y="306.5" text-anchor="middle" font-size="9.5" fill="#6ee7b7">The FileStream object itself is untouched in the heap.</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="10" y="275" width="620" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="320" y="293" text-anchor="middle" font-size="9.5" fill="#fcd34d">4 · The method returns, the frame is popped: the FileStream is unreachable, but its memory is still there.</text></g>
+<g class="st" data-s="4-4"><text x="320" y="306.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">Dispose did not free any heap memory.</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="10" y="275" width="620" height="44" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="320" y="293" text-anchor="middle" font-size="9.5" fill="#c4b5fd">5 · A later GC reclaims the FileStream’s memory, like any other object.</text></g>
+<g class="st" data-s="5-5"><text x="320" y="306.5" text-anchor="middle" font-size="9.5" fill="#c4b5fd">The GC frees memory; Dispose released the file.</text></g>
+<text class="free" x="10" y="337" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colours: emerald = in use / released · amber = unreachable or still open · dashed = free or popped</text>
+<text class="free" x="630" y="355" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: handle value and layout are illustrative; a real FileStream holds more internals</text>
+<g class="st" data-s="1-2"><g class="arrow-pill"><rect x="382.5" y="205" width="39" height="18" rx="9"/><text x="402" y="217.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
 <p class="st-cap" aria-live="polite" hidden></p>
@@ -252,6 +257,7 @@
 <g class="st" data-s="1-1"><path id="mc3-c1" d="M132,205 L172,205" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#mc3A)"/></g>
 <g class="st" data-s="1-3"><path id="mc3-c2" d="M364,213 L438,213" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#mc3A)"/></g>
 <g class="st" data-s="3-3"><path id="mc3-c4" d="M272,234 L272,300" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mc3A)"/></g>
+<g class="st" data-s="3-4"><path id="mc3-c5" d="M200,300 L200,234" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mc3A)"/></g>
 <g class="st" data-s="4-4"><path id="mc3-c3" d="M372,316 L529,316 L529,241" fill="none" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#mc3A)"/></g>
 <rect class="bx" x="10" y="4" width="620" height="100" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
 <text x="24" y="26" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8" xml:space="preserve" style="white-space:pre">var file = File.OpenRead("data.txt");</text>
@@ -292,6 +298,7 @@
 <g class="st" data-s="5-5"><text class="free" x="272" y="320" text-anchor="middle" font-size="9" font-weight="400" fill="#93a0b8">empty again</text></g>
 <g class="st" data-s="3-4" data-hl="3,,,4"><rect class="bx" x="172" y="300" width="200" height="32" rx="10" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.3"/></g>
 <g class="st" data-s="3-4" data-hl="3,,,4"><text x="272" y="320" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c4b5fd">finalizer of the handle</text></g>
+<g class="st" data-s="3-4"><text class="free" x="386" y="164" text-anchor="end" font-size="9" font-weight="400" fill="#c4b5fd">finalizer queue holds a reference</text></g>
 <g class="st" data-s="1-1"><rect class="bx note" x="10" y="350" width="620" height="44" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
 <g class="st" data-s="1-1"><text x="320" y="374.75" text-anchor="middle" font-size="9.5" fill="#6ee7b7">1 · Same start, but written without using: a FileStream owns an OS handle and the file is locked.</text></g>
 <g class="st" data-s="2-2"><rect class="bx note" x="10" y="350" width="620" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
@@ -309,7 +316,8 @@
 <text class="free" x="10" y="412" text-anchor="start" font-size="9" font-weight="400" fill="#93a0b8">colours: emerald = in use / released · amber = unreachable · rose = file still locked · dashed = free, popped or queue</text>
 <text class="free" x="630" y="430" text-anchor="end" font-size="8.5" font-weight="400" fill="#93a0b8">teaching picture: how the GC queues finalizers is not drawn exactly; times are unknown</text>
 <g class="st" data-s="1-3"><g class="arrow-pill"><rect x="382.5" y="204" width="39" height="18" rx="9"/><text x="402" y="216.5" text-anchor="middle" font-size="9" font-style="italic">owns</text></g></g>
-<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="293" y="275" width="50" height="18" rx="9"/><text x="318" y="287.5" text-anchor="middle" font-size="9" font-style="italic">queued</text></g></g>
+<g class="st" data-s="3-3"><g class="arrow-pill"><rect x="293" y="245" width="50" height="18" rx="9"/><text x="318" y="257.5" text-anchor="middle" font-size="9" font-style="italic">queued</text></g></g>
+<g class="st" data-s="3-4"><g class="arrow-pill"><rect x="164.5" y="245" width="71" height="18" rx="9"/><text x="200" y="257.5" text-anchor="middle" font-size="9" font-style="italic">kept alive</text></g></g>
 <g class="st" data-s="4-4"><g class="arrow-pill"><rect x="425" y="307" width="50" height="18" rx="9"/><text x="450" y="319.5" text-anchor="middle" font-size="9" font-style="italic">closes</text></g></g>
 </svg></div>
 <div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>

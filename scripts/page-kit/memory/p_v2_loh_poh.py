@@ -15,7 +15,7 @@ def d_lo1():
     # --- small object heap: one array object
     sm = card(d, 18, 34, 'byte[1_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 1,000 data bytes', 'f')], 'emerald', w=174, st='1-')
     # --- LOH: three slots in address order (teaching picture)
-    d.note(366, 34, 256, 50, 'array ≥ 85,000 bytes → LOH|(sizes: teaching picture)', 'amber', size=9, st='2-2')
+    d.note(366, 34, 256, 50, 'array ≥ 85,000 bytes → LOH', 'amber', size=9, st='2-2')
     c1 = card(d, 366, 100, 'byte[100_000] object', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 100,000 data bytes', 'f')], 'amber', w=256, st='2-3')
     card(d, 366, 100, 'byte[100_000] unreachable', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 100,000 data bytes', 'f')], 'rose', w=256, st='4-4', hl=4)
     d.zone(366, 100, 256, 106, 'n', 'free hole: 100,000 bytes (was big)', st='5-', hl=5)
@@ -41,7 +41,7 @@ def d_lo1():
     d.box(18, 390, 174, 40, [('big = null', 'm'), ('its array not marked ✘', 'm')], 'rose', st='5-6')
     for i, (t, c) in enumerate([
             ('small is a stack reference to an array object on the small heap: header, type pointer, length, data|(1,000 bytes of data is far below 85,000)', 'emerald'),
-            ('100,000 bytes of data is over 85,000, so this array goes to the LOH instead|the stack variable big still just holds a reference', 'amber'),
+            ('100,000 bytes of data is over 85,000, so this array goes to the LOH instead|the stack variable big still just holds a reference (sizes below 85,000 are a teaching picture)', 'amber'),
             ('A second big array, with its own reference other, is placed after it|(addresses grow downwards: teaching picture)', 'amber'),
             ('big = null: nothing points at the first array any more, so it is unreachable|but it is still sitting there; nobody has freed it yet', 'rose'),
             ('A gen 2 GC marks from the roots: small and other are reachable, the first array is not|its space becomes a hole; other is NOT moved (LOH is not compacted by default)', 'violet'),
@@ -51,7 +51,7 @@ def d_lo1():
 
 # ------------------------------------------------------------ diagram 2: why a pinned object blocks compaction
 def d_lo2():
-    d = Diagram('lo2', 640, 330, 'A pinned object cannot move: with native code holding the raw address of P, a collection frees the dead objects but only B can slide next to P, so a hole remains between A and P and a new larger object cannot use it')
+    d = Diagram('lo2', 640, 450, 'A pinned object cannot move: with native code holding the raw address of P, a collection frees the dead objects but only B can slide next to P, so a hole remains between A and P and a new larger object cannot use it')
     d.zone(10, 8, 620, 70, 'cyan', '📚 STACK')
     d.zone(10, 90, 620, 130, 'emerald')
     d.text(620, 212, '🏠 SMALL OBJECT HEAP · addresses: teaching picture', 'emerald', size=9.5, anchor='end')
@@ -101,25 +101,28 @@ def d_lo2():
             ('The unmarked objects are garbage; their space is free|but the objects around them have not moved yet', 'rose'),
             ('Compaction slides survivors together: B moves to 0x400 (b updated)|P stays at 0x300, so the hole at 0x200 cannot be closed', 'emerald'),
             ('A new object N, bigger than the hole, goes after B|free space split into pieces = fragmentation (illustrative)', 'rose')]):
-        d.note(10, 286, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9)
+        d.note(10, 400, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9)
+    d.code_box(10, 286, 620, 106, [(0, 'var a = new Item();', ''), (0, 'var buf = new byte[256];', ''), (0, 'var b = new Item();', ''), (0, 'GCHandle.Alloc(buf, GCHandleType.Pinned);  // native code keeps the raw address', ''), (0, '// GC runs here (later)', ''), (0, 'var n = new Item();  // bigger than the hole', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 286, 620, [2, 3, 4, 4, 4, 5], size=9, lh=14)
     return d
 
 # ------------------------------------------------------------ diagram 3: the pinned object heap
 def d_lo3():
-    d = Diagram('lo3', 640, 386, 'A pinned buffer allocated with GC.AllocateArray pinned true goes into the separate pinned object heap; native code takes its raw address; when a garbage object in the small object heap is freed, the survivor Y slides up to close the gap while the buffer does not move and the native address stays valid')
+    d = Diagram('lo3', 640, 436, 'A pinned buffer allocated with GC.AllocateArray pinned true goes into the separate pinned object heap; native code takes its raw address; when a garbage object in the small object heap is freed, the survivor Y slides up to close the gap while the buffer does not move and the native address stays valid')
     d.zone(10, 8, 190, 250, 'emerald', '🏠 SMALL OBJECT HEAP')
     d.zone(214, 8, 110, 250, 'cyan', '📚 STACK')
     d.zone(338, 8, 292, 176, 'amber', '📌 PINNED OBJECT HEAP (POH)')
     d.zone(346, 70, 276, 106, 'n', 'empty so far: the buffer will go here', dash=True, st='1-1')
     poh = card(d, 346, 70, 'byte[4096] pinned buffer', [('header', 'hdr'), ('type ptr → byte[] MT', 'tp'), ('length + 4,096 data bytes', 'f')], 'amber', w=276, st='2-')
         # small heap: X, garbage, Y
-    R = [40, 96, 152]; H = 40
+    R = [40, 96, 152, 208]; H = 40
     d.box(20, R[0], 170, H, [('X', 't'), ('live', 'm')], 'emerald')
     d.box(20, R[1], 170, H, [('object', 't'), ('no reference: garbage', 'm')], 'rose', st='1-3', hl=1)
     d.box(20, R[1], 170, H, [('free space', 't'), ('(was garbage)', 'm')], 'n', st='4-4', hl=4)
     d.box(20, R[1], 170, H, [('Y', 't'), ('live, slid up', 'm')], 'emerald', st='5-', hl=5)
     d.box(20, R[2], 170, H, [('Y', 't'), ('live', 'm')], 'emerald', st='1-4')
-    d.box(20, R[2], 170, H, [('one free block', 't')], 'n', st='5-', hl=5)
+    d.box(20, R[3], 170, H, [('free space', 't'), ('(second piece)', 'm')], 'n', st='1-4')
+    d.box(20, R[2], 170, R[3] + H - R[2], [('one free block', 't')], 'n', st='5-', hl=5)
     _slot(d, 224, R[0] + 3, 'x', 'reference', 'cyan', w=90)
     _slot(d, 224, R[2] + 3, 'y', 'reference', 'cyan', w=90)
     d.arrow([(224, R[0] + 20), (190, R[0] + 20)], 'cyan')
@@ -139,8 +142,8 @@ def d_lo3():
             ('A GC finds nothing pointing at the middle object: it is freed|but the survivor Y has not moved yet, so the free space is split in two', 'rose'),
             ('The small heap compacts: Y slides up, the free space becomes one block|the POH buffer stays where it is, so the native address is still valid', 'violet')]):
         d.note(10, 270, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9)
-    d.code_box(10, 328, 620, 46, [(0, 'byte[] buf = GC.AllocateArray<byte>(4096, pinned: true);', ''), (0, '// POH: the .NET 5+ API for arrays that must not move', '')], 'n', size=9, lh=14)
-    run_line(d, 10, 328, 620, [None, 0, None, None, None], size=9, lh=14)
+    d.code_box(10, 328, 620, 98, [(0, 'var x = new Item();', ''), (0, 'new Item();  // result thrown away: garbage', ''), (0, 'var y = new Item();', ''), (0, 'byte[] buf = GC.AllocateArray<byte>(4096, pinned: true);', ''), (0, 'NativeLib.Use(buf);  // native code keeps the raw address', '')], 'n', size=9, lh=14)
+    run_line(d, 10, 328, 620, [2, 3, 4, None, None], size=9, lh=14)
     return d
 
 def build_loh_poh():

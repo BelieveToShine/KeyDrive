@@ -2,43 +2,43 @@ from p_common import *
 
 # ================================================================= 12. DYNAMIC / REFLECTION  (v2: true memory level)
 def d_dy1():
-    d = Diagram('dy1', 640, 450, 'dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder follows the Duck’s type pointer to the type data and finds Quack by name, and a rule is stored in the CallSite; the second call checks the type against the rule and jumps to Quack without any lookup; d.Swim() is not in the type data so it fails at run time; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field')
-    d.code_box(10, 8, 400, 78, [(0, 'dynamic d = new Duck();', ''), (0, 'd.Quack();     // 1st call', ''), (0, 'd.Quack();     // 2nd call', ''), (0, '// d.Swim();   // compiles, fails at run time', '')], 'n', size=8.8, lh=15)
-    run_line(d, 10, 8, 400, [0, 1, 1, 1, 1, 2, 3, None], size=8.8, lh=15)
-    d.note(420, 12, 210, 70, 'teaching picture:|call-site / rule internals|differ by runtime version', 'amber', size=9)
-    d.zone(10, 98, 110, 280, 'cyan', '📚 STACK')
-    d.zone(140, 98, 230, 280, 'emerald', '🏠 HEAP')
-    d.zone(392, 98, 238, 170, 'violet', '🧬 TYPE DATA')
-    d.box(20, 157, 90, 40, [('d', 't'), ('dynamic · ref', 'm')], 'cyan', st='1-7', hl=1)
+    d = Diagram('dy1', 640, 470, 'dynamic d = new Duck(): d is an ordinary reference to a Duck object whose type pointer leads to Duck’s type data; the compiler adds a call site whose static field starts empty; the first d.Quack() creates a CallSite object on the heap, the binder follows the Duck’s type pointer to the type data and finds Quack by name, and a rule is stored in the CallSite; the second call checks the type against the rule and jumps to Quack without any lookup; d.Swim() is not in the type data so it fails at run time; when d goes away the Duck becomes garbage but the CallSite and rule stay, reachable from the static field')
+    d.code_box(10, 8, 400, 98, [(0, 'dynamic d = new Duck();', ''), (0, 'd.Quack();      // 1st call', ''), (0, '//  run time: binder finds Quack by name, caches rule', ''), (0, 'd.Quack();      // 2nd call', ''), (0, '// d.Swim();   // if enabled: compiles, fails at run time', '')], 'n', size=8.8, lh=15)
+    run_line(d, 10, 8, 400, [0, 1, 1, 2, 2, 3, 4, None], size=8.8, lh=15)
+    d.note(420, 12, 210, 90, 'teaching picture:|call-site / rule internals|differ by runtime version', 'amber', size=9)
+    d.zone(10, 118, 110, 280, 'cyan', '📚 STACK')
+    d.zone(140, 118, 230, 280, 'emerald', '🏠 HEAP')
+    d.zone(392, 118, 238, 170, 'violet', '🧬 TYPE DATA')
+    d.box(20, 177, 90, 40, [('d', 't'), ('dynamic · ref', 'm')], 'cyan', st='1-7', hl=1)
     kids = [('header (sync block)', 'hdr'), ('type ptr → Duck MT', 'tp'), ('fields …', 'f')]
-    duck = card(d, 148, 124, 'Duck object', [kids[0], ('type ptr → Duck MT', 'tp', '1-3'), kids[2]], 'emerald', w=190, st='1-7', hl=1)
+    duck = card(d, 148, 144, 'Duck object', [kids[0], ('type ptr → Duck MT', 'tp', '1-3'), kids[2]], 'emerald', w=190, st='1-7', hl=1)
     cell(d, duck, 1, 'type ptr → Duck MT', 'amber', st='4-4', hl=4)
     cell(d, duck, 1, 'type ptr → Duck MT', 'violet', st='5-5')
     cell(d, duck, 1, 'type ptr → Duck MT', 'amber', st='6-6', hl=6)
     cell(d, duck, 1, 'type ptr → Duck MT', 'violet', st='7-7')
-    card(d, 148, 124, 'Duck: unreachable', kids, 'n', w=190, st='8-', hl=8, dash=True)
-    mt = card(d, 408, 148, 'Duck type data', [('Duck MethodTable', 'f'), ('method Quack', 'f', '1-3')], 'violet', w=206, st=1)
+    card(d, 148, 144, 'Duck: unreachable', kids, 'n', w=190, st='8-', hl=8, dash=True)
+    mt = card(d, 408, 168, 'Duck type data', [('Duck MethodTable', 'f'), ('method Quack', 'f', '1-3')], 'violet', w=206, st=1)
     cell(d, mt, 1, 'method Quack  ✔ found', 'amber', st='4-4', hl=4)
     cell(d, mt, 1, 'method Quack', 'violet', st='5-5')
     cell(d, mt, 1, 'method Quack  ✔ reused', 'amber', st='6-6', hl=6)
     cell(d, mt, 1, 'method Quack', 'violet', st='7-')
-    d.box(416, 236, 190, 24, [('Swim:  not found  ✖', 'm')], 'rose', rx=4, st='7-7', hl=7)
-    d.arrow([(duck['x'] - 38, 177), (148, 177)], 'cyan', st='1-7')
+    d.box(416, 256, 190, 24, [('Swim:  not found  ✖', 'm')], 'rose', rx=4, st='7-7', hl=7)
+    d.arrow([(duck['x'] - 38, 197), (148, 197)], 'cyan', st='1-7')
     ty = duck['rows'][1]['y']
     d.arrow([(330, ty), (416, ty)], 'violet', st='1-3')
     d.arrow([(330, ty), (416, ty)], 'violet', st='5-8')
     d.arrow([(330, ty), (416, ty)], 'amber', st='4-4', label='lookup', at=(373, ty), id='lk')
-    d.zone(392, 282, 238, 96, 'amber', '⚙ STATIC AREA (a root)', st='2-')
-    st = card(d, 400, 312, 'compiler-made class', [('callSite1 = null', 'f', '2-2')], 'amber', w=222, st='2-', hl=2)
+    d.zone(392, 302, 238, 96, 'amber', '⚙ STATIC AREA (a root)', st='2-')
+    st = card(d, 400, 332, 'compiler-made class', [('callSite1 = null', 'f', '2-2')], 'amber', w=222, st='2-', hl=2)
     cell(d, st, 0, 'callSite1 → CallSite', 'emerald', st='3-', hl=3)
-    cs = card(d, 148, 262, 'CallSite object', [('rules: (empty)', 'f', '3-4')], 'emerald', w=190, st='3-', hl=3)
+    cs = card(d, 148, 282, 'CallSite object', [('rules: (empty)', 'f', '3-4')], 'emerald', w=190, st='3-', hl=3)
     cell(d, cs, 0, 'rule: Duck → Quack', 'emerald', st='5-5', hl=5)
     cell(d, cs, 0, 'rule: Duck → Quack  ✔ hit', 'amber', st='6-6', hl=6)
     cell(d, cs, 0, 'rule: Duck → Quack', 'emerald', st='7-')
-    d.arrow([(400, 349), (243, 349), (243, 320)], 'amber', st='3-')
-    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'emerald', st='5-5')
-    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'amber', st='6-6', label='no lookup', at=(385, 254), sw=2.2)
-    d.arrow([(330, 299), (385, 299), (385, 209), (416, 209)], 'emerald', st='7-')
+    d.arrow([(400, 369), (243, 369), (243, 340)], 'amber', st='3-')
+    d.arrow([(330, 319), (385, 319), (385, 229), (416, 229)], 'emerald', st='5-5')
+    d.arrow([(330, 319), (385, 319), (385, 229), (416, 229)], 'amber', st='6-6', label='no lookup', at=(385, 274), sw=2.2)
+    d.arrow([(330, 319), (385, 319), (385, 229), (416, 229)], 'emerald', st='7-')
     for i, (t, c) in enumerate([
         ('dynamic d is just a normal reference:|d → Duck object → its type data', 'cyan'),
         ('The compiler adds a call site for d.Quack():|a static field, still null', 'amber'),
@@ -46,9 +46,9 @@ def d_dy1():
         ('The binder (run-time code) follows the Duck’s type ptr|to its type data and looks Quack up BY NAME', 'violet'),
         ('The answer is cached: a rule “if the type is Duck,|call Quack” is stored inside the CallSite', 'emerald'),
         ('2nd call: compare the Duck’s type with the rule (hit)|and go to Quack. The by-name lookup is skipped', 'amber'),
-        ('d.Swim(): the binder finds no Swim in Duck’s|type data → RuntimeBinderException, at run time', 'rose'),
+        ('d.Swim() (the commented line, if enabled): no Swim in|Duck’s type data → RuntimeBinderException at run time', 'rose'),
         ('When d goes away the Duck is garbage; the CallSite|and rule stay (static field = root)', 'emerald')]):
-        d.note(10, 392, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
+        d.note(10, 412, 620, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 
 def d_dy2():

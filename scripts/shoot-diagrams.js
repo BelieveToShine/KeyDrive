@@ -2,8 +2,7 @@
 /* Screenshot every diagram on a page at 2x so you can LOOK at every junction.
  *   node scripts/shoot-diagrams.js http://localhost:5900 azure/concepts/storage.html /tmp/out/storage
  * → /tmp/out/storage-1.png, -2.png …  (one per figure.diagram-card, all <details> opened)
- * The sticky header and fixed bottom bar can overlap tall figures in element screenshots — that is a
- * capture artefact, not a page bug. Needs `playwright` (NODE_PATH=$(npm root -g)). See docs/rules/verification.md. */
+ * The sticky header, crumb bar and fixed bottom bar are hidden during capture (they would cover tall figures). Needs `playwright` (NODE_PATH=$(npm root -g)). See docs/rules/verification.md. */
 const { chromium } = require('playwright');
 (async () => {
   const [base, page, prefix] = process.argv.slice(2);
@@ -14,6 +13,8 @@ const { chromium } = require('playwright');
   await p.goto(new URL(page, base.endsWith('/') ? base : base + '/').href);
   await p.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
   await p.evaluate(() => document.fonts.ready);
+  // sticky header / crumb bar / fixed pager would cover tall figures in element screenshots: hide them for the capture only
+  await p.addStyleTag({ content: '.fixed-pager,.kd-crumbs,header,.topbar,.site-header{visibility:hidden !important}' });
   await p.waitForTimeout(400);
   const figs = await p.locator('figure.diagram-card').all();
   let shots = 0;

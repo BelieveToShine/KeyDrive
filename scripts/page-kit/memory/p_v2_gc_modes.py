@@ -49,7 +49,7 @@ def d_gm1():
     return d
 
 def d_gm2():
-    d = Diagram('gm2', 640, 410, 'Background gen 2 collection at memory level: after a brief pause the app thread keeps running while the GC thread marks Order A and Order B; meanwhile the app allocates a new Order D in gen 0 and links Order B to it, a short pause finishes the marking so D is reached too, and Order C is reclaimed')
+    d = Diagram('gm2', 640, 510, 'Background gen 2 collection at memory level: after a brief pause the app thread keeps running while the GC thread marks Order A and Order B; meanwhile the app allocates a new Order D in gen 0 and links Order B to it, a short pause finishes the marking so D is reached too, and Order C is reclaimed')
     d.zone(160, 24, 470, 262, 'emerald', '🏠 HEAP')
     d.zone(168, 48, 454, 132, 'n', 'gen 2 (part of it)')
     d.zone(168, 190, 454, 88, 'violet', 'gen 0 (empty so far)', st='1-2')
@@ -66,21 +66,22 @@ def d_gm2():
     fA = A['rows'][0]
     d.arrow([(fA['r'][0], fA['y']), (B['L'][0], fA['y'])], 'emerald', id='r2', st='2-')
     fB = B['rows'][0]
-    d.arrow([(fB['r'][0], fB['y']), (436, fB['y']), (436, D['L'][1]), D['L']], 'amber', 'app wrote this', at=(436, 150), id='r3', st='4-')
-    d.token('r1', '🔍', 15, 'cyan', st='2-2')
-    d.token('r2', '🔍', 15, 'emerald', st='3-3')
-    d.token('r3', '✏️', 15, 'amber', st='4-4')
+    pB = [(fB['r'][0], fB['y']), (436, fB['y']), (436, D['L'][1]), D['L']]
+    d.arrow(pB, 'amber', 'app wrote this', at=(436, 150), id='r3', st='4-4')
+    d.arrow(pB, 'emerald', id='r4', st='5-')
     caps = [('Setup: A → B in gen 2, C unreferenced, gen 0 empty. Gen 2 fills up: a background collection starts.|The app thread is paused only briefly, to begin.', 'amber'),
-            ('The app runs again while the GC thread works beside it. It marks from the root: Order A reached.|🔍 = the GC follows a pointer.', 'cyan'),
-            ('The app allocates Order D in gen 0: nothing points to it yet. The GC thread marks Order B: reached.|The app and the GC thread work at the same time.', 'violet'),
-            ('The app sets B.next to D (✏️ = the app changes a pointer) while the GC is reading.|The GC has not looked at D: it must not miss this change.', 'amber'),
+            ('The app runs again while the GC thread works beside it. It marks from the root: Order A reached.|The app and the GC thread work at the same time.', 'cyan'),
+            ('The app allocates Order D in gen 0: nothing points to it yet. The GC thread marks Order B: reached.|The app code (var d = new Order();) runs while the GC reads.', 'violet'),
+            ('b.Next = d; the app changes a pointer while the GC is reading.|The GC has not looked at D: it must not miss this change.', 'amber'),
             ('A short pause finishes the marking: the GC picks up the change, so D is reached.|C still has no path: it is not reached.', 'emerald'),
             ('C’s space is reclaimed and the app runs on.|The app never waited while all of gen 2 was read.', 'emerald')]
     for i, (t, c) in enumerate(caps):
-        d.note(10, 298, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=10)
-    d.text(630, 380, LEG + ' · amber = changed', 'n', 8.5, anchor='end')
-    d.text(630, 394, 'teaching picture: how the runtime tracks the change is not drawn; pause details are simplified', 'n', 8.5, anchor='end')
-    add_code(d, ['// gen 2 fills up: a background GC starts (brief pause)', '// app keeps running; GC thread marks A', 'var d = new Order();   // Order D in gen 0', 'b.Next = d;            // app changes a pointer mid-GC', '// short pause: the GC finishes marking', '// GC reclaims C; the app runs on'], [0,1,2,3,4,5])
+        d.note(10, 402, 620, 56, t, c, st=f'{i + 1}-{i + 1}', size=10)
+    d.text(630, 482, LEG + ' · amber = changed', 'n', 8.5, anchor='end')
+    d.text(630, 496, 'teaching picture: how the runtime tracks the change is not drawn; pause details are simplified', 'n', 8.5, anchor='end')
+    lines = ['// gen 2 fills up: a background GC starts (brief pause)', 'var b = orders.Next;   // app runs on; the GC thread marks A', 'var d = new Order();   // app: Order D in gen 0', 'b.Next = d;            // app: changes a pointer mid-GC', '// short pause: the GC finishes marking', '// GC reclaims C; the app runs on']
+    d.code_box(10, 294, 620, 14 + len(lines) * 13 + 8, [(0, t, '') for t in lines], 'n', size=9, lh=13)
+    run_line(d, 10, 294, 620, [0, 1, 2, 3, 4, 5], size=9, lh=13)
     return d
 
 # ---- workstation vs server: the SAME 12 objects, one heap vs four heaps
