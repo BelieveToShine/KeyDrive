@@ -55,7 +55,7 @@ def d_rf2():
                                 ('Replace(ref p): q is a slot holding the ADDRESS OF p. It is not a copy of p’s arrow (compare the previous page).', 'violet'),
                                 ('q = new Person("Zed") first builds a new Person on the heap. Nothing points at it yet.', 'amber'),
                                 ('The assignment goes through the alias and rewrites p itself: p’s arrow now leads to Zed. Asha still exists in memory.', 'amber'),
-                                ('Return: the Replace frame and the alias are popped; p still points at Zed. Nothing reaches Asha any more: unreachable, not yet freed.', 'rose'),
+                                ('Return: the Replace frame and the alias are popped; p still points at Zed.|Nothing reaches Asha any more: unreachable, not yet freed.', 'rose'),
                                 ('Later, a GC finds Asha is not marked and reclaims it. It runs when the runtime decides, not at return.', 'emerald')]):
         d.note(10, 308, 620, 48, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
@@ -126,7 +126,7 @@ def d_rf5():
     for i, (t, c) in enumerate([('arr (on the stack) leads to the int[3] object on the heap: its length, then the three ints one after another.', 'cyan'),
                                 ('Slot(arr, 1): a new frame. a is a COPY of the reference (default passing), i is 1.', 'violet'),
                                 ('ref a[i] works out the ADDRESS of element 1 and returns that. The value 20 is not copied.', 'amber'),
-                                ('Return: the Slot frame is popped. The returned address lives on in the ref local s: it points at ONE element, not the whole array.', 'violet'),
+                                ('Return: the Slot frame is popped. The returned address lives on in the ref local s:|it points at ONE element, not the whole array.', 'violet'),
                                 ('s = 99 writes through the alias into arr[1]. The array now holds 10, 99, 30.', 'emerald')]):
         d.note(10, 398, 620, 44, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d

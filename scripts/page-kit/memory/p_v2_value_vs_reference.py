@@ -16,7 +16,7 @@ def d_vr1():
     ya, yb = g['rows'][0]['y'], g['rows'][1]['y']
     d.arrow([(g['rows'][0]['r'][0], ya), (550, ya), (550, yb), (g['rows'][1]['r'][0], yb)], 'violet', 'copy', at=(550, (ya + yb) / 2), st='2-2', id='cp')
     for i, (t, c) in enumerate([('a is its own slot: the 5 is stored right in it', 'cyan'), ('b = a: a NEW slot b gets a copy of the 5', 'violet'),
-                                ('only b changed to 10; a still holds 5', 'amber'), ('Main returns: the frame is popped (dashed = gone), a and b with it', 'rose')]):
+                                ('only b changed to 10; a still holds 5', 'amber'), ('Main returns: frame popped|(dashed = gone), a and b with it', 'rose')]):
         d.note(340, 128, 280, 46, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     return d
 

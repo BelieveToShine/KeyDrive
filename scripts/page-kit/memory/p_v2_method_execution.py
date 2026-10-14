@@ -52,7 +52,7 @@ def d_me2():
     d.arrow([(B['rows'][1]['r'][0], B['rows'][1]['y']), (380, B['rows'][1]['y']), (380, mt['L'][1]), (mt['x'], mt['L'][1])], 'violet', st='2-')
     d.arrow([(520, mt['rows'][0]['top'] + mt['rows'][0]['h']), (520, 190)], 'amber', 'address of', at=(520, 150), st='3-', id='tc')
     d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (158, af['rows'][0]['y']), (158, 150), (A['x'], 150)], 'violet', 'this', at=(158, 232), st='4-4')
-    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (B['x'], 250)], 'violet', 'this', at=(160, af['rows'][0]['y'] + 12), st='5-5')
+    d.arrow([(af['rows'][0]['r'][0], af['rows'][0]['y']), (B['x'], 250)], 'violet', 'this', at=(150, af['rows'][0]['y'] + 12), st='5-5')
     d.code_box(10, 326, 270, 50, [(0, 'o1.AddItem();', ''), (0, 'o2.AddItem();', '')], 'n', size=9, lh=15)
     d.note(10, 392, 620, 46, 'teaching picture: addresses and layout are made up. A normal (non-virtual) call is fixed by the compiler at build time;|the MethodTable link shows where the shared type data and the one copy of the code are found.', 'n', size=8.8)
     _notes(d, 326, 52, [('Two objects, each with its own header,|type pointer and Count. o1 and o2 hold|their addresses. (Type data comes next.)', 'cyan'),
