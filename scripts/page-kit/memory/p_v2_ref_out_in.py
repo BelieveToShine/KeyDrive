@@ -62,7 +62,7 @@ def d_rf2():
     d.arrow([(422, na), (440, na), (440, _ry(sa, 1)), (456, _ry(sa, 1))], 'rose', st='6-6', id='n1r')
     d.arrow([(422, nz), (440, nz), (440, _ry(sz, 1)), (456, _ry(sz, 1))], 'amber', st='3-', id='n2')
     d.token('aq', '✏️', 14, 'amber', st='4-4')
-    d.text(430, 340, 'addresses & layout: teaching picture', 'n', 8.5)
+    d.text(110, 334, 'addresses & layout: teaching picture', 'n', 8.5)
     for i, (t, c) in enumerate([('p (on the stack) leads to the Person object "Asha" on the heap. Its Name field leads to a separate string object.', 'cyan'),
                                 ('Replace(ref p): q is a slot holding the ADDRESS OF p. It is not a copy of p’s arrow (compare the previous page).', 'violet'),
                                 ('q = new Person("Zed") first builds a new Person and a new string on the heap. Nothing points at them yet.', 'amber'),

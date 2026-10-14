@@ -36,7 +36,7 @@ def d_mc1():
             ('3 · The program keeps working: a new Customer is allocated and Cart.Customer references it.|The unreachable Order is simply left where it is.', 'cyan'),
             ('4 · Later a GC starts at the roots (stack slots), follows references: Cart ✔, Customer ✔.|Nothing leads to the Order: not marked.', 'violet'),
             ('5 · The GC reclaims the unmarked Order: its space is free again.|It happened at the GC’s own moment, not when the method returned.', 'emerald'),
-            ('6 · New allocations can use the free space: here a new Invoice, referenced by inv.|(The GC may also compact survivors; see page [[p:gc-basics]].)', 'emerald')]
+            ('6 · New allocations can use the free space: here a new Invoice, referenced by inv.|(The GC may also compact survivors; see [[p:gc-basics]].)', 'emerald')]
     for i, (t, c) in enumerate(caps):
         d.note(10, 298, 620, 40, t, c, st=f'{i + 1}-{i + 1}', size=9.5)
     d.text(630, 350, 'teaching picture: positions and values are illustrative; the GC runs when it decides', 'n', 8.5, anchor='end')

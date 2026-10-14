@@ -12,26 +12,26 @@ def d_lk1():
     d.text(75, 112, 'frame popped', 'n', 9, st='4-')
     d.text(75, 126, 'slot gone', 'n', 9, st='4-')
     # static field Tick: null at 1 and from 5, points to delegate 2-4
-    card(d, 20, 182, 'Bus statics', [('Tick = null', 'f')], 'amber', w=110, st='1')
+    card(d, 20, 182, 'Bus statics', [('Tick = null', 'f')], 'amber', w=110, st='1-1')
     card(d, 20, 182, 'Bus statics', [('Tick = 0x…D1', 'f')], 'amber', w=110, st='2-4', hl='2')
     card(d, 20, 182, 'Bus statics', [('Tick = null', 'f')], 'amber', w=110, st='5-', hl='5')
     # Window object (variants by state)
     wrows = [('header (sync block)', 'hdr'), ('type ptr → Window MT', 'tp'), ('big UI data (fields)', 'f')]
     card(d, 172, 44, 'Window @ 0x…A1', wrows, 'emerald', w=190, st='1-3', hl='1')
-    card(d, 172, 44, 'Window @ 0x…A1  ✔ marked', wrows, 'emerald', w=190, st='4', hl='4')
-    card(d, 172, 44, 'Window @ 0x…A1  ✘ unreachable', wrows, 'rose', w=190, st='5', hl='5')
+    card(d, 172, 44, 'Window @ 0x…A1  ✔ marked', wrows, 'emerald', w=190, st='4-4', hl='4')
+    card(d, 172, 44, 'Window @ 0x…A1  ✘ unreachable', wrows, 'rose', w=190, st='5-5', hl='5')
     # Delegate object
     drows = [('header (sync block)', 'hdr'), ('type ptr → Action MT', 'tp'), ('target → 0x…A1', 'f'), ('method: Window.OnTick', 'f')]
     card(d, 172, 158, 'Delegate @ 0x…D1', drows, 'amber', w=190, st='2-3', hl='2')
-    card(d, 172, 158, 'Delegate @ 0x…D1  ✔ marked', drows, 'amber', w=190, st='4', hl='4')
-    card(d, 172, 158, 'Delegate @ 0x…D1  ✘ unreachable', drows, 'rose', w=190, st='5', hl='5')
+    card(d, 172, 158, 'Delegate @ 0x…D1  ✔ marked', drows, 'amber', w=190, st='4-4', hl='4')
+    card(d, 172, 158, 'Delegate @ 0x…D1  ✘ unreachable', drows, 'rose', w=190, st='5-5', hl='5')
     # type data
     card(d, 515, 68, 'Window MT', [('one per type', 'f')], 'violet', w=105)
     # arrows
-    d.arrow([(122, 105), (180, 105)], 'cyan', 'ref', at=(151, 105), st='1-3', id='k0')
-    d.arrow([(354, 105), (515 + 0, 105)], 'violet', 'type ptr', at=(438, 105), st='1-', id='k3')
-    d.arrow([(122, 219), (180, 219)], 'amber', 'ref', at=(151, 219), st='2-4', id='k1')
-    d.arrow([(354, 243), (380, 243), (380, 129), (354, 129)], 'amber', 'target', at=(380, 186), st='2-5', id='k2')
+    d.arrow([(122, 105), (180, 105)], 'cyan', 'ref', at=(147, 105), st='1-3', id='k0')
+    d.arrow([(354, 105), (515 + 0, 105)], 'violet', 'type ptr', at=(438, 105), st='1-5', id='k3')
+    d.arrow([(122, 219), (180, 219)], 'amber', 'ref', at=(147, 219), st='2-4', id='k1')
+    d.arrow([(354, 243), (392, 243), (392, 129), (354, 129)], 'amber', 'target', at=(392, 186), st='2-5', id='k2')
     d.token('k1', '🔍', 14, 'amber', st='4-4')
     d.token('k2', '🔍', 14, 'amber', st='4-4')
     # freed
@@ -40,12 +40,12 @@ def d_lk1():
     d.text(560, 150, 'type data stays:', 'n', 9, st='6-')
     d.text(560, 163, 'shared by all Windows', 'n', 8.5, st='6-')
     d.note(505, 190, 125, 70, 'teaching picture:|addresses are made up,|delegate fields are|simplified', 'n', size=8.5)
-    d.code_box(10, 276, 130, 24, [(0, 'win = new Window();', '')], 'n', size=8, lh=12, st='1-1')
-    d.code_box(10, 276, 130, 24, [(0, 'Bus.Tick += OnTick;', '')], 'n', size=8, lh=12, st='2-2')
-    d.code_box(10, 276, 130, 24, [(0, 'Main returns', '')], 'n', size=8, lh=12, st='3-3')
-    d.code_box(10, 276, 130, 24, [(0, 'GC runs', '')], 'n', size=8, lh=12, st='4-4')
-    d.code_box(10, 276, 130, 24, [(0, 'Bus.Tick -= OnTick;', '')], 'n', size=8, lh=12, st='5-5')
-    d.code_box(10, 276, 130, 24, [(0, 'next GC runs', '')], 'n', size=8, lh=12, st='6-6')
+    d.note(10, 276, 130, 24, 'win = new Window();', 'n', size=8.5, st='1-1')
+    d.note(10, 276, 130, 24, 'Bus.Tick += OnTick;', 'n', size=8.5, st='2-2')
+    d.note(10, 276, 130, 24, 'Main returns', 'n', size=8.5, st='3-3')
+    d.note(10, 276, 130, 24, 'GC runs', 'n', size=8.5, st='4-4')
+    d.note(10, 276, 130, 24, 'Bus.Tick -= OnTick;', 'n', size=8.5, st='5-5')
+    d.note(10, 276, 130, 24, 'next GC runs', 'n', size=8.5, st='6-6')
     for i, (t, c) in enumerate([('window is a stack slot holding the Window’s address.|Bus.Tick is a static field: a GC root, still null', 'cyan'),
                                 ('+= makes a delegate object that remembers the window.|Tick points to it', 'amber'),
                                 ('The frame is popped: the window variable is gone,|but the delegate still points at the Window', 'rose'),
@@ -61,10 +61,10 @@ def d_lk2():
     d.zone(150, 24, 480, 300, 'emerald', '🏠 HEAP')
     card(d, 20, 68, 'Cache statics', [('Cache →', 'f')], 'amber', w=110)
     lrows = lambda n: [('header (sync block)', 'hdr'), ('type ptr → List MT', 'tp'), ('_size = %s' % n, 'f'), ('_items → array', 'f')]
-    card(d, 170, 40, 'List object', lrows(2), 'emerald', w=150, st=1)
+    card(d, 170, 40, 'List object', lrows(2), 'emerald', w=150, st='1-1')
     card(d, 170, 40, 'List object', lrows(6), 'emerald', w=150, st='2-3', hl=3)
     card(d, 170, 40, 'List object', lrows(0), 'emerald', w=150, st='4-')
-    d.arrow([(112, 105), (178, 105)], 'amber', 'ref', at=(145, 105), id='c1', st=1)
+    d.arrow([(122, 105), (178, 105)], 'amber', 'ref', at=(147, 105), id='c1', st=1)
     # array strip
     d.zone(160, 190, 460, 54, 'emerald', None)
     d.text(612, 203, 'byte[][] array object', 'emerald', 8.5, anchor='end')
@@ -76,32 +76,32 @@ def d_lk2():
     for k, x in enumerate(SX):
         first = 1 if k < 2 else 2
         if k >= 2:
-            d.box(x, 208, 48, 24, [('null', 'm')], 'n', rx=4, st='1')
+            d.box(x, 208, 48, 24, [('null', 'm')], 'n', rx=4, st='1-1')
         d.box(x, 208, 48, 24, [('null', 'm')], 'n', rx=4, st='4-')
         d.box(x, 208, 48, 24, [('slot %d' % k, 'm')], 'emerald', rx=4, st=f'{first}-3', hl=3)
         # items
         iy = 266
         lbl = lambda t2: [('item %d' % (k + 1), 'm'), (t2, 'm')]
         d.box(x, iy, 48, 38, lbl('byte[]'), 'emerald', rx=6, st=f'{first}-2')
-        d.box(x, iy, 48, 38, lbl('✔ live'), 'emerald', rx=6, st='3', hl=3)
-        d.box(x, iy, 48, 38, lbl('no ref'), 'rose', rx=6, st='4', hl=4)
+        d.box(x, iy, 48, 38, lbl('✔ live'), 'emerald', rx=6, st='3-3', hl=3)
+        d.box(x, iy, 48, 38, lbl('no ref'), 'rose', rx=6, st='4-4', hl=4)
         d.arrow([(x + 24, 232), (x + 24, iy)], 'emerald', st=f'{first}-3', id=f's{k}')
         d.token(f's{k}', '🔍', 12, 'emerald', st='3-3')
     d.token('c1', '🔍', 12, 'amber', st='3-3')
     d.token('c2', '🔍', 12, 'emerald', st='3-3')
-    d.text(390, 258, 'each slot holds a reference to an item object', 'n', 8.5, st='1-3')
-    d.text(390, 312, 'items freed: their memory is reclaimed', 'emerald', 9.5, st='5-')
+    d.text(390, 318, 'each slot holds a reference to an item object', 'n', 8.5, st='1-3')
+    d.text(390, 318, 'items freed: their memory is reclaimed', 'emerald', 9.5, st='5-')
     # heap meter (teaching picture)
     d.text(170, 340, 'heap in use (teaching picture)', 'n', 9, anchor='start')
-    d.box(170, 348, 450, 14, [], 'n', rx=4)
-    d.box(170, 348, 100, 14, [], 'emerald', rx=4, st=1)
-    d.box(170, 348, 300, 14, [], 'amber', rx=4, st='2-3')
-    d.box(170, 348, 300, 14, [], 'rose', rx=4, st=4)
-    d.box(170, 348, 50, 14, [], 'emerald', rx=4, st=5)
-    d.code_box(10, 160, 130, 24, [(0, 'Cache.Add(item)', '')], 'n', size=8, lh=12, st='1-2')
-    d.code_box(10, 160, 130, 24, [(0, 'GC runs', '')], 'n', size=8, lh=12, st='3-3')
-    d.code_box(10, 160, 130, 24, [(0, 'Cache.Clear()', '')], 'n', size=8, lh=12, st='4-4')
-    d.code_box(10, 160, 130, 24, [(0, 'next GC runs', '')], 'n', size=8, lh=12, st='5-5')
+    d.zone(170, 346, 450, 18, 'n', None, dash=False)
+    d.box(172, 348, 98, 14, [], 'emerald', rx=4, st='1-1')
+    d.box(172, 348, 296, 14, [], 'amber', rx=4, st='2-3')
+    d.box(172, 348, 296, 14, [], 'rose', rx=4, st='4-4')
+    d.box(172, 348, 50, 14, [], 'emerald', rx=4, st='5-')
+    d.note(10, 160, 130, 24, 'Cache.Add(item)', 'n', size=8.5, st='1-2')
+    d.note(10, 160, 130, 24, 'GC runs', 'n', size=8.5, st='3-3')
+    d.note(10, 160, 130, 24, 'Cache.Clear()', 'n', size=8.5, st='4-4')
+    d.note(10, 160, 130, 24, 'next GC runs', 'n', size=8.5, st='5-5')
     for i, (t, c) in enumerate([('Cache is a static field: a root. It points to a List,|whose array holds references to 2 items', 'amber'),
                                 ('Requests keep adding items. Nothing removes them:|6 references, 6 items on the heap', 'amber'),
                                 ('GC marks from the root: Cache → List → array → every item.|All are reachable: nothing is freed', 'rose'),

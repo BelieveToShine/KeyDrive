@@ -7,13 +7,13 @@ def d_as1():
     d.zone(10, 70, 170, 340, 'cyan', '📚 STACK (one thread)')
     d.zone(190, 70, 440, 340, 'emerald', '🏠 HEAP')
     # stack
-    caller = card(d, 20, 100, 'Caller frame', [('i = 0  (other local)', 'f'), ('t = ?', 'f', '1-2')], 'cyan', w=128, st=1)
+    caller = card(d, 20, 100, 'Caller frame', [('other locals…', 'f'), ('t = ?', 'f', '1-2')], 'cyan', w=128, st=1)
     cell(d, caller, 1, 't → Task<int>', 'cyan', st='3-', hl=3)
     card(d, 20, 196, 'LoadAsync frame', [('sm.a = 1', 'f'), ('sm.state = -1', 'f')], 'cyan', w=128, st='1-3', hl='1,3')
     d.box(20, 196, 128, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='4-4')
     d.box(20, 196, 128, 50, [('Other work', 't'), ('thread is free', 'm')], 'n', st='7-')
-    mv = card(d, 20, 196, 'MoveNext frame', [('this → state machine', 'f'), ('reads a = 1 (field)', 'f', '5-5')], 'cyan', w=128, st='5-6', hl=5)
-    cell(d, mv, 1, 'a + 1 = 2 → result', 'cyan', st='6-6', hl=6)
+    mv = card(d, 20, 196, 'MoveNext frame', [('this → heap sm', 'f'), ('a = 1 from field', 'f', '5-5')], 'cyan', w=128, st='5-6', hl=5)
+    cell(d, mv, 1, 'returns 2', 'cyan', st='6-6', hl=6)
     # heap
     tk = card(d, 200, 100, 'Task<int> (caller holds)', [('header (sync block)', 'hdr'), ('type ptr → Task<int> MT', 'tp'), ('result = not ready', 'f', '3-5')], 'emerald', w=180, st='3-')
     cell(d, tk, 2, 'result = 2  ✓ done', 'emerald', st='6-', hl=6)
