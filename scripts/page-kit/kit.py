@@ -234,7 +234,7 @@ def page(slug, title, eyebrow, h1, sub, ivq, body, crumbs, next_html, search_tit
   <div class="wrap">KeyDrive · {CATEGORY["name"]} · concept journey</div>
 </footer>
 
-<script src="../../assets/site.js?v=20261020"></script>
+<script src="../../assets/site.js?v=20261021"></script>
 </body>
 </html>
 '''

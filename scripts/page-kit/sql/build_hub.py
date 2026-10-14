@@ -131,7 +131,7 @@ page = HEAD.replace('<title>Azure — KeyDrive</title>', '<title>SQL Performance
   <div class="wrap">KeyDrive · Data Systems · SQL Performance Lab · {nw} / {nt} concepts written</div>
 </footer>
 
-<script src="../assets/site.js?v=20261020"></script>
+<script src="../assets/site.js?v=20261021"></script>
 </body>
 </html>
 '''

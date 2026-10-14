@@ -453,3 +453,20 @@
   window.addEventListener("load", fit);
   [300, 900, 2000].forEach(function (ms) { setTimeout(fit, ms); });
 })();
+
+
+/* Keep the breadcrumb bar (with the ← Back pill) pinned directly under the top bar while scrolling. */
+(function () {
+  function sync() {
+    var tb = document.querySelector(".topbar");
+    if (!tb) return;
+    var h = window.innerWidth <= 700 ? 0 : tb.getBoundingClientRect().height;
+    document.documentElement.style.setProperty("--topbar-h", h + "px");
+    var c = document.querySelector("nav.kd-crumbs");
+    document.documentElement.style.scrollPaddingTop = (h + (c ? c.getBoundingClientRect().height : 0) + 12) + "px";
+  }
+  sync();
+  window.addEventListener("resize", sync);
+  window.addEventListener("load", sync);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+})();

@@ -93,7 +93,10 @@ code, .mono{ font-family:'JetBrains Mono', monospace; }
   display:flex; align-items:center; gap:6px; flex-wrap:nowrap; overflow-x:auto; max-width:none; margin:0;
   padding:9px max(24px, calc((100% - 1032px) / 2)); font-size:12.5px; color:var(--ink-faint);
   background:var(--surface); border-bottom:1px solid var(--border-soft);
+  /* stays visible under the top bar while scrolling, so ← Back is always one click away */
+  position:sticky; top:var(--topbar-h, 57px); z-index:39; box-shadow:0 6px 14px -10px rgba(0,0,0,.6);
 }
+html{ scroll-padding-top:112px; }
 .kd-crumbs::-webkit-scrollbar{ display:none; }
 .kd-crumbs a:not(.crumb-back), .kd-crumbs .cur{
   display:inline-flex; align-items:center; gap:4px; white-space:nowrap; flex:0 0 auto;
@@ -602,3 +605,10 @@ main p, main li{ overflow-wrap:anywhere; }
 .quiz-item{ margin:0; }
 .quiz-item summary{ overflow-wrap:anywhere; }
 .quiz-item .zoom-inner p{ margin:0; }
+
+/* Phones: the tall top bar scrolls away; the breadcrumb bar stays pinned at the very top with ← Back first and always in view. */
+@media (max-width:700px){
+  .topbar{ position:static; }
+  .kd-crumbs, .kd-crumbs.wrap{ top:0 !important; }
+  .kd-crumbs .crumb-back{ order:-1; margin-left:0; margin-right:4px; position:sticky; left:0; z-index:2; }
+}
