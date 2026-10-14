@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Fields: One Copy for the Whole App — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Statics</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 6 of 22 · 📌 Static memory</div>
+    <h1><span class="grad-text">The notice board in the lobby</span> — one copy, everyone reads it.</h1>
+    <p class="sub">Where static fields live, how many copies exist, when static constructors run, and why a static reference can keep objects alive for the life of the app.</p>
+    <div class="interview-q">❓ "Where are static variables stored in .NET and when are they cleaned?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Two Counter objects each have their own id field on the heap, but there is only one static Total field in static memory that both objects share; each new object adds one to that single Total">
+<defs><marker id="st1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="84" width="390" height="206" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP  (one object per new)</text>
+<rect class="zone" x="420" y="84" width="210" height="206" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="434" y="103" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC  (one copy)</text>
+<g class="st" data-s="3-"><path id="st1-sh1" d="M105,172 L105,228 L525,228 L525,172" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<g class="st" data-s="3-"><path d="M360,146 L440,146" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st1A)"/></g>
+<rect class="bx" x="10" y="8" width="380" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Counter { public static int Total;</text>
+<text x="24" y="44" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">                 public int Id;</text>
+<text x="24" y="58" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  public Counter() { Total++; Id = Total; } }</text>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">0</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">1</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="440" y="120" width="170" height="52" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="525" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Counter.Total</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="525" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">2</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="30" y="120" width="150" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Counter object</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="105" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 1</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="210" y="120" width="150" height="52" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="285" y="144" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Counter object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="285" y="156" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Id = 2</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="30" y="240" width="340" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="200" y="261" text-anchor="middle" font-size="10" fill="#fcd34d">Many objects, ONE Total</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="290" y="219" width="50" height="18" rx="9"/><text x="315" y="231.5" text-anchor="middle" font-size="9" font-style="italic">shared</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A class has a <b>static</b> field <code>Total</code> and an instance field <code>Id</code>. The static field lives in <b>static memory</b>, once, and starts at 0.</li><li><code>new Counter()</code>: a heap object with its own <code>Id = 1</code>. The constructor adds 1 to the one shared <code>Total</code>.</li><li>A second <code>new Counter()</code>: another heap object with <code>Id = 2</code>. Both objects use the <b>same</b> <code>Total</code>, now 2.</li><li>Many objects, <b>one</b> <code>Total</code>. That is what “static” means: it belongs to the type, not to any object.</li></ol>
+<figcaption><strong>What you're seeing:</strong> instance fields: one copy per object (heap). Static fields: one copy per type (static memory).</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A static field belongs to the type, not to any object: one copy for the whole app, alive until the app ends.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>📌 The <b>notice board in a building lobby</b>. There is exactly one. Everyone in the building reads the same board. It stays up as long as the building is open.</p>
+      <p>Each <b>flat</b> (object) has its own fridge (instance fields); the notice board (static field) is shared by all flats.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">⚓ Why statics can keep objects alive</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="A static field Cache holds a reference to a List object on the heap, so the list stays alive after the method that created a temporary Order returns, while the unreferenced Order can be cleaned up">
+<defs><marker id="st2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="st2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="72" width="170" height="218" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="190" y="72" width="140" height="218" rx="14" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="204" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#fcd34d">📌 STATIC</text>
+<rect class="zone" x="340" y="72" width="290" height="218" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="354" y="91" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M320,130 L380,130" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<g class="st" data-s="2-2"><path d="M166,210 L380,210" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#st2A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">static List&lt;int&gt; Cache = new();</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">void Load() { var tmp = new Order(); }</text>
+<g class="st" data-s="1-" data-hl="1,,,4"><rect class="bx" x="200" y="108" width="120" height="44" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,4"><text x="260" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Cache</text></g>
+<g class="st" data-s="1-" data-hl="1,,,4"><text x="260" y="140" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">address 0x…F1</text></g>
+<g class="st" data-s="1-" data-hl="1,,,4"><rect class="bx" x="380" y="108" width="210" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1,,,4"><text x="485" y="127.75" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">List object</text></g>
+<g class="st" data-s="1-" data-hl="1,,,4"><text x="485" y="140.25" text-anchor="middle" font-size="9.5" font-weight="400" fill="#a7f0d0">stays alive</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="24" y="188" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="95" y="208" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">tmp</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="95" y="220" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…F9</text></g>
+<g class="st" data-s="2-"><rect class="bx" x="380" y="188" width="210" height="44" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-"><text x="485" y="214" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="22" y="244" width="150" height="36" rx="9" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="97" y="264.5" text-anchor="middle" font-size="9" fill="#67e8f9">tmp is gone</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="344" y="244" width="280" height="36" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="484" y="264.5" text-anchor="middle" font-size="9" fill="#fda4af">Nobody points to Order: GC may free it</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="344" y="244" width="280" height="36" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="484" y="264.5" text-anchor="middle" font-size="9" fill="#fcd34d">Static still points to the List: kept alive</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="330" y="121" width="34" height="18" rx="9"/><text x="347" y="133.5" text-anchor="middle" font-size="9" font-style="italic">ref</text></g></g>
+<g class="st" data-s="2-2"><g class="arrow-pill"><rect x="232" y="201" width="82" height="18" rx="9"/><text x="273" y="213.5" text-anchor="middle" font-size="9" font-style="italic">tmp → Order</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li>A static field <code>Cache</code> points to a List on the heap. The static field itself lives for the whole app.</li><li><code>Load()</code> runs and makes a temporary <code>Order</code> on the heap, with <code>tmp</code> on the stack pointing to it.</li><li><code>Load()</code> returns. <code>tmp</code> is gone, so nothing points to the Order — the GC may free it.</li><li>But <code>Cache</code> still points to the List, so the List <b>stays alive</b>. Static references are <b>GC roots</b> (page 13).</li></ol>
+<figcaption><strong>What you're seeing:</strong> a static reference is a permanent “ticket”: whatever it points to is never freed while it points there.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🧾 Instance vs static</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col"></th><th scope="col">Instance field</th><th scope="col">Static field</th></tr></thead><tbody><tr><th scope="row">How many copies?</th><td>one per object</td><td>one per type (for the whole app)</td></tr><tr><th scope="row">Created when?</th><td>each <code>new</code></td><td>when the type is first initialised (see below)</td></tr><tr><th scope="row">Lives where?</th><td>inside the object on the heap</td><td>static memory belonging to the type</td></tr><tr><th scope="row">Cleared when?</th><td>when the GC frees the object</td><td>not during the run; ends with the app</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">⏱️ When does the static part get set up?</div>
+    <div class="kd-card why-box">
+      <p>A <b>static constructor</b> runs automatically, at most once, before the first instance is created or any static member is used. Static field initializers run first, in the order written, then the static constructor body.</p>
+      <p>If you do not write a static constructor, the runtime may set up the static fields a little earlier or later (it only promises: before the first static field is used). Do not depend on the exact moment.</p>
+      <p>If a static constructor throws, the type cannot be used afterwards (the error repeats as a <code>TypeInitializationException</code>).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">🔬 Honest note on “where exactly”</div>
+    <div class="kd-card why-box">
+      <p>Microsoft’s docs say static fields belong to the type and are shared by all instances. Exactly <b>which internal memory area</b> the runtime uses to hold them is an implementation detail that the public docs do not pin down, so this lab draws “static memory” as one box and does not claim more.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Counter
+{
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span> Total;      <span class="cmt">// ONE copy for the whole app</span>
+    <span class="kw">public</span> <span class="kw">int</span> Id;                <span class="cmt">// one copy per object</span>
+
+    <span class="kw">public</span> Counter() { Total++; Id = Total; }
+}
+
+<span class="kw">var</span> a = <span class="kw">new</span> Counter();   <span class="cmt">// a.Id = 1, Total = 1</span>
+<span class="kw">var</span> b = <span class="kw">new</span> Counter();   <span class="cmt">// b.Id = 2, Total = 2</span>
+
+<span class="kw">static</span> <span class="kw">class</span> Cache { <span class="kw">public</span> <span class="kw">static</span> List&lt;<span class="kw">int</span>&gt; Items = <span class="kw">new</span>(); }   <span class="cmt">// lives as long as the app</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Counter.Total is reached through the type name, not through an object.</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p><b>Nobody during the run.</b> Static fields live until the app ends. Objects that a static field <b>points to</b> are also kept alive, because the GC treats static references as roots. That is the classic way a “cache” turns into a memory leak (page 17).</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Each <code>new Counter()</code> gets its own copy of the static <code>Total</code>.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> There is one <code>Total</code> for the type.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A List held by a static field is freed when the method that filled it returns.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The static reference keeps it alive for the whole app.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Static constructors run once, automatically.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — before first use of the type, at most once.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Static = belongs to the type, one copy per app.</li><li>Not cleared during the run; static references are GC roots.</li><li>Static constructor: automatic, at most once, before first use.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“Static fields are per type, not per instance; there is one copy for the app and it lives as long as the app. Because static references are GC roots, objects they reference never get collected — so unbounded static caches leak memory.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Putting everything in static collections “for convenience”. Anything added and never removed stays in memory until the app ends.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what exactly happens inside <code>new</code> when the class has initializers and a constructor.</span>
+      <a class="next-link" href="object-creation.html">Creating an Object <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Static constructor timing, at-most-once and exception behaviour: Microsoft Learn “Static Constructors” and CA1810. Static references as GC roots: GC fundamentals. The exact internal storage area for statics is a runtime detail and is deliberately not claimed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors" target="_blank" rel="noopener">Static constructors (C# guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals" target="_blank" rel="noopener">Fundamentals of garbage collection (Microsoft Learn)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

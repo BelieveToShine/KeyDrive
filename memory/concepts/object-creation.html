@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Happens in Memory When You Create an Object — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Creating an object</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 7 of 22 · 🧬 Objects & types</div>
+    <h1>Building a house: <span class="grad-text">land, frame, then the rooms</span>.</h1>
+    <p class="sub">The exact order inside <code>new</code>: reserve memory, default values, field initializers, constructor body — plus objects holding objects and arrays of objects.</p>
+    <div class="interview-q">❓ "What is the order of events when an object is created in C#?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="Creating an Order object step by step: the heap object is reserved with all fields at default values, then field initializers run, then the constructor body runs, and finally the address is stored in the variable o">
+<defs><marker id="oc1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="100" width="170" height="190" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="200" y="100" width="430" height="190" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="214" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="4-"><path d="M166,168 L260,168" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#oc1A)"/></g>
+<rect class="bx" x="10" y="8" width="380" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Order {</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  int qty = 1;                 // field initializer</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  string note;</text>
+<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">  Order() { note = "new"; } }</text>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="260" y="130" width="200" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="360" y="160" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="360" y="172" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">qty = 0</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="360" y="184" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">note = null</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="260" y="130" width="200" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="360" y="160" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order object</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="360" y="172" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">qty = 1</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="360" y="184" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">note = null</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="260" y="130" width="200" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="360" y="160" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="360" y="172" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">qty = 1</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="360" y="184" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">note = "new"</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx" x="24" y="146" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">o</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="95" y="178" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…G2</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="480" y="130" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="550" y="164" text-anchor="middle" font-size="9.5" fill="#fcd34d">Room reserved</text></g>
+<g class="st" data-s="1-1"><text x="550" y="177.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">all fields default</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="480" y="130" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="550" y="164" text-anchor="middle" font-size="9.5" fill="#fcd34d">Field initializers</text></g>
+<g class="st" data-s="2-2"><text x="550" y="177.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">run first</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="480" y="130" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="550" y="164" text-anchor="middle" font-size="9.5" fill="#fcd34d">Constructor body</text></g>
+<g class="st" data-s="3-3"><text x="550" y="177.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">runs last</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="480" y="130" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="550" y="164" text-anchor="middle" font-size="9.5" fill="#fcd34d">Address returned</text></g>
+<g class="st" data-s="4-4"><text x="550" y="177.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">stored in o</text></g>
+<g class="st" data-s="4-"><g class="arrow-pill"><rect x="185.5" y="159" width="55" height="18" rx="9"/><text x="213" y="171.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><b>1 · Room reserved.</b> The runtime reserves space for the whole Order on the heap. Every field is at its default (0 / null).</li><li><b>2 · Field initializers run.</b> <code>qty = 1</code> is set first.</li><li><b>3 · Constructor body runs.</b> <code>note = "new"</code>. Only now is your constructor code executed.</li><li><b>4 · Address returned</b> and stored in the variable <code>o</code>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> the four moments of new. Field initializers always run before the constructor body.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b><code>new</code> = reserve memory → defaults → field initializers → constructor body → hand back the address.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🏠 Building a house: first the <b>land is marked out</b> (memory reserved, empty), then the <b>frame</b> goes up (initializers), then the <b>finishing touches</b> (constructor), and finally you get the <b>key</b> (the reference).</p>
+      <p>You can never enter a house before it has land — an object always has all of its memory before any of your code runs inside it.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🪆 An object that holds another object</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="An Order whose field initializer creates a Customer makes two heap objects: the Order holds the address of the Customer, and the variable o on the stack only knows the Order">
+<defs><marker id="oc2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="74" width="150" height="216" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="180" y="74" width="450" height="216" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="194" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="3-"><path d="M148,152 L250,152" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#oc2A)"/></g>
+<g class="st" data-s="3-"><path d="M420,148 L500,148" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#oc2A)"/></g>
+<rect class="bx" x="10" y="8" width="380" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">class Order { Customer cust = new Customer(); }</text>
+<text x="24" y="45" text-anchor="start" font-size="9" font-family="'JetBrains Mono'" fill="#93a0b8">var o = new Order();</text>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="22" y="130" width="126" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="85" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">o</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="85" y="162" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…H3</text></g>
+<g class="st" data-s="1-2" data-hl="1"><rect class="bx" x="250" y="110" width="170" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="335" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Order object</text></g>
+<g class="st" data-s="1-2" data-hl="1"><text x="335" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">cust = null</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx" x="250" y="110" width="170" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="335" y="146" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Order object</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="335" y="158" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">cust = 0x…H8</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="500" y="110" width="120" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="560" y="144.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Customer</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="560" y="159.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">object</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="250" y="214" width="370" height="52" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="435" y="236" text-anchor="middle" font-size="10" fill="#fcd34d">Two objects, joined by a reference</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="435" y="250" text-anchor="middle" font-size="10" fill="#fcd34d">o knows only the Order</text></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="171.5" y="143" width="55" height="18" rx="9"/><text x="199" y="155.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+<g class="st" data-s="3-"><g class="arrow-pill"><rect x="440.5" y="139" width="39" height="18" rx="9"/><text x="460" y="151.5" text-anchor="middle" font-size="9" font-style="italic">cust</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>new Order()</code> reserves the Order object. Its <code>cust</code> field starts as <b>null</b>.</li><li>The field initializer <code>new Customer()</code> builds a <b>second</b> object on the heap.</li><li>The Order’s <code>cust</code> field now holds the Customer’s <b>address</b>, and <code>o</code> holds the Order’s address.</li><li>Two heap objects joined by a reference. <code>o</code> only knows the Order; it reaches the Customer through it.</li></ol>
+<figcaption><strong>What you're seeing:</strong> composition in memory: one object keeps a reference to another. This is how almost every real object graph looks.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧺 An array of objects</div>
+<figure class="diagram-card kd-story" data-steps="3">
+<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="3" role="img" aria-label="new Person[3] creates only one array object holding three empty reference slots and no Person objects; assigning a[0] creates one Person and puts its address in slot 0">
+<defs><marker id="oc3A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc3S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="oc3T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="74" width="130" height="224" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="160" y="74" width="470" height="224" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="174" y="93" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M130,152 L230,152" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#oc3A)"/></g>
+<g class="st" data-s="2-"><path d="M345,188 L345,244" fill="none" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#oc3A)"/></g>
+<rect class="bx" x="10" y="8" width="330" height="48" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">var a = new Person[3];</text>
+<text x="24" y="45" text-anchor="start" font-size="9.5" font-family="'JetBrains Mono'" fill="#93a0b8">a[0] = new Person();</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="20" y="130" width="110" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="75" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="75" y="162" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…J1</text></g>
+<g class="st" data-s="1-1" data-hl="1"><rect class="bx" x="230" y="112" width="230" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="345" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person[3] array object</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="345" y="154" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">slot0 | slot1 | slot2</text></g>
+<g class="st" data-s="1-1" data-hl="1"><text x="345" y="166" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">null | null | null</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="230" y="112" width="230" height="76" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">Person[3] array object</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="154" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">slot0 | slot1 | slot2</text></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="166" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">ref  | null | null</text></g>
+<g class="st" data-s="2-" data-hl="2"><rect class="bx" x="230" y="244" width="230" height="36" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-" data-hl="2"><text x="345" y="266" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Person object</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="480" y="112" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="550" y="146" text-anchor="middle" font-size="9.5" fill="#fcd34d">No Person yet!</text></g>
+<g class="st" data-s="1-1"><text x="550" y="159.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">just 3 empty slots</text></g>
+<g class="st" data-s="3-" data-hl="3"><rect class="bx note" x="480" y="112" width="140" height="76" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-" data-hl="3"><text x="550" y="146" text-anchor="middle" font-size="9.5" fill="#fcd34d">An array of objects</text></g>
+<g class="st" data-s="3-" data-hl="3"><text x="550" y="159.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">is an array of refs</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="152.5" y="143" width="55" height="18" rx="9"/><text x="180" y="155.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+<g class="st" data-s="2-"><g class="arrow-pill"><rect x="320" y="207" width="50" height="18" rx="9"/><text x="345" y="219.5" text-anchor="middle" font-size="9" font-style="italic">slot 0</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>new Person[3]</code> makes <b>one</b> object: an array with three empty slots. <b>No Person object exists yet.</b></li><li><code>a[0] = new Person();</code> creates one Person and puts its address into slot 0.</li><li>An array of class objects is an array of <b>references</b>. The other slots are still <code>null</code>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> a common surprise: creating the array does not create the people.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Customer { }
+<span class="kw">class</span> Order
+{
+    <span class="kw">int</span> qty = 1;                         <span class="cmt">// 2) field initializer</span>
+    <span class="kw">string</span> note;                         <span class="cmt">// 1) starts as null</span>
+    Customer cust = <span class="kw">new</span> Customer();      <span class="cmt">// 2) builds a second heap object</span>
+    <span class="kw">public</span> Order() { note = <span class="str">"new"</span>; }     <span class="cmt">// 3) constructor body runs last</span>
+}
+
+<span class="kw">var</span> o = <span class="kw">new</span> Order();                      <span class="cmt">// 4) o holds the address</span>
+<span class="kw">var</span> a = <span class="kw">new</span> Person[3];                    <span class="cmt">// 3 null slots, no Person yet</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Field initializers run before the constructor body. (With inheritance there is one more rule — next pages.)</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The garbage collector. An object graph is freed <b>as a whole</b>: when nothing reachable points to the Order, the Order <b>and</b> the Customer it alone referenced can both be freed. The GC follows references, so you never “delete” the inner objects by hand.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> The constructor body runs before field initializers.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> Field initializers run first, then the constructor body.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Person[3]</code> creates three Person objects.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> It creates one array with three null slots.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> A field of class type holds the address of another heap object.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes — that is how objects link together.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>Memory is reserved and zeroed first; then field initializers; then the constructor body.</li><li>An object can hold references to other heap objects.</li><li><code>new T[n]</code> for a class T makes n empty slots, not n objects.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“new allocates the object with default field values, runs field initializers, then the constructor body, and returns a reference. Objects that hold other objects just store references to them on the heap.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Using an array element without creating the object: <code>a[1].Name</code> throws a <code>NullReferenceException</code> because slot 1 is still null.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what if the class has a parent? One object, two layers.</span>
+      <a class="next-link" href="inheritance-memory.html">Inheritance <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Initialization order (field initializers before constructor body; default values) is documented in the C# language reference on constructors and fields; arrays of reference types holding null by default: C# docs on arrays. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/instance-constructors" target="_blank" rel="noopener">Instance constructors (C# guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types" target="_blank" rel="noopener">Reference types (C# reference)</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>

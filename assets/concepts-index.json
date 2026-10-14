@@ -5178,5 +5178,109 @@
     "summary": "The classic mistake with Boxing and Unboxing: a Value Moves to the Heap.",
     "keywords": "memory boxing unboxing object interface generics list allocation trap mistake",
     "anchor": "trap"
+  },
+  {
+    "id": "memory-statics",
+    "title": "Static Fields: One Copy for the Whole App",
+    "category": "Memory",
+    "page": "memory/concepts/statics.html",
+    "summary": "Where static fields live, static constructors, and why statics keep objects alive",
+    "keywords": "memory static field static constructor gc root cache leak"
+  },
+  {
+    "id": "memory-statics-recall",
+    "title": "Static Fields: One Copy for the Whole App — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/statics.html",
+    "summary": "Quick recall points: Static Fields: One Copy for the Whole App.",
+    "keywords": "memory static field static constructor gc root cache leak interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-statics-trap",
+    "title": "Static Fields: One Copy for the Whole App — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/statics.html",
+    "summary": "The classic mistake with Static Fields: One Copy for the Whole App.",
+    "keywords": "memory static field static constructor gc root cache leak trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-object-creation",
+    "title": "What Happens in Memory When You Create an Object",
+    "category": "Memory",
+    "page": "memory/concepts/object-creation.html",
+    "summary": "Order of events in new: defaults, field initializers, constructor; objects holding objects; arrays of objects",
+    "keywords": "memory new constructor field initializer object graph array null"
+  },
+  {
+    "id": "memory-object-creation-recall",
+    "title": "What Happens in Memory When You Create an Object — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/object-creation.html",
+    "summary": "Quick recall points: What Happens in Memory When You Create an Object.",
+    "keywords": "memory new constructor field initializer object graph array null interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-object-creation-trap",
+    "title": "What Happens in Memory When You Create an Object — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/object-creation.html",
+    "summary": "The classic mistake with What Happens in Memory When You Create an Object.",
+    "keywords": "memory new constructor field initializer object graph array null trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-inheritance-memory",
+    "title": "Subclass Creation: One Object, Parent and Child Inside",
+    "category": "Memory",
+    "page": "memory/concepts/inheritance-memory.html",
+    "summary": "One heap object holds base and derived fields; constructor order; base-typed variables",
+    "keywords": "memory inheritance subclass base class constructor order cast"
+  },
+  {
+    "id": "memory-inheritance-memory-recall",
+    "title": "Subclass Creation: One Object, Parent and Child Inside — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/inheritance-memory.html",
+    "summary": "Quick recall points: Subclass Creation: One Object, Parent and Child Inside.",
+    "keywords": "memory inheritance subclass base class constructor order cast interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-inheritance-memory-trap",
+    "title": "Subclass Creation: One Object, Parent and Child Inside — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/inheritance-memory.html",
+    "summary": "The classic mistake with Subclass Creation: One Object, Parent and Child Inside.",
+    "keywords": "memory inheritance subclass base class constructor order cast trap mistake",
+    "anchor": "trap"
+  },
+  {
+    "id": "memory-abstract-base",
+    "title": "Abstract and Base Classes: Allocated Only Inside a Child",
+    "category": "Memory",
+    "page": "memory/concepts/abstract-base.html",
+    "summary": "Why abstract classes cannot be created alone and how child objects hold the base layer",
+    "keywords": "memory abstract class base class payment polymorphism"
+  },
+  {
+    "id": "memory-abstract-base-recall",
+    "title": "Abstract and Base Classes: Allocated Only Inside a Child — interview recall",
+    "category": "Memory",
+    "page": "memory/concepts/abstract-base.html",
+    "summary": "Quick recall points: Abstract and Base Classes: Allocated Only Inside a Child.",
+    "keywords": "memory abstract class base class payment polymorphism interview recall",
+    "anchor": "recall"
+  },
+  {
+    "id": "memory-abstract-base-trap",
+    "title": "Abstract and Base Classes: Allocated Only Inside a Child — common trap",
+    "category": "Memory",
+    "page": "memory/concepts/abstract-base.html",
+    "summary": "The classic mistake with Abstract and Base Classes: Allocated Only Inside a Child.",
+    "keywords": "memory abstract class base class payment polymorphism trap mistake",
+    "anchor": "trap"
   }
 ]

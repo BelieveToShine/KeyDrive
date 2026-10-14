@@ -51,5 +51,25 @@ Sources: learn.microsoft.com .NET GC docs, C# reference, ASP.NET Core memory gui
 | Generic collections avoid boxing | ✅ V | same page |
 | Person/Order/Asha examples, addresses 0x…, step shapes | 🟦 I | illustrative |
 
+## Pages 6–9 — Statics, object creation, inheritance, abstract classes
+| Claim | Status | Note |
+|---|---|---|
+| Static fields belong to the type, one copy shared by all instances | ✅ V | C# docs (static members) |
+| Static constructor runs automatically, at most once, before first instance or any static member use; initializers run first in textual order; exception → type unusable (TypeInitializationException) | ✅ V | MS Learn Static Constructors, CA1810 (search summary); TypeInitializationException 🟨 K |
+| Without explicit static constructor the runtime may initialise statics at any time before the first static-field access (beforefieldinit) | ✅ V | CA1810 / C# static constructors docs (search summary) |
+| Static references are GC roots (objects they reference are never collected) | ✅ V | GC fundamentals (roots) |
+| Which internal memory area holds statics | 🟨 K | not claimed; page says "static memory" |
+| Order in new: allocate & default → field initializers → constructor body | ✅ V | C# language reference (instance constructors) |
+| new T[n] of a class makes n null slots; elements null until assigned | ✅ V | C# docs on arrays |
+| Object holding another object stores a reference | ✅ V | C# reference types |
+| Subclass instance is one object with base + derived fields | ✅ V | C# inheritance docs (language semantics); byte layout not claimed |
+| Field initializers derived→base; constructors base→derived | ✅ V | C# language reference (verified in research pass) |
+| Base-typed variable exposes only base members; cast needed; wrong cast InvalidCastException | ✅ V | C# docs |
+| abstract class cannot be instantiated; abstract members have no body; derived must override | ✅ V | C# reference (abstract) |
+| Base constructor runs when a derived object is created | ✅ V | C# constructors docs |
+| Calling virtual method from base constructor runs derived override before derived init | ✅ V | well-known C# rule (CA2214 analyzer); 🟨 K for rule text |
+| Counter/Animal/Dog/Payment examples; addresses 0x…; CardEnd 1234 | 🟦 I | illustrative |
+
 ## Cross-page notes
+- Illustrative literals: Amount = 100, qty = 1, Total = 2, "Rex"/"Pug", card ending 1234.
 - Addresses (0x…), sizes, timings and object counts in diagrams are 🟦 illustrative.

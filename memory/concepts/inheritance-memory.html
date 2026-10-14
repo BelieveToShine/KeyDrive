@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subclass Creation: One Object, Parent and Child Inside — Memory — KeyDrive</title>
+<link rel="stylesheet" href="../../assets/style.css?v=20261018">
+</head>
+<body data-root="../../">
+
+<header class="topbar">
+  <div class="bar wrap">
+    <a class="brand" href="../../index.html">
+      <svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="kdMark" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+        </linearGradient></defs>
+        <rect x="3" y="3" width="26" height="26" rx="8" fill="none" stroke="url(#kdMark)" stroke-width="2.4"/>
+        <circle cx="12" cy="16" r="2.6" fill="url(#kdMark)"/><circle cx="20" cy="16" r="2.6" fill="url(#kdMark)"/>
+        <path d="M14.6 16h4.8" stroke="url(#kdMark)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Key<span class="kd-dot">Drive</span>
+    </a>
+    <div class="kdsearch">
+      <span class="kicon">🔎</span>
+      <input type="text" placeholder="Search any concept… (AI, ML, RAG…)" autocomplete="off" aria-label="Search concepts">
+      <span class="kkey">/</span>
+      <div class="kdsearch-results" role="listbox"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="kd-crumbs wrap">
+  <a href="../../index.html">KeyDrive</a><span class="sep">›</span><a href="../../design/index.html">🧱 Software Design</a><span class="sep">›</span><a href="../index.html">🧠 .NET Memory Lab</a><span class="sep">›</span><span class="cur">Inheritance</span>
+</nav>
+
+<main class="wrap">
+  <section class="kd-hero left">
+    <div class="eyebrow">Concept 8 of 22 · 🧬 Objects & types</div>
+    <h1><span class="grad-text">A nesting doll</span>: creating a Dog also builds the Animal inside it.</h1>
+    <p class="sub">What <code>new Dog()</code> allocates when Dog inherits from Animal: one object with both layers, the constructor order, and what a base-type variable can see.</p>
+    <div class="interview-q">❓ "When you create a subclass object, what happens to the base class memory?"</div>
+  </section>
+
+  <section class="kd-section ">
+    <div class="sec-label see">👁 See it first</div>
+<figure class="diagram-card kd-story" data-steps="6">
+<div class="st-stage"><svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="6" role="img" aria-label="Creating a Dog, a subclass of Animal, makes ONE heap object that contains both the Animal part and the Dog part; initializers run derived first then base, then constructors run base first then derived">
+<defs><marker id="in1A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in1S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in1T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="100" width="170" height="210" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="200" y="100" width="430" height="210" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="214" y="119" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 ONE Dog object on the heap</text>
+<g class="st" data-s="6-"><path d="M166,168 L260,168" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in1A)"/></g>
+<rect class="bx" x="10" y="8" width="400" height="78" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Animal { string Name = "?";</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Animal() { Name = "Rex"; } }</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">class Dog : Animal { string Breed = "Lab";</text>
+<text x="24" y="75" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">   public Dog() { Breed = "Pug"; } }</text>
+<g class="st" data-s="1-1"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
+<g class="st" data-s="1-1"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
+<g class="st" data-s="1-1"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-1"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
+<g class="st" data-s="1-1"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = null</text></g>
+<g class="st" data-s="2-2"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
+<g class="st" data-s="2-2"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = null</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐶 Dog part</text></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐾 Animal part</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = "?"</text></g>
+<g class="st" data-s="3-3"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="3-3"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
+<g class="st" data-s="3-3"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
+<g class="st" data-s="4-4" data-hl="4"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐾 Animal part</text></g>
+<g class="st" data-s="4-4" data-hl="4"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
+<g class="st" data-s="4-4"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="4-4"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐶 Dog part</text></g>
+<g class="st" data-s="4-4"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Lab"</text></g>
+<g class="st" data-s="5-"><rect class="bx" x="260" y="130" width="350" height="50" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="5-"><text x="435" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">🐾 Animal part</text></g>
+<g class="st" data-s="5-"><text x="435" y="165" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
+<g class="st" data-s="5-" data-hl="5"><rect class="bx" x="260" y="192" width="350" height="50" rx="10" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.3"/></g>
+<g class="st" data-s="5-" data-hl="5"><text x="435" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fcd34d">🐶 Dog part</text></g>
+<g class="st" data-s="5-" data-hl="5"><text x="435" y="227" text-anchor="middle" font-size="8.8" font-weight="400" fill="#fde59a" font-family="'JetBrains Mono'">Breed = "Pug"</text></g>
+<g class="st" data-s="6-" data-hl="6"><rect class="bx" x="24" y="146" width="142" height="44" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="6-" data-hl="6"><text x="95" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">d</text></g>
+<g class="st" data-s="6-" data-hl="6"><text x="95" y="178" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">address 0x…K4</text></g>
+<g class="st" data-s="1-1"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="1-1"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">1 · whole object reserved: both parts, all defaults</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">2 · Dog’s field initializer runs first</text></g>
+<g class="st" data-s="3-3"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">3 · then Animal’s field initializer</text></g>
+<g class="st" data-s="4-4"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-4"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">4 · Animal’s constructor body (base first)</text></g>
+<g class="st" data-s="5-5"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="5-5"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">5 · Dog’s constructor body (derived last)</text></g>
+<g class="st" data-s="6-6"><rect class="bx note" x="260" y="254" width="350" height="40" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="6-6"><text x="435" y="276.75" text-anchor="middle" font-size="9.5" fill="#fcd34d">6 · one address for the whole Dog</text></g>
+<g class="st" data-s="6-"><g class="arrow-pill"><rect x="185.5" y="159" width="55" height="18" rx="9"/><text x="213" y="171.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>new Dog()</code> reserves <b>one</b> object on the heap. It already has room for the <b>Animal part</b> and the <b>Dog part</b>. All fields are default.</li><li><b>Field initializers run derived → base.</b> First Dog’s: <code>Breed = "Lab"</code>.</li><li>Then Animal’s: <code>Name = "?"</code>.</li><li><b>Constructor bodies run base → derived.</b> First Animal’s: <code>Name = "Rex"</code>.</li><li>Then Dog’s: <code>Breed = "Pug"</code>.</li><li>One address for the whole Dog object goes into the variable <code>d</code>.</li></ol>
+<figcaption><strong>What you're seeing:</strong> there is no separate Animal object. The Animal part is the first layer of the same object.</figcaption>
+</figure>
+  </section>
+  <div class="one-sentence">🎯 <span class="grad-text"><b>A subclass object is ONE object that contains the base-class fields and the subclass fields.</b></span></div>
+  <section class="kd-section " id="why">
+    <div class="sec-label why">🌍 In real life</div>
+    <div class="kd-card why-box">
+      <p>🪆 A <b>nesting doll</b>: one doll, but you cannot make the inner layer without the outer shell around it — and you cannot make the outer layer without building the inner part first.</p>
+      <p>A Dog <b>is</b> an Animal: it has everything an Animal has plus its own extras. So memory for both is reserved together, in one block.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">👁️ A base variable pointing at a child object</div>
+<figure class="diagram-card kd-story" data-steps="4">
+<div class="st-stage"><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" class="concept-diagram" data-steps="4" role="img" aria-label="An Animal variable can point at a Dog object but only sees the Animal members; casting to Dog shows the whole object; the object itself stays a Dog the whole time">
+<defs><marker id="in2A" markerWidth="7" markerHeight="7" refX="4.5" refY="2" orient="auto"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in2S" markerWidth="7" markerHeight="7" refX="0" refY="2" orient="auto-start-reverse"><path d="M0,0 L4.5,2 L0,4 Z" fill="#5b6577"/></marker><marker id="in2T" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L12,7 L0,14 Z" fill="#8392ad"/></marker></defs>
+<rect class="zone" x="10" y="86" width="170" height="214" rx="14" fill="rgba(34,211,238,.05)" stroke="#22d3ee" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="24" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#67e8f9">📚 STACK</text>
+<rect class="zone" x="200" y="86" width="430" height="214" rx="14" fill="rgba(52,211,153,.05)" stroke="#34d399" stroke-opacity=".55" stroke-dasharray="5 4"/>
+<text class="zone-title" x="214" y="105" font-size="9.5" font-family="'JetBrains Mono'" fill="#6ee7b7">🏠 HEAP</text>
+<g class="st" data-s="1-"><path d="M166,175 L260,175" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#in2A)"/></g>
+<rect class="bx" x="10" y="8" width="380" height="62" rx="10" fill="#171c28" stroke="#2d364a" stroke-width="1.3"/>
+<text x="24" y="30" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">Animal a = new Dog();</text>
+<text x="24" y="45" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">a.Name = "Rex";            // ✅ Animal member</text>
+<text x="24" y="60" text-anchor="start" font-size="8.8" font-family="'JetBrains Mono'" fill="#93a0b8">var b = ((Dog)a).Breed;   // ✅ cast to see Dog members</text>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="24" y="150" width="142" height="50" rx="10" fill="rgba(34,211,238,.13)" stroke="#22d3ee" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="95" y="173" text-anchor="middle" font-size="11.5" font-weight="700" fill="#67e8f9">a  (type Animal)</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="95" y="185" text-anchor="middle" font-size="8.8" font-weight="400" fill="#9fe8f5" font-family="'JetBrains Mono'">0x…L2</text></g>
+<g class="st" data-s="1-" data-hl="1"><rect class="bx" x="260" y="118" width="190" height="76" rx="10" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.3"/></g>
+<g class="st" data-s="1-" data-hl="1"><text x="355" y="148" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6ee7b7">Dog object</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="355" y="160" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Name = "Rex"</text></g>
+<g class="st" data-s="1-" data-hl="1"><text x="355" y="172" text-anchor="middle" font-size="8.8" font-weight="400" fill="#a7f0d0" font-family="'JetBrains Mono'">Breed = "Pug"</text></g>
+<g class="st" data-s="2-2" data-hl="2"><rect class="bx note" x="470" y="118" width="150" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2" data-hl="2"><text x="545" y="138" text-anchor="middle" font-size="10" fill="#fcd34d">a sees: Name</text></g>
+<g class="st" data-s="2-2"><rect class="bx note" x="470" y="160" width="150" height="34" rx="9" fill="rgba(251,113,133,.12)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-2"><text x="545" y="180" text-anchor="middle" font-size="10" fill="#fda4af">a.Breed → ❌ error</text></g>
+<g class="st" data-s="3-3" data-hl="3"><rect class="bx note" x="470" y="118" width="150" height="76" rx="9" fill="rgba(52,211,153,.13)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="545" y="152" text-anchor="middle" font-size="10" fill="#6ee7b7">(Dog)a sees:</text></g>
+<g class="st" data-s="3-3" data-hl="3"><text x="545" y="166" text-anchor="middle" font-size="10" fill="#6ee7b7">Name + Breed</text></g>
+<g class="st" data-s="4-" data-hl="4"><rect class="bx note" x="470" y="118" width="150" height="76" rx="9" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="4-" data-hl="4"><text x="545" y="152" text-anchor="middle" font-size="10" fill="#c4b5fd">The object never</text></g>
+<g class="st" data-s="4-" data-hl="4"><text x="545" y="166" text-anchor="middle" font-size="10" fill="#c4b5fd">changes: it is a Dog</text></g>
+<g class="st" data-s="2-"><rect class="bx note" x="260" y="214" width="360" height="44" rx="9" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+<g class="st" data-s="2-"><text x="440" y="232" text-anchor="middle" font-size="9.5" fill="#fcd34d">The variable’s type = what you may use.</text></g>
+<g class="st" data-s="2-"><text x="440" y="245.5" text-anchor="middle" font-size="9.5" fill="#fcd34d">The object’s type = what it really is.</text></g>
+<g class="st" data-s="1-"><g class="arrow-pill"><rect x="185.5" y="166" width="55" height="18" rx="9"/><text x="213" y="178.5" text-anchor="middle" font-size="9" font-style="italic">address</text></g></g>
+</svg></div>
+<div class="st-bar" hidden><button type="button" class="st-btn" data-act="prev" aria-label="Previous step">⏮</button><button type="button" class="st-btn st-play" data-act="play" aria-label="Play or pause">⏸</button><button type="button" class="st-btn" data-act="next" aria-label="Next step">⏭</button><span class="st-dots" aria-hidden="true"></span><span class="st-hint">Press ▶ to watch</span></div>
+<p class="st-cap" aria-live="polite" hidden></p>
+<ol class="st-caps"><li><code>Animal a = new Dog();</code> — the variable is typed <b>Animal</b>, but it points at a full <b>Dog</b> object.</li><li>Through <code>a</code> you can only use <b>Animal</b> members. <code>a.Breed</code> will not compile.</li><li>A <b>cast</b> to <code>Dog</code> shows the whole object (and checks the object really is a Dog).</li><li>The object <b>never changes type</b>; only your “view” of it changes.</li></ol>
+<figcaption><strong>What you're seeing:</strong> one object, two possible views. The variable’s type limits what you can touch; it does not change the object.</figcaption>
+</figure>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">📋 The two orders to remember</div>
+    <div class="table-wrap"><table class="cmp-table"><thead><tr><th scope="col">What</th><th scope="col">Order</th><th scope="col">Why it helps</th></tr></thead><tbody><tr><th scope="row">Field initializers</th><td>derived class first, then base</td><td>a documented C# rule</td></tr><tr><th scope="row">Constructor bodies</th><td>base class first, then derived</td><td>the parent part is ready before the child uses it</td></tr><tr><th scope="row">Memory</th><td>allocated once, for the whole object</td><td>there is just one object and one address</td></tr></tbody></table></div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label see">🧪 Tiny code</div>
+    <div class="code-block"><pre><span class="kw">class</span> Animal
+{
+    <span class="kw">string</span> Name = <span class="str">"?"</span>;                     <span class="cmt">// runs 3rd (base initializer)</span>
+    <span class="kw">public</span> Animal() { Name = <span class="str">"Rex"</span>; }      <span class="cmt">// runs 4th (base constructor)</span>
+}
+<span class="kw">class</span> Dog : Animal
+{
+    <span class="kw">string</span> Breed = <span class="str">"Lab"</span>;                  <span class="cmt">// runs 2nd (derived initializer)</span>
+    <span class="kw">public</span> Dog() { Breed = <span class="str">"Pug"</span>; }        <span class="cmt">// runs 5th (derived constructor)</span>
+}
+
+Animal a = <span class="kw">new</span> Dog();     <span class="cmt">// ONE Dog object on the heap</span>
+<span class="cmt">// a.Breed;               // ❌ not visible through an Animal variable</span>
+<span class="kw">var</span> dog = (Dog)a;         <span class="cmt">// ✅ same object, bigger view</span></pre></div>
+    <p style="color:var(--ink-faint); font-size:13px; margin-top:12px;">Never call an overridable method from a constructor: the child part may not be initialised yet (see the trap).</p>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label why">♻️ Who clears this memory?</div>
+    <div class="kd-card why-box">
+      <p>The garbage collector frees the <b>whole</b> Dog object at once — base and derived layers together — when nothing references it. There is no way to free just the Animal part.</p>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label trap">🎯 Check yourself</div>
+    <div class="quiz">
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>new Dog()</code> creates a Dog object and a separate Animal object.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> One object only. The Animal part is the first layer inside it.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> Constructor bodies run base → derived.</summary><div class="zoom-inner"><p><b>✅ Right.</b> Yes, the base constructor completes first.</p></div></details>
+      <details class="zoom quiz-item"><summary><span class="chev">▾</span> <code>Animal a = new Dog();</code> turns the object into an Animal.</summary><div class="zoom-inner"><p><b>❌ Wrong.</b> The object stays a Dog; only the variable’s view is Animal.</p></div></details>
+    </div>
+  </section>
+  <section class="kd-section " id="recall">
+    <div class="sec-label recall">🔥 Interview recall</div>
+    <div class="kd-card recall-box">
+      <ul><li>One object holds base + derived fields.</li><li>Field initializers: derived → base. Constructors: base → derived.</li><li>A base variable can point at a derived object but only sees base members.</li></ul>
+    </div>
+  </section>
+  <section class="kd-section ">
+    <div class="sec-label saythis">🎤 Say this in an interview</div>
+    <div class="kd-card saythis-box">“A derived-class instance is a single heap object containing the base fields and the derived fields. Field initializers run derived first then base, and constructors run base first then derived. A base-typed variable references the same object but only exposes base members.”</div>
+  </section>
+  <section class="kd-section " id="trap">
+    <div class="sec-label trap">⚠️ Common trap</div>
+    <div class="kd-card trap-box">
+      <p>Calling a virtual method from a base constructor. It runs the <b>derived</b> override while the derived fields are still at their defaults (or only initializers have run) — a classic bug.</p>
+    </div>
+  </section>
+  <section class="kd-section next" id="next">
+    <div class="sec-label next">➡️ Where this leads</div>
+    <div class="kd-card next-box">
+      <span>Next: what if the parent is abstract and can never be created on its own?</span>
+      <a class="next-link" href="abstract-base.html">Abstract & Base Classes <span class="arrow">→</span></a>
+    </div>
+  </section>  <p class="fact-note">📌 Constructor order and the initializer order are documented in the C# language reference (instance constructors / field initializers). Base-typed variables exposing only base members and casting: C# docs on inheritance and casting. The exact in-memory byte layout is a runtime detail and is not claimed. Official docs: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance" target="_blank" rel="noopener">Inheritance in C# (guide)</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/instance-constructors" target="_blank" rel="noopener">Instance constructors</a></p>
+
+
+</main>
+
+<footer class="kd-foot">
+  <div class="wrap">KeyDrive · Memory · concept journey</div>
+</footer>
+
+<script src="../../assets/site.js?v=20261018"></script>
+</body>
+</html>
