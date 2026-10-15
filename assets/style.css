@@ -167,6 +167,7 @@ a.kd-card:active{ transform:translateY(-1px) scale(.98); box-shadow:0 6px 16px r
 .cat-tile .ribbon{
   position:absolute; top:14px; right:-8px; font-family:'JetBrains Mono'; font-size:10px; font-weight:600;
   color:var(--ink-faint); background:var(--surface-2); border:1px solid var(--border); border-radius:6px; padding:3px 10px;
+  max-width:calc(100% - 92px); white-space:normal; text-align:right; line-height:1.4; /* long ribbons wrap instead of covering the icon */
 }
 .cat-tile .glow{
   position:absolute; inset:-40% -40% auto auto; width:140px; height:140px; border-radius:50%;
