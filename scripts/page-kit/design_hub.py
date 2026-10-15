@@ -60,7 +60,7 @@ tile = f'''      <a class="kd-card cat-tile" href="design/index.html" style="bor
         <span class="glow"></span>
         <span class="ct-icon">🧱</span>
         <h3>Software Design</h3>
-        <p>The five SOLID principles, every major design pattern — CQRS included — and a .NET memory lab (stack, heap, GC, async, DI lifetimes), explained with everyday pictures, animated stories and a few lines of C#.</p>
+        <p>Why code gets expensive to change, and how to keep it cheap: the five SOLID principles, every major design pattern (creational to CQRS and Saga), and how .NET memory really works (stack, heap, GC, async) — with everyday pictures, animated stories and C# examples.</p>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-dives">0 / 12 concepts</span></div><div class="progress"><i style="width:0%"></i></div></div>
       </a>
 '''
