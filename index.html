@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KeyDrive — Learn how systems actually work</title>
-<link rel="stylesheet" href="assets/style.css?v=20261023">
+<link rel="stylesheet" href="assets/style.css?v=20261024">
 </head>
 <body data-root="">
 
@@ -53,47 +53,71 @@
 
   <section class="kd-section">
     <div class="sec-label" style="color:var(--ink-soft)">📚 Pick a journey</div>
-    <div class="tile-grid">
-      <a class="kd-card cat-tile" href="ai/index.html" style="border-color:rgba(34,211,238,.3)">
-        <span class="ribbon live">19 concepts</span>
+    <div class="tile-grid rich">
+      <div class="kd-card cat-tile cat-rich" style="border-color:rgba(34,211,238,.3)">
         <span class="glow"></span>
-        <span class="ct-icon">🤖</span>
-        <h3>AI</h3>
+        <div class="ct-top"><span class="ct-icon">🤖</span><span class="ct-chip">19 steps</span></div>
+        <h3><a class="ct-main" href="ai/index.html">AI</a></h3>
         <p>From “what is AI” to a production agent — one system, upgraded step by step.</p>
+        <ul class="ct-labs">
+          <li><a class="ct-lab" href="ai/concepts/what-is-ai.html"><span class="cl-ico">🌱</span><span class="cl-txt"><b>What is AI?</b><i>Where the whole story begins</i></span><span class="cl-n">step 1</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="ai/concepts/llms.html"><span class="cl-ico">🧠</span><span class="cl-txt"><b>LLMs</b><i>How a model predicts the next word</i></span><span class="cl-n">core</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="ai/concepts/rag.html"><span class="cl-ico">📚</span><span class="cl-txt"><b>RAG</b><i>Give the model your own data</i></span><span class="cl-n">core</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="ai/concepts/agents.html"><span class="cl-ico">🕹️</span><span class="cl-txt"><b>Agents</b><i>Models that plan, use tools and act</i></span><span class="cl-n">core</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="ai/concepts/production.html"><span class="cl-ico">🚀</span><span class="cl-txt"><b>Production</b><i>Evaluate, observe, ship it safely</i></span><span class="cl-n">last step</span><span class="cl-go">→</span></a></li>
+        </ul>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-done">✓ 19 / 19</span><span class="ct-dives">1 deep dive</span></div><div class="progress"><i style="width:100%"></i></div></div>
-      </a>
-      <a class="kd-card cat-tile" href="cloud/index.html" style="border-color:rgba(56,189,248,.3)">
-        <span class="ribbon live">Azure + AWS</span>
+        <div class="ct-cta">Start the AI journey <span class="arrow">→</span></div>
+      </div>
+      <div class="kd-card cat-tile cat-rich" style="border-color:rgba(56,189,248,.3)">
         <span class="glow"></span>
-        <span class="ct-icon">☁️</span>
-        <h3>Cloud Systems</h3>
-        <p>The same 19-step journey for an architect — told twice, once in Azure and once in AWS, with a side-by-side map between them.</p>
+        <div class="ct-top"><span class="ct-icon">☁️</span><span class="ct-chip">2 clouds</span></div>
+        <h3><a class="ct-main" href="cloud/index.html">Cloud Systems</a></h3>
+        <p>The same 19-step journey for an architect — told twice, with a side-by-side map between them.</p>
+        <ul class="ct-labs">
+          <li><a class="ct-lab" href="azure/index.html"><span class="cl-ico">🔷</span><span class="cl-txt"><b>Azure</b><i>Tenants and regions up to landing zones</i></span><span class="cl-n">26 pages</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="aws/index.html"><span class="cl-ico">🟧</span><span class="cl-txt"><b>AWS</b><i>The same journey in AWS service names</i></span><span class="cl-n">26 pages</span><span class="cl-go">→</span></a></li>
+        </ul>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-done">✓ 38 / 38</span><span class="ct-dives">14 deep dives</span></div><div class="progress"><i style="width:100%"></i></div></div>
-      </a>
-      <a class="kd-card cat-tile" href="data/index.html" style="border-color:rgba(167,139,250,.35)">
-        <span class="ribbon live">SQL + Cosmos DB</span>
+        <div class="ct-cta">Compare Azure and AWS <span class="arrow">→</span></div>
+      </div>
+      <div class="kd-card cat-tile cat-rich" style="border-color:rgba(167,139,250,.35)">
         <span class="glow"></span>
-        <span class="ct-icon">🗄️</span>
-        <h3>Data Systems</h3>
-        <p>Read execution plans, tame indexes and statistics, and debug slow queries in SQL; then partition keys, request units and fan-out queries in Cosmos DB.</p>
+        <div class="ct-top"><span class="ct-icon">🗄️</span><span class="ct-chip">2 labs</span></div>
+        <h3><a class="ct-main" href="data/index.html">Data Systems</a></h3>
+        <p>Find out why a query is slow — and fix it — in both a relational and a NoSQL database.</p>
+        <ul class="ct-labs">
+          <li><a class="ct-lab" href="sql/index.html"><span class="cl-ico">🔎</span><span class="cl-txt"><b>SQL Performance Lab</b><i>Execution plans, indexes, statistics, locking</i></span><span class="cl-n">16 pages</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="cosmos/index.html"><span class="cl-ico">🌍</span><span class="cl-txt"><b>Cosmos DB Lab</b><i>Partition keys, request units and 429s</i></span><span class="cl-n">13 pages</span><span class="cl-go">→</span></a></li>
+        </ul>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-done">✓ 28 / 28</span><span class="ct-dives">1 deep dive</span></div><div class="progress"><i style="width:100%"></i></div></div>
-      </a>
-      <a class="kd-card cat-tile" href="web/index.html" style="border-color:rgba(34,211,238,.35)">
-        <span class="ribbon live">React + Angular</span>
+        <div class="ct-cta">Open Data Systems <span class="arrow">→</span></div>
+      </div>
+      <div class="kd-card cat-tile cat-rich" style="border-color:rgba(34,211,238,.35)">
         <span class="glow"></span>
-        <span class="ct-icon">🌐</span>
-        <h3>Web Platforms</h3>
-        <p>How React and Angular decide what to update: renders, keys, effects, change detection, signals, forms, routing and the performance habits that keep a front-end fast.</p>
+        <div class="ct-top"><span class="ct-icon">🌐</span><span class="ct-chip">2 labs</span></div>
+        <h3><a class="ct-main" href="web/index.html">Web Platforms</a></h3>
+        <p>How React and Angular decide what to update — and the habits that keep a front-end fast.</p>
+        <ul class="ct-labs">
+          <li><a class="ct-lab" href="react/index.html"><span class="cl-ico">⚛️</span><span class="cl-txt"><b>React Lab</b><i>Renders, keys, effects and the Profiler</i></span><span class="cl-n">21 pages</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="angular/index.html"><span class="cl-ico">🅰️</span><span class="cl-txt"><b>Angular Lab</b><i>Change detection, signals and RxJS</i></span><span class="cl-n">22 pages</span><span class="cl-go">→</span></a></li>
+        </ul>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-done">✓ 24 / 24</span><span class="ct-dives">18 deep dives</span></div><div class="progress"><i style="width:100%"></i></div></div>
-      </a>
-      <a class="kd-card cat-tile" href="design/index.html" style="border-color:rgba(52,211,153,.35)">
-        <span class="ribbon live">SOLID · Patterns · Memory</span>
+        <div class="ct-cta">Open Web Platforms <span class="arrow">→</span></div>
+      </div>
+      <div class="kd-card cat-tile cat-rich" style="border-color:rgba(52,211,153,.35)">
         <span class="glow"></span>
-        <span class="ct-icon">🧱</span>
-        <h3>Software Design</h3>
-        <p>Why code gets expensive to change, and how to keep it cheap: the five SOLID principles, every major design pattern (creational to CQRS and Saga), and how .NET memory really works (stack, heap, GC, async) — with everyday pictures, animated stories and C# examples.</p>
+        <div class="ct-top"><span class="ct-icon">🧱</span><span class="ct-chip">3 labs</span></div>
+        <h3><a class="ct-main" href="design/index.html">Software Design</a></h3>
+        <p>Why code gets expensive to change, and how to keep it cheap — with everyday pictures, animated stories and C#.</p>
+        <ul class="ct-labs">
+          <li><a class="ct-lab" href="solid/index.html"><span class="cl-ico">🔤</span><span class="cl-txt"><b>SOLID Lab</b><i>Why code rots and the five rules that stop it</i></span><span class="cl-n">15 pages</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="patterns/index.html"><span class="cl-ico">🧩</span><span class="cl-txt"><b>Design Patterns Lab</b><i>Every pattern as a story, up to CQRS and Saga</i></span><span class="cl-n">34 pages</span><span class="cl-go">→</span></a></li>
+          <li><a class="ct-lab" href="memory/index.html"><span class="cl-ico">🧠</span><span class="cl-txt"><b>.NET Memory Lab</b><i>Stack, heap, GC and async — what really happens</i></span><span class="cl-n">29 pages</span><span class="cl-go">→</span></a></li>
+        </ul>
         <div class="ct-foot"><div class="ct-stats"><span class="ct-done">✓ 65 / 65</span><span class="ct-dives">13 deep dives</span></div><div class="progress"><i style="width:100%"></i></div></div>
-      </a>
+        <div class="ct-cta">Open Software Design <span class="arrow">→</span></div>
+      </div>
     </div>
   </section>
 
@@ -113,6 +137,6 @@
   <div class="wrap">KeyDrive · concept-first learning · AI · Cloud Systems (Azure + AWS) · Data Systems (SQL lab) live</div>
 </footer>
 
-<script src="assets/site.js?v=20261023"></script>
+<script src="assets/site.js?v=20261024"></script>
 </body>
 </html>
